@@ -1,0 +1,31 @@
+title: Cub Tracker
+author: Jason Lee
+local_tz: America/Chicago
+
+asciidoctor:
+  :compact: true
+  :eruby: erubis
+  :attributes:
+    idprefix: ''
+    idseparator: '-' 
+
+scss:
+  :line_numbers: true
+  :style: :expanded
+# if no profile is specified, the first with a deploy config is selected
+profiles:
+  development:
+    deploy:
+      dummy:
+  production:
+    base_url: http://blogs.steeplesoft.com
+    #disqus_developer: false
+    #google_analytics: UA-33133481-1
+
+    # TODO enable once not dependent on system binaries
+    #minify: true
+
+    #deploy:
+    #  host: github_pages
+    #  branch: master
+
