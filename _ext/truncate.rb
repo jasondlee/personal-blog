@@ -4,7 +4,7 @@ module Awestruct
   module Extensions
     module Truncate
       def truncate(content)
-        delims = ["pass::[more]","<!-- more -->","<!--more-->"]
+        delims = ["pass::[more]","pass::[<!-- more -->]","<!-- more -->","<!--more-->","&lt;!-- more --&gt;"]
         delims.each do |delim|
             index = content.index(delim)
             if index != nil

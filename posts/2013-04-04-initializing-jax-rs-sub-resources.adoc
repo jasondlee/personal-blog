@@ -8,7 +8,7 @@ tags: [ Java, Java EE, JavaEE, JAX-RS, REST ]
 
 This morning, I was reading through the http://download.oracle.com/otndocs/jcp/jaxrs-2_0-pfd-spec/index.html[Proposed Final Draft for JAX-RS 2.0 specification], when I found a little nugget that could have saved me some work, specificially in initializing subresources.
 
-pass::[more]
+<!-- more -->
 
 This is kind of sad to admit (though, surely -- hopefully -- I'm not alone in this :), but I have been initializing subresource manually. For example:
 

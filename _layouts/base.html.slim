@@ -12,11 +12,10 @@ html
       meta name='twitter:title' content=page.title
       meta name='twitter:description' content=summarize(html_to_text(page.content).strip.gsub(/^[:space:]*\n/, ''), 25)
     /link rel='stylesheet' href='/stylesheets/styles.css'
-    link rel="stylesheet" href="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/library/styles/reset.css"
-    link rel='stylesheet' href='http://blogs.steeplesoft.com/wp-content/themes/blueblogger/library/styles/typograhpy.css'
-    link rel='stylesheet' href='http://blogs.steeplesoft.com/wp-content/themes/blueblogger/assets/css/screen.css'
-    link rel="stylesheet" href="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/style.css" type="text/css" media="screen"
-    link rel="stylesheet" href="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/assets/css/print.css" type="text/css" media="print"
+    link rel="stylesheet" href="/styles/reset.css"
+    link rel='stylesheet' href='/styles/typograhpy.css'
+    link rel='stylesheet' href='/styles/screen.css'
+    link rel="stylesheet" href='/styles/style.css'
     link href='http://fonts.googleapis.com/css?family=Cherry+Cream+Soda' rel='stylesheet' type='text/css'
     link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'
     css:
@@ -32,7 +31,7 @@ html
         font-family:'Philosopher','Cherry Cream Soda',arial,serif;background-color:#47586d;
         float:left
       }
-      .entry-header1 {
+      .entry-header {
         background-image: none;
       }
     /[if lt IE 9]
@@ -44,13 +43,13 @@ html
         div#header-wrap.container style="height: 227px; margin:auto; vertical-align: middle; padding-top: 1px;"
             div.blogname
                 |Coming
-                img src="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
+                img src="/images/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
                 |Up
-                img src="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
+                img src="/images/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
                 |for
-                img src="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
+                img src="/images/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
                 |Air
-            img src="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/dolphin.png"
+            img src="/images/dolphin.png"
     div.content
         div#content-container
             div#content-wrap.container
