@@ -7,6 +7,7 @@ gem 'erubis', '~> 2.7.0'
 gem 'slim', '~> 2.0.0.pre.0'
 gem "htmlcompressor"
 gem "uglifier"
+gem "therubyracer"
 
 #gem 'rdiscount', '~> 2.0.7', :platforms => [:ruby]
 #gem 'kramdown', '~> 1.0.1', :platforms => [:jruby]
