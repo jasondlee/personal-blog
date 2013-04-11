@@ -24,9 +24,9 @@ profiles:
     #google_analytics: UA-33133481-1
 
     # TODO enable once not dependent on system binaries
-    #minify: true
+    minify: true
 
-    #deploy:
-    #  host: github_pages
-    #  branch: master
+    deploy:
+      host: steeplesoft.com
+      path: /home/tlh/steeplesoft.com/beta
 

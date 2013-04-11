@@ -8,7 +8,7 @@ tags: [ Android ]
 
 As every Android developer knows, application crashes are reported back to Google and can be view in the Play Developer's Console. This is helpful, but, in my experience, sometimes you don't get enough context. You also don't get notifications when crashes are reported.  Fortunately, there is a tool, called http://acra.ch[ACRA], that improves the situation quite a bit. In this post, I'll give you a brief introduction to the tool, and how I use it in http://cubtracker.com[Cub Tracker].
 
-<!-- more -->
+pass::[more]
 
 If you look at the http://acra.ch[ACRA home page], the quick start suggests a code snippet like this:
 
