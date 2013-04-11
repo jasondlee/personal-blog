@@ -27,6 +27,7 @@ profiles:
     minify: true
 
     deploy:
-      host: steeplesoft.com
+      host: tlh@steeplesoft.com
       path: /home/tlh/steeplesoft.com/beta
+      uncommited: true
 
