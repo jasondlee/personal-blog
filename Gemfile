@@ -5,7 +5,7 @@ gem 'awestruct', '~> 0.5.0'
 gem 'asciidoctor', '~> 0.1.1'
 gem 'erubis', '~> 2.7.0'
 gem 'slim', '~> 2.0.0.pre.0'
-gem "html_truncator"
+gem "htmlcompressor"
 
 #gem 'rdiscount', '~> 2.0.7', :platforms => [:ruby]
 #gem 'kramdown', '~> 1.0.1', :platforms => [:jruby]
