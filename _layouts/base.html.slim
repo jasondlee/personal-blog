@@ -11,12 +11,78 @@ html
       meta name='twitter:url' content="#{site.base_url}#{page.url}"
       meta name='twitter:title' content=page.title
       meta name='twitter:description' content=summarize(html_to_text(page.content).strip.gsub(/^[:space:]*\n/, ''), 25)
+    /link rel='stylesheet' href='/stylesheets/styles.css'
+    link rel="stylesheet" href="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/library/styles/reset.css"
+    link rel='stylesheet' href='http://blogs.steeplesoft.com/wp-content/themes/blueblogger/library/styles/typograhpy.css'
+    link rel='stylesheet' href='http://blogs.steeplesoft.com/wp-content/themes/blueblogger/assets/css/screen.css'
+    link rel="stylesheet" href="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/style.css" type="text/css" media="screen"
+    link rel="stylesheet" href="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/assets/css/print.css" type="text/css" media="print"
+    link href='http://fonts.googleapis.com/css?family=Cherry+Cream+Soda' rel='stylesheet' type='text/css'
+    link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'
     css:
-      body {
-        padding-top: 60px;
+      .blogname{
+        letter-spacing:10px;
+        font-size:36px;
+        padding:15px 0px 0px 5px;
+        width:170px;
+        height:227px;
+        margin:auto;
+        text-align:center;
+        color:#cecfd1;
+        font-family:'Philosopher','Cherry Cream Soda',arial,serif;background-color:#47586d;
+        float:left
       }
-    link rel='stylesheet' href='/stylesheets/styles.css'
+      .entry-header1 {
+        background-image: none;
+      }
     /[if lt IE 9]
       script src='//html5shim.googlecode.com/svn/trunk/html5.js'
-  body
-          =content
+  body class="y2013 m01 d31 h08 home blog linux firefox ff1"
+    div.header
+        div#tagline.container
+            p#description
+        div#header-wrap.container style="height: 227px; margin:auto; vertical-align: middle; padding-top: 1px;"
+            div.blogname
+                |Coming
+                img src="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
+                |Up
+                img src="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
+                |for
+                img src="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
+                |Air
+            img src="http://blogs.steeplesoft.com/wp-content/themes/blueblogger/dolphin.png"
+    div.content
+        div#content-container
+            div#content-wrap.container
+                div class="primary hfeed"
+                    =content
+                div class="secondary aside"
+                    div#sidebar-container
+                        div class="widget widget_links"
+                            h3.widget-title My Links
+                            ul class="xoxo blogroll"
+                                li
+                                    a href="/+" rel="me" title="Google+" Google+
+                                li
+                                    a href="/linkedin" rel="me" title="LinkedIn" LinkedIn
+                                li
+                                    a href="/twitter" rel="me" title="Twitter" Twitter
+                        div class="widget widget_links"
+                            h3.widget-title Publications
+                            ul class="xoxo blogroll"
+                                li
+                                    a title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries. " href="http://jaxenter.com/java-tech-journal/JTJ-2012-06"
+                                        | Tips for Writing Pluggable Java EE Applications
+                                li
+                                    a title="An article Ken Paulsen and I wrote detailing easy JSF component creation" href="http://java.sun.com/developer/technicalArticles/J2EE/jsf_templating/index.html"
+                                        | JSFTemplating and Woodstock: Component Authoring Made Easy
+                                li
+                                    a href="http://jsfcentral.com/articles/lee-03-09.html" Jason Lee in depth: Mojarra and Scales
+                                li
+                                    a title="My JavaOne 2008 Wrap Up" href="http://www.theserverside.com/news/thread.tss?thread_id=49343" Jason Lee: Postmortem for JavaOne 2008
+                                li
+                                    a title="The GlassFish Adoption Story from my time at IEC" href="https://blogs.oracle.com/stories/entry/international_environmental"
+                                        | International Environmental: A Cooling Company Which Prefers Hot Software
+                                li
+                                    a title="This details the project that spawned a couple of the Mojarra Scales components" href="http://www.jsfcentral.com/articles/trenches_7.html"
+                                        |IEC donates custom JSF component to Mojarra Scales

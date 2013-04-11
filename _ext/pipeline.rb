@@ -1,5 +1,8 @@
 require 'truncate'
 require 'erubis'
+require 'tilt'
+ 
+#Tilt.mappings.delete("html")
 
 Awestruct::Extensions::Pipeline.new do
   extension Awestruct::Extensions::Posts.new( '/posts', :posts)

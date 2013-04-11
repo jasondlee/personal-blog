@@ -1,6 +1,7 @@
-title: Cub Tracker
+title: Steeplesoft
 author: Jason Lee
 local_tz: America/Chicago
+interpolate: false
 
 asciidoctor:
   :compact: true

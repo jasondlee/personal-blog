@@ -1,0 +1,27 @@
+---
+layout: base
+---
+article.post
+  header.entry-header
+    h1.title
+      a href=page.url =page.title
+    h4
+      time.pubdate datetime=page.date.strftime('%FT%T%:z') =page.date.strftime "%A, %B #{page.date.day}, %Y"
+  .entry-content
+    = content
+  footer.entry-footer
+    - if page.tags
+      .tags
+        span.title
+          | tags: 
+        - page.tags.each do |tag|
+          a href="/blog/tags/#{tag}"
+            - if tag != page.tags.last
+              ="#{tag}, "
+            - else
+              ="#{tag} "
+/  - if not page.listing
+/    =partial('pagination.html.slim', :post => page)
+/    - if site.disqus
+/      #comments
+/        =page.post.disqus_comments

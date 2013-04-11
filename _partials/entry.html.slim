@@ -17,9 +17,8 @@ article.post
               ="#{tag}, "
             - else
               ="#{tag} "
-  hr
   - if not page.listing
-    =partial('pager.html.slim', :post => page)
+    =partial('pagination.html.slim', :post => page)
     - if site.disqus
       #comments
         =page.post.disqus_comments
