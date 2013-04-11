@@ -1,0 +1,61 @@
+/*
+Theme Name:		Blueblogger
+Theme URI: 		http://wpframework.com/
+Version: 		0.1
+Description: 	BlueBlogger Theme for <a href="http://happyjoe.com">HappyJoe Blogging</a>. Built on <a href="http://wpframework.com">WP Framework</a>.
+Author: 		Ptah Dunbar
+Author URI:		http://ptahdunbar.com
+Tags:			wpframework, framework, widgets, gravatars, valid xHTML, valid CSS, SEO, microformats, hAtom, vCard, XOXO
+
+Copyright 2008 Ptah Dunbar <http://ptahdunbar.com> All rights reserved.
+WP Framework is licensed under the terms of the GNU General Public License version 2.
+
+If you have any questions, comments, or concerns, 
+visit <http://wpframework.com> for more information!
+*/
+
+/* Reset Browser Defaults */
+@import url( 'library/styles/reset.css' );
+
+/* Apply base theme styles and colors */
+@import url( 'library/styles/typograhpy.css' );
+
+/* Site Specific Styles */
+@import url( 'assets/css/screen.css' );
+
+
+/*********************************************
+		The Obligatory WP Styles
+*********************************************/
+.aligncenter,
+div.aligncenter {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+}
+.alignleft {
+   float: left;
+   margin: 0px 8px 8px 0px;
+}
+.alignright {
+   float: right;
+   margin: 0px 0px 8px 8px;
+}
+.wp-caption {
+   border: 1px solid #ddd;
+   text-align: center;
+   background-color: #f3f3f3;
+   padding-top: 4px;
+   margin: 10px;
+}
+.wp-caption img {
+   margin: 0;
+   padding: 0;
+   border: 0 none;
+}
+.wp-caption p.wp-caption-text {
+   font-size: 11px;
+   line-height: 17px;
+   padding: 0 4px 5px;
+   margin: 0;
+}
