@@ -1,0 +1,33 @@
+---
+title: 'Announcing Mojarra Scales'
+author: 'Jason Lee'
+layout: blog-post
+date: 2008-1-2
+tags: [ Java, JavaServer Faces, JSFTemplating, Scales ]
+---
+<p>Some of you may be wondering what the status is on the RI Sandbox.  With the <a target="_blank" href="/2007/12/05/announcing-project-mojarra/">announcement</a> of <a target="_blank" href="https://mojarra.dev.java.net/">Project Mojarra</a>, we can finally take the wraps off of <a target="_blank" href="https://scales.dev.java.net/">Mojarra Scales</a>, the promotion of the RI/Mojarra Sandbox to its own project.<!--more-->  There are a few differences between the Sandbox of Scales to note, such as package names, namespace, etc.  There has also been a fair amount of refactoring inside the library to simplify the components somewhat (more on that later).  To migrate from the RI Sandbox to Mojarra Scales, you will need to do the following:
+</p>
+<ol>
+<li>Remove jsf-ri-sandbox-0.9.jar</li>
+<li>Add <a href="https://scales.dev.java.net/files/documents/7591/79743/mojarra-scales.jar">mojarra-scales.jar</a>. (I'm working on getting this added to the java.net maven repository as well).</li>
+<li>Add the (new) JSFTemplating dependencies from <a href="https://maven-repository.dev.java.net/nonav/repository/com.sun.jsftemplating/jars/jsftemplating-1.2-SNAPSHOT.jar">here</a> and <a href="https://maven-repository.dev.java.net/nonav/repository/com.sun.jsftemplating/jars/jsftemplating-dynafaces-0.1-1.2-SNAPSHOT.jar">here</a>.</li>
+<li>Change your references to the RI Sandbox URL.
+	<ul>
+		<li>JSP: &lt;%@ taglib uri="http://java.sun.com/mojarra/scales" prefix="sc" %&gt;</li>
+		<li>Facelets: xmlns:sc="http://java.sun.com/mojarra/scales"</li>
+	</ul>
+</li>
+<li>Add the static resource PhaseListener:
+<p>[source lang="xml"]
+</p>
+<lifecycle>
+    <phase-listener>
+<p>        com.sun.mojarra.scales.util.StaticResourcePhaseListener
+</p>
+    </phase-listener>
+</lifecycle>
+<p>[/source]
+</p>
+</li>
+</ol>
+<p>That should be all there is too it (though if I've missed a step, please let me know).</p>

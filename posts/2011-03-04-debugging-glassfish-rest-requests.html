@@ -1,0 +1,155 @@
+---
+title: 'Debugging GlassFish REST Requests'
+author: 'Jason Lee'
+layout: blog-post
+date: 2011-3-4
+tags: [ GlassFish, GlassFish, REST, REST ]
+---
+<p>If you've been following my series on using the GlassFish REST interface, you've probably noticed that your JSON and XML output isn't pretty-printed like mine.  While there are several <a href="http://xmlindent.com/">online</a> <a href="http://jsonformatter.curiousconcept.com/">tools</a> that can fix that for you, there's no need for the extra step.  GlassFish will do that for you.  Let's look at how to make that happen.<!--more-->
+</p>
+<p>To configure the REST interface, we can use the REST interface, in particular <a href="http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config">http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config</a>
+</p>
+<p>[code]
+</p>
+<p>$ curl -X OPTIONS http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config
+</p>
+<p>{
+</p>
+<p>    "command": "_set-rest-admin-config",
+</p>
+<p>    "exit_code": "SUCCESS",
+</p>
+<p>    "extraProperties": {"methods": [
+</p>
+<p>        {"name": "GET"},
+</p>
+<p>        {
+</p>
+<p>            "name": "POST",
+</p>
+<p>            "messageParameters": {
+</p>
+<p>                "debug": {
+</p>
+<p>                    "acceptableValues": "",
+</p>
+<p>                    "optional": "true",
+</p>
+<p>                    "type": "string",
+</p>
+<p>                    "defaultValue": ""
+</p>
+<p>                },
+</p>
+<p>                "indentLevel": {
+</p>
+<p>                    "acceptableValues": "",
+</p>
+<p>                    "optional": "true",
+</p>
+<p>                    "type": "int",
+</p>
+<p>                    "defaultValue": "-100"
+</p>
+<p>                },
+</p>
+<p>                "logInput": {
+</p>
+<p>                    "acceptableValues": "",
+</p>
+<p>                    "optional": "true",
+</p>
+<p>                    "type": "string",
+</p>
+<p>                    "defaultValue": ""
+</p>
+<p>                },
+</p>
+<p>                "logOutput": {
+</p>
+<p>                    "acceptableValues": "",
+</p>
+<p>                    "optional": "true",
+</p>
+<p>                    "type": "string",
+</p>
+<p>                    "defaultValue": ""
+</p>
+<p>                },
+</p>
+<p>                "showDeprecatedItems": {
+</p>
+<p>                    "acceptableValues": "",
+</p>
+<p>                    "optional": "true",
+</p>
+<p>                    "type": "string",
+</p>
+<p>                    "defaultValue": ""
+</p>
+<p>                },
+</p>
+<p>                "showHiddenCommands": {
+</p>
+<p>                    "acceptableValues": "",
+</p>
+<p>                    "optional": "true",
+</p>
+<p>                    "type": "string",
+</p>
+<p>                    "defaultValue": ""
+</p>
+<p>                },
+</p>
+<p>                "wadlGeneration": {
+</p>
+<p>                    "acceptableValues": "",
+</p>
+<p>                    "optional": "true",
+</p>
+<p>                    "type": "string",
+</p>
+<p>                    "defaultValue": ""
+</p>
+<p>                }
+</p>
+<p>            }
+</p>
+<p>        }
+</p>
+<p>    ]}
+</p>
+<p>}
+</p>
+<p>[/code]
+</p>
+<p>Here's what each of those options mean:
+</p>
+<ul>
+    <li><strong>debug</strong> - To the best of my knowledge, this option is not used.</li>
+    <li><strong>indentLevel</strong> - If this option is 0 or greater, the output is pretty-printed, using this value as the indentation level.</li>
+    <li><strong>logInput</strong> - Echo to the server log all REST requests.</li>
+    <li><strong>logOutput</strong> - Echo to the server log all REST responses.</li>
+    <li><strong>showDeprecatedItems</strong> - By default, deprecated items are not shown.  If you need to see them, set this to true.</li>
+    <li><strong>showHiddenCommands</strong> - By default, hidden commands are not shown.  If you need to see them, set this to true.  Be warned, though, that hidden commands are hidden for a reason.  They are internal, undocumented commands and can be changed or removed without notice.</li>
+    <li><strong>wadlGeneration</strong> - Since WADL generation is an expensive process, it is turned off by default.  If you need WADL, set this to true.  You can then retrieve the WADL document from <a href="http://localhost:4848/management/application.wadl">http://localhost:4848/management/application.wadl</a>.  Be careful with that, the resulting file is <em>HUGE</em>.</li>
+</ul>
+<p>For technical, implementation-specific reasons (which I won't go into here), the first attempt to manipulate the REST configuration must be done via <a href="http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config">http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config</a>.  Once that's done, the <code>rest-config</code> element will show up under <code>server-config</code> as expected.  For example, to enable pretty-printing, for example, we can issue these requests:
+</p>
+<p>[code]
+</p>
+<p>$ curl -s -S -H "Accept: application/json" -X POST http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config
+</p>
+<p>$ curl -s -S -H "Accept: application/json" -X POST -d indentLevel=4 http://localhost:4848/management/domain/configs/config/server-config/rest-config
+</p>
+<p>{
+</p>
+<p>    "message": "\"http:\/\/localhost:4848\/management\/domain\/configs\/config\/server-config\/rest-config\" updated successfully.",
+</p>
+<p>    "exit_code": "SUCCESS"
+</p>
+<p>}
+</p>
+<p>[/code]
+</p>
+<p>And that's all there is to it.  Debugging your REST client issues should now be much simpler.</p>

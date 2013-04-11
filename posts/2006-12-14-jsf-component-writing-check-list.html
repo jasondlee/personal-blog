@@ -1,0 +1,250 @@
+---
+title: 'JSF Component Writing Check List'
+author: 'Jason Lee'
+layout: blog-post
+date: 2006-12-14
+tags: [ Components, Java, JavaServer Faces, jsf, Tutorials ]
+---
+<p>I've been doing a fair amount of JSF component writing of late, and, invariably, I miss one or more "minor" details, causing my component to explode in spectacular fashion at runtime.  What follows, then, is a check list for writing JSF components, with notes on the differences between the 1.1 and 1.2 versions of the specification.<!--more-->
+</p>
+<h3>Table of Contents</h3>
+<ul>
+<li><a href="#uicomponent">Write the UIComponent Class</a></li>
+<li><a href="#renderer">Write the Renderer Class</a></li>
+<li><a href="#tag">Write the Tag Class</a></li>
+<li><a href="#tld">Write the Tag Library Description (.tld)</a></li>
+<li><a href="#config">Write the faces-config.xml Entries</a></li>
+<li><a href="#facelets">Write Facelets .taglib.xml File</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+<a name="uicomponent"></a><h3>Write the <code>UIComponent</code> Class</h3>
+<ul>
+<li>Extend the appropriate UIComponent class</li>
+<li>Define the following properties, changing the the package <code>com.foo</code> to your package, and the component name, <code>Foo</code> to the name of your component:</li>
+</ul>
+<p>[source lang="java"]
+</p>
+<p>public static final String COMPONENT_TYPE = "com.foo.Foo";
+</p>
+<p>public static final String RENDERER_TYPE = "com.foo.FooRenderer";
+</p>
+<p>[/source]
+</p>
+<ul>
+<li>Define <code>public String getFamily () { return COMPONENT_TYPE; }</code>
+<li>Define default constructor which calls <code>setRendererType(RENDERER_TYPE);</code>
+<li>Define your properties and their getters and setters.</li>
+</ul>
+<p>For 1.1:
+</p>
+<p>[source lang="java"]
+</p>
+<p>    protected String bar;
+</p>
+<p>    public String getBar() {
+</p>
+<p>        if (null != this.bar) {
+</p>
+<p>            return this.bar ;
+</p>
+<p>        }
+</p>
+<p>        ValueBinding _vb = getValueBinding("bar");
+</p>
+<p>        return (_vb != null) ? (bar) _vb.getValue(getFacesContext()) : null;
+</p>
+<p>    }
+</p>
+<p>[/source]
+</p>
+<p>For 1.2:
+</p>
+<p>[source lang="java"]
+</p>
+<p>    protected String bar;
+</p>
+<p>    public String getBar() {
+</p>
+<p>        if (null != this.bar) {
+</p>
+<p>            return this.bar;
+</p>
+<p>        }
+</p>
+<p>        ValueExpression _ve = getValueExpression("bar");
+</p>
+<p>        return (_ve != null) ? (String) _ve.getValue(getFacesContext().getELContext()) : null;
+</p>
+<p>    }
+</p>
+<p>[/source]
+</p>
+<ul>
+<li>Write the state saving and restoring code:</li>
+</ul>
+<p>[source lang="java"]
+</p>
+<p>    private Object[] _state = null;
+</p>
+<p>    public void restoreState(FacesContext _context, Object _state) {
+</p>
+<p>        this._state = (Object[]) _state;
+</p>
+<p>        super.restoreState(_context, this._state[0]);
+</p>
+<p>        bar = (String) this._state[1];
+</p>
+<p>    }
+</p>
+<p>    public Object saveState(FacesContext _context) {
+</p>
+<p>        if (_state == null) {
+</p>
+<p>            _state = new Object[2];
+</p>
+<p>        }
+</p>
+<p>        _state[0] = super.saveState(_context);
+</p>
+<p>        _state[1] = bar;
+</p>
+<p>        return _state;
+</p>
+<p>    }
+</p>
+<p>[/source]
+</p>
+<a name="renderer"></a><h3>Write the <code>Renderer</code> Class</h3>
+<ul>
+<li>Extend <code>Renderer</code></li>
+<li>Implement <code>encodeBegin()</code>, and/or <code>encodeEnd()</code>.  Maybe others, depending on the component's needs.  All of my components, for example, have only need to extend one or the other.
+</li>
+</ul>
+<a name="tag"></a><h3>Write the Tag Class</h3>
+<p>For 1.1
+</p>
+<ul>
+<li>Extend <code>UIComponentTag</code></li>
+<li>Define all the properties as <code>String</code> (?)</li>
+<li>Define the following methods (where <code>Foo</code> is your component class):</li>
+</ul>
+<p>[source lang="java"]
+</p>
+<p>    protected String bar;
+</p>
+<p>    public String getRendererType() {
+</p>
+<p>        return Foo.RENDERER_TYPE;
+</p>
+<p>    }
+</p>
+<p>    public String getComponentType() {
+</p>
+<p>        return Foo.COMPONENT_TYPE;
+</p>
+<p>    }
+</p>
+<p>    protected void setProperties(UIComponent component) {
+</p>
+<p>        super.setProperties(component);
+</p>
+<p>        if (!(component instanceof Foo)) {
+</p>
+<p>            throw new IllegalStateException("Component " + component.toString() + 
+</p>
+<p>                " not expected type.  Expected: com.foo.Foo.  Perhaps you're missing a tag?");
+</p>
+<p>        }
+</p>
+<p>        Foo foo = (Foo)component;
+</p>
+<p>        if (bar!= null) {
+</p>
+<p>            if (isValueReference(bar)) {
+</p>
+<p>                ValueBinding vb = Util.getValueBinding(bar);
+</p>
+<p>                foo.setValueBinding("bar", vb);
+</p>
+<p>            } else {
+</p>
+<p>                throw new IllegalStateException("The value for 'bar' must be a ValueBinding.");
+</p>
+<p>            }
+</p>
+<p>        }
+</p>
+<p>    }
+</p>
+<p>[/source]
+</p>
+<p>For 1.2
+</p>
+<ul>
+<li>Extend <code>UIComponentElTag</code></li>
+<li>Define properties as <code>ValueExpression</code></li>
+<li>Define these methods (where Foo is your component class):</li>
+</ul>
+<p>[source lang="java"]
+</p>
+<p>    protected ValueExpression bar;
+</p>
+<p>    public String getComponentType() {
+</p>
+<p>        return Foo.COMPONENT_TYPE;
+</p>
+<p>    }
+</p>
+<p>    public String getRendererType() {
+</p>
+<p>        return Foo.RENDERER_TYPE;
+</p>
+<p>    }
+</p>
+<p>    public ValueExpression getBar() {
+</p>
+<p>        return bar;
+</p>
+<p>    }
+</p>
+<p>    protected void setProperties(UIComponent component) {
+</p>
+<p>        super.setProperties(component);
+</p>
+<p>        Foo download = null;
+</p>
+<p>        try {
+</p>
+<p>            foo = (Foo) component;
+</p>
+<p>        } catch (ClassCastException cce) {
+</p>
+<p>            throw new IllegalStateException("Component " + component.toString() + 
+</p>
+<p>                " not expected type.  Expected: com.foo.Foo.  Perhaps you're missing a tag?");
+</p>
+<p>        }
+</p>
+<p>        if (bar != null) {
+</p>
+<p>            foo.setValueExpression("bar", bar);
+</p>
+<p>        }
+</p>
+<p>    }
+</p>
+<p>[/source]</li>
+</p>
+<a name="tld"></a><h3>Write the Tag Library Description (.tld)</h3>
+<p>For 1.1:
+</p>
+<p>[source lang="xml"]
+</p>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>foo</short-name>
+    <uri>http://foo.com/foo</uri>
+    <description><![CDATA[Your description here]]

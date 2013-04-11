@@ -1,0 +1,39 @@
+---
+title: 'JSFOne Looms!'
+author: 'Jason Lee'
+layout: blog-post
+date: 2008-8-23
+tags: [ Java, JSFOne ]
+---
+<a target="_blank" href="http://www.jsfone.com/">JSFOne</a> is just a week and a half away, so if you haven't done so yet, buy those tickets!  <a target="_blank" href="http://www.javaposse.com/">The Java Posse</a> recently plugged the show in the Quick News section in what I think might be the greatest 34 seconds in Java Posse history.  Listen for yourself. ;) 
+<br/>
+<script type="text/javascript" src="https://media.dreamhost.com/swfobject.js"></script>
+<div id="player" style="width: 320px; margin: auto"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</div>
+<script type="text/javascript">
+<p>var so = new SWFObject('https://media.dreamhost.com/mediaplayer.swf','mpl','320','20','8');
+</p>
+<p>so.addParam('allowscriptaccess','always');
+</p>
+<p>so.addParam('allowfullscreen','false');
+</p>
+<p>so.addVariable('height','20');
+</p>
+<p>so.addVariable('width','320');
+</p>
+<p>so.addVariable('file','/wp-content/uploads/2008/08/JSFOne%20on%20the%20Java%20Posse.mp3');
+</p>
+<p>so.write('player');
+</p>
+</script>
+<!--more-->
+<p>At any rate, in preparation for my presentations at the conference, I volunteered to give one of my presentations, <!--pull-->The only word that comes to mind is, "educational."<!--/pull--><a target="_blank" href="http://www.jsfone.com/show_session_view.jsp?presentationId=11089&showId=166">JSF 2-style Component Development in a JSF 1.2 World</a>, to the <a target="_blank" href="http://okcjug.org">Oklahoma City JUG</a>.  The only word that comes to mind is, "educational."
+</p>
+<p>The presentation did not start off well, as I broke what I consider to be THE cardinal rule for presentations:  never, ever require network access unless you have to, and if you have to, rethink your presentation. :)  The components I intended to demo were still pulling their CSS and Javascript from Yahoo's CDN because I hadn't taken the time to correct that, as I had done on the rest of the Scales components.  Instead of demoing something else, I tried to fix that mistake prior to the start of the session, which was another mistake.  I should have picked something else to demo, but panic kicked in a bit and skewed my judgment.
+</p>
+<p>When I felt I finally had that part under control, I turned to the main reason I showed up early, which was to verify that I could successfully connect to and use the projection system.  When I did that, things unraveled further.  As is often the case, in my experience, when hooking up a laptop to a projector, my machines resolution was lowered to match that of the projector.  Normally, this wouldn't be much of a problem, but, for reasons I can't explain, I was using OpenOffice.org 2.4 on my Mac Book Pro, which requires X11 to run.  When the resolution changed, things in OO.org went crazy.  The right and bottom sides of the slides wouldn't fit on the screen, and the program decided to rearrange the items on the slide to fit in the viewable area.  Unable to correct that, I ended going back to the slide editing screen and manually selecting the slide to show from the list on the left, and showing the edit view for the slide show.
+</p>
+<p>Once I got those two issues in hand, more or less, I think the presentation went fairly well, but I certainly learned (or relearned some important things):  I will never break the cardinal rule again, and I'll not use OpenOffice.org 2.x on a Mac ever again. :P  It's probably unfair to blame OO.org for that failure, but its dependence on X11 (which is fixed in OO.org 3.0, currently in beta) caused me much grief that day, and NeoOffice provides a Mac-native port of OO.org that works MUCH better.  After the lunch session was over, I fixed my network issue and downloaded NeoOffice, verifying that both issues were indeed resolved in the room on the hardware I would be using that night, but then no one showed for the evening session, so I got no chance at redemption. :)
+</p>
+<p>As frustrating as the session was for me (and I'm sure the audience), it was a helpful tune up for JSFOne.  The feedback I received, which was much kinder than I expected, was extremely helpful as well.  Given the time I've had since that session and what I learned from it, I think all three of my sessions will be much smoother come September.  Speaking of that, my slides are due soon, so I had better finish those up.  I hope to see some of you at the conference.  Be sure to come up and say hi. :)
+</p>
+<p>[tags]jsfone[/tags]</p>

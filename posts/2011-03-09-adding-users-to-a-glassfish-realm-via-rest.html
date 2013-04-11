@@ -1,0 +1,105 @@
+---
+title: 'Adding Users to a GlassFish Realm via REST'
+author: 'Jason Lee'
+layout: blog-post
+date: 2011-3-9
+tags: [ GlassFish, GlassFish, REST, REST ]
+---
+<p>A user on the GlassFish forums recently asked how to create users in bulk.  The <code>asadmin</code> command <code>create-file-user</code> doesn't support passing the password as a parameter, which makes scripting difficult.  The REST interface, though, can help there, and it's really pretty simple.<!--more-->
+</p>
+<p>The REST endpoint of interest is  <a href=" http://localhost:4848/management/domain/configs/config/server-config/security-service/auth-realm/file/create-user">http://localhost:4848/management/domain/configs/config/server-config/security-service/auth-realm/file/create-user</a>, and here's a sample bash shell script to exercise it:
+</p>
+<p>[code]
+</p>
+<p>#!/bin/bash
+</p>
+<p>for USER in user1 user2 user3 user4 user5 user6 user7 user8 user9 user10 ; do
+</p>
+<p>    curl -X POST -H 'Accept: application/json' \
+</p>
+<p>        -d id=$USER -d AS_ADMIN_USERPASSWORD=$USER http://localhost:4848/management/domain/configs/config/server-config/security-service/auth-realm/file/create-user
+</p>
+<p>done
+</p>
+<p>[/code]
+</p>
+<p>Want to see what users exist in the realm?
+</p>
+<p>[code]
+</p>
+<p>$ curl -H 'Accept: application/json' http://localhost:4848/management/domain/configs/config/server-config/security-service/auth-realm/file/list-users
+</p>
+<p>{
+</p>
+<p>    "command": "list-file-users AdminCommand",
+</p>
+<p>    "exit_code": "SUCCESS",
+</p>
+<p>    "extraProperties": {"users": [
+</p>
+<p>        {
+</p>
+<p>            "name": "user10",
+</p>
+<p>            "groups": []
+</p>
+<p>        },
+</p>
+<p>        {
+</p>
+<p>            "name": "user9",
+</p>
+<p>            "groups": []
+</p>
+<p>        },
+</p>
+<p>// ...
+</p>
+<p>    ]},
+</p>
+<p>    "children": [
+</p>
+<p>        {
+</p>
+<p>            "message": "user10",
+</p>
+<p>            "properties": {}
+</p>
+<p>        },
+</p>
+<p>        {
+</p>
+<p>            "message": "user9",
+</p>
+<p>            "properties": {}
+</p>
+<p>        },
+</p>
+<p>// ...
+</p>
+<p>    ]
+</p>
+<p>}
+</p>
+<p>[/code]
+</p>
+<h2>Minor update</h2>
+<p>I forgot that the poster asked about deleting users.  Here's how you do that:
+</p>
+<p>[code]
+</p>
+<p>$ curl -H 'Accept: application/json' -X DELETE -d id=user1 $mgmt/configs/config/server-config/security-service/auth-realm/file/delete-user
+</p>
+<p>{
+</p>
+<p>    "command": "delete-file-user AdminCommand",
+</p>
+<p>    "exit_code": "SUCCESS"
+</p>
+<p>}
+</p>
+<p>[/code]
+</p>
+<p>It's important to note that only <code>FileRealm</code>-based realms support user management in this manner.  For other realm types, like <code>LdapRealm</code> and <code>JdbcRealm</code>, for example, the system administrator will need to use tools that are appropriate for the type of realm in question.
+</p>
+<p>If you have any questions, leave a message. : )</p>

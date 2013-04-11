@@ -1,0 +1,64 @@
+---
+title: 'Interested in Remote Method Calls via JS in JSF?'
+author: 'Jason Lee'
+layout: blog-post
+date: 2010-9-21
+tags: [ JavaServer Faces ]
+---
+<p>One of the nicest enhancements to the JSF specification that 2.0 brought was the inclusion of native Ajax support.  It is now extremely simple to Ajaxify a JSF application.  One thing that it lacks, though, is the ability to call arbitrary methods on JSF (or CDI?) Managed Beans.  There is a project that offers that kind of functionality, and it's been around for years:  <a href="http://directwebremoting.org/dwr">Direct Web Remoting</a>.  I've used this library at times and have found it to be really useful in certain situations.  That got me to wondering, Should this kind of functionality be a first class citizen of JSF?  To help us decide, let's take a quick look at how DWR works.<!--more-->
+</p>
+<p>Once you have DWR <a href="http://directwebremoting.org/dwr/server/annotations.html">configured to work</a> (warning: those docs might be slightly out of date, if memory serves me), you have to tell DWR what to expose.  I prefer the annotation-based approach (condensing, here, the DWR documentation, with some modifications):
+</p>
+<p>[java]
+</p>
+<p>@ManagedBean
+</p>
+<p>@SessionScoped
+</p>
+<p>@RemoteProxy
+</p>
+<p>public class RemoteFunctions {
+</p>
+<p>    @RemoteMethod
+</p>
+<p>    public int calculateFoo() {
+</p>
+<p>       return 42;
+</p>
+<p>    }
+</p>
+<p>    public String calculateBar() {
+</p>
+<p>        return "Life, the universe, and everything"
+</p>
+<p>    }
+</p>
+<p>}
+</p>
+<p>[/java]
+</p>
+<p>For a class like this, DWR will expose <code>RemoteFunctions.calculateFoo()</code>, but will not expose <code>RemoteFunctions.calculateBar()</code>.  With DWR, you must explicitly mark a method as remoteable (is that a word? : ) or you won't have access to it.
+</p>
+<p>On the client side, you would put something like this on your page:
+</p>
+<p>[js]
+</p>
+<script type="text/javascript" src="[WEBAPP]/dwr/interface/RemoteFunctions.js"/>
+<script type="text/javascript" src="[WEBAPP]/dwr/engine.js"/>
+<p>[/js]
+</p>
+<p>With those two declarations, you would then be able to call the JSF Managed Bean via:
+</p>
+<p>[js]
+</p>
+<p>RemoteFuctions.calculateFoo(function(str) { 
+</p>
+<p>    alert(str);
+</p>
+<p>});
+</p>
+<p>[/js]
+</p>
+<p>While this isn't a very exciting example, it should highlight the type of interaction DWR enables.  It offers a great deal more flexibility with things like RBAC and Object conversion (i.e., DTOs).
+</p>
+<p>I've found this to be a very nice library that neatly solves certain types of asynchronous issues.  The question I have, though, is, as stated above, "Should this be added to the JSF specification?"  Ed Burns, the JSF spec lead, is pretty vocal in his assertion (with which I tend to agree) that specs aren't primarily for innovating but for standardizing (which is not to say that it can't be done at all, of course, but great care must be taken with unproven techniques, technologies, etc).  His approach with JSF 2 was to look at the field of web application frameworks and see what works and what doesn't, and what might be a good addition to JSF.  With that approach in mind, is DWR-like functionality a good candidate for JSF 2.next?  Please feel free to comment below.  While I await responses, we'll see if I can hammer out a proof-of-concept in the Mojarra tree. :)</p>

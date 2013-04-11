@@ -1,0 +1,14 @@
+---
+title: 'JSFTemplating: Announcing beta support for Facelets templates'
+author: 'Jason Lee'
+layout: blog-post
+date: 2007-6-7
+tags: [ JSFTemplating ]
+---
+<p>The <a target="_blank" href="https://jsftemplating.dev.java.net/">JSFTemplating</a> team is proud to announce that a new, Facelets-compatible format has been added to JSFTemplating and has reached the beta stage.  Not all of the Facelets components are currently supported; those that are currently supported are <code>ui:component</code>, <code>ui:decorate</code>, <code>ui:include</code>, <code>ui:define</code>, and <code>ui:remove</code>, with the addition of a new <code>ui:event</code>, which brings the power of JSFTemplating's events to this new Facelets format.  In addition other JSFTemplating features are also available to Facelets pages, such as "pageSession" (i.e. <code>#{pageSession.variable}</code>) and ability to reference relative information like <code>$this{componentId}</code>.
+</p>
+<p>Please remember that this <i>is</i> beta software, but should be stable enough to support the basic Facelets functionality (note that we do not yet have support for Facelets tag handlers, etc).  Should you find a bug in this new format, please file an issue against it on the issue <a target="_blank" href="https://jsftemplating.dev.java.net/issues/enter_bug.cgi?issue_type=DEFECT&amp;subcomponent=Facelets+Format">tracker</a>.
+</p>
+<p>If you would like to see a demo of the functionality, we have deployed an <a target="_blank" href="http://www.jsftemplating.org/FaceletsDemo/">application</a> that shows the exact same templates as processed by Facelets itself as well as JSFTemplating, thus showing how well the implementations match up.  As the implementation matures, this application will be updated to show the current state.
+</p>
+<p>If you have questions or comments, please join the discussion on the <a target="_blank" href="https://jsftemplating.dev.java.net/servlets/ProjectMailingListList">dev mailing list</a>.  You might also be able to catch one of the developers on irc.freenode.net in #jsftemplating. </p>

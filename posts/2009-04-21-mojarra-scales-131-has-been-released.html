@@ -1,0 +1,40 @@
+---
+title: 'Mojarra Scales 1.3.1 Has Been Released'
+author: 'Jason Lee'
+layout: blog-post
+date: 2009-4-21
+tags: [ Components, Java, JavaServer Faces, jsf, kenai, mojarra, mojarra scales, Scales, Scales ]
+---
+<p>Early this morning, I published Mojarra Scales 1.3.1.  I've been remiss in making good updates where when I make release, so, rather than creating a new post for each release long after the fact, I'll try to being everyone up to the current state in just one.<!--more-->
+</p>
+<p>Much has changed over the past few weeks.  We started using Scales in the GlassFish Administration Console as part of UI update, which has been a great vehicle for driving change and finding bugs.  One of the most pressing changes, which should have been in since day 1, is the namespacing of the JavaScript code.  In 1.3 and earlier, all the JS functions and vars were in the global namespace.  As of 1.3.1, they are now in the <code>scales</code> namespace.  For the most part, this shouldn't affect most users, except, perhaps, for those <code>sc___panel</code>.  This namespace should go much farther in preventing naming collisions, which is is nice for all of us. :)
+</p>
+<p>In case I haven't mentioned this (it's really late here, and I honestly don't remember : ), Scales is <a target="_blank" href="http://download.java.net/maven/2/com/sun/mojarra/mojarra-scales/">now available</a> via the java.net Maven 2 repository.  The dependency element looks like this:
+</p>
+<p>[source lang="xml"]
+</p>
+        <dependency>
+            <groupId>com.sun.mojarra</groupId>
+            <artifactId>mojarra-scales</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+<p>[/source]
+</p>
+<p>Furthermore, all <a target="_blank" href="http://kenai.com/projects/scales/pages/Home">documentation</a> and <a target="_blank" href="http://kenai.com/jira/browse/SCALES">issue tracking</a> are now done on Kenai.com (which, I must say, has been really nice so far).
+</p>
+<p>One of the things I've disliked about the build for the longest time was its dependence on Java 5.  This was due to a very odd bug regarding the ant-run plugin, apt, and Java 6.  I had never been able to track it down, so I just noted the Java 5 requirement and moved on.  I finally got tired of it, and removed the need for apt, which was the annotations that produced the JSF metadata.  This change, while certainly fixing the build system, brought another important, and not wholly distasteful change:  the removal of JSP support.  The XML for custom <code>UIComponent</code>s in both <code>faces-config.xml</code> and <code>taglib.xml</code> is not that onerous (though I'll be happy to see it go in JSF 2 ; ).  The TLD (and <code>Tag</code> class) required for JSP, however, is truly awful.  Since fewer people are using JSP these days, and that it is all but deprecated in JSF 2, I decided not to reproduce all the JSP support metadata manually and just drop it altogether.  If you're using JSP, I know this may not be good news, but you really should be using Facelets anyway. :)
+</p>
+<p>I've also removed the dependency on JSFTemplating, which was being used for template-based Rendering.  While the feature was nice for me, I had personally run into issue with the dependency in applications (e.g., JSFTemplating was processing my views and not Facelets.  While that's fixable, it's a hurdle I'd rather not require).  Furthermore, many of the components were using Java-based <code>Renderer</code>s anyway, so I decide to convert the others and remove the extra dependency.  This allowed me to reorganize and clean up a lot of code.
+</p>
+<p>I also introduced the use of <a target="_blank" href="http://kenai.com/projects/facestester">FacesTester</a>, which I've mentioned here a <a target="_blank" href="/announcing-facestester/">couple</a> of <a target="_blank" href="/facestester-can-now-test-state-saving/">times</a>.  While FacesTester is still young and maturing, it has allowed me to test for certain classes of bugs, namely, I can easily insure that all components render correctly, and that <code>UIInput</code> components behave correctly on POST-back.  I also test that the state saving code is accurate and complete for each component.  In addition, I'm slowly expanding the suite of tests to cover as much of the library as possible, which is good for both libraries.  In addition, I've added the use of Cobertura to help track and analyze unit test coverage, and Hudson for <a target="_blank" href="http://hudson.steeplesoft.com/">continuous integration</a>.
+</p>
+<p>In addition to those "big ticket items," here's a quick run down of some other smaller changes, in no particular order:
+</p>
+<ul>
+<li>Bug fix in Layout rendering and handling</li>
+<li>Added a helper function (getLayout()) to acquire a handle to a specific LayoutManager instance</li>
+<li>Do not render LayoutUnits if rendered=false</li>
+<li>Added the <a target="_blank" href="http://alchim.sourceforge.net/yuicompressor-maven-plugin/compress-mojo.html">YUI compressor</a> to the build.  This saved up to 53% on some files</li>
+<li>Got rid of that ugly blue background on sc___layout</li>
+</ul>
+<p>I think that covers the highlights.  If there are any issues I've missed or features you'd like to see, please feel free to open an issue, and I'll get to it as quickly as I can. :)</p>

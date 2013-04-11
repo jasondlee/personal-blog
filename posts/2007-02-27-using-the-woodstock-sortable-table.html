@@ -1,0 +1,260 @@
+---
+title: 'Using the Woodstock Sortable Table'
+author: 'Jason Lee'
+layout: blog-post
+date: 2007-2-27
+tags: [ Java, JavaServer Faces, jsf, Woodstock, Woodstock ]
+---
+<p>At long last, the <a target="_blank" href="https://woodstock.dev.java.net">Woodstock component set</a> is finally here.  At IEC, we have been anxiously awaiting its release for quite some time now, as we've been hoping to make use of the sortable data table component it offers, which we have now done.  Having done it, allow me to show off the component a bit, as well as explain what I had to do make things work.  It's not hard, necessarily, just different enough to give one pause at first glance.<!--more-->
+</p>
+<h3>Table of Contents</h3>
+<ul>
+<li><a href="#setup">Setting up your environment</a></li>
+<li><a href="#thetable">The Table</a></li>
+<li><a href="#data">Displaying Data</a></li>
+<li><a href="#sorting">Sorting Data</a></li>
+<li><a href="#filtering">Filtering Data</a></li>
+<li><a href="#screenshot">What It Looks Like</a></li>
+<li><a href="#closing">Closing</a></li>
+</ul>
+<a name="setup"></a><h3>Setting up your environment</h3>
+<p>The first thing you will need to do, obviously, is add the required jars to your project:
+</p>
+<ul>
+<li>dataprovider.jar</li>
+<li>dojo-0.4.1-ajax.jar</li>
+<li>jsf-extensions-common-0.1.jar</li>
+<li>jsf-extensions-dynamic-faces-0.1.jar</li>
+<li>json.jar</li>
+<li>prototype-1.5.0.jar</li>
+<li>webui-jsf-suntheme.jar</li>
+<li>webui-jsf.jar</li>
+</ul>
+<p>To make things look pretty (and who doesn't), you will also need to configure the Woodstock theme servlet:
+</p>
+<p>[source lang="xml"]    <servlet>
+</p>
+        <servlet-name>ThemeServlet</servlet-name>
+        <servlet-class>com.sun.webui.theme.ThemeServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ThemeServlet</servlet-name>
+        <url-pattern>/theme/*</url-pattern>
+    </servlet-mapping>[/source]
+<strike>Note that if you are using Facelets (which all of these examples will be), you will need to take a look <a target="blank" href="https://woodstock.dev.java.net/issues/show_bug.cgi?id=3">this</a> Woodstock issue.  If you don't want to checkout the sources, apply the patch, etc, <a target="_blank" href="/wp-content/uploads/2007/02/woodstock.taglib.xml" title="Download Woodstock Facelets taglib">here</a> is the tag library file which you can place in <code>/META-INF/</code> in your class path.</strike>
+<p>With that done, you will need to declare the Woodstock namespace on your page:
+</p>
+<p>[source lang="xml"]<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+</p>
+<p>    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+</p>
+<html xmlns="http://www.w3.org/1999/xhtml"
+<p>    xmlns:ui="http://java.sun.com/jsf/facelets"
+</p>
+<p>    xmlns:h="http://java.sun.com/jsf/html"
+</p>
+<p>    xmlns:f="http://java.sun.com/jsf/core"
+</p>
+<p>    xmlns:risb="http://java.sun.com/jsf/ri/sandbox"
+</p>
+<p>    xmlns:w="http://www.sun.com/webui/webuijsf">[/source]
+</p>
+<p>Of course, XML being what it is, <code>xmlns:w="http://www.sun.com/webui/webuijsf"</code> will have to be repeated on each page that uses a Woodstock component.  I should also note that, while I <i>was</i> using "webuijsf" as the Woodstock examples suggested, I have started using "w" as it's much smaller (and have updated this entry to reflect that).  Having done that, you will now need to change your Facelets template/template client (or JSP header include, etc), changing <code><head></code> to <code><w:head></code>.  This is necessary, as this is how the various JavaScript and CSS files required by Woodstock are included.
+</p>
+<p>[source lang="xml"]<w:head>
+</p>
+    <w:link url="/style.css"/>
+</w:head>[/source]
+<p>Alternately, you can use the themeLinks component:
+</p>
+<p>[source lang="xml"]<head>
+</p>
+    <w:themeLinks />
+</head>[/source]
+<a name="thetable"></a><h3>The Table</h3>
+<p>We're now ready to put a table on the page.  Here's a snippet from the application in which I've implemented the table:
+</p>
+<p>[source lang="xml"]<w:table id="table" clearSortButton="true" sortPanelToggleButton="true" 
+</p>
+<p>    title="Pending Units" filterText="#{ewl.group.filter.filterText}" 
+</p>
+<p>    deselectMultipleButton="true" selectMultipleButton="false">
+</p>
+    <f___facet name="actionsTop">
+        <f___subview id="actionsTop">
+            <h___selectOneMenu id="selectedEngineer" value="#{ewl.selectedEngineer}">
+                <risb:selectItems value="#{ewl.engineers}" itemValue="#{item.name}" 
+<p>                    itemLabel="#{item.name}" />
+</p>
+            </h:selectOneMenu>
+            <w:button id="assignEngineerAction" text="Assign Engineer" 
+<p>                action="#{ewl.assignEngineer}" />
+</p>
+            <w:image icon="TABLE_ACTIONS_SEPARATOR" />
+            <w:button text="Refresh" action="#{ewl.refresh}" />
+        </f___subview>
+    </f___facet>
+    <f___facet name="filter">
+        <w:dropDown submitForm="true" id="filter" 
+<p>            action="#{ewl.group.filter.applyBasicFilter}"
+</p>
+<p>            items="#{ewl.group.filter.filterOptions}" 
+</p>
+<p>            onChange="if (filterMenuChanged(this) == false) return false"
+</p>
+<p>            selected="#{ewl.group.filter.basicFilter}" />
+</p>
+    </f___facet>
+    <f___facet name="filterPanel">
+        <f___subview id="filterPanel">
+            <h___inputHidden id="customFilter"
+<p>                value="#{ewl.group.filter.customFilter}" />
+</p>
+            <w:markup tag="div">
+<p>                Show only units for the engineer:
+</p>
+                <h___selectOneMenu id="engineerFilter">
+                    <risb:selectItems value="#{ewl.engineers}" itemValue="#{item.name}" 
+<p>                        itemLabel="#{item.name}" />
+</p>
+                </h:selectOneMenu>
+                <w:button action="#{ewl.group.filter.applyCustomFilter}"
+<p>                    onClick="applyCustomFilter('engineerFilter');" mini="true" text="OK">
+</p>
+                    <f___setPropertyActionListener value="assignedTo" 
+<p>                        target="#{ewl.group.filter.customFilterField}" />
+</p>
+                </w:button>
+            </w:markup>
+            <!-- snip! -->
+        </f___subview>
+    </f___facet>
+    <w:tableRowGroup id="pendingRowGroup" sourceData="#{ewl.group.provider}" 
+<p>        sourceVar="unit" selected="#{ewl.group.select.selectedState}" 
+</p>
+<p>        binding="#{ewl.group.tableRowGroup}">
+</p>
+        <w:tableColumn align="center" selectId="selectReferenceId">
+            <w:checkbox id="selectReferenceId" selected="#{ewl.group.select.selected}"
+<p>                selectedValue="#{ewl.group.select.selectedValue}" 
+</p>
+<p>                onClick="setTimeout('clicked()', 0);" />
+</p>
+        </w:tableColumn>
+        <w:tableColumn alignKey="assignedTo" headerText="Assigned To" 
+<p>            sort="assignedTo">
+</p>
+            <w:staticText text="#{unit.value.assignedTo}" />
+        </w:tableColumn>
+        <!-- snip! -->
+    </w:tableRowGroup>
+</w:table>[/source]
+<p>At first glance, that's quite overwhelming, and I'll be the first to admit that I don't understand everything that's going on there, but I'll try convey what I <i>do</i> understand.  :)  For good or bad, this sample does both sorting and filtering.  The properties on <code><w:table></code> should be fairly self-explanatory.  The <code>actionsTop</code> facet allows me to insert arbitrary markup into the area by that name in the table header.  In this example, it is through this area that I'm able to perform various actions against the selected rows in the table:  assign an engineer or refresh the table (i.e., clear any filters and reload the data the database).
+</p>
+<a name="data"></a><h3>Displaying Data</h3>
+<p>Finally, we come to the heart of the table, the <code>tableRowGroup</code>.  This is the point at which I had to smile and nod, and just do what I was told.  The TLD docs have this to say of this component:
+</p>
+<div class="quote">The tableRowGroup component is used to define attributes for XHTML elements, which are used to display rows of data. You can specify multiple w:tableRowGroup  tags to create groups of rows. Each group is visually separate from the other groups, but all rows of the table can be sorted and filtered at once, within their respective groups.</div>
+<p>Note that we bind this component to a property on the managed bean.  This is where things get really...interesting.  If you were to look at the example source code or the TLD docs for the <code>table</code>, you would find a number of helper classes, such as <code>Group</code>, <code>Filter</code>, and <code>Select</code>.  If you are like me, your first inclination is to skip using these classes, hoping to simplify things a bit.  Don't.  In fact, I took these classes and tweaked them a bit to make them more generally usable and bundled them in a utility library that we can use.  If you'd like to use these classes, the complete source can be downloaded <a target="_blank" href="/wp-content/uploads/2007/02/woodstock-utils.zip" title="Download Woodstock utilities source">here</a>.  You can browse the source to see what all <code>Group</code> does, but one of its most important functions is to create the <code>TableDataProvider</code> the component will need.  The easiest way I have found, which you will see in the class, is to wrap a <code>List</code> of my model objects in an <code>ObjectListDataProvider</code>:
+</p>
+<p>[source lang="java"]public Group(String sourceVar, Object[] array) {
+</p>
+<p>    this(sourceVar);
+</p>
+<p>    provider = new ObjectArrayDataProvider(array);
+</p>
+<p>}
+</p>
+<p>// Construct an instance using given List.
+</p>
+<p>public Group(String sourceVar, List list) {
+</p>
+<p>    this(sourceVar);
+</p>
+<p>    provider = new ObjectListDataProvider(list);
+</p>
+<p>}[/source]
+</p>
+<p>Now that we've bound the data to the <code>tableRowGroup</code>, we need to display the data on the page.  In the example above, I have two columns:  one has a checkbox for selecting a row, and the other shows the assigned engineer.  Again, this is somewhat of a black box for me, but as best as I can make out, the "select" column has a selection ID that will be used by the <code>table</code>'s JavaScript to manage selected rows.  Note the the value of the <code>selectId</code> matches the id of the <code>checkbox</code> component.  The <code>checkbox</code> itself has few properties to note.  The first is the <code>selected</code> and <code>selectedValue</code> attributes, which are bound to methods on the <code>Select</code> object (owned by the <code>Group</code> object) that determine whether or not a given row has been selected.  The third property is the <code>onClick</code> (note the case) property.  The JavaScript referenced here is used to update the table to reflect the selected of the row associated with the checkbox (From the TLD Docs: "The JavaScript setTimeout  function is used to ensure checkboxes are selected immediately, instead of waiting for the JavaScript function to complete."):
+</p>
+<p>[source lang="javascript"]var tableId = "pendingUnits:table";
+</p>
+<p>function clicked () {
+</p>
+<p>    document.getElementById(tableId).initAllRows();
+</p>
+<p>}[/source]
+</p>
+<a name="sorting"></a><h3>Sorting Data</h3>
+<p>The next column in the table is a sortable column.  While most of the markup here is straightforward, note the <code>alignKey</code> and <code>sort</code> properties.  These columns indicate the field on which to sort when the user selects that column.  I am uncertain as to whether or not they have to be the same, but I've always seen them that way, so that's the pattern I've followed.  It is also probably important to point out how data is retrieved from the <code>DataProvider</code>.  In the <code>staticText</code> component, you'll see the value is set to <code>#{unit.value.assignedTo}</code>.  The variable <code>unit</code> is the <code>sourceVar</code> defined in the <code>table</code> setup, and <code>value</code> is a method on the <code>DataProvider</code> that returns (in our case) the object for the given row.
+</p>
+<a name="filtering"></a><h3>Filtering Data</h3>
+<p>Filtering is also enabled on our table.  The <code>filter</code> facet is where I am able to specify the filters I'd like to be able to apply to the table.  Due to a JavaScript issue I have yet to track down (which may or may not be related to my nascent Facelets support), my implementation here is a bit different from the Woodstock examples.  Here is the source for <code>filterMenuChanged</code>:
+</p>
+<p>[source lang="javascript"]function filterMenuChanged(cb) {
+</p>
+<p>    if (cb.value == "_customFilter") {
+</p>
+<p>        var ret = document.getElementById(tableId).filterMenuChanged();
+</p>
+<p>        return ret;
+</p>
+<p>    } else if (cb.value == "FILTER_SHOW_ALL") {
+</p>
+<p>        window.location.href=window.location.href;
+</p>
+<p>    }
+</p>
+<p>}[/source]
+</p>
+<p>It basically checks for the special option element Woodstock adds to determine if a custom filter is being requested (which causes the filter panel to be displayed), or if the "show all" option was selected, which will clear the filter.  Note that this JavaScript is not optimal and has changed a fair amount as my understanding of the component has grown, and will likely do so again.  Ideally, I'll solve the JavaScript error that prompted this so that this can go away.
+</p>
+<p>The next item of interest is the <code>filterPanel</code> facet, which is display when the user selects the "Custom Filter" option.  The markup here pretty simple, in that all I have are a number of custom filters (though I've shown only one) that are nothing more than a label, an appropriate <code>UIInput</code> component, and a button.  The only thing really noteworthy is the JavaScript used to apply the filter.  Via EL, we're taking the value entered or selected by the user, and setting that on a property on the <code>Filter</code> class (which I added to the Sun-provided class to make things more reusable).  Since every field on the form will get set on the managed bean referenced via its EL, we can't have them all pointing at the same property.  To solve this problem, I use some simple JavaScript to copy the value in which I'm interested to a hidden field, which is the only one assigned to the desired property.  I also use a <code><f___setPropertyActionListener></code> to set which field should be filtered:
+</p>
+<p>[source lang="xhtml"]<w:button action="#{ewl.group.filter.applyCustomFilter}" mini="true" 
+</p>
+<p>    text="OK" onClick="applyCustomFilter('timePending');">
+</p>
+    <f___setPropertyActionListener value="timePendingClass" 
+<p>        target="#{ewl.group.filter.customFilterField}"/>
+</p>
+</w:button>[/source]
+<p>The source for <code>applyCustomFilter</code> is
+</p>
+<p>[source lang="javascript"]function applyCustomFilter(source) {
+</p>
+<p>    document.getElementById('pendingUnits:table:filterPanel:customFilter').value = 
+</p>
+<p>        document.getElementById('pendingUnits:table:filterPanel:' + source).value;
+</p>
+<p>}[/source]
+</p>
+<p>When the form submits, the appropriate properties on the <code>Filter</code> object are set, and the filters are applied to the <code>DataProvider</code>:
+</p>
+<p>[source lang="java"]public void applyCustomFilter() {
+</p>
+<p>    basicFilter = Table.CUSTOM_FILTER_APPLIED; // Set filter menu option.
+</p>
+<p>    filterText = "Custom - " + customFilter;
+</p>
+<p>    // Filter rows that do not match custom filter.
+</p>
+<p>    CompareFilterCriteria criteria = new CompareFilterCriteria(
+</p>
+<p>            group.getProvider().getFieldKey(customFilterField), customFilter);
+</p>
+<p>    // Note: TableRowGroup ensures pagination is reset per UI guidelines.
+</p>
+<p>    group.getTableRowGroup().setFilterCriteria(new FilterCriteria[] {criteria});
+</p>
+<p>}[/source]
+</p>
+<a name="#screenshot"></a><h3>What It Looks Like</h3>
+<p>Here is a screen shot from the application from which this table was taken.  It shows the rows sorted by the "Assigned To" field, a row is selected, and the custom filter panel is displayed:
+</p>
+<a href='http://blogs.steeplesoft.com/wp-content/uploads/2007/02/tablescreenshot.png' title='Table Screen Shot'><img width="710px" src='http://blogs.steeplesoft.com/wp-content/uploads/2007/02/tablescreenshot.png' alt='Table Screen Shot' /></a>
+<a name="#closing"></a><h3>Closing</h3>
+<p>And that's "all" there is to it.  I've worked with (and on) a fair number of JSF components, but this is likely the coolest with which I've had personal experience.  The "coolness" comes at a cost, though, in that the component can be difficult to grasp at first.  Hopefully, this "little" will flatten the learning curve just a little bit.  And while you're playing with the table, be sure to <a target="_blank" href="https://woodstock.dev.java.net/Preview.htm">check out</a> some of the other Woodstock components.  They did a great job.
+</p>
+<p>As a side note, many thanks to <a target="_blank" href="http://blogs.sun.com/paulsen/">Ken Paulsen</a> (of <a href="https://jsftemplating.dev.java.net" target="_blank">JSFTemplating</a> and <a target="_blank" href="https://glassfish.dev.java.net">Glassfish admin console</a> fame) for answering all of my questions, regardless of how silly they seemed.  My employer, IEC (namely, my boss Mitch, and not just because he reads this ;) ) deserves many thanks as well for giving me the time to add Facelets support, without which we couldn't be using Woodstock.</p>

@@ -1,0 +1,240 @@
+---
+title: 'Testing Android Applications with Maven, Android-x86 and VirtualBox'
+author: 'Jason Lee'
+layout: blog-post
+date: 2011-11-22
+tags: [ android, Android, maven, Maven2, Testing, VirtualBox ]
+---
+<a href="http://cubtracker.com" style="float:right; padding-left: 10px;"><img src="http://cubtracker.com/wp-content/uploads/2011/04/cubtracker_logo_220_white.png" alt="Cub Tracker" width="140px"/></a>For a few months now, I've been working on a small application called <a href="http://cubtracker.com">Cub Tracker</a> which is designed to help Cub Scout den and pack leaders track the progress of the scouts assigned them.  I'm a big fan of testing, so I've done my best to follow TDD as I've worked on the app.  Early on, it became clear that I needed a better way to test, as the official Android app is slow and unreliable at times.  Via Twitter, I was turned on to <a href="http://www.android-x86.org/">Android-x86</a> and after a couple nights of hacking, I think I have a usable installation of Android-x86 under <a href="http://www.virtualbox.org/">VirtualBox</a> that has sped up my testing considerably.  In this article, I'll show you how I did it.<!--more-->
+<p>First up, let me clarify something, namely, my claim that the Android emulator is unreliable.  Unless I'm just really unlucky or doing something really wrong, sometimes the emulator comes up, for lack of a better term, in a funky state.  I can unlock the screen, interact with the "device" etc., but adb doesn't see the emulator, so I can't deploy my app (e.g., adb logcat sits waiting for the device to come online forever).  Usually, killing the zombie emulator and starting a new one solves the problem, but that type of manual interaction doesn't work under CI.  With what little experience I've had with Android-x86 and VirtualBox, that doesn't seem to be a problem anymore.  The device starts up quickly and is almost immediately ready to use.  
+</p>
+<p>So how does one set up a VM for this?  While there are probably a myriad of ways, I'll give you two.  You can follow these <a href="http://brunocosta.com/blog/2011/11/02/speeding-up-android-development-with-android-x86-and-virtualbox/">instructions</a>, or you can download <a href="/wp-content/uploads/2011/11/Android.ova" title="Android VirtualBox Appliance">this VirtualBox appliance</a> I exported.  The appliance has the lock screen disabled, and the ethernet configuration set to a static IP, so, assuming the IP works on your network, you can just import the appliance and start using it.
+</p>
+<p>For those that want to build your own VM, once you've finished the instructions linked above, I would suggest setting a static IP (Menu -> Settings -> Ethernet Configuration) and disabling the lock screen (Menu -> Settings -> Location & security -> Set up screen lock).
+</p>
+<em><strong>A quick note on navigating in the emulator</strong></em>:  To go back, you press ESC.  To emulate menu keypresses, etc, click on the clock in the status bar.  After a moment or two, it will tell you that "you can touch the menu bar to do the function of menu now".  Once that's displayed, click on the status bar will go Home, and click and swiping right will emulate a Menu press.
+<p>So now, one way or another, you have your VM setup, but how do you integrate that with your tests?  While Maven's XML doesn't make it easy, judicious as of antrun saves the day.  Here's a sample POM:
+</p>
+<p>[xml]
+</p>
+<p>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+</p>
+<p>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+</p>
+<p>         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
+</p>
+<p>    &lt;parent&gt;
+</p>
+<p>        &lt;groupId&gt;com.example.application&lt;/groupId&gt;
+</p>
+<p>        &lt;artifactId&gt;application-parent&lt;/artifactId&gt;
+</p>
+<p>        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+</p>
+<p>        &lt;relativePath&gt;../pom.xml&lt;/relativePath&gt;
+</p>
+<p>    &lt;/parent&gt;
+</p>
+<p>    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+</p>
+<p>    &lt;artifactId&gt;test-suite&lt;/artifactId&gt;
+</p>
+<p>    &lt;packaging&gt;apk&lt;/packaging&gt;
+</p>
+<p>    &lt;name&gt;My Test Suite&lt;/name&gt;
+</p>
+<p>    &lt;dependencies&gt;
+</p>
+<p>        &lt;dependency&gt;
+</p>
+<p>            &lt;groupId&gt;com.google.android&lt;/groupId&gt;
+</p>
+<p>            &lt;artifactId&gt;android&lt;/artifactId&gt;
+</p>
+<p>            &lt;scope&gt;provided&lt;/scope&gt;
+</p>
+<p>        &lt;/dependency&gt;
+</p>
+<p>        &lt;dependency&gt;
+</p>
+<p>            &lt;groupId&gt;com.google.android&lt;/groupId&gt;
+</p>
+<p>            &lt;artifactId&gt;android-test&lt;/artifactId&gt;
+</p>
+<p>            &lt;scope&gt;provided&lt;/scope&gt;
+</p>
+<p>        &lt;/dependency&gt;
+</p>
+<p>        &lt;dependency&gt;
+</p>
+<p>            &lt;groupId&gt;${project.groupId}&lt;/groupId&gt;
+</p>
+<p>            &lt;artifactId&gt;application&lt;/artifactId&gt;
+</p>
+<p>            &lt;version&gt;${project.version}&lt;/version&gt;
+</p>
+<p>            &lt;type&gt;apk&lt;/type&gt;
+</p>
+<p>        &lt;/dependency&gt;
+</p>
+<p>        &lt;dependency&gt;
+</p>
+<p>            &lt;groupId&gt;${project.groupId}&lt;/groupId&gt;
+</p>
+<p>            &lt;artifactId&gt;application&lt;/artifactId&gt;
+</p>
+<p>            &lt;version&gt;${project.version}&lt;/version&gt;
+</p>
+<p>            &lt;scope&gt;provided&lt;/scope&gt;
+</p>
+<p>            &lt;type&gt;jar&lt;/type&gt;
+</p>
+<p>        &lt;/dependency&gt;
+</p>
+<p>    &lt;/dependencies&gt;
+</p>
+<p>    &lt;build&gt;
+</p>
+<p>        &lt;plugins&gt;
+</p>
+<p>            &lt;plugin&gt;
+</p>
+<p>                &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;
+</p>
+<p>                &lt;version&gt;1.7&lt;/version&gt;
+</p>
+<p>                &lt;executions&gt;
+</p>
+<p>                    &lt;execution&gt;
+</p>
+<p>                        &lt;id&gt;startvb&lt;/id&gt;
+</p>
+<p>                        &lt;phase&gt;prepare-package&lt;/phase&gt;
+</p>
+<p>                        &lt;configuration&gt;
+</p>
+<p>                            &lt;target&gt;
+</p>
+<p>                                &lt;echo&gt;***** Starting VirtualBox&lt;/echo&gt;
+</p>
+<p>                                &lt;exec executable=&quot;adb&quot;&gt;
+</p>
+<p>                                    &lt;arg value=&quot;kill-server&quot;/&gt;
+</p>
+<p>                                &lt;/exec&gt;
+</p>
+<p>                                &lt;exec executable=&quot;VBoxManage&quot;&gt;
+</p>
+<p>                                    &lt;arg value=&quot;startvm&quot;/&gt;
+</p>
+<p>                                    &lt;arg value=&quot;Android&quot;/&gt;
+</p>
+<p>                                &lt;/exec&gt;
+</p>
+<p>                                &lt;waitfor maxwait=&quot;3&quot; maxwaitunit=&quot;minute&quot;&gt;
+</p>
+<p>                                    &lt;and&gt;
+</p>
+<p>                                        &lt;socket server=&quot;192.168.1.200&quot; port=&quot;5555&quot;/&gt;
+</p>
+<p>                                    &lt;/and&gt;
+</p>
+<p>                                &lt;/waitfor&gt;
+</p>
+<p>                                &lt;exec executable=&quot;adb&quot;&gt;
+</p>
+<p>                                    &lt;arg value=&quot;connect&quot;/&gt;
+</p>
+<p>                                    &lt;arg value=&quot;192.168.1.200&quot;/&gt;
+</p>
+<p>                                &lt;/exec&gt;
+</p>
+<p>                            &lt;/target&gt;
+</p>
+<p>                        &lt;/configuration&gt;
+</p>
+<p>                        &lt;goals&gt;
+</p>
+<p>                            &lt;goal&gt;run&lt;/goal&gt;
+</p>
+<p>                        &lt;/goals&gt;
+</p>
+<p>                    &lt;/execution&gt;
+</p>
+<p>                    &lt;execution&gt;
+</p>
+<p>                        &lt;id&gt;stopvb&lt;/id&gt;
+</p>
+<p>                        &lt;phase&gt;verify&lt;/phase&gt;
+</p>
+<p>                        &lt;configuration&gt;
+</p>
+<p>                            &lt;target&gt;
+</p>
+<p>                                &lt;echo&gt;***** Stopping VirtualBox&lt;/echo&gt;
+</p>
+<p>                                &lt;exec executable=&quot;VBoxManage&quot;&gt;
+</p>
+<p>                                    &lt;arg value=&quot;controlvm&quot;/&gt;
+</p>
+<p>                                    &lt;arg value=&quot;Android&quot;/&gt;
+</p>
+<p>                                    &lt;arg value=&quot;poweroff&quot;/&gt;
+</p>
+<p>                                &lt;/exec&gt;
+</p>
+<p>                            &lt;/target&gt;
+</p>
+<p>                        &lt;/configuration&gt;
+</p>
+<p>                        &lt;goals&gt;
+</p>
+<p>                            &lt;goal&gt;run&lt;/goal&gt;
+</p>
+<p>                        &lt;/goals&gt;
+</p>
+<p>                    &lt;/execution&gt;
+</p>
+<p>                &lt;/executions&gt;
+</p>
+<p>            &lt;/plugin&gt;
+</p>
+<p>            &lt;plugin&gt;
+</p>
+<p>                &lt;groupId&gt;com.jayway.maven.plugins.android.generation2&lt;/groupId&gt;
+</p>
+<p>                &lt;artifactId&gt;android-maven-plugin&lt;/artifactId&gt;
+</p>
+<p>                &lt;extensions&gt;true&lt;/extensions&gt;
+</p>
+<p>                &lt;configuration&gt;
+</p>
+<p>                    &lt;sdk&gt;
+</p>
+<p>                        &lt;platform&gt;8&lt;/platform&gt;
+</p>
+<p>                    &lt;/sdk&gt;
+</p>
+<p>                    &lt;undeployBeforeDeploy&gt;true&lt;/undeployBeforeDeploy&gt;
+</p>
+<p>                    &lt;enableIntegrationTest&gt;true&lt;/enableIntegrationTest&gt;
+</p>
+<p>                &lt;/configuration&gt;
+</p>
+<p>            &lt;/plugin&gt;
+</p>
+<p>        &lt;/plugins&gt;
+</p>
+<p>    &lt;/build&gt;
+</p>
+<p>&lt;/project&gt;
+</p>
+<p>[/xml]
+</p>
+<p>Scroll down to about line 40 or so.  Here, there's an antrun execution block that starts the VirtualBox VM.  In my case, it's called "Android", so you'll want to change that as appropriate.  Ideally, that would be a property so that you can target different VMs for different Android versions.  I'll leave that as an exercise for the reader. : )  First up, we kill the adb server.  This might be overkill (no pun intended. Honest! : ), but I've had issues where adb was certain it was already connected to the device in situations where I run the tests over and over.  Next, we start the VM, and then we wait for it to listen on port 5555.  The startvm command finishes pretty quickly, but that doesn't mean we're ready to deploy our test app yet, so wait.  Finally, we tell adb to connect to our VM.  From there, it's the standard Maven Android Plugin.After our tests are done, we tell VirtualBox to shut down our VM.
+</p>
+<p>Sharp-eyed readers have probably noted a dependency listed twice, that of the application to test.  That oddity is, as best as I can tell, to allow the test application to compile (via the Jar dependency) and to tell the Maven plugin what application archive to deploy (via the apk dependency) so that the tests have something to run against.
+</p>
+<p>The setup isn't perfect, sadly.  For example, if a test fails, the VM isn't torn down (it's likely just a poor choice of Maven phase), and, ideally, those hard-coded values would be properties.  It does, however, seem to work fairly well for manual runs, so while there may still be lingering issues preventing unattended runs under, say, <a href="http://hudson-ci.org">Hudson</a>, this feels like a good step in the right direction.  The best part is that this can easily be imported into <a href="http://netbeans.org">NetBeans</a> or <a href="http://www.jetbrains.com/idea/">IDEA</a> thanks to their great Maven support (read as: Eclipse is no longer required. : )
+</p>
+<p>Give that a whirl and let me know what you think.  If you find a way to improve it, I'd love to hear about!</p>

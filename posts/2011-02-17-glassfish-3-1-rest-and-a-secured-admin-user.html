@@ -1,0 +1,185 @@
+---
+title: 'GlassFish 3.1, REST, and a Secured Admin User'
+author: 'Jason Lee'
+layout: blog-post
+date: 2011-2-17
+tags: [ GlassFish, GlassFish, REST, REST ]
+---
+<p>In my last post on using the GlassFish REST interface, a commenter asked about how GlassFish handles security.  So far, all of my examples have been using GlassFish 3.1 out of the box, which doesn't require authentication (as a convenience for developers, as well as system admins evaluating the server).  In production, of course, the server will be secured, which means our client code will have to be modified.  In this installment, we'll see how that might be done in Java.<!--more-->
+</p>
+<p>Let's start with a very simple class that deploys an application to the server:
+</p>
+<p>[java]
+</p>
+<p>public class AuthExample {
+</p>
+<p>    protected Client client;
+</p>
+<p>    public AuthExample() {
+</p>
+<p>        client = Client.create();
+</p>
+<p>    }
+</p>
+<p>    public boolean deployApp(String fileName) throws URISyntaxException {
+</p>
+<p>        FormDataMultiPart form = new FormDataMultiPart();
+</p>
+<p>        form.getBodyParts().add(new FileDataBodyPart("id", new File(fileName)));
+</p>
+<p>        form.field("name", fileName.substring(0, fileName.indexOf(".")), MediaType.TEXT_PLAIN_TYPE);
+</p>
+<p>        form.field("contextroot", fileName.substring(0, fileName.indexOf(".")), MediaType.TEXT_PLAIN_TYPE);
+</p>
+<p>        form.field("force", "true", MediaType.TEXT_PLAIN_TYPE);
+</p>
+<p>        ClientResponse response = client.resource("http://localhost:4848/management/domain/applications/application/")
+</p>
+<p>                .type(MediaType.MULTIPART_FORM_DATA)
+</p>
+<p>                .accept(MediaType.APPLICATION_JSON)
+</p>
+<p>                .post(ClientResponse.class, form);
+</p>
+<p>        return response.getStatus() == 200;
+</p>
+<p>    }
+</p>
+<p>    public static void main(String... args) {
+</p>
+<p>        try {
+</p>
+<p>            AuthExample example = new AuthExample();
+</p>
+<p>            if (example.deployApp(args[0])) {
+</p>
+<p>                System.out.println("Success");
+</p>
+<p>            } else {
+</p>
+<p>                System.out.println("Failure");
+</p>
+<p>            }
+</p>
+<p>        } catch (Exception e) {
+</p>
+<p>            e.printStackTrace();
+</p>
+<p>        }
+</p>
+<p>    }
+</p>
+<p>}
+</p>
+<p>[/java]
+</p>
+<p>If you execute this, passing a WAR as the first and only parameter, you should see "Success" printed to the screen.  Now that we've verified this works, let's secure the server:
+</p>
+<p>[source]
+</p>
+<p>$ asadmin change-admin-password
+</p>
+<p>Enter admin user name [default: admin]> 
+</p>
+<p>Enter admin passwordthe > 
+</p>
+<p>Enter new admin password> 
+</p>
+<p>Enter new admin password again> 
+</p>
+<p>Command change-admin-password executed successfully.
+</p>
+<p>[/source]
+</p>
+<p>If you rerun the class now, you should see "Failure" printed to the screen, which is what we'd expect to see.  To fix this, let's change the constructor for our test app:
+</p>
+<p>[java]
+</p>
+<p>    public AuthExample() {
+</p>
+<p>        client = Client.create();
+</p>
+<p>        client.addFilter(new HTTPBasicAuthFilter("admin", "admin"));
+</p>
+<p>    }
+</p>
+<p>[/java]
+</p>
+<p>Change the password, of course, to what you entered, and rerun the app.  You should now see "Success".
+</p>
+<p>Pretty simple.  Ultimately, this has more to do with the Jersey Client than with GlassFish, but is still something one will need to know if using these two pieces of software together.
+</p>
+<p>For the Maven people in the audience, here's the POM I used to build this:
+</p>
+<p>[xml]
+</p>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+<p>    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+</p>
+<p>    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+</p>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.steeplesoft</groupId>
+    <artifactId>jersey-plus-auth</artifactId>
+    <packaging>jar</packaging>
+    <version>0.1-SNAPSHOT</version>
+    <name>Jersey plus Authentication Example</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>1.5</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-multipart</artifactId>
+            <version>1.5</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>run</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                                <configuration>
+                                    <mainClass>com.steeeplesoft.jersey.examples.auth.AuthExample</mainClass>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
+<p>[/xml]
+</p>
+<p>I executed the project with this command line:
+</p>
+<p>[bash]mvn -Prun -Dexec.args="test.war" package[/bash]
+</p>
+<p>Enjoy!</p>

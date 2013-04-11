@@ -1,0 +1,557 @@
+---
+title: 'Embedding JSF with Winstone'
+author: 'Jason Lee'
+layout: blog-post
+date: 2006-5-8
+tags: [ JavaServer Faces ]
+---
+<p>Sometimes, when developing a JSF application, it would be nice not to have to wait for your favorite container to start up.  That's especially true if your container is a full JEE stack like Glassfish or JBoss.  Likewise, there are times when you might need to embed a web application in another, say some server process or desktop application.  While there are a number of options available, I'd like to demonstrate how to embed a simple JSF application using the <a href="http://winstone.sourceforge.net/">Winstone Servlet Container</a>.  To help demonstrate how this is done, we'll use a well know sample application:  <a href="http://java.sun.com/developer/technicalArticles/GUI/JavaServerFaces/">Duke's guessNumber game</a>, and, to make things even more interesting, we'll convert the application to use Facelets (mostly because I love Facelets, but partly because I didn't care to figure out how to make Winstone compile JSPs ;) ).
+</p>
+<!--more-->
+<p>First, let's take a look at the web app itself.  To convert the application to a Facelets app, we'll have to rename the JSPs, then make them conform to XHTML and Facelets specifications.  First off, a really easy one:  index.html.  This page simply redirects us to guessNumber.xhtml.  I could probably have done this in web.xml, but it was in the original app, so we'll just run with it like that.  
+</p>
+<p>index.html:
+</p>
+<p>[source lang="html"]<html>
+</p>
+    <head>
+        <META HTTP-EQUIV=Refresh CONTENT="0; URL=greeting.jsf">
+    </head>
+<body>
+</body>
+</html>[/source]
+<p>Pretty simple and boring.  Let's now take a look at our template file (for a fuller introduction to using Facelets, please see Rick Hightower's excellent <a target="_newwindow" href="http://www-128.ibm.com/developerworks/java/library/j-facelets/index.html">article</a>, as well as Jim Hazen's <a target="_newwindow" href="http://www.jroller.com/page/CptnKirk?entry=getting_started_with_facelets_part">Getting Started</a> article):
+</p>
+<p>layout.xhtml:
+</p>
+<p>[source lang="xml"]<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+</p>
+<p>    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+</p>
+<html xmlns="http://www.w3.org/1999/xhtml"
+<p>    xmlns:ui="http://java.sun.com/jsf/facelets"
+</p>
+<p>    xmlns:h="http://java.sun.com/jsf/html"
+</p>
+<p>    xmlns:f="http://java.sun.com/jsf/core">
+</p>
+<head>
+    <title><ui:insert name="title">Default title</ui:insert></title>
+    <link rel="stylesheet" type="text/css" href="./css/main.css"/>
+</head>
+<body>
+    <div style="float: left">
+        <h___graphicImage id="waveImg" url="/wave.med.gif" />
+    </div>
+    <div>
+        <ui:insert name="content"></ui:insert>
+    </div>
+</body>
+</html>[/source]
+<p>Nothing real exciting there either.  Next we have greeting.xhtml and response.xhtml.
+</p>
+<p>greeting.xhtml:
+</p>
+<p>[source lang="xml"]<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+</p>
+<p>    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+</p>
+<html xmlns="http://www.w3.org/1999/xhtml"
+<p>    xmlns:ui="http://java.sun.com/jsf/facelets"
+</p>
+<p>    xmlns:h="http://java.sun.com/jsf/html"
+</p>
+<p>    xmlns:f="http://java.sun.com/jsf/core">
+</p>
+<ui:composition template="layout.xhtml">
+    <ui:define name="title">Number Guess</ui:define>
+    <ui:define name="content">
+        <h___form id="helloForm" >
+            <h2>Hi. My name is Duke.  I'm thinking of a number from 
+            <h___outputText value="#{UserNumberBean.minimum}"/> to
+            <h___outputText value="#{UserNumberBean.maximum}"/>.  Can you guess it?</h2>
+            <h___inputText id="userNo" value="#{UserNumberBean.userNumber}" validator="#{UserNumberBean.validate}"/>          
+            <h___commandButton id="submit" action="success" value="Submit" />
+            <br />
+            <h___message style="color: red; font-family: 'New Century Schoolbook', serif; font-style: oblique; text-decoration: overline" id="errors1" for="userNo"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>[/source]
+<p>response.xhtml:
+</p>
+<p>[source lang="xml"]<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+</p>
+<p>    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+</p>
+<html xmlns="http://www.w3.org/1999/xhtml"
+<p>    xmlns:ui="http://java.sun.com/jsf/facelets"
+</p>
+<p>    xmlns:h="http://java.sun.com/jsf/html"
+</p>
+<p>    xmlns:f="http://java.sun.com/jsf/core">
+</p>
+<ui:composition template="layout.xhtml">
+    <ui:define name="title">Number Guess</ui:define>
+    <ui:define name="content">
+        <h___form id="responseForm" >
+            <h2><h___outputText id="result" value="#{UserNumberBean.response}"/></h2>   
+            <h___commandButton id="back" value="Back" action="success"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>[/source]
+<p>Having fixed up our views to work using Facelets, let's now see exactly how we do the embedding.  That magic is done in the following class.
+</p>
+<p>WinstoneServer.java:
+</p>
+<p>[source lang="java"]package embed;
+</p>
+<p>import java.net.URL;
+</p>
+<p>import java.util.HashMap;
+</p>
+<p>import java.util.Map;
+</p>
+<p>import winstone.Launcher;
+</p>
+<p>public class WinstoneServer {
+</p>
+<p>    Launcher winstone;
+</p>
+<p>    public void startup() {
+</p>
+<p>        Map args = new HashMap();
+</p>
+<p>        try {
+</p>
+<p>            URL webdir = getClass().getResource("/WebContent");
+</p>
+<p>            args.put("webroot", webdir.getPath());
+</p>
+<p>            System.out.println(args.toString());
+</p>
+<p>            Launcher.initLogger(args);
+</p>
+<p>            winstone = new Launcher(args); // spawns threads, so your application doesn't block
+</p>
+<p>        } catch (Exception e) {
+</p>
+<p>            e.printStackTrace();
+</p>
+<p>        }
+</p>
+<p>    }
+</p>
+<p>    public void shutdown() {
+</p>
+<p>        winstone.shutdown(); 
+</p>
+<p>    }
+</p>
+<p>    public static void main(String args[]) {
+</p>
+<p>        WinstoneServer server = new WinstoneServer();
+</p>
+<p>        server.startup();
+</p>
+<p>    }
+</p>
+<p>}[/source]
+</p>
+<p>That code is taken pretty much verbatim from the Winstone <a target="_newwindow" href="http://winstone.sourceforge.net/#embedding">documentation</a>.  I split it out into methods on the class to make it prettier, but that's about it.  It's an extremely simple process.  Of course, there are many more options available, all of which are documented on Winstone's site.  My goal here isn't to be a Winstone tutorial, so we'll just use the minimum configuration, which is where to find the web root.
+</p>
+<p>The web root probably needs a word here.  What I've done in my example, which you'll see in the <a href="http://blogs.steeplesoft.com/wp-content/uploads/2006/05/EmbedJsf-src.zip">archive</a> attached to this article, is to put the web root directory in the source directory.  By doing it this way, when Eclipse compiles my project it moves my web root to the build directory, making it simple to load it from the classpath.  There are at least two other ways to accomplish the task:  hard coding a path on the filesystem, and archiving the web root to a .war and telling Winstone to use the war.  Each has its pros and cons.  Your choice will depend on your intended usage.  Ideally, for a packaged and deployed application, it would be nice to be able to jar the web root up with the application, but I have not had any luck getting it to load the web app from inside a jar.  Given the limited scope of this demonstration, though, I opted not to pursue that very far.
+</p>
+<p>Now, the UserNumberBean class, the Faces-managed bean that is the actual heart of the application.  I've included the full source code here for a couple reasons:  the upgrade to JSF 1.2 necessitated some source changes, and there was apparently some sort of error in the inclusion of the code in the article linked above resulting in the case of some identifiers being mangled somewhat.
+</p>
+<p>UserNumberBean.java:
+</p>
+<p>[source lang="java"]package guessNumber;
+</p>
+<p>import java.util.Random;
+</p>
+<p>import javax.faces.component.UIComponent;
+</p>
+<p>import javax.faces.context.FacesContext;
+</p>
+<p>import javax.faces.validator.LongRangeValidator;
+</p>
+<p>import javax.faces.validator.ValidatorException;
+</p>
+<p>import com.sun.faces.util.MessageFactory;
+</p>
+<p>public class UserNumberBean {
+</p>
+<p>    protected int maximum = 0;
+</p>
+<p>    protected boolean maximumSet = false;
+</p>
+<p>    protected String[] status = null;
+</p>
+<p>    protected int minimum = 0;
+</p>
+<p>    protected boolean minimumSet = false;
+</p>
+<p>    protected Integer userNumber = null;
+</p>
+<p>    protected Integer randomInt = null;
+</p>
+<p>    protected String response = null;
+</p>
+<p>    Random randomGR = new Random();
+</p>
+<p>    public UserNumberBean() {
+</p>
+<p>        randomInt = new Integer(randomGR.nextInt(10));
+</p>
+<p>        System.out.println("Duke's Number: " + randomInt);
+</p>
+<p>    }
+</p>
+<p>    public void setUserNumber(Integer user_Number) {
+</p>
+<p>        userNumber = user_Number;
+</p>
+<p>        System.out.println("Set userNumber " + userNumber);
+</p>
+<p>    }
+</p>
+<p>    public Integer getUserNumber() {
+</p>
+<p>        System.out.println("get userNumber " + userNumber);
+</p>
+<p>        return userNumber;
+</p>
+<p>    }
+</p>
+<p>    public String getResponse() {
+</p>
+<p>        if (userNumber != null && userNumber.compareTo(randomInt) == 0) {
+</p>
+<p>            randomInt = new Integer(randomGR.nextInt(10));
+</p>
+<p>            return "Yay! You got it!";
+</p>
+<p>        } else {
+</p>
+<p>            return "Sorry, " + userNumber + " is incorrect.";
+</p>
+<p>        }
+</p>
+<p>    }
+</p>
+<p>    public String[] getStatus() {
+</p>
+<p>        return status;
+</p>
+<p>    }
+</p>
+<p>    public void setStatus(String[] newStatus) {
+</p>
+<p>        status = newStatus;
+</p>
+<p>    }
+</p>
+<p>    public int getMaximum() {
+</p>
+<p>        return (this.maximum);
+</p>
+<p>    }
+</p>
+<p>    public void setMaximum(int maximum) {
+</p>
+<p>        this.maximum = maximum;
+</p>
+<p>        this.maximumSet = true;
+</p>
+<p>    }
+</p>
+<p>    public int getMinimum() {
+</p>
+<p>        return (this.minimum);
+</p>
+<p>    }
+</p>
+<p>    public void setMinimum(int minimum) {
+</p>
+<p>        this.minimum = minimum;
+</p>
+<p>        this.minimumSet = true;
+</p>
+<p>    }
+</p>
+<p>    public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+</p>
+<p>        if ((context == null) || (component == null)) {
+</p>
+<p>            throw new NullPointerException();
+</p>
+<p>        }
+</p>
+<p>        if (value != null) {
+</p>
+<p>            try {
+</p>
+<p>                int converted = intValue(value);
+</p>
+<p>                if (maximumSet &&
+</p>
+<p>                        (converted > maximum)) {
+</p>
+<p>                    if (minimumSet) {
+</p>
+<p>                        throw new ValidatorException(
+</p>
+<p>                                MessageFactory.getMessage
+</p>
+<p>                                (context, LongRangeValidator.NOT_IN_RANGE_MESSAGE_ID,
+</p>
+<p>                                        new Object[]{
+</p>
+<p>                                        new Integer(minimum),
+</p>
+<p>                                        new Integer(maximum)
+</p>
+<p>                                }));
+</p>
+<p>                    } else {
+</p>
+<p>                        throw new ValidatorException(
+</p>
+<p>                                MessageFactory.getMessage
+</p>
+<p>                                (context, LongRangeValidator.MAXIMUM_MESSAGE_ID,
+</p>
+<p>                                        new Object[]{
+</p>
+<p>                                        new Integer(maximum)
+</p>
+<p>                                }));
+</p>
+<p>                    }
+</p>
+<p>                }
+</p>
+<p>                if (minimumSet &&
+</p>
+<p>                        (converted < minimum)) {
+</p>
+<p>                    if (maximumSet) {
+</p>
+<p>                        throw new ValidatorException(MessageFactory.getMessage
+</p>
+<p>                                (context, LongRangeValidator.NOT_IN_RANGE_MESSAGE_ID,
+</p>
+<p>                                        new Object[]{
+</p>
+<p>                                        new Double(minimum),
+</p>
+<p>                                        new Double(maximum)
+</p>
+<p>                                }));
+</p>
+<p>                    } else {
+</p>
+<p>                        throw new ValidatorException(
+</p>
+<p>                                MessageFactory.getMessage
+</p>
+<p>                                (context, LongRangeValidator.MINIMUM_MESSAGE_ID,
+</p>
+<p>                                        new Object[]{
+</p>
+<p>                                        new Integer(minimum)
+</p>
+<p>                                }
+</p>
+<p>                                ));
+</p>
+<p>                    }
+</p>
+<p>                }
+</p>
+<p>            } catch (NumberFormatException e) {
+</p>
+<p>                throw new ValidatorException(
+</p>
+<p>                        MessageFactory.getMessage
+</p>
+<p>                        (context, LongRangeValidator.TYPE_MESSAGE_ID));
+</p>
+<p>            }
+</p>
+<p>        }
+</p>
+<p>    }
+</p>
+<p>    private int intValue(Object attributeValue)    throws NumberFormatException {
+</p>
+<p>        if (attributeValue instanceof Number) {
+</p>
+<p>            return (((Number) attributeValue).intValue());
+</p>
+<p>        } else {
+</p>
+<p>            return (Integer.parseInt(attributeValue.toString()));
+</p>
+<p>        }
+</p>
+<p>    }
+</p>
+<p>}[/source]
+</p>
+<p>The web.xml and faces-config.xml files used to wire the web application together are pretty standard, but I'll include them here for your perusal:
+</p>
+<p>web.xml:
+</p>
+<p>[source lang="xml"]<?xml version='1.0' encoding='UTF-8'?>
+</p>
+<!DOCTYPE web-app PUBLIC
+<p>  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+</p>
+<p>  "http://java.sun.com/dtd/web-app_2_3.dtd">
+</p>
+<web-app>
+    <display-name>JavaServer Faces Guess Number Sample Application</display-name>
+    <description>JavaServer Faces Guess Number Sample Application</description>
+    <!-- Use Documents Saved as *.xhtml -->
+    <context-param>
+        <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+        <param-value>.xhtml</param-value>
+    </context-param>
+    <!-- Special Debug Output for Development -->
+    <context-param>
+        <param-name>facelets.DEVELOPMENT</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.verifyObjects</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.validateXml</param-name>
+        <param-value>true</param-value>
+        <description>Set this flag to true if you want the JavaServer Faces Reference Implementation to validate the XML in your faces-config.xml resources against the DTD. Default value is false.</description>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.verifyObjects</param-name>
+        <param-value>true</param-value>
+        <description>
+<p>            Set this flag to true if you want the JavaServer Faces Reference Implementation to verify that all of the application objects you have configured (components, converters, renderers, and validators) can be successfully created. Default value is
+</p>
+<p>            false.
+</p>
+        </description>
+    </context-param>
+    <listener>
+        <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+    </listener>
+    <!-- Faces Servlet -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <!-- Faces Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+    <security-constraint>
+        <!-- This security constraint illustrates how JSP pages 
+<p>            with JavaServer Faces components can be protected from
+</p>
+<p>            being accessed without going through the Faces Servlet.
+</p>
+<p>            The security constraint ensures that the Faces Servlet will
+</p>
+<p>            be used or the pages will not be processed. -->
+</p>
+        <display-name>Restrict access to JSP pages</display-name>
+        <web-resource-collection>
+            <web-resource-name>Restrict access to JSP pages</web-resource-name>
+            <url-pattern>/greeting.xhtml</url-pattern>
+            <url-pattern>/response.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>With no roles defined, no access granted</description>
+        </auth-constraint>
+    </security-constraint>
+</web-app>[/source]
+<p>faces-config.xml:
+</p>
+<p>[source lang="xml"]<?xml version='1.0' encoding='UTF-8'?>
+</p>
+<!DOCTYPE faces-config PUBLIC
+<p>  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+</p>
+<p>  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+</p>
+<faces-config>
+    <application>
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>de</supported-locale>
+            <supported-locale>fr</supported-locale>
+            <supported-locale>es</supported-locale>
+        </locale-config>
+        <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+    </application>
+    <navigation-rule>
+        <description>The decision rule used by the NavigationHandler to determine which view must be displayed after the current view, greeting.jsp is processed.</description>
+        <from-view-id>/greeting.xhtml</from-view-id>
+        <navigation-case>
+            <description>Indicates to the NavigationHandler that the response.jsp view must be displayed if the Action referenced by a UICommand component on the greeting.jsp view returns the outcome "success".</description>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/response.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <description>The decision rules used by the NavigationHandler to determine which view must be displayed after the current view, response.jsp is processed.</description>
+        <from-view-id>/response.xhtml</from-view-id>
+        <navigation-case>
+            <description>Indicates to the NavigationHandler that the greeting.jsp view must be displayed if the Action referenced by a UICommand component on the response.jsp view returns the outcome "success".</description>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/greeting.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <managed-bean>
+        <description>The "backing file" bean that backs up the guessNumber webapp</description>
+        <managed-bean-name>UserNumberBean</managed-bean-name>
+        <managed-bean-class>guessNumber.UserNumberBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>minimum</property-name>
+            <property-class>int</property-class>
+            <value>0</value>
+        </managed-property>
+        <managed-property>
+            <property-name>maximum</property-name>
+            <property-class>int</property-class>
+            <value>10</value>
+        </managed-property>
+    </managed-bean>
+</faces-config>[/source]
+<p>The archive attached to this blog does not have the dependencies included for size and (possible) legal restrictions, so here's a list of what my workspace has:
+</p>
+<ul>
+    <li>commons-el.jar</li>
+    <li>commons-logging-1.0.4.jar</li>
+    <li>el-api.jar</li>
+    <li>el-ri.jar</li>
+    <li>jsf-api-1.2.jar</li>
+    <li>jsf-facelets-1.1.jar</li>
+    <li>jsf-impl-1.2.jar</li>
+    <li>log4j-1.2.13.jar</li>
+    <li>winstone-0.8.1.jar</li>
+</ul>
+<p>That's all there is to.  To run the sample application, simply run <code>embed.WinstoneServer</code>, point your browser at <a target="_newwindow" href="http://localhost:8080/" title="Embedded Duke's Number Guessing Sample Application"/>http://localhost:8080/</a>, and start guessing.
+</p>
+<p>As I've hopefully made clear, embedding a JSF application can be quite simple, though that simplicitly is linked somewhat to the embedding environment.  Please note that this sample is not meant to be a catalog of best practices for JSF, Facelets or Winstone embedding, but to be a simple introduction to the topic, and, to that end, I hope you'll find it useful.
+</p>
+<p>(You can download the source archive <a href="http://blogs.steeplesoft.com/wp-content/uploads/2006/05/EmbedJsf-src.zip">here</a>).</p>

@@ -1,0 +1,154 @@
+---
+title: 'Managing GlassFish JDBC Resources via REST'
+author: 'Jason Lee'
+layout: blog-post
+date: 2011-3-10
+tags: [ GlassFish, GlassFish, REST, REST ]
+---
+<p>I was asked this morning about creating JDBC resources via REST. As with <a href="/2011/03/adding-users-to-a-glassfish-realm-via-rest/">user management</a>, it's actually pretty simple, once you've seen how.  Let's take a look.<!--more-->
+</p>
+<p>To create a JDBC resource, you need two different objects, a <code>JDBC Connection Pool</code> and a <code>JDBC Resource</code>.  The endpoints for these two objects are <a href="http://localhost:4848/management/domain/resources/jdbc-connection-pool">http://localhost:4848/management/domain/resources/jdbc-connection-pool</a> and <a href="http://localhost:4848/management/domain/resources/jdbc-resource">http://localhost:4848/management/domain/resources/jdbc-resource</a>.  Let's start by creating the connection pool.  There are many parameters available (which you can see via OPTIONS), but we'll only deal with a small subset here:
+</p>
+<p>[code]
+</p>
+<p>$ curl -X POST -H 'Accept: application/json' -d driverClassname=org.postgresql.Driver -d resType=java.sql.Driver -d id=&quot;ExamplePool&quot; http://localhost:4848/management/domain/resources/jdbc-connection-pool
+</p>
+<p>{
+</p>
+<p>    &quot;message&quot;: &quot;\&quot;http:\/\/localhost:4848\/management\/domain\/resources\/jdbc-connection-pool\/ExamplePool\&quot; created successfully.&quot;,
+</p>
+<p>    &quot;exit_code&quot;: &quot;SUCCESS&quot;
+</p>
+<p>}
+</p>
+<p>[/code]
+</p>
+<p>This connection pool will, of course, need to know where to connect, and how to log in.  To do that, we need to set some properties on the connection pool. Setting properties, though, is a bit different.  Properties in GlassFish's <code>domain.xml</code> aren't simple name/value pairs.  Each property has a name, a value, and a description.  To support that, the <code>property</code> endpoint takes an object which, expressed in JSON, is a list of objects: <code>[{'name':'propertyName','value':'propertyValue','description':'optionalPropertyDescription'}]</code>.  In our case, the command will look like this:
+</p>
+<p>[code]
+</p>
+<p>$ curl -X POST -H 'Accept: application/json' -H 'Content-Type: application/json' -d &quot;[{'name':'user','value':'test'},{'name':'password','value':'test'},{'name':'databaseName','value':'test'},{'name':'serverName','value':'localhost'},{'name':'url','value':'jdbc:postgresql://localhost/test/'}]&quot; http://localhost:4848/management/domain/resources/jdbc-connection-pool/ExamplePool/property
+</p>
+<p>{
+</p>
+<p>    &quot;message&quot;: &quot;\&quot;http:\/\/localhost:4848\/management\/domain\/resources\/jdbc-connection-pool\/ExamplePool\/property\&quot; updated successfully.&quot;,
+</p>
+<p>    &quot;command&quot;: &quot;Property&quot;,
+</p>
+<p>    &quot;exit_code&quot;: &quot;SUCCESS&quot;
+</p>
+<p>}
+</p>
+<p>[/code]
+</p>
+<p>We can now view this connection pool like this:
+</p>
+<p>[code]
+</p>
+<p>$ curl -H 'Accept: application/json' http://localhost:4848/management/domain/resources/jdbc-connection-pool/ExamplePool
+</p>
+<p>{
+</p>
+<p>    &quot;command&quot;: &quot;Jdbc-connection-pool&quot;,
+</p>
+<p>    &quot;exit_code&quot;: &quot;SUCCESS&quot;,
+</p>
+<p>    &quot;extraProperties&quot;: {
+</p>
+<p>        &quot;commands&quot;: [],
+</p>
+<p>        &quot;methods&quot;: [
+</p>
+<p>// ...
+</p>
+<p>        ],
+</p>
+<p>        &quot;entity&quot;: {
+</p>
+<p>//...
+</p>
+<p>            &quot;datasourceClassname&quot;: null,
+</p>
+<p>            &quot;description&quot;: null,
+</p>
+<p>            &quot;driverClassname&quot;: &quot;org.postgresql.Driver&quot;,
+</p>
+<p>//...
+</p>
+<p>            &quot;name&quot;: &quot;ExamplePool&quot;,
+</p>
+<p>//...
+</p>
+<p>            &quot;resType&quot;: &quot;java.sql.Driver&quot;,
+</p>
+<p>//...
+</p>
+<p>        },
+</p>
+<p>        &quot;childResources&quot;: {&quot;property&quot;: &quot;http:\/\/localhost:4848\/management\/domain\/resources\/jdbc-connection-pool\/ExamplePool\/property&quot;}
+</p>
+<p>    }
+</p>
+<p>}
+</p>
+<p>[/code]
+</p>
+<p>Now that we have a connection pool, let's create the JDBC Resource:
+</p>
+<p>[code]
+</p>
+<p>$ curl -X POST -H 'Accept: application/json' -d id=jdbc/test -d poolName=ExamplePool http://localhost:4848/management/domain/resources/jdbc-resource
+</p>
+<p>{
+</p>
+<p>    &quot;message&quot;: &quot;\&quot;http:\/\/localhost:4848\/management\/domain\/resources\/jdbc-resource\/jdbc\/test\&quot; created successfully.&quot;,
+</p>
+<p>    &quot;exit_code&quot;: &quot;SUCCESS&quot;
+</p>
+<p>}
+</p>
+<p>[/code]
+</p>
+<p>Your connection pool and resource are now ready to use.  As an added bonus, let's ping our new connection pool to make sure it works:
+</p>
+<p>[code]
+</p>
+<p>$ curl -H 'Accept: application/json' http://localhost:4848/management/domain/resources/ping-connection-pool?id=ExamplePool
+</p>
+<p>{
+</p>
+<p>    &quot;command&quot;: &quot;ping-connection-pool AdminCommand&quot;,
+</p>
+<p>    &quot;exit_code&quot;: &quot;SUCCESS&quot;
+</p>
+<p>}
+</p>
+<p>[/code]
+</p>
+<p>Deleting the pool and the resource are both very simple. Note that the JNDI name (<code>jdbc/test</code>) must be properly encoded (<code>jdbc%2Ftest</code>):
+</p>
+<p>[code]
+</p>
+<p>$ curl -X DELETE -H 'Accept: application/json' http://localhost:4848/management/domain/resources/jdbc-resource/jdbc%2Ftest
+</p>
+<p>{
+</p>
+<p>    &quot;message&quot;: &quot;\&quot;http:\/\/localhost:4848\/management\/domain\/resources\/jdbc-resource\/jdbc%2Ftest\&quot; deleted successfully.&quot;,
+</p>
+<p>    &quot;exit_code&quot;: &quot;SUCCESS&quot;
+</p>
+<p>}
+</p>
+<p>$ curl -X DELETE -H 'Accept: application/json' http://localhost:4848/management/domain/resources/jdbc-connection-pool/ExamplePool
+</p>
+<p>{
+</p>
+<p>    &quot;message&quot;: &quot;\&quot;http:\/\/localhost:4848\/management\/domain\/resources\/jdbc-connection-pool\/ExamplePool\&quot; deleted successfully.&quot;,
+</p>
+<p>    &quot;exit_code&quot;: &quot;SUCCESS&quot;
+</p>
+<p>}
+</p>
+<p>[/code]
+</p>
+<p>There you have it.  If you have any questions, or have some examples you'd like to see, feel free to ask. : )</p>

@@ -1,0 +1,59 @@
+---
+title: 'What&#039;s Happening In the World of Mojarra Scales?'
+author: 'Jason Lee'
+layout: blog-post
+date: 2009-2-23
+tags: [ GlassFish, jsf, kenai, mojarra, mojarra scales, Scales, Scales ]
+---
+<p>I've been a bit silent of late on what's happening with Mojarra Scales, so I thought I'd take a moment to bring everyone up to speed.<!--more-->
+</p>
+<p>For starters, and I guess this is the official announcement of this, I've moved the project from <a target="_blank" href="https://scales.dev.java.net/">java.net</a> to <a target="_blank" href="http://kenai.com/projects/scales/pages/Home">kenai.com</a>.  Anyone who has used java.net knows that it has gotten a bit long in the tooth, as they say.  Frustrated with grossly inadequate site support and desiring to use Mercurial for source control -- not to mention flee the frequent outages and slow downs -- I jumped to Sun's new community platform, Kenai.  It offers several SCM choices, bugzilla or (drum roll, please!) JIRA support, and sports a nice wiki for web site development, which alone has made documentation MUCH easier.  I've been very, very happy with Kenai.  If you can snag an invite to create a project, you should do so.  If you're interested in helping with Scales development, I can easily add you to the project without an Kenai invitation.
+</p>
+<p>Secondly, I released version 1.1, somewhat sooner that I had hoped.  As I noted in an earlier entry, we're investigating some possible changes to the GlassFish Administration console.  As part of the work, we integrated Scales into the console to handle the menu work.  At the time, the version was 1.1-SNAPSHOT.  Our release engineers balked at the version number, as the GlassFish promoted builds can not rely on SNAPSHOTs of external projects, as the build is not reproducible.  Given that very sensible requirement, I tidied things up as much as possible and pushed out 1.1, which can be downloaded <a target="_blank" href="http://kenai.com/projects/scales/downloads/directory/Mojarra_Scales_1.1">here</a>.
+</p>
+<p>So what's happened since then?  A fair amount:
+</p>
+<ul>
+	<li>As part of the Scales 1.1 release, I added the "flat" option to the panel, which will render the panel inline in the document.  This allows one to embed the panel "in" the document, rather than having it "float" above it.</li>
+	<li>A couple of the default values for the panel have changed as well:
+        <ul>
+            <li>draggable: true</li>
+            <li>visible: true</li>
+        </ul></li>
+	<li>I've done some work to reduce the weight on the page.  Since the YUI resources are all stored in a JAR file, the URLs to images, CSS, JS, etc have to be changed so the server can find and send them.  Until recently, the CSS override snippets that handled that was rendered once for <em>every</em> component on the page, which is obviously overkill.  I added some logic to make sure that renders only once.  I'm planning on some additional work there to render only what's needed, but this is a good start.  I also switch from sending yahoo-min.js, dom-min.js, etc., to utilities.js, which includes a number of JS files needed by most of the components.  While this will end up sending more data than is needed in some cases, it also reduces the number of requests a great deal, which I think is a good trade-off.</li>
+	<li>One complaint we heard when working with Scales in the GF admin console was the size of the JAR, so I spent some time tuning what gets included.  We now only package the minimized JS files that we actually use.  I was blindly including every file (minimized, non-minimized AND debug versions) of every component Scales wraps.  That was an obvious waste, so the build is now much more specific in what gets included, which, when coupled with the removal of old images and JavaScript that are no longer used, resulted in a JAR about 1/3 of its original size.</li>
+	<li>In 1.2-SNAPSHOT, Scales now uses YUI 2.7.0.  This gets us a number of bug fixes, the most notable of which concerns the vertical carousel demo.  I added a couple of simple CSS tweaks, which now allows the vertical carousel to render and function as expected.</li>
+	<li>As part of the GF console redesign, I implemented a wrapper for the YUI Layout Manager component, giving rise to two new Scales components, <code>sc___layout</code> and <code>sc___layoutUnit</code>.  Their usage looks like this:
+<p>[source language="xml"]
+</p>
+<sc___layout fullPage="true">
+    <sc___layoutUnit position="top" height="75" gutter="5px" resize="true" collapse="true" maxHeight="100" minHeight="50">
+        <span style="font-size: large; font-weight: bold">
+<p>            This is my header.  There are many like it, but this one is mine!
+</p>
+        </span>
+    </sc___layoutUnit>
+    <sc___layoutUnit position="left" width="125" minWidth="125" maxWidth="200" gutter="5px" resize="true" collapse="true">
+<p>        This would probably be some navigation stuff.
+</p>
+    </sc___layoutUnit>
+    <sc___layoutUnit position="right" width="125" gutter="5px" resize="true" collapse="true">
+<p>        Some random site stats, links, etc to clutter the page.
+</p>
+    </sc___layoutUnit>
+    <sc___layoutUnit position="bottom" height="75" gutter="5px" resize="true" collapse="true">
+        <span style="font-size: large; font-weight: bold">
+<p>            This is my footer.  There are many like it, but this one is mine!
+</p>
+        </span>
+    </sc___layoutUnit>
+    <sc___layoutUnit position="center" gutter="5px">
+        <!-- snip! -->
+    </sc___layoutUnit>
+</sc___layout>[/source]
+<p>        You can see how that renders on the <a target="_blank" href="http://www.jsftemplating.org/mojarra-scales-demo/facelets/layoutDemo.xhtml">demo site</a>.</li>
+</p>
+</ul>
+<p>I think those are all the major changes worth noting.  Hopefully, by the end of the week I'll Scales in the java.net Maven repo, but I'm waiting on a package/groupId decision to be made for Mojarra, which we'll then follow with Scales, since it is a sub-project of Mojarra's.
+</p>
+<p>If you have anything else you'd like to see (that's not already in the java.net issue tracker), please file a request on the Scales JIRA <a target="_blank" href="http://kenai.com/jira/browse/SCALES">instance</a>.</p>

@@ -1,0 +1,80 @@
+---
+title: 'Error Reporting for Android Apps'
+author: 'Jason Lee'
+layout: blog-post
+date: 2013-4-5
+tags: [ Android ]
+---
+
+As every Android developer knows, application crashes are reported back to Google and can be view in the Play Developer's Console. This is helpful, but, in my experience, sometimes you don't get enough context. You also don't get notifications when crashes are reported.  Fortunately, there is a tool, called http://acra.ch[ACRA], that improves the situation quite a bit. In this post, I'll give you a brief introduction to the tool, and how I use it in http://cubtracker.com[Cub Tracker].
+
+pass::[more]
+
+If you look at the http://acra.ch[ACRA home page], the quick start suggests a code snippet like this:
+
+[source,java]
+-----
+import org.acra.*;
+import org.acra.annotation.*;
+
+@ReportsCrashes(formKey = "dGVacG0ydVHnaNHjRjVTUTEtb3FPWGc6MQ") 
+public class MyApplication extends Application {
+  @Override
+  public void onCreate() {
+    // The following line triggers the initialization of ACRA
+    super.onCreate();
+    ACRA.init(this);
+  }
+}
+-----
+
+In a nutshell, this configuration will tell ACRA to report all crashes to a Google Docs form. While helpful, I've found this less than optimal, as the spreadsheet the form feeds gets very hard to read.  Then, there's this, also from the ACRA home page:
+
+[quote, http://acra.ch/]
+_____
+Since the recent update of Google Forms by Google, the usage of Google Docs as a storage engine for ACRA reports is becoming deprecated.
+_____
+
+So my advice is to skip it. :)  What I've done in Cub Tracker is to configure an `HttpPostSender` instance:
+
+[source,java]
+-----
+ACRA.init(this);
+ACRA.getErrorReporter().setReportSender(new HttpPostSender(ERROR_REPORTING_URL, null));
+-----
+
+Now, rather than posting to a Google Form, it POSTS to my custom web service, which looks like this (please excuse the ugly PHP :) :
+
+[source,php]
+-----
+<?php
+$message .= "PHONE_MODEL = " . $_POST["PHONE_MODEL"] . "\n";
+$message .= "ANDROID_VERSION = " . $_POST["ANDROID_VERSION"] . "\n";
+$message .= "PRODUCT = " . $_POST["PRODUCT"] . "\n";
+$message .= "APP_VERSION_CODE = " . $_POST["APP_VERSION_CODE"] . "\n";
+$message .= "APP_VERSION_NAME = " . $_POST["APP_VERSION_NAME"] . "\n";
+$message .= "STACK_TRACE:\n" . $_POST["STACK_TRACE"] . "\n";
+
+// Send
+mail('me@foo.com', 'Cub Tracker Error Report', $message);
+
+?>
+-----
+
+That results in an email like this:
+
+-----
+PHONE_MODEL = Galaxy Nexus
+ANDROID_VERSION = 4.2.2
+PRODUCT = mysid
+APP_VERSION_CODE = 19
+APP_VERSION_NAME = 2.3
+STACK_TRACE:
+java.lang.IllegalStateException: Couldn't read row 0, col 0 from CursorWindow.  Make sure the Cursor is initialized correctly before accessing data from it.
+	at android.database.CursorWindow.nativeGetLong(Native Method)
+	at android.database.CursorWindow.getLong(CursorWindow.java:507)
+	at android.database.AbstractWindowedCursor.getLong(AbstractWindowedCursor.java:75)
+...
+-----
+
+That nicely demonstrates the flexibility of ACRA, as well as one the most frustrating and elusive bugs in my app, but, hopefully, my pain can help you with your app. :)

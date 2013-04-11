@@ -1,0 +1,24 @@
+---
+title: 'New Components in Mojarra Scales: Part IV – sc___combo'
+author: 'Jason Lee'
+layout: blog-post
+date: 2010-2-18
+tags: [ Components, JavaServer Faces, jsf, mojarra scales, Scales ]
+---
+<p>Yesterday brought us <a href='/2010/02/new-components-in-mojarra-scales-part-iii-%e2%80%93-scimagezoomer-and-sclightbox/'>Part III</a> in our look at some new components in Mojarra Scales.  Today, Part IV brings us <code>sc___combo</code>, combination, if you can imagine that, of a <code>h:selectOneMenu</code> and <code>h:inputText</code>.<!--more-->
+</p>
+<p>The <code>h:selectOneMenu</code> is a nice control as it allows the application author to limit what the user can enter, thus helping insure data integrity (and sanity).  Sometimes, though, it would be nice to offer a list of options for the user, but allow him to enter any arbitrary alternative.  Unfortunately, the HTML spec doesn't offer this kind of control.  Lucky for us, though, this is fairly easy to implement using some of the nice JavaScript widgets provided by YUI.  Here's a sample:
+</p>
+<p>[source lang="xhtml"]
+</p>
+            <sc___combo id='combo' style='width: 500px' value='#{comboBean.value}'>
+                <f___selectItems value='#{comboBean.selectItems}'/>
+            </sc___combo>
+<p>[/source]
+</p>
+<p>This should look very familiar to anyone who has used any of the selection components in JSF (<code>h:selectBooleanCheckbox</code>, <code>h:selectManyCheckbox</code>, <code>h:selectManyListbox</code>, <code>h:selectManyMenu</code>, <code>h:selectOneListbox</code>, <code>h:selectOneMenu</code>, or <code>h:selectOneRadio</code>).  About the only change is the name of the parent tag.  Rendered, you should see something like this:
+</p>
+<div style='width: 542px; margin: auto'><a href='http://blogs.steeplesoft.com/wp-content/uploads/2010/02/combo.png'><img alt='Mojarra Scales sc___combo screenshot' class='size-full wp-image-634' height='252' src='http://blogs.steeplesoft.com/wp-content/uploads/2010/02/combo.png' title='sc___combo' width='542'/></a></div>
+<p>As the user keys in his choice, should he choose to do so, type-ahead will attempt to complete his entry for him from the available options.  If one is not found, though, the user is free to enter what he desires.
+</p>
+<p>In the next installment, we'll take a look at <code>sc___resize</code>, a component that adds resizing capabilities to another control on the screen.</p>

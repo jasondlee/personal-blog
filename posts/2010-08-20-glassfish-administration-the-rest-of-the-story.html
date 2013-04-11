@@ -1,0 +1,209 @@
+---
+title: 'GlassFish Administration: The REST of the Story Part I'
+author: 'Jason Lee'
+layout: blog-post
+date: 2010-8-20
+tags: [ administration, GlassFish, GlassFish, Java, json, REST, REST, xml ]
+---
+<p>Of the many great things about GlassFish, one that is often mentioned most (and is, in fact, what got me involved with GlassFish as an end user years ago) is the Administration Console.  It's an extremely powerful and capable interface, and is, if I may be so bold, orders of magnitudes better than its open source competition (it may even beat commercial competitors, but I have no experience with those).  Another powerful tool in GlassFish administration is the asadmin CLI utility, which allows for quick and easy scripting of server provisioning, etc.  Did you know, though, that GlassFish has a third administration interface?  As of GlassFish v3, we offer a RESTful administration API, based on Jersey, to allow non-Java clients to configure the app server easily.  For GlassFish 3.1, one of my main responsibilities, with the help, I should add of my coworkers Ludovic Champenois and Mitesh Meswani, has been to help improve upon the great start we had in in v3.  In this entry, we'll take a look at the current state of the interface and learn the basics of using.<!--more-->
+</p>
+<h1>The Basics</h1>
+<p>I don't want to go too far into the weeds explaining what REST is, so for those of you new to the concept, you can get a high level overview at <a href='http://en.wikipedia.org/wiki/Representational_State_Transfer'>Wikipedia</a>.  Go ahead and read it.  We'll wait.  Everyone back?  Great! :P
+</p>
+<p>The GlassFish RESTful Administration API (aka, the REST API/interface) can be found at <a href='http://localhost:4848/management/domain'>http://localhost:4848/management/domain</a> for configuration-related activities, and <a href='http://localhost:4848/monitoring/domain'>http://localhost:4848/monitoring/domain</a> for monitoring-related activities.  For this entry, we'll not do anything with the monitoring side other than mention that it's there.  The REST API supports three different response encodings (yes, I'm aware of how dangerously overloaded that term is : ):  HTML, JSON, and XML.  Which type to use is determined using the Accept header, but can be overridden by using an extension on the URL (.html, .json, or .xml).  Let's take a quick look at what the return looks like.
+</p>
+<h1>The Request</h1>
+<p>The request payload is typically what you would see with an HTML form submission.  For example, this curl example sets the port for http-listener-1, which is the listener that serves your applications:
+</p>
+<p>[source lang="bash"]
+</p>
+<p>curl -H "__debug: true" -H "Accept: application/json" -X POST -d "port=8675" http://localhost:4848/management/domain/configs/config/server-config/network-config/network-listeners/network-listener/http-listener-1
+</p>
+<p>[/source]
+</p>
+<p>which will return this document (edited for brevity):
+</p>
+<p>[js]
+</p>
+<p>{
+</p>
+<p>   "message":"\"http:\/\/localhost:4848\/...\/http-listener-1\" updated successfully.",
+</p>
+<p>   "exit_code":"SUCCESS",
+</p>
+<p>   "properties":{
+</p>
+<p>   },
+</p>
+<p>   "extraProperties":{
+</p>
+<p>   }
+</p>
+<p>}[/js]
+</p>
+<p>There are places where the payload is a bit more complex of necessity (such as properties), but I'll cover those in another post.
+</p>
+<h1>The Response</h1>
+<p>Early on, the structure of the document the REST interface could vary depending on how the endpoint resource was implemented (more on the later).  In this cycle, we've done a lot of work to standardize on one format, which I'll describe here, but be aware you may still see non-compliant response documents.  If you do, it's a bug and we'd appreciate it if you could open an <a href='https://glassfish.dev.java.net/servlets/ProjectIssues'>issue</a>. :)
+</p>
+<p>The structure, then, is an object with the following fields:  message, command, exit_code, properties, and extraProperties.  An example is often best, so here's the three representations of the endpoint <a href='http://localhost:4848/management/domain/'>http://localhost:4848/management/domain/</a>:
+</p>
+<h2>JSON</h2>
+<p>[source lang="js"]
+</p>
+<p>{
+</p>
+<p>    "command": "Domain",
+</p>
+<p>    "exit_code": "SUCCESS",
+</p>
+<p>    "properties": {},
+</p>
+<p>    "extraProperties": {
+</p>
+<p>        "commands": [
+</p>
+<p>            {
+</p>
+<p>                "path": "create-instance",
+</p>
+<p>                "command": "create-instance",
+</p>
+<p>                "method": "POST"
+</p>
+<p>            },
+</p>
+<p>// ...
+</p>
+<p>        ],
+</p>
+<p>        "methods": [
+</p>
+<p>            {"name": "GET"},
+</p>
+<p>            {
+</p>
+<p>                "name": "POST",
+</p>
+<p>                "messageParameters": {
+</p>
+<p>                    "applicationRoot": {
+</p>
+<p>                        "optional": "true",
+</p>
+<p>                        "type": "string",
+</p>
+<p>                        "key": "false"
+</p>
+<p>                    },
+</p>
+<p>// ...
+</p>
+<p>                }
+</p>
+<p>            }
+</p>
+<p>        ],
+</p>
+<p>        "entity": {
+</p>
+<p>            "applicationRoot": "${com.sun.aas.instanceRoot}\/applications",
+</p>
+<p>            "locale": "en",
+</p>
+<p>            "logRoot": "${com.sun.aas.instanceRoot}\/logs",
+</p>
+<p>            "version": "jasonlee-private"
+</p>
+<p>        },
+</p>
+<p>        "childResources": {
+</p>
+<p>            "amx-pref": "http:\/\/localhost:4848\/management\/domain\/amx-pref",
+</p>
+<p>// ...
+</p>
+<p>        }
+</p>
+<p>    }
+</p>
+<p>}[/source]
+</p>
+<h2>XML</h2>
+<p>[source lang="xml"]
+</p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<map>
+    <entry key='extraProperties'>
+        <map>
+            <entry key='methods'>
+                <list>
+                    <map>
+                        <entry key='name' value='GET'/>
+                    </map>
+                    <map>
+                        <entry key='name' value='POST'/>
+                        <entry key='messageParameters'>
+                            <map>
+                                <entry key='applicationRoot'>
+                                    <map>
+                                        <entry key='optional' value='true'/>
+                                        <entry key='type' value='string'/>
+                                        <entry key='key' value='false'/>
+                                    </map>
+                                </entry>
+                            </map>
+                        </entry>
+<!-- ... -->
+                    </map>
+                </list>
+            </entry>
+            <entry key='entity'>
+                <map>
+                    <entry key='applicationRoot' value='${com.sun.aas.instanceRoot}/applications'/>
+                    <entry key='locale' value='en'/>
+                    <entry key='logRoot' value='${com.sun.aas.instanceRoot}/logs'/>
+                    <entry key='version' value='jasonlee-private'/>
+                </map>
+            </entry>
+            <entry key='commands'>
+                <list>
+                    <map>
+                        <entry key='command' value='create-instance'/>
+                        <entry key='path' value='create-instance'/>
+                        <entry key='method' value='POST'/>
+                    </map>
+<!-- ... -->
+                </list>
+            </entry>
+            <entry key='childResources'>
+                <map>
+                    <entry key='resources' value='http://localhost:4848/management/domain/resources'/>
+<!-- ... -->
+                </map>
+            </entry>
+        </map>
+    </entry>
+    <entry key='message'/>
+    <entry key='exit_code' value='SUCCESS'/>
+    <entry key='command' value='Domain'/>
+</map>[/source]
+<h2>HTML</h2>
+<img alt='' class='aligncenter size-medium wp-image-728' height='207' src='http://blogs.steeplesoft.com/wp-content/uploads/2010/08/html_interfaces_screenshot-300x207.png' title='HTML Interface Screenshot' width='300'/>
+<h2>The Details</h2>
+<p>As you can see from these trimmed down version, there's quite a bit of data there.  For the most part (though we still have areas we need to clean up), the data you will be most interested in as an end user will be under 'extraProperties'.  This property is an object that lists the various HTTP methods the endpoint supports, giving information on parameters it supports; the entity's state, if there is any (more on that later); any commands nested under this endpoint (more on that later as well); and any child resources this resource may have.
+</p>
+<p>It's worth noting that the documents you see above were pretty-printed by the server, a feature that is off by default.  To enable this feature, the HTTP Accept header '__debug' must be set to true.  If this header is not present, or if the value is not 'true', the server will not format the document.  In this case, the unformatted JSON document is just over half the size of the pretty-printed one, resulting in much less going over the wire, an important production consideration.
+</p>
+<h1>Quack! Quack! WADL! WADL!</h1>
+<p>What's a REST service with a WADL document describing it?  Since the REST interface is Jersey-based, we get that for free.  It can be found at <a href='http://localhost:4848/management/application.wadl'>http://localhost:4848/management/application.wadl</a>.  Be careful, though, because it's BIG. :)
+</p>
+<h1>You put your module in. You take your module out!</h1>
+<p>Those of that have been following GlassFish for a while may remember the big deal we made about the dynamic nature of v3.  Jerome Dochez stood on the stage at JavaOne and showed an EJB-less GlassFish container start up, and then refuse to deploy an EJB app, because it didn't support them.  He then added the require jars, and with the black magic help of OSGi, the server suddenly supported EJB deployments.  Really slick.  One of the issues we tackled on the REST side, though, was how to handle the addition and removal of these modules.  Making matters more difficult, we didn't want to require third party module developers to worry about REST when writing their add-ons.  Enter asm, stage right.
+</p>
+<p>Thanks to hard work of Mitesh and Ludo, the REST endpoints you see in the server are completely dynamic.  The REST module itself is lazily loaded, so you don't have to pay that penalty as the server starts, but, once it starts, it analyzes what is in memory (i.e., the HK2 DOM hierarchy) and generates and registers REST endpoints on the fly.  What this means for third party developers is that as long as they're using HK2 and domain.xml to manage their config, they get REST endpoints for free.  It also means that a web profile GlassFish installation isn't exposing useless endpoints.
+</p>
+<h1>Summary</h1>
+<p>This ended up being much longer than I had intended, but here's the take away.  GlassFish offers three ways to administer the server: the web-based console, the command line-based asadmin utility, and HTTP-based REST interface.  Using one or more of those means you will likely never have to look at an XML file, and that ain't bad. :)  
+</p>
+<p>In future posts in what I intend to be a series, we'll take a look at specific use cases using the REST interface.</p>

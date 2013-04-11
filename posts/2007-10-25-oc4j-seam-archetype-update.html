@@ -1,0 +1,59 @@
+---
+title: 'OC4J Seam Archetype Update'
+author: 'Jason Lee'
+layout: blog-post
+date: 2007-10-25
+tags: [ JPA, Maven2, OC4J, Seam ]
+---
+<p>Well, that wasn't hard.  I think I have the <a target="_blank" href="/2007/10/25/seam-jpa-hibernate-oc4j-maven2-archetype#redeploy">redeploy issue</a> fixed, and a shared library was the trick.<!--more-->
+</p>
+<p>It appeared that the redeployment issue was due to some odd class loading issue, so I decided to try a shared library.  To do that, I create the directory in <code>j2ee/home/shared-lib/hibernate/3.2</code> and put these jars there:
+</p>
+<p>[source lang="xml"]
+</p>
+<p>antlr-2.7.6.jar
+</p>
+<p>asm-1.5.3.jar
+</p>
+<p>asm-attrs-1.5.3.jar
+</p>
+<p>cglib-2.1_3.jar
+</p>
+<p>commons-collections-3.2.jar
+</p>
+<p>commons-logging-1.1.jar
+</p>
+<p>dom4j-1.6.1-jboss.jar
+</p>
+<p>hibernate-3.2.4.sp1.jar
+</p>
+<p>hibernate-annotations-3.3.0.ga.jar
+</p>
+<p>hibernate-commons-annotations-3.0.0.ga.jar
+</p>
+<p>hibernate-entitymanager-3.3.1.ga.jar
+</p>
+<p>hsqldb-1.8.0.7.jar
+</p>
+<p>javassist-3.3.ga.jar
+</p>
+<p>jboss-archive-browsing-5.0.0alpha-200607201-119.jar
+</p>
+<p>jta-1.0.1B.jar
+</p>
+<p>log4j-1.2.14.jar
+</p>
+<p>[/source]
+</p>
+<p>To be candid, I'm not 100% sure that all of these classes belong in a Hibernate library, but it works and I'm afraid to breathe on it. :)  To describe the shared library to OC4J, I added the following XML to <code>j2ee/home/config/server.xml</code>:
+</p>
+<p>[source lang="xml"]
+</p>
+	<shared-library name="hibernate" version="3.2" library-compatible="true">
+		<code-source path="../shared-lib/hibernate/3.2/"/>
+	</shared-library>
+<p>[/source]
+</p>
+<p>And that's it.  I created the project and immediately built and deployed, verified that the application worked, then repeatedly redeployed and tested the app without failure.  That's not to say that the archetype is complete or perfect in any way, but it's Good Enough for Now.  :)  Any fixes/enhancements/etc. are, of course, very welcome.
+</p>
+<p>[tags]seam,jpa,oc4j,maven2,archetype[/tags]</p>

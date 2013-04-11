@@ -1,0 +1,368 @@
+---
+title: 'A Jersey POJOMapping Client/Server Example'
+author: 'Jason Lee'
+layout: blog-post
+date: 2012-1-26
+tags: [ JavaEE, JavaEE, JAX-RS, Jersey, REST, REST ]
+---
+<p>JAX-RS is the specification that describes how to build RESTful interfaces in a Java EE environment.  Jersey is the reference implementation of that spec, and, like many implementations, offers features above and beyond what spec does.  One feature that I've been working with recently is the POJOMapping feature, which makes writing services and clients much easier, as well as typesafe.<!--more-->
+</p>
+<p>In a nutshell, what this feature allows you to do is deal with actual model classes in your service with little to no regard for their serialization and deserialization.  That's a huge boon, as dealing with XML and JSON isn't always pretty, and really isn't what we're wanting to do with our service.  To see how this works, we'll develop a simple service and a client to interact with.  First things first, we need some sort of model.  Since I work on GlassFish, I've chosen something familiar to me, a Cluster.  Here's what our class might look like (Note: this is modeled roughly after GlassFish's <code>ConfigBean</code> of the same name):
+</p>
+<p>[java]
+</p>
+<p>public class Cluster {
+</p>
+<p>    private String name;
+</p>
+<p>    private String configRef;
+</p>
+<p>    private boolean gmsEnabled;
+</p>
+<p>    private String broadcast = &quot;udpmulticast&quot;;
+</p>
+<p>    private String gmsBindInterfaceAddress;
+</p>
+<p>    private String gmsMulticastAddress;
+</p>
+<p>    private int gmsMulticastPort;
+</p>
+<p>    private Date modified = new Date();
+</p>
+<p>    // getters, setters, and toString() not shown
+</p>
+<p>}
+</p>
+<p>[/java]
+</p>
+<p>It's a POJO in every sense of the word, so it's pretty boring.  Let's move quickly, then, to our service:
+</p>
+<p>[java]
+</p>
+<p>@Path(&quot;/cluster&quot;)
+</p>
+<p>public class ClusterResource {
+</p>
+<p>    private static Map&lt;String, Cluster&gt; clusters = new HashMap&lt;String, Cluster&gt;();
+</p>
+<p>    public ClusterResource() {
+</p>
+<p>        clusters.put(&quot;c1&quot;, new Cluster(&quot;c1&quot;));
+</p>
+<p>        clusters.put(&quot;c2&quot;, new Cluster(&quot;c2&quot;));
+</p>
+<p>    }
+</p>
+<p>    @GET
+</p>
+<p>    public Map&lt;String, Cluster&gt; getClusters() {
+</p>
+<p>        return clusters;
+</p>
+<p>    }
+</p>
+<p>    @POST
+</p>
+<p>    public Response addCluster(Cluster newCluster) {
+</p>
+<p>        Response response;
+</p>
+<p>        if (clusters.containsKey(newCluster.getName())) {
+</p>
+<p>            response = Response.status(Response.Status.BAD_REQUEST)
+</p>
+<p>                    .entity(&quot;That cluster already exists&quot;)
+</p>
+<p>                    .build();
+</p>
+<p>        } else {
+</p>
+<p>            clusters.put(newCluster.getName(), newCluster);
+</p>
+<p>            response = Response.ok().build();
+</p>
+<p>        }
+</p>
+<p>        return response;
+</p>
+<p>    }
+</p>
+<p>    @GET
+</p>
+<p>    @Path(&quot;{name}&quot;)
+</p>
+<p>    public Cluster getCluster(@PathParam(&quot;name&quot;) String name) {
+</p>
+<p>        return clusters.get(name);
+</p>
+<p>    }
+</p>
+<p>    @POST
+</p>
+<p>    @Path(&quot;{name}&quot;)
+</p>
+<p>    public Response updateCluster(Cluster c) {
+</p>
+<p>        c.setModified(new Date());
+</p>
+<p>        clusters.put(c.getName(), c);
+</p>
+<p>        Response response = Response.ok(c).build();
+</p>
+<p>        return response;
+</p>
+<p>    }
+</p>
+<p>    @DELETE
+</p>
+<p>    @Path(&quot;{name}&quot;)
+</p>
+<p>    public Response deleteCluster(@PathParam(&quot;name&quot;) String name) {
+</p>
+<p>        clusters.remove(name);
+</p>
+<p>        return Response.ok().build();
+</p>
+<p>    }
+</p>
+<p>}[/java]
+</p>
+<p>This is a very basic JAX-RS resource. So far, there's nothing much new.  Some JAX-RS users might now turn to writing one or more <code>MessageBodyWriter</code>s to 
+</p>
+<p>handle the serialization of the <code>Cluster</code> instances to JSON, XML, etc., but we're not.  In fact, we're mostly done on the server-side.  All we have left to do is to enable Jersey's <code>POJOMapping</code> feature.  In our example, we'll do that via <code>web.xml</code>:
+</p>
+<p>[xml]
+</p>
+<p>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+</p>
+<p>&lt;web-app version=&quot;3.0&quot; 
+</p>
+<p>    xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; 
+</p>
+<p>    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; 
+</p>
+<p>    xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;&gt;
+</p>
+<p>    &lt;servlet&gt;
+</p>
+<p>        &lt;servlet-name&gt;jersey-serlvet&lt;/servlet-name&gt;
+</p>
+<p>        &lt;servlet-class&gt;
+</p>
+<p>            com.sun.jersey.spi.container.servlet.ServletContainer
+</p>
+<p>        &lt;/servlet-class&gt;
+</p>
+<p>        &lt;init-param&gt;
+</p>
+<p>            &lt;param-name&gt;com.sun.jersey.api.json.POJOMappingFeature&lt;/param-name&gt;
+</p>
+<p>            &lt;param-value&gt;true&lt;/param-value&gt;
+</p>
+<p>        &lt;/init-param&gt;
+</p>
+<p>        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+</p>
+<p>    &lt;/servlet&gt; 
+</p>
+<p>    &lt;servlet-mapping&gt;
+</p>
+<p>        &lt;servlet-name&gt;jersey-serlvet&lt;/servlet-name&gt;
+</p>
+<p>        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+</p>
+<p>    &lt;/servlet-mapping&gt;
+</p>
+<p>&lt;/web-app&gt;
+</p>
+<p>[/xml]
+</p>
+<p>We're ready to write a client now to see if we did things correctly.  For that, we'll write just a simple command-line Java application:
+</p>
+<p>[java]
+</p>
+<p>public class RestClient {
+</p>
+<p>    protected Client client;
+</p>
+<p>    protected ObjectMapper mapper = new ObjectMapper();
+</p>
+<p>    protected WebResource webResource;
+</p>
+<p>    public RestClient() {
+</p>
+<p>        ClientConfig clientConfig = new DefaultClientConfig();
+</p>
+<p>        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+</p>
+<p>        client = Client.create(clientConfig);
+</p>
+<p>        webResource = client.resource(&quot;http://localhost:8080/rest-service&quot;);
+</p>
+<p>    }
+</p>
+<p>    public Cluster getCluster(String name) {
+</p>
+<p>        return webResource
+</p>
+<p>                .path(&quot;cluster&quot;)
+</p>
+<p>                .path(name)
+</p>
+<p>                .accept(MediaType.APPLICATION_JSON)
+</p>
+<p>                .get(Cluster.class);
+</p>
+<p>    }
+</p>
+<p>    public ClientResponse createCluster (Cluster cluster) {
+</p>
+<p>        return webResource.path(&quot;cluster&quot;)
+</p>
+<p>                .type(MediaType.APPLICATION_JSON)
+</p>
+<p>                .accept(MediaType.APPLICATION_JSON)
+</p>
+<p>                .post(ClientResponse.class, cluster);
+</p>
+<p>    }
+</p>
+<p>    public Cluster saveCluster(Cluster cluster) {
+</p>
+<p>        ClientResponse cr = webResource.path(&quot;cluster&quot;)
+</p>
+<p>                .path(cluster.getName())
+</p>
+<p>                .type(MediaType.APPLICATION_JSON)
+</p>
+<p>                .accept(MediaType.APPLICATION_JSON)
+</p>
+<p>                .post(ClientResponse.class, cluster);
+</p>
+<p>        return cr.getEntity(Cluster.class);
+</p>
+<p>    }
+</p>
+<p>    public ClientResponse deleteCluster(Cluster cluster) {
+</p>
+<p>        return webResource.path(&quot;cluster&quot;)
+</p>
+<p>                .path(cluster.getName())
+</p>
+<p>                .type(MediaType.APPLICATION_JSON)
+</p>
+<p>                .accept(MediaType.APPLICATION_JSON)
+</p>
+<p>                .delete(ClientResponse.class);
+</p>
+<p>    }
+</p>
+<p>    public Map&lt;String, Cluster&gt; getClusters() {
+</p>
+<p>        try {
+</p>
+<p>            String json = webResource
+</p>
+<p>                    .path(&quot;cluster&quot;)
+</p>
+<p>                    .accept(MediaType.APPLICATION_JSON)
+</p>
+<p>                    .get(String.class);
+</p>
+<p>            return mapper.readValue(json, new TypeReference&lt;Map&lt;String, Cluster&gt;&gt;() {});
+</p>
+<p>        } catch (IOException e) {
+</p>
+<p>        }
+</p>
+<p>        return new HashMap&lt;String, Cluster&gt;();
+</p>
+<p>    }
+</p>
+<p>    public void run() {
+</p>
+<p>        Cluster cluster = getCluster(&quot;c1&quot;);
+</p>
+<p>        assert (cluster.getName().equals(&quot;c1&quot;));
+</p>
+<p>        Map&lt;String, Cluster&gt; clusters = getClusters();
+</p>
+<p>        System.out.println(&quot;Number of clusters: &quot; + clusters.size());
+</p>
+<p>        try {
+</p>
+<p>            Thread.sleep(2000);
+</p>
+<p>        } catch (InterruptedException e) {
+</p>
+<p>        }
+</p>
+<p>        cluster.setGmsMulticastPort(1234);
+</p>
+<p>        saveCluster(cluster);
+</p>
+<p>        clusters = getClusters();
+</p>
+<p>        System.out.println(&quot;Original time: &quot; + cluster.getModified());
+</p>
+<p>        System.out.println(&quot;New time:      &quot; + clusters.get(&quot;c1&quot;).getModified());
+</p>
+<p>        Cluster newCluster = new Cluster(&quot;newCluster&quot;);
+</p>
+<p>        ClientResponse cr = createCluster(newCluster);
+</p>
+<p>        int status = cr.getStatus();
+</p>
+<p>        if ((status &gt;= 200) &amp;&amp; (status &lt;= 299)) {
+</p>
+<p>            System.out.println(&quot;Cluster created.&quot;);
+</p>
+<p>        } else {
+</p>
+<p>            System.out.println(&quot;Cluster creation failed: &quot; + cr.getEntity(String.class));
+</p>
+<p>        }
+</p>
+<p>        System.out.println(&quot;List of clusters after create: &quot; + getClusters());
+</p>
+<p>        deleteCluster(newCluster);
+</p>
+<p>        System.out.println(&quot;List of clusters after delete: &quot; + getClusters());
+</p>
+<p>    }
+</p>
+<p>    public static void main(String... args) throws IOException {
+</p>
+<p>        RestClient rc = new RestClient();
+</p>
+<p>        rc.run();
+</p>
+<p>    }
+</p>
+<p>}
+</p>
+<p>[/java]
+</p>
+<p>Note in the constructor, we pass a <code>ClientConfig</code> instance to the <code>Client</code> constructor so that we can enable <code>POJOMapping</code> in the client.  The rest is pretty basic Jersey Client code.  For the endpoints that return a specific <code>Cluster</code> instance, we can simply ask the <code>Client</code> for <code>Cluster.class</code>. For the endpoint that returns all of the <code>Cluster</code>s, which we've modeled here as <code>Map&lt;String, Cluster&gt;</code> (one might argue that this method is poorly designed, and you might be right, but the point of this exercise is to look at the POJOMapping feature, not, necessarily, to craft the world's best REST resource : ), we have to do a little more work.  If we ask the Client for a Map (i.e., <code>cr.getEntity(Map.class)</code>), Jersey will happily return that, but the type of the values in the <code>Map</code> will be <code>LinkedHashMap</code>, not Cluster as we are wanting.  To work around that, we ask the <code>Client</code> for a <code>String</code>, which we then explicitly deserialize using the Jackson library, which is what Jersey itself uses: <code>mapper.readValue(json, new TypeReference&lt;Map&lt;String, Cluster&gt;&gt;() {});</code>.
+</p>
+<p>If you run the client, you should get output like this:
+</p>
+<p>[code]
+</p>
+<p>Number of clusters: 2
+</p>
+<p>Original time: Thu Jan 26 07:47:22 CST 2012
+</p>
+<p>New time:      Thu Jan 26 07:47:24 CST 2012
+</p>
+<p>Cluster created.
+</p>
+<p>List of clusters after create: {newCluster=Cluster{name='newCluster', configRef='null', gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}, c1=Cluster{name='c1', configRef='null', gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}, c2=Cluster{name='c2', configRef='null', gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}}
+</p>
+<p>List of clusters after delete: {c1=Cluster{name='c1', configRef='null', gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}, c2=Cluster{name='c2', configRef='null', gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}}
+</p>
+<p>[/code]
+</p>
+<p>Note that the serialization/deserialization works both ways (getting FROM the server and posting TO the server).  It's all handled automagically.  Having written and maintained several <code>MessageBodyWriter</code>s and <code>MessageBodyReader</code>s, I find this simplicity immensely appealing.  I would imagine that for most basic resources, this should work really well.  I'm not sure yet how this will scale up, if you will, with more complex resources, but I intend to find out.  Either way, it's definitely a great tool to have at hand.
+</p>
+<p>Source code for this project can be found <a href="/wp-content/uploads/2012/01/pojomapping.tar.gz">here</a>.</p>

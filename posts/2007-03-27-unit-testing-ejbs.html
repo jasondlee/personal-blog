@@ -1,0 +1,253 @@
+---
+title: 'Unit Testing EJBs'
+author: 'Jason Lee'
+layout: blog-post
+date: 2007-3-27
+tags: [ EJB3, Java, Testing ]
+---
+<p>As we've done more and more EJB development, we've had to think pretty hard about how to unit test our beans.  We've tried a couple of different approaches (including <i>not</i> testing, which I don't recommend ;), but weren't ever just real comfortable with the results.  I'm pretty happy with the method we're using now, and it's so simple, I'm a bit embarrassed that we didn't think of it earlier.<!--more-->
+</p>
+<p>One of our earliest attempts used JBoss' <a target="blank" href="http://docs.jboss.org/ejb3/embedded/embedded.html">embeddable container</a>, which we eventually discarded for a couple of reasons.  It was <i>really</i> heavy in terms of configuration and startup time, and, as hard as I'm sure the JBoss team is working on AS 5 in terms of EE 5 compliance, the embeddable container is still using an <i>old</i> version of the spec, which meant we had to change the way we handled resource look ups, which we didn't like.   We've also tried using mock objects, but, for the most part, we found that to be overkill.  What we ended up with is pretty light and simple.
+</p>
+<p>To make things work, we had to change the way we setup our EJBs.  Since the beginning our EE 5 development, we've been using field injection:
+</p>
+<p>[source lang="java"]
+</p>
+<p>@EJB(mappedName="ejb/MyEjb")
+</p>
+<p>private MyEjbInterface myEjb;
+</p>
+<p>[/source]
+</p>
+<p>which we have changed to using property injection:
+</p>
+<p>[source lang="java"]
+</p>
+<p>private MyEjbInterface myEjb;
+</p>
+<p>@EJB(mappedName="ejb/MyEjb")
+</p>
+<p>public void setMyEjb(MyEjb myEjb) {
+</p>
+<p>    this.myEjb = myEjb;
+</p>
+<p>}
+</p>
+<p>[/source]
+</p>
+<p>Our general approach has been to avoid making changes to production code for the purpose of testing, but, after talking things over with a <a target="blank" href="http://blog.rodcoffin.com/">friend</a> from our local <a target="blank" href="http://www.okcjug.org">JUG</a>, I felt the change was not only appropriate, but a good general philosophy change.  What Rod explained to me is that, by using property injection, we make our beans reusable across integration technologies.  If, for example, we ever wanted to use this class with <a target="blank" href="http://code.google.com/p/google-guice/">Guice</a> or <a target="blank" href="http://springframework.org/">Spring</a>, we'd be out of luck using field injection, as they don't support that.  They do, though, support property injection, so using that makes sense in terms of portability.
+</p>
+<p>With that change made, our unit tests became a lot easier to write.  Our applications are all multi-tiered, with JSF handling the view, and service and DAO layers that are either Faces-managed or container-managed and Session Beans, depending on the need for remote access.  For the purposes of our discussion here, we'll start with the data layer.  Let's say we have this simple DAO:
+</p>
+<p>[source lang="java"]
+</p>
+<p>@Stateful
+</p>
+<p>public class UserDaoImpl implements UserDao {
+</p>
+<p>    private EntityManager entityManager;
+</p>
+<p>    @PersistenceContext(unitName="myapp")
+</p>
+<p>    public void setEntityManager(EntityManager entityManager) {
+</p>
+<p>        this.entityManager = entityManager;
+</p>
+<p>    }
+</p>
+<p>    public User addUser(String userName, String emailAddress) {
+</p>
+<p>        User user = new User(userName, emailAddress);
+</p>
+<p>        entityManager.persist(user);
+</p>
+<p>        return user;
+</p>
+<p>    }
+</p>
+<p>}[/source]
+</p>
+<p>This is a very simple DAO, and there is a lot intentionally left out, but it demonstrates a simple DAO using JPA.  So how do we test that?  How do we create the EntityManager, for example?  Here's how the unit test might look using JUnit 4 and DBUnit:
+</p>
+<p>[source lang="java"]
+</p>
+<p>public class UserDaoImplTest {
+</p>
+<p>    private static UserDaoImpl dao = new UserDaoImpl();
+</p>
+<p>    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("myapp-test");
+</p>
+<p>    private static EntityManager entityManager;
+</p>
+<p>    @BeforeClass
+</p>
+<p>    public static void classSetup() {
+</p>
+<p>        try {
+</p>
+<p>            entityManager = (EntityManager) emf.createEntityManager();
+</p>
+<p>            DbUnitHelper.initDatabase(entityManager, "doc/sql/myapp.sql");
+</p>
+<p>            dao.setEntityManager(entityManager);
+</p>
+<p>        } catch (Exception e) {
+</p>
+<p>            throw new RuntimeException (e);
+</p>
+<p>        }
+</p>
+<p>    }
+</p>
+<p>    @AfterClass
+</p>
+<p>    public static void classTearDown() {
+</p>
+<p>        try {
+</p>
+<p>            DbUnitHelper.closeConnection();
+</p>
+<p>        } catch (SQLException e) {
+</p>
+<p>            e.printStackTrace();
+</p>
+<p>        }
+</p>
+<p>    }
+</p>
+<p>    @Before
+</p>
+<p>    public void setUp() throws DatabaseUnitException, SQLException, Exception {
+</p>
+<p>        DbUnitHelper.loadData("/dataset.xml");
+</p>
+<p>    }
+</p>
+<p>    @Test
+</p>
+<p>    public void addUser() {
+</p>
+<p>        DbUnitHelper.startTransaction(entityManager);
+</p>
+<p>        User user = dao.addUser("Jim Halpert", "jim@dundermiffflin.com");
+</p>
+<p>        Assert.assertNotNull(user);
+</p>
+<p>        DbUnitHelper.rollbackTransaction(entityManager);
+</p>
+<p>    }
+</p>
+<p>}[/source]
+</p>
+<p>The unit test starts by declaring some static resources:  the DAO implementation, an <code>EntityManagerFactory</code>, and an <code>EntityManager</code>.  In the <code>@BeforeClass</code>, we ask the EMF for the EntityManager, then pass that to a <a target="blank" href="http://blogs.steeplesoft.com/wp-content/uploads/2007/03/dbunithelper.zip" title="DBUnitHelper Source Code">DBUnit helper class</a>, then set the EM on the DAO (you should see now where the property injection comes in handy).  The <code>@Before</code> method simply loads our test data before each test.  One could just as easily have each unit test rollback at the end, but we chose to reload our small test dataset before each run.  The unit test itself is fairly straightforward, except that we are explicitly handling transactions to mimic the container-managed transaction handling we get for free in production.  
+</p>
+<p>The persistence context is defined like this:
+</p>
+<p>[source lang="XML"]
+</p>
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" 
+<p>    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+</p>
+<p>    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" 
+</p>
+<p>    version="1.0">
+</p>
+    <persistence-unit name="myapp-test" transaction-type="RESOURCE_LOCAL">
+        <class>com.steeplesoft.myapp.model.beans.User</class>
+        <exclude-unlisted-classes/>
+        <properties>
+            <property name="toplink.jdbc.driver" value="org.postgresql.Driver"/>  
+            <property name="toplink.jdbc.url" value="jdbc:postgresql://localhost/myapp"/>
+            <property name="toplink.jdbc.user" value="myapp"/>
+            <property name="toplink.jdbc.password" value="myapp"/>
+            <property name="toplink.logging.level" value="FINE"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+<p>[/source]
+</p>
+<a target="blank" href="http://blogs.steeplesoft.com/wp-content/uploads/2007/03/dbunithelper.zip" title="DBUnitHelper Source Code">Here</a> is the code for the DBUnitHelper class.  Note that this is still experimental, but I've used it on three projects now with good success, but it does abuse the JPA API by talking to the TopLink objects directly, so it is definitely not portable.  You have been warned. :)
+<p>Testing our service is fairly similar, needing just a bit more setup:
+</p>
+<p>[source lang="java"]
+</p>
+<p>public class MyAppServiceImplTest {
+</p>
+<p>    private static MyAppServiceImpl service = new MyAppServiceImpl();
+</p>
+<p>    private static UserDaoImpl dao = new UserDaoImpl();
+</p>
+<p>    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("myapp-test");
+</p>
+<p>    private static EntityManager entityManager;
+</p>
+<p>    @BeforeClass
+</p>
+<p>    public static void classSetup() {
+</p>
+<p>        try {
+</p>
+<p>            entityManager = (EntityManager) emf.createEntityManager();
+</p>
+<p>            DbUnitHelper.initDatabase(entityManager, "doc/sql/myapp.sql");
+</p>
+<p>            dao.setEntityManager(entityManager);
+</p>
+<p>            service.setUserDao(dao);
+</p>
+<p>        } catch (Exception e) {
+</p>
+<p>            throw new RuntimeException (e);
+</p>
+<p>        }
+</p>
+<p>    }
+</p>
+<p>    @AfterClass
+</p>
+<p>    public static void classTearDown() {
+</p>
+<p>        try {
+</p>
+<p>            DbUnitHelper.closeConnection();
+</p>
+<p>        } catch (SQLException e) {
+</p>
+<p>            e.printStackTrace();
+</p>
+<p>        }
+</p>
+<p>    }
+</p>
+<p>    @Before
+</p>
+<p>    public void setUp() throws DatabaseUnitException, SQLException, Exception {
+</p>
+<p>        DbUnitHelper.loadData("/dataset.xml");
+</p>
+<p>    }
+</p>
+<p>    @Test
+</p>
+<p>    public void addUser() {
+</p>
+<p>        DbUnitHelper.startTransaction(entityManager);
+</p>
+<p>        User user = service.addUser("Jim Halpert", "jim@dundermiffflin.com");
+</p>
+<p>        Assert.assertNotNull(user);
+</p>
+<p>        DbUnitHelper.rollbackTransaction(entityManager);
+</p>
+<p>    }
+</p>
+<p>}[/source]
+</p>
+<p>This test is very similar to the DAO test, including transaction management, but we call the service instead of the DAO.  I also chose to create a "real" instance of the DAO as opposed to mocking one up, since the resource was local to the project.  That makes the test more of an integration test in some ways, but we're OK with that.
+</p>
+<p>For external resources, we're tempted to use mock objects, but another sharp OKC JUG regular, <a target="blank" href="http://www.davenicolette.net">Dave Nicolette</a>, suggests that that might be overkill.  Anything we might inject we will have an interface for, so he suggests just writing a stubbed implementation of the interface and injecting that, making our "stub" behave the way our test expects, which would allow us to focus on testing the client and not the "remote" object.  That's an interesting approach.  I have not been able to test that yet, but I certainly will when the need arises.
+</p>
+<p>That about sums it up.  All that's left to test is the JSF layer, for which we don't have a solution with which I'm all that comfortable.  Once we nail something down, I'll be sure to write it up here. :)
+</p>
+<p>So, how is everyone else testing EJBs?  Comments, suggestions, corrections, etc. are, of course, welcome!</p>

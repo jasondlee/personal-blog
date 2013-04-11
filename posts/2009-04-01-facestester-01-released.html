@@ -1,0 +1,39 @@
+---
+title: 'FacesTester 0.1 Released'
+author: 'Jason Lee'
+layout: blog-post
+date: 2009-4-1
+tags: [ Java, jsf, mojarra scales, Testing ]
+---
+<p>About a month ago, I <a target="_blank" href="/announcing-facestester/">announced</a> a new project, FacesTester, a JUnit-based testing tool for JSF that my good friend <a target="_blank" href="http://www.rodcoffin.com/">Rod Coffin</a> and I have undertaken.  Since then, Rod posted a very nice <a target="_blank" href="http://blog.rodcoffin.com/?p=137">introduction</a> to FacesTester usage.  Today, we made our first official release, FacesTester 0.1.  The version number should indicate that it's still a work in progress, but it is already quite functional (I, for one, have been using it to build a test suite for Mojarra Scales, which has helped drive out features and resolve bugs very quickly).  We wanted to push out a release to encourage people to download it, use it, and give us feedback.
+</p>
+<p>So what does FacesTester currently support?  Quite a bit.  In this entry, we'll take a quick look at what FacesTester offers, and what we have planned.<!--more-->
+</p>
+<p>Without diving into code too much, which Rod has covered nicely, here's a quick list of what we support:
+</p>
+<ul>
+<li>Requesting a page from your JSF app</li>
+<li>Verifying the existence of a component in the UIComponent tree of a rendered page</li>
+<li>Verifying the existence of arbitrary substrings in the rendered page</li>
+<li>Exercising managed beans via EL on a requested page</li>
+<li>Exercising custom components via a requested page</li>
+<li>Acquiring a handle (<code>FacesForm</code>) for a form on a rendered page</li>
+<li>Manipulating form values and submitting the form</li>
+<li>Validating <code>managed-bean</code> declarations in <code>faces-config.xml</code></li>
+<li>Validating custom <code>component</code> declarations in <code>faces-config.xml</code></li>
+</ul>
+<p>While that is, I think, a pretty nice set of features, we have more work planned.  For example, the faces-config.xml static analysis will eventually cover as many of the valid configuration elements as possible (e.g., Renderer declarations, navigation cases, PhaseListeners, etc);  we currently do not support query string parameters, which I'll be fixing shortly; and so on.
+</p>
+<p>If you're a JSF developer, we'd love for you try this out and tell us what works, what doesn't, and what you'd like to see.  The project is hosted on <a target="_blank" href="http://kenai.com/projects/facestester">kenai.com</a>, where we have forums and, most importantly, an <a target="_blank" href="http://kenai.com/jira/browse/FACESTESTER">issue tracker</a>.   You can download the jar file directly from the <a target="_blank" href="http://kenai.com/projects/facestester/downloads">Kenai project site</a>, or, if you're a Maven user, the jar is available from the <a target="_blank" href="http://download.java.net/maven/2/">java.net Maven 2 repository</a>:
+</p>
+<p>[source lang="xml"]
+</p>
+        <dependency>
+            <groupId>com.steeplesoft.jsf</groupId>
+            <artifactId>facestester</artifactId>
+            <version>0.1</version>
+            <scope>test</scope>
+        </dependency>
+<p>[/source]
+</p>
+<p> Any and all feedback is welcome!</p>

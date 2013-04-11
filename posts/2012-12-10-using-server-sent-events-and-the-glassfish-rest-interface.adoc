@@ -1,0 +1,218 @@
+---
+title: 'Using Server Sent Events and the GlassFish REST Interface'
+author: 'Jason Lee'
+layout: blog-post
+date: 2012-12-10
+tags: [ GlassFish, Java EE, REST ]
+---
+
+Wikipedia defines Server-Sent Events as "a technology for providing push notifications from a server to a browser client in the form of DOM events. The Server-Sent Events EventSource API is now being standardized as part of HTML5 by the W3C."  It's a great alternative to polling the server for updates.  Long story short, thanks to the work of the http://jersey.java.net[Jersey] team, we have "easy" access to this in GlassFish, and we've added support for it to our RESTful administration interface.  Let's take a look at a quick sample.
+
+pass::[more]
+
+I should explain my scare quotes above, before we get too far, and I'll start with two brutally honest admissions: 1) I didn't write most of the SSE support we'll see today, 2) I don't understand yet, some of the mechanics.  Whew! I feel better. :P  One more caveat: this is not intended to be a general REST/SSE how to (though I might try my hand at one later), but, rather, a GlassFish REST admin SSE discussion.  If you're not interested in managing GlassFish via our REST APIs, then this might not interest you much. Or it might.  Either way, you've been warned.
+
+With that out of the way, I need to describe a few GlassFish architectural items. The first, and most important for our purposes here, is the primary way, fundamentally, of interacting with the various GlassFish backend subsystems is the `AdminCommand`.  Every REST resource we expose is ultimately based on this building block. (There are a number of technical and historical reasons for this that are out of scope here).
+
+The second architectural item to note is a... type of REST resource we've termed "composite resources".  These are not composites of other REST resources, but of 1 or more `AdminCommand` invocations. In GlassFish 3.x, each REST request was backed ultimately by a call to a single `AdminCommand`, which resulted in a very fine-grained API. For GlassFish 4.x, one of our goals is to provide a framework for quickly and easiliy writing management REST interfaces that expose a higher-level (more coarsely-grained) API.  That, in a nutshell, is the goal of composite resources.
+
+I tell you all of that for two reasons. The first is that I've had people ask for more details on the background, and the second is that we'll be dealing with both of those in this entry, so it will help to understand their backgrounds.  With all of that said, let's get to the code.
+
+== The Server Side ==
+Currently, we don't have any REST resources in the https://svn.java.net/svn/glassfish~svn/trunk/main[GlassFish repo] to demonstrate this, but that's not going to stop us: We're going to write one right here! :P
+
+Let's first, then, take a look at an `AdminCommand`.  One of the main reasons to use SSE is that the REST request might take a while (take, for example, cluster creation).  What this new SSE support will allow us to do is expose the functionality in such a way that will allow the client to send the request, then be notified, asynchronously, of the progress as the request is processed.  That will allow the client to do other things, if it so chooses, while the request is being handled.  What we need, then, is a long-running `AdminCommand`:
+
+[source,java]
+-----
+@Service(name = "slow-command")
+@PerLookup
+@ExecuteOn(RuntimeType.DAS)
+@CommandLock(CommandLock.LockType.NONE)
+@Progress(totalStepCount = 5)
+public class SlowAdminCommand implements AdminCommand {
+    public void execute(AdminCommandContext context) {
+        ProgressStatus progressStatus = context.getProgressStatus();
+        ActionReport report = context.getActionReport();
+
+        for (int i = 1; i <= 5; i++) {
+            sleep();
+            progressStatus.progress(i, "Finished step #" + i);
+        }
+
+        report.appendMessage("Slow command completed.");
+    }
+
+    protected void sleep() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SlowAdminCommand.class.getName())
+                .log(Level.SEVERE, null, ex);
+        }
+    }
+}
+-----
+
+This is a pretty simple and boring `AdminCommand`, if you're used to seeing them, but, in a nutshell, this command sleeps 5 times, for 1 second at a sime, updating the progress status after each sleep.  Finally, it returns a message in the `ActionReport`, another Admin infrastructure artifact.  All the bits and pieces of this are out of scope, but included here for the curious.  
+
+Let's take a look at how this might be exposed via REST, now.  In short, we can add new REST resources to the system by doing two things:
+# Writing a JAX-RS class that extends `CompositeResource`
+# Annotating that class with `@Service`
+
+Here is how this might look:
+
+[source,java]
+-----
+@Service
+@Path("/slow")
+public class SlowRestResource extends CompositeResource {
+    public static final String MESSAGE = "It works!";
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String plain() {
+        return MESSAGE;
+    }
+
+    @GET
+    @Produces(SseFeature.SERVER_SENT_EVENTS)
+    public EventOutput get() {
+        return this.executeSseCreateCommand(getSubject(), "slow-command", 
+            Util.parameterMap(), new ResponseBodyBuilder() {
+            public ResponseBody build(ActionReport report) {
+                return Util.responseBody()
+                .addSuccess(MESSAGE);
+            }
+
+        });
+    }
+}
+-----
+
+If you're familiar with JAX-RS, this should look pretty familiar, apart from the `RestModel` defined at the end. That's part of the composite component supports extensible data model support and is (say it with me!) out of scope here. :)
+
+This resource has a single method, `get()`, which returns an `EventChannel`. Note that `EventChannel` has been changed to `EventOutput` in more recent versions of the JAX-RS 2.0 specification (and EventChannel.SERVER_SENT_EVENTS becomes SseFeature.SERVER_SENT_EVENTS).  The real meat of the SSE handling is hidden away nicely in the executeSseCreateCommand() method.  The curious can find that in the GlassFish source repo, but it's pretty heavily steeped in GlassFish internals. You've been warned. Again. :)
+
+== The Client Side ==
+OK. So most of the server is of little interest to well over 99% of the people reading this. The interesting part is the client, and, well, it's interesting. :)  Here is our test client:
+
+[source,java]
+-----
+public class SseClient {
+    public static void main(String... args) throws IOException, JSONException {
+        Client client = JerseyClientFactory.newClient();
+        client.configuration()
+                .register(new AdminCommandStateJsonReader())
+                .register(new ProgressStatusDTOJsonReader())
+                .register(new ProgressStatusEventJsonReader())
+                .register(GfSseEventReceiverReader.class);
+
+        GfSseEventReceiver eventReceiver = 
+            client.target("http://localhost:4848/management/slow").
+                request(EventChannel.SERVER_SENT_EVENTS).
+                get(GfSseEventReceiver.class);
+        boolean closeSse = false;
+        GfSseInboundEvent event;
+        ActionReport ar = null;
+        String message = null;
+        do {
+            event = eventReceiver.readEvent();
+            if (event != null) {
+                final String eventName = event.getName();
+                if (AdminCommandState.EVENT_STATE_CHANGED.equals(eventName)) {
+                    AdminCommandState acs = event.getData(AdminCommandState.class, 
+                        MediaType.APPLICATION_JSON_TYPE);
+                    if (acs.getState() == AdminCommandState.State.COMPLETED
+                            || acs.getState() == AdminCommandState.State.RECORDED) {
+                        if (acs.getActionReport() != null) {
+                            ar = acs.getActionReport();
+                            final JSONObject responseBody = 
+                                new JSONObject((Map)ar.getExtraProperties().get("response"));
+                            JSONArray messages = responseBody.getJSONArray("messages");
+                            message = ((JSONObject)messages.get(0)).getString("message");
+                        }
+                        closeSse = true;
+                    }
+                }
+            }
+        } while (event != null && !eventReceiver.isClosed() && !closeSse);
+        if (closeSse) {
+            try {
+                eventReceiver.close();
+            } catch (Exception exc) {
+            }
+        }
+
+        System.out.println(message);
+
+    }
+}
+
+-----
+
+As you can see, there's a _lot_ going on here. First, we need to create and configure the client, which is the new JAX-RS `Client`. We register a few GlassFish-specific `MessageBodyReader` implementations, which are needed to deserialize the JSON responses from the server. (Note: a source comment on `GfSseEventReceiverReader` says _"TODO: Temporary implementation until more features in Jersey client"_, so this requirement may go away before GlassFish 4.0 ships). Once we have our client instance, we can make the REST request, asking Jersey to return us a `GfSseEventReceiver`. With that, we start a loop.
+
+Inside the loop, we read an event from the receiver, and pull out its name. When calling an `AdminCommand`-backed, SSE-enabled GlassFish REST resource, you will always get at least three event types: `AdminCommandInstance/stateChanged`, `ProgressStatus/state`, and `ProgressStatus/change`. First, you will receive an `AdminCommandInstance/stateChanged` event, which will tell you (if you were to examine the JSON or the `AdminCommandState` object it becomes) that the command is "RUNNING". The next event, `ProgressStatus/state` will inform you of the initial state of the `ProgressStatus` object the server uses internal for, as you might guess, progress status. If you will look back at our `AdminCommand`, you'll see a call to `progressStatus.progress()`. A long-running process can make these calls to denote steps in the overall process, which are then sent to the client via the `ProgressStatus/change` event.  Finally, you will receive one last `AdminCommandInstance/stateChanged` event, informing you that the command has "COMPLETED".  It might help to see the whole stream as JSON. You can request it from the server by issuing this command: `curl -H 'Accept: text/event-stream' http://localhost:4848/management/slow`:
+
+[source,javascript]
+-----
+event: AdminCommandInstance/stateChanged
+data: {"state":"RUNNING","id":"1","empty-payload":true}
+
+event: ProgressStatus/state
+data: {"progress-status":{"name":"slow-command","id":"1","total-step-count":-1,
+    "current-step-count":0,"complete":false}}
+
+event: ProgressStatus/change
+data: {"progress-status-event":{"changed":["TOTAL_STEPS"],"progress-status":
+    {"name":"slow-command","id":"1","total-step-count":5,"current-step-count":0,"complete":false}}}
+
+event: ProgressStatus/change
+data: {"progress-status-event":{"changed":["SPINNER","STEPS"],"message":
+    "Finished step #1","progress-status":{"name":"slow-command","id":"1",
+    "total-step-count":5,"current-step-count":1,"complete":false}}}
+
+event: ProgressStatus/change
+data: {"progress-status-event":{"changed":["SPINNER","STEPS"],"message":
+    "Finished step #2","progress-status":{"name":"slow-command","id":"1",
+    "total-step-count":5,"current-step-count":3,"complete":false}}}
+
+event: ProgressStatus/change
+data: {"progress-status-event":{"changed":["SPINNER","STEPS"],"message":
+    "Finished step #3","progress-status":{"name":"slow-command","id":"1",
+    "total-step-count":5,"current-step-count":5,"complete":false}}}
+
+event: ProgressStatus/change
+data: {"progress-status-event":{"changed":["SPINNER"],"message":
+    "Finished step #4","progress-status":{"name":"slow-command","id":"1",
+    "total-step-count":5,"current-step-count":5,"complete":false}}}
+
+event: ProgressStatus/change
+data: {"progress-status-event":{"changed":["SPINNER"],"message":
+    "Finished step #5","progress-status":{"name":"slow-command","id":"1",
+    "total-step-count":5,"current-step-count":5,"complete":false}}}
+
+event: ProgressStatus/change
+data: {"progress-status-event":{"changed":["COMPLETED"],"progress-status":
+    {"name":"slow-command","id":"1","total-step-count":5,"current-step-count":5,
+    "complete":true}}}
+
+event: AdminCommandInstance/stateChanged
+data: {"state":"COMPLETED","id":"1","empty-payload":true,"action-report":
+    {"message":"Slow command completed.","command":"slow-command AdminCommand",
+    "exit_code":"SUCCESS","extraProperties":{"response":{"messages":
+    [{"message":"It works!","severity":"SUCCESS"}]}}}}
+-----
+
+Under a "normal" synchronous REST request, when the entity is created, https://wikis.oracle.com/display/GlassFish/GlassFishRestResourceGuidelines[GlassFish REST Resource Guidelines], the server will return 201 (CREATED) status code, with the URI of the newly created entity in the `Location` header. Since this asynchronous, SSE-based interaction is so different, we have to return this data in a different manner.  Currently, this is done via a `ResponseBody` object (another GlassFish model) that can hold messages, as well as the item/entity.  Things in this area are likely to change as we continue to think about and stress test this functionality, so if you're an early adopter, keep your eyes open. :)
+
+== Caveats ==
+image::genie.jpg[float="left"] 
+
+If you haven't picked up it yet, "there are a few exceptions, a few provisos, and a couple of quid pro quos." 
+
+Much of this code is brand new. There's also quite a bit of time between now and when GlassFish 4.0 ships, so this code could change.  I'm not real comfortable with the current mechanism for returning the desired repsonse, to be honest. For example: the client code seems a bit verbose, so we might be able to provide some client-side utilities to help encapsulate that; and the JAX-RS spec continues to change as that EG refines the new revision; just to name a few.
+
+The take away should be, then, that you can start playing with this now, with the code I've presented here, but you need to keep in mind that early adopters usually stub their toes a bit as products mature. :)  In one form or another, though, this support will be present when GlassFish 4.0 ships, so you can count on that, though I can't say at this point which resources, specifically, will support SSE. Time will tell on that.
+
+You can find the source http://blogs.steeplesoft.com/wp-content/uploads/2012/12/glassfish_rest_sse_sample.tar.gz[here]. If you have any questions or suggestions, see the box below. :)

@@ -1,0 +1,359 @@
+---
+title: 'FacesUtil:  A missing, yet important piece'
+author: 'Jason Lee'
+layout: blog-post
+date: 2006-5-8
+tags: [ JavaServer Faces ]
+---
+<p>A reader brought to my attention that I have never posted the code to FacesUtil, a convenience class used, for example, in my <a target="_newwindow" href="http://blogs.steeplesoft.com/2006/04/25/jsf-phaselisteners-and-get-requests/">JSF, PhaseListeners, and GET Requests</a> article, so I'll fix that oversight now.  Before I get to the code, though, let me preface it by saying this:  This code has grown as several developers have hacked on it, so it my not be consistent, and probably doesn't embody any sort of best practices.  It does, however, work well for us, and that's our primary concern. :)  Note also, that this code has not been updated to the 1.2 specification yet, so you'll at least get warnings if not errors should you use this in a 1.2 environment.  I am currently in the process of updating the class, but, for now, here it is in its current state.
+</p>
+<!--more-->
+<p>FacesUtil.java
+</p>
+<p>[source lang="java"]import javax.faces.FactoryFinder;
+</p>
+<p>import javax.faces.application.Application;
+</p>
+<p>import javax.faces.application.ApplicationFactory;
+</p>
+<p>import javax.faces.application.FacesMessage;
+</p>
+<p>import javax.faces.context.FacesContext;
+</p>
+<p>import javax.faces.el.ValueBinding;
+</p>
+<p>import javax.faces.webapp.UIComponentTag;
+</p>
+<p>import javax.servlet.ServletContext;
+</p>
+<p>import javax.servlet.http.HttpServletRequest;
+</p>
+<p>/**
+</p>
+<p> * Utility class for JavaServer Faces.
+</p>
+<p> * 
+</p>
+<p> */
+</p>
+<p>public class FacesUtil {
+</p>
+<p>    /**
+</p>
+<p>     * Get servlet context.
+</p>
+<p>     * 
+</p>
+<p>     * @return the servlet context
+</p>
+<p>     */
+</p>
+<p>    public static ServletContext getServletContext() {
+</p>
+<p>        return (ServletContext) FacesContext.getCurrentInstance()
+</p>
+<p>                .getExternalContext().getContext();
+</p>
+<p>    }
+</p>
+<p>    /**
+</p>
+<p>     * Get managed bean based on the bean name.
+</p>
+<p>     * 
+</p>
+<p>     * @param beanName
+</p>
+<p>     *            the bean name
+</p>
+<p>     * @return the managed bean associated with the bean name
+</p>
+<p>     */
+</p>
+<p>    public static Object getManagedBean(String beanName) {
+</p>
+<p>        Object o = getValueBinding(getJsfEl(beanName)).getValue(
+</p>
+<p>                FacesContext.getCurrentInstance());
+</p>
+<p>        return o;
+</p>
+<p>    }
+</p>
+<p>    /**
+</p>
+<p>     * Remove the managed bean based on the bean name.
+</p>
+<p>     * 
+</p>
+<p>     * @param beanName
+</p>
+<p>     *            the bean name of the managed bean to be removed
+</p>
+<p>     */
+</p>
+<p>    public static void resetManagedBean(String beanName) {
+</p>
+<p>        getValueBinding(getJsfEl(beanName)).setValue(
+</p>
+<p>                FacesContext.getCurrentInstance(), null);
+</p>
+<p>    }
+</p>
+<p>    /**
+</p>
+<p>     * Store the managed bean inside the session scope.
+</p>
+<p>     * 
+</p>
+<p>     * @param beanName
+</p>
+<p>     *            the name of the managed bean to be stored
+</p>
+<p>     * @param managedBean
+</p>
+<p>     *            the managed bean to be stored
+</p>
+<p>     */
+</p>
+<p>    public static void setManagedBeanInSession(String beanName,
+</p>
+<p>            Object managedBean) {
+</p>
+<p>        FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+</p>
+<p>                .put(beanName, managedBean);
+</p>
+<p>    }
+</p>
+<p>    /**
+</p>
+<p>     * Get parameter value from request scope.
+</p>
+<p>     * 
+</p>
+<p>     * @param name
+</p>
+<p>     *            the name of the parameter
+</p>
+<p>     * @return the parameter value
+</p>
+<p>     */
+</p>
+<p>    public static String getRequestParameter(String name) {
+</p>
+<p>        return (String) FacesContext.getCurrentInstance().getExternalContext()
+</p>
+<p>                .getRequestParameterMap().get(name);
+</p>
+<p>    }
+</p>
+<p>    /**
+</p>
+<p>     * Add information message.
+</p>
+<p>     * 
+</p>
+<p>     * @param msg
+</p>
+<p>     *            the information message
+</p>
+<p>     */
+</p>
+<p>    public static void addInfoMessage(String msg) {
+</p>
+<p>        addInfoMessage(null, msg);
+</p>
+<p>    }
+</p>
+<p>    /**
+</p>
+<p>     * Add information message to a sepcific client.
+</p>
+<p>     * 
+</p>
+<p>     * @param clientId
+</p>
+<p>     *            the client id
+</p>
+<p>     * @param msg
+</p>
+<p>     *            the information message
+</p>
+<p>     */
+</p>
+<p>    public static void addInfoMessage(String clientId, String msg) {
+</p>
+<p>        FacesContext.getCurrentInstance().addMessage(clientId,
+</p>
+<p>                new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg));
+</p>
+<p>    }
+</p>
+<p>    /**
+</p>
+<p>     * Add error message.
+</p>
+<p>     * 
+</p>
+<p>     * @param msg
+</p>
+<p>     *            the error message
+</p>
+<p>     */
+</p>
+<p>    public static void addErrorMessage(String msg) {
+</p>
+<p>        addErrorMessage(null, msg);
+</p>
+<p>    }
+</p>
+<p>    /**
+</p>
+<p>     * Add error message to a sepcific client.
+</p>
+<p>     * 
+</p>
+<p>     * @param clientId
+</p>
+<p>     *            the client id
+</p>
+<p>     * @param msg
+</p>
+<p>     *            the error message
+</p>
+<p>     */
+</p>
+<p>    public static void addErrorMessage(String clientId, String msg) {
+</p>
+<p>        FacesContext.getCurrentInstance().addMessage(clientId,
+</p>
+<p>                new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
+</p>
+<p>    }
+</p>
+<p>    /**
+</p>
+<p>     * Add warning message.
+</p>
+<p>     * 
+</p>
+<p>     * @param msg
+</p>
+<p>     *            the warning message
+</p>
+<p>     */
+</p>
+<p>    public static void addWarningMessage(String msg) {
+</p>
+<p>        addWarningMessage(null, msg);
+</p>
+<p>    }
+</p>
+<p>    /**
+</p>
+<p>     * Add warning message to a sepcific client.
+</p>
+<p>     * 
+</p>
+<p>     * @param clientId
+</p>
+<p>     *            the client id
+</p>
+<p>     * @param msg
+</p>
+<p>     *            the warning message
+</p>
+<p>     */
+</p>
+<p>    public static void addWarningMessage(String clientId, String msg) {
+</p>
+<p>        FacesContext.getCurrentInstance().addMessage(clientId,
+</p>
+<p>                new FacesMessage(FacesMessage.SEVERITY_WARN, msg, msg));
+</p>
+<p>    }
+</p>
+<p>    /**
+</p>
+<p>     * Evaluate the integer value of a JSF expression.
+</p>
+<p>     * 
+</p>
+<p>     * @param el
+</p>
+<p>     *            the JSF expression
+</p>
+<p>     * @return the integer value associated with the JSF expression
+</p>
+<p>     */
+</p>
+<p>    public static Integer evalInt(String el) {
+</p>
+<p>        if (el == null) {
+</p>
+<p>            return null;
+</p>
+<p>        }
+</p>
+<p>        if (UIComponentTag.isValueReference(el)) {
+</p>
+<p>            Object value = getElValue(el);
+</p>
+<p>            if (value == null) {
+</p>
+<p>                return null;
+</p>
+<p>            } else if (value instanceof Integer) {
+</p>
+<p>                return (Integer) value;
+</p>
+<p>            } else {
+</p>
+<p>                return new Integer(value.toString());
+</p>
+<p>            }
+</p>
+<p>        }
+</p>
+<p>        return new Integer(el);
+</p>
+<p>    }
+</p>
+<p>    private static Application getApplication() {
+</p>
+<p>        ApplicationFactory appFactory = (ApplicationFactory) FactoryFinder
+</p>
+<p>                .getFactory(FactoryFinder.APPLICATION_FACTORY);
+</p>
+<p>        return appFactory.getApplication();
+</p>
+<p>    }
+</p>
+<p>    private static ValueBinding getValueBinding(String el) {
+</p>
+<p>        return getApplication().createValueBinding(el);
+</p>
+<p>    }
+</p>
+<p>    public static HttpServletRequest getServletRequest() {
+</p>
+<p>        return (HttpServletRequest) FacesContext.getCurrentInstance()
+</p>
+<p>                .getExternalContext().getRequest();
+</p>
+<p>    }
+</p>
+<p>    private static Object getElValue(String el) {
+</p>
+<p>        return getValueBinding(el).getValue(FacesContext.getCurrentInstance());
+</p>
+<p>    }
+</p>
+<p>    private static String getJsfEl(String value) {
+</p>
+<p>        return "#{" + value + "}";
+</p>
+<p>    }
+</p>
+<p>}[/source]</p>
