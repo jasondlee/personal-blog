@@ -16,6 +16,23 @@ html
     link rel='stylesheet' href='/styles/typograhpy.css'
     link rel='stylesheet' href='/styles/screen.css'
     link rel="stylesheet" href='/styles/style.css'
+    link rel='stylesheet' href='/styles/syntaxHighlighter/shCore.css'
+    link rel='stylesheet' href='/styles/syntaxHighlighter/shThemeDefault.css'
+    script src='/scripts/shCore.js'
+    script src='/scripts/shAutoloader.js'
+    javascript:
+        SyntaxHighlighter.autoloader(
+            'js jscript javascript  /scripts/brushes/shBrushJScript.js'
+            //'java /scripts/brushes/shBrushJava.js',
+            //'php /scripts/brushes/shBrushPhp.js',
+            //'xml /scripts/brushes/shBrushXml.js',
+            //'scala /scripts/brushes/shBrushScala.js',
+            //'python /scripts/brushes/shBrushPython.js',
+            //'css /scripts/brushes/shBrushCss.js',
+            //'javafx /scripts/brushes/shBrushJavaFX.js',
+            //'bash /scripts/brushes/shBrushBash.js'
+        );
+        
     link href='http://fonts.googleapis.com/css?family=Cherry+Cream+Soda' rel='stylesheet' type='text/css'
     link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'
     css:
@@ -57,6 +74,9 @@ html
                     =content
                 div class="secondary aside"
                     div#sidebar-container
+                        /div class="widget widget_links"
+                        /    h3.widget-title Tag Cloud
+                        /    = site.posts_tag_cloud
                         div class="widget widget_links"
                             h3.widget-title My Links
                             ul class="xoxo blogroll"
@@ -66,6 +86,8 @@ html
                                     a href="/linkedin" rel="me" title="LinkedIn" LinkedIn
                                 li
                                     a href="/twitter" rel="me" title="Twitter" Twitter
+                                li
+                                    a href="/resume.pdf" rel="me" title="Resume" Resume
                         div class="widget widget_links"
                             h3.widget-title Publications
                             ul class="xoxo blogroll"
@@ -85,3 +107,5 @@ html
                                 li
                                     a title="This details the project that spawned a couple of the Mojarra Scales components" href="http://www.jsfcentral.com/articles/trenches_7.html"
                                         |IEC donates custom JSF component to Mojarra Scales
+    javascript:
+        SyntaxHighlighter.all();

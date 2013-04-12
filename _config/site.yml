@@ -16,6 +16,7 @@ scss:
 # if no profile is specified, the first with a deploy config is selected
 profiles:
   development:
+    minify: false
     deploy:
       dummy:
   production:

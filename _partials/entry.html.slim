@@ -12,7 +12,7 @@ article.post
         span.title
           | tags: 
         - page.post.tags.each do |tag|
-          a href="/blog/tags/#{tag}"
+          a href="/posts/tags/#{tag}"
             - if tag != page.post.tags.last
               ="#{tag}, "
             - else
