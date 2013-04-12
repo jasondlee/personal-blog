@@ -3,7 +3,7 @@ title: 'JSF 2, h:dataTable, and Ajax Updates'
 author: 'Jason Lee'
 layout: blog-post
 date: 2009-10-28
-tags: [ Ajax, Ajax, Java, JavaServer Faces, jsf ]
+tags: [ ajax, Java, JavaServer Faces ]
 ---
 <p>While JSF has had Ajax support for a long time now, it has always been through external libraries such as <a href="http://www.jboss.org/richfaces">Ajax4Jsf/RichFaces</a>, <a href="http://www.icefaces.org/main/home/">ICEfaces</a>, <a href="http://directwebremoting.org/dwr/index.html">DWR</a>, <a href="https://jsf-extensions.dev.java.net/nonav/mvn/reference-ajax.html">DynaFaces</a>, etc.  With JSF 2, the framework now has first class, standardized support for Ajax.  This is good news on several fronts.  For those that want Ajax support but would rather not import another library, that capability is now baked in, and, for those familiar with a4j or DynaFaces, it should look very familiar.  However, for those that don't mind the external dependency, the standardized Ajax will make it much easier to mix and match component libraries on the same page, an issue that has plagued JSF for while.  In this post, I'd like to take the first approach and show how easy it is to achieve Ajaxy updates on your <code>h:dataTable</code> using only standard JSF.<!--more-->
 </p>

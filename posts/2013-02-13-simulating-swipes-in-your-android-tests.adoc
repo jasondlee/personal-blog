@@ -3,7 +3,7 @@ title: 'Simulating Swipes in Your Android Tests'
 author: 'Jason Lee'
 layout: blog-post
 date: 2013-2-13
-tags: [ android, Android, Java ]
+tags: [ Android, Java ]
 ---
 
 As some of you may or may not know, I have small Android project, http://cubtracker.com[Cub Tracker], that I've been working on for quite some time now in my spare time.  I've been trying to be better about quicker releases, but all the testing for the app is currently manual (and, therefore, hit-and-miss), so updates tend to be a bit slower and very cautious.  (For the record, it used to have pretty decent tests, but I rewrote the app for version 2 and just never got around to porting/rewriting the tests.)  My next change, though, will be pretty invasive, so I've decided it's time to fix that.  In doing so, though, I hit a snag pretty quickly.  Cub Tracker now uses a http://developer.android.com/reference/android/support/v4/view/ViewPager.html[ViewPager] as the main form of navigation, and I quickly realized I didn't know how to swipe from one page to another. It turns out there are several different ways to do it. Here are some...

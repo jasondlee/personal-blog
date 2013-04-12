@@ -3,7 +3,7 @@ title: 'Java EE&#039;s Buried Treasure: the Application Client Container'
 author: 'Jason Lee'
 layout: blog-post
 date: 2011-2-22
-tags: [ GlassFish, GlassFish, Java, JavaEE, Tutorials ]
+tags: [ GlassFish, Java, JavaEE, tutorials ]
 ---
 <p>From time to time, I'm asked about accessing various EE artifacts (EJBs, etc) from a standalone client.  Almost invariably, the user is having trouble getting the environment setup, grabbing an InitialContext, etc.  Also almost invariably, my answer to them is "use the application client container", which is as far as I can take them.  The topic of application client container, or ACC, came up again recently when I was asked on Twitter about an issue with ACC and GlassFish in a clustered environment. While this user (hi, Markus! : ) <a href='http://blog.eisele.net/2011/02/clustering-stateful-session-beans-with.html'>figured out his issue</a> before I could be of much help, I took this opportunity finally to learn exactly what the ACC is and how to use it.  Thanks to Oracle's Tim Quinn for his patient and tireless help, here's what I learned...<!--more-->
 </p>

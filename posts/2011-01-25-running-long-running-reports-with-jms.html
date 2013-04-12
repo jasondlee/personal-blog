@@ -3,7 +3,7 @@ title: 'Running Long-Running Reports with JMS'
 author: 'Jason Lee'
 layout: blog-post
 date: 2011-1-25
-tags: [ GlassFish, JavaServer Faces, JMS, jms, jsf ]
+tags: [ GlassFish, JavaServer Faces, JMS ]
 ---
 <p>At a recent meeting of the Oklahoma City JUG, I was asked by a member how her group could "script" JSF report generation.  After a couple of questions, I figured what she really wanted:  she wanted a way to allow users to request reports in an ad hoc manner, as opposed to the reports being run on a schedule.  In a general sense, this is a pretty easy question to answer, but I've run into situations where the reports take a long time to run -- and I'm sure she will, as well -- making a web interface for generating the report less useful (due to timeouts, etc).  In this entry, we'll take a look at one way to handle that.<!--more-->
 </p>

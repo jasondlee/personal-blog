@@ -3,7 +3,7 @@ title: 'JSF 2 Gets Declarative Event Handling'
 author: 'Jason Lee'
 layout: blog-post
 date: 2008-12-23
-tags: [ JavaServer Faces, jsf ]
+tags: [ JavaServer Faces ]
 ---
 <p>If you've been following the evolution of the JSF 2 spec closely, you have probably seen the addition of a finer-grained event system (if you haven't seen it, section 3.4 of the spec is the relevant one).  These events include things like AfterAddToViewEvent, BeforeRenderEvent, ViewMapCreatedEvent, etc.  An application developer could subscribe to these events from a managed bean by using the API exposed by the new system.  While that is a big improvement over the way things work in 1.2, it still leave page authors out in the cold until, that is, this week.  Yesterday I committed the code to support declarative even handling to Mojarra.  In this short entry, we'll take a look at what that entails, and how to use it.<!--more-->
 </p>
