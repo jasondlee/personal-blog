@@ -62,6 +62,7 @@ mail('me@foo.com', 'Cub Tracker Error Report', $message);
 
 That results in an email like this:
 
+[source]
 -----
 PHONE_MODEL = Galaxy Nexus
 ANDROID_VERSION = 4.2.2
