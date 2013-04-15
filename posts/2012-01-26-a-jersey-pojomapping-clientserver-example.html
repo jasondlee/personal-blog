@@ -181,8 +181,19 @@ public class ClusterResource {
 Original time: Thu Jan 26 07:47:22 CST 2012
 New time:      Thu Jan 26 07:47:24 CST 2012
 Cluster created.
-List of clusters after create: {newCluster=Cluster{name='newCluster', configRef='null', gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}, c1=Cluster{name='c1', configRef='null', gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}, c2=Cluster{name='c2', configRef='null', gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}}
-List of clusters after delete: {c1=Cluster{name='c1', configRef='null', gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}, c2=Cluster{name='c2', configRef='null', gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}} </code></pre>
+List of clusters after create: {newCluster=Cluster{name='newCluster', configRef='null', \
+    gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', \
+    gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}, \
+    c1=Cluster{name='c1', configRef='null', gmsEnabled=false, broadcast='udpmulticast', \
+    gmsBindInterfaceAddress='null', gmsMulticastAddress='null', gmsMulticastPort=0, \
+    modified=Thu Jan 26 07:47:24 CST 2012}, c2=Cluster{name='c2', configRef='null', \
+    gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', \
+    gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}}
+List of clusters after delete: {c1=Cluster{name='c1', configRef='null', gmsEnabled=false, \
+    broadcast='udpmulticast', gmsBindInterfaceAddress='null', gmsMulticastAddress='null', \
+    gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}, c2=Cluster{name='c2', \
+    configRef='null', gmsEnabled=false, broadcast='udpmulticast', gmsBindInterfaceAddress='null', \
+    gmsMulticastAddress='null', gmsMulticastPort=0, modified=Thu Jan 26 07:47:24 CST 2012}}</code></pre>
 <p>Note that the serialization/deserialization works both ways (getting FROM the server and posting TO the server).  It's all handled automagically.  Having written and maintained several <code>MessageBodyWriter</code>s and <code>MessageBodyReader</code>s, I find this simplicity immensely appealing.  I would imagine that for most basic resources, this should work really well.  I'm not sure yet how this will scale up, if you will, with more complex resources, but I intend to find out.  Either way, it's definitely a great tool to have at hand.
 </p>
 <p>Source code for this project can be found <a href="/wp-content/uploads/2012/01/pojomapping.tar.gz">here</a>.</p>
