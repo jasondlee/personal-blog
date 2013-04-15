@@ -29,6 +29,6 @@ profiles:
 
     deploy:
       host: tlh@steeplesoft.com
-      path: /home/tlh/steeplesoft.com/beta
+      path: /home/tlh/steeplesoft.com/awestruct
       uncommited: true
 
