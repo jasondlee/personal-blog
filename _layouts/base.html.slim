@@ -16,13 +16,16 @@ html
     link rel='stylesheet' href='/styles/typograhpy.css'
     link rel='stylesheet' href='/styles/screen.css'
     link rel="stylesheet" href='/styles/style.css'
-    link rel='stylesheet' href='/styles/syntaxHighlighter/shCore.css'
-    link rel='stylesheet' href='/styles/syntaxHighlighter/shThemeDefault.css'
-    script src='/scripts/shCore.js'
-    script src='/scripts/shAutoloader.js'
+    link rel="stylesheet" href='/styles/highlight/sunburst.css'
+    script src='/scripts/highlight.pack.js'
+    /link rel='stylesheet' href='/styles/syntaxHighlighter/shCore.css'
+    /link rel='stylesheet' href='/styles/syntaxHighlighter/shThemeDefault.css'
+    /script src='/scripts/shCore.js'
+    /script src='/scripts/shAutoloader.js'
     javascript:
-        SyntaxHighlighter.autoloader(
-            'js jscript javascript  /scripts/brushes/shBrushJScript.js'
+        hljs.initHighlightingOnLoad();
+        //SyntaxHighlighter.autoloader(
+        //    'js jscript javascript  /scripts/brushes/shBrushJScript.js'
             //'java /scripts/brushes/shBrushJava.js',
             //'php /scripts/brushes/shBrushPhp.js',
             //'xml /scripts/brushes/shBrushXml.js',
@@ -31,7 +34,7 @@ html
             //'css /scripts/brushes/shBrushCss.js',
             //'javafx /scripts/brushes/shBrushJavaFX.js',
             //'bash /scripts/brushes/shBrushBash.js'
-        );
+        //);
         
     link href='http://fonts.googleapis.com/css?family=Cherry+Cream+Soda' rel='stylesheet' type='text/css'
     link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'
@@ -58,15 +61,16 @@ html
         div#tagline.container
             p#description
         div#header-wrap.container style="height: 227px; margin:auto; vertical-align: middle; padding-top: 1px;"
-            div.blogname
-                |Coming
-                img src="/images/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
-                |Up
-                img src="/images/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
-                |for
-                img src="/images/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
-                |Air
-            img src="/images/dolphin.png"
+            a href="#{site.base_url}"
+                div.blogname
+                    |Coming
+                    img src="/images/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
+                    |Up
+                    img src="/images/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
+                    |for
+                    img src="/images/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
+                    |Air
+                img src="/images/dolphin.png"
     div.content
         div#content-container
             div#content-wrap.container
@@ -107,5 +111,3 @@ html
                                 li
                                     a title="This details the project that spawned a couple of the Mojarra Scales components" href="http://www.jsfcentral.com/articles/trenches_7.html"
                                         |IEC donates custom JSF component to Mojarra Scales
-    javascript:
-        SyntaxHighlighter.all();
