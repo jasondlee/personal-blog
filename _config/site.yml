@@ -22,7 +22,7 @@ profiles:
   production:
     base_url: http://blogs.steeplesoft.com
     #disqus_developer: false
-    #google_analytics: UA-33133481-1
+    google_analytics: UA-1091049-1
 
     # TODO enable once not dependent on system binaries
     minify: true
