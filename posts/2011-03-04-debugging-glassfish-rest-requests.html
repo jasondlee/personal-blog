@@ -9,120 +9,61 @@ tags: [ GlassFish, REST ]
 </p>
 <p>To configure the REST interface, we can use the REST interface, in particular <a href="http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config">http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config</a>
 </p>
-<p>[code]
-</p>
-<p>$ curl -X OPTIONS http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config
-</p>
-<p>{
-</p>
-<p>    "command": "_set-rest-admin-config",
-</p>
-<p>    "exit_code": "SUCCESS",
-</p>
-<p>    "extraProperties": {"methods": [
-</p>
-<p>        {"name": "GET"},
-</p>
-<p>        {
-</p>
-<p>            "name": "POST",
-</p>
-<p>            "messageParameters": {
-</p>
-<p>                "debug": {
-</p>
-<p>                    "acceptableValues": "",
-</p>
-<p>                    "optional": "true",
-</p>
-<p>                    "type": "string",
-</p>
-<p>                    "defaultValue": ""
-</p>
-<p>                },
-</p>
-<p>                "indentLevel": {
-</p>
-<p>                    "acceptableValues": "",
-</p>
-<p>                    "optional": "true",
-</p>
-<p>                    "type": "int",
-</p>
-<p>                    "defaultValue": "-100"
-</p>
-<p>                },
-</p>
-<p>                "logInput": {
-</p>
-<p>                    "acceptableValues": "",
-</p>
-<p>                    "optional": "true",
-</p>
-<p>                    "type": "string",
-</p>
-<p>                    "defaultValue": ""
-</p>
-<p>                },
-</p>
-<p>                "logOutput": {
-</p>
-<p>                    "acceptableValues": "",
-</p>
-<p>                    "optional": "true",
-</p>
-<p>                    "type": "string",
-</p>
-<p>                    "defaultValue": ""
-</p>
-<p>                },
-</p>
-<p>                "showDeprecatedItems": {
-</p>
-<p>                    "acceptableValues": "",
-</p>
-<p>                    "optional": "true",
-</p>
-<p>                    "type": "string",
-</p>
-<p>                    "defaultValue": ""
-</p>
-<p>                },
-</p>
-<p>                "showHiddenCommands": {
-</p>
-<p>                    "acceptableValues": "",
-</p>
-<p>                    "optional": "true",
-</p>
-<p>                    "type": "string",
-</p>
-<p>                    "defaultValue": ""
-</p>
-<p>                },
-</p>
-<p>                "wadlGeneration": {
-</p>
-<p>                    "acceptableValues": "",
-</p>
-<p>                    "optional": "true",
-</p>
-<p>                    "type": "string",
-</p>
-<p>                    "defaultValue": ""
-</p>
-<p>                }
-</p>
-<p>            }
-</p>
-<p>        }
-</p>
-<p>    ]}
-</p>
-<p>}
-</p>
-<p>[/code]
-</p>
+<pre><code>$ curl -X OPTIONS http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config
+{
+    "command": "_set-rest-admin-config",
+    "exit_code": "SUCCESS",
+    "extraProperties": {"methods": [
+        {"name": "GET"},
+        {
+            "name": "POST",
+            "messageParameters": {
+                "debug": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "string",
+                    "defaultValue": ""
+                },
+                "indentLevel": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "int",
+                    "defaultValue": "-100"
+                },
+                "logInput": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "string",
+                    "defaultValue": ""
+                },
+                "logOutput": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "string",
+                    "defaultValue": ""
+                },
+                "showDeprecatedItems": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "string",
+                    "defaultValue": ""
+                },
+                "showHiddenCommands": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "string",
+                    "defaultValue": ""
+                },
+                "wadlGeneration": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "string",
+                    "defaultValue": ""
+                }
+            }
+        }
+    ]}
+}</code></pre>
 <p>Here's what each of those options mean:
 </p>
 <ul>
@@ -136,20 +77,10 @@ tags: [ GlassFish, REST ]
 </ul>
 <p>For technical, implementation-specific reasons (which I won't go into here), the first attempt to manipulate the REST configuration must be done via <a href="http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config">http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config</a>.  Once that's done, the <code>rest-config</code> element will show up under <code>server-config</code> as expected.  For example, to enable pretty-printing, for example, we can issue these requests:
 </p>
-<p>[code]
-</p>
-<p>$ curl -s -S -H "Accept: application/json" -X POST http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config
-</p>
-<p>$ curl -s -S -H "Accept: application/json" -X POST -d indentLevel=4 http://localhost:4848/management/domain/configs/config/server-config/rest-config
-</p>
-<p>{
-</p>
-<p>    "message": "\"http:\/\/localhost:4848\/management\/domain\/configs\/config\/server-config\/rest-config\" updated successfully.",
-</p>
-<p>    "exit_code": "SUCCESS"
-</p>
-<p>}
-</p>
-<p>[/code]
-</p>
+<pre><code>$ curl -s -S -H "Accept: application/json" -X POST http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config
+$ curl -s -S -H "Accept: application/json" -X POST -d indentLevel=4 http://localhost:4848/management/domain/configs/config/server-config/rest-config
+{
+    "message": "\"http:\/\/localhost:4848\/management\/domain\/configs\/config\/server-config\/rest-config\" updated successfully.",
+    "exit_code": "SUCCESS"
+}</code></pre>
 <p>And that's all there is to it.  Debugging your REST client issues should now be much simpler.</p>
