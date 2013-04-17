@@ -2,6 +2,9 @@ title: Steeplesoft
 author: Jason Lee
 local_tz: America/Chicago
 interpolate: false
+uncommitted: true
+disqus: steeplesoft
+base_url: http://localhost:1234
 
 asciidoctor:
   :compact: true
@@ -17,6 +20,8 @@ scss:
 profiles:
   development:
     minify: false
+    disqus_developer: true
+    dev: true
     deploy:
       dummy:
   production:
@@ -30,5 +35,4 @@ profiles:
     deploy:
       host: tlh@steeplesoft.com
       path: /home/tlh/steeplesoft.com/awestruct
-      uncommited: true
 
