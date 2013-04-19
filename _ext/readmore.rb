@@ -11,7 +11,13 @@ module Awestruct
         return content
       end 
       def filter(content)
-        return content.gsub("pass::[more]", "")
+        index = content.index("pass::[more]")
+        if index != nil
+            if index > -1
+                content[index..index+11]= ""
+            end
+        end
+        content
       end
     end
   end

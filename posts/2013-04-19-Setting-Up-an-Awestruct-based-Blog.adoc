@@ -110,32 +110,33 @@ I don't know Ruby (though I've learned some in this process), but this seems pre
 
 [source,ruby]
 -----
-require 'rubygems'
-
 module Awestruct
   module Extensions
     module ReadMore
       def truncate(content)
-        delims = ["pass::[more]","pass::[<!-- more -->]","<!-- more -->","<!--more-->","&lt;!-- more --&gt;"]
-        delims.each do |delim|
-            index = content.index(delim)
-            if index != nil
-                if index > -1
-                    return content[0..index-1]
-                end
+        index = content.index("pass::[more]")
+        if index != nil
+            if index > -1
+                return content[0..index-1]
             end
         end
         return content
       end 
       def filter(content)
-        return content.gsub("pass::[more]", "")
+        index = content.index("pass::[more]")
+        if index != nil
+            if index > -1
+                content[index..index+11]= ""
+            end
+        end
+        content
       end
     end
   end
 end
 -----
 
-It has several possible delimiters due to some HTML I imported from a Wordpress export file for this site.  New Asciidoc-based files should be able to put `pass::[more]` on a line by itself and things will work as expected. The rest of the ugliness of the file is due to the fact that I don't know Ruby, so I was shooting in the dark. Feel free to clean it up, but, if you do, I'd love to see your better version. :)
+Pages and posts should be able to put `pass::[more]` on a line by itself and things will work as expected: in page listing, the content stops at `pass::[more]`, and on full posts, `pass::[more]` is removed from the output. The rest of the ugliness of the file is due to the fact that I don't know Ruby, so I was shooting in the dark. Feel free to clean it up, but, if you do, I'd love to see your better version. :)
 
 Layouts
 -------
