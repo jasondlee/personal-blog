@@ -7,11 +7,12 @@ html
     - if page.layout == 'post'
       meta name='author' content=page.author
       meta name='twitter:card' content='summary'
-      meta name='twitter:creator' content='@carbonfray'
+      meta name='twitter:creator' content='@jasondlee'
       meta name='twitter:url' content="#{site.base_url}#{page.url}"
       meta name='twitter:title' content=page.title
       meta name='twitter:description' content=summarize(html_to_text(page.content).strip.gsub(/^[:space:]*\n/, ''), 25)
     /link rel='stylesheet' href='/stylesheets/styles.css'
+    link rel="alternate" type="application/rss+xml" title="Steeplesoft RSS Feed" href="#{site.base_url}/feed.atom"
     link rel="stylesheet" href="/styles/reset.css"
     link rel='stylesheet' href='/styles/typograhpy.css'
     link rel='stylesheet' href='/styles/screen.css'
