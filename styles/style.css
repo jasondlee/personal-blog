@@ -14,16 +14,6 @@ If you have any questions, comments, or concerns,
 visit <http://wpframework.com> for more information!
 */
 
-/* Reset Browser Defaults */
-@import url( 'library/styles/reset.css' );
-
-/* Apply base theme styles and colors */
-@import url( 'library/styles/typograhpy.css' );
-
-/* Site Specific Styles */
-@import url( 'assets/css/screen.css' );
-
-
 /*********************************************
 		The Obligatory WP Styles
 *********************************************/

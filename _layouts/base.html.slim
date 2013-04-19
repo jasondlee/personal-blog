@@ -11,50 +11,18 @@ html
       meta name='twitter:url' content="#{site.base_url}#{page.url}"
       meta name='twitter:title' content=page.title
       meta name='twitter:description' content=summarize(html_to_text(page.content).strip.gsub(/^[:space:]*\n/, ''), 25)
-    /link rel='stylesheet' href='/stylesheets/styles.css'
     link rel="alternate" type="application/rss+xml" title="Steeplesoft RSS Feed" href="#{site.base_url}/feed.atom"
     link rel="stylesheet" href="/styles/reset.css"
     link rel='stylesheet' href='/styles/typograhpy.css'
     link rel='stylesheet' href='/styles/screen.css'
     link rel="stylesheet" href='/styles/style.css'
     link rel="stylesheet" href='/styles/highlight/sunburst.css'
+    link rel='stylesheet' href='/styles/custom.css'
     script src='/scripts/highlight.pack.js'
-    /link rel='stylesheet' href='/styles/syntaxHighlighter/shCore.css'
-    /link rel='stylesheet' href='/styles/syntaxHighlighter/shThemeDefault.css'
-    /script src='/scripts/shCore.js'
-    /script src='/scripts/shAutoloader.js'
-    javascript:
-        hljs.initHighlightingOnLoad();
-        //SyntaxHighlighter.autoloader(
-        //    'js jscript javascript  /scripts/brushes/shBrushJScript.js'
-            //'java /scripts/brushes/shBrushJava.js',
-            //'php /scripts/brushes/shBrushPhp.js',
-            //'xml /scripts/brushes/shBrushXml.js',
-            //'scala /scripts/brushes/shBrushScala.js',
-            //'python /scripts/brushes/shBrushPython.js',
-            //'css /scripts/brushes/shBrushCss.js',
-            //'javafx /scripts/brushes/shBrushJavaFX.js',
-            //'bash /scripts/brushes/shBrushBash.js'
-        //);
         
     link href='http://fonts.googleapis.com/css?family=Cherry+Cream+Soda' rel='stylesheet' type='text/css'
     link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'
     css:
-      .blogname{
-        letter-spacing:10px;
-        font-size:36px;
-        padding:15px 0px 0px 5px;
-        width:170px;
-        height:227px;
-        margin:auto;
-        text-align:center;
-        color:#cecfd1;
-        font-family:'Philosopher','Cherry Cream Soda',arial,serif;background-color:#47586d;
-        float:left
-      }
-      .entry-header {
-        background-image: none;
-      }
     /[if lt IE 9]
       script src='//html5shim.googlecode.com/svn/trunk/html5.js'
   body class="y2013 m01 d31 h08 home blog linux firefox ff1"

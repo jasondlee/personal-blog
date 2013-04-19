@@ -1,0 +1,25 @@
+.blogname{
+    letter-spacing:10px;
+    font-size:36px;
+    padding:15px 0px 0px 5px;
+    width:170px;
+    height:227px;
+    margin:auto;
+    text-align:center;
+    color:#cecfd1;
+    font-family:'Philosopher','Cherry Cream Soda',arial,serif;
+    background-color:#47586d;
+    float:left
+}
+.entry-header {
+    background-image: none;
+}
+tt {
+    font-family: monospace;
+    background-color: #dddddd;
+    #border-bottom: 1px dashed black;
+}
+.title {
+    font-size: 18px;
+    border-bottom: 1px dashed #dddddd;
+}
