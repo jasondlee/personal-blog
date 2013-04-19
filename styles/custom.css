@@ -19,7 +19,7 @@ tt {
     background-color: #dddddd;
     #border-bottom: 1px dashed black;
 }
-.title {
+div.title {
     font-size: 18px;
     border-bottom: 1px dashed #dddddd;
 }

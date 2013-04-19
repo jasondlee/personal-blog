@@ -1,5 +1,5 @@
 ---
-title: Setting Up an Awestruct based Blog
+title: Setting Up an Awestruct-based Blog
 author: Jason Lee
 layout: blog-post
 date: 2013-04-19
