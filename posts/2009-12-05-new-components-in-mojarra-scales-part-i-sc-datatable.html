@@ -5,7 +5,8 @@ layout: blog-post
 date: 2009-12-5
 tags: [ components, JavaServer Faces, Scales ]
 ---
-<p>The migration of Mojarra Scales to JSF 2, adding new components has become much easier due to JSF 2's new composite component feature.  In the past couple of weeks, this new capability has paid off in spades as Mojarra Scales has gotten (so far) three new components in rapid succession.  In this, the first part of a multi-part series, we'll take a look at the most complex of the new components, <code>sc___dataTable</code>.<!--more-->
+<p>The migration of Mojarra Scales to JSF 2, adding new components has become much easier due to JSF 2's new composite component feature.  In the past couple of weeks, this new capability has paid off in spades as Mojarra Scales has gotten (so far) three new components in rapid succession.  In this, the first part of a multi-part series, we'll take a look at the most complex of the new components, <code>sc___dataTable</code>.
+pass::[more]
 </p>
 <p>The JSF spec details a data table, but it's nothing fancy.  It doesn't offer pagination or sorting, for example.  For simple applications, this may be sufficient, but for more complex or dynamic applications, it can be pretty plain and boring.  The YAHOO! User Interface library provides a very nice table, which supports sorting, pagination, ajax updates, row and cell selecting, etc.  In keeping with Scales' original intent, it is this Javascript that Scales wraps and provides as a JSF component.  For those familiar with the standard <code>h:dataTable</code>, the usage should look very familiar.  From the Scales demo, we find something like this:
 </p>

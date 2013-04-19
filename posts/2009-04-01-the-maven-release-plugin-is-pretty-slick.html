@@ -5,7 +5,8 @@ layout: blog-post
 date: 2009-4-1
 tags: [ Maven ]
 ---
-<p>Maven catches a lot of flak from a lot of people.  I've even been known to bemoan some its eccentricities from time to time.  Over the past year and a half, though, I've done more and more with Maven, and I'm to the point now where that's all I use.  In fact, Maven and Ant have traded positions in my praise and scorn playbook.  At any rate, in releasing FacesTester 0.1 yesterday, I was shown how to use the release plugin (which, by the way, has no parallel in Ant-space that I can see).  This plugin helps in releasing a version of a project, updating all the version numbers as appropriate.  Here's a rough blow-by-blow of what happened:<!--more-->
+<p>Maven catches a lot of flak from a lot of people.  I've even been known to bemoan some its eccentricities from time to time.  Over the past year and a half, though, I've done more and more with Maven, and I'm to the point now where that's all I use.  In fact, Maven and Ant have traded positions in my praise and scorn playbook.  At any rate, in releasing FacesTester 0.1 yesterday, I was shown how to use the release plugin (which, by the way, has no parallel in Ant-space that I can see).  This plugin helps in releasing a version of a project, updating all the version numbers as appropriate.  Here's a rough blow-by-blow of what happened:
+pass::[more]
 </p>
 <p>I issued <code>mvn release:prepare</code> and <code>mvn release:perform</code>.  The plugin asks me what the release version number should be, what the next version will be, and what the SCM tag should be.  It has reasonable defaults for all of these, or you can specify something different.  The plugin the did the following:
 </p>

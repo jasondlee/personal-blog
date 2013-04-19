@@ -5,8 +5,8 @@ layout: blog-post
 date: 2007-10-25
 tags: [ JPA, Maven, OC4J, Seam ]
 ---
-<p>Well, that wasn't hard.  I think I have the <a target="_blank" href="/2007/10/25/seam-jpa-hibernate-oc4j-maven2-archetype#redeploy">redeploy issue</a> fixed, and a shared library was the trick.<!--more-->
-</p>
+<p>Well, that wasn't hard.  I think I have the <a target="_blank" href="/2007/10/25/seam-jpa-hibernate-oc4j-maven2-archetype#redeploy">redeploy issue</a> fixed, and a shared library was the trick.</p>
+pass::[more]
 <p>It appeared that the redeployment issue was due to some odd class loading issue, so I decided to try a shared library.  To do that, I create the directory in <code>j2ee/home/shared-lib/hibernate/3.2</code> and put these jars there:
 </p>
 <p>[source lang="xml"]
@@ -56,4 +56,3 @@ tags: [ JPA, Maven, OC4J, Seam ]
 </p>
 <p>And that's it.  I created the project and immediately built and deployed, verified that the application worked, then repeatedly redeployed and tested the app without failure.  That's not to say that the archetype is complete or perfect in any way, but it's Good Enough for Now.  :)  Any fixes/enhancements/etc. are, of course, very welcome.
 </p>
-<p>[tags]seam,jpa,oc4j,maven2,archetype[/tags]</p>

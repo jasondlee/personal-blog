@@ -7,6 +7,7 @@ tags: [ Java, JavaServer Faces, Scales ]
 ---
 <p>As I noted in a recent <a href='http://blogs.steeplesoft.com/changes-are-coming-to-the-glassfish-admin-console/' target='_blank'>entry</a>, we are considering moving to a desktop-like interface for the GlassFish Administration Console, where the content is in separate "windows" (decorated DIVs, basically) which can be moved, closed, minimized, etc.  As I've started working on a concrete implementation of some of those ideas, I quickly realized that we were going to have issues with multiple, overlapping windows.  Once you have multiple windows open, the user has to be able to bring the desired window to the front, but YUI, which will likely be the library used, doesn't support that natively.  Fortunately, that's easy to fix.  First, an example of the problem:
 </p>
+pass::[more]
 <p>[caption id="attachment_219" align="alignright" width="385" caption="Overlapping window example"]<a href='http://blogs.steeplesoft.com/wp-content/uploads/2009/01/window_example.png'><img alt='Overlapping window example' class='size-full wp-image-219' height='300' src='http://blogs.steeplesoft.com/wp-content/uploads/2009/01/window_example.png' title='Overlapping window example' width='385'/></a>[/caption]
 </p>
 <p>With stock YUI, as best as I can tell, if you want to look at Window #2, you're out luck.  With this simple JS, though, the problem is quickly solved:
@@ -41,4 +42,3 @@ tags: [ Java, JavaServer Faces, Scales ]
 </p>
 <p>Having worked out how to do that, I've added this functionality to Scales (which will likely be used in the GlassFish console, if only just for this exploration) and committed that to the repository (about which I need to post, but that will have to wait a bit longer).   If you'd like to see this in action, point your browser <a href='http://www.jsftemplating.org/mojarra-scales-demo/facelets/panel.xhtml' target='_blank'>here</a> (there is, at the moment, an odd rendering bug I'm trying to track down) and let me know what you think.
 </p>
-<p>[tags]jsf, mojarra scales[/tags]</p>

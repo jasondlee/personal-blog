@@ -5,7 +5,8 @@ layout: blog-post
 date: 2006-8-17
 tags: [ Java, JavaServer Faces ]
 ---
-<p>In an earlier <a target="_newwindow" href="/2006/04/25/jsf-phaselisteners-and-get-requests/">post</a>, I detailed how my company got around JSF's dependence on POST requests in our efforts to implement pretty URLs.  While this approach has worked well for us for quite some time, a pretty major flaw in the approach revealed itself to us in the past few days.<!--more-->
+<p>In an earlier <a target="_newwindow" href="/2006/04/25/jsf-phaselisteners-and-get-requests/">post</a>, I detailed how my company got around JSF's dependence on POST requests in our efforts to implement pretty URLs.  While this approach has worked well for us for quite some time, a pretty major flaw in the approach revealed itself to us in the past few days.
+pass::[more]
 </p>
 <p>In the application for which this PhaseListener was written, we display order information for our customer service group.  A recent feature request was the ability to approve an order from this application, which is basically the assignation of an order number.  The most user-friendly way to do this, we thought, would be an in-place edit.  For the user, it would be quick and easy, and look really cool, so we altered the page to use the excellent <a target="_newwindow" href="https://ajax4jsf.dev.java.net/">Ajax4jsf</a> library for the in-place edit and data submission.  We hit a pretty big snag, though:  the Ajax request was failing.  In fact, the method on the managed bean wasn't being called at all.  To make sure it wasn't a4j-related, I added a plain <h___commandButton/> to see if I could get the method to fire, but, again, it failed to run.
 </p>

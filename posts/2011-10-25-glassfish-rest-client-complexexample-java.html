@@ -5,7 +5,8 @@ layout: blog-post
 date: 2011-10-25
 tags: [ GlassFish, REST ]
 ---
-<p>In a series of <a href="/glassfish-rest-interface-a-client-side-perspective/">recent</a> <a href="/glassfish-rest-client-goes-to-the-flying-circus/">posts</a>, I've shown off what the GlassFish 4.0 REST client wrappers should look like, giving simple examples of using the wrappers using both Java and Python, the two currently supported languages.  In this post, we'll take a look at a more complex example, that of setting up clusters and standalone instances, deploying an app, then cleaning up after ourselves.  Let's jump right in.<!--more-->
+<p>In a series of <a href="/glassfish-rest-interface-a-client-side-perspective/">recent</a> <a href="/glassfish-rest-client-goes-to-the-flying-circus/">posts</a>, I've shown off what the GlassFish 4.0 REST client wrappers should look like, giving simple examples of using the wrappers using both Java and Python, the two currently supported languages.  In this post, we'll take a look at a more complex example, that of setting up clusters and standalone instances, deploying an app, then cleaning up after ourselves.  Let's jump right in.
+pass::[more]
 </p>
 <p>In this fairly contrived scenario, we're going to create one cluster, <code>c1</code>, with two nodes, <code>c1in1</code> and <code>c1in2</code>, as well as two standalone instances, <code>in1</code> and <code>in2</code>.  In a real world situation, we might be deploying a single app to three different customer environments, for example.  Once the cluster and instances are created, we'll deploy the app, and then create application references on each of the instances.  This is GlassFish's way of deploying the same application to multiple targets.  We could, of course, deploy the war multiple times, but that would result in the war file being deployed several times.  There's nothing inherently wrong with either approach.  We're just going to go with the former.
 </p>

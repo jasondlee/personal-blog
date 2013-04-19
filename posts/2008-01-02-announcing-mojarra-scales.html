@@ -5,8 +5,9 @@ layout: blog-post
 date: 2008-1-2
 tags: [ Java, JavaServer Faces, JSFTemplating, Scales ]
 ---
-<p>Some of you may be wondering what the status is on the RI Sandbox.  With the <a target="_blank" href="/2007/12/05/announcing-project-mojarra/">announcement</a> of <a target="_blank" href="https://mojarra.dev.java.net/">Project Mojarra</a>, we can finally take the wraps off of <a target="_blank" href="https://scales.dev.java.net/">Mojarra Scales</a>, the promotion of the RI/Mojarra Sandbox to its own project.<!--more-->  There are a few differences between the Sandbox of Scales to note, such as package names, namespace, etc.  There has also been a fair amount of refactoring inside the library to simplify the components somewhat (more on that later).  To migrate from the RI Sandbox to Mojarra Scales, you will need to do the following:
+<p>Some of you may be wondering what the status is on the RI Sandbox.  With the <a target="_blank" href="/2007/12/05/announcing-project-mojarra/">announcement</a> of <a target="_blank" href="https://mojarra.dev.java.net/">Project Mojarra</a>, we can finally take the wraps off of <a target="_blank" href="https://scales.dev.java.net/">Mojarra Scales</a>, the promotion of the RI/Mojarra Sandbox to its own project.  There are a few differences between the Sandbox of Scales to note, such as package names, namespace, etc.  There has also been a fair amount of refactoring inside the library to simplify the components somewhat (more on that later).  To migrate from the RI Sandbox to Mojarra Scales, you will need to do the following:
 </p>
+pass::[more]
 <ol>
 <li>Remove jsf-ri-sandbox-0.9.jar</li>
 <li>Add <a href="https://scales.dev.java.net/files/documents/7591/79743/mojarra-scales.jar">mojarra-scales.jar</a>. (I'm working on getting this added to the java.net maven repository as well).</li>

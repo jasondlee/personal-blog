@@ -5,7 +5,8 @@ layout: blog-post
 date: 2008-12-23
 tags: [ JavaServer Faces ]
 ---
-<p>If you've been following the evolution of the JSF 2 spec closely, you have probably seen the addition of a finer-grained event system (if you haven't seen it, section 3.4 of the spec is the relevant one).  These events include things like AfterAddToViewEvent, BeforeRenderEvent, ViewMapCreatedEvent, etc.  An application developer could subscribe to these events from a managed bean by using the API exposed by the new system.  While that is a big improvement over the way things work in 1.2, it still leave page authors out in the cold until, that is, this week.  Yesterday I committed the code to support declarative even handling to Mojarra.  In this short entry, we'll take a look at what that entails, and how to use it.<!--more-->
+<p>If you've been following the evolution of the JSF 2 spec closely, you have probably seen the addition of a finer-grained event system (if you haven't seen it, section 3.4 of the spec is the relevant one).  These events include things like AfterAddToViewEvent, BeforeRenderEvent, ViewMapCreatedEvent, etc.  An application developer could subscribe to these events from a managed bean by using the API exposed by the new system.  While that is a big improvement over the way things work in 1.2, it still leave page authors out in the cold until, that is, this week.  Yesterday I committed the code to support declarative even handling to Mojarra.  In this short entry, we'll take a look at what that entails, and how to use it.
+pass::[more]
 </p>
 <p>This change really has two parts:  a new <code>f___event</code> tag, and a new @NamedEvent annotation.  Let's start our discussion by looking at the tag.   The syntax for the tag is really quite simple.  You just add the tag to any component you desire, provide values for the tags only two attributes, and you're done.  For example (from the Mojarra systests):
 </p>
@@ -63,4 +64,3 @@ tags: [ JavaServer Faces ]
 <p>It's important to note that, while the spec is currently in feature freeze, that doesn't mean it's done.  While what you see now is largely what you'll see when we ship JSF 2 and Mojarra 2.0, some things may be slightly different.  If anything changes in this are before we finalize the spec, I'll make sure I update you here.
 </p>
 <div class="crossposted">Cross-posted at <a target="_blank" href="http://blogs.sun.com/jasondlee/entry/jsf_2_gets_declarative_event">blogs.sun.com</a></div>
-<p>[tags]jsf 2[/tags]</p>

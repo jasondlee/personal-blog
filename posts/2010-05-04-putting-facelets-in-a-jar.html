@@ -5,7 +5,8 @@ layout: blog-post
 date: 2010-5-4
 tags: [ Java ]
 ---
-<p>In a recent forum post, a user asked how to store a Facelets file in a database.  Although JSF doesn't support this out of the box (though it <em>would</em> be a nice feature), it's not too difficult to add.  In this entry, I'll show you how to serve Facelets from a JAR file, then give some thoughts that will help, I hope, implement a database-backed approach.  I'll be using JSF 2, so if you're using Facelets 1.x with JSF 1.2, you'll have to extend com.sun.facelets classes to make this work in that environment.  With that out of the way, unto the breach!<!--more-->
+<p>In a recent forum post, a user asked how to store a Facelets file in a database.  Although JSF doesn't support this out of the box (though it <em>would</em> be a nice feature), it's not too difficult to add.  In this entry, I'll show you how to serve Facelets from a JAR file, then give some thoughts that will help, I hope, implement a database-backed approach.  I'll be using JSF 2, so if you're using Facelets 1.x with JSF 1.2, you'll have to extend com.sun.facelets classes to make this work in that environment.  With that out of the way, unto the breach!
+pass::[more]
 </p>
 <p>To implement this solution, we'll need to provide JSF with three artifacts: and <a href="#ExternalContextFactory">ExternalContextFactory</a>, an <a href="#ExternalContext">ExternalContext</a>, and a <a href="#ResourceResolver">ResourceResolver</a>.
 </p>

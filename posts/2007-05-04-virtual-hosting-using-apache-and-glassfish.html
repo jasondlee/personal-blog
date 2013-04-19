@@ -5,7 +5,8 @@ layout: blog-post
 date: 2007-5-4
 tags: [ GlassFish, Java ]
 ---
-<p>While many have found GlassFish to be a great choice for an internal application server, there are others that would like to push it a bit further, and use it in an ASP/ISP envrionment.  Jan Luehe discussed GlassFish's virtual hosting features in a recent <a target="_blank" href="http://blogs.sun.com/jluehe/entry/virtual_hosting_features_in_glassfish">blog entry</a>.  What I'd like to do in this entry is take the information that Jan presented, and walk through setting up a few different virtual hosting environments.<!--more-->
+<p>While many have found GlassFish to be a great choice for an internal application server, there are others that would like to push it a bit further, and use it in an ASP/ISP envrionment.  Jan Luehe discussed GlassFish's virtual hosting features in a recent <a target="_blank" href="http://blogs.sun.com/jluehe/entry/virtual_hosting_features_in_glassfish">blog entry</a>.  What I'd like to do in this entry is take the information that Jan presented, and walk through setting up a few different virtual hosting environments.
+pass::[more]
 </p>
 <h3>Terms to Know</h3>
 <p>Before we go too far, we need to make sure we're all using various terms in the same manner.  To summarize Shreedhar Ganapathy's excellent <a target="_blank" href="http://blogs.sun.com/shreedhar/entry/understanding_the_glassfish_domain_model">discussion</a>, a <em>domain</em> in GlassFish terms is an "administrative area."  It should not be confused with DNS domains.  A domain will have one or more <em>servers</em> defined.  These servers correlate, roughly, with a <code>ServerName</code> in Apache's httpd.conf (and, like a <code>ServerName</code> can have <code>ServerAlias</code>es, a server can be given aliases).  For the sake of this discussion, we will not give any attention to clustering or load balancing.

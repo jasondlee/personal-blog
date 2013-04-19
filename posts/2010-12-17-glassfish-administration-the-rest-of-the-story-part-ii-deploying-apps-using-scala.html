@@ -5,7 +5,8 @@ layout: blog-post
 date: 2010-12-17
 tags: [ administration, GlassFish, REST, Scala ]
 ---
-<p>In a previous post (far too long ago :), I began showing off the RESTful administration API in GlassFish v3.  In <a href="/2010/08/glassfish-administration-the-rest-of-the-story/">GlassFish Administration: The REST of the Story Part I</a>, I showed the basics of the API, what to send, what you get back, etc.  In this post, I want to show a practical use of the API, namely, deploying an application, and this time, for no particular reason other than I'm trying to learn the language, we'll do it in Scala.<!--more-->
+<p>In a previous post (far too long ago :), I began showing off the RESTful administration API in GlassFish v3.  In <a href="/2010/08/glassfish-administration-the-rest-of-the-story/">GlassFish Administration: The REST of the Story Part I</a>, I showed the basics of the API, what to send, what you get back, etc.  In this post, I want to show a practical use of the API, namely, deploying an application, and this time, for no particular reason other than I'm trying to learn the language, we'll do it in Scala.
+pass::[more]
 </p>
 <p>If you'll recall from Part I, the default root URL is <a href="http://localhost:4848/management/domain">http://localhost:4848/management/domain</a>.  The endpoint, then for deploying applications works out to be <a href="http://localhost:4848/management/domain/applications/application">http://localhost:4848/management/domain/applications/application</a>.<sup>1</sup> Submitting an OPTIONS request to this endpoint gets us a document like this (trimmed down for clarity):
 </p>

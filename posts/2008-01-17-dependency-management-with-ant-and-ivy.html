@@ -5,8 +5,8 @@ layout: blog-post
 date: 2008-1-17
 tags: [ Ant, Scales ]
 ---
-<p>One of my long-standing complaints with Ant is that project dependency management is non-existent in the core Ant distribution.  Many will quickly point to the Maven Ant tasks, but I've never been really fond of them for one reason or another.  The other advice I often get is to use Ivy, but even after several attempts, I had never gotten Ivy to work.  With the <a target="_blank" href="http://ant.apache.org/ivy/history/2.0.0-beta1/release-notes.html">recent release</a> of 2.0 beta 1, though, I thought I'd try again, and I'm glad I did.  Not only have I gotten it to work for me, but I was also able to successfully configure custom resolvers.  Below is what I had to do to migrate the Mojarra Scales dependency management to Ivy.<!--more-->
-</p>
+<p>One of my long-standing complaints with Ant is that project dependency management is non-existent in the core Ant distribution.  Many will quickly point to the Maven Ant tasks, but I've never been really fond of them for one reason or another.  The other advice I often get is to use Ivy, but even after several attempts, I had never gotten Ivy to work.  With the <a target="_blank" href="http://ant.apache.org/ivy/history/2.0.0-beta1/release-notes.html">recent release</a> of 2.0 beta 1, though, I thought I'd try again, and I'm glad I did.  Not only have I gotten it to work for me, but I was also able to successfully configure custom resolvers.  Below is what I had to do to migrate the Mojarra Scales dependency management to Ivy.</p>
+pass::[more]
 <p>Using Ivy requires, at least in the way I'm using it, two new files, ivy.xml, which defines my dependencies, and ivysettings.xml, which configures my custom resolvers.  The usage from my Ant build file is actually pretty simple, so we'll start there:
 </p>
 <p>[source lang="xml"]
@@ -117,4 +117,3 @@ tags: [ Ant, Scales ]
 </p>
 <p>With all of that in place, I can issue an <code>ant update</code> from the command line, and sit back and watch Ivy checking the configured repositories for my dependencies.  It may seem like a lot to configure for dependencies, but Ivy is certainly better than the homegrown dependency management schemes I've seen (and devised), and is certainly less intrusive than migrating wholesale to Maven.  While I <i>am</i> coming around on Maven 2, this will be a great tool for those projects that I can't (or won't) migrate.
 </p>
-<p>[tags]ant,ivy[/tags]</p>

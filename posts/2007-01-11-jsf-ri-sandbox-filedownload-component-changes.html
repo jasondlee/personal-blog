@@ -5,7 +5,8 @@ layout: blog-post
 date: 2007-1-11
 tags: [ Java, JavaServer Faces ]
 ---
-<p>Today I checked in a couple of changes to the RI Sandbox file download component that will make the component more flexible, and, therefore, more usable.<!--more-->
+<p>Today I checked in a couple of changes to the RI Sandbox file download component that will make the component more flexible, and, therefore, more usable.
+pass::[more]
 </p>
 <p>Before these changes, the only way the component could be used was with one of two "methods:"  "inline" (e.g., a PDF embedded in the page), or "download" (which was a link with a text anchor).  While this worked, it was pretty limiting.  What if the page author wants the link to be a picture, or if he wants the file download to start from on onChange even handler?  Before today, that wasn't possible.  Today, though, I committed support for child components, as well as support for creating an EL variable that can be used by any child components as they please.
 </p>

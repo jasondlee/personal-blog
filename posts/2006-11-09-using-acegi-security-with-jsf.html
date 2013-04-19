@@ -7,7 +7,7 @@ tags: [ JavaServer Faces ]
 ---
 <p>A question that often comes up in when looking through JSF <a target="blank" href="http://forum.java.sun.com/forum.jspa?forumID=427&start=0">forums</a> or idling on IRC is, "How do I secure my JSF app?"  to which, of course, there are a myriad of options.  At <a target="blank" href="http://www.iec-okc.com">IEC</a>, we use <a target="blank" href="http://www.acegisecurity.org/">Acegi Security</a>.  That answers only part of the "how," though, as Acegi is not the easiest thing to learn.  In this blog entry, I'll detail how we have Acegi implemented at IEC.  While it's not perfect, it works well for us, and should be enough to get someone moving in the right direction.
 </p>
-<!--more-->
+pass::[more]
 <p>The first step, of course, is to download Acegi, and integrate with the web application.  Once the jars have been installed in <code>WEB-INF/lib</code>, <code>web.xml</code> needs to be edited:
 </p>
 <p>[source lang="xml"]<context-param>

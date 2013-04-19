@@ -8,7 +8,7 @@ tags: [ JavaServer Faces ]
 <strong>UPDATE:</strong>  For a missing piece of code, please see this <a target="_newwindow" href="http://blogs.steeplesoft.com/2006/05/08/facesutil-a-missing-yet-important-piece/">entry</a>.
 <p>In one of our applications at work, we needed to be able to deep link to certain pages to allow external applications to get at specific pieces of data, product and order information to be specific.  Since JSF 1.x does not support HTTP GET requests, this poses a problem.  In order to get (no pun intended) information to the backing bean for processing, the data would have to be POSTed.  This obviously makes bookmarking the resulting page useless.  Our initial solution was to write a servlet filter which would get a reference to the current FacesContext, then get a reference to the appropriate JSF managed bean, and pump data into it.  This actually worked rather well, but, at Ed Burns' suggestion, I decided to reimplement this a JSF PhaseListener (many thanks to Ryan Lubke for his help!).  A PhaseListener is "an interface implemented by objects that wish to be notified at the beginning and ending of processing for each standard phase of the request processing lifecycle."
 </p>
-<!--more-->
+pass::[more]
 <p>At any rate, what I was able to do is register a PhaseListener to execute on the RESTORE VIEW phase (for a GET request, the only two phases that run are the RESTORE VIEW and RENDER RESPONSE phases).  In a nut shell, what the beforePhase() method does is this:
 </p>
 <ul>

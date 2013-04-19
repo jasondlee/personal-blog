@@ -5,8 +5,8 @@ layout: blog-post
 date: 2007-10-17
 tags: [ EJB3, Hibernate, JavaServer Faces, JPA, Maven, OC4J, Seam ]
 ---
-<p>On a recent project, the architecture we settled on included JavaServer Faces (no surprise, there, I guess:), JBoss Seam and JPA.  The production environment is Oracle's OC4J, so the stack we chose has to deploy (easily) to that container.  While I did get it working, it wasn't easy, nor was it easily reproducible.  Now that the pressures of deadlines have passed, I took the time to track down what exactly needs to be done to make the application deploy and run on OC4J.  In retrospect, it doesn't look that hard, but, knowing the pain I went through to make it work, I thought I'd share what you need to know if you're in a similar situation.<!--more-->
-</p>
+<p>On a recent project, the architecture we settled on included JavaServer Faces (no surprise, there, I guess:), JBoss Seam and JPA.  The production environment is Oracle's OC4J, so the stack we chose has to deploy (easily) to that container.  While I did get it working, it wasn't easy, nor was it easily reproducible.  Now that the pressures of deadlines have passed, I took the time to track down what exactly needs to be done to make the application deploy and run on OC4J.  In retrospect, it doesn't look that hard, but, knowing the pain I went through to make it work, I thought I'd share what you need to know if you're in a similar situation.</p>
+pass::[more]
 <h4>Quick Links</h4>
 <ul>
 <li><a href="#parent">Parent POM</a></li>
