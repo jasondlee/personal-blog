@@ -4,6 +4,7 @@ local_tz: America/Chicago
 interpolate: false
 disqus: steeplesoft
 base_url: http://localhost:1234
+minify: false
 
 asciidoctor:
   :compact: true
