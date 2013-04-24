@@ -23,3 +23,19 @@ div.title {
     font-size: 18px;
     border-bottom: 1px dashed #dddddd;
 }
+.aligncenter,
+.alignleft,
+.alignright {
+    clear: both;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.imageblock .content {
+    background-image: url(none);
+}
+
+blockquote *:first-child:after, q *:first-child:after, blockquote *:first-child:before, q *:first-child:before {
+    content: "";
+}

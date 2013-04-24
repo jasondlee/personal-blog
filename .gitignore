@@ -2,3 +2,5 @@
 _tmp
 _site
 .sass-cache
+assets.tar.gz
+posts/assets
