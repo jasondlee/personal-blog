@@ -39,3 +39,7 @@ div.imageblock .content {
 blockquote *:first-child:after, q *:first-child:after, blockquote *:first-child:before, q *:first-child:before {
     content: "";
 }
+
+img {
+    max-width: 775px;
+}
