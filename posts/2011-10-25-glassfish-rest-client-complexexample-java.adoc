@@ -1,0 +1,140 @@
+---
+title: GlassFish REST Client - ComplexExample.java
+author: Jason Lee
+layout: blog-post
+date: 2011-10-25
+tags: [ GlassFish, REST ]
+---
+In a series of link:/posts/2011/10/03/glassfish-rest-interface-a-client-side-perspective[recent] link:/posts/2011/10/06/glassfish-rest-client-goes-to-the-flying-circus[posts], I've shown off what the GlassFish 4.0 REST client wrappers should look like, giving simple examples of using the wrappers using both Java and Python, the two currently supported languages.  In this post, we'll take a look at a more complex example, that of setting up clusters and standalone instances, deploying an app, then cleaning up after ourselves.  Let's jump right in.
+pass::[more]
+
+In this fairly contrived scenario, we're going to create one cluster, `c1`, with two nodes, `c1in1` and `c1in2`, as well as two standalone instances, `in1` and `in2`.  In a real world situation, we might be deploying a single app to three different customer environments, for example.  Once the cluster and instances are created, we'll deploy the app, and then create application references on each of the instances.  This is GlassFish's way of deploying the same application to multiple targets.  We could, of course, deploy the war multiple times, but that would result in the war file being deployed several times.  There's nothing inherently wrong with either approach.  We're just going to go with the former.
+
+Enough with that, then, let's get to the code.  Hopefully, if you've been following along, this should be pretty straightforward and easy to read.
+
+[source,java]
+-----
+public class ClusterDemo {
+    RestClient rc = new RestClient();
+    Domain domain = new Domain(rc);
+
+    public void run() {
+        createCluster();
+        createStandaloneInstances();
+        deployApplication();
+        testApplication();
+        undeployApplication();
+        removeStandaloneInstance();
+        removeCluster();
+    }
+
+    private void createCluster() {
+        deleteCluster("c1");
+        RestResponse rr = domain.getClusters().createCluster("c1");
+        rr = domain.createInstance("localhost-domain1", "c1in1", new HashMap<String, Object>() {{
+            put("cluster", "c1");
+            put("portbase", "10000");
+        }});
+
+        rr = domain.createInstance("localhost-domain1", "c1in2", new HashMap<String, Object>() {{
+            put("cluster", "c1");
+            put("portbase", "11000");
+        }});
+    }
+
+    private void createStandaloneInstances() {
+        deleteInstance("in1");
+        deleteInstance("in2");
+        RestResponse rr = domain.createInstance("localhost-domain1", "in1", 
+            new HashMap<String, Object>() {{
+                put("portbase", "12000");
+            }});
+
+        rr = domain.createInstance("localhost-domain1", "in2", new HashMap<String, Object>() {{
+            put("portbase", "13000");
+        }});
+    }
+
+    private void deployApplication() {
+        Application app = domain.getApplications().getApplication("test");
+        if (app != null) {
+            app.delete();
+        }
+
+        RestResponse rr = domain.getApplications().deploy(new File("test.war"),
+                new HashMap<String, Object>() {{
+                    put("target", "c1");
+                }});
+
+        rr = domain.getServers().getServer("in1").createApplicationRef("test");
+        rr = domain.getServers().getServer("in2").createApplicationRef("test");
+    }
+
+    private void testApplication() {
+        // An exercise for the reader
+    }
+
+    private void undeployApplication() {
+        RestResponse rr = domain.getServers().getServer("in1").deleteApplicationRef("test");
+        rr = domain.getServers().getServer("in2").deleteApplicationRef("test");
+        rr = domain.getClusters().getCluster("c1").deleteApplicationRef("test");
+        rr = domain.getApplications().undeploy("test");
+    }
+
+    private void removeStandaloneInstance() {
+        deleteInstance("in1");
+        deleteInstance("in2");
+    }
+
+    private void removeCluster() {
+        deleteCluster("c1");
+    }
+
+    private void deleteCluster(final String clusterName) {
+        RestResponse rr = domain.listInstances(new HashMap<String, Object>() {{
+            put("id", clusterName);
+        }});
+
+        List<Map> instanceList = (List<Map>) rr.getExtraProperties().get("instanceList");
+
+        if (instanceList != null && !instanceList.isEmpty()) {
+            for (Map instance : instanceList) {
+                String instanceName = (String) instance.get("name");
+                Server server = domain.getServers().getServer(instanceName);
+                server.stopInstance(instanceName);
+                server.delete();
+            }
+        }
+
+        Cluster cluster = domain.getClusters().getCluster(clusterName);
+
+        if (cluster != null) {
+            if (cluster.delete()) {
+                System.out.println("Successfully deleted instance " + clusterName);
+            } else {
+                System.out.println("Failed to delete instance " + clusterName);
+            }
+        }
+    }
+
+    private void deleteInstance(String name) {
+        Server server = domain.getServers().getServer(name);
+        if (server != null) {
+            if (server.delete()) {
+                System.out.println("Successfully deleted instance " + name);
+            } else {
+                System.out.println("Failed to delete instance " + name);
+            }
+        }
+    }
+
+    public static void main(String... args) {
+        ClusterDemo cd = new ClusterDemo();
+        cd.run();
+    }
+}
+-----
+
+There's not much to say about the code beyond what I said in the intro.  I should note, though, that I removed some error checking to try to make this a bit shorter.  Typically, after each REST call, I would have `assert (rr.isSuccess());` just to make sure.  In production code, you would need something similar (though, obviously, more robust).
+
+If you have any questions about the code, please feel free to ask questions in the comments section.  I'll try to get the Python version posted as soon as I can.  If there's anything in particular you'd like to see me address about these client wrappers or the GlassFish REST interface in general, you know where to ask. ;)
