@@ -1,0 +1,57 @@
+---
+title: 'The Maven Release Plugin Is Pretty Slick'
+author: 'Jason Lee'
+layout: blog-post
+date: 2009-4-1
+tags: [ Maven ]
+---
+Maven catches a lot of flak from a lot of people.  I've even been known to bemoan some its eccentricities from time to time.  Over the past year and a half, though, I've done more and more with Maven, and I'm to the point now where that's all I use.  In fact, Maven and Ant have traded positions in my praise and scorn playbook.  At any rate, in releasing FacesTester 0.1 yesterday, I was shown how to use the release plugin (which, by the way, has no parallel in Ant-space that I can see).  This plugin helps in releasing a version of a project, updating all the version numbers as appropriate.  Here's a rough blow-by-blow of what happened:
+pass::[more]
+
+I issued `mvn release:prepare` and `mvn release:perform`.  The plugin asks me what the release version number should be, what the next version will be, and what the SCM tag should be.  It has reasonable defaults for all of these, or you can specify something different.  The plugin the did the following:
+
+* Updated the version from 0.1-SNAPSHOT to 0.1 for the parent POM and each submodule
+* Built each module
+* Checked the POM changes into my SCM (Mercurial, btw)
+* Tagged Mercurial to mark the release
+* Deployed the artifacts to the configured Maven repository
+* Updated the version number from 0.1 to 0.2-SNAPSHOT
+* Checked the POM changes into Mercurial
+
+Once that was done, I was able to update my development working copy, which got me to 0.2-SNAPSHOT and continue development.  It was very, very slick.  It's a two-step process, and I can't begin to explain the difference between prepare and perform in terms of what gets changed when and where.  All I can tell is that it worked really well for me. :)
+
+To make it work, though, you need to make sure your parent POM has these two entries:
+
+[source,xml]
+-----
+<distributionManagement>
+    <repository>
+        <id>java.net-m2-repository</id>
+        <url>java-net:/maven2-repository/trunk/repository/</url>
+        <uniqueVersion>false</uniqueVersion>
+    </repository>
+</distributionManagement>
+<scm>
+    <connection>
+        scm:hg:https://kenai.com/hg/facestester~mercurial
+    </connection>
+    <developerConnection>
+        scm:hg:https://kenai.com/hg/facestester~mercurial
+    </developerConnection>
+</scm>
+-----
+
+Of course, your Maven repository and SCM URLs will be different. ;)  I also needed to tell the SCM how to login to Mercurial.  I did that by adding this to `~/.m2/settings.xml`:
+
+[source,xml]
+-----
+<servers>
+    <server>
+        <id>kenai.com</id>
+        <username>jasondlee</username>
+        <password>...</password>
+    </server>
+</servers>
+-----
+
+I didn't actually try it without the password element there, which I will do next time I use the plugin.  I'm not comfortable with putting my password in cleartext there, which is compounded by the fact that the plugin then echoes that password to the console as it runs.  Other than that, I was really pleased with the process.  Maven, when properly understood, is a much, much better tool than Ant. :)

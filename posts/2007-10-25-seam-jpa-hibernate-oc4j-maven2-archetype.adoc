@@ -1,0 +1,80 @@
+---
+title: 'A Seam+JPA/Hibernate on OC4J Maven 2 Archetype'
+author: 'Jason Lee'
+layout: blog-post
+date: 2007-10-25
+tags: [ JPA, Maven, OC4J, Seam ]
+---
+As a follow-up to my link:/2007/10/17/seam-and-jpa-hibernate-on-oc4j-1013/[entry] on getting a Seam and JPA/Hibernate application running on OC4J, I now have an alpha release of a Maven 2 archetype available for use and testing, with heavy emphasis on testing.
+pass::[more]
+
+Using the archetype is pretty simple (assuming you know how to use Maven 2 archetypes in general):
+
+[source,bash]
+-----
+mvn archetype:create -DarchetypeGroupId=com.steeplesoft.maven.archetypes 
+    -DarchetypeArtifactId=seam-jpa-oc4j -DarchetypeVersion=1.0-alpha 
+    -DremoteRepositories=http://repo.steeplesoft.com/maven2 
+    -DgroupId=com.foo 
+    -DartifactId=myApp 
+    -Dversion=1.0
+-----
+
+What this gets you is a multi-module project, such as what was described in the aforementioned article, with (hopefully) working examples of a JPA entity bean, a HSQL-based PersistenceUnit, and a simple JSF (Facelets), all wired together via Seam.  Chances are good that you'll want to change the package name and structure to match your project and organization's needs, but, if you're like me, having these examples to copy and paste will help when creating a new project. :)
+
+[[redeploy]] This is by no means perfect.  Given my newness to Maven, the archetype itself could probably use some help, <strike>but there's something more serious to consider at the moment involving OC4J.  If you create the project as described above, deploy the resulting EAR file and hit the web context, you should see that the application works fine.  If you try to redeploy the application, you'll see an error message like this in the web console (formatted for readability)</strike>(this is been link:/2007/10/25/oc4j-seam-archetype-update/[fixed]):
+
+[source]
+-----
+Operation failed with error: java.lang.IllegalStateException: 
+    ClassLoader "myapp.web.myapp-web-1.0:0.0.0" 
+    (from in /oc4j/j2ee/home/applications/myapp/myapp-web-1.0/): 
+    This loader has been closed and should not be in use. 
+-----
+
+The server console will show something like this:
+
+[source]
+-----
+oracle.oc4j.admin.internal.DeployerException: java.lang.IllegalStateException: ClassLoader "myapp.web.myapp-web-1.0:0.0.0" (from <web-module> in /oc4j/j2ee/home/applications/myapp/myapp-web-1.0/): This loader has been closed and should not be in use.
+      at org.hibernate.ejb.Ejb3Configuration.configure(Ejb3Configuration.java:258)
+      at org.hibernate.ejb.HibernatePersistence.createEntityManagerFactory(HibernatePersistence.java:120)
+      at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:59)
+      at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:48)
+      at org.jboss.seam.persistence.EntityManagerFactory.createEntityManagerFactory(EntityManagerFactory.java:81)
+      at org.jboss.seam.persistence.EntityManagerFactory.startup(EntityManagerFactory.java:50)
+      at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+      at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+      at java.lang.reflect.Method.invoke(Method.java:585)
+      at org.jboss.seam.util.Reflections.invoke(Reflections.java:21)
+      at org.jboss.seam.util.Reflections.invokeAndWrap(Reflections.java:125)
+      at org.jboss.seam.Component.callComponentMethod(Component.java:2095)
+      at org.jboss.seam.Component.callCreateMethod(Component.java:2010)
+      at org.jboss.seam.Component.newInstance(Component.java:1981)
+      at org.jboss.seam.contexts.Contexts.startup(Contexts.java:304)
+      at org.jboss.seam.contexts.Contexts.startup(Contexts.java:278)
+      at org.jboss.seam.contexts.ServletLifecycle.endInitialization(ServletLifecycle.java:95)
+      at org.jboss.seam.init.Initialization.init(Initialization.java:554)
+      at org.jboss.seam.servlet.SeamListener.contextInitialized(SeamListener.java:34)
+      at com.evermind.server.http.HttpApplication.initDynamic(HttpApplication.java:1130)
+      at com.evermind.server.http.HttpApplication.<init>(HttpApplication.java:738)
+      at com.evermind.server.ApplicationStateRunning.getHttpApplication(ApplicationStateRunning.java:414)
+      at com.evermind.server.Application.getHttpApplication(Application.java:545)
+      at com.evermind.server.http.HttpSite$HttpApplicationRunTimeReference.createHttpApplicationFromReference(HttpSite.java:1990)
+      at com.evermind.server.http.HttpSite$HttpApplicationRunTimeReference.<init>(HttpSite.java:1909)
+      at com.evermind.server.http.HttpSite.addHttpApplication(HttpSite.java:1606)
+      at oracle.oc4j.admin.internal.WebApplicationBinder.bindWebApp(WebApplicationBinder.java:238)
+      at oracle.oc4j.admin.internal.WebApplicationBinder.bindWebApp(WebApplicationBinder.java:99)
+      at oracle.oc4j.admin.internal.ApplicationDeployer.bindWebApp(ApplicationDeployer.java:547)
+      at oracle.oc4j.admin.internal.ApplicationDeployer.doDeploy(ApplicationDeployer.java:202)
+      at oracle.oc4j.admin.internal.DeployerBase.execute(DeployerBase.java:93)
+      at oracle.oc4j.admin.jmx.server.mbeans.deploy.OC4JDeployerRunnable.doRun(OC4JDeployerRunnable.java:52)
+      at oracle.oc4j.admin.jmx.server.mbeans.deploy.DeployerRunnable.run(DeployerRunnable.java:81)
+      at com.evermind.util.ReleasableResourcePooledExecutor$MyWorker.run(ReleasableResourcePooledExecutor.java:298)
+      at java.lang.Thread.run(Thread.java:595)
+-----
+
+The only way I've found to fix that is to restart the app server, which is, of course, extremely ugly.  Making this work on OC4J has been extremely trying, and this is just one more example of the pain I've put myself through.  Since the contract dictates this container, though, I have little choice. :)  At any rate, I'm going to try to work around this by creating one or more shared libraries on the app server and see what that gets me.  I'll report back what I find.
+
+In the meantime, you can find the archetype in my (new) Maven http://repo.steeplesoft.com/maven2[repo] (when the DNS finally propagates), or in its (experimental) http://www.selenic.com/mercurial/wiki/[Mercurial] http://hg.steeplesoft.com/seam-oc4j-archetype/[repository].

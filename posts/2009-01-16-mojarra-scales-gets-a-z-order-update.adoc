@@ -1,0 +1,33 @@
+---
+title: 'Mojarra Scales Gets a Z-Order Update'
+author: 'Jason Lee'
+layout: blog-post
+date: 2009-1-16
+tags: [ Java, JavaServer Faces, Scales ]
+---
+As I noted in a recent link:/posts/changes-are-coming-to-the-glassfish-admin-console[entry], we are considering moving to a desktop-like interface for the GlassFish Administration Console, where the content is in separate "windows" (decorated DIVs, basically) which can be moved, closed, minimized, etc.  As I've started working on a concrete implementation of some of those ideas, I quickly realized that we were going to have issues with multiple, overlapping windows.  Once you have multiple windows open, the user has to be able to bring the desired window to the front, but YUI, which will likely be the library used, doesn't support that natively.  Fortunately, that's easy to fix.  First, an example of the problem:
+pass::[more]
+
+image::/imported/2009/01/window_example.png[alt='Overlapping window example', title='Overlapping window example']
+
+With stock YUI, as best as I can tell, if you want to look at Window #2, you're out luck.  With this simple JS, though, the problem is quickly solved:
+
+[source,javascript]
+-----
+var currentMaxZ = 1;
+registerPanel = function(id, panel) {
+    scalesPanels[id] = panel;
+    YAHOO.util.Event.addListener(id, "mousedown", bringToFront);
+    currentMaxZ++;
+}
+setZToMax = function (target) {
+    YAHOO.util.Dom.setStyle(target, 'z-index', ++currentMaxZ);
+}
+bringToFront = function (event) {
+    setZToMax(event.target.parentNode.parentNode);
+}
+-----
+
+There may be more elegant approaches, but here's how this one works.  When the page first loads, the variable `currentMaxZ` is set to one.  As each windows is registered (a requirement I put on the page), the variable is incremented, and an "onclick" handler is attached to the DOM element.  Now, when someone clicks on the panel/window/dialog, whether it's a simple click or a click to drag, `bringToFront` is called, which determines the actual DOM element that needs to be manipulated (due to how YUI works, the DOM isn't as simple as it may look in your markup), then delegates to `setZToMax` (it's a separate function so that other parts of Scales can reuse the functionality) which increments `currentMaxZ` and sets the target's `z-index` style property to that value.  Once that's done, the window is brought to front, as expected.  
+
+Having worked out how to do that, I've added this functionality to Scales (which will likely be used in the GlassFish console, if only just for this exploration) and committed that to the repository (about which I need to post, but that will have to wait a bit longer).   If you'd like to see this in action, point your browser http://www.jsftemplating.org/mojarra-scales-demo/facelets/panel.xhtml[here] (there is, at the moment, an odd rendering bug I'm trying to track down) and let me know what you think.

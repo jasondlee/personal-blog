@@ -1,0 +1,22 @@
+---
+title: 'JSF and File Downloads, Take Two'
+author: 'Jason Lee'
+layout: blog-post
+date: 2006-4-5
+tags: [ JavaServer Faces ]
+---
+Yesterday, I link:/2006/04/04/jsf-and-file-downloads[detailed] some issues I was having getting a JSF app to allow the download of an Excel spreadsheet as the result of a backing bean action being called.  My solution involved a servlet and some JavaScript, with just a -pinch- a fistful of kludge.
+pass::[more]
+
+Thanks to the esteemed Mr. Chad Cummings, I have a better solution, and it involves one small change to the backing bean (the navigation target returned) and the addition of this snippet to the JSF page:
+
+[source,html]
+-----
+<h:panelGrid columns="1" rendered="#{batchAuditReportBean.workBook != null}">
+    <f:verbatim>
+        <iframe src="success.jsp" style="visibility: hidden"/>
+    </f:verbatim>
+</h:panelGrid>
+-----
+
+Is it still a bit of a hack?  Maybe so, but it does work, and is a whole lot cleaner.  That's a plus in my book, so I'm going to commit this to our http://subversion.tigris.org[Subversion] repository.

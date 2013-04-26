@@ -1,0 +1,63 @@
+---
+title: 'JSF, PhaseListeners, and GET Requests Redux'
+author: 'Jason Lee'
+layout: blog-post
+date: 2006-8-17
+tags: [ Java, JavaServer Faces ]
+---
+In an earlier link:/2006/04/25/jsf-phaselisteners-and-get-requests[post], I detailed how my company got around JSF's dependence on POST requests in our efforts to implement pretty URLs.  While this approach has worked well for us for quite some time, a pretty major flaw in the approach revealed itself to us in the past few days.
+pass::[more]
+
+In the application for which this PhaseListener was written, we display order information for our customer service group.  A recent feature request was the ability to approve an order from this application, which is basically the assignation of an order number.  The most user-friendly way to do this, we thought, would be an in-place edit.  For the user, it would be quick and easy, and look really cool, so we altered the page to use the excellent https://ajax4jsf.dev.java.net/[Ajax4jsf] library for the in-place edit and data submission.  We hit a pretty big snag, though:  the Ajax request was failing.  In fact, the method on the managed bean wasn't being called at all.  To make sure it wasn't a4j-related, I added a plain `<h:commandButton/>` to see if I could get the method to fire, but, again, it failed to run.
+
+To make a long story short, it turns out that if I hit the page directly ("/index.jsf" in my test case), everything worked as expected.  If I hit the page via a pretty URL ("/prettyurl/"), it would fail.  After talking to Ryan Lubke, the JSF maintainer at Sun (a million thanks, by the way), he pointed me to section 2.2.1 of the JSF spec:
+
+_____
+The JSF implementation must perform the following tasks during the Restore View phase of the request processing lifecycle:
+* Examine the FacesContext instance for the current request. If it already contains a UIViewRoot:
+** Set the locale on this UIViewRoot to the value returned by the getRequestLocale() method on the ExternalContext for this request.
+** For each component in the component tree, determine if a ValueBinding for "binding" is present. If so, call the setValue() method on this ValueBinding, passing the component instance on which it was found.
+** Take no further action during this phase.
+_____
+
+He added, "So your [pretty URL PhaseListener] adds your custom ViewRoot to the Context.  We get to the actual part of RestoreViewPhase and see it's already there, so we exit the phase and continue processing."
+
+That's no good.  His suggested fix is to extend HttpServletRequestWrapper, override getPathInfo(), and set that on the ServletContext.  That may sound scary, but it's actually not too bad.  First, let's look at the HttpServletRequestWrapper:
+
+[source,java]
+-----
+class PrettyUrlRequestWrapper extends HttpServletRequestWrapper {
+	private String template;
+	@Override
+	public String getPathInfo() {
+		return "/" + template;
+	}
+	public PrettyUrlRequestWrapper(HttpServletRequest reg) {
+		super(reg);
+	}
+	public void setTemplateName(String template) {
+		this.template = template;
+	}
+}
+-----
+
+I added this as a private class in the same source file as the PrettyUrlPhaseListener.  I then altered the PL to do, for example:
+
+[source,java]
+-----
+PrettyUrlRequestWrapper wrapper = new PrettyUrlRequestWrapper(request);
+wrapper.setTemplateName("/product-view-" + tab + suffix);
+context.getExternalContext().setRequest(wrapper);
+-----
+
+instead of 
+[source,java]
+-----
+UIViewRoot view = context.getApplication().getViewHandler()
+    .createView(context,"/product-view-" + tab + suffix);
+context.setViewRoot(view);
+-----
+
+where `suffix` is `context.getExternalContext(). getInitParameter ("javax.faces.DEFAULT_SUFFIX");` and `tab` is an application-specific parameter (the "tab" to display in the view).  The end result of all of this is that I can hit the URI `/Gopher/product/FXY02/details` and the PhaseListener (using logic in the other post and not displayed here) sets the state on the backing bean and "tricks" JSF into displaying "product-view-details.xhtml" _and_ allows `<h:commandButton />` to function as expected. 
+
+To clarify the problem, Ryan also noted (via IRC, so please forgive the odd syntax), "First request to prettyURL -> RestoreViewPhase (UIViewRoot already exists) -> RenderResponse.  Click the button to initiate a post-back.  The [pretty URL PhaseListener] detects the URL, and creates a new view which means the view won't be restored properly from the initial request.  So, you can go the wrapper approach (which I think is good as the URL is normallized during the processing) or you could try determining of the request is a postback and if it is, not creating the view."  Since I have the wrapper approach, I think I'll stick with that.  I think it's much cleaner than the old way anyway.
