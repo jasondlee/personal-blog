@@ -78,7 +78,6 @@ There's a really good chance this is a bad pretty bad example, but I'm not JavaF
 [source,java]
 -----
 public class DoctorFXController implements Initializable {
-
     private final Asciidoctor instance;
     private Map<String, Object> options;
     @FXML
@@ -87,27 +86,18 @@ public class DoctorFXController implements Initializable {
     WebView preview;
 
     public DoctorFXController() {
-        final OptionsBuilder optionsBuilder = OptionsBuilder.options()
+        options = OptionsBuilder.options()
                 .compact(false)
-                .safe(SafeMode.UNSAFE);
-        final AttributesBuilder attributesBuilder = AttributesBuilder
-                .attributes()
+                .headerFooter(true)
+                .safe(SafeMode.UNSAFE)
                 .backend("html")
-                .docType("book");
-
-        Map<String,String> attributes = new HashMap<>();
-        final Map<String, Object> attributesMap = attributesBuilder.asMap();
-        attributesMap.putAll(attributes);
-
-        optionsBuilder.attributes(attributesMap);
-        options = optionsBuilder.asMap();
+                .asMap();
         instance = Asciidoctor.Factory.create();
     }
 
     @FXML
     protected void handleKeyTyped(KeyEvent event) {
-        WebEngine engine = preview.getEngine();
-        engine.loadContent("<body>" + instance.render(editField.getText(), options) + "</body>");
+        preview.getEngine().loadContent(instance.render(editField.getText(), options));
     }
 
     @Override
@@ -122,8 +112,13 @@ image::/images/2013/doctorfx.png[]
 
 It's not very pretty, but it "works". As you type on the left, the pane on the right is constantly updated, which is kinda cool. :P
 
-Currently, JavaFX builds are Ant-based and, to be honest, I really don't want to muck around in that too much, so I just copied the AsciiDoc-related dependencies from Jason Porter's Maven plugin and added those manually to the NetBeans project build path. Perhaps once they migrate to Gradle, this can be made a bit prettier. For now, for a Q&D PoC app, it works just fine.
+Currently, JavaFX builds are Ant-based and, to be honest, I really don't want to muck around in that too much, so I just copied the AsciiDoc-related dependencies from Jason Porter's Maven plugin and added those manually to the NetBeans project build path:
 
-The app clearly has a lot of work left. For example, note the period and the empty line at the top of the edit area. Without that, the first two lines of AsciiDoc markup are not rendered at all. If I change `= Hello, AsciiDoc` to `== Hello, AsciiDoc`, though, it renders just fine. I'm still trying to track that down.  The app could also use some support (and related menus) for opening, saving, various edit actions, etc. For an hour's worth of hacking, though, it's not too shabby. My main interesting in this, though, was an excuse to play with the AsciiDoctor Java integration and JavaFX, and this let me do both at the same time.
+* asciidoctor-java-integration-0.1.2.jar
+* jruby-complete-1.7.3.jar
+
+Perhaps once the JavaFX migrates hte build system to Gradle, this can be made a bit prettier. For now, for a Q&D PoC app, it works just fine.
+
+The app clearly has a lot of work left. +++<strike>For example, note the period and the empty line at the top of the edit area. Without that, the first two lines of AsciiDoc markup are not rendered at all. If I change `= Hello, AsciiDoc` to `== Hello, AsciiDoc`, though, it renders just fine. I'm still trying to track that down.</strike>+++  The app could also use some support (and related menus) for opening, saving, various edit actions, etc. For an hour's worth of hacking, though, it's not too shabby. My main interesting in this, though, was an excuse to play with the AsciiDoctor Java integration and JavaFX, and this let me do both at the same time.
 
 As I have time and energy, I'll probably keep hacking on this. In time, a usable editor might just come of it. :)
