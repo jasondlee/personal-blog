@@ -117,7 +117,7 @@ Currently, JavaFX builds are Ant-based and, to be honest, I really don't want to
 * asciidoctor-java-integration-0.1.2.jar
 * jruby-complete-1.7.3.jar
 
-Perhaps once the JavaFX migrates hte build system to Gradle, this can be made a bit prettier. For now, for a Q&D PoC app, it works just fine.
+Perhaps once the JavaFX migrates the build system to Gradle, this can be made a bit prettier. For now, for a Q&D PoC app, it works just fine.
 
 The app clearly has a lot of work left. +++<strike>For example, note the period and the empty line at the top of the edit area. Without that, the first two lines of AsciiDoc markup are not rendered at all. If I change `= Hello, AsciiDoc` to `== Hello, AsciiDoc`, though, it renders just fine. I'm still trying to track that down.</strike>+++  The app could also use some support (and related menus) for opening, saving, various edit actions, etc. For an hour's worth of hacking, though, it's not too shabby. My main interesting in this, though, was an excuse to play with the AsciiDoctor Java integration and JavaFX, and this let me do both at the same time.
 
