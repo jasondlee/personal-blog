@@ -88,8 +88,6 @@ public class DoctorFXController implements Initializable {
 
     public DoctorFXController() {
         final OptionsBuilder optionsBuilder = OptionsBuilder.options()
-                .backend("html")
-                .docType("book")
                 .compact(false)
                 .safe(SafeMode.UNSAFE);
         final AttributesBuilder attributesBuilder = AttributesBuilder
