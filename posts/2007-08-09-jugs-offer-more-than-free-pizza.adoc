@@ -1,0 +1,61 @@
+---
+title: 'JUGs Offer More Than Free Pizza'
+author: 'Jason Lee'
+layout: blog-post
+date: 2007-8-9
+tags: [ General, Java ]
+---
+As regular readers likely know, I am currently serving as the president of the http://okcjug.org[Oklahoma City Java Users Group].  One of the things we've really been focusing on is getting the word out about our JUG, hoping to increase not only attendance, but the size of our speaker pool as well.  Since we've really started pushing this effort, I've done a fair amount of thinking about JUGs in general and have come to reinforce an idea I've long held:  good JUGs are more than just a once-a-month meeting.  They offer several very practical benefits to both <<employees>> and <<employers>>.
+pass::[more]
+
+[[employees]]
+Employees
+---------
+
+Employees are, ostensibly, the primary focus of a JUG.  As such, the JUG's value is more clearly and easily seen here.
+
+Exposure to new technologies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The most obvious purpose of a JUG is to give its members introductions to, or small tutorials on new technologies, methodologies, etc.  One of the problems, if one can call it that, with working full time is that, in many cases, it leaves little time for research and experimentation.  In the hurry to finish a product, we are often left little choice but to use what we know, so staus quo carries the day.  In some situations, we are granted (or simply make) the time to evaluate a new technology, but, oftentimes, tight deadlines or even strict corporate policies make that unworkable.  
+
+Once or twice a month, though, an employee can sit down in a JUG session and learn about the latest in the field.  The value in this is that it costs the employee only a an hour or two of his time, and he gets to reap the benefits of all the time the speaker put in to preparing the talk.  This allows a developer to avoid a lot of the initial learning curve of the technology, methodology, etc. and come up to speed quickly on the topic at hand.  Armed with this basic knowledge, the developer can go back to work the next day and begin his own experimentation, able to avoid many of the pain points in learning a new tool.  While the pressures mentioned above still apply, it's possible (at least more so than before) that the situation has been ameliorated enough to allow a little time for research.
+
+Expansion of professional networks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+One of the hottest trends on the internet right now is that of social networking.  This fad for pre-teens to 20-somethings has made its way into the professional world.  Networking sites like http://www.linkedin.com/profile?viewProfile=&key=7722815" title="This is my LinkedIn profile[LinkedIn] exist to fill the desire to connect with fellow professionals, but developers need not look further than their local JUG for this same type of networking.  The attendance numbers for the Oklahoma City JUG vary from month to month, as do the actual attendees, but there is a pretty solid core of consistent attendees.  That means that each month, a developer has the opportunity to meet, in real life, many fellow developers living in the same city, putting a face and personality to the name that a web site just can't offer.  The JUG also offers the opportunity to talk to people in one's ever expanding network, trading ideas, techniques, problems, etc.  While there is certainly value to sites like LinkedIn, actually being able to look someone in the eye and have a conversation about work is hard to beat.
+
+Exposure to potential employers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This is perhaps a bit more subtle:  developers aren't the only ones who attend the talks.  We regularly see managers as well as recruiters attending our sessions.  While there are several reasons they would be attending (managers want/need the exposure to new technologies as well, and recruiters tell us they learn about these new technologies in order to help them recruit more effectively), one of the most important for developers, especially those looking for a job, is that, in attending, those making hiring decisions get an easy and free introduction to the developers in the area.  In fact, it was my presentation in the fall of 2006 that caught my http://objectstream.com[current employer's] eye, as I was told up front when we first started talking about the opportunity http://objectstream.com[Objectstream] to offer.  Had I not become active in the JUG, it's quite possible that I would have missed that opportunity.
+
+Enhance your reputation
+~~~~~~~~~~~~~~~~~~~~~~~
+Closely tied to the last boon, JUG involvement can do wonders for enhancing one's reputation among peers.  Having a reputation as solid coder, developer, analyst, researcher, etc. is extremely important in getting and keeping employment, as witnessed by the referrals for which employers ask.  Active participation in the JUG, whether as a vocal attendee or, better yet, presenter gives the opportunity to showcase one's skill sets.  Likewise, and I think more importantly, it allows one to work as part of a team in a public way, offering assistance to those in attendance that may not understand the topic as well.  The aforementioned managers and recruiters take great interest in those who can clearly and effectively elucidate a topic, and the JUG provides a great forum for that.
+
+[[employers]]
+Employers
+---------
+Individual employees aren't the only ones who can gain from JUG attendance and participation.  Area employers stand to gain much from a visible presence in the local JUG.
+
+Free (or at least cheap) exposure for one's company
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+One of the things that I like to do after each month's meetings is to look at the sign in sheets to see who all came, and for whom they work.  I am constantly surprised by that list.  Hardly a month goes by that I don't learn of yet another Java shop in town.  The big shops are generally easy to spot, but, for the smaller or newer shops, it's often a bit more difficult to become known in the community, which makes finding job candidates more difficult.  If they don't know about your shop, how do they know if you're hiring?  By becoming involved in the local JUG, an employer has a very inexpensive marketing vehicle.  Handled properly (technical types are often adverse to heavy-handed sales pitches), it's a <span title="WIN!">win-win</span> for an employer.
+
+Find potential employees
+~~~~~~~~~~~~~~~~~~~~~~~~
+The exposure of employees to employers mentioned above works both ways:  by attending the JUG, an employer gets the chance to test drive, so to speak, an employee:  
+* How solid is he, technically? 
+* How clearly can he communicate what he knows?
+* Is he comfortable speaking to large groups?
+* Is he willing to help others?
+* How patient is he with those less skilled than he?
+
+And so on.  A more relaxed environment like the JUG can be (and often is, in my experience) a much better forum for evaluating a potential candidate, and it can be had for free (or really cheaply if one chooses to be a JUG sponsor).
+
+Facilitate a more knowledgeable community
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The primary goal of the JUG, I would think, is the first point above:  exposing local developers to new technologies, etc.  While this is primarily focused on the developer, an employer has much to gain from this as well.  Via the JUG, current employees, as we've discussed, get the opportunity for self-improvement, which can only help their employers.  As one in leadership positions, I've always been encouraged to see fellow developers take the initiative to expand their sphere of knowledge.  It's gratifying to watch developers becoming increasingly confident and self-sufficient through such endeavors, and such growth can only make them better developers.  
+
+The employer also stands to gain by having a better informed/educated community when it comes to hiring.  In addition to getting to learn about a potential candidate, an employer, actively sponsoring and participating in the JUG, can help develop potential candidates for very little cost, so, when a position opens up, the area candidates will be better prepared to fill that position.
+
+In the final analysis, there's little down side to a users group.  Assuming one can sacrifice a little time for it, there's much to gain, from the social aspects to professional development, and even personal gratification for those that really like public speaking, a users group offers a unique opportunity.  Are you taking full advantage of your local JUG.  If not, why?

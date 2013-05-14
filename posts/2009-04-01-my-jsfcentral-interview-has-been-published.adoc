@@ -1,0 +1,8 @@
+---
+title: 'My JSFCentral Interview Has Been Published'
+author: 'Jason Lee'
+layout: blog-post
+date: 2009-4-1
+tags: [ JavaServer Faces, Mojarra, Scales ]
+---
+Careful readers of my blog (thank you, dear wife! : ) will remember that I was link:/jsfone-day-one/[interviewed] at http://jsfone.com[JSFOne] by the conference co-founder and http://jsfcentral.com[JSFCentral] founder Kito Mann.  That interview, complete with transcript, has been http://www.jsfcentral.com/articles/lee-03-09.html[published] on JSFCentral.  I was a bit nervous about how it would turn out, but I think it turned out pretty well.  I'm not a big fan of hearing my recorded voice, but there's not much to be done about that. :)

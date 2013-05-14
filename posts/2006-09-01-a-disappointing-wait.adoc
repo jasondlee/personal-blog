@@ -1,0 +1,20 @@
+---
+title: 'A Disappointing Wait'
+author: 'Jason Lee'
+layout: blog-post
+date: 2006-9-1
+tags: [ Java ]
+---
+Several months ago at http://www.iec-okc.com[work], we evaluated a handful of methods for dependency downloads.  We looked at extending our home grown solution, http://jayasoft.org/ivy[ivy], http://maven.apache.org/ant-tasks.html[maven ant tasks], and even the unthinkable:  migrating to http://maven.apache.org/[maven2].  In the end, we decided to stay with our home grown solution, as we were led to believe that the next version of ant would have transitive dependency management built in.  We concluded that it would be a waste of time to migrate to one solution, just to do it again when the new ant came out, so we waited, and, oh, how disappointed we were.
+pass::[more]
+
+On August 27, 2006, Ant *1.7* beta 1 (not the 2.0 I had hoped to see) was announced.  Here is the text of the announcement on the web site:
+
+_____
+Ant 1.7 introduces a resource framework. Some of the core ant tasks such as <copy/> are now able to process not only file system resources but also zip entries, tar entries, paths, ... Resource collections group resources, and can be further combined with operators such as union and intersection. This can be extended by custom resources and custom tasks using resources.
+Ant 1.7 starts outsourcing of optional tasks to Antlibs. The .NET antlib in preparation will replace the .NET optional tasks which ship in Ant. Support for the version control system Subversion will be only provided as an antlib to be released shortly.
+Ant 1.7 fixes also a large number of bugs.
+Ant 1.7 has no support for Java6 features, but first tests on Java6 did not fail.
+_____
+
+That's all they could think of to highlight on the front page, and the http://svn.apache.org/viewvc/ant/core/trunk/WHATSNEW?view=markup&pathrev=439055[WHATSNEW] document doesn't show much more.  It looks like bug fixes, random tweaks, and 4 new tasks.  That's a long wait for so little improvement.  August 27, 2006 may very well mark the day that ant gave up the fight against a surging maven2.

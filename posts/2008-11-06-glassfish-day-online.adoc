@@ -1,0 +1,8 @@
+---
+title: 'GlassFish Day Online'
+author: 'Jason Lee'
+layout: blog-post
+date: 2008-11-6
+tags: [ GlassFish ]
+---
+One more note (for now :) on GlassFish v3 Prelude.&nbsp; Sun is holding an online event called GlassFish Day, which is a day of short presentations (about 10 minutes each).&nbsp; There will be several presentations throughout the day.&nbsp; To see the schedule and decide which ones are of interest to you, please see http://wikis.sun.com/display/TheAquarium/GlassFishDayOnline+-+GFv3Prelude[this entry] from http://blogs.sun.com/theaquarium/[The Aquarium].

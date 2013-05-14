@@ -1,0 +1,62 @@
+---
+title: 'Setting Up a New Web Site on DreamHost'
+author: 'Jason Lee'
+layout: blog-post
+date: 2009-11-3
+tags: [ General ]
+---
+As a "computer guy," I get asked to help with all things computer-related.  My http://qsbc.org[church's web site] is no different.  I was recently asked to help set up a new site.  Since my time is limited and they need to get things going without waiting on me, I thought I would document my process for them, simple as it is.  It occurred to me that it might be generally useful, so here it is. If I was wrong about that, please feel free to keep surfing. :)
+pass::[more]
+
+Table of contents
+-----------------
+
+* link:#quick[Quick instructions for the impatient]
+* link:#domain[Creating the domain]
+* link:#software[Installing the software]
+
+[[quick]]
+Quick instructions for the impatient
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Log on to the https://panel.dreamhost.com/[control panel]
+* Click on "https://panel.dreamhost.com/index.cgi?tree=domain.manage&[Manage Domains]"
+* Enter the domain/sub-domain name on "Domain to host"
+* Select your "Do you want the www in your URL?" choice
+* Select the user under which to run the domain
+* Enter the domain web directory (e.g., example.com/mysite or example.com/www)
+* Click"Fully host this domain"
+* Click "https://panel.dreamhost.com/index.cgi?tree=goodies.installer&[One-Click Installs]" from the Goodies navigation menu
+* Click "Install new website software - Advanced Mode"
+* Select WordPress as the software to install
+* Select the newly created domain/sub-domain for the "Install to" option
+* Click "Install it for me now"
+
+[[domain]]
+Creating the domain
+~~~~~~~~~~~~~~~~~~~
+The first step, of course, is to log on to the DreamHost http://panel.dreamhost.com[control panel].  In the navigation tree on the left, you should see a "Domains" section.  If it is not expanded, clicking on it will do so.  Next, click on "https://panel.dreamhost.com/index.cgi?tree=domain.manage&[Manage Domains]."  This will show you a list of your domain(s), with a "Add New Domain / Sub-Domain" button at the top.  Click this. 
+
+At this point, things start to get really subjective.  This is how I like to set things up.  You are, of course free to change things as you see fit.  In the "Domain to host" field, enter the fully qualified domain name (e.g., mysite.example.com).  For "Do you want the www in your URL?", my answer depends on the site I'm creating.  In this example, I'm creating a sub-domain, so I select "Remove WWW."  For new domains, I typically select "Leave it alone."
+
+Next up, "Run this domain under the user" will depend, again, on how you plan on managing the site.  If you, the administrator, will handle everything, then this can be left as the main domain login.  If, however, you need to allow other users to upload files, it might be a good idea to create a user for them.  This way, you won't need to give them your password.
+
+For the web directory, I group all my domains (and their sub-domains) into a directory named after the domain.  That means, for example, that for example.com, mysite.example.com, and beta.example.com, the directory structure would look like this:
+
+[source]
+-----
+$HOME/example.com/
+               | beta/
+               | mysite/
+               | www/
+-----
+
+Hopefully that makes sense.  What I like about that is that it leaves my home directory a little cleaner.  Should I ever let a domain lapse, I can delete one directory and things are basically cleaned up.
+
+For the other options, I leave them as the default.  I'm tempted to use Google Hosted Services for email on new domains, but that's a personal preference.
+
+[[software]]
+Installing the software
+~~~~~~~~~~~~~~~~~~~~~~~
+Once the domain is created, which may take a few minutes, the software can be installed.  We typically use WordPress.  To install that, click "https://panel.dreamhost.com/index.cgi?tree=goodies.installer&[One-Click Installs]" under "Goodies."  We use custom themes and plugins, so I select the "Install new webiste software - Advanced Mode" option.  Here, I select the WordPress option, then scroll way down to the "Install to" field.  From the drop down, I select the new (sub) domain I just created.  While I prefer to create and manage the databases manually, that's not strictly necessary, so we'll leave the check box checked, then click "Install it for me now."
+
+With that, you're done.  In just a few minutes, the software should be installed for you and ready to use.  All that's left is to login in to the site and begin configuring it, which I'll leave as an excercise for the reader. :)

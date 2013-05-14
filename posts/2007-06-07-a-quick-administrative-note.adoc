@@ -1,0 +1,13 @@
+---
+title: 'A Quick Administrative Note'
+author: 'Jason Lee'
+layout: blog-post
+date: 2007-6-7
+tags: [ General ]
+---
+I recently made a change that I should probably note here:  In mid-May, I left my employer of the past 2+ years, http://www.iec-okc.com[IEC], to join http://www.objectstream.com[Objectstream] as a Software Architect, and for whom I will be working at the FAA's Mike Monroney Aernoautical Center here in Oklahoma City.  While I'm very excited about this opportunity (and have enjoyed the past few weeks), it was not an easy decision to leave IEC, as it's a _really_ great place to work.  IEC (and my boss, Mitch, in particular) gave me a degree of freedom in terms of technology that I've not had anywhere else.  I was able to try a lot of bleeding edge technologies and do some really neat stuff with some really sharp people.  Much of what you may have read here came from my experiences at IEC.
+pass::[more]
+
+With Objectstream, I will have the opportunity to architect and build very large, complex systems, well beyond the scope and size of most of what I've done thus far in my career, so it will be a good growth vehicle for me.  A side effect of this change is that the types of things I'll blog about will change a bit, as the FAA is an Oracle and RUP shop.  While I won't be leaving the JSF and GlassFish worlds, one can certainly expect my new environs to show up here.
+
+Though it was not an easy decision, as http://en.wikipedia.org/wiki/Characters_of_The_Brady_Bunch#Peter_Brady[Peter Brady] once http://www.bradyresidence.com/songs.html[sang], "when it's time to change, don't fight the tide."  :)

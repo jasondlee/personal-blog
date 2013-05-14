@@ -1,0 +1,10 @@
+---
+title: 'Writing Pluggable Java EE Applications'
+author: 'Jason Lee'
+layout: blog-post
+date: 2012-7-9
+tags: [ CDI, JavaEE ]
+---
+image::imported//2012/07/jaxlogo.gif
+
+ just finished giving my session at JAXConf San Francisco 2012, "Writing Plugged-In Java EE Apps". I think it went pretty well, though I guess I'll find out how it really went when the reviews come in. :)  Either way, I had a great time.  As promised, link:/images/imporeted/2012/07/pluggable-javaee.tar.gz[here] is a tar ball that includes the code we looked at during the session, as well as the accompanying slides.  Hopefully I'll be able to get this code put in a proper public repository (such as java.net or GitHub, or both) soon.  For now, feel free to play with the code. Fix bugs. Extend it. Whatever comes to mind. :)  If you make changes or use it in something, I'd love to hear about it.  Thanks to all who attended!

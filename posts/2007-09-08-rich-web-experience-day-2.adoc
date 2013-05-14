@@ -1,0 +1,18 @@
+---
+title: 'Rich Web Experience, Day 2'
+author: 'Jason Lee'
+layout: blog-post
+date: 2007-9-8
+tags: [ General ]
+---
+Day two of RWE turned out to be as good as the first.  I started the day with two back-to-back talks on the Google Web Toolkit given by David Geary.  Just as entertaining and informative as his JSF talks from yesterday.  He describes GWT as (roughly) "the coolest piece of software I have ever seen" and it _is_ pretty cool.  I'm still not sold on it, though, largely for the same reason I don't like some other Java web frameworks:  I don't think Java code is the best way to express a UI; I much prefer a domain specific language for that.  Having said that, though, what GWT is offers is cool enough that I might just have to play with it some.  
+
+The keynote at lunch was given by Jesse James Garrett, discussing "Beyond Ajax."  What I took away from it is the call to look beyond Ajax and really think through the problem at hand.  Ajax treats a symptom in user interfaces.  He encouraged us to look beyond band-aids (my word, not his) like Ajax and really figure out how to solve the user's problems.  He pointed to the iPod as an example:  it has fewer features and was more expensive than the competition, but it works the way users want/need it to, so it dominates the market.  Really good keynote.
+
+I spent the afternoon in a couple of less practical (for me) sessions, https://openjfx.dev.java.net[JavaFX] and the http://developer.yahoo.com/yui[Yahoo! User Interface].  I've used both, though the latter more than the former, so the talks, it turns out, weren't of much value to me.  I knew that might be the case, but I wanted to see if I might pick up something new on either technology.  I didn't, but that's OK.  They were both pretty good talks, and I enjoyed myself. :)
+
+The expert panel after dinner was good, though depressing, spending a great deal of time on how awful web security is, and how almost hopeless the situation is with regard to fixing.  It's not completely without hope, the experts noted, but pretty close.  
+
+I got to eat dinner with http://www.jroller.com/cschalk/[Chris Schalk], formerly of Oracle and now with Google and author of my current favorite http://www.amazon.com/JavaServer-Faces-Complete-Reference/dp/0072262400/ref=sr_1_3/002-2480877-0224803?ie=UTF8&s=books&qid=1189229586&sr=8-3[JSF book] (you should all go out and buy two copies.  No, I don't get a commission, but that's not for lack of trying :).  We got to get caught up on what he's been doing, and talked a bit about what he'd like to see Google do in terms of its developer community.  There should be some interesting things coming out of Google soon.  For the record, I asked about the rumored GPhone, and got the "I can neither confirm nor deny" response.  Google must train all their people on that. :P  Speaking of the GPhone...
+
+To cap the night off, during the prize raffle section, I didn't happen to win the 24" iMac, but I got the next best thing there:  an 8GB iPhone!  The timing works out really well, as I really wanted one, and my other phone happened to have died Tuesday of this week.  To use it, I have to switch to AT&T, but I've been wanting to ditch my current carrier anyway, so this is a great excuse.

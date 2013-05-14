@@ -1,0 +1,12 @@
+---
+title: 'JSF 2.0 Early Access Review Available'
+author: 'Jason Lee'
+layout: blog-post
+date: 2008-6-3
+tags: [ Java, JavaServer Faces ]
+---
+The JSF 2.0 Expert Group (operating under the auspices of http://jcp.org/en/jsr/detail?id=314[JSR 314]) has released Early Draft Review 1 of the upcoming revision of the spec.  We are soliciting feedback, of course, and the window of opportunity for that runs through July 2.  If you want to have some input on the direction of the specification, now is the time to speak up. :)
+
+The major changes in this draft release are baked in Ajax support, and what we've termed "EZComp," which is better described as composite components.  Composite components, which touches on a change to finalized in a later release, namely, the inclusion of Facelets, allows a component developer to create a new component by piecing together several others in a template file.  This functionality is very similar, as best as I can tell as I've never used them, to Facelets' component support, where a snippet of markup is specified in a file and can then be treated as an actual component.  Unlike the Facelets version, though, these composite components are "real" components in that they are backed by a UIComponent.  If you were at JavaOne, this is what Ed demoed in this presentation (with Roger demonstrating the Ajax support).
+
+There's still much work to be done before September when we are schedule to deliver the Proposed Final Draft, but this is a pretty good start.  If you have any interest at all, please review the spec and give us feedback.  We really do want your input, as our goal is to improve upon the JSF experience and solve as many of the real world pain points as we can.  If your favorite pain point isn't being addressed, you owe it to yourself to speak up! :)

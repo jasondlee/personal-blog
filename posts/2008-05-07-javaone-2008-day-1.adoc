@@ -1,0 +1,34 @@
+---
+title: 'JavaOne 2008: Day 1'
+author: 'Jason Lee'
+layout: blog-post
+date: 2008-5-7
+tags: [ Java, JavaOne ]
+---
+Good morning.  It's time for my JavaOne 2008 Day 1 report (though it's actually the morning of the 2nd day :).  Thanks to the graciousness of Sun Microsystems, I'm here on the Java Blogger program, giving me _really_ amazing access and privileges.  All I have to do is blog about my experience, which I would have done anyway, so over the next few days, I'll be filing "reports" on what I've seen and heard.  So, with that introduction out of the way, let's recap day 1.
+pass::[more]
+
+The day started off early.  I grabbed breakfast in the press room then hopped in the Press/Analyst room for the kick off keynote.  As I stood there, I realized I was standing behind a couple of friends of mine, Joesph Ottinger of The Server Side, and Eugene Ciurana of LeapFrog (and http://www.teslatestament.com/[Tesla]), so I introduced myself, as we've never met in real life.  Once the doors opened, we filed in and found our seats, and got to watch a dance troupe gyrating on stage.  They weren't bad (they were actually pretty good, I guess some would say), but not my thing, really.  At one point, the dancers took a break so James Gosling could come up and do his usual shirt sling shot.
+
+|=====
+|http://blogs.steeplesoft.com//images/imported/2008/05/gosling_tshirt_toss-150x150.jpg[link="/images/2008/05/gosling_tshirt_toss.jpg" title='James Gosling firing t-shirts into the crowd']|
+image:imported/2008/05/gosling_tshirt_toss2-150x150.jpg[link="/image/imported/2008/05/gosling_tshirt_toss2.jpg' title='James Gosling t-shirt toss #2']
+|=====
+
+Finally, the keynote began and Rich Green the stage.  His speech was a pretty typical rah rah speech, in which he paraded various vendors with Java-based products on stage, such as Ian Freed of Amazon with the Amazon Kindle, and Rikko Sakaguchi of Sony Ericsson with...a phone whose model number I can't remember, but which I want to check out nonetheless.  There was also a fairly disastrous JavaFX demo by Nandini Ramani.  The demo crashed three times on her, though we learned from Josh Marinacci that the demo had a race condition which they fixed later.  Embarrassing for Nandini, I'm sure, but it didn't dent my enthusiasm for the platform.
+
+Speaking of JavaFX, it appears that like JavaOne 2007, this is the year of media, powered by JavaFX.  There were a plethora of JavaFX-based demos, either showing audio, a game, or metrics taken from sensors placed around the Moscone Center, JavaFX was displayed proudly.  A couple of interesting things to note were JavaFX running on Android, and the JavaFX SDK due in beta this summer (for which you can sign up at http://javafx.com[javafx.com]).  The Android demo was interesting.  It's my understanding the the Android SDK takes your Java code and compiles to run on the Dalvik VM, so it's not Java bytecode at run-time.  I'm curious how they got JavaFX to run, then:  did they compile the run-time to run on Android, or, as Jonathan Schwartz commented cryptically, do they have the JVM running on Dalvik.  Or maybe I'm missing something. :)
+
+The Neil Young announcement, to be honest, was a bit of a let down.  Yes, the project is cool, and yes the man's a legend, but I sure was hoping for some great new technology announcement. :)
+
+One you get past JavaFX, one of the biggest themes, it seems to me, has been GlassFish v3.  They're really pushing that hard, which makes sense, I think, as it is really, really cool technology.  Roberto Chinnici discussed the future of Java EE, highlighting some of the features of the upcoming spec, then brought out Jerome Dochez, the architect behind GlassFish.  Jerome then demoed v3, discussing it's relatively new OSGi foundation, and then showed how, for example, the EJB container can be added to GlassFish at run-time, no server restart needed.  In the words of Rich Green, "very cool stuff."  Jerome also demoed the work that Ken Paulsen and his team have done in making the Admin Console pluggable, which has some interesting OEM possibilities.  Arun Gupta and Tor Norbye then showed off the scripting language support in GlassFish with a networked, two-player Tic Tac Toe game, finishing with Tor running the game "Global Thermonuclear War."  When the game's map showed nuclear explosions all over the US, Tor shouted, "Oh no!  What have I done?!"  Priceless.
+
+Danny Coward, the Chief Architect for Java SE, then discussed where SE is and where it's heading.  There were two big announcements in his presentation.  The first was the the Java Module System will now interoperate with OSGi, hopefully putting to rest, finally, the long and contentious feud between the camps.  The second, which I found more exciting, was the announcement of a baked-in video codec in SE.  It's based on a codec from On2, so I don't know what kind of market penetration it will get, but it _is_ a single codec that content creators can depend on being there on all modern Java-capable devices, from your desktop to your cell phone, so it should do well.  Time will tell.
+
+Also demoed were changes to the applet plugin.  It boots faster, an applet crash won't take out your browser, and the applet can now be detached from the page and run separately.  Close the applet, and it reattaches to the web page.  Detach the applet and close the browser, and you're given the option of installing the application on your local machine.  If you do so, you no longer need a browser to run the app.  Really, really cool.  As I sit here sipping this Kool-Aid, I think JavaFX and this new applet plugin will make applets viable again.  I'm certainly anxious to play around with the technology.
+
+The pavilion floor is, of course, packed with vendors pitching their wares and handing out free stuff.  I've gotten more t-shirts in one day than I did all last year, and that includes attending two tech conferences.  My 4-year old son loves the screaming flying monkey from AT&amp;T. :)
+
+Time to run to a session (BTW, Cay Horstmann is three chairs to my left.  Celebrity sightings are fun! :)  I'll either do mini posts during the day or one big one tonight.  We'll see.  Sorry for any typos and bad grammar here.  I'm typing on the run, so to speak, so I haven't had time to proof read and edit.  We'll see if I come back and do that.
+
+Once more unto the breach, dear friends, once more!

@@ -1,0 +1,33 @@
+---
+title: 'Book Review: Pro JavaFX 2: A Definitive Guide to Rich Clients with Java Technology'
+author: 'Jason Lee'
+layout: blog-post
+date: 2012-4-3
+tags: [ Java, JavaFX, reviews ]
+---
+image::http://www.apress.com/media/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/A/9/A9781430268727-3d_11.png
+
+I was privileged to be given a copy of the recently released http://www.amazon.com/gp/product/1430268727/ref=as_li_ss_tl?ie=UTF8&tag=coupfoai0f-20&linkCode=as2&camp=1789&creative=390957&creativeASIN=1430268727[Pro JavaFX 2: A Definitive Guide to Rich Clients with Java Technology] image:http://www.assoc-amazon.com/e/ir?t=coupfoai0f-20&l=as2&o=1&a=1430268727[style="border:none !important; margin:0px !important;"] from Apress, authored by https://twitter.com/#!/JavaFXpert[James] http://www.learnjavafx.typepad.com/weblog/[Weaver], https://twitter.com/#!/weiqigao[Weiqi] http://www.weiqigao.com/blog/[Gao], https://twitter.com/#!/steveonjava[Stephen] http://steveonjava.com/[Chin], https://twitter.com/#!/deanriverson[Dean] http://pleasingsoftware.blogspot.com/[Iverson], https://twitter.com/#!/johanvos[Johan] http://blogs.lodgon.com/johan[Vos].  This review is a bit overdue, but I hope you find it as helpful as I found the book.
+pass::[more]
+
+For those looking for a quick summary, here it is: Overall, I thought it was a really good book that should get you up and running with JavaFX very quickly.
+
+Now, the details.  As I said, I think this is a very solid technical book, which is hard thing to accomplish.  Some books are really dry and overly technical, making them hard to read and reference, while others are fun to read, but shallow and not very helpful.  This book, though, strikes a great balance, I think.  There's a wealth of knowledge, but I found it flows pretty well and doesn't bog the user down in the super technical details.  I do, though, read a fair number of these types of books, so maybe I'm numbed to that.  Your mileage may vary. : )
+
+Chapter 1, "Getting a Jump Start in JavaFX", might be the most important, as it introduces the technology to the user.  Lose him here, and the rest of the book is worthless to him.  The authors did a great job of working through a simple, yet functional application, hitting the high points.  They didn't spend a great deal of time on the details, but gave the reader enough to grasp kinda-sorta what's going on.  There is _tons_ of source code and pictures, which is extremely helpful.  You don't have to go download the source and glance back and forth between the book and your computer.  It's literally all right there.
+
+Chapter 2 deals with "Creating a User Interface in JavaFX".  The component library in JavaFX is large and growing, so the book can't (and shouldn't) cover all of them, this chapter hits some of the major ones, showing how to put them on the screen, lay them out, have them respond to events like mouse clicks, etc.  Again, there is a _lot_ of source code, giving the reader plenty of complete examples right the book to follow. Skipping a bit, Chapter 4 shows how to write (visually) scalable applications with no static positioning, while Chapter 5 returns to the topic of components, demonstrating a large number of the components and how to use them.  Using these three chapters, I was able to get a non-functioning, but non-trivial UI mocked up in no time.
+
+Chapter 3 covers properties and bindings, two of the more fascinating aspects of the library, in my opinion. This one dives a bit deeper into the interfaces involved in the topics (including some UML for those that into that sort of thing), but still manages to be very readable.  Like chapter 3, chapter 6 covers something not necessarily graphical, collections and concurrency.  This chapter covers the new, rich collections API, while addressing the concurrency issues that are sure to arise in a modern, event-driven application.
+
+Chapter 7 spends considerable time on the charting features available in JavaFX, an important part of many business applications.  The chapter has plenty of source and graphics to look at, and spends some time on styling the charts with CSS
+
+Chapter 8 shows the media control features in the JavaFX.  In this chapter, the user is walked through building simple, yet functional audio and video players.  This is very practical chapter, I think, giving interested parties a great starting point in making their media-capable applications.
+
+Chapter 9 seemed to me to take a very odd departure.  What in the world do web services have to do with JavaFX?  The answer is nothing, really, but what this chapter does, though, is provide a very practical, real world usage of the various JavaFX APIs, both UI and concurrency.  We're give great examples of ListCells, Services, TableViews, etc., and some more hands-on with JavaFX Property objects.  I may have started the chapter confused, but I think in the end, this is one of my favorite chapters.
+
+Chapter 10 and Appendix A round out the book by describing some of the alternate languages available to JavaFX developers, namely, GroovyFX, ScalaFX, Visage, and FXML.  While these chapters are really more about these other languages than JavaFX itself, I think those open to non-Java JVM languages will find a wealth of information here to help them pick a language.  Or reinforce a choice they've already made.
+
+With all of that out of the way, if I _had_ to say something bad about this book (and, I know, this will sound strange), I would say that _maybe_ there's too _much_ code.  The amount of source in a book is, I think, a pretty subjective question.  When learning something, it's great to have it all right there in front of you (the authors even include import statements, a rare, in my experience, but nice touch), but if you're just needing a quick answer found somewhere in the prose of the book, it can obscure things a bit.  Having said that, _I_ don't think they've done a bad thing here, as I like to see the code, but I can see someone being a bit put off by the multiple consecutive pages of code, so be forewarned.
+
+As I said at the beginning, I really enjoyed this book.  As I find the time to work more with JavaFX, I think this will be my go-to tome to help me through my issues.  Can you find all of this information online?  Certainly, as is the case with every technical book, but the authors have done a great job of distilling all that information into a readable text, meaning you'll spend less time on Google, and more time in your http://netbeans.org" title=";)[IDE of choice].  If you're interested in learning JavaFX, this book is well worth your money.

@@ -1,0 +1,33 @@
+---
+title: 'NetBeans 6.8 Is Now Available'
+author: 'Jason Lee'
+layout: blog-post
+date: 2009-12-10
+tags: [ NetBeans ]
+---
+While we're making product announcements, I might as well mention that NetBeans 6.8 is available today as well.  I really think NetBeans is the best Free <del>Java</del> multi-language IDE on the market.  It's by no means perfect, but I like it a lot.^1^  Quoting from the release:
+pass::[more]
+
+_____
+Today Sun and the NetBeans(TM) community are announcing the availability of the NetBeans Integrated Development Environment (IDE) 6.8 -- in conjunction with the availability of Java(TM) Platform Enterprise Edition 6 (Java EE 6) and Sun GlassFish(TM) Enterprise Server v3. The NetBeans 6.8 IDE is the first IDE to provide complete support for Java EE 6 and GlassFish v3, and offers other new and exciting features. 
+
+The NetBeans IDE 6.8 is available for download free of charge at www.netbeans.org.
+
+*KEY UPDATES TO THE NETBEANS 6.8 IDE*
+*Complete Java EE 6 Support*: Java EE 6 language features simplify Java application development with less XML configuration, more annotations and more POJO-like development.
+*GlassFish v3 Support*: Developers can easily target and deploy to GlassFish v3, including the new lightweight GlassFish v3 Web Profile.
+*JavaFX(TM)*: The latest version of the NetBeans editor provides improved code completion, hints and navigation for JavaFX.
+*PHP Support*: The NetBeans IDE expands its support of dynamic languages with support for PHP 5.3 and the Symfony framework.
+*Tighter Integration with Project Kenai*: Project Kenai, a collaborative environment for hosting open source projects, now delivers full support for JIRA and improved instant messenger and issue tracker integration. For more information visit http://www.kenai.com[www.kenai.com].
+*C/C++ Profiling*: The new Microstate Accounting indicator and I/O usage monitor help developers profile and tune C/C++ applications.
+*NetBeans Platform*: As a rock-solid application framework for Swing applications, the platform saves developers a huge amount of time and effort by providing commonly-used facilities such as menu items, toolbar items, keyboard shortcuts, and window management out of the box.
+
+Additional information is available at:
+NetBeans 6.8 IDE -  http://netbeans.org/community/releases/68/
+Java EE 6 - http://java.sun.com/javaee/
+GlassFish v3 - http://www.sun.com/glassfishv3
+_____
+
+Head over to http://netbeans.org[netbeans.org] and give it a spin!  The JSF 2 support is excellent! ;)
+
+^1^ Some might expect that, as a Sun employee, I _have_ to push NetBeans, but that's not the case.  I converted from Eclipse months prior to the start of my employment at Sun, so that has no bearing at all on my choice. :)  In fact, I've never had anyone at Sun tell me what to use.  We have engineers that use every major IDE (or none).

@@ -1,0 +1,18 @@
+---
+title: 'Firefox, Linux, and the Java Plugin'
+author: 'Jason Lee'
+layout: blog-post
+date: 2012-6-20
+tags: [ Firefox, Java, Linux, plugin ]
+---
+image::imported//2012/06/java-plugin-300x284.png[link="/images/imported/2012/06/java-plugin.png" title='java-plugin']
+
+In a perfect world, Firefox, Linux and the Java plugin would get along happily.  You'd install all three, and things would just work.  If memory serves, that's exactly what happened under Ubuntu.  However, after installing Fedora 17, it just didn't want to work for me (I'm not blaming Fedora, mind you.  I like to live on the bleeding edge, so I install Java 7 nightlies from tar balls and not RPMs, so I probably broke something along the way). After much fumbling and guessing, I finally found a solution, which I'll share here in case you're in the same boat:
+
+[source,bash]
+-----
+$ mkdir ~/.mozilla/plugins
+$ ln -s $PATH_TO_JRE/lib/amd64/libnpjp2.so ~/.mozilla/plugins/libnpjp2.so
+-----
+
+And restart Firefox.  You can verify that Java (i.e., applets and webstart) is working by going http://www.java.com/en/download/installed.jsp[here].

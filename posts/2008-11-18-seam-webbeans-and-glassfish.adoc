@@ -1,0 +1,8 @@
+---
+title: 'Seam, WebBeans and GlassFish'
+author: 'Jason Lee'
+layout: blog-post
+date: 2008-11-18
+tags: [ EJB3, GlassFish, JavaServer Faces, Seam ]
+---
+For some time now, Sun has made use of Ustream.TV to broadcast webinars covering various topics of interest to GlassFish users.&nbsp; That effort continues on November 20th at 11am PST as Eduardo Pelegri-Llopart hosts http://mojavelinux.com/[Dan Allen], author of http://www.manning.com/dallen/[Seam in Action] to discuss Seam, WebBeans, and GlassFish.&nbsp; Some of WebBeans' companion specs (EJB 3.1 and JSF 2) will also be covered by spec leads Ken Saks and Roger Kitain, respectively.&nbsp; For more information, see this https://wikis.sun.com/display/TheAquarium/Seam+and+WebBeans[page] on Sun's wiki. To catch previous broadcasts on The Aquarium's Ustream.TV channel, you can go directly http://www.ustream.tv/channel/theaquarium[there].
