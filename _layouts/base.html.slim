@@ -20,8 +20,9 @@ html
     link rel='stylesheet' href='/styles/custom.css'
     link rel='stylesheet' href='/styles/lightbox/lightbox.css'
     script src='/scripts/highlight.pack.js'
-    <script src="/scripts/lightbox/jquery-1.7.2.min.js"></script>
-    <script src="/scripts/lightbox/lightbox.js"></script>
+    script src="/scripts/lightbox/jquery-1.7.2.min.js"
+    script src="/scripts/lightbox/lightbox.js"
+    script src="/scripts/quotes.js"
     javascript:
           hljs.tabReplace = '    ';
           hljs.initHighlightingOnLoad();
@@ -67,6 +68,14 @@ html
                                     a href="/twitter" rel="me" title="Twitter" Twitter
                                 li
                                     a href="/resume.pdf" rel="me" title="Resume" Resume
+                        div class="widget widget_links"
+                            h3.widget-title Quotes
+                            p#quote style="margin-bottom: 0px" Sample quote
+                            P#source style="text-align:right; padding-right: 5px; font-style: italic;" Quote source
+                            javascript:
+                                var index = Math.floor(Math.random() * quotes.length)
+                                document.getElementById('quote').innerHTML = (quotes[index].quote);
+                                document.getElementById('source').innerHTML = "-- " + (quotes[index].source);
                         div class="widget widget_links"
                             h3.widget-title Publications
                             ul class="xoxo blogroll"
