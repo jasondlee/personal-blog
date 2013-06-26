@@ -1,0 +1,77 @@
+---
+title: Backing Up Your Data with Duplicity
+author: Jason Lee
+date: 2013-06-26
+layout: blog-post
+tags: [ backup ]
+---
+
+For those wanting to backup their data, there are a myriad of commercial products, ranging from economical to absurdly expensive, from basic to extremely flexible and robust. Depending on your needs, though, you need not spend any money at all to get a pretty poiwerful backup system. In this entry, I'll show how I backup my workstation using http://duplicity.nongnu.org/[duplicity].
+
+pass::[more]
+
+Installing duplicity should be as simple as telling yum or apt to install the package appropriate for your Linux distribution. Mac users can use MacPorts or homebrew. Windows users, you're on your own. :)  In a nutshell, duplicity will take the set of you files you specify, either implicitly via include-all pattern, or explicitly, through config files, pattern matches, etc.  We'll see and example of both in a bit. Given a backup set definition, duplicity will create the back up, either full or incremental, and upload it to the destination you specify, which can be a local drive, an FTP or SCP target, or even Amazon S3.
+
+Rather than walk through all of the options, I'll share the script I've put together to manage my backups:
+
+[source]
+-----
+#!/bin/bash
+
+BASE_DIR=file:///mnt/backups/duplicity
+DOW=`date +"%u"`
+REPORT_DATE=`date +%Y%m%d`;
+COMMON_OPTS="--asynchronous-upload --no-encryption --full-if-older-than=8D -v"
+LOG=~/Documents/BackupLogs/Backup_Log_$REPORT_DATE.log
+
+# If it's Sunday, do a full backup
+if [ "$DOW" == "7" ] ; then
+    TYPE=full
+fi
+
+# Create log directory
+mkdir -p ~/Documents/BackupLogs 2>&1 > /dev/null
+
+duplicity $TYPE $COMMON_OPTS \
+    --exclude-filelist=~/local/etc/backup.exclude \
+    /home/jdlee/ \
+    $BASE_DIR/jdlee > $LOG
+duplicity $TYPE $COMMON_OPTS \
+    --include-filelist=~/local/etc/backup.system.include \
+    --exclude '**' \
+    / \
+    $BASE_DIR/system >> $LOG
+    
+# Clean up old backups
+/usr/bin/duplicity remove-older-than 14D --force $BASE_DIR/jdlee >> $LOG
+/usr/bin/duplicity remove-older-than 14D --force $BASE_DIR/system >> $LOG
+-----
+
+The interesting part of the script starts after the `mkdir` call. I have two backup sets, my home directory, and some system files. Since I call duplicity twice, I use the variable `COMMON_OPTS` defined above, which tells duplicity not to encrypt the files (which is fine for me), to perform an asynchronous upload to remote store, and to perform a full backup present if the last full is older than 8 days. It's worth noting that I am saving these backup sets to a "local" file store (it's actually a CIFS mount to a NAS device) via the `file:///` (for lack of a better term) protocol.
+
+For the firt backup fileset, I've gone with an opt-out type approach, as I generally want to back up my entire home directory. There are some things, though, such as MP3s, locally-installed software, etc., that I don't want to back up, so I exclude them via `--exclude-filelist`, which takes the path to a file with the exclusions. Mine looks a bit like this:
+
+[source]
+-----
+- /home/jdlee/Dropbox
+- /home/jdlee/Music
+- /home/jdlee/local/android-sdk
+-----
+
+There are more, of course, but this shows the basic format: a leading minus, a space, and the path of the file or directory. I then tell duplicity the base directory, and redirect the output to a log file. Note that any files excluded (or included) must be under the base directory you specify here. If there's a mismatch, duplicity will complain and exit.
+
+The next backup set uses an opt-in approach, where I specify the files I want. That file looks like this:
+
+[source]
+-----
+/etc/hosts
+/etc/fstab
+-----
+
+The format here is simpler, just the path of the file or directory to include. Again, these files must be under the base directory specified on the command line, which is `/` in this case, so we're good.
+
+After the files are backed up, duplicity is told to remove anything older than 14 days. If that's not done, the files will continue to build up. Whether or not that's a good thing is up to you. One of the nice things about duplicity is that it won't erase any file that's needed by another. For example, any files from a full backup that are needed by subsequent incremental backups will not be deleted. Once another full back up is done and the incrementals have aged appropriately, though, they, too will be pruned.
+
+Restoring files is pretty simple as well, or seems to be based on the one time I've had to use it. :) Duplicity will not overwrite existing files, it seems, so you have restore to an empty directory, then copy/move the restore files to their original location, but that's probably a good, safe approach anyway.
+
+With the script in place, you're now ready to schedule the job via cron, for example, and get nice, incremental back ups on the cheap. You will, of course, need to make sure the backups are safe to be really secure, for which I use CrashPlan running on another system. ;)
