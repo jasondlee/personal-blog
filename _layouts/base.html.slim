@@ -11,18 +11,22 @@ html
       meta name='twitter:url' content="#{site.base_url}#{page.url}"
       meta name='twitter:title' content=page.title
       meta name='twitter:description' content=summarize(html_to_text(page.content).strip.gsub(/^[:space:]*\n/, ''), 25)
+      
     link rel="alternate" type="application/rss+xml" title="Steeplesoft RSS Feed" href="#{site.base_url}/feed.atom"
-    link rel="stylesheet" href="/styles/reset.css"
-    link rel='stylesheet' href='/styles/typograhpy.css'
-    link rel='stylesheet' href='/styles/screen.css'
-    link rel="stylesheet" href='/styles/style.css'
-    link rel="stylesheet" href='/styles/highlight/sunburst.css'
-    link rel='stylesheet' href='/styles/custom.css'
-    link rel='stylesheet' href='/styles/lightbox/lightbox.css'
-    script src='/scripts/highlight.pack.js'
-    script src="/scripts/lightbox/jquery-1.7.2.min.js"
-    script src="/scripts/lightbox/lightbox.js"
-    script src="/scripts/quotes.js"
+    // link rel="stylesheet" href="#{site.base_url}/styles/normalize.css"
+    link rel="stylesheet" href='#{site.base_url}/styles/style.css'
+    link rel='stylesheet' href='#{site.base_url}/styles/typograhpy.css'
+    link rel="stylesheet" href="#{site.base_url}/styles/app.css"
+    link rel="stylesheet" href='#{site.base_url}/styles/highlight/sunburst.css'
+    link rel='stylesheet' href='#{site.base_url}/styles/lightbox/lightbox.css'
+    link rel='stylesheet' href='#{site.base_url}/styles/custom.css'
+
+    script src='#{site.base_url}/scripts/highlight.pack.js'
+    script src="#{site.base_url}/scripts/lightbox/jquery-1.7.2.min.js"
+    script src="#{site.base_url}/scripts/lightbox/lightbox.js"
+    script src="#{site.base_url}/scripts/quotes.js"
+    // script src="#{site.base_url}/scripts/vendor/custom.modernizr.js"
+    script src="#{site.base_url}/scripts/foundation/foundation.js"
     javascript:
           hljs.tabReplace = '    ';
           hljs.initHighlightingOnLoad();
@@ -32,72 +36,65 @@ html
     css:
     /[if lt IE 9]
       script src='//html5shim.googlecode.com/svn/trunk/html5.js'
-  body class="y2013 m01 d31 h08 home blog linux firefox ff1"
-    div.header
-        div#tagline.container
-            p#description
-        div#header-wrap.container style="height: 227px; margin:auto; vertical-align: middle; padding-top: 1px;"
-            a href="#{site.base_url}"
-                div.blogname
-                    |Coming
-                    img src="/images/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
-                    |Up
-                    img src="/images/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
-                    |for
-                    img src="/images/sep.png" style="display: block; margin-top: 10px; margin-bottom: 20px;"
-                    |Air
-                img src="/images/dolphin.png"
-    div.content
-        div#content-container
-            div#content-wrap.container
-                div class="primary hfeed"
-                    =content
-                div class="secondary aside"
-                    div#sidebar-container
-                        /div class="widget widget_links"
-                        /    h3.widget-title Tag Cloud
-                        /    = site.posts_tag_cloud
-                        div class="widget widget_links"
-                            h3.widget-title My Links
-                            ul class="xoxo blogroll"
-                                li
-                                    a href="/+" rel="me" title="Google+" Google+
-                                li
-                                    a href="/linkedin" rel="me" title="LinkedIn" LinkedIn
-                                li
-                                    a href="/twitter" rel="me" title="Twitter" Twitter
-                                li
-                                    a href="/resume.pdf" rel="me" title="Resume" Resume
-                        div class="widget widget_links"
-                            h3.widget-title Quotes
-                            p#quote style="margin-bottom: 0px" Sample quote
-                            P#source style="text-align:right; padding-right: 5px; font-style: italic;" Quote source
-                            javascript:
-                                var index = Math.floor(Math.random() * quotes.length)
-                                document.getElementById('quote').innerHTML = (quotes[index].quote);
-                                document.getElementById('source').innerHTML = "-- " + (quotes[index].source);
-                        div class="widget widget_links"
-                            h3.widget-title Publications
-                            ul class="xoxo blogroll"
-                                li
-                                    a title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries. " href="http://jaxenter.com/java-tech-journal/JTJ-2012-06"
-                                        | Tips for Writing Pluggable Java EE Applications
-                                li
-                                    a title="An article Ken Paulsen and I wrote detailing easy JSF component creation" href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html"
-                                        | JSFTemplating and Woodstock: Component Authoring Made Easy
-                                li
-                                    a href="http://jsfcentral.com/articles/lee-03-09.html" Jason Lee in depth: Mojarra and Scales
-                                li
-                                    a title="My JavaOne 2008 Wrap Up" href="http://www.theserverside.com/news/thread.tss?thread_id=49343" Jason Lee: Postmortem for JavaOne 2008
-                                li
-                                    a title="The GlassFish Adoption Story from my time at IEC" href="https://blogs.oracle.com/stories/entry/international_environmental"
-                                        | International Environmental: A Cooling Company Which Prefers Hot Software
-                                li
-                                    a title="This details the project that spawned a couple of the Mojarra Scales components" href="http://www.jsfcentral.com/articles/trenches_7.html"
-                                        |IEC donates custom JSF component to Mojarra Scales
+  body
+    div.row
+        div.row.blogname
+            div.small-12.columns
+                span 
+                    a href="#{site.base_url}" Coming Up for Air
+        div.row
+            div.small-9.columns
+                =content
+            div.small-3.columns.widget
+                .row
+                    .small-12.columns
+                        h3 My Links
+                        ul
+                            li
+                                a href="/+" rel="me" title="Google+" Google+
+                            li
+                                a href="/linkedin" rel="me" title="LinkedIn" LinkedIn
+                            li
+                                a href="/twitter" rel="me" title="Twitter" Twitter
+                            li
+                                a href="/resume.pdf" rel="me" title="Resume" Resume
+                .row
+                    .small-12.columns
+                        h3 Quotes
+                        p#quote style="margin-bottom: 0px" Sample quote
+                        P#source style="text-align:right; padding-right: 5px; font-style: italic;" Quote source
+                        javascript:
+                            var index = Math.floor(Math.random() * quotes.length)
+                            document.getElementById('quote').innerHTML = (quotes[index].quote);
+                            document.getElementById('source').innerHTML = "-- " + (quotes[index].source);
+                .row
+                    .small-12.columns
+                        h3 Publications
+                        ul
+                            li
+                                a title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries. " href="http://jaxenter.com/java-tech-journal/JTJ-2012-06"
+                                    | Tips for Writing Pluggable Java EE Applications
+                            li
+                                a title="An article Ken Paulsen and I wrote detailing easy JSF component creation" href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html"
+                                    | JSFTemplating and Woodstock: Component Authoring Made Easy
+                            li
+                                a href="http://jsfcentral.com/articles/lee-03-09.html" Jason Lee in depth: Mojarra and Scales
+                            li
+                                a title="My JavaOne 2008 Wrap Up" href="http://www.theserverside.com/news/thread.tss?thread_id=49343" Jason Lee: Postmortem for JavaOne 2008
+                            li
+                                a title="The GlassFish Adoption Story from my time at IEC" href="https://blogs.oracle.com/stories/entry/international_environmental"
+                                    | International Environmental: A Cooling Company Which Prefers Hot Software
+                            li
+                                a title="This details the project that spawned a couple of the Mojarra Scales components" href="http://www.jsfcentral.com/articles/trenches_7.html"
+                                    |IEC donates custom JSF component to Mojarra Scales
+        div.row.footer
+            div.small-12.columns
+                p &#169; Copyright Jason Lee, 2005-2013. All rights reserved.
+        
     javascript:
+        $(document).foundation()
         $(".image").each(function() {
-            $(this).attr('rel','lightbox[group]');
+            $(tis).attr('rel','lightbox[group]');
         });
         
     - if site.google_analytics

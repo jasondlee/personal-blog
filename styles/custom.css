@@ -1,16 +1,26 @@
 .blogname{
     letter-spacing:10px;
-    font-size:36px;
-    padding:15px 0px 0px 5px;
-    width:170px;
-    height:227px;
+    font-size:48px;
+    padding:10px 0px 15px 0px;
     margin:auto;
     text-align:center;
     color:#cecfd1;
     font-family:'Philosopher','Cherry Cream Soda',arial,serif;
     background-color:#47586d;
-    float:left
+    letter-spacing: 30px;
 }
+
+.blogname a {
+    color: inherit;
+    text-decoration: none;
+}
+/*
+
+    width:170px;
+    height:227px;
+    float:left
+*/
+
 .entry-header {
     background-image: none;
 }
@@ -42,4 +52,46 @@ blockquote *:first-child:after, q *:first-child:after, blockquote *:first-child:
 
 img {
     max-width: 775px;
+}
+
+h1.title {
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 400;
+}
+
+article:not(:first-child) {
+    border-top: 2px;
+    border-top-style: solid;
+    border-top-color: #2BA6CB;
+    margin-top: 20px;
+}
+
+header h4 {
+    line-height: 18px
+}
+
+.footer {
+    border-top: 1px;
+    border-top-style: dotted;
+    border-top-color: #2BA6CB;
+    font-size: small;
+    font-style: italic;
+}
+
+time {
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.widget h3 { font-size: 18px; color: #54667d; padding-bottom: 5px; border-bottom: 1px #666 dotted; }
+.widget ul { list-style: none; }
+.widget ul { margin-left: 0px; }
+.widget ul li { border-bottom: 1px #666 dotted; padding: 3px 0px; }
+.widget ul li ul { display: none; /* Hides any nested uls */ }
+.widget ul li a { color: #666; text-decoration: none; display: block; }
+.widget ul li:hover { border-bottom: 1px #111 dotted }
+.widget ul li a:hover { color: #111; }
+.pagination {
+    margin-top: 5px;
 }

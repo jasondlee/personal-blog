@@ -1,11 +1,11 @@
 ---
 layout: base
 ---
+=partial('pagination.html.slim', :posts => page.posts)
+div style="clear: both"
 #content
-  =partial('pagination.html.slim', :posts => page.posts)
-  div style="clear: both"
   - page.posts.each do |post|
     =partial('entry.html.slim', :post => post, :listing => true)
-  =partial('pagination.html.slim', :posts => page.posts)
+=partial('pagination.html.slim', :posts => page.posts)
 #tagcloud
   = tagcloud

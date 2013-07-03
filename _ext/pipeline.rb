@@ -2,6 +2,7 @@ require 'readmore'
 require 'tagatomizer'
 require 'erubis'
 require 'tilt'
+require 'zurb-foundation'
  
 #Tilt.mappings.delete("html")
 
