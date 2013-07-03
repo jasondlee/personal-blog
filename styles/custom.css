@@ -95,3 +95,11 @@ time {
 .pagination {
     margin-top: 5px;
 }
+
+p#quote,p#source {
+    color: #666666;
+    font-size: small;
+}
+
+p#quote{ margin-bottom: 0px }
+p#source { text-align:right; padding-right: 5px; font-style: italic; }

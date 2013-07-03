@@ -51,18 +51,18 @@ html
                         h3 My Links
                         ul
                             li
-                                a href="/+" rel="me" title="Google+" Google+
+                                a href="#{site.base_url}/+" rel="me" title="Google+" Google+
                             li
-                                a href="/linkedin" rel="me" title="LinkedIn" LinkedIn
+                                a href="#{site.base_url}/linkedin" rel="me" title="LinkedIn" LinkedIn
                             li
-                                a href="/twitter" rel="me" title="Twitter" Twitter
+                                a href="#{site.base_url}/twitter" rel="me" title="Twitter" Twitter
                             li
-                                a href="/resume.pdf" rel="me" title="Resume" Resume
+                                a href="#{site.base_url}/resume.pdf" rel="me" title="Resume" Resume
                 .row
                     .small-12.columns
                         h3 Quotes
-                        p#quote style="margin-bottom: 0px" Sample quote
-                        P#source style="text-align:right; padding-right: 5px; font-style: italic;" Quote source
+                        p#quote Sample quote
+                        P#source Quote source
                         javascript:
                             var index = Math.floor(Math.random() * quotes.length)
                             document.getElementById('quote').innerHTML = (quotes[index].quote);
