@@ -161,7 +161,7 @@ task :new => :init do
     formatted = title.downcase \
         .gsub(' ', '-') \
         .gsub(',', '') \
-        .gsub(/[!?\*\[\]\@\#\$%^&()]/, '')
+        .gsub(/[!?\*\[\]\@\#\$%^&()']/, '')
     today = Time.new.strftime('%Y-%m-%d')
     file = "posts/#{today}-#{formatted}.adoc"
     
