@@ -154,6 +154,29 @@ task :check => :init do
   end
 end
 
+task :new => :init do
+    print ('Enter the blog title:  ')
+    # This is a test post, of course!@#$%[]
+    title = STDIN.gets.strip
+    formatted = title.downcase \
+        .gsub(' ', '-') \
+        .gsub(',', '') \
+        .gsub(/[!?\*\[\]\@\#\$%^&()]/, '')
+    today = Time.new.strftime('%Y-%m-%d')
+    file = "posts/#{today}-#{formatted}.adoc"
+    
+    File.open(file, 'w') do |f|
+        f.puts("---")
+        f.puts("title: #{title}")
+        f.puts("author: Jason Lee")
+        f.puts("date: #{today}")
+        f.puts("layout: blog-post")
+        f.puts("tags: [  ]")
+        f.puts('---')
+        f.close
+    end
+end
+
 # Execute Awestruct
 def run_awestruct(args)
   system "#{$use_bundle_exec ? 'bundle exec ' : ''}awestruct #{args}" 
