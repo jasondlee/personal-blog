@@ -1,0 +1,15 @@
+---
+title: What's the Deal With Containerless Frameworks?
+author: Jason Lee
+date: 2013-07-08
+layout: blog-post
+tags: [ General ]
+---
+
+I've been spending some time with the http://playframework.com[Play Framework] recently, and one of my first questions was, "Can I deploy this to an app server?", to which the answer is "No. Play is its own container". That (to be honest) somewhat disappointing answer reminded me of some discussions I recenlty saw but mostly ignored about "containerless frameworks". I'm afraid I'm going to have to let my dumb hang out (as my dad used to love to say) and confess that I guess I don't get it. :)
+
+pass::[more]
+
+Before I go too far, let me say up front that I realize you don't *have* to have an application server to deploy applications. Evidence at hand aside, we have, as an industry, done so for many, many years, clearly. What I don't understand, though, and here I'm hoping those In the Know will help me out, is why doing so is A Good Thing. My guess is the common (sometimes justified, sometimes not) complaint that app servers are slow, heavy, etc. If you just want to deploy a simple to do list, then, yes, an app server is likely overkill. However, for larger (dare I say enterprise apps), it seems some sort of app server is worth the extra weight: high availability/load balancing, connection pooling, management, etc. It seems that with containerless approaches, all of these concerns are now pushed completely on to the developer (or in larger organizations, the release teams, etc), and that seems like a net loss to me.
+
+Clearly, I haven't taken any of these types of systems to production, not even a small hobby app, so I'm hoping those of you who have can clue me in.  How are these kinds of things handled outside of the app server realm? Is hosting more than one app on a server (and thus needing multiple ports) a hassle, etc? It seems like it's just not worth all the extra effort, but people smarter than I seem to disagree. Anyone care to cure me of my ignorance? :)
