@@ -51,7 +51,7 @@ duplicity $TYPE $COMMON_OPTS \
 
 The interesting part of the script starts after the `mkdir` call. I have two backup sets, my home directory, and some system files. Since I call duplicity twice, I use the variable `COMMON_OPTS` defined above, which tells duplicity not to encrypt the files (which is fine for me), to perform an asynchronous upload to remote store, and to perform a full backup present if the last full is older than 8 days. It's worth noting that I am saving these backup sets to a "local" file store (it's actually a CIFS mount to a NAS device) via the `file:///` (for lack of a better term) protocol.
 
-For the firt backup fileset, I've gone with an opt-out type approach, as I generally want to back up my entire home directory. There are some things, though, such as MP3s, locally-installed software, etc., that I don't want to back up, so I exclude them via `--exclude-filelist`, which takes the path to a file with the exclusions. Mine looks a bit like this:
+For the first backup fileset, I've gone with an opt-out type approach, as I generally want to back up my entire home directory. There are some things, though, such as MP3s, locally-installed software, etc., that I don't want to back up, so I exclude them via `--exclude-filelist`, which takes the path to a file with the exclusions. Mine looks a bit like this:
 
 [source]
 -----

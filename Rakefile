@@ -167,7 +167,7 @@ task :new => :init do
     
     File.open(file, 'w') do |f|
         f.puts("---")
-        f.puts("title: #{title}")
+        f.puts("title: \"#{title}\"")
         f.puts("author: Jason Lee")
         f.puts("date: #{today}")
         f.puts("layout: blog-post")
