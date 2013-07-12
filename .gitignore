@@ -4,3 +4,4 @@ _site
 .sass-cache
 assets.tar.gz
 posts/assets
+_hide
