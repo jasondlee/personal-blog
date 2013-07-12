@@ -163,7 +163,7 @@ task :new => :init do
         .gsub(',', '') \
         .gsub(/[!?\*\[\]\@\#\$%^&()']/, '')
     today = Time.new.strftime('%Y-%m-%d')
-    file = "posts/#{today}-#{formatted}.adoc"
+    file = "posts/#{today}-#{formatted}.ad"
     
     File.open(file, 'w') do |f|
         f.puts("---")
