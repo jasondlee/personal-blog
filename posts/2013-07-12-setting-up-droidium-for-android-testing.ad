@@ -51,13 +51,6 @@ Rather than use Ant as the Android SDK currently does, we're going to build this
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-build</artifactId>
-                <version>${version.arquillian.core}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <!-- Arquillian Drone BOM -->
             <dependency>
                 <groupId>org.jboss.arquillian.extension</groupId>
