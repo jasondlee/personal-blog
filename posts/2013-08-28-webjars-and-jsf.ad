@@ -1,0 +1,49 @@
+---
+title: "WebJars and JSF"
+author: Jason Lee
+date: 2013-08-28
+layout: blog-post
+tags: [ JSF ]
+---
+
+http://www.webjars.org/[WebJars], for those that haven't heard, is a project that takes popular client-side web libraries and packages them in JARs to make their use in Java-/JVM-based web apps simpler. The web site notes that you can easily see which libraries a project is using simply by looking at its dependencies, and that transitive dependencies automatically appear. It's a pretty compelling project, but, for some reason, it doesn't http://www.webjars.org/documentation[show how to integrate it] with JSF. I'd like to think it's because it's so trivial, but I'll show it here anyway. :)
+
+pass::[more]
+
+The first step is to add it to your build. We'll use http://getbootstrap.com/[Bootstrap 3.0] in our example:
+
+.build.gradle
+[source,groovy]
+-----
+dependencies {
+    // ...
+    compile 'org.webjars:bootstrap:3.0.0'
+    // ...
+}
+-----
+
+.pom.xml
+[source,xml]
+-----
+<dependency>
+    <groupId>org.webjars</groupId>
+    <artifactId>bootstrap</artifactId>
+    <version>3.0.0</version>
+</dependency>
+-----
+
+
+The next step is adding it to the page:
+
+.index.xhtml
+[source,xhtml]
+-----
+<h:head>
+    <h:outputStylesheet  library="webjars/bootstrap/3.0.0/css"  
+        name="bootstrap.min.css"/>
+    <h:outputScript library="webjars/bootstrap/3.0.0/js" 
+        name="bootstrap.min.js"/>
+</h:head>
+-----
+
+That's it. Build and deploy your app, and Bootstrap (or the library of your choice) is ready to use.
