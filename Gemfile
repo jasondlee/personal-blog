@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'awestruct', '~> 0.5.1'
 #gem "awestruct", :github => 'awestruct'
-gem 'asciidoctor', '~> 0.1.3'
+gem 'asciidoctor', '~> 0.1.4'
 gem 'erubis', '~> 2.7.0'
 gem 'slim', '~> 2.0.0'
 gem "htmlcompressor"
