@@ -1,0 +1,24 @@
+---
+title: "Gradle Tip: Better Test Debugging"
+author: Jason Lee
+date: 2013-09-24
+layout: blog-post
+tags: [ Gradle, testing ]
+---
+
+In a link:/posts/2013/09/10/gradle-tip-attaching-a-debugger/[recent post], I showed how to attach a debugger to tests run from the command line via Gradle. While it worked, it turns out that it's a bit over kill.  Try this instead:
+
+[source,bash]
+-----
+$ gradle -Dtest.debug test
+:compileJava
+:processResources UP-TO-DATE
+:classes
+:compileTestJava
+:processTestResources
+:testClasses
+:test
+Listening for transport dt_socket at address: 5005
+-----
+
+Attach your debugger to port 5005, and off you go. No need to modify your build.  Kudos to the http://netbeans.org[NetBeans] debugger output for helping me find that. ;)
