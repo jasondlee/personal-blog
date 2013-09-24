@@ -28,7 +28,7 @@ Java EE is, of course, a large, diverse set of technologies, so the book itself,
 . SOAP Web Services
 . RESTful Web Services
 
-The book doesn't cover _all_ of Java EE 7 (batch processing and caching, for example, is not covered), but it does cover a good deal of the platform, focusing primarily, as the title suggests, on those technologies most likely needed to get started with Java EE development. 
+The book doesn't cover _all_ of Java EE 7 (batch processing, for example, is not covered), but it does cover a good deal of the platform, focusing primarily, as the title suggests, on those technologies most likely needed to get started with Java EE development. 
 
 Each section gives enough background to give the user a good understanding of where we were prior to each specification's creation. While some may scoff at the brig history lessons, I find it helpful to understand the technology in its historical context, as it tends to explain many of the design decisions and trade-offs made. Antonio then breaks down each area bit by bit in what I found to be pretty clear, concise language. He then walks the reader through building a small, working example so you can see all the pieces in place.
 
