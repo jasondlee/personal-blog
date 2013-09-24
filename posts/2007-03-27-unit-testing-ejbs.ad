@@ -3,7 +3,7 @@ title: 'Unit Testing EJBs'
 author: 'Jason Lee'
 layout: blog-post
 date: 2007-3-27
-tags: [ EJB3, Java, Testing ]
+tags: [ EJB3, Java, testing ]
 ---
 As we've done more and more EJB development, we've had to think pretty hard about how to unit test our beans.  We've tried a couple of different approaches (including _not_ testing, which I don't recommend ;), but weren't ever just real comfortable with the results.  I'm pretty happy with the method we're using now, and it's so simple, I'm a bit embarrassed that we didn't think of it earlier.
 pass::[more]

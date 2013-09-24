@@ -3,7 +3,7 @@ title: 'Announcing FacesTester'
 author: 'Jason Lee'
 layout: blog-post
 date: 2009-3-3
-tags: [ JavaServer Faces, Kenai, Testing ]
+tags: [ JavaServer Faces, Kenai, testing ]
 ---
 One of the issues that has always troubled me with regard to writing JSF applications (or _any_ web application, really) is how hard it is to test them.  Some time ago, while discussing various Java web frameworks, I stumbled across a class called `WicketTester`, which is part of the Wicket project.  Using this class, as best as I can tell, Wicket authors can easily test their applications very quickly.  Having taken the advice of Dale Hanchey, and old http://www.okbu.edu[college] professor of mine, "Never be too proud to steal a good idea," FacesTester was born.
 pass::[more]
