@@ -1,41 +1,56 @@
 doctype 5
 html
   head
-    meta charset='utf-8'
-    title=(page.title ? [page.title, site.title] : [site.title]) * ' | '
-    meta name='viewport' content='width=device-width, initial-scale=1.0'
-    - if page.layout == 'post'
-      meta name='author' content=page.author
-      meta name='twitter:card' content='summary'
-      meta name='twitter:creator' content='@jasondlee'
-      meta name='twitter:url' content="#{site.base_url}#{page.url}"
-      meta name='twitter:title' content=page.title
-      meta name='twitter:description' content=summarize(html_to_text(page.content).strip.gsub(/^[:space:]*\n/, ''), 25)
+    meta charset="utf-8"
+    title=(page.title ? [page.title, site.title] : [site.title]) * " | "
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    - if page.layout == "post"
+      meta name="author" content=page.author
+      meta name="twitter:card" content="summary"
+      meta name="twitter:creator" content="@jasondlee"
+      meta name="twitter:url" content="#{site.base_url}#{page.url}"
+      meta name="twitter:title" content=page.title
+      meta name="twitter:description" content=summarize(html_to_text(page.content).strip.gsub(/^[:space:]*\n/, ""), 25)
       
     link rel="alternate" type="application/rss+xml" title="Steeplesoft RSS Feed" href="#{site.base_url}/feed.atom"
     // link rel="stylesheet" href="#{site.base_url}/styles/normalize.css"
-    link rel="stylesheet" href='#{site.base_url}/styles/style.css'
-    link rel='stylesheet' href='#{site.base_url}/styles/typograhpy.css'
-    link rel="stylesheet" href="#{site.base_url}/styles/app.css"
-    link rel="stylesheet" href='#{site.base_url}/styles/highlight/sunburst.css'
-    link rel='stylesheet' href='#{site.base_url}/styles/lightbox/lightbox.css'
-    link rel='stylesheet' href='#{site.base_url}/styles/custom.css'
+    link rel="stylesheet" type="text/css" href="#{site.base_url}/styles/style.css"
+    link rel="stylesheet" type="text/css" href="#{site.base_url}/styles/typograhpy.css"
+    link rel="stylesheet" type="text/css" href="#{site.base_url}/styles/app.css"
+    link rel="stylesheet" type="text/css" href="#{site.base_url}/styles/highlight/sunburst.css"
+    link rel="stylesheet" type="text/css" href="#{site.base_url}/styles/lightbox/lightbox.css"
+    link rel="stylesheet" type="text/css" href="#{site.base_url}/styles/custom.css"
+    link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Cherry+Cream+Soda"
+    link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Philosopher"
 
-    script src='#{site.base_url}/scripts/highlight.pack.js'
-    script src="#{site.base_url}/scripts/lightbox/jquery-1.7.2.min.js"
-    script src="#{site.base_url}/scripts/lightbox/lightbox.js"
-    script src="#{site.base_url}/scripts/quotes.js"
-    // script src="#{site.base_url}/scripts/vendor/custom.modernizr.js"
-    script src="#{site.base_url}/scripts/foundation/foundation.js"
     javascript:
-          hljs.tabReplace = '    ';
-          hljs.initHighlightingOnLoad();
+        function downloadJSAtOnload() {
+            var scripts = [
+                "#{site.base_url}/scripts/highlight.pack.js",
+                "#{site.base_url}/scripts/lightbox/jquery-1.7.2.min.js",
+                "#{site.base_url}/scripts/lightbox/lightbox.js",
+                "#{site.base_url}/scripts/quotes.js",
+                "#{site.base_url}/scripts/foundation/foundation.js",
+                "#{site.base_url}/scripts/local.js",
+            ];
+            for (var i in scripts) {
+                script = scripts[i];
+                var element = document.createElement("script");
+                element.src = script;
+                document.body.appendChild(element);
+            }
+        }
+        if (window.addEventListener) {
+            window.addEventListener("load", downloadJSAtOnload, false);
+        } else if (window.attachEvent) {
+            window.attachEvent("onload", downloadJSAtOnload);
+        } else {
+            window.onload = downloadJSAtOnload;
+        }
           
-    link href='http://fonts.googleapis.com/css?family=Cherry+Cream+Soda' rel='stylesheet' type='text/css'
-    link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'
     css:
     /[if lt IE 9]
-      script src='//html5shim.googlecode.com/svn/trunk/html5.js'
+      script src="//html5shim.googlecode.com/svn/trunk/html5.js"
   body
     div.row
         div.row.blogname
@@ -63,10 +78,6 @@ html
                         h3 Quotes
                         p#quote Sample quote
                         P#source Quote source
-                        javascript:
-                            var index = Math.floor(Math.random() * quotes.length)
-                            document.getElementById('quote').innerHTML = (quotes[index].quote);
-                            document.getElementById('source').innerHTML = "-- " + (quotes[index].source);
                 .row
                     .small-12.columns
                         h3 Publications
@@ -92,11 +103,6 @@ html
                 p &#169; Copyright Jason Lee, 2005-2013. All rights reserved.
         
     javascript:
-        $(document).foundation()
-        $(".image").each(function() {
-            $(tis).attr('rel','lightbox[group]');
-        });
-        
     - if site.google_analytics
         =google_analytics_async
 

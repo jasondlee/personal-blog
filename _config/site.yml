@@ -13,24 +13,28 @@ asciidoctor:
     idprefix: ''
     idseparator: '-' 
 
+minify: true
+minify_html_opts:
+    remove_intertag_spaces: true
+    compress_js: true
+
 scss:
   :line_numbers: true
   :style: :expanded
 # if no profile is specified, the first with a deploy config is selected
 profiles:
   development:
-    minify: false
+    #minify: false
     disqus_developer: true
     dev: true
     deploy:
       dummy:
   production:
     base_url: http://blogs.steeplesoft.com
-    #disqus_developer: false
+    disqus_developer: false
     google_analytics: UA-1091049-1
 
     # TODO enable once not dependent on system binaries
-    minify: true
 
     deploy:
       uncommitted: true

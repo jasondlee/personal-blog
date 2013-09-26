@@ -17,6 +17,9 @@ Awestruct::Extensions::Pipeline.new do
   extension Awestruct::Extensions::Atomizer.new( :posts, '/feed.atom', :feed_title=>'Steeplesoft' )
   #extension Awestruct::Extensions::TagAtomizer.new( :posts, '/index', '/posts/tags', :per_page => 10)
 
+  transformer Awestruct::Extensions::Minify.new([:js])
+  transformer Awestruct::Extensions::Minify.new([:css])
+
   helper Awestruct::Extensions::Partial
   helper Awestruct::Extensions::ReadMore
   helper Awestruct::Extensions::GoogleAnalytics
