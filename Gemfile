@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'awestruct', '~> 0.5.1'
+gem 'awestruct', '0.5.3'
+#gem 'awestruct', '~> 0.5.4.rc'
 #gem "awestruct", :github => 'awestruct'
 gem 'asciidoctor', '~> 0.1.4'
 gem 'erubis', '~> 2.7.0'
