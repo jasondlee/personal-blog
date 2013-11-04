@@ -4,6 +4,7 @@ Redirect 301 /in http://www.linkedin.com/in/jasondlee
 Redirect 301 /linkedin http://www.linkedin.com/in/jasondlee
 Redirect 301 /facebook http://www.facebook.com/jasondaniellee
 Redirect 301 /resume /resume.pdf
+Redirect 301 /cv /resume.pdf
 
 AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript
 

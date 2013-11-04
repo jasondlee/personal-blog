@@ -1,0 +1,29 @@
+---
+title  : "Projects"
+author : Jason Lee
+date   : 2013-11-04
+layout : blog-post
+---
+
+While this is posted publicly, this status page is primarily intended for me to keep 
+track of my many irons in the fire. Without further ado, then:
+
+Cub Tracker
+^^^^^^^^^^^
+* Group replication
+
+NetBeans Awestruct Plugin
+^^^^^^^^^^^^^^^^^^^^^^^^^
+* Slim/HAML support. Keep an eye on jTilt/Tiltj
+* Break out Asciidoc file support into separate plugin
+* Flesh out NetBake, the standalone wrapper for the plugin
+* New file assumes a blog post
+* New files aren't shown in the project view. Fix file list refreshing.
+
+Blog Fodder
+^^^^^^^^^^^
+* Implement something. Anything. :P
+
+FxTunes
+^^^^^^^
+* Fix MediaPlayer/song model binding

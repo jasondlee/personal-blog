@@ -1,5 +1,5 @@
 require 'readmore'
-require 'tagatomizer'
+#require 'tagatomizer'
 require 'erubis'
 require 'tilt'
 require 'zurb-foundation'
