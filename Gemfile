@@ -9,7 +9,7 @@ gem 'slim', '~> 2.0.0'
 gem "htmlcompressor"
 gem "yui-compressor"
 gem "uglifier"
-gem "therubyracer"
+#gem "therubyracer"
 
 #gem 'rdiscount', '~> 2.0.7', :platforms => [:ruby]
 #gem 'kramdown', '~> 1.0.1', :platforms => [:jruby]
