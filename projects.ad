@@ -15,7 +15,6 @@ Cub Tracker
 NetBeans Awestruct Plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 * Slim/HAML support. Keep an eye on jTilt/Tiltj
-* Break out Asciidoc file support into separate plugin
 * Flesh out NetBake, the standalone wrapper for the plugin
 * New file assumes a blog post
 * New files aren't shown in the project view. Fix file list refreshing.
