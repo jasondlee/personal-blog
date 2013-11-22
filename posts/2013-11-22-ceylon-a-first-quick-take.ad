@@ -1,0 +1,110 @@
+---
+title  : "Ceylon: a First, Quick Take"
+author : Jason Lee
+date   : 2013-11-22
+layout : blog-post
+tags   : [ Ceylon ]
+---
+
+Last week at Devoxx, Red Hat http://ceylon-lang.org/blog/2013/11/12/ceylon-1/[announced] the release of Ceylon 1.0, "a modern, modular, statically typed programming language for the Java and JavaScript virtual machines." A fan of learning languages, I started taking http://ceylon-lang.org/documentation/1.0/tour/[the tour]. In no particular order, and without any lengthy rumination, here are my initial thoughts on the language.
+
+pass::[more]
+
+Mixin inheritance
+~~~~~~~~~~~~~~~~~
+
+Mixin inheritance looks pretty interesting. While I'm no Scala expert, it strikes me as being very similar to what Scala's traits offer. It also seems pretty close to the default methods Java 8's interface will now make possible. These comparisons could be way off, and in the case that they're not, I can't say at this point how they differ, but I find this a very interesting feature. Over the years, I've found myself creating utility classes with static methods for a specific purpose. Over time that class usually turns into a dumping ground for utility methods, killing cohesiveness and making the class hard to maintain. 
+
+Intersection Types
+~~~~~~~~~~~~~~~~~~
+
+The Ceylon docs descrive an intersection type as: _An expression is assignable to an intersection type, written X&Y, if it is assignable to both X and Y._ They give this example:
+
+[source,ceylon]
+-----
+Iterable<String>&Correspondence<Integer,String> strings =
+        ["hello", "world"];
+String? str = strings.get(0);  //call get() of Correspondence
+Integer size = strings.size;  //call size of Iterable
+-----
+
+There are more resources available on the topic (like http://ceylon-lang.org/blog/2013/11/17/intersections-and-variance/[this one]), which I'll definitely need to read, because it's just not clicking at the moment. :)
+
+No NullPointerExceptions
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+In Ceylon, they claim, it's impossible to get NPEs at runtime. While I'm always a bit skeptical when someone says something is impossible, I'm willing to give them the benefit of the doubt. If a variable is nullable, it must be declared as such: `String? name = getName();` Without the `?`, one can not assign `null` to the variable, so it's always safe to access it without checking. With the `?`, the compiler forces the code to check for null before it will compile code that accesses it: `if (exists name) { ...`. It seems that this may require a variable be checked for null multiple times if it's passed around to methods, but that's probably not a big enough problem to worry about.  Regardless, no more embarassing NPEs in production, meaning other exceptions will finally get some time at bat. :P
+
+Type narrowing
+~~~~~~~~~~~~~~
+
+In Java, when dealing with subclasses, we use `if (... instanceof ...)`, then cast. In Ceylon, it's done in one step:
+
+[source,ceylon]
+-----
+if (is Foo bar) {
+    bar.someFooMethod();
+}
+-----
+
+It's nice that the cast is not necessary, since, as the docs point out, it's clear we intended to interact with `bar` as an instance of `Foo`. I think the `is {type} {variable}` syntax reads oddlyt, but I'm sure it's something I'd get used to.
+
+Enumerated Subtypes
+~~~~~~~~~~~~~~~~~~~
+
+I'll confess right up front: there's a good chance that I don't understand enumerated subtypes correctly. The docs seems to say that enumerated types are not subclassable (and I might be making up words now :). For example:
+
+[source,ceylon]
+-----
+abstract class Point()
+        of Polar | Cartesian {
+    // ...
+}
+-----
+
+The docs then say, 'Now the compiler won't let us declare additional subclasses of `Point`, and so the union type `Polar|Cartesian` is exactly the same type as `Point`.' Are enumerated subtypes necessary? Probably not. Either way, this doesn't seem like something you'd in a public API, but I could be wrong. I'll have to read http://ceylon-lang.org/blog/2012/01/25/enumerated-types/[some more] on it.
+
+First class and higher order functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This feature looks very nice. It is, of course, nothing new, but it's good to see this designed in from the start, rather than bolted on later. 
+
+Ceylon also supports named argument method invocation. My initial reaction to it is fairly positive. It's a bit verbose, but very readble, and I would think would lead to more clearly self-documenting code, though I would imagine its use would taper off as one becomes more fluent in the language.
+
+Tuples
+~~~~~~
+Ceylon has built-in support for tuples, "a linked list which captures the static type of each individual element in the list". Tuples seem to have no built-in length limit, and they can handle more than one type (otherwise it would be a `List<T>`, right? :) You can also 'spread' a tuple, meaning you can specify that the contents of a tuple be used to satisfay method parameters:
+
+[source,ceylon]
+-----
+[String,Float] args = ["%5.2f", 1.0];
+print(format(*args));
+-----
+
+In this example, a tuple of `String` and `Float` is declared, then, prefixing the variable name with a `*`, the elements in the tuple are spread across the parameters for format (which are `String, Float...`).  Really cool.
+
+Case Restrictions
+~~~~~~~~~~~~~~~~~
+In Ceylon, "[t]he case of the first character of an identifier is significant. Type (interface, class, and type parameter) names must start with an initial capital letter. Function and value names start with an initial lowercase letter or underscore." While this happens to mirror what I do anyway, it strikes me as an odd choice to codify in the language spec. It's quite possible, though, that this will be a lot like spaces in python: it causes an initial adverse reaction, followed by acceptance when you realize you were going to do it anyway. There may be some, though, thought _don't_ code like that, so it's going to bite them. Heads up! ;)
+
+Mandatory Braces
+~~~~~~~~~~~~~~~~
+One of my big pet peeves (and it's _always_ with someone else's code ;) is the omission of braces around code blocks:
+
+[source,java]
+-----
+if (condition)
+    return;
+-----
+
+That's just asking for bugs if you ask me. Fortunately, the Ceylon team agrees with me: the language requires braces for all control structutes. The code snippet above, while valid Java, will fail to compile in a Ceylon program. Hip. Hip. Hooray. :)
+
+Packages
+~~~~~~~~
+I remember years ago when I was first learning Java that I got burned by a mismatch between the package name declared (or not?) in my Java source with the implied package found in the directory name. I don't remember the details, but it seems like I kept getting CNFEs when trying to run my code. Ceylon neatly avoids this by not having package declarations; the package is inferred based on its location in the filesystem (relative to the source root, of course). My gut reaction is that I like this, but I wonder if there are some unintended consequences I'm missing.
+
+Conclusion
+~~~~~~~~~~
+As I said at the start, this is just a random smattering of things that stood out to me as I read the http://ceylon-lang.org/documentation/1.0/tour[tour]. I'm by no means a language design expert, so any critiques on the language should be taken with that in mind, but, so far, I like what I've seen. I've been working on a small proof-of-concept-type application to kick the tires, which has resulted in a few cuts and bruises, so we'll see how it goes, but I think I'll stick with it a while and give a good chance. If nothing else, the learning has been fun. :)
+
+Have you looked at Ceylon? What are you thoughts? Have I gotten something wrong here? Please let me know below! :)
