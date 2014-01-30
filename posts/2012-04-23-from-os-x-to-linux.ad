@@ -13,7 +13,7 @@ In general, Apple puts together a very nice system in the MacBook Pro.  The mach
 
 From a user experience, my complaints realy boil down to personal preferences.  Many will likely read this list and think I'm quite a crank for my age, and that's fine.  We all have different preferences (I recently read a blurb about a Haskell developer -- I forget his name -- who prefers _Windows!_.  Now _that's_ crazy, right? ;).  At the end of the day, I had some minor quibbles with the OS, but I sucked it up and pressed on, and was generally pretty productive.  Much more than I was on the Windows laptop at my last gig.
 
-image::imported//2012/04/cof_orange_hex.jpg
+image::/images/2012/04/cof_orange_hex.jpg[]
 
 Enter Linux.  Or, I should say, re-enter Linux.  I've been using Linux for many, many years now, so many of the annoyances I found when using OS X were the result of forming habits in that other Unix-like OS.  On this new machine, I installed Linux Mint, which seems to the flavor of the day in some circles, and was mostly pleased.  I had some odd issues with menus in NetBeans that seem to be GNOME-related, so I tried LXDE, which I found to be a bit...ugly, and finally KDE, with which I had some stability issues.  Over the course of part of an afternoon, then, I installed Ubuntu 12.04, since I had read that they fixed all the woes that at first plagued Unity.  Surprisingly, I'm pretty happy with Unity.  It has its issues, but the system is fast and stable, and lets me work the way I prefer, which is all I really wanted. 
 
