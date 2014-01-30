@@ -11,6 +11,7 @@ pass::[more]
 File Downloads
 ---------------
 This component is really rather simple.  Currently, it has these options:
+
 * data
 * mimeType
 * fileName
@@ -21,6 +22,7 @@ This component is really rather simple.  Currently, it has these options:
 * width
 
 A few of these attributes need a little explanation:
+
 * The `data` attribute is an EL expression that resolves to the content of the file to be downloaded.  This data can be returned as a `byte[]`, `InputStream`, or a `ByteArrayOutputStream`.
 * The mime type needs to be specified as there is no easy way of determining the correct type short of guessing based on the file extension, adding a third party dependency, or writing a bunch of painful code myself.  None of those are very appealing.
 * The `method` is how the file is to be rendered: 'inline' (i.e., embedded in the page), or 'download' (i.e., force a Save As dialog).

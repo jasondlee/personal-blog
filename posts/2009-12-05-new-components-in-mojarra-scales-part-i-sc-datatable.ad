@@ -72,7 +72,8 @@ public class TableBean {
         }
         return list;
     }
-}-----
+}
+-----
 
 When the component is rendered, you will see something like this:
 

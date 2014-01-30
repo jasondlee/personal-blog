@@ -29,7 +29,7 @@ And, if that one example were not enough, Schalk and company go on to implement 
 -----
 <jcr:spellCheckTextArea cols="30" rows="15" 
     value="#{user.interests}" />
-----
+-----
 
 which results in something like this:
 

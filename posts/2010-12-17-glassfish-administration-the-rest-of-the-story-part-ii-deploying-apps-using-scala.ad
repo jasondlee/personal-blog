@@ -53,7 +53,7 @@ If you'll recall from Part I, the default root URL is http://localhost:4848/mana
          ]
      }
  }
- -----
+-----
 
 There are a lot of options there, but there are many more, giving you really fine-grained control over the deployment of your application.  In our case, we only care about a few options, which are in the list above:  `id`, `contextroot`, and `force`.  The `contextroot` option specifies the context root at which the application will be available, and `force` tells the server to redeploy the application if an existing app of the same name is already deployed.
 

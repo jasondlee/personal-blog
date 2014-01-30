@@ -156,7 +156,8 @@ public class MyAppServiceImplTest {
         Assert.assertNotNull(user);
         DbUnitHelper.rollbackTransaction(entityManager);
     }
-}-----
+}
+-----
 
 This test is very similar to the DAO test, including transaction management, but we call the service instead of the DAO.  I also chose to create a "real" instance of the DAO as opposed to mocking one up, since the resource was local to the project.  That makes the test more of an integration test in some ways, but we're OK with that.
 

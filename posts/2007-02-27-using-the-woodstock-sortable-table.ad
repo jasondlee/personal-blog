@@ -10,6 +10,7 @@ pass::[more]
 
 Table of Contents
 -----------------
+
 * link:#setup[Setting up your environment]
 * link:#thetable[The Table]
 * link:#data[Displaying Data]
@@ -22,6 +23,7 @@ Table of Contents
 Setting up your environment
 ---------------------------
 The first thing you will need to do, obviously, is add the required jars to your project:
+
 * dataprovider.jar
 * dojo-0.4.1-ajax.jar
 * jsf-extensions-common-0.1.jar
