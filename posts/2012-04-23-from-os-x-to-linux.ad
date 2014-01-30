@@ -5,7 +5,7 @@ layout: blog-post
 date: 2012-4-23
 tags: [ Linux, OS X, Ubuntu, Unity ]
 ---
-image::imported//2012/04/mac.jpeg
+image::/images/2012/04/mac.jpg[]
 
 When I joined Sun Microsystems "way back" in 2008, I was asked if I wanted a Mac for my work system.  Having heard many extol the numerous virtues of the OS, I jumped at the chance.  Since then, I've even migrated my wife and family to the OS.  Trouble arose last fall, though, with the delivery of a new MacBook Pro (whose purchase was somewhat a miracle, brought about by the tireless efforts from my upper management).  Simply put, I got a lemon.  After five trips to the Apple Store, which resulted in overnight diagnostic runs; shipment to an offsite, more advanced repair facility; the replacement of the hard drive; and the replacement of the motherboard, I finally broke down and asked for a new machine, knowing it wouldn't be a Mac.  Just over a week ago, a new Lenovo Thinkpad arrived, and, after putting Linux on it, I have to say I'm generally very happy with the system.more
 
