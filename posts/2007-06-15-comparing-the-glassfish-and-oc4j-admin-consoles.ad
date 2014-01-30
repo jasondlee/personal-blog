@@ -5,82 +5,82 @@ layout: blog-post
 date: 2007-6-15
 tags: [ GlassFish ]
 ---
-As I've link:/2007/06/07/a-quick-administrative-note/[noted previously], a recent job change has required that I become familiar with Oracle's application server, Oracle Containers for Java, or OC4J.  I recently set aside time to set up my OC4J environment to test a prototype I have been working on and have running under GlassFish.  After getting the server installed and logging on to the administration console, I was struck by how nice it was.  I've long held that one of the many strengths GlassFish has over its open source competition is a vastly superior administration console.  Presented now with a commercial application server with the might of a company like Oracle behind it, how well does GlassFish stand uplink:#footnote-1[<sup>1</sup>]?  In this entry, I'd like to take a look at that question.  Since a Java EE container is a complicated piece of software, an exhaustive comparison of any two such containers is an overwhelming task.  In the interest of brevity, we'll take a look at just a couple of areaslink:#footnote-2[<sup>2</sup>], and wrap things up with some general observations.
+As I've link:/2007/06/07/a-quick-administrative-note/[noted previously], a recent job change has required that I become familiar with Oracle's application server, Oracle Containers for Java, or OC4J.  I recently set aside time to set up my OC4J environment to test a prototype I have been working on and have running under GlassFish.  After getting the server installed and logging on to the administration console, I was struck by how nice it was.  I've long held that one of the many strengths GlassFish has over its open source competition is a vastly superior administration console.  Presented now with a commercial application server with the might of a company like Oracle behind it, how well does GlassFish stand uplink:#footnote-1[^1^]?  In this entry, I'd like to take a look at that question.  Since a Java EE container is a complicated piece of software, an exhaustive comparison of any two such containers is an overwhelming task.  In the interest of brevity, we'll take a look at just a couple of areaslink:#footnote-2[^2^], and wrap things up with some general observations.
 pass::[more] 
 
 When I first log on to each of the consoles, it's apparent that the two were designed with different emphases.  In OC4J's console, the front page seems to have chosen server health to highlight, showing some general information (including status, server start time, and version) and a chart of response and load (showing both request processing time in seconds and requests per second).  The navigation for OC4J is achieved via a horizontal navigation bar that is shown above and below that page's main content.  
 
-image::/imported/2007/06/oc4j_admin_console_front.png
+image::/images/2007/06/oc4j_admin_console_front.png[]
 
 The GlassFish console, on the other hand, seems to have chosen ease of use, presenting the user with shortcuts to commonly performed functions, including deployment, monitoring, "other tasks" and support/help.  Navigation is handled by a frame on the left presenting the user with a tree view of tasks.
 
-image::/imported/2007/06/glassfish_admin_console_front.png
+image::/images/2007/06/glassfish_admin_console_front.png[]
 
 Application deployment in the two containers is affected by the navigation choices.  In OC4J, the administrator clicks on the Applications link in the horizontal menu and is presented with a table listing the deployed resources (applications, modules, and standalone resource adapters). 
 
-image::/imported/2007/06/oc4j_admin_console_applications.png
+image::/images/2007/06/oc4j_admin_console_applications.png[]
 
 Deploying an application is done by clicking on the deploy button, and following the wizard.
 
 Archive selection:
 
-image::/imported/2007/06/oc4j_admin_console_deploy1.png
+image::/images/2007/06/oc4j_admin_console_deploy1.png[]
 
 Application attributes entry:
 
-image::/imported/2007/06/oc4j_admin_console_deploy2.png
+image::/images/2007/06/oc4j_admin_console_deploy2.png[]
 
 Deployment settings:
 
-image::/imported/2007/06/oc4j_admin_console_deploy3.png
+image::/images/2007/06/oc4j_admin_console_deploy3.png[]
 
 Results:
 
-image::/imported/2007/06/oc4j_admin_console_deploy4.png
+image::/images/2007/06/oc4j_admin_console_deploy4.png[]
 
 For GlassFish, the administrator has a host of choices in the navigation tree: Enterprise Applications, Web Applications,  EJB Modules, etc.  Unlike OC4J, though, there does not appear to be a way to see all the deployed modules regardless of type.  One has to click on each type on the left to see items of that type.  Selecting one presents the user with a screen like this:
 
-image::/imported/2007/06/glassfish_admin_console_applications.png
+image::/images/2007/06/glassfish_admin_console_applications.png[]
 
 Deployment in GlassFish is a bit simpler, as all steps are on one page, and there is no concept of a deployment plan (for better or for worse):
 
-image::/imported/2007/06/glassfish_admin_console_deploy1.png
+image::/images/2007/06/glassfish_admin_console_deploy1.png[]
 
 On this screen, the administrator selects the deployment type, selects the archive, sets the application name and context root, etc., then clicks deploy and the job is done.
 
 Once deployed, monitoring the application becomes quite important.  Here the differences in the two application servers are pretty marked.  As I've already noted, the OC4J administrator gets some basic metrics up front, whereas the GlassFish administrator has to dig a little bit to find similar information.  The OC4J console also has, I think a slight edge in its first page under Performance:
 
-image::/imported/2007/06/oc4j_admin_console_perf1.png
+image::/images/2007/06/oc4j_admin_console_perf1.png[]
 
 OC4J also offers a couple of interesting reports that I have yet to find under GlassFish (which doesn't mean they don't exist, of course, but, if they're there, they're certainly not as easy to find):  Top Servlets and Top JSPs:
 
-image::/imported/2007/06/oc4j_admin_console_perf2.png
+image::/images/2007/06/oc4j_admin_console_perf2.png[]
 
-image::/imported/2007/06/oc4j_admin_console_perf3.png
+image::/images/2007/06/oc4j_admin_console_perf3.png[]
 
 While these are two pretty interesting reports, from what I can tell, that's all there is unless one uses a JMX console.  GlassFish, on the other hand, gives the administrator almost too much information it can seem.
 
-image::/imported/2007/06/glassfish_admin_console_perf1.png
+image::/images/2007/06/glassfish_admin_console_perf1.png[]
 
-image::/imported/2007/06/glassfish_admin_console_perf2.png
+image::/images/2007/06/glassfish_admin_console_perf2.png[]
 
 The Runtime tab under Monitoring gives the administrator a detailed looked at several areas of the runtime environment, including JVM (up time and heap size), class loading system (total loaded class count, unloaded class count, and loaded class count), memory (initial non-heap size, max non-heap size, initial heap size, max heap size, etc), and many more.  Like OC4J's Top Servlet report, OC4J may offer this information, but it was non-obvious to me where to find it in the interface.  With GlassFish, it's all out in the open.
 
 The Applications tab lets the administrator select an application and a component and get detailed information:
 
-image::/imported/2007/06/glassfish_admin_console_perf3.png
+image::/images/2007/06/glassfish_admin_console_perf3.png[]
 
 The resources tab is a bit of a mixed bag.  While OC4J has the upper hand in clarity and conciseness, GlassFish wins in terms of completeness.  With connection pool metrics like max connections allowed, number allocated, high water mark, etc., GlassFish gives the administrator a wealth of information about what is happening on his server.  My only complaint, which I've shared with the administration console team, is the page needs a more concise summary of what's going on.  Something like OC4J's summary would be great.  Other than that, this is a great resource that has helped me more than once track down leaked connections.
 
 Both application servers allow the administrator to see a list of the currently running transactions:
 
-image::/imported/2007/06/oc4j_admin_console_jta1.png
+image::/images/2007/06/oc4j_admin_console_jta1.png[]
 
-image::/imported/2007/06/glassfish_admin_console_jta1.png
+image::/images/2007/06/glassfish_admin_console_jta1.png[]
 
 OC4J goes a step further though, giving a nice performance overview of historical JTA information:
 
-image::/imported/2007/06/oc4j_admin_console_jta2.png
+image::/images/2007/06/oc4j_admin_console_jta2.png[]
 
 In general, I feel more comfortable with the GlassFish administration console, though that's probably due, at least in part, to my higher degree of familiarity.  Having said that, though, the OC4J console is really quite nice and has some features that the GlassFish administration console team would be wise to take a look at it.  As I've noted, it's quite possible that the "deficiencies" I've found in the GlassFish console aren't really deficiencies at all, at least not in the way I thought they were.  It's quite possible I just don't know where to look (the same goes for OC4J, for that matter).  If that's the case though, the console team might consider making those items easier to find.  
 
