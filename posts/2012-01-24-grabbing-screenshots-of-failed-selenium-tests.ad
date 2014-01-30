@@ -119,4 +119,4 @@ Implementations of `MethodRule` act as an interceptor for your tests.  You can d
 
 If you run these tests, you should see one success and one failure, and you should see `target/surefire-reports/screenshot-testThatFails.png`.  How easy was that?! : )
 
-Full source code can be found link:/images/imported/2012/01/selenium_screenshots.tar.gz[here].  I hope this helps you as much as it has me. : )
+Full source code can be found link:/images/2012/01/selenium_screenshots.tar.gz[here].  I hope this helps you as much as it has me. : )

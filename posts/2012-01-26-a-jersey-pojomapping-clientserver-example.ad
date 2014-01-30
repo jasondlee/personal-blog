@@ -214,4 +214,4 @@ List of clusters after delete: {c1=Cluster{name='c1', configRef='null', gmsEnabl
 -----
 Note that the serialization/deserialization works both ways (getting FROM the server and posting TO the server).  It's all handled automagically.  Having written and maintained several `MessageBodyWriter `s and `MessageBodyReader `s, I find this simplicity immensely appealing.  I would imagine that for most basic resources, this should work really well.  I'm not sure yet how this will scale up, if you will, with more complex resources, but I intend to find out.  Either way, it's definitely a great tool to have at hand.
 
-Source code for this project can be found link:/images/imported/2012/01/pojomapping.tar.gz[here].
+Source code for this project can be found link:/images/2012/01/pojomapping.tar.gz[here].

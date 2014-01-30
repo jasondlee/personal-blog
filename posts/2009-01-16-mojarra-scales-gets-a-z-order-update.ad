@@ -8,7 +8,7 @@ tags: [ Java, JavaServer Faces, Scales ]
 As I noted in a recent link:/posts/changes-are-coming-to-the-glassfish-admin-console[entry], we are considering moving to a desktop-like interface for the GlassFish Administration Console, where the content is in separate "windows" (decorated DIVs, basically) which can be moved, closed, minimized, etc.  As I've started working on a concrete implementation of some of those ideas, I quickly realized that we were going to have issues with multiple, overlapping windows.  Once you have multiple windows open, the user has to be able to bring the desired window to the front, but YUI, which will likely be the library used, doesn't support that natively.  Fortunately, that's easy to fix.  First, an example of the problem:
 pass::[more]
 
-image::/imported/2009/01/window_example.png[alt='Overlapping window example', title='Overlapping window example']
+image::/images/2009/01/window_example.png[alt='Overlapping window example', title='Overlapping window example']
 
 With stock YUI, as best as I can tell, if you want to look at Window #2, you're out luck.  With this simple JS, though, the problem is quickly solved:
 

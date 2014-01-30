@@ -19,7 +19,7 @@ The `h:selectOneMenu` is a nice control as it allows the application author to l
 
 This should look very familiar to anyone who has used any of the selection components in JSF (`h:selectBooleanCheckbox`, `h:selectManyCheckbox`, `h:selectManyListbox`, `h:selectManyMenu`, `h:selectOneListbox`, `h:selectOneMenu`, or `h:selectOneRadio`).  About the only change is the name of the parent tag.  Rendered, you should see something like this:
 
-image::/imported/2010/02/combo.png[alt='Mojarra Scales sc:combo screenshot', title='sc:combo']
+image::/images/2010/02/combo.png[alt='Mojarra Scales sc:combo screenshot', title='sc:combo']
 
 As the user keys in his choice, should he choose to do so, type-ahead will attempt to complete his entry for him from the available options.  If one is not found, though, the user is free to enter what he desires.
 

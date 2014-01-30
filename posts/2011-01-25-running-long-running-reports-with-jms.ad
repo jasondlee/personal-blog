@@ -114,8 +114,8 @@ Since we're going to be emailing the report, we inject a `javax.mail.Session` ([
 
 Before we leave the issue, though, it's important to note that the JMS `Queue` must be configured in the broker as part of the application deployment process.  Here's how that would look for a GlassFish deployment.
 
-image::/imported/2011/01/connectionfactory-300x197.jpg[link='/images/imported/2011/01/connectionfactory.jpg' title='Connection Factory Creation' width='600']
+image::/images/2011/01/connectionfactory-300x197.jpg[link='/images/2011/01/connectionfactory.jpg' title='Connection Factory Creation' width='600']
 
-image::/imported/2011/01/destinationresource-300x197.jpg[link='/images/imported/2011/01/destinationresource.jpg' title='Creating the Destination Resource' width='600']
+image::/images/2011/01/destinationresource-300x197.jpg[link='/images/2011/01/destinationresource.jpg' title='Creating the Destination Resource' width='600']
 
-And that should do it.  If you're interested in the source, you can find that link:/images/imported/2011/01/jsfjms.tar.gz[here]. If you have any questions, feel free to post them below.
+And that should do it.  If you're interested in the source, you can find that link:/images/2011/01/jsfjms.tar.gz[here]. If you have any questions, feel free to post them below.

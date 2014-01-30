@@ -5,7 +5,7 @@ layout: blog-post
 date: 2011-11-14
 tags: [ EJB3, JavaEE, JPA, REST, reviews, testing ]
 ---
-image::imported/2011/11/nighthacks.jpg[title='Real World Java EE Night Hacks--Dissecting the Business Tier']
+image::/images/2011/11/nighthacks.jpg[title='Real World Java EE Night Hacks--Dissecting the Business Tier']
 
 Last week, a great http://www.adam-bien.com/roller/abien/entry/building_plug_in_with_java' title='Building Plug-ins With Java EE 6[post] by http://www.adam-bien.com/roller/abien/[Adam] https://twitter.com/#!/AdamBien[Bien] brought his latest book, _Real World Java EE Night Hacks - Dissecting the Business Tier_, to mind.  I have since gotten myself a copy and thought I'd share my thoughts here.
 pass::[more]

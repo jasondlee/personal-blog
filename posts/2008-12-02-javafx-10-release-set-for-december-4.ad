@@ -36,7 +36,7 @@ If I heard him right, that bit of Javascript from dl.javafx.com handles all the 
 
 Another nifty feature is the updating of the venerable old javadoc with javafxdoc.  I read a bit about this a few weeks ago, and I believe it allows running code in your documentation.  If, then, you have a bit of code for which you want to include sample output, you just markup your docs correctly, and the doc processor will run that code and insert a "screen shot" produced by the code.  Fancy!  So is the new look (sorry for the low quality.  I did a screen grab from the slides PDF. :):
 
-image::/imported/2008/12/javafxdoc-300x233.png[link="/images/imported/2008/12/javafxdoc.png"]
+image::/images/2008/12/javafxdoc-300x233.png[link="/images/2008/12/javafxdoc.png"]
 
 He also covered, of course, the draggable applet feature of Update 10, which is really, really cool.  Perhaps as exciting is the new Javascript/Java integration the update offers.  Suppose you have this code running in an applet on the page:
 

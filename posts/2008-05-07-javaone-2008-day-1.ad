@@ -11,8 +11,8 @@ pass::[more]
 The day started off early.  I grabbed breakfast in the press room then hopped in the Press/Analyst room for the kick off keynote.  As I stood there, I realized I was standing behind a couple of friends of mine, Joesph Ottinger of The Server Side, and Eugene Ciurana of LeapFrog (and http://www.teslatestament.com/[Tesla]), so I introduced myself, as we've never met in real life.  Once the doors opened, we filed in and found our seats, and got to watch a dance troupe gyrating on stage.  They weren't bad (they were actually pretty good, I guess some would say), but not my thing, really.  At one point, the dancers took a break so James Gosling could come up and do his usual shirt sling shot.
 
 |=====
-|http://blogs.steeplesoft.com//images/imported/2008/05/gosling_tshirt_toss-150x150.jpg[link="/images/2008/05/gosling_tshirt_toss.jpg" title='James Gosling firing t-shirts into the crowd']|
-image:imported/2008/05/gosling_tshirt_toss2-150x150.jpg[link="/image/imported/2008/05/gosling_tshirt_toss2.jpg' title='James Gosling t-shirt toss #2']
+|image:/images/2008/05/gosling_tshirt_toss-150x150.jpg[link="/images/2008/05/gosling_tshirt_toss.jpg" title='James Gosling firing t-shirts into the crowd']|
+image:/images/2008/05/gosling_tshirt_toss2-150x150.jpg[link="/image/2008/05/gosling_tshirt_toss2.jpg' title='James Gosling t-shirt toss #2']
 |=====
 
 Finally, the keynote began and Rich Green the stage.  His speech was a pretty typical rah rah speech, in which he paraded various vendors with Java-based products on stage, such as Ian Freed of Amazon with the Amazon Kindle, and Rikko Sakaguchi of Sony Ericsson with...a phone whose model number I can't remember, but which I want to check out nonetheless.  There was also a fairly disastrous JavaFX demo by Nandini Ramani.  The demo crashed three times on her, though we learned from Josh Marinacci that the demo had a race condition which they fixed later.  Embarrassing for Nandini, I'm sure, but it didn't dent my enthusiasm for the platform.

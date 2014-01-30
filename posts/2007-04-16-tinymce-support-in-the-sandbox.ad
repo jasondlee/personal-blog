@@ -22,7 +22,7 @@ This example markup:
   
 gets you this:  
 
-image:/imported/2007/04/htmleditorscreenshot.thumbnail.png[title='HtmlEditor Screenshot', link="/images/imported/2007/04/htmleditorscreenshot.png"]
+image:/images/2007/04/htmleditorscreenshot.thumbnail.png[title='HtmlEditor Screenshot', link="/images/2007/04/htmleditorscreenshot.png"]
 
 Hopefully, I'll get full support for the editor, but I can't make promises on how quickly that will happen, this being mostly a lunch-time project.  
 

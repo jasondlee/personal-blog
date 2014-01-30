@@ -153,7 +153,7 @@ _____
 The tableRowGroup component is used to define attributes for XHTML elements, which are used to display rows of data. You can specify multiple w:tableRowGroup  tags to create groups of rows. Each group is visually separate from the other groups, but all rows of the table can be sorted and filtered at once, within their respective groups.
 _____
 
-Note that we bind this component to a property on the managed bean.  This is where things get really...interesting.  If you were to look at the example source code or the TLD docs for the `table`, you would find a number of helper classes, such as `Group`, `Filter`, and `Select`.  If you are like me, your first inclination is to skip using these classes, hoping to simplify things a bit.  Don't.  In fact, I took these classes and tweaked them a bit to make them more generally usable and bundled them in a utility library that we can use.  If you'd like to use these classes, the complete source can be downloaded link:/images/imported/2007/02/woodstock-utils.zip[here].  You can browse the source to see what all `Group` does, but one of its most important functions is to create the `TableDataProvider` the component will need.  The easiest way I have found, which you will see in the class, is to wrap a `List` of my model objects in an `ObjectListDataProvider`:
+Note that we bind this component to a property on the managed bean.  This is where things get really...interesting.  If you were to look at the example source code or the TLD docs for the `table`, you would find a number of helper classes, such as `Group`, `Filter`, and `Select`.  If you are like me, your first inclination is to skip using these classes, hoping to simplify things a bit.  Don't.  In fact, I took these classes and tweaked them a bit to make them more generally usable and bundled them in a utility library that we can use.  If you'd like to use these classes, the complete source can be downloaded link:/images/2007/02/woodstock-utils.zip[here].  You can browse the source to see what all `Group` does, but one of its most important functions is to create the `TableDataProvider` the component will need.  The easiest way I have found, which you will see in the class, is to wrap a `List` of my model objects in an `ObjectListDataProvider`:
 
 [source,java]
 -----
@@ -243,7 +243,7 @@ What It Looks Like
 ------------------
 Here is a screen shot from the application from which this table was taken.  It shows the rows sorted by the "Assigned To" field, a row is selected, and the custom filter panel is displayed:
 
-image::/imported//2007/02/tablescreenshot.png[title='Table Screen Shot']
+image::/images/2007/02/tablescreenshot.png[title='Table Screen Shot']
 
 [[closing]]
 Closing

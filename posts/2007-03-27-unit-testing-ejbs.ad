@@ -90,7 +90,7 @@ public class UserDaoImplTest {
 }
 -----
 
-The unit test starts by declaring some static resources:  the DAO implementation, an `EntityManagerFactory`, and an `EntityManager`.  In the `@BeforeClass`, we ask the EMF for the EntityManager, then pass that to a link:/images/imported/2007/03/dbunithelper.zip[DBUnit helper class], then set the EM on the DAO (you should see now where the property injection comes in handy).  The `@Before` method simply loads our test data before each test.  One could just as easily have each unit test rollback at the end, but we chose to reload our small test dataset before each run.  The unit test itself is fairly straightforward, except that we are explicitly handling transactions to mimic the container-managed transaction handling we get for free in production.  
+The unit test starts by declaring some static resources:  the DAO implementation, an `EntityManagerFactory`, and an `EntityManager`.  In the `@BeforeClass`, we ask the EMF for the EntityManager, then pass that to a link:/images/2007/03/dbunithelper.zip[DBUnit helper class], then set the EM on the DAO (you should see now where the property injection comes in handy).  The `@Before` method simply loads our test data before each test.  One could just as easily have each unit test rollback at the end, but we chose to reload our small test dataset before each run.  The unit test itself is fairly straightforward, except that we are explicitly handling transactions to mimic the container-managed transaction handling we get for free in production.  
 
 The persistence context is defined like this:
 
@@ -115,7 +115,7 @@ The persistence context is defined like this:
 </persistence>
 -----
 
-link:/images/imported/2007/03/dbunithelper.zip[Here] is the code for the DBUnitHelper class.  Note that this is still experimental, but I've used it on three projects now with good success, but it does abuse the JPA API by talking to the TopLink objects directly, so it is definitely not portable.  You have been warned. :)
+link:/images/2007/03/dbunithelper.zip[Here] is the code for the DBUnitHelper class.  Note that this is still experimental, but I've used it on three projects now with good success, but it does abuse the JPA API by talking to the TopLink objects directly, so it is definitely not portable.  You have been warned. :)
 
 Testing our service is fairly similar, needing just a bit more setup:
 

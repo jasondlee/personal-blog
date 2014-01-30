@@ -123,6 +123,6 @@ Back in the main method of Main, we make another call to the applications endpoi
 
 That's all there is to it.  Using less-than-stellar Scala code, we've demonstrated how to deploy an application to a GlassFish instance.  Using the RESTful interface that shipped with v3, and which we continue to improve in 3.1, allows us to manage GlassFish from an application written in the language of our choice.
 
-The full project (including the Maven pom file), can be found link:/images/imported/2010/12/GlassFishDeployDemo.tar.gz[here].
+The full project (including the Maven pom file), can be found link:/images/2010/12/GlassFishDeployDemo.tar.gz[here].
 
 [1] You might look at that an wonder why it's "applications/application," and the answer is because the tree mimics the structure of the domain.xml file that is being manipulated via these endpoints.

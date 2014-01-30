@@ -25,15 +25,15 @@ In order to have an application client, we need an application, so we're going t
 
 To create the application, click File -> New Project in NetBeans (I'm using a nightly of NetBeans 7.0, for what it's worth):
 
-image::/images/imported/2011/02/newenterpriseapp1-300x211.png[class='aligncenter' title='New Enterprise Application Step 1', link='/images/imported/2011/02/newenterpriseapp1.png']
+image::/images/2011/02/newenterpriseapp1-300x211.png[class='aligncenter' title='New Enterprise Application Step 1', link='/images/2011/02/newenterpriseapp1.png']
 
 Choose the Jave EE category, and Enterprise Application under Projects.  On the next page, enter the project name and location:
 
-image::/images/imported/2011/02/newenterpriseapp2-300x205.png[class='aligncenter' title='New Enterprise Application Step 2' , link='/images/imported/2011/02/newenterpriseapp2.png']
+image::/images/2011/02/newenterpriseapp2-300x205.png[class='aligncenter' title='New Enterprise Application Step 2' , link='/images/2011/02/newenterpriseapp2.png']
 
 On the third step in the wizard, make sure you have a server selected (I, for example, chose the very excellent GlassFish 3.1 server : ).  Uncheck `Create Web Application Module`, and, if you would like, check `Enable Contexts and Dependency Injection`.  
 
-image::/images/imported/2011/02/newenterpriseapp3-300x174.png[class='aligncenter' title='New Enterprise Application Step 3' , link='/images/imported/2011/02/newenterpriseapp3.png']
+image::/images/2011/02/newenterpriseapp3-300x174.png[class='aligncenter' title='New Enterprise Application Step 3' , link='/images/2011/02/newenterpriseapp3.png']
 
 Finally, click finish and NetBeans will create your project for you.
 
@@ -65,11 +65,11 @@ The Enterprise Application Client
 ---------------------------------
 In NetBeans, click File -> New Project again.  Choose the Jave EE category again, but this time select Enterprise Application Client under Projects:
 
-image::/images/imported/2011/02/newappclient1-300x211.png[class='aligncenter' title='New Application Client Step 1', link='/images/imported/2011/02/newappclient1.png']
+image::/images/2011/02/newappclient1-300x211.png[class='aligncenter' title='New Application Client Step 1', link='/images/2011/02/newappclient1.png']
 
 On the final page, select EnterpriseApplication for `Add to Enterprise Application`, make sure the correct server is selected, target Java EE 6, and check `Enable Contexts and Dependency Injection` if you'd like (all this does, by the way, is add a basically empty beans.xml to the project, so you can always do this later if you forget).
 
-image::/images/imported/2011/02/newappclient3-300x174.png[class='aligncenter', title='New Application Client Step 3', link='/images/imported/2011/02/newappclient3.png']
+image::/images/2011/02/newappclient3-300x174.png[class='aligncenter', title='New Application Client Step 3', link='/images/2011/02/newappclient3.png']
 
 Our app client will look something like this:
 
@@ -125,7 +125,7 @@ public class Main  extends javax.swing.JFrame {
 
 We're now ready to run our application. In the Projects browser on the left, right click `EnterpriseApplication` and click `Run`. After a few seconds, you should see a window that looks like this:
 
-image::/images/imported/2011/02/appclient-300x235.png[class='aligncenter' title='The running Application Client', link='/images/imported/2011/02/appclient.png']
+image::/images/2011/02/appclient-300x235.png[class='aligncenter' title='The running Application Client', link='/images/2011/02/appclient.png']
 
 Beautiful! 8-)
 
