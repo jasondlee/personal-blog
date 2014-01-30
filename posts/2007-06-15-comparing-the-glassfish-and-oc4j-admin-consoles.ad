@@ -89,4 +89,5 @@ One thing that OC4J does that I wish GlassFish would do is really pretty simple,
 In the end, though, I'm quite happy with the GlassFish console.  I've been using it for over a year now, and it has only gotten better and faster.  While I realize there are many, many more factors to consider in picking an application server, ease of administration is a pretty important one (at least for me), and I think GlassFish does extremely well against all competitors, even one from the world's largest software company.
 
 ^1^ I am aware that Sun is very active and generous in its support of GlassFish, but it still seems to carry the stigma that open source sometimes does in certain circles.
+
 ^2^ The current production release of OC4J is 10.1.3.2, with a preview release for 11g available.  The preview, however does not currently ship with a GUI administration console, so this comparison will be using 10g.

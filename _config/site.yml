@@ -3,7 +3,7 @@ author: Jason Lee
 local_tz: America/Chicago
 interpolate: false
 disqus: steeplesoft
-#base_url: http://localhost:1234
+base_url: http://localhost:4242
 minify: false
 
 asciidoctor:
