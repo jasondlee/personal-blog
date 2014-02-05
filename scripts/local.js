@@ -6,6 +6,3 @@ $(document).foundation()
 $(".image").each(function() {
     $(tis).attr("rel","lightbox[group]");
 });
-
-hljs.tabReplace = "    ";
-hljs.initHighlighting();

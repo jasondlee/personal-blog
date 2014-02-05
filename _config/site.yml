@@ -4,16 +4,17 @@ local_tz: America/Chicago
 interpolate: false
 disqus: steeplesoft
 base_url: http://localhost:4242
-minify: false
+minify: true
 
 asciidoctor:
   :compact: true
   :eruby: erubis
   :attributes:
+    source-highlighter: coderay
+    coderay-css: style
     idprefix: ''
     idseparator: '-' 
 
-minify: true
 minify_html_opts:
     remove_intertag_spaces: true
     compress_js: true
@@ -24,7 +25,9 @@ scss:
 # if no profile is specified, the first with a deploy config is selected
 profiles:
   development:
-    #minify: false
+    minify: false
+    asciidoctor:
+        :compact: false
     disqus_developer: true
     dev: true
     deploy:
