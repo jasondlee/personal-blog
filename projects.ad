@@ -11,6 +11,14 @@ track of my many irons in the fire. Without further ado, then:
 Cub Tracker
 ^^^^^^^^^^^
 * Group replication
+* Add awareness of when a scout has completed an item.
+* Possible UI rework (Navigation Drawer)
+
+Ceylon
+^^^^^^
+* Learn more about the language
+* Implement something interesting
+* Learn more about the async IO support
 
 NetBeans Awestruct Plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^
