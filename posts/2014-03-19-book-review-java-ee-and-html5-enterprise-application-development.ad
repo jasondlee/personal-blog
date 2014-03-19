@@ -7,7 +7,7 @@ tags   : [ Java EE, HTML5, reviews ]
 ---
 
 I was recently sent a copy of http://www.amazon.com/gp/product/0071823093/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0071823093&linkCode=as2&tag=coupfoai0f-20[_Java EE and HTML5 Enterprise Application Development_]
-by John Brock, Arun Gupta, and Geertjan Wielenga. This is my review of the book
+by https://twitter.com/peppertech[John Brock], https://twitter.com/arungupta[Arun Gupta], and https://twitter.com/GeertjanW[Geertjan Wielenga]. This is my review of the book
 
 pass::[more]
 
@@ -17,7 +17,7 @@ every Java EE topic is covered. What the authors have done, however, is cover so
 started with an HTML5 application in an EE environment. The topics covered in detail are JPA (persistence), JAX-RS (REST), and 
 Java API for WebSocket, all discussed in just enough detail to get you going, but no so much that you're buried in details.
 
-The first chapter is an introduction to tools being used, HTML5, Java EE 7, and NetBeans. With this book being from Oracle Press (disclaimer: 
+The first chapter is an introduction to tools being used, HTML5, Java EE 7, and http://netbeans.org[NetBeans]. With this book being from Oracle Press (disclaimer: 
 I work for Oracle as well), one might expect to see a slant toward Oracle tools (in fact, two of the authors, Brock and Wielenga, work directly 
 on NetBeans). What we find in the book, however, is the use of NetBeans not as a marketing tool, but as a way to simplify the development effort.
 Before any steps are shown in the IDE, the code-by-hand approach is shown first, followed by how to accomplish the same thing using the IDE. 
