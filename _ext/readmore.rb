@@ -9,10 +9,10 @@ module Awestruct
   module Extensions
     module ReadMore
       # Don't know why "" was in here I think that would always return 0 to index and work immediately.
-      DELIMETERS = ["pass::[<!-- more -->]","<!-- more -->","<!--more-->","&lt;!-- more --&gt;"]
+      DELIMITERS = ["pass::[<!-- more -->]","<!-- more -->","<!--more-->","&lt;!-- more --&gt;"]
 
       def truncate(content)
-        DELIMETERSS.map { |delim| content.index(delim) }.each do |index| 
+        DELIMITERS.map { |delim| content.index(delim) }.each do |index| 
           return content[0...i] if i  # notice three dots excludes ith index
         end
         content  # return usually left off for last expression in method by convention
