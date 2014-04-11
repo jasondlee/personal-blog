@@ -1,7 +1,6 @@
 .blogname{
     letter-spacing:10px;
     font-size:48px;
-    padding:10px 0px 15px 0px;
     margin:auto;
     text-align:center;
     color:#cecfd1;
@@ -58,6 +57,7 @@ h1.title {
     font-size: 24px;
     line-height: 28px;
     font-weight: 400;
+    margin-bottom: 0px;
 }
 
 article:not(:first-child) {
@@ -82,6 +82,8 @@ header h4 {
 time {
     font-weight: normal;
     font-size: 14px;
+    font-style: italic; 
+    padding-bottom: 10px;
 }
 
 .widget h3 { font-size: 18px; color: #54667d; padding-bottom: 5px; border-bottom: 1px #666 dotted; }
@@ -103,3 +105,28 @@ p#quote,p#source {
 
 p#quote{ margin-bottom: 0px }
 p#source { text-align:right; padding-right: 5px; font-style: italic; }
+
+code {
+    color: #7F0A0C;
+    font-family: Consolas,"Liberation Mono",Courier,monospace;
+    font-weight: bold;
+}
+code, kbd, pre, samp {
+    font-family: monospace,serif;
+    font-size: 1em;
+}
+code {
+    padding-bottom: 0;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 0;
+}
+
+.pagination {
+    width: 100%;
+}
+
+.main {
+    padding-left: 10px;
+    padding-right: 10px;
+}

@@ -11,7 +11,7 @@ by https://twitter.com/peppertech[John Brock], https://twitter.com/arungupta[Aru
 
 pass::[more]
 
-image:http://ecx.images-amazon.com/images/I/51vcYORnPLL._SY300_.jpg[Cover, 162, 300, float="right", height="150"] While this a fairly short book (176 pages), the authors managed to work a fair amount in. As you probably guessed from the title, the book
+image:http://ecx.images-amazon.com/images/I/51vcYORnPLL._SY300_.jpg[Cover, 162, 300, float="right"] While this a fairly short book (176 pages), the authors managed to work a fair amount in. As you probably guessed from the title, the book
 covers Java EE in the context of an HTML5 application. Given the size of the book and the fairly large and expansive scope of Java EE, not
 every Java EE topic is covered. What the authors have done, however, is cover some of the basic Java EE concepts that one might need to get
 started with an HTML5 application in an EE environment. The topics covered in detail are JPA (persistence), JAX-RS (REST), and 

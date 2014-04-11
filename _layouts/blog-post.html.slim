@@ -5,7 +5,7 @@ article.post
   header.entry-header
     h1.title
       a href=page.url =page.title
-    h4
+    span style="font-size: 18px; font-style: italic; padding-bottm: 10px;"
       time.pubdate datetime=page.date.strftime('%FT%T%:z') =page.date.strftime "%A, %B #{page.date.day}, %Y"
   .entry-content
     = filter(content)

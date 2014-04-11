@@ -23,16 +23,14 @@ you started). Lastly, to keep things simple yet a bit more interesting than the 
 with an existing system, a GlassFish 4 server; we'll implement a very basic REST-based deploy command. 
 With that said, let's get started.
 
-Contents
-^^^^^^^^
+== Contents
 * link:#airline[Airline]
 * link:#crest[Crest]
 * link:#build[Build Notes]
 * link:#closing[Closing]
 
 [[airline]]
-Airline
-^^^^^^^
+=== Airline
 
 Each Airline-based command is coded as a class which
 implements `Runnable`. In the example in the README, some basic, shared functionality is implemented in a
@@ -133,8 +131,7 @@ $ java -jar target/airline-demo-1.0-SNAPSHOT.jar deploy /path/to/myapp.war
 The application has been deployed.
 -----
 
-Crest
-^^^^^
+=== Crest
 
 Command implmentation in crest is a bit different. Crest uses methods annotated 
 with `@Command` rather than classes:
@@ -207,8 +204,8 @@ and works. :) The other option, which is not as fast, is to use xbean-based clas
 `org.tomitribe:tomitribe-crest-xbean:${crest.version}` to your build file. 
 
 [[build]]
-Build Notes
-^^^^^^^^^^^
+=== Build Notes
+
 To make these easy to run, I borrowed the use the Maven shader plugin from the crest README to
 make an executable "uberjar":
 
@@ -254,8 +251,8 @@ configure and run the libraries. If you're using crest+xbean, `mainClass` will b
 `org.tomitribe.crest.Main`.
 
 [[closing]]
-Closing
-^^^^^^^
+=== Closing
+
 If I had to choose a library right now, it would be a touch choice, though I lean a bit toward
 Crest. The libraries have slightly different approaches to exposing commands (classes vs methods),
 so since neither is inherently better than the other, personal preference will be a large factor here. 
