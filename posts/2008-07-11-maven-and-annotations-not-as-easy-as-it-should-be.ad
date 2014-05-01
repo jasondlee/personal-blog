@@ -5,6 +5,7 @@ layout: blog-post
 date: 2008-7-11
 tags: [ Ant, Java, Maven ]
 ---
+
 Over the past year or so, I've been slowly migrating -- somewhat accidentally -- to Maven.  I had even begun migrating the build environment for Scales from Ant to Maven, but hit a huge roadblock:  annotation processing.  Scales depends heavily on compile-time annotation processing, and the only thing I could find on the web was other people with the same problem.  As I was working on some of my JSFOne examples, I really wanted to use Maven, as the NetBeans support is a lot cleaner with Maven versus an externally maintained Ant build file, so I set to with renewed purpose.  Finally, I seem to have found the right query string, as I appear to have solved my problem.  The solution?  Ant.
 pass::[more]
 

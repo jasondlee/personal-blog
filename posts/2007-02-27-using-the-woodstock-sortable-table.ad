@@ -8,8 +8,7 @@ tags: [ Java, JavaServer Faces, Woodstock ]
 At long last, the https://woodstock.dev.java.net[Woodstock component set] is finally here.  At IEC, we have been anxiously awaiting its release for quite some time now, as we've been hoping to make use of the sortable data table component it offers, which we have now done.  Having done it, allow me to show off the component a bit, as well as explain what I had to do make things work.  It's not hard, necessarily, just different enough to give one pause at first glance.
 pass::[more]
 
-Table of Contents
------------------
+= Table of Contents
 
 * link:#setup[Setting up your environment]
 * link:#thetable[The Table]
@@ -20,8 +19,7 @@ Table of Contents
 * link:#closing[Closing]
 
 [[setup]]
-Setting up your environment
----------------------------
+= Setting up your environment
 The first thing you will need to do, obviously, is add the required jars to your project:
 
 * dataprovider.jar
@@ -148,8 +146,7 @@ We're now ready to put a table on the page.  Here's a snippet from the applicati
 At first glance, that's quite overwhelming, and I'll be the first to admit that I don't understand everything that's going on there, but I'll try convey what I _do_ understand.  :)  For good or bad, this sample does both sorting and filtering.  The properties on `<w:table>` should be fairly self-explanatory.  The `actionsTop` facet allows me to insert arbitrary markup into the area by that name in the table header.  In this example, it is through this area that I'm able to perform various actions against the selected rows in the table:  assign an engineer or refresh the table (i.e., clear any filters and reload the data the database).
 
 [[data]]
-Displaying Data
----------------
+= Displaying Data
 Finally, we come to the heart of the table, the `tableRowGroup`.  This is the point at which I had to smile and nod, and just do what I was told.  The TLD docs have this to say of this component:
 _____
 The tableRowGroup component is used to define attributes for XHTML elements, which are used to display rows of data. You can specify multiple w:tableRowGroup  tags to create groups of rows. Each group is visually separate from the other groups, but all rows of the table can be sorted and filtered at once, within their respective groups.
@@ -181,13 +178,11 @@ function clicked () {
 -----
 
 [[sorting]]
-Sorting Data
-------------
+= Sorting Data
 The next column in the table is a sortable column.  While most of the markup here is straightforward, note the `alignKey` and `sort` properties.  These columns indicate the field on which to sort when the user selects that column.  I am uncertain as to whether or not they have to be the same, but I've always seen them that way, so that's the pattern I've followed.  It is also probably important to point out how data is retrieved from the `DataProvider`.  In the `staticText` component, you'll see the value is set to `#{unit.value.assignedTo}`.  The variable `unit` is the `sourceVar` defined in the `table` setup, and `value` is a method on the `DataProvider` that returns (in our case) the object for the given row.
 
 [[filtering]]
-Filtering Data
---------------
+= Filtering Data
 Filtering is also enabled on our table.  The `filter` facet is where I am able to specify the filters I'd like to be able to apply to the table.  Due to a JavaScript issue I have yet to track down (which may or may not be related to my nascent Facelets support), my implementation here is a bit different from the Woodstock examples.  Here is the source for `filterMenuChanged`:
 
 [source,javascript]
@@ -241,15 +236,13 @@ public void applyCustomFilter() {
 -----
 
 [[screenshot]]
-What It Looks Like
-------------------
+= What It Looks Like
 Here is a screen shot from the application from which this table was taken.  It shows the rows sorted by the "Assigned To" field, a row is selected, and the custom filter panel is displayed:
 
 image::/images/2007/02/tablescreenshot.png[title='Table Screen Shot']
 
 [[closing]]
-Closing
--------
+= Closing
 And that's "all" there is to it.  I've worked with (and on) a fair number of JSF components, but this is likely the coolest with which I've had personal experience.  The "coolness" comes at a cost, though, in that the component can be difficult to grasp at first.  Hopefully, this "little" will flatten the learning curve just a little bit.  And while you're playing with the table, be sure to https://woodstock.dev.java.net/Preview.htm[check out] some of the other Woodstock components.  They did a great job.
 
 As a side note, many thanks to http://blogs.sun.com/paulsen/[Ken Paulsen] (of https://jsftemplating.dev.java.net[JSFTemplating] and https://glassfish.dev.java.net[Glassfish admin console] fame) for answering all of my questions, regardless of how silly they seemed.  My employer, IEC (namely, my boss Mitch, and not just because he reads this ;) ) deserves many thanks as well for giving me the time to add Facelets support, without which we couldn't be using Woodstock.

@@ -5,11 +5,11 @@ layout: blog-post
 date: 2011-2-22
 tags: [ GlassFish, Java, JavaEE, tutorials ]
 ---
+
 From time to time, I'm asked about accessing various EE artifacts (EJBs, etc) from a standalone client.  Almost invariably, the user is having trouble getting the environment setup, grabbing an InitialContext, etc.  Also almost invariably, my answer to them is "use the application client container", which is as far as I can take them.  The topic of application client container, or ACC, came up again recently when I was asked on Twitter about an issue with ACC and GlassFish in a clustered environment. While this user (hi, Markus! : ) http://blog.eisele.net/2011/02/clustering-stateful-session-beans-with.html[figured out his issue] before I could be of much help, I took this opportunity finally to learn exactly what the ACC is and how to use it.  Thanks to Oracle's Tim Quinn for his patient and tireless help, here's what I learned...
 pass::[more]
 
-What _IS_ the Application Client Container
-------------------------------------------
+= What _IS_ the Application Client Container
 http://download.oracle.com/docs/cd/E19229-01/819-0600/msgappclient.html[Officially], an ACC is defined this way:
 
 [quote]
@@ -19,8 +19,7 @@ ____
 
 In a nutshell, an application client is a Java application (which would typically be, I'm guessing, a Swing app, for example) that is a client of a particular enterprise application.  It is run in an "application client container" which handles the lifecycle of the application, providing various enterprise type services (such as EJB injection).  An example might be an EJB-based order entry system, with a Swing frontend.  Much to my surprise, there doesn't seem to be any magic to it beyond the inclusion of the XML file, `META-INF/application-client.xml`, which we'll look at in just a moment.  First, let's build a simple enterprise application.
 
-The Enterprise Application
---------------------------
+= The Enterprise Application
 In order to have an application client, we need an application, so we're going to build one, but I'm going to do something a bit unusual.  Typically, my examples here all Maven-based.  This time, though, I'm going to walk you through building the application (and its client) using NetBeans, as it's support for what we're doing here is pretty slick.  Don't click away yet, Maven fans.  I'll have a Maven version further down.
 
 To create the application, click File -> New Project in NetBeans (I'm using a nightly of NetBeans 7.0, for what it's worth):
@@ -61,9 +60,8 @@ public class DummyBean implements Dummy {
 
 And that's our app. You can have NetBeans build and deploy it if you'd like, but you won't see much.  To fix that, let's write a simple Swing app to exercise this impressive EJB.
 
-The Enterprise Application Client
----------------------------------
-In NetBeans, click File -> New Project again.  Choose the Jave EE category again, but this time select Enterprise Application Client under Projects:
+= The Enterprise Application Client
+In NetBeans, click File -> New Project again.  Choose the Java EE category again, but this time select Enterprise Application Client under Projects:
 
 image::/images/2011/02/newappclient1-300x211.png[class='aligncenter' title='New Application Client Step 1', link='/images/2011/02/newappclient1.png']
 
@@ -129,8 +127,7 @@ image::/images/2011/02/appclient-300x235.png[class='aligncenter' title='The runn
 
 Beautiful! 8-)
 
-Deploying and running outside of NetBeans
------------------------------------------
+= Deploying and running outside of NetBeans
 Obviously, you won't deploy this to production with NetBeans, so let's a take a quick look at deployment and execution via the command line.  If you want to deploy the app and immediately download the client stubs, you can do this:
 
 [source,bash]
@@ -154,8 +151,7 @@ appclient -jar localdir/EnterpriseApplicationClient.jar
 
 The problem with that approach is that it requires a pretty heavy configuration: grab some GlassFish client jars, configure XML, and on and on.  That's just too much.  Fortunately, GlassFish makes this really simple (remember when I said GlassFish was an excellent server? : ).  With the application deployed, point your browser at http://localhost:8080/EnterpriseApplication/ApplicationClient[http://localhost:8080/EnterpriseApplication/ApplicationClient] and wait for it.  GlassFish gives you Java Web Start for your application client for free.  No extra steps needed.  If this is the first time you've run the Application Client via JWS on this machine, it will take a few minutes to download the required libraries, but subsequent runs should be much quicker starting up.  How fancy is that?
 
-Enough with the GUI! Give me some XML!
---------------------------------------
+= Enough with the GUI! Give me some XML!
 For those that have been waiting patiently, here's how to accomplish the same thing via Maven.  Let's start with a parent POM:
 
 [source,xml]
@@ -207,6 +203,7 @@ For those that have been waiting patiently, here's how to accomplish the same th
     </build>
 </project>
 -----
+
 The EJB POM is very simple:
 
 [source,xml]

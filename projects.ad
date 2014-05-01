@@ -8,29 +8,32 @@ layout : blog-post
 While this is posted publicly, this status page is primarily intended for me to keep 
 track of my many irons in the fire. Without further ado, then:
 
-Cub Tracker
-^^^^^^^^^^^
+== Currently (mostly) Active
+
+=== Cub Tracker
 * Group replication
 * Add awareness of when a scout has completed an item.
 * Possible UI rework (Navigation Drawer)
+* Add den support
+* Add item completion support
 
-Ceylon
-^^^^^^
-* Learn more about the language
-* Implement something interesting
-* Learn more about the async IO support
-
-NetBeans Awestruct Plugin
-^^^^^^^^^^^^^^^^^^^^^^^^^
+=== NetBeans Awestruct Plugin
 * Slim/HAML support. Keep an eye on jTilt/Tiltj
 * Flesh out NetBake, the standalone wrapper for the plugin
 * New file assumes a blog post
 * New files aren't shown in the project view. Fix file list refreshing.
 
-Blog Fodder
-^^^^^^^^^^^
+=== NetBeans Application platform Madsonic/Subsonic Streaming Player
+* ...
+
+== (Mostly) Inactive
+=== Ceylon
+* Learn more about the language
+* Implement something interesting
+* Learn more about the async IO support
+
+=== Blog Fodder
 * Implement something. Anything. :P
 
-FxTunes
-^^^^^^^
-* Fix MediaPlayer/song model binding
+=== FxTunes 
+* [strike]#Fix MediaPlayer/song model binding# Converted to NetBeans Application app

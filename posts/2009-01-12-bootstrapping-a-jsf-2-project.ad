@@ -5,6 +5,7 @@ layout: blog-post
 date: 2009-1-12
 tags: [ JavaServer Faces, tutorials ]
 ---
+
 I needed a break this afternoon, so I thought I'd see how easy it is to bootstrap a JSF 2 project.  One of the biggest complaints about JSF 1.x is all that XML, so JSF 2 is aiming to fix that.  How have we done so far?  Based on this quick look (which is my first from-scratch JSF 2 app), really, really well.
 pass::[more]
 
@@ -29,6 +30,7 @@ mvn archetype:create -DgroupId=com.mycompany.app -DartifactId=my-webapp \
     <url-pattern>*.jsf</url-pattern>
 </servlet-mapping>
 -----
+
 * Add the JSF 2 jars (and their repo) to pom.xml:
 [source,xml]
 -----

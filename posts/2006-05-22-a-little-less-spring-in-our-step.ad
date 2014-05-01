@@ -5,6 +5,7 @@ layout: blog-post
 date: 2006-5-22
 tags: [ Java ]
 ---
+
 Friday I had an interesting discussion with my boss, Mitch.  I have been doing a lot of thinking about Java EE 5 and what it offers, and that has me reevaluating some of our technology decisions.  Most notably, which was the bulk of my discussion with Mitch, is, "Do we really need Spring anymore?"
 pass::[more]
 

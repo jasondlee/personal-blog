@@ -5,6 +5,7 @@ layout: blog-post
 date: 2009-11-2
 tags: [ components, Java, JavaServer Faces, Scales ]
 ---
+
 With the recent migration of http://kenai.com/projects/scales/pages/Home[Mojarra Scales] to https://javaserverfaces.dev.java.net[JSF 2], the old location of the Mojarra Scales demo was no longer adequate (upgrading that server posed some issues).  For that reason, I have moved the demo to a http://demo.steeplesoft.com/mojarra-scales-demo/index.jsf[new home].  This server should be more up-to-date (both in terms of the application as well as the application server -- which is http://glassfish.org[GlassFish v3], of course -- that runs it).  When accessing the application, please keep in mind that it's on an old server that's running on an AT&T U-verse line, and the download times will reflect that. :)
 
 I'd also like to not that this showcases a couple of new components at the moment.  I've begun an implementation of the http://developer.yahoo.com/yui/datatable/[YUI data table widget].  At the time of this posting, basic table functions work, including client-side sorting.  More complex functionality, such as Ajax updates, are in the offing.  

@@ -5,6 +5,7 @@ layout: blog-post
 date: 2005-4-13
 tags: [ PHP ]
 ---
+
 For quite a while now, I've been using PEAR's http://pear.php.net/manual/en/package.database.db-dataobject.php[DB_DataObject] to do data persistence, but I've never been quite satisfied with it.  As I've used http://www.hibernate.org/[Hibernate] more and more, I find myself increasingly disappointed with DB_DataObject, so I went searching for a solution.
 pass::[more]
 

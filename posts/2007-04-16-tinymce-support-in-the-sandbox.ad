@@ -5,6 +5,7 @@ layout: blog-post
 date: 2007-4-16
 tags: [ Java, JavaServer Faces ]
 ---
+
 I have just committed preliminary support for the http://tinymce.moxiecode.com/[TinyMCE] JavaScript HTML editor.  There are parts that still don't work correctly, but it's a good start.
 pass::[more]
 

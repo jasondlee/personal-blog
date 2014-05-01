@@ -5,6 +5,7 @@ layout: blog-post
 date: 2010-10-5
 tags: [ JUnit, testing ]
 ---
+
 Part of my job as a developer is writing unit tests.  Lately, though, I've been spending more and more of my time in our tests, which take a long, long time to run.  For example, to run the GlassFish Admin Console's StandaloneTest class, the last run took 17 minutes and 36 seconds.  Clearly, something needs to be done to speed that up overall, but I have to wait for the entire class to run just so that I can see if my one new/changed test works.  Try as I might, I have not been able to find a way to make the surefire Maven plugin run just that one test method.  This morning, though, I happened to stumble across a new feature of JUnit (as of 4.7, if I read correctly) that did the trick for me, which I'll share here.
 pass::[more]
 
