@@ -6,10 +6,11 @@ layout: blog-post
 tags: [ NetBeans, HTML5 ]
 ---
 
-Recently, Geertjan Wielenga, Principal Product Manager in the Oracle Developer Tools group, posted a video on his|https://blogs.oracle.com/geertjan/entry/youtube_14_netbeans_web_development[blog] showing "14 NetBeans Web Development Tips in 7 Minutes", which showed off several nice tips for the IDE (#1 and #5 are my favorites). If you're like me, sometimes you don't have (or don't want to make) time to watch a video, so I thought I'd make a table of contents for the video, with links to relevant portion of it for those that would like to read the list and watch only the parts that interest them. 
+Recently, Geertjan Wielenga, Principal Product Manager in the Oracle Developer Tools group, posted a video on his https://blogs.oracle.com/geertjan/entry/youtube_14_netbeans_web_development[blog] showing "14 NetBeans Web Development Tips in 7 Minutes", which showed off several nice tips for the IDE (#1 and #5 are my favorites). If you're like me, sometimes you don't have (or don't want to make) time to watch a video, so I thought I'd make a table of contents for the video, with links to relevant portion of it for those that would like to read the list and watch only the parts that interest them. 
 
 pass::[more]
 
+[cols="1,15,1", options="header", width="50%"]
 |===
 | | Tip | Video Link
 |1|You can quickly drag and drop resources from the Projects window into HTML files|https://www.youtube.com/watch?v=JaqAi3r0k1Y[watch]
