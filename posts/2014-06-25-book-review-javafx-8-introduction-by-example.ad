@@ -1,0 +1,41 @@
+---
+title: "Book Review: JavaFX 8: Introduction by Example"
+author: Jason Lee
+layout: blog-post
+date: 2014-06-25
+tags: [ JavaFX, reviews ]
+---
+
+http://carlfx.wordpress.com[Carl Dea], this time with the help of https://blogs.oracle.com/javajungle[Mark Heckler], http://harmoniccode.blogspot.com[Gerrit Grunwald], http://jperedadnr.blogspot.com[José Pereda], and http://birdasaur.tumblr.com[Sean Phillips], recently http://www.apress.com/9781430264606[published] an updated and greatly expanded introductory work on JavaFX, with both the title and content updated to reflect the updates in the JDK and library.
+
+*tl;dr*: A solid introduction with a plethora of usable examples. You can purchase it http://www.apress.com/9781430264606[here.]
+
+pass::[more]
+
+image:http://www.apress.com/media/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/A/9/A9781430264606-3d.png[float=right, role=right]To start with, let's take a quick glance at the table of contents:
+
+. Getting started
+. JavaFX Fundamentals
+. Java 8 Lambda Expressions
+. Layout & UI Controls
+. Graphics with JavaFX
+. Custom Controls
+. Media with JavaFX
+. JavaFX on the Web
+. JavaFX 3D
+. JavaFX and Arduino
+. JavaFX on the Raspberry Pi
+. Gesture-based Interfaces
+. Appendix A. References 
+
+As you can see, there is wide array of topics, starting with some very fundamental topics (covering JavaFX and Java 8 fundamentals), then moving on to more complex topics. If you're familiar with the updates in Java 8, then chapter 3 can probably be safely skipped, but chapter lays the foundation on which the rest of the book is read.
+
+Rather than walking through each chapter, I'll say this: each chapter is clear and well-written, providing copious amounts of sample code. One of the things I really liked about the examples is that, usually, each example source/application was shown in its entirety, then the authors walk through each significant section of code explaining the whats and why, repeating the source for easy viewing. Furthermore, whether by luck or design, the code is formatted very neatly and displays perfectly on my Android tablet. I've read a lot of technoical books, and, more often than not, the code wraps oddly and is hard to read. With very few exceptions, the code was all neatly formatted so that it displayed cleanly on the ereader, which made it much easier to read.
+
+The book ends with what I would consider a bit more advanced topic: JavaFX and the Internet of Things (IoT. As an aside, I really hate that term :). To be honest, I only lightly skimmed these chapters, as I'm not even thinking of working in this area at the moment. From the scan, though, the chapters look pretty solid, with plenty of advice in selecting and setting up your board, to getting your application to run on it. Should I ever venture into this realm, I'll definitely have to revisit this section.
+
+The last chapter (actually an appendix), is called "References", and it is exactly that: 16 pages of links, and it might be one of the best parts of the book. Being an introduction to JavaFX, there's no way the authors can cover everything you need to know about the topic, so Appendix A comes to the rescue with link after link to help you go deeper. Topics include: Java 8 SDK and APIs, IDEs, Properties and Bindings, Layouts, Tools, Enterprise GUI Frameworks, and on and on. If my count is correct, there are links to 210 difference resources. I don't remember the last time I saw such an exhaustive list in a book like this.
+
+As I said at the beginning, this is a very solid introduction to JavaFX. The prose is well-written and easy to follow, and there are ample, ready to use examples for each topic. If you are interested in JavaFX in even the slightest way, this is a great place to start. 
+
+In case you missed the link earlier, you can purchase the book direct from the publishers http://www.apress.com/9781430264606[here].
