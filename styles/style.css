@@ -52,3 +52,13 @@ div.aligncenter {
 div.attribution {
     text-align: right;
 }
+
+
+.CodeRay pre {
+    border: 0px;
+}
+
+td.line-numbers {
+    border-right-width: 1px;
+    border-right-style: solid;
+}
