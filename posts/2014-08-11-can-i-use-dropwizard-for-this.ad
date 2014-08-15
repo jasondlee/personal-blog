@@ -41,7 +41,7 @@ Caused by: org.glassfish.hk2.api.UnsatisfiedDependencyException: There was no ob
 
 If I create the Weld runtime and request the beans specifically, I get to good objects (instances of both A and B, with B having an injected instance of A), but once I tell DW to fire things, the app dies:
 
-[source,java]
+[source,java,linenums]
 -----
         Weld weld = new Weld();
         WeldContainer container = weld.initialize();

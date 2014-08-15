@@ -7,7 +7,7 @@ tags: [ GlassFish, REST ]
 ---
 I recently blogged about a change we made in GlassFish 3.1.2 with regard to REST security.  Specifically, we added some CSRF protection (you can read the details link:/posts/2012/03/01/glassfish-3-1-2-and-rest-security[here]).  For those of you using the Jersey Client, updating your code to support this change is very simple:
 
-[source,java]
+[source,java,linenums]
 -----
 import com.sun.jersey.api.client.filter.CsrfProtectionFilter;
 // ...

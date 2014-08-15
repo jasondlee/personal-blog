@@ -22,7 +22,7 @@ Once that was done, I was able to update my development working copy, which got 
 
 To make it work, though, you need to make sure your parent POM has these two entries:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <distributionManagement>
     <repository>
@@ -43,7 +43,7 @@ To make it work, though, you need to make sure your parent POM has these two ent
 
 Of course, your Maven repository and SCM URLs will be different. ;)  I also needed to tell the SCM how to login to Mercurial.  I did that by adding this to `~/.m2/settings.xml`:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <servers>
     <server>

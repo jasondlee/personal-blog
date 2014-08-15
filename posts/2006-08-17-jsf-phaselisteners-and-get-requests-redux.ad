@@ -24,7 +24,7 @@ He added, "So your [pretty URL PhaseListener] adds your custom ViewRoot to the C
 
 That's no good.  His suggested fix is to extend HttpServletRequestWrapper, override getPathInfo(), and set that on the ServletContext.  That may sound scary, but it's actually not too bad.  First, let's look at the HttpServletRequestWrapper:
 
-[source,java]
+[source,java,linenums]
 -----
 class PrettyUrlRequestWrapper extends HttpServletRequestWrapper {
 	private String template;
@@ -43,7 +43,7 @@ class PrettyUrlRequestWrapper extends HttpServletRequestWrapper {
 
 I added this as a private class in the same source file as the PrettyUrlPhaseListener.  I then altered the PL to do, for example:
 
-[source,java]
+[source,java,linenums]
 -----
 PrettyUrlRequestWrapper wrapper = new PrettyUrlRequestWrapper(request);
 wrapper.setTemplateName("/product-view-" + tab + suffix);
@@ -51,7 +51,7 @@ context.getExternalContext().setRequest(wrapper);
 -----
 
 instead of 
-[source,java]
+[source,java,linenums]
 -----
 UIViewRoot view = context.getApplication().getViewHandler()
     .createView(context,"/product-view-" + tab + suffix);

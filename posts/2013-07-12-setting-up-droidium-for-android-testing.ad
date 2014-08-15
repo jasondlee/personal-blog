@@ -11,7 +11,7 @@ pass::[more]
 
 Rather than use Ant as the Android SDK currently does, we're going to build this test app using Maven. My POM currently looks something like this:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
@@ -133,7 +133,7 @@ There's much of interest here, and, to be honest, I copied it mostly wholesale f
 
 Next up, `arquillian.xml`:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version="1.0"?>
 <arquillian xmlns="http://jboss.org/schema/arquillian"
@@ -167,7 +167,7 @@ This file is also copy and paste from the repo, with no changes made. A word of 
 
 Next up, the test case:
 
-[source,java]
+[source,java,linenums]
 -----
 @RunWith(Arquillian.class)
 @RunAsClient

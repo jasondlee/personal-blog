@@ -15,7 +15,7 @@ ExternalContextFactory
 ----------------------
 The http://java.sun.com/javaee/javaserverfaces/2.0/docs/api/javax/faces/context/ExternalContext.html[ExternalContext] "allows the Faces API to be unaware of the nature of its containing application environment.  In particular, this class allows JavaServer Faces based appications to run in either a Servlet or a Portlet environment."  JSF creates the `ExternalContext` by means of an http://java.sun.com/javaee/javaserverfaces/2.0/docs/api/javax/faces/context/ExternalContextFactory.html[ExternalContextFactory].  Since we're providing a custom `ExternalContext`, we must provide an `ExternalContextFactory`, which is really quite simple:
 
-[source,java]
+[source,java,linenums]
 -----
 public class MyExternalContextFactory extends ExternalContextFactory {
     private ExternalContextFactory parent;
@@ -41,7 +41,7 @@ ExternalContext
 
 As we noted briefly above, the `ExternalContext` is an abstraction over either a `ServletContext` or a `PortletContext` (in theory, an `ExternalContext` implementation could also wrap `BillyBobsRubyThingamajig` if one were so inclined to write one).  The function of the `ExternalContext` for our purposes here is to allow JSF to ask its external context for a URL to the resource requested by the client, and that's why we have to override this class.  Since the default `ExternalContext` looks in the document root of the web app for a resource, and since we're not storing some/any of our Facelets in the document root, we have to change the look up logic.  However, there will likely still be at least <em>some</em> resources in the doc root, so we look first in the classpath for the resource.  If that lookup fails, we call the wrapped `ExternalContext`, whatever it is, and let it take things from there.  That code, then, might look something like this:
 
-[source,java]
+[source,java,linenums]
 -----
 public class MyExternalContext extends ExternalContextWrapper {
     private ExternalContext wrapped;
@@ -71,7 +71,7 @@ ResourceResolver
 ----------------
 The http://java.sun.com/javaee/javaserverfaces/2.0/docs/api/javax/faces/view/facelets/ResourceResolver.html[ResourceResolver] provides "a hook to decorate or override the way that Facelets loads template files."  Sadly, this class looks a lot like the custom `ExternalContext` from above:
 
-[source,java]
+[source,java,linenums]
 -----
 public class MyResourceResolver extends ResourceResolver {
     private ResourceResolver parent;
@@ -97,7 +97,7 @@ public class MyResourceResolver extends ResourceResolver {
 Eerily familiar, isn't it?  It's certainly possible that this redundant code could be reduced or removed altogether, but I haven't found a way.  If you do, please let me know. : )
 With our artifacts coded, we now need to tell JSF to use them.  That's done in `faces-config.xml` (one of the few places where XML is still needed):
 
-[source,xml]
+[source,xml,linenums]
 -----
 <faces-config xmlns="http://java.sun.com/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -111,7 +111,7 @@ With our artifacts coded, we now need to tell JSF to use them.  That's done in `
 
 We also need a context parameter to tell Facelets to use our new ResourceResolver:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <context-param>
     <param-name>javax.faces.FACELETS_RESOURCE_RESOLVER</param-name>

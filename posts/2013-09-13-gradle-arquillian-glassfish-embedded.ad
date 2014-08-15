@@ -13,7 +13,7 @@ pass::[more]
 While there _is_ a https://github.com/aslakknutsen/arquillian-gradle-plugin[Gradle plugin], as I understand things, it only supports the container lifecycle. All of the test deployment, etc. is work yet to be done. Fortunately, you don't need the plugin if you don't mind a little more work in your build.  Here is my current build file, which only supports GlassFish Embedded and JBoss AS 7 Managed (paritally) at the moment:
 
 .build.gradle
-[source,groovy]
+[source,groovy,linenums]
 -----
 apply plugin: 'war'
 apply plugin: 'idea'
@@ -111,7 +111,7 @@ Finally, at `[4]`, we declare two new tasks, one for each supported container. I
 The rest of the project is a fairly straightforward Arquillian setup. For the curious, I'll share a couple more files in case it helps anyone out. The first is my `arquillian.xml`:
 
 .src/integrationTest/resources/arquillian.xml
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version="1.0" encoding="UTF-8"?>
 <arquillian xmlns="http://jboss.org/schema/arquillian"
@@ -137,7 +137,7 @@ The rest of the project is a fairly straightforward Arquillian setup. For the cu
 -----
 
 .src/integrationTest/resources/glassfish-resources.xml
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE resources PUBLIC 

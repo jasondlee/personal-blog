@@ -10,7 +10,7 @@ pass::[more]
 
 The REST endpoint of interest is  link: http://localhost:4848/management/domain/configs/config/server-config/security-service/auth-realm/file/create-user[http://localhost:4848/management/domain/configs/config/server-config/security-service/auth-realm/file/create-user], and here's a sample bash shell script to exercise it:
 
-[source,bash]
+[source,bash,linenums]
 -----
 #!/bin/bash
 for USER in user1 user2 user3 user4 user5 user6 user7 user8 user9 user10 ; do
@@ -20,7 +20,7 @@ done
 -----
 
 Want to see what users exist in the realm?
-[source,bash]
+[source,bash,linenums]
 -----
 $ curl -H 'Accept: application/json' http://localhost:4848/management/domain/configs/config/server-config/security-service/auth-realm/file/list-users
 {
@@ -55,7 +55,7 @@ Minor update
 ------------
 I forgot that the poster asked about deleting users.  Here's how you do that:
 
-[source,bash]
+[source,bash,linenums]
 -----
 $ curl -H 'Accept: application/json' -X DELETE -d id=user1 $mgmt/configs/config/server-config/security-service/auth-realm/file/delete-user
 {

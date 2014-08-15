@@ -10,7 +10,7 @@ I've been tinkering with a couple of different JavaFX projects for a while now. 
 
 pass::[more]
 
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" 

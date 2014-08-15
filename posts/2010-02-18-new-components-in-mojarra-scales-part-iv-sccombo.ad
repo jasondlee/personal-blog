@@ -10,7 +10,7 @@ pass::[more]
 
 The `h:selectOneMenu` is a nice control as it allows the application author to limit what the user can enter, thus helping insure data integrity (and sanity).  Sometimes, though, it would be nice to offer a list of options for the user, but allow him to enter any arbitrary alternative.  Unfortunately, the HTML spec doesn't offer this kind of control.  Lucky for us, though, this is fairly easy to implement using some of the nice JavaScript widgets provided by YUI.  Here's a sample:
 
-[source,xhtml]
+[source,xhtml,linenums]
 -----
 <sc:combo id='combo' style='width: 500px' value='#{comboBean.value}'>
     <f:selectItems value='#{comboBean.selectItems}'/>

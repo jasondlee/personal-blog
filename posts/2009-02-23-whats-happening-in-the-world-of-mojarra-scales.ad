@@ -22,7 +22,7 @@ So what's happened since then?  A fair amount:
 * One complaint we heard when working with Scales in the GF admin console was the size of the JAR, so I spent some time tuning what gets included.  We now only package the minimized JS files that we actually use.  I was blindly including every file (minimized, non-minimized AND debug versions) of every component Scales wraps.  That was an obvious waste, so the build is now much more specific in what gets included, which, when coupled with the removal of old images and JavaScript that are no longer used, resulted in a JAR about 1/3 of its original size.
 * In 1.2-SNAPSHOT, Scales now uses YUI 2.7.0.  This gets us a number of bug fixes, the most notable of which concerns the vertical carousel demo.  I added a couple of simple CSS tweaks, which now allows the vertical carousel to render and function as expected.
 * As part of the GF console redesign, I implemented a wrapper for the YUI Layout Manager component, giving rise to two new Scales components, `sc:layout` and `sc:layoutUnit`.  Their usage looks like this:
-[source,xml]
+[source,xml,linenums]
 -----
 <sc:layout fullPage="true">
     <sc:layoutUnit position="top" height="75" gutter="5px" resize="true" collapse="true" maxHeight="100" minHeight="50">

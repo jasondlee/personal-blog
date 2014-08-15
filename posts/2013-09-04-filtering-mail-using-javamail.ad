@@ -13,7 +13,7 @@ pass::[more]
 The system itself is really pretty simple. It's not pretty, probably not too terribly efficient, and may be, generally speaking, not as flexible as some would like it to be, but, so far, it works well for me, and, to be honest, I had fun writing it, so I'm happy. :)  The rules are expressed in a JSON file that might look something like this:
 
 .rules.json
-[source,javascript]
+[source,javascript,linenums]
 -----
 [
     {
@@ -35,7 +35,7 @@ The system knows of two types of objects: `Acccount` and `Rule`. Each `Account` 
 Multiple accounts are supported as well. All you have to do is add a new `Account` object to the top-level list:
 
 .rules.json
-[source,javascript]
+[source,javascript,linenums]
 -----
 [
     {
@@ -64,7 +64,7 @@ Multiple accounts are supported as well. All you have to do is add a new `Accoun
 
 The build generates a link:/posts/2013/09/04/building-fat-jars-with-gradle/[fat jar], so running it can be done simply with
 
-[source, bash]
+[source, bash,linenums]
 -----
 $ java -jar /path/to/mailfilter.jar /path/to/rules.json
 Deleted 0 message(s) for account myaddress@example.com

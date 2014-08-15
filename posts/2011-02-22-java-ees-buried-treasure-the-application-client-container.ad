@@ -38,7 +38,7 @@ Finally, click finish and NetBeans will create your project for you.
 
 With our project ready, let's create a really simple EJB.  We'll do that in the new EnterpriseApplication-ejb project (for what it's worth, I modified my project to find its source under `src/main/java` to make Mavenization simpler later).  Let's start with an interface (yes, I know EJB 3.1 has interface-less EJBs, but the ACC doesn't seem to like that, and I still think programming to interfaces is a good idea):
 
-[source,java]
+[source,java,linenums]
 -----
 @Remote
 public interface Dummy {
@@ -48,7 +48,7 @@ public interface Dummy {
 
 And here's the implementation:
 
-[source,java]
+[source,java,linenums]
 -----
 public class DummyBean implements Dummy {
     @Override
@@ -71,7 +71,7 @@ image::/images/2011/02/newappclient3-300x174.png[class='aligncenter', title='New
 
 Our app client will look something like this:
 
-[source,java]
+[source,java,linenums]
 -----
 public class Main  extends javax.swing.JFrame {
     @EJB
@@ -130,21 +130,21 @@ Beautiful! 8-)
 = Deploying and running outside of NetBeans
 Obviously, you won't deploy this to production with NetBeans, so let's a take a quick look at deployment and execution via the command line.  If you want to deploy the app and immediately download the client stubs, you can do this:
 
-[source,bash]
+[source,bash,linenums]
 -----
 asadmin deploy --retrieve localdir/ --force dist/EnterpriseApplication.ear
 -----
 
 This will deploy the app and download the client stubs to `localdir` in the current directory.  If you don't need the client stubs at the time of deployment (say, you've deployed to the server from your machine, then need to download on a client machine), you can issue this command:
 
-[source,bash]
+[source,bash,linenums]
 -----
 asadmin get-client-stubs --appname EnterpriseApplication localdir
 -----
 
 To run the client, issue this command:
 
-[source,bash]
+[source,bash,linenums]
 -----
 appclient -jar localdir/EnterpriseApplicationClient.jar
 -----
@@ -154,7 +154,7 @@ The problem with that approach is that it requires a pretty heavy configuration:
 = Enough with the GUI! Give me some XML!
 For those that have been waiting patiently, here's how to accomplish the same thing via Maven.  Let's start with a parent POM:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <project 
         xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd' 
@@ -206,7 +206,7 @@ For those that have been waiting patiently, here's how to accomplish the same th
 
 The EJB POM is very simple:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <project 
         xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd' 
@@ -227,7 +227,7 @@ The EJB POM is very simple:
 
 As is the app client jar:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <project 
         xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd' 
@@ -279,7 +279,7 @@ Note that we add a dependency on our EJB module, as well as the `swing-layout` a
 
 Lastly, we have the POM for the ear module:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <project 
         xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd' 

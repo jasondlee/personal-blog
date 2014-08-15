@@ -29,7 +29,7 @@ The Java Class
 
 The Java class is very simple.  It must implement the `ConsoleProvider` interface, which will require one method, `getConfiguration`, and it must be annotated with the https://hk2.dev.java.net/[HK2] annotation, `@Service`:
 
-[source,java]
+[source,java,linenums]
 -----
 @Service
 public class ConsolePluginExample implements ConsoleProvider {
@@ -46,7 +46,7 @@ The Config File
 ---------------
 So that defines the plugin for the console, but how do we make it do anything interesting?  For that, we need to take a look at `/META-INF/admingui/console-plugin.xml`:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <console-config id='console-plugin-example'>
         type="org.glassfish.admingui:treeNode" 
@@ -104,7 +104,7 @@ Plugin Content
 ^^^^^^^^^^^^^^
 Finally, the `content` attribute tells the plugin service where to find the content of the integration point.  This value is typically the path, relative to the plugin's root, to the file that defines the content, which is simply a JSF page.  In our example, we point to "treeNode.jsf."  In a Maven project, this file would be in `src/main/resources`, and would be in the root directory of the resulting jar.  This example file's contents look like this:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <sun:treeNode id='tabtest' imageURL='resource/images/instance.gif' 
     target='main' text='Test Node #1' url='tabtest/jdbcLists.jsf'/>
@@ -138,7 +138,7 @@ JSFTemplating Handlers
 ^^^^^^^^^^^^^^^^^^^^^^
 To attach a handler to an event, using JSFTemplating's "template" syntax, one would do something like this:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <sun:button id='button' text='Push Me!'>
     <!command executeSomeBusinessLogic(amount="5.25", 
@@ -150,7 +150,7 @@ This creates a `sun:button` and attaches the Handler `executeSomeBusinessLogic` 
 
 The Handler, `executeSomeBusinessLogic` might look like this:
 
-[source,java]
+[source,java,linenums]
 -----
     @Handler(id="executeSomeBusinessLogic",
         input = {

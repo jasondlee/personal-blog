@@ -11,7 +11,7 @@ As you may have guessed from my recent link:/2012/04/book-review-pro-javafx-2-a-
 
 The first step, of course, is to download the binaries.  You can do that http://www.oracle.com/technetwork/java/javafx/downloads/index.html[here], sort of.  Since this is still a preview release at the time of this writing, you have click the teeny tiny http://www.oracle.com/technetwork/java/javafx/downloads/devpreview-1429449.html[link] under the header.  Once you've downloaded the distribution, you need to extract it somewhere:
 
-[source,bash]
+[source,bash,linenums]
 -----
 $ unzip javafx_sdk-2_1_0-beta-b19-macosx-universal-27_mar_2012.zip -d ~/local/
 -----

@@ -12,7 +12,7 @@ pass::[more]
 
 Let's get right to the code:
 
-[source,java]
+[source,java,linenums]
 -----
 @RunAsClient
 public class AuthTest extends Arquillian {

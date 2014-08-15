@@ -15,7 +15,7 @@ The first step, of course, is to download Quercus.  As of this writing, the curr
 = Enabling PHP support
 With the jars installed, we're ready to modify the default web configuration.  This is done by modifying config/default-web.xml in each domain directory you would like to affect.  I have not seen a way to change this globally, so you have to do this to each domain.  If someone out there knows how, though, I'm all ears.  At any rate, in default-web.xml, add these servlet and servlet-mapping entries:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <servlet>
     <servlet-name>Quercus Servlet</servlet-name>
@@ -33,7 +33,7 @@ With the jars installed, we're ready to modify the default web configuration.  T
 
 If you'd like, you can also add index.php to the welcome file list:
 
-[source,xml]
+[source,xml,linenums]
 -----
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

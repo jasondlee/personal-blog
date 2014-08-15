@@ -12,7 +12,7 @@ pass::[more]
 
 The first step is, of course, installing Awestruct, which is pretty simple:
 
-[source,bash]
+[source,bash,linenums]
 -----
 $ gem install awestruct
 $ awestruct -i -f bootstrap
@@ -27,7 +27,7 @@ _config/site.yml
 
 Let's start with the `_config/site.yml`. Something like this seems to be pretty common:
 
-[source,yaml]
+[source,yaml,linenums]
 -----
 title: My Blog
 author: Jason Lee
@@ -74,7 +74,7 @@ _ext/pipeline.rb
 ----------------
 The next important file is `_ext/pipeline.rb`. While `site.yml` configures your site, `pipeline.rb` configures Awestruct itself. Here you enable extensions and helpers, basically turning features on and off.  As of the time of this writing, I have two Awestruct based sites, and their pipeline files look basically like this:
 
-[source,ruby]
+[source,ruby,linenums]
 -----
 require 'readmore'
 require 'erubis'
@@ -108,7 +108,7 @@ I don't know Ruby (though I've learned some in this process), but this seems pre
 * The `GoogleAnalytics` helper should be self-explanatory.
 * `ReadMore` is an extension I wrote to duplicate the "read more" functionality of Wordpress. It's in a file called `readmore.rb` and goes in `_ext`. It looks like this:
 
-[source,ruby]
+[source,ruby,linenums]
 -----
 module Awestruct
   module Extensions
@@ -143,7 +143,7 @@ Layouts
 
 With the site and Awestruct configured, we now need to create the look and feel for the site.  This can, of course, be as fancy as you want. For this example, it's going to be simple and ugly, but, hopefully, educational. :) Again, the Awestruct initialization will create a .haml file, which we want to delete. Instead, we want to create `_layouts/base.html.slim`:
 
-[source,slim]
+[source,slim,linenums]
 -----
 doctype 5
 html
@@ -177,7 +177,7 @@ index.html.slim
 ---------------
 My index pages look more or less like this:
 
-[source]
+[source,linenums]
 -----
 ---
 layout: base
@@ -201,7 +201,7 @@ Partials
 Partials allow us to define a small snippet of...parameterized HTML that we can reuse. We've already seen the usages of two: pagination and entry. These files are simple slim files:
 
 .pagination.html.slim
-[source,slim]
+[source,slim,linenums]
 -----
 div.pagination
     div.previous style="width:50%; float: left"
@@ -219,7 +219,7 @@ div.pagination
 In this partial, we use the variable `page.posts`, which we set in the call to `partial` above.
 
 .entry.html.slim
-[source,slim]
+[source,slim,linenums]
 -----
 article.post
   header.entry-header
@@ -255,7 +255,7 @@ We can now look at the important part of this exercise, the site content itself.
 
 For a "normal" page, such as an About page, for which you simply need to create a page called `about.adoc`:
 
-[source,asciidoc]
+[source,asciidoc,linenums]
 -----
 ---
 title: About
@@ -270,7 +270,7 @@ When the site is built, this page can be accessed via `http://localhost:1234/abo
 
 Blog posts are only slight more complicated, as it seems there are conventions that need to be followed. Based on our configuration above, all blog posts must be put in the `posts/` directory, and it seems, must follow the naming scheme `yyyy-mm-dd-blog-post-title.adoc`. Other than that, they look pretty much like any other page, with a couple more metadata entries:
 
-[source,asciidoc]
+[source,asciidoc,linenums]
 -----
 ---
 title: Blog Post Title
@@ -287,7 +287,7 @@ Testing
 -------
 Before we're ready to push this site live, we need to test it. Awestruct comes with a simple server that should be sufficient for most cases. While starting is very simple, I have a small shell script I use, as I like to force a site clean up before I start the server, and I need to change the port on which the server listens:
 
-[source,bash]
+[source,bash,linenums]
 -----
 #!/bin/bash
 
@@ -301,7 +301,7 @@ Deployment
 ----------
 Once we have our site set up and looking the way want it to, we're ready to deploy. Again, Awestruct makes this very simple:
 
-[source,bash]
+[source,bash,linenums]
 -----
 $ awestruct -P production -g --force --deploy
 -----

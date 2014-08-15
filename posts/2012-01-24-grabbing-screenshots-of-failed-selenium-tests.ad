@@ -10,7 +10,7 @@ pass::[more]
 
 In this example, we're going make sure http://example.com[example.com] works correctly. Sort of. : )  What we need to do first, though, is set up our project, which we'll configure (for simplicity's sake) as a simple Maven-based Java application.  The important pom.xml elements are these:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <dependencies>
     <dependency>
@@ -49,7 +49,7 @@ In this example, we're going make sure http://example.com[example.com] works cor
 
 Simple enough.  Now, the test:
 
-[source,java]
+[source,java,linenums]
 -----
 public class ScreenshotDemoTest {
     private static WebDriver driver;
@@ -85,7 +85,7 @@ public class ScreenshotDemoTest {
 
 This is an extremely simple test that should make sense to those familiar with Selenium.  The interesting part here is lines 4 and 5.  What's that `Rule`?  That little nugget is a means of http://www.junit.org/node/580[extending JUnit] in an AOP fashion.  In our case, that's where the magic is going to happen, so let's take a look at `ScreenshotTestRule`:
 
-[source,java]
+[source,java,linenums]
 -----
 class ScreenshotTestRule implements MethodRule {
     public Statement apply(final Statement statement, final FrameworkMethod frameworkMethod, final Object o) {

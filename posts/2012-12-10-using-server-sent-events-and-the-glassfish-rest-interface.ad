@@ -23,7 +23,7 @@ Currently, we don't have any REST resources in the https://svn.java.net/svn/glas
 
 Let's first, then, take a look at an `AdminCommand`.  One of the main reasons to use SSE is that the REST request might take a while (take, for example, cluster creation).  What this new SSE support will allow us to do is expose the functionality in such a way that will allow the client to send the request, then be notified, asynchronously, of the progress as the request is processed.  That will allow the client to do other things, if it so chooses, while the request is being handled.  What we need, then, is a long-running `AdminCommand`:
 
-[source,java]
+[source,java,linenums]
 -----
 @Service(name = "slow-command")
 @PerLookup
@@ -62,7 +62,7 @@ Let's take a look at how this might be exposed via REST, now.  In short, we can 
 
 Here is how this might look:
 
-[source,java]
+[source,java,linenums]
 -----
 @Service
 @Path("/slow")
@@ -96,7 +96,7 @@ This resource has a single method, `get()`, which returns an `EventChannel`. Not
 == The Client Side ==
 OK. So most of the server is of little interest to well over 99% of the people reading this. The interesting part is the client, and, well, it's interesting. :)  Here is our test client:
 
-[source,java]
+[source,java,linenums]
 -----
 public class SseClient {
     public static void main(String... args) throws IOException, JSONException {
@@ -154,7 +154,7 @@ As you can see, there's a _lot_ going on here. First, we need to create and conf
 
 Inside the loop, we read an event from the receiver, and pull out its name. When calling an `AdminCommand`-backed, SSE-enabled GlassFish REST resource, you will always get at least three event types: `AdminCommandInstance/stateChanged`, `ProgressStatus/state`, and `ProgressStatus/change`. First, you will receive an `AdminCommandInstance/stateChanged` event, which will tell you (if you were to examine the JSON or the `AdminCommandState` object it becomes) that the command is "RUNNING". The next event, `ProgressStatus/state` will inform you of the initial state of the `ProgressStatus` object the server uses internal for, as you might guess, progress status. If you will look back at our `AdminCommand`, you'll see a call to `progressStatus.progress()`. A long-running process can make these calls to denote steps in the overall process, which are then sent to the client via the `ProgressStatus/change` event.  Finally, you will receive one last `AdminCommandInstance/stateChanged` event, informing you that the command has "COMPLETED".  It might help to see the whole stream as JSON. You can request it from the server by issuing this command: `curl -H 'Accept: text/event-stream' http://localhost:4848/management/slow`:
 
-[source,javascript]
+[source,javascript,linenums]
 -----
 event: AdminCommandInstance/stateChanged
 data: {"state":"RUNNING","id":"1","empty-payload":true}

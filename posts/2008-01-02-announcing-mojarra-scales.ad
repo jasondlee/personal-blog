@@ -15,7 +15,7 @@ pass::[more]
   ## JSP: `<%@ taglib uri="http://java.sun.com/mojarra/scales" prefix="sc" %>`
   ## Facelets: xmlns:sc="http://java.sun.com/mojarra/scales"
 # Add the static resource PhaseListener:
-[source,xml]
+[source,xml,linenums]
 -----
 <lifecycle>
     <phase-listener>

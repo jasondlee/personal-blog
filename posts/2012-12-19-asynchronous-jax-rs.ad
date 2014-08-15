@@ -24,7 +24,7 @@ Makes sense? Let's dive in and clear things, with a look at server-side first:
 == Server-side
 To start, let's look at an "asynchronous" REST resource:
 
-[source, java]
+[source, java,linenums]
 -----
     @POST   
     @Produces(MediaType.APPLICATION_JSON)
@@ -50,7 +50,7 @@ Despite what it may sound like, server-side asynchrony does _not_ mean (at least
 .Update #3
 *****
 After talking to the Jersey team, they suggested this:
-[source, java]
+[source, java,linenums]
 -----
     @POST   
     @Produces(MediaType.APPLICATION_JSON)
@@ -69,7 +69,7 @@ That was pretty easy.  What about client-side? Is that more like what we usually
 == Client-side
 The short answer is, "Yes". :)  Like what we saw on the server-side, though, there's not on-the-wire difference here, and the asynchronous nature is really a...trick of the JAX-RS Client API.  Let's see some code, then I'll explain:
 
-[source,java]
+[source,java,linenums]
 -----
     public void asyncRestClient() throws JSONException, InterruptedException {
         getClient()

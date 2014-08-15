@@ -18,14 +18,14 @@ Complete code for this component is shown, demonstrating what many of us already
 
 Taking that example, the authors then reimplement the same component as a JSF component.  For those new to JSF or unfamiliar with writing JSF components, some of the inner workings of the component can seem a bit overwhelming, but the advantage for those that would like to consume this component is hard to miss.  The requirement for reuse goes from copying several JavaScript files into one's project, adding the script includes, and writing all the (X)HTML markup to display the component to adding one JAR to the project and adding two lines to the markup: the tag library declaration, and this line:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <jcr:directorySearch />
 -----
 
 And, if that one example were not enough, Schalk and company go on to implement a spell check text area component for JSF.  This component "extends HtmlInputTextArea and provides a simple Ajax-enabled spell-checking facility,"  which can be used with a single line of code like this:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <jcr:spellCheckTextArea cols="30" rows="15" 
     value="#{user.interests}" />

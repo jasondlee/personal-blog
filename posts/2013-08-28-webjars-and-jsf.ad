@@ -13,7 +13,7 @@ pass::[more]
 The first step is to add it to your build. We'll use http://getbootstrap.com/[Bootstrap 3.0] in our example:
 
 .build.gradle
-[source,groovy]
+[source,groovy,linenums]
 -----
 dependencies {
     // ...
@@ -23,7 +23,7 @@ dependencies {
 -----
 
 .pom.xml
-[source,xml]
+[source,xml,linenums]
 -----
 <dependency>
     <groupId>org.webjars</groupId>
@@ -36,7 +36,7 @@ dependencies {
 The next step is adding it to the page:
 
 .index.xhtml
-[source,xhtml]
+[source,xhtml,linenums]
 -----
 <h:head>
     <h:outputStylesheet  library="webjars/bootstrap/3.0.0/css"  

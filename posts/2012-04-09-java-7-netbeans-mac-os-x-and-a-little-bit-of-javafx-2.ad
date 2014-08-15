@@ -25,21 +25,21 @@ image::/images/2012/04/graphicsswitching-300x251.png[link="/images/2012/04/graph
 
 In case you haven't installed Java 7, you can grab it http://jdk7.java.net/download.html[here].  Once that's downloaded, open the image and run the installer.  This will install the JVM into `/Library/Java/JavaVirtualMachines/1.7.0.jdk`.  Once that's ready, you need to modify NetBeans to use the new JDK.  The only way I've found to do this is to edit `netbeans.conf`: 
 
-[source,bash]
+[source,bash,linenums]
 -----
 sudo vi /Applications/NetBeans\ 7.1.1.app/Contents/Resources/NetBeans/etc/netbeans.conf
 -----
 
 Your path may be slightly different, as I moved NetBeans out of the NetBeans folder the installer created, so you may have something like `/Applications/NetBeans/NetBeans\ 7.1.1.app/Contents/Resources/NetBeans/etc/netbeans.conf`.  At about line 19 or so, you should something like this:
 
-[source]
+[source,linenums]
 -----
 #netbeans_jdkhome="/path/to/jdk"
 -----
 
 which I changed to this: 
 
-[source]
+[source,linenums]
 -----
 netbeans_jdkhome=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
 -----

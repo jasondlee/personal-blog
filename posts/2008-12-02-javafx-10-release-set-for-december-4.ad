@@ -14,7 +14,7 @@ Remember those fancy videos at JavaOne 2008 with 200 videos playing at once at a
 
 One of the things that has me most excited, though, is the improved Java applet support.  Granted, some of this comes as part of Java 6 Update 10, but, combined, I think we might finally see client Java getting some respect.  Look at this example code Josh shared.  This will launch a JavaFX-based applet from any browser, if I understood him correctly:
 
-[source,js]
+[source,js,linenums]
 -----
 <script src='http://dl.javafx.com/dtfx.js'/> 
 <script> 
@@ -40,7 +40,7 @@ image::/images/2008/12/javafxdoc-300x233.png[link="/images/2008/12/javafxdoc.png
 
 He also covered, of course, the draggable applet feature of Update 10, which is really, really cool.  Perhaps as exciting is the new Javascript/Java integration the update offers.  Suppose you have this code running in an applet on the page:
 
-[source,java]
+[source,java,linenums]
 -----
 public function doSearch():String { 
     return "I searched, honest!"; 
@@ -49,7 +49,7 @@ public function doSearch():String {
 
 If you want to call `doSearch` from your Javascript code, you would do this:
 
-[source,js]
+[source,js,linenums]
 -----
 <script> 
 function doSearch() { 

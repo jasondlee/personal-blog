@@ -14,7 +14,7 @@ Installing duplicity should be as simple as telling yum or apt to install the pa
 
 Rather than walk through all of the options, I'll share the script I've put together to manage my backups:
 
-[source]
+[source,linenums]
 -----
 #!/bin/bash
 
@@ -53,7 +53,7 @@ The interesting part of the script starts after the `mkdir` call. I have two bac
 
 For the first backup fileset, I've gone with an opt-out type approach, as I generally want to back up my entire home directory. There are some things, though, such as MP3s, locally-installed software, etc., that I don't want to back up, so I exclude them via `--exclude-filelist`, which takes the path to a file with the exclusions. Mine looks a bit like this:
 
-[source]
+[source,linenums]
 -----
 - /home/jdlee/Dropbox
 - /home/jdlee/Music
@@ -64,7 +64,7 @@ There are more, of course, but this shows the basic format: a leading minus, a s
 
 The next backup set uses an opt-in approach, where I specify the files I want. That file looks like this:
 
-[source]
+[source,linenums]
 -----
 /etc/hosts
 /etc/fstab

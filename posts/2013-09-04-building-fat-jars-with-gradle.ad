@@ -9,7 +9,7 @@ tags: [ Gradle ]
 Sometimes, such as when building command line Java apps, it would be nice to bundle all of the app's dependencies in a single jar so that the user need not collect and manage these.  With Gradle, that can be easily accomplished with the following lines:
 
 .build.gradle
-[source,groovy]
+[source,groovy,linenums]
 -----
 jar {
     from {

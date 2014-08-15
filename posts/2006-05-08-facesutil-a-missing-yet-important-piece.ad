@@ -9,7 +9,7 @@ A reader brought to my attention that I have never posted the code to FacesUtil,
 pass::[more]
 
 FacesUtil.java
-[source,java]
+[source,java,linenums]
 -----
 import javax.faces.FactoryFinder;
 import javax.faces.application.Application;

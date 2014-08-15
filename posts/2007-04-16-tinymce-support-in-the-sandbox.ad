@@ -11,7 +11,7 @@ pass::[more]
 
 This example markup:
 
-[source,html]
+[source,html,linenums]
 -----
 <h3>Normal editor</h3>
 <risb:htmlEditor rows="10" cols="85"  value="#{testBean.editorValue}"/>

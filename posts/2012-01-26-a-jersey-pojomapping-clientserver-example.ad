@@ -10,7 +10,7 @@ pass::[more]
 
 In a nutshell, what this feature allows you to do is deal with actual model classes in your service with little to no regard for their serialization and deserialization.  That's a huge boon, as dealing with XML and JSON isn't always pretty, and really isn't what we're wanting to do with our service.  To see how this works, we'll develop a simple service and a client to interact with.  First things first, we need some sort of model.  Since I work on GlassFish, I've chosen something familiar to me, a Cluster.  Here's what our class might look like (Note: this is modeled roughly after GlassFish's `ConfigBean ` of the same name):
 
-[source,java]
+[source,java,linenums]
 -----
 public class Cluster {
     private String name;
@@ -27,7 +27,7 @@ public class Cluster {
 
 It's a POJO in every sense of the word, so it's pretty boring.  Let's move quickly, then, to our service:
 
-[source,java]
+[source,java,linenums]
 -----
 @Path("/cluster")
 public class ClusterResource {
@@ -78,7 +78,7 @@ This is a very basic JAX-RS resource. So far, there's nothing much new.  Some JA
 
 handle the serialization of the `Cluster ` instances to JSON, XML, etc., but we're not.  In fact, we're mostly done on the server-side.  All we have left to do is to enable Jersey's `POJOMapping ` feature.  In our example, we'll do that via `web.xml `:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" 
@@ -105,7 +105,7 @@ handle the serialization of the `Cluster ` instances to JSON, XML, etc., but we'
 
 We're ready to write a client now to see if we did things correctly.  For that, we'll write just a simple command-line Java application:
 
-[source,java]
+[source,java,linenums]
 -----
 public class RestClient {
     protected Client client;
@@ -192,7 +192,7 @@ public class RestClient {
 Note in the constructor, we pass a `ClientConfig ` instance to the `Client ` constructor so that we can enable `POJOMapping ` in the client.  The rest is pretty basic Jersey Client code.  For the endpoints that return a specific `Cluster ` instance, we can simply ask the `Client ` for `Cluster.class `. For the endpoint that returns all of the `Cluster `s, which we've modeled here as `Map<String, Cluster> ` (one might argue that this method is poorly designed, and you might be right, but the point of this exercise is to look at the POJOMapping feature, not, necessarily, to craft the world's best REST resource : ), we have to do a little more work.  If we ask the Client for a Map (i.e., `cr.getEntity(Map.class) `), Jersey will happily return that, but the type of the values in the `Map ` will be `LinkedHashMap `, not Cluster as we are wanting.  To work around that, we ask the `Client ` for a `String `, which we then explicitly deserialize using the Jackson library, which is what Jersey itself uses: `mapper.readValue(json, new TypeReference<Map<String, Cluster>>() {}); `.
 
 If you run the client, you should get output like this: 
-[source]
+[source,linenums]
 -----
 Number of clusters: 2
 Original time: Thu Jan 26 07:47:22 CST 2012

@@ -33,7 +33,7 @@ There's a lot to that, but all you _really_ need to understand from the client's
 
 First up, let's prepare the server:
 
-[source, bash]
+[source, bash,linenums]
 -----
 $ asadmin enable-secure-admin
 $ asadmin stop-domain
@@ -42,7 +42,7 @@ $ asadmin start-domain
 
 Unless you installed a signed certificate, if you run the example from my last post, you should now see a giant stack trace with `sun.security.validator.ValidatorException: PKIX path building failed` toward the end. There are at least two ways to handle this. The first, and perhaps the best, is simply to import the server's certificate. One way to do this is via http://blogs.sun.com/andreas/resource/InstallCert.java[this utility] (written by a Sun engineer whose name I can't find):
 
-[source, bash]
+[source, bash,linenums]
 -----
 $ javac InstallCert.java
 $ java InstallCert localhost
@@ -50,7 +50,7 @@ $ java InstallCert localhost
 
 Another approach, albeit riskier, is to accept all certificates. You can achieve that with this code:
 
-[source,java]
+[source,java,linenums]
 -----
 public static void disableCertificateValidation() {
     // Create a trust manager that does not validate certificate chains
@@ -85,7 +85,7 @@ try {
 
 Note that this will affect all HTTPS connections in the JVM, so use it with caution. Once a call to that method has been added to the class' constructor, we can then change the GlassFish url to use HTTPS:
 
-[source,java]
+[source,java,linenums]
 -----
 public class SslExample {
     private Client client;

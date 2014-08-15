@@ -26,7 +26,7 @@ Still with me? I hope so. I've put too much work into this to lose you now! :P
 
 With our basic workflow described, let's look at an implementation. In this example, _TheApp_ and _TheService_ will be the same app, and _TheUser_ will be unit tests. Let's start with the authorization code resource:
 
-[source,java]
+[source,java,linenums]
 -----
 @Path("/authz")
 public class AuthzEndpoint {
@@ -80,7 +80,7 @@ Notice that we're not doing any authentication for the request. If this were a r
 
 Once _TheApp_ has the authorization code, it can then request the actual token, sometimes referred to as a "bearer token". The server side of that can be implemented like this:
 
-[source,java]
+[source,java,linenums]
 -----
 @Path("/token")
 public class TokenEndpoint {
@@ -162,14 +162,14 @@ Once we validated the request, we can generate a token (using the Oltu class `OA
 
 _TheApp_, now equipped with the bearer token, can store it internally for use on behalf of _TheUser_. When requests are made to _TheService_, _TheApp_ includes the token in the `Authorization` header:
 
-[source]
+[source,linenums]
 -----
 Authorization: Bearer <token>
 -----
 
 The resource must then validate the token:
 
-[source,java]
+[source,java,linenums]
 -----
 @Path("/resource")
 public class ResourceEndpoint {

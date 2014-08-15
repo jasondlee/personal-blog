@@ -31,7 +31,7 @@ A few of these attributes need a little explanation:
 
 Usage is pretty simple:
 
-[source,java]
+[source,java,linenums]
 -----
 <fl:download method="download" mimeType="application/pdf" 
     data="#{testBean.pdf}" fileName="test.pdf" text="Get PDF"/>
@@ -69,7 +69,7 @@ Here are a couple of sample usages.
 
 Full Mode:
 
-[source,java]
+[source,java,linenums]
 -----
 <fl:multiFileUpload maxFileSize="10240" 
     fileHolder="#{testBean.fileHolder}" 
@@ -84,7 +84,7 @@ image::/images/2006/12/upload.full.screenshot.gif[title="Full Upload Example Scr
 
 Button Mode:
 
-[source,java]
+[source,java,linenums]
 -----
 <fl:multiFileUpload maxFileSize="10240" 
     fileHolder="#{testBean.fileHolder}" 

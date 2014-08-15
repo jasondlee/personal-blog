@@ -22,7 +22,7 @@ pass::[more]
 <li>Extend the appropriate UIComponent class</li>
 <li>Define the following properties, changing the the package `com.foo` to your package, and the component name, `Foo` to the name of your component:</li>
 </ul>
-[source,java]
+[source,java,linenums]
 -----
 public static final String COMPONENT_TYPE = "com.foo.Foo";
 public static final String RENDERER_TYPE = "com.foo.FooRenderer";
@@ -34,7 +34,7 @@ public static final String RENDERER_TYPE = "com.foo.FooRenderer";
 <li>Define your properties and their getters and setters.</li>
 </ul>
 For 1.1:
-[source,java]
+[source,java,linenums]
 -----
     protected String bar;
     public String getBar() {
@@ -47,7 +47,7 @@ For 1.1:
 -----
 
 For 1.2:
-[source,java]
+[source,java,linenums]
 -----
     protected String bar;
     public String getBar() {
@@ -62,7 +62,7 @@ For 1.2:
 <ul>
 <li>Write the state saving and restoring code:</li>
 </ul>
-[source,java]
+[source,java,linenums]
 -----
     private Object[] _state = null;
     public void restoreState(FacesContext _context, Object _state) {
@@ -93,7 +93,7 @@ For 1.1
 <li>Define all the properties as `String` (?)</li>
 <li>Define the following methods (where `Foo` is your component class):</li>
 </ul>
-[source,java]
+[source,java,linenums]
 -----
     protected String bar;
     public String getRendererType() {
@@ -126,7 +126,7 @@ For 1.2
 <li>Define properties as `ValueExpression`</li>
 <li>Define these methods (where Foo is your component class):</li>
 </ul>
-[source,java]
+[source,java,linenums]
 -----
     protected ValueExpression bar;
     public String getComponentType() {
@@ -155,7 +155,7 @@ For 1.2
 </li>
 <a name="tld"></a><h3>Write the Tag Library Description (.tld)</h3>
 For 1.1:
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">

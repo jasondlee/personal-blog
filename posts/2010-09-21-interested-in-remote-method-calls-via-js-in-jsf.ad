@@ -10,7 +10,7 @@ pass::[more]
 
 Once you have DWR http://directwebremoting.org/dwr/server/annotations.html[configured to work] (warning: those docs might be slightly out of date, if memory serves me), you have to tell DWR what to expose.  I prefer the annotation-based approach (condensing, here, the DWR documentation, with some modifications):
 
-[source,java]
+[source,java,linenums]
 -----
 @ManagedBean
 @SessionScoped
@@ -31,7 +31,7 @@ For a class like this, DWR will expose `RemoteFunctions.calculateFoo()`, but wil
 
 On the client side, you would put something like this on your page:
 
-[source,html]
+[source,html,linenums]
 -----
 <script type="text/javascript" src="[WEBAPP]/dwr/interface/RemoteFunctions.js"/>
 <script type="text/javascript" src="[WEBAPP]/dwr/engine.js"/>
@@ -39,7 +39,7 @@ On the client side, you would put something like this on your page:
 
 With those two declarations, you would then be able to call the JSF Managed Bean via:
 
-[source,js]
+[source,js,linenums]
 -----
 RemoteFuctions.calculateFoo(function(str) { 
     alert(str);

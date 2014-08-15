@@ -22,7 +22,7 @@ JSF 2 Support
 -------------
 With this release, we now support running in a JSF 2 environment, with full access to all annotation-based objects the new spec makes available.  I should be a bit more precise here, in that when I say "JSF 2," I mean Mojarra 2, primarily as it's the only JSF 2 implementation available.  To use FacesTester with JSF 2, you will need one extra jar, which includes the Mojarra2-specific bits:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <dependency>
     <groupId>com.steeplesoft.jsf</groupId>

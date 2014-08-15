@@ -10,7 +10,7 @@ pass::[more]
 
 The first component, `sc:imageZoomer`, displays a thumbnail, and, when clicked, "zooms" that thumbnail up to the full size image.  Here is a sample usage:
 
-[source,xhtml]
+[source,xhtml,linenums]
 -----
 <sc:imageZoomer thumb="#{request.contextPath}/images/thumbs/image1.jpg" 
     image="#{request.contextPath}/images/image1.jpg"
@@ -21,7 +21,7 @@ Given the active nature of the component, a screen shot wouldn't be that interes
 
 The next component is `sc:lightbox`.  Chances are good that you've seen a http://www.huddletogether.com/projects/lightbox2/[lightbox] before.  When an image is clicked, it "zooms" up, and navigation is offered to go to the previous or next image in the group.  While using the lightbox library linked above has never been tedious to use, Mojarra Scales makes it even easier now:
 
-[source,xhtml]
+[source,xhtml,linenums]
 -----
 <sc:lightbox id="lightbox2">
     <h:outputLink id="boxer1" value="images/boxers/Boxer1.jpg" >
@@ -37,7 +37,7 @@ The next component is `sc:lightbox`.  Chances are good that you've seen a http:/
 
 The sample above puts two images on the page, adding them to the "lightbox2" group.  To use the lightbox inside another component, say `sc:carousel`, your markup may look something like this:
 
-[source,xhtml]
+[source,xhtml,linenums]
 -----
 <sc:carousel id="carousel1" numVisible="4" isCircular="true" isVertical="false">
     <h:outputLink value="images/boxers/Boxer1.jpg" rel="lightbox[boxers]">

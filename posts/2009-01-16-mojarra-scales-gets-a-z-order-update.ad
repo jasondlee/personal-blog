@@ -12,7 +12,7 @@ image::/images/2009/01/window_example.png[alt='Overlapping window example', titl
 
 With stock YUI, as best as I can tell, if you want to look at Window #2, you're out luck.  With this simple JS, though, the problem is quickly solved:
 
-[source,javascript]
+[source,javascript,linenums]
 -----
 var currentMaxZ = 1;
 registerPanel = function(id, panel) {

@@ -9,7 +9,7 @@ In a previous post (far too long ago :), I began showing off the RESTful adminis
 pass::[more]
 
 If you'll recall from Part I, the default root URL is http://localhost:4848/management/domain[http://localhost:4848/management/domain].  The endpoint, then for deploying applications works out to be http://localhost:4848/management/domain/applications/application[http://localhost:4848/management/domain/applications/application]. [1] Submitting an OPTIONS request to this endpoint gets us a document like this (trimmed down for clarity):
-[source,json]
+[source,json,linenums]
 -----
 {
      "extraProperties": {
@@ -60,7 +60,7 @@ There are a lot of options there, but there are many more, giving you really fin
 The id `parameter` is a bit different.  It's called id because of the way the REST Resource is implemented on the server side (i.e., the REST Resources wrap, more or less, various GlassFish CLI commands, pulling the required data in from the REST request, and handing if off to the appropriate AdminCommand instance.  It all boils down to a lot of internal GlassFish code that's outside the scope of this entry : ).  In our client code, we'll handle it as a String that represents the path to the archive to be deployed.  When we make the actual REST call (via the Jersey Client), we'll see that a File object is created as we pass the data to Jersey.
 
 Having already said too much, let's see some Scala code (for the Scala enthusiasts out there, this is, quite literally, the very first bit of Scala I've ever written, so be kind :):
-[source,scala]
+[source,scala,linenums]
 -----
 import com.sun.jersey.api.client.Client
 import com.sun.jersey.api.client.ClientResponse

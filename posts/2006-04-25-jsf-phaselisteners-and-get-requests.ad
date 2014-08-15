@@ -20,7 +20,7 @@ At any rate, what I was able to do is register a PhaseListener to execute on the
 
 What comes out the other end is the expected pages, just as if someone had filled out a form and clicked submit.  It's really quite nifty.   Of course, all of that is pretty tough to follow with out some code, so here we go.  First, let's register the PhaseListener:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <lifecycle>
     <phase-listener>
@@ -31,7 +31,7 @@ What comes out the other end is the expected pages, just as if someone had fille
 
 Next, let's look at the PhaseListener itself:
 
-[source,java]
+[source,java,linenums]
 -----
 public class PrettyUrlPhaseListener implements PhaseListener {
     private static final Log logger =
@@ -138,7 +138,7 @@ public class PrettyUrlPhaseListener implements PhaseListener {
 
 There's one more step.  Currently, our application is only configured to map *.jsf to the FacesServlet, so we'll need to add a couple more mappings to make our "virtual" URLs work.  This goes in web.xml:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>

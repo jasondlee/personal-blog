@@ -37,7 +37,7 @@ implements `Runnable`. In the example in the README, some basic, shared function
 base class (which implements `Runnable`) and each command extends this class. Let's see how this looks
 in our scenario:
 
-[source,java]
+[source,java,linenums]
 -----
 public class AirlineGlassFish {
     public static void main(String[] args) {
@@ -125,7 +125,7 @@ Finally, if you look back at `main()`, you see how Airline is made aware of our 
 patter, we specify the description, default command, and list of command classes. We then build the CLI
 parser, parse the args, and run the command. A sample invocation might look like this:
 
-[source,bash]
+[source,bash,linenums]
 -----
 $ java -jar target/airline-demo-1.0-SNAPSHOT.jar deploy /path/to/myapp.war
 The application has been deployed.
@@ -136,7 +136,7 @@ The application has been deployed.
 Command implmentation in crest is a bit different. Crest uses methods annotated 
 with `@Command` rather than classes:
 
-[source,java]
+[source,java,linenums]
 -----
 public class CrestGlassFish {
 
@@ -209,7 +209,7 @@ and works. :) The other option, which is not as fast, is to use xbean-based clas
 To make these easy to run, I borrowed the use the Maven shader plugin from the crest README to
 make an executable "uberjar":
 
-[source, xml]
+[source, xml,linenums]
 -----
 <build>
     <defaultGoal>install</defaultGoal>

@@ -12,7 +12,7 @@ pass::[more]
 
 The first step, of course, is to create the annotation. We'll use this very simple one:
 
-[source,java]
+[source,java,linenums]
 -----
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -24,7 +24,7 @@ public @interface MyAnnotation {
 
 Nothing special there. The next step is to create the `Processor` class:
 
-[source,java]
+[source,java,linenums]
 -----
 @SupportedAnnotationTypes("com.foo.MyAnnotation")
 public class MyAnnotationProcessor extends AbstractProcessor {
@@ -72,7 +72,7 @@ Once we've processed all the elements, we're ready to create our metadata file. 
 
 Once that's done, the final step is to add this jar as a compile-time dependency to any project that uses the annotation (and which needs the metadata generated):
 
-[source,xml]
+[source,xml,linenums]
 -----
 <dependency>
     <groupId>com.foo</groupId>
@@ -88,7 +88,7 @@ And that's it. When your build tool (Maven, Gradle, or... _shudder_ Ant :) compi
 
 The other side of this reading the data to finish locating the interfaces.  Here is the code I'm currently using:
 
-[source, java]
+[source, java,linenums]
 -----
 // This Map<List> holds MyAnnotation data keyed by parent().  Since there may be more than one 
 // MyAnnotation pointing to a given parent, we store the name of the actual MyAnnotation-annotated
@@ -128,7 +128,7 @@ private static void loadMyAnnotationMetadata(Class similarClass) {
 
 This code reads any metadata files found in the running system and builds a `Map<String,List>` to hold the data.  Elsewhere in the system, I iterate over these `Lists` and load the classes (`Class.forName()`) to integrate the interfaces into the system:
 
-[source,java]
+[source,java,linenums]
 -----
 List<String> list = myAnnotations.get(parent));
 if (list != null) {

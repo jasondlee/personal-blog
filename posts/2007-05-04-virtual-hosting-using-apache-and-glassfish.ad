@@ -26,7 +26,7 @@ image::/images/2007/05/virtual_servers_02.thumbnail.png[title='Adding a virtual 
 
 I've chosen to use _http-listener-1_ only, as I only care about http://vh1:8080/ being available.  Repeat the process for server _vh2_.  For those that prefer the command line, the server can be created with this command:
 
-[source,bash]
+[source,bash,linenums]
 -----
 asadmin create-virtual-server --user admin --hosts vh1 --httplisteners http-listener-1 vh1
 asadmin create-virtual-server --user admin --hosts vh2 --httplisteners http-listener-1 vh2
@@ -34,7 +34,7 @@ asadmin create-virtual-server --user admin --hosts vh2 --httplisteners http-list
 
 While there are a myriad of options regarding port usage, I like to have Apache handle requests on port 80, and forward requests for my vhosts to the appropriate server behind it, so let's take a look at that configuration:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <VirtualHost *:80>
     ServerName vh1
@@ -54,7 +54,7 @@ image::/images/2007/05/app_deployment_01.thumbnail.png[title='Deploying an app t
 
 Command line users can do:
 
-[source,bash]
+[source,bash,linenums]
 -----
 asadmin deploy --virtualservers vh1 AppA.ear
 asadmin deploy --virtualservers vh2 AppB.ear
@@ -62,7 +62,7 @@ asadmin deploy --virtualservers vh2 AppB.ear
 
 With these apps deployed, `http://vh1/AppA` should get your app, while `http://vh2/AppA` should get a 404, and vice versa.  If you deploy a third app and do not specify a virtual server:
 
-[source,bash]
+[source,bash,linenums]
 -----
 asadmin deploy AppC.ear
 -----
@@ -77,7 +77,7 @@ Multiple Domains, Multiple Servers
 ----------------------------------
 If you need to segregate administrative control amongst users, such as in an ASP/ISP environment, then you will need multiple domains.  When you setup the server, the default domain, _domain1_, is created for you.  Since a domain is an administrative area, one can not use the admin console to create another domain, and must use the `asadmin` command line tool.  A session might look something like this:
 
-[source,bash]
+[source,bash,linenums]
 -----
 $ asadmin create-domain --portbase 5000 --profile developer mydomain
 Please enter the admin user name>admin
@@ -114,7 +114,7 @@ We specified the developer profile, as we do not need clustering, high availabil
 
 With our domain created and start (`asadmin start-domain mydomain`), we can now begin creating virtual servers and deploying applications in the same manner we did above.  Note that, for those using Apache as the front end, the virtual host configuration will need to be adjusted accordingly:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <VirtualHost *:80>
     ServerName vh3

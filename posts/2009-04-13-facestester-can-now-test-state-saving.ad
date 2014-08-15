@@ -10,7 +10,7 @@ In my experience, a pretty common bug with custom components is improper state s
 pass::[more]
 
 Before we start, let's take a quick look at a very simple component to see what things might look like:
-[source,java]
+[source,java,linenums]
 -----
 public class TestComponent extends UIOutput {
     public static final String COMPONENT_FAMILY = "com.steeplesoft.jsf.facestester.TestComponent";
@@ -66,7 +66,7 @@ To one who has never been bitten by this bug, the cause is subtle and elusive, b
 
 So how does one catch this class of error?  With `FacesTester.testStateSaving()`:
 
-[source,java]
+[source,java,linenums]
 -----
 @Test
 public void validateTestComponentStateSaving() {

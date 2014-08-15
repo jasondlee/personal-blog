@@ -12,14 +12,14 @@ pass::[more]
 Here are the steps I took:
 
 * Create a web app project using the Maven archetype (because I'm lazy that way : ) :
-[source, bash]
+[source, bash,linenums]
 -----
 mvn archetype:create -DgroupId=com.mycompany.app -DartifactId=my-webapp \
     -DarchetypeArtifactId=maven-archetype-webapp
 -----
 
 * Add FacesServlet to web.xml:
-[source,xml]
+[source,xml,linenums]
 -----
 <servlet>
     <servlet-name>Faces Servlet</servlet-name>
@@ -32,7 +32,7 @@ mvn archetype:create -DgroupId=com.mycompany.app -DartifactId=my-webapp \
 -----
 
 * Add the JSF 2 jars (and their repo) to pom.xml:
-[source,xml]
+[source,xml,linenums]
 -----
 <repositories>
     <repository>
@@ -58,7 +58,7 @@ mvn archetype:create -DgroupId=com.mycompany.app -DartifactId=my-webapp \
 -----
 
 * Create a managed bean:
-[source,java]
+[source,java,linenums]
 -----
 @ManagedBean(name="main", eager=true)
 public class MainBean {
@@ -72,7 +72,7 @@ public class MainBean {
 -----
 
 * Create the view:
-[source,xml]
+[source,xml,linenums]
 -----
 <!DOCTYPE html
       PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"

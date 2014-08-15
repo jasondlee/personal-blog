@@ -12,7 +12,7 @@ pass::[more]
 
 Before I get to the script, I'll admit that when it comes to maintaining the RPM database, my skills are sorely lacking. Beyond installing and uninstalling, I can't do much. :)  This script, then, may not be optimal, but it was a fun, quick effort, so *lay off*! :P  That said,
 
-[source,bash]
+[source,bash,linenums]
 -----
 #!/bin/bash
 
@@ -81,7 +81,7 @@ This script takes a parameters. With `-t`, the user can specify the name of the 
 
 For example:
 
-[source,bash]
+[source,bash,linenums]
 -----
 $ tx_yum cinnamon
 <lots of deleted output>

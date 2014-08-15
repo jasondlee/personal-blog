@@ -12,7 +12,7 @@ pass::[more]
 
 For starters, let's take a look at the very small, simple Python script:
 
-[source,python]
+[source,python,linenums]
 -----
 #!/usr/bin/python
 

@@ -18,14 +18,14 @@ The Request
 -----------
 The request payload is typically what you would see with an HTML form submission.  For example, this curl example sets the port for `http-listener-1`, which is the listener that serves your applications:
 
-[source,bash]
+[source,bash,linenums]
 -----
 curl -H "__debug: true" -H "Accept: application/json" -X POST -d "port=8675" http://localhost:4848/management/domain/configs/config/server-config/network-config/network-listeners/network-listener/http-listener-1
 -----
 
 which will return this document (edited for brevity):
 
-[source,js]
+[source,js,linenums]
 -----
 {
    "message":"\"http:\/\/localhost:4848\/...\/http-listener-1\" updated successfully.",
@@ -48,7 +48,7 @@ The structure, then, is an object with the following fields:  `message`, `comman
 JSON
 ~~~~
 
-[source,js]
+[source,js,linenums]
 -----
 {
     "command": "Domain",
@@ -94,7 +94,7 @@ JSON
 XML
 ~~~
 
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <map>

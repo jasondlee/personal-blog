@@ -11,7 +11,7 @@ pass::[more]
 First, let's take a look at the web app itself.  To convert the application to a Facelets app, we'll have to rename the JSPs, then make them conform to XHTML and Facelets specifications.  First off, a really easy one:  index.html.  This page simply redirects us to guessNumber.xhtml.  I could probably have done this in web.xml, but it was in the original app, so we'll just run with it like that.  
 
 index.html:
-[source,html]
+[source,html,linenums]
 -----
 <html>
     <head>
@@ -26,7 +26,7 @@ Pretty simple and boring.  Let's now take a look at our template file (for a ful
 
 layout.xhtml:
 
-[source,html]
+[source,html,linenums]
 -----
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -53,7 +53,7 @@ Nothing real exciting there either.  Next we have greeting.xhtml and response.xh
 
 greeting.xhtml:
 
-[source,html]
+[source,html,linenums]
 -----
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -80,7 +80,7 @@ greeting.xhtml:
 
 response.xhtml:
 
-[source,html]
+[source,html,linenums]
 -----
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -104,7 +104,7 @@ Having fixed up our views to work using Facelets, let's now see exactly how we d
 
 WinstoneServer.java:
 
-[source,java]
+[source,java,linenums]
 -----
 package embed;
 import java.net.URL;
@@ -143,7 +143,7 @@ Now, the UserNumberBean class, the Faces-managed bean that is the actual heart o
 
 UserNumberBean.java:
 
-[source,java]
+[source,java,linenums]
 -----
 package guessNumber;
 import java.util.Random;
@@ -268,7 +268,7 @@ The web.xml and faces-config.xml files used to wire the web application together
 
 web.xml:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE web-app PUBLIC
@@ -343,7 +343,7 @@ web.xml:
 
 faces-config.xml:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE faces-config PUBLIC

@@ -31,7 +31,7 @@ At this point, the servlet works the same as the JSP:
 
 This works, but is a pretty ugly hack.  In fact, check out the code:
 
-[source,java]
+[source,java,linenums]
 -----
 public class ExcelServlet extends HttpServlet {
     /**

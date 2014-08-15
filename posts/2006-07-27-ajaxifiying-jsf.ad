@@ -12,7 +12,7 @@ My goal with this part of the app is role and group management for users.  The b
 
 My first effort used http://getahead.ltd.uk/dwr/[Direct Web Remoting (DWR)], and it worked pretty well.  The documentation was a bit difficult for me to follow (which could be more my fault than the docs), but, with a little persistence, I got it working.  It was not pretty, though.  Here's what my view markup looked like:
 
-[source,java]
+[source,java,linenums]
 -----
 <h:selectOneListbox id="users" size="20" style="width: 175px" 
 	onclick="getUserRoles(this);">
@@ -22,7 +22,7 @@ My first effort used http://getahead.ltd.uk/dwr/[Direct Web Remoting (DWR)], and
 
 with the accompanying Javascript looking like this:
 
-[source,java]
+[source,java,linenums]
 -----
 function getUserRoles(elem) {
 	var id = elem.options[elem.selectedIndex].value;
@@ -32,7 +32,7 @@ function getUserRoles(elem) {
 
 The ugly part was the JSF code.  One of the main complaints I heard about DWR and JSF going into this effort is that DWR lives outside the JSF lifecycle, and that showed itself in how I handled the server side.  I'll not show the code as it's not that interesting, but I basically created four `Map`s (they translate quite nicely to Javascript associative arrays), populate them with the appropriate data, and return them all in a `List`.  Here is what the `populateRoles()` function looked like which updated the UI with the returned data:
 
-[source,java]
+[source,java,linenums]
 -----
 function populateRoles(data) {
 	DWRUtil.removeAllOptions("authForm:user_roles");
@@ -50,7 +50,7 @@ A little ugly, but it worked.  I was pretty happy with the overall result, but n
 
 Based on the documentation, I _think_ should be able to do this:
 
-[source,html]
+[source,html,linenums]
 -----
 <h:selectOneListbox id="users" size="20" style="width: 175px"
 	onclick="new Faces.Event(this, { render: 'authForm:user_roles,authForm:remaining_roles,authForm:user_groups,authForm:remaining_groups' }); return false;"value="#{authBean.currentUser}">
@@ -62,7 +62,7 @@ Despite several variations, including the use of ajaxZones as suggested on the m
 
 The change for Ajax4jsf was pretty simple.  Here's that very same select box:
 
-[source,java]
+[source,java,linenums]
 -----
 <h:selectOneListbox id="users" size="20" style="width: 175px"
 	value="#{authBean.currentUser}">

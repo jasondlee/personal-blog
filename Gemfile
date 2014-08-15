@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'awestruct', '0.5.3'
+gem 'awestruct', '>= 0.5.3'
 gem 'listen', '<= 1.3.1'
-gem 'asciidoctor', '~> 0.1.4'
+gem 'asciidoctor', '~> 1.5.0'
 gem 'erubis', '~> 2.7.0'
 gem 'slim', '~> 2.0.0'
 gem "htmlcompressor"

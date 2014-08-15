@@ -12,7 +12,7 @@ So, What's New?
 ---------------
 Currently, interacting with the REST interface means JSON or XML. Lots and lots of it.  We do ship some utility methods to help with that (though I won't discuss them here, as they're not technically public APIs at this point) and I've heard of GlassFish users doing the same.  What would be nice, though, is to avoid that as much as possible.  What we plan to deliver, then, is a set of Java classes that wrap all the complexities of JSON/XML, the Jersey client, etc.  We can generate these stubs (see note below) by using this command:
 
-[source,bash]
+[source,bash,linenums]
 -----
 asadmin generate-rest-client --outputdir client/
 -----
@@ -25,7 +25,7 @@ Great! How do I use it?
 -----------------------
 For those familiar with GlassFish internals, these classes largely mimic the public interfaces of the `ConfigBean`s they represent.  There are additional methods exposed to make available the CLI commands that GlassFish exposes via REST.  With that out of the way, perhaps the best way to explain how to use the library is to show a couple of examples.  We'll start with a simple example, creating a JDBC connection pool:
 
-[source,java]
+[source,java,linenums]
 -----
 RestClient restClient = new RestClient("localhost", 4848, false /* use ssl? */);
 Domain domain = new Domain(restClient);
@@ -59,7 +59,7 @@ Calls to CLI endpoint methods return a `RestResponse` object, which wraps all of
 
 That's fun, but let's try something a bit more hard core:  Let's deploy an application.  I hate to disappoint, but it's not all that exciting:
 
-[source,java]
+[source,java,linenums]
 -----
 RestClient restClient = new RestClient("localhost", 4848, false /* use ssl? */);
 Domain domain = new Domain(restClient);
@@ -68,7 +68,7 @@ RestResponse rr = domain.getApplications().deploy(new File("test.war"));
 
 And that's it.  You can now access your application as expected.  Need to undeploy the application?
 
-[source,java]
+[source,java,linenums]
 -----
 Application app = domain.getApplications().getApplication("test");
 if (app != null) {

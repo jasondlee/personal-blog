@@ -10,7 +10,7 @@ pass::[more]
 
 The program itself is really rather simple.  Not counting all the imports, it's currently less than 100 lines of code.  In a nutshell, it reads its configuration from a properties file, connects to the specified Google Calendar, removes any entries it added (by looking for a special string appended to the description), then adds the events from an input file.  The input file is a CSV file downloaded from the JavaOne Schedule Builder application.  Execution is simple, as it takes one optional parameter, the path to the properties file, defaulting to j12008cal.csv in the current working directory:
 
-[source,bash]
+[source,bash,linenums]
 -----
 java -cp dist/j1sync.jar;lib/gdata-calendar-1.0.jar;\
     lib/gdata-client-1.0.jar;lib/gdata-core-1.0.jar;\

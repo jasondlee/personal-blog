@@ -13,7 +13,7 @@ pass::[more]
 Here's the script:
 
 .mvnimport.sh
-[source,bash]
+[source,bash,linenums]
 -----
 #!/bin/bash
 
@@ -116,7 +116,7 @@ processArtifact $1 $2 $3
 
 To import a Maven artifact, all you have to do is specify the group ID, artifact, and version:
 
-[source,bash]
+[source,bash,linenums]
 -----
 $ mvnimport.sh com.google.guava guava 14.0.1
 Processing com.google.guava:guava:14.0.1

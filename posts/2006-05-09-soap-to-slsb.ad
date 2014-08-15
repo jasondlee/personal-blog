@@ -18,7 +18,7 @@ EJB3 offers the annotation `@PostConstruct` which, based on my limited research 
 
 For no real good reason, I wanted to use container injection for the `DataSource`, thereby using the EJB container for everything I could.  With that goal in mind, I added a `DataSource` member variable as well as the annotation to ask for the injection of the resource:
 
-[source,java]
+[source,java,linenums]
 -----
 @Resource (name = "jdbc/Comergent")
 DataSource dataSource;
@@ -28,7 +28,7 @@ Then, in my `initDao()` method, I manually constructed the two Spring classes I 
 
 Overall, knowing what I know now, the task itself was not that difficult, though the level of effort was certainly heightened due to my lack of depth with EJB3.  Migrating the remaining service, though, should be a breeze.  For those that like to see code, here it is:
 
-[source,java]
+[source,java,linenums]
 -----
 @Stateless
 public class ComergentPartnersSessionBeanImpl implements IComergentPartners {

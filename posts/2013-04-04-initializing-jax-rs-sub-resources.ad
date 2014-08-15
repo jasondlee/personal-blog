@@ -12,7 +12,7 @@ pass::[more]
 
 This is kind of sad to admit (though, surely -- hopefully -- I'm not alone in this :), but I have been initializing subresource manually. For example:
 
-[source,java]
+[source,java,linenums]
 -----
 public <T> T getSubResource(Class<T> clazz) {
     try {
@@ -31,7 +31,7 @@ public <T> T getSubResource(Class<T> clazz) {
 
 While this works, the problems should be pretty obvious: it's extremely inflexible.  Fortunately, the JAX-RS Expert Group, who has clearly thought about this more than I, has a better solution: `ResourceContext`. Take this example, pulled from the spec:
 
-[source,java]
+[source,java,linenums]
 -----
 @Path("widgets")
 public class WidgetsResource {

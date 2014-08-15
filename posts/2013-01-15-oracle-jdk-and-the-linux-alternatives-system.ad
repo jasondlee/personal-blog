@@ -14,7 +14,7 @@ pass::[more]
 
 First, it seems the actual update script, `update-java-alternatives`, needs a `.jinfo` file in `/usr/lib/jvm`.  Mine looks like this:
 
-[source,shell]
+[source,shell,linenums]
 -----
 name=java-7-latest
 alias=java-1.7-latest
@@ -65,7 +65,7 @@ plugin mozilla-javaplugin.so /opt/java/latest/jre/lib/amd64/libnpjp2.so
 
 Next, I needed to "install" my alternatives option.  The script I used to do that looks like this:
 
-[source,shell]
+[source,shell,linenums]
 -----
 update-alternatives --install /usr/bin/java java /opt/java/latest/jre/bin/java 10
 update-alternatives --install /usr/bin/keytool keytool /opt/java/latest/jre/bin/keytool 10
@@ -111,7 +111,7 @@ update-alternatives --install /usr/lib/mozilla/plugins/mozilla-javaplugin.so moz
 
 Once that ran (Hint: i put that in a text file, which I ran via `sudo bash foo`), I was able to issue `sudo update-java-alternatives -s java-1.7-latest` and test my change:
 
-[source,shell]
+[source,shell,linenums]
 -----
 java -version
 java version "1.7.0_11"

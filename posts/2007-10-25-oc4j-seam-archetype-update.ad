@@ -10,7 +10,7 @@ pass::[more]
 
 It appeared that the redeployment issue was due to some odd class loading issue, so I decided to try a shared library.  To do that, I create the directory in `j2ee/home/shared-lib/hibernate/3.2` and put these jars there:
 
-[source,bash]
+[source,bash,linenums]
 -----
 antlr-2.7.6.jar
 asm-1.5.3.jar
@@ -32,7 +32,7 @@ log4j-1.2.14.jar
 
 To be candid, I'm not 100% sure that all of these classes belong in a Hibernate library, but it works and I'm afraid to breathe on it. :)  To describe the shared library to OC4J, I added the following XML to `j2ee/home/config/server.xml`:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <shared-library name="hibernate" version="3.2" library-compatible="true">
 	<code-source path="../shared-lib/hibernate/3.2/"/>

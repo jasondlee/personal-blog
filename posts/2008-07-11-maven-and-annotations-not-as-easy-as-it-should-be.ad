@@ -11,7 +11,7 @@ pass::[more]
 
 One of the vaunted features of Maven is the ability to embed Ant scripts in your POM file.  My first thought when I ran into the problem above was exploiting that capability, but those attempts were thwarted by one of Maven's biggest weaknesses:  poor documentation.  As I noted, though, I finally found a web page that had something close to what I needed that I was able to work out the rest.  Since my JSFOne examples have the same compilation requirements as does Scales, I was able to pull the annotation processing tasks from the Scales build, giving me this:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <plugin>
   <groupId>org.apache.maven.plugins</groupId>
@@ -72,7 +72,7 @@ One feature that I like a lot is the `sourceRoot` entry.  With that line, we're 
 
 One remaining problem was that this creates some directories and files that Maven doesn't delete when the `clean` goal is run.  To fix that, we add this XML snippet to the plugin description above:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <execution>
   <id>clean_generated</id>

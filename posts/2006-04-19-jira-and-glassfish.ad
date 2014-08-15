@@ -12,7 +12,7 @@ The first step, of course, is to download the JIRA distribution (For our purpose
 
 For the database, you'll need to modify entityengine.xml, which you will want to copy from `webapp/WEB-INF/classes` to `edit-webapp/WEB-INF/classes`.  We'll need to make two changes in this file:  the transaction factory, and the data source.  For the transaction factory, we need to locate the element, and edit it to look like this:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <transaction-factory class="org.ofbiz.core.entity.transaction.JNDIFactory">
     <user-transaction-jndi jndi-server-name="default" jndi-name="UserTransaction"/>
@@ -21,7 +21,7 @@ For the database, you'll need to modify entityengine.xml, which you will want to
 -----
 
 For the curious, that change is just the removal of `java:comp/` from the JNDI name.  For the data source, find the  element toward the end of the file.  This is what ours looks like:
-[source,xml]
+[source,xml,linenums]
 -----
 <datasource name="defaultDS" field-type-name="postgres72"
 	helper-class="org.ofbiz.core.entity.GenericHelperDAO"
@@ -38,7 +38,7 @@ For the curious, that change is just the removal of `java:comp/` from the JNDI n
 
 Of course, you need to make sure that the datasource `jdbc/Jira` is configured in Glassfish.  If you need help with that, http://blogs.sun.com/roller/page/Glassfish_PostgreSQL?entry=introducing_support_for_postgresql_in[this] blog entry should be helpful. For Active Directory integration, copy osuser.xml from `webapp/WEB-INF/classes` to `edit-webapp/WEB-INF/classes`.  Since this file is smaller, I'll show it in its entirety:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <opensymphony-user>
 	<authenticator 

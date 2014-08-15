@@ -10,7 +10,7 @@ pass::[more]
 
 The auto-complete component is likely very familiar to most seasoned web users.  As information is typed into a field on the form, suggestions are displayed in a box that appears below the input field.  The user is then free to select one of these options or to continue entering his value of choice.  To put such a component on the web page using Mojarra Scales, a component similar to the following can be used:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <sc:autocomplete animate="both" id="autoComplete" 
     suggestions="#{autoCompleteBean.autoCompleteValues}" 
@@ -20,7 +20,7 @@ The auto-complete component is likely very familiar to most seasoned web users. 
 
 This example will create an input that is 300 pixels wide, has a suggestion box whose appearance is animated in both directions, and allows type ahead -- meaning the component will auto-fill the field with the first result, allowing the user to tab away to automatically select that value or continue typing.  The `ValueExpression` `suggestions` is what the component uses to retrieve the appropriate set of suggestions.  In our simple example, the implementation looks like this:
 
-[source,java]
+[source,java,linenums]
 -----
 public List autoCompleteValues(String query) {
     List values = new ArrayList();

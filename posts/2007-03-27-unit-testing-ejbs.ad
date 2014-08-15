@@ -12,7 +12,7 @@ One of our earliest attempts used JBoss' http://docs.jboss.org/ejb3/embedded/emb
 
 To make things work, we had to change the way we setup our EJBs.  Since the beginning our EE 5 development, we've been using field injection:
 
-[source,java]
+[source,java,linenums]
 -----
 @EJB(mappedName="ejb/MyEjb")
 private MyEjbInterface myEjb;
@@ -20,7 +20,7 @@ private MyEjbInterface myEjb;
 
 which we have changed to using property injection:
 
-[source,java]
+[source,java,linenums]
 -----
 private MyEjbInterface myEjb;
 @EJB(mappedName="ejb/MyEjb")
@@ -33,7 +33,7 @@ Our general approach has been to avoid making changes to production code for the
 
 With that change made, our unit tests became a lot easier to write.  Our applications are all multi-tiered, with JSF handling the view, and service and DAO layers that are either Faces-managed or container-managed and Session Beans, depending on the need for remote access.  For the purposes of our discussion here, we'll start with the data layer.  Let's say we have this simple DAO:
 
-[source,java]
+[source,java,linenums]
 -----
 @Stateful
 public class UserDaoImpl implements UserDao {
@@ -52,7 +52,7 @@ public class UserDaoImpl implements UserDao {
 
 This is a very simple DAO, and there is a lot intentionally left out, but it demonstrates a simple DAO using JPA.  So how do we test that?  How do we create the EntityManager, for example?  Here's how the unit test might look using JUnit 4 and DBUnit:
 
-[source,java]
+[source,java,linenums]
 -----
 public class UserDaoImplTest {
     private static UserDaoImpl dao = new UserDaoImpl();
@@ -94,7 +94,7 @@ The unit test starts by declaring some static resources:  the DAO implementation
 
 The persistence context is defined like this:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" 
@@ -119,7 +119,7 @@ link:/images/2007/03/dbunithelper.zip[Here] is the code for the DBUnitHelper cla
 
 Testing our service is fairly similar, needing just a bit more setup:
 
-[source,java]
+[source,java,linenums]
 -----
 public class MyAppServiceImplTest {
     private static MyAppServiceImpl service = new MyAppServiceImpl();

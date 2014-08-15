@@ -11,7 +11,7 @@ pass::[more]
 
 Here's the technique in question:
 
-[source,java]
+[source,java,linenums]
 -----
 Map<String, Object> map =  new HashMap<String, Object>() {{
     put("foo", "abc");
@@ -21,7 +21,7 @@ Map<String, Object> map =  new HashMap<String, Object>() {{
 
 I'm not a language geek by any reasonable stretch of the imagination, so I can't see in definitive (or maybe even accurate) terms what's going on here, but it seems to me to be very much like the instantiation of an anonymous inner class.  We've all seen those:
 
-[source,java]
+[source,java,linenums]
 -----
 Thread t = new Thread(name) {
     @Override
@@ -33,7 +33,7 @@ Thread t = new Thread(name) {
 
 Nothing unusual there.  What makes this so interesting is (if my educated guess is correct) is the static initializer block we've declared (`{ put...; put...;}`).  Technically, I think we're subclassing HashMap and specifying a static initializer.  Technicalities aside, what this does is allow us to execute initialization code in the context of the newly created object _before_ it's returned to the enclosing code.  What I like about this is that it makes the code much more concise, and can be collapsed in IDEs and editors that support such things.  It also allows me to create a `Map` (or `List` or `Set` or `Foo` or...) and initialize it inside a method call:
 
-[source,java]
+[source,java,linenums]
 -----
 someObject.someMethodThatTakesAList(new List<String>() {{
     add("foo");

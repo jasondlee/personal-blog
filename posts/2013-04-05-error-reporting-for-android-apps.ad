@@ -11,7 +11,7 @@ pass::[more]
 
 If you look at the http://acra.ch[ACRA home page], the quick start suggests a code snippet like this:
 
-[source,java]
+[source,java,linenums]
 -----
 import org.acra.*;
 import org.acra.annotation.*;
@@ -36,7 +36,7 @@ _____
 
 So my advice is to skip it. :)  What I've done in Cub Tracker is to configure an `HttpPostSender` instance:
 
-[source,java]
+[source,java,linenums]
 -----
 ACRA.init(this);
 ACRA.getErrorReporter().setReportSender(new HttpPostSender(ERROR_REPORTING_URL, null));
@@ -44,7 +44,7 @@ ACRA.getErrorReporter().setReportSender(new HttpPostSender(ERROR_REPORTING_URL, 
 
 Now, rather than posting to a Google Form, it POSTS to my custom web service, which looks like this (please excuse the ugly PHP :) :
 
-[source,php]
+[source,php,linenums]
 -----
 <?php
 $message .= "PHONE_MODEL = " . $_POST["PHONE_MODEL"] . "\n";
@@ -62,7 +62,7 @@ mail('me@foo.com', 'Cub Tracker Error Report', $message);
 
 That results in an email like this:
 
-[source]
+[source,linenums]
 -----
 PHONE_MODEL = Galaxy Nexus
 ANDROID_VERSION = 4.2.2

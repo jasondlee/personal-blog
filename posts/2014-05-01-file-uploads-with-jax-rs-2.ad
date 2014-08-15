@@ -12,7 +12,7 @@ pass::[more]
 
 In this example, we're going to upload arbitrary, binary data. Let's think of this in HTML terms: we have a form on a page that has a number of text input fields, and at least one file field. In this example, we'll use two fields: `name`, and `attachment`. A Java model (which will become more important later), might look like this:
 
-[source,java]
+[source,java,linenums]
 -----
 public class Example {
     private String name;
@@ -38,7 +38,7 @@ public class Example {
 
 One way of getting the data passed to a JAX-RS resource would be to use `@FormParam`. Normally, this will work fine, but since we're wanting a file to be part of the payload, the request must be of type `multipart/form-data`, which `@FormParam` doesn't seem to like. Fortunately, the Servlet 3 spec provides an implementation-independent way of dealing with multipart requests: `javax.servlet.http.Part`, which we'll use here. First, the resource method itself:
 
-[source,java]
+[source,java,linenums]
 -----
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -56,7 +56,7 @@ Before looking at where things actually get done, just a quick note here. We are
 
 And now, the details:
 
-[source,java]
+[source,java,linenums]
 -----
 public class MultipartRequestMap extends HashMap<String, List<Object>> {
 
@@ -155,7 +155,7 @@ The most interesting part (no pun intended :) is in this loop: `for (Part part :
 
 If you deploy the application now, you'll get an error at runtime because you need to configure multipart support. It's a bit obnoxious that there aren't sensible defaults, but that's the way it is. In this example, we don't have any other configuration requirements, we'll just use the JAX-RS standard application:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -181,7 +181,7 @@ The area of interest is the `<multipart-config>` element. Feel free to tweak the
 
 We're now ready to deploy and test, which we'll do using curl:
 
-[source,bash]
+[source,bash,linenums]
 -----
 $ curl -X POST -H 'Accept: application/json' \
     -F 'name=Form Upload Example' \
@@ -192,7 +192,7 @@ You uploaded an Example named 'Form Upload Example' with an attachment that is 9
 
 And there it is! POSTing a binary file to a JAX-RS resource. As I mentioned earlier, there *is* another, perhaps better way. If you're using "real" models, there's no extra magic required:
 
-[source,java]
+[source,java,linenums]
 -----
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -203,7 +203,7 @@ And there it is! POSTing a binary file to a JAX-RS resource. As I mentioned earl
 
 which can be called with:
 
-[source,bash]
+[source,bash,linenums]
 -----
 curl -X POST -H 'Content-type: application/json' \
     -H 'Accept: application/json' \

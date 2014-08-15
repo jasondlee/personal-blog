@@ -10,7 +10,7 @@ pass::[more]
 
 Using the archetype is pretty simple (assuming you know how to use Maven 2 archetypes in general):
 
-[source,bash]
+[source,bash,linenums]
 -----
 mvn archetype:create -DarchetypeGroupId=com.steeplesoft.maven.archetypes 
     -DarchetypeArtifactId=seam-jpa-oc4j -DarchetypeVersion=1.0-alpha 
@@ -24,7 +24,7 @@ What this gets you is a multi-module project, such as what was described in the 
 
 [[redeploy]] This is by no means perfect.  Given my newness to Maven, the archetype itself could probably use some help, <strike>but there's something more serious to consider at the moment involving OC4J.  If you create the project as described above, deploy the resulting EAR file and hit the web context, you should see that the application works fine.  If you try to redeploy the application, you'll see an error message like this in the web console (formatted for readability)</strike>(this is been link:/2007/10/25/oc4j-seam-archetype-update/[fixed]):
 
-[source]
+[source,linenums]
 -----
 Operation failed with error: java.lang.IllegalStateException: 
     ClassLoader "myapp.web.myapp-web-1.0:0.0.0" 
@@ -34,7 +34,7 @@ Operation failed with error: java.lang.IllegalStateException:
 
 The server console will show something like this:
 
-[source]
+[source,linenums]
 -----
 oracle.oc4j.admin.internal.DeployerException: java.lang.IllegalStateException: ClassLoader "myapp.web.myapp-web-1.0:0.0.0" (from <web-module> in /oc4j/j2ee/home/applications/myapp/myapp-web-1.0/): This loader has been closed and should not be in use.
       at org.hibernate.ejb.Ejb3Configuration.configure(Ejb3Configuration.java:258)

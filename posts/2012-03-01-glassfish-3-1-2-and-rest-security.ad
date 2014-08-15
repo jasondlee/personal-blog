@@ -10,7 +10,7 @@ As you may know by now, we https://blogs.oracle.com/theaquarium/entry/glassfish_
 For the curious, we implemented the CSRF protection using a http://jersey.java.net/nonav/apidocs/latest/jersey/com/sun/jersey/api/container/filter/CsrfProtectionFilter.html[filter] provided by the http://jersey.java.net[Jersey] team.  As you can see from the javadoc, this change only affects requests that change state (POST, PUT, DELETE, etc).  
 To update your client code, all you need to do is add the `X-Requested-By` header.  Its value doesn't matter: 
 
-[source,bash]
+[source,bash,linenums]
 -----
 curl -X POST -H 'X-Requested-By: YeaGlassFish' -d key=value \
     http://localhost:4848/management/domain/path/to/resource

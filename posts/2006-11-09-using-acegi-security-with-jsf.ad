@@ -10,7 +10,7 @@ pass::[more]
 
 The first step, of course, is to download Acegi, and integrate with the web application.  Once the jars have been installed in `WEB-INF/lib`, `web.xml` needs to be edited:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <context-param>
 	<param-name>contextConfigLocation</param-name>
@@ -48,7 +48,7 @@ The first step, of course, is to download Acegi, and integrate with the web appl
 
 That's the easy part.  The Acegi configuration, applicationContext-acegi.xml in this example, is where the difficulty comes in:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
@@ -173,7 +173,7 @@ Once Acegi is setup and configured, we can start protecting resources.  The conf
 
 Here's an example from an app we have in poroduction.  In this particular snippet, if the user has the correct permissions, we allow him to approve a request or resubmit the order:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <acegijsf:authorize ifAllGranted="ROLE_OrderManager]
     <h:form id="requestForm" rendered="#{dwmoForm.isRequest == true}" 

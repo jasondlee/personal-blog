@@ -10,7 +10,7 @@ pass::[more]
 
 Thanks to the esteemed Mr. Chad Cummings, I have a better solution, and it involves one small change to the backing bean (the navigation target returned) and the addition of this snippet to the JSF page:
 
-[source,html]
+[source,html,linenums]
 -----
 <h:panelGrid columns="1" rendered="#{batchAuditReportBean.workBook != null}">
     <f:verbatim>

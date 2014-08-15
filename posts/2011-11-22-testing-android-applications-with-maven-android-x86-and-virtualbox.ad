@@ -19,7 +19,7 @@ For those that want to build your own VM, once you've finished the instructions 
 _*A quick note on navigating in the emulator*_:  To go back, you press ESC.  To emulate menu keypresses, etc, click on the clock in the status bar.  After a moment or two, it will tell you that "you can touch the menu bar to do the function of menu now".  Once that's displayed, click on the status bar will go Home, and click and swiping right will emulate a Menu press.
 
 So now, one way or another, you have your VM setup, but how do you integrate that with your tests?  While Maven's XML doesn't make it easy, judicious as of antrun saves the day.  Here's a sample POM:
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

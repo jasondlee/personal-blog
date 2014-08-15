@@ -13,7 +13,7 @@ pass::[more]
 Let's say you want to debug your tests:
 
 .build.gradle
-[source,groovy]
+[source,groovy,linenums]
 -----
 test {
     if (System.getProperty('DEBUG', 'false') == 'true') {
@@ -25,7 +25,7 @@ test {
 
 From the command line, issue `gradle -DDEBUG=true test`:
 
-[source,bash]
+[source,bash,linenums]
 -----
 $ gradle -DDEBUG=true test
 :compileJava UP-TO-DATE
@@ -42,7 +42,7 @@ Listening for transport dt_socket at address: 9009
 When you see that line, you can attach the debugger of your choice, using port 9009. This also works if you're building a command line application:
 
 .build.gradle
-[source,groovy]
+[source,groovy,linenums]
 -----
 run {
     if (System.getProperty('DEBUG', 'false') == 'true') {
@@ -54,7 +54,7 @@ run {
 
 and run:
 
-[source,bash]
+[source,bash,linenums]
 -----
 gradle -DDEBUG=true run
 :compileJava UP-TO-DATE
@@ -68,7 +68,7 @@ Listening for transport dt_socket at address: 9009
 To add this all of your projects, you can make this change to `init.gradle`:
 
 ~/.gradle/init.gradle
-[source,groovy]
+[source,groovy,linenums]
 -----
 allprojects {
     tasks.withType(Test) {

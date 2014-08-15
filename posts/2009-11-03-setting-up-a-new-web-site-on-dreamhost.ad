@@ -42,7 +42,7 @@ Next up, "Run this domain under the user" will depend, again, on how you plan on
 
 For the web directory, I group all my domains (and their sub-domains) into a directory named after the domain.  That means, for example, that for example.com, mysite.example.com, and beta.example.com, the directory structure would look like this:
 
-[source]
+[source,linenums]
 -----
 $HOME/example.com/
                | beta/

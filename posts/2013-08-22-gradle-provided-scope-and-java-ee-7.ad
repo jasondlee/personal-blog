@@ -11,7 +11,7 @@ provide such a scope out of the box, but it's easy enough to add. The following 
 Java EE 7 web application setup:
 
 .build.gradle
-[source,groovy]
+[source,groovy,linenums]
 -----
 apply plugin: 'war'
 

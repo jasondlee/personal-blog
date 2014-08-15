@@ -12,7 +12,7 @@ Before these changes, the only way the component could be used was with one of t
 
 With the first change, something like is now possible:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <risb:download method="download" mimeType="application/pdf" 
     fileName="HelloWorld.pdf"
@@ -25,7 +25,7 @@ which will render an anchor, using the the `download.jpg` image as its content, 
 
 But what if you want a dynamically generated image to be displayed?  With the second change, this is now possible:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <risb:download mimeType="image/jpg" fileName="image.jpg" 
     data="#{testBean.image}">
@@ -37,7 +37,7 @@ This simple example will render an image on the page, pulling the contents of th
 
 If you don't like the variable name `downloadUrl` or if it would clobber one already set, you can specify the name of the variable with the `urlVar` attribute:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <risb:download mimeType="image/jpg" fileName="image.jpg" 
     urlVar="foo" data="#{testBean.image}">

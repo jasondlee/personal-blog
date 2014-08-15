@@ -12,7 +12,7 @@ Much has changed over the past few weeks.  We started using Scales in the GlassF
 
 In case I haven't mentioned this (it's really late here, and I honestly don't remember : ), Scales is http://download.java.net/maven/2/com/sun/mojarra/mojarra-scales/[now available] via the java.net Maven 2 repository.  The dependency element looks like this:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <dependency>
     <groupId>com.sun.mojarra</groupId>

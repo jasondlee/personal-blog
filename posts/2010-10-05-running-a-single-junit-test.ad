@@ -11,7 +11,7 @@ pass::[more]
 
 This new feature is a `MethodRule`.  It's an interface that a user can implement, and, when coupled with the `@Rule` attribute, allows this rule to applied in a very AOP-like manner to each test.  Since code is often better than words, here's the `MethodRule` I implemented for the console tests: 
 
-[source,java]
+[source,java,linenums]
 -----
 public class SpecificTestRule implements MethodRule {
     protected String method;
@@ -44,7 +44,7 @@ There's really not much going on here.  In the constructor, I look up the value 
 
 With that rule defined, let's take a look at how that is applied to the tests.  All of the console tests extend a base class, so I added this snippet to that base class: 
 
-[source,java]
+[source,java,linenums]
 -----
 @Rule
     public SpecificTestRule specificTestRule = new SpecificTestRule();
@@ -54,7 +54,7 @@ In this case, that particular instance variable is never used, so this usage see
 
 With those two pieces of code in place, we can now run individual test methods: 
 
-[source,java]
+[source,java,linenums]
 -----
 public class MyTest extends MyBase { // The rule is defined in the base
     @Test
@@ -76,7 +76,7 @@ public class MyTest extends MyBase { // The rule is defined in the base
 
 For that test, we can execute `mvn -Dtest=MyTest -Dmethod=foo test`, and expect output like this:
 
-[source]
+[source,linenums]
 -----
 -------------------------------------------------------
 T E S T S

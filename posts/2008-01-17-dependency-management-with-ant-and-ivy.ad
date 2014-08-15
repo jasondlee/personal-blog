@@ -10,7 +10,7 @@ pass::[more]
 
 Using Ivy requires, at least in the way I'm using it, two new files, ivy.xml, which defines my dependencies, and ivysettings.xml, which configures my custom resolvers.  The usage from my Ant build file is actually pretty simple, so we'll start there:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <target name="-download-ivy" unless="skip.download">
     <!-- download Ivy from web site so that it can be 
@@ -38,7 +38,7 @@ Using Ivy requires, at least in the way I'm using it, two new files, ivy.xml, wh
 
 You will also need to define these properties somewhere:
 
-[source]
+[source,linenums]
 -----
 ivy.install.version=2.0.0-beta1
 ivy.jar.file=${lib.build.dir}/ivy.jar
@@ -50,7 +50,7 @@ But what's that `pattern` all about?  This, I think, is a pretty interesting asp
 
 The `ivy.xml` for Scales looks like this at the moment:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <ivy-module version="1.0">
     <info organisation="org" module="standalone" revision="working"/>
@@ -99,7 +99,7 @@ Next in the file is the list of dependencies, which is pretty straightforward.  
 
 Next up is `ivysettings.xml`:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <ivysettings>
     <settings defaultResolver="chained"/>

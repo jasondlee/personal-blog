@@ -9,7 +9,7 @@ tags: [ Gradle, Scala ]
 For those interested, here's a quick and simple project to get you started using Gradle and Scala together:
 
 .build.gradle
-[source,groovy]
+[source,groovy,linenums]
 -----
 apply plugin: 'scala'
 
@@ -33,7 +33,7 @@ task run(type: JavaExec, dependsOn: classes) {
 
 
 .src/main/scala/Main.scala
-[source,scala]
+[source,scala,linenums]
 -----
 object Main extends App {
   println("Hello, world")
@@ -43,7 +43,7 @@ object Main extends App {
 You can run the app using the custom task `run`:
 
 
-[source,bash]
+[source,bash,linenums]
 -----
 $ gradle run
 :compileJava

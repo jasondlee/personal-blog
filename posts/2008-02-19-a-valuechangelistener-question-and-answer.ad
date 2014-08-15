@@ -7,7 +7,7 @@ tags: [ JavaServer Faces, tutorials ]
 ---
 At the lunch session of the http://okcjug.org[OKC JUG] today, a question was asked about the difference between the valueChangeListener attribute and `<f:valueChangeListener/>`.  That is, 
 
-[source,xml]
+[source,xml,linenums]
 -----
 <h:selectOneMenu id="optionMenu" value="#{optionBean.selectedOption}" 
         valueChangeListener="#{optionBean.optionChanged}" onchange="submit()">
@@ -17,7 +17,7 @@ At the lunch session of the http://okcjug.org[OKC JUG] today, a question was ask
 
 and
 
-[source,xml]
+[source,xml,linenums]
 -----
 <h:selectOneMenu id="optionMenu" value="#{optionBean.selectedOption}" onchange="submit()">
     <f:selectItems value="#{optionBean.optionList}" />
@@ -30,13 +30,13 @@ pass::[more]
 
 The former form takes a MethodExpression (`#{optionBean.optionChanged}`) that points to a method that satisfies the following method signature:
 
-[source,java]
+[source,java,linenums]
 -----
 public void valueChangeListener(ValueChangeEvent e);
 -----
 
 The latter form points to a class that implements the ValueChangeListener interface:
-[source,java]
+[source,java,linenums]
 -----
 public class MyValueChangeListener implements ValueChangeListener  {
     void processValueChange(ValueChangeEvent event) throws AbortProcessingException {
@@ -46,7 +46,7 @@ public class MyValueChangeListener implements ValueChangeListener  {
 -----
 
 You can also use "binding" with the component:
-[source,xml]
+[source,xml,linenums]
 -----
 <f:valueChangeListener type="com.mycompany.MyValueChangeListenerImpl" 
     binding="#{optionBean.valueChangeListener}"/>
@@ -54,7 +54,7 @@ You can also use "binding" with the component:
 
 In `OptionBean`, you would have a method like this:
 
-[source,java]
+[source,java,linenums]
 -----
 public ValueChangeListener getValueChangeListener() {
     return new MyValueChangeListener();

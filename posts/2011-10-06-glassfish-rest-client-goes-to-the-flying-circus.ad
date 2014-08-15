@@ -12,21 +12,21 @@ One easy egg to crack!
 ----------------------
 Generating the python client looks strangely similar to how it's done for java:
 
-[source, bash]
+[source, bash,linenums]
 -----
 asadmin generate-rest-client --languages python --outputdir tmp
 -----
 
 After that is complete, you'll have a Python egg in `tmp/` that you can then install into your Python environment:
 
-[source,bash]
+[source,bash,linenums]
 -----
 sudo easy_install tmp/glassfish-rest-client-stubs.zip
 -----
 
 If you want both the Java and Python stubs, the command line would look like this:
 
-[source,bash]
+[source,bash,linenums]
 -----
 asadmin generate-rest-client --languages java,python --outputdir tmp
 -----
@@ -36,7 +36,7 @@ Great! How do I use it?
 
 To show how similar the clients are, I'm going to implement here, in Python, the same examples I gave in link:/posts/2011/10/03/glassfish-rest-interface-a-client-side-perspective[my last post].  First up, then, is creating a JDBC connection pool:
 
-[source,python]
+[source,python,linenums]
 -----
 from glassfish.rest import *
 restClient = RestClient()
@@ -56,7 +56,7 @@ print "Success!" if rr.isSuccess() else ("Failure: " + rr.getMessage())
 
 Easy! Now let's deploy an application:
 
-[source,python]
+[source,python,linenums]
 -----
 from glassfish.rest import *
 restClient = RestClient()
@@ -67,7 +67,7 @@ print "Success!" if rr.isSuccess() else ("Failure: " + rr.getMessage())
 
 Undeploying is just as easy:
 
-[source,python]
+[source,python,linenums]
 -----
 app = domain.getApplications().getApplication("test")
 if app:

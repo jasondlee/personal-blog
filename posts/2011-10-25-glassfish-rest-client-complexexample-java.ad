@@ -12,7 +12,7 @@ In this fairly contrived scenario, we're going to create one cluster, `c1`, with
 
 Enough with that, then, let's get to the code.  Hopefully, if you've been following along, this should be pretty straightforward and easy to read.
 
-[source,java]
+[source,java,linenums]
 -----
 public class ClusterDemo {
     RestClient rc = new RestClient();

@@ -11,7 +11,7 @@ pass::[more]
 
 To start, let's create a basic JavaFX application. To do this, I made use of the built-in JavaFX support in NetBeans 7.3 by clicking `File` -> `New Project...` -> `JavaFX` -> `JavaFX FXML Application`. I entered all of the appropriate information in the rest of the wizard, and I had my empty application. The next step was to remove all of the default/example controls in the app and create the user interface I wanted. To do this, I used the Early Access build of http://www.oracle.com/technetwork/java/javafx/tools/index.htm[Scene Builder 1.1]. This isn't meant to be a Scene Builder tutorial, so I'll leave out the details and just give you the resulting FXML file:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <?xml version="1.0" encoding="UTF-8"?>
 
@@ -75,7 +75,7 @@ To start, let's create a basic JavaFX application. To do this, I made use of the
 
 There's a really good chance this is a bad pretty bad example, but I'm not JavaFX expert, so this is all I have for you. :) Next up, the Java controller class:
 
-[source,java]
+[source,java,linenums]
 -----
 public class DoctorFXController implements Initializable {
     private final Asciidoctor instance;

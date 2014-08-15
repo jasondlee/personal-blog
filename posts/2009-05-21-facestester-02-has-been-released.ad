@@ -8,7 +8,7 @@ tags: [ FacesTester, JavaServer Faces, testing ]
 Today we released FacesTester 0.2.  While this release has a number of bug fixes and more minor enhancements, one of the biggest new features is injection support. Leveraging the `InjectionProvider` Service Provider Interface (SPI) provided by Mojarra, FacesTester now supports the automagic injection of mock/test objects.  For example, the following managed bean:
 pass::[more]
 
-[source,java]
+[source,java,linenums]
 -----
 public class ManagedBeanWithJpa {
     @PersistenceContext(unitName = "em")
@@ -24,7 +24,7 @@ public class ManagedBeanWithJpa {
 
 can be tested like this:
 
-[source,java]
+[source,java,linenums]
 -----
 @Test
 public void shouldHaveInjectionPerformed() {
@@ -38,7 +38,7 @@ In line 3 in the test code, we see the registration of our test `EntityManager`.
 
 Also in this release is code to test the state saving on a component.  A pretty common source of bugs with custom components is inadequate coverage in the state saving code.  FacesTester will examine the component and insure that each property is correctly handled:
 
-[source,java]
+[source,java,linenums]
 -----
 @Test
 public void testMyComponentStateSaving() {
@@ -53,7 +53,7 @@ The `FacesConfig` object was also updated to cover more JSF artfiacts, so if you
 
 As always, FacesTester is available in the java.net Maven repository:
 
-[source,xml]
+[source,xml,linenums]
 -----
 <dependency>
     <groupId>com.steeplesoft.jsf</groupId>

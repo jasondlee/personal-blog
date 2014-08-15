@@ -12,7 +12,7 @@ pass::[more]
 
 We'll cover three, in descreasing order of complexity and pure geekiness.  The first will programmatically simulate the swiping action:
 
-[source,java]
+[source,java,linenums]
 -----
     protected void swipe(Direction direction) {
         Instrumentation inst = getInstrumentation();
@@ -38,7 +38,7 @@ In this implementation of our `swipe()` method, we simulate the physical act of 
 
 For completeness' sake, here is the super simple enum I used to make the method signature more self-explanatory:
 
-[source,java]
+[source,java,linenums]
 -----
 public enum Direction {
     Left, Right;
@@ -47,7 +47,7 @@ public enum Direction {
 
 While that approach is pretty fun, there's a simpler way, which, oddly enough, actually uses the `ViewPager` API. :)
 
-[source,java]
+[source,java,linenums]
 -----
     protected void swipe(final Direction direction) {
         activity.runOnUiThread(new Runnable() {
@@ -71,7 +71,7 @@ In this implementation, we make sure that we can safely swipe to the left or rig
 
 Lastly, we deviate from the `ViewPager` API usage, and look at another, simpler take on our first implementation, this time using http://code.google.com/p/robotium/[Robotium]
 
-[source,java]
+[source,java,linenums]
 -----
     protected void swipe(final Direction direction) {
         Point size = new Point();
