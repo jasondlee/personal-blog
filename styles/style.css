@@ -59,6 +59,5 @@ div.attribution {
 }
 
 td.line-numbers {
-    border-right-width: 1px;
-    border-right-style: solid;
+    border-right: 1px solid #ccc;
 }
