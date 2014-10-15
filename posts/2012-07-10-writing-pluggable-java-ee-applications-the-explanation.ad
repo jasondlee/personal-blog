@@ -3,7 +3,7 @@ title: 'Writing Pluggable Java EE Applications, The Explanation'
 author: 'Jason Lee'
 layout: blog-post
 date: 2012-7-10
-tags: [ CDI, JavaEE, JSF, REST ]
+tags: [ CDI, Java EE, JSF, REST ]
 ---
 
 I recently posted the slides and the source code from the presentation I gave at http://jaxconf.com/2012[JAXConf San Francisco]. While that's helpful for those who were in my session, it's probably less so for those who weren't.  What I'll do in this post, then, is discuss the slides and code in detail, skipping over the introductory slides, and getting right to the heart of the matter.

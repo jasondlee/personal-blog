@@ -3,7 +3,7 @@ title: "Gradle, 'provided' scope, and Java EE 7"
 author: Jason Lee
 date: 2013-08-22
 layout: blog-post
-tags: [ Gradle, JavaEE ]
+tags: [ Gradle, Java EE ]
 ---
 
 Maven has a dependency scope, `provided`, that indicates that the dependency should not be in the archive. Gradle does not

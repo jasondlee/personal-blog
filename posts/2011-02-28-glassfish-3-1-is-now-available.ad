@@ -3,7 +3,7 @@ title: 'GlassFish 3.1 Is Now Available'
 author: 'Jason Lee'
 layout: blog-post
 date: 2011-2-28
-tags: [ GlassFish, JavaEE ]
+tags: [ GlassFish, Java EE ]
 ---
 image::http://glassfish.java.net/image/sparky_3.1_orange.gif[style="float: right; padding: 0px 0px 10px 10px;"] For those that may not have noticed, today the GlassFish team officially released version 3.1.  This new release brings in a myriad of features, the most significant of which is probably clustering and high availability.  http://blogs.sun.com/theaquarium/entry/glassfish_3_1_is_here[The Aquarium] is the best place to find links to blogs, screencasts etc. from various GlassFish engineers (though Markus Eisele has a nice run down of the new features http://blog.eisele.net/2011/02/glassfish-31-arrived-yes-sir-we-do.html[here] as well).  The Aquarium's list is pretty extensive, so certainly check it out, but I'd like to highlight a few that I found interesting from teammates of mine:
 

@@ -3,7 +3,7 @@ title: 'The Value of the Stack'
 author: 'Jason Lee'
 layout: blog-post
 date: 2010-12-14
-tags: [ GlassFish, JavaEE ]
+tags: [ GlassFish, Java EE ]
 ---
 This morning on twitter, I saw an http://twitter.com/#!/johanvos/status/14692015212068865[announcement] that http://mollom.com/[Mollom] has a new backend, one based on http://glassfish.org[GlassFish].  I have to be honest.  I don't know much of anything about Mollom beyond this, nor do I know anything about their previous backend other than it was Java-based.  The blog http://buytaert.net/mollom-gets-a-new-backend[post], though, immediately made me think of dynamic languages.
 

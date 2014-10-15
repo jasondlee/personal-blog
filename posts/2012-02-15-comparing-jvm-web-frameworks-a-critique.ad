@@ -3,7 +3,7 @@ title: 'Comparing JVM Web Frameworks - A Critique'
 author: 'Jason Lee'
 layout: blog-post
 date: 2012-2-15
-tags: [ Java, JavaEE ]
+tags: [ Java, Java EE ]
 ---
 Recently, Matt Raible again presented his http://www.slideshare.net/mraible/comparing-jvm-web-frameworks-jfokus-2012[Comparing JVM Web Frameworks], this time at JFokus 2012.  The intent of the presentation, as best as I can gather from half a world away, is to prevent some of the major JVM-based web frameworks, showing the various strengths and weaknesses, which will allow the audience to choose a framework more easily.  While the goal is laudable, I'm just not sure how well executed the attempt was.
 pass::[more]

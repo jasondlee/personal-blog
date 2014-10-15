@@ -3,7 +3,7 @@ title: 'Using Server Sent Events and the GlassFish REST Interface'
 author: 'Jason Lee'
 layout: blog-post
 date: 2012-12-10
-tags: [ GlassFish, JavaEE, REST ]
+tags: [ GlassFish, Java EE, REST ]
 ---
 
 Wikipedia defines Server-Sent Events as "a technology for providing push notifications from a server to a browser client in the form of DOM events. The Server-Sent Events EventSource API is now being standardized as part of HTML5 by the W3C."  It's a great alternative to polling the server for updates.  Long story short, thanks to the work of the http://jersey.java.net[Jersey] team, we have "easy" access to this in GlassFish, and we've added support for it to our RESTful administration interface.  Let's take a look at a quick sample.

@@ -3,7 +3,7 @@ title: 'A Jersey POJOMapping Client/Server Example'
 author: 'Jason Lee'
 layout: blog-post
 date: 2012-1-26
-tags: [ JavaEE, JAX-RS, Jersey, REST ]
+tags: [ Java EE, JAX-RS, Jersey, REST ]
 ---
 JAX-RS is the specification that describes how to build RESTful interfaces in a Java EE environment.  Jersey is the reference implementation of that spec, and, like many implementations, offers features above and beyond what spec does.  One feature that I've been working with recently is the POJOMapping feature, which makes writing services and clients much easier, as well as typesafe.
 pass::[more]

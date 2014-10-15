@@ -3,7 +3,7 @@ title: "A Simple OAuth2 Client and Server Example: Part I"
 author: Jason Lee
 date: 2013-07-11
 layout: blog-post
-tags: [ JavaEE, OAuth2, REST, JAX-RS ]
+tags: [ Java EE, OAuth2, REST, JAX-RS ]
 ---
 
 When implementing web site security, OAuth2 almost always comes up. We've had requests to implement OAuth2 in the GlassFish REST interface, and, it turns out, I have a similar need on a personal project. Looking at the spec, though, OAuth2 can be pretty daunting. Fortunately, you don't need to understand it all, and Apache has a project, Oltu (nee Amber) that handles most of the implementation. 

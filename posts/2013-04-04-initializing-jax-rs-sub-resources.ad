@@ -3,7 +3,7 @@ title: 'Initializing JAX-RS Sub-resources'
 author: 'Jason Lee'
 layout: blog-post
 date: 2013-4-4
-tags: [ Java, JavaEE, JAX-RS, REST ]
+tags: [ Java, Java EE, JAX-RS, REST ]
 ---
 
 This morning, I was reading through the http://download.oracle.com/otndocs/jcp/jaxrs-2_0-pfd-spec/index.html[Proposed Final Draft for JAX-RS 2.0 specification], when I found a little nugget that could have saved me some work, specificially in initializing subresources.
