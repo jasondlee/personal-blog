@@ -8,6 +8,8 @@ tags: [ database, PostgreSQL, multitenancy ]
 
 As more and more of our applications move into "the cloud", multi-tenancy has become a pretty big thing these days. In a nutshell, "multi-tenancy" means handling multiple customers data using, say, a single server. This concept scales, of course, to clusters, etc., but the concept is the same: a bunch of people's data all mixed together in one big bucket. The problem, then, for the development team is isolating one customer's data from another's, disallowing, for example, the viewing or editing of another customer's information. There are a myriad of ways to accomplish this, but I'd like to discuss here a way to accomplish this using a single database.
 
+pass::[more]
+
 While the concept can certainly be applied on just about any database, for this discussion, we'll use PostgreSQL, my favorite database (and, yes, as a geek I'm allowed to say things like that). The concepts we'll use are views, triggers, and session variables.
 
 To keep things simple, our entity/model will be a very simple one called Item, which has one column, data. The DDL for its table might look something like this:
@@ -41,7 +43,7 @@ CREATE OR REPLACE VIEW company_items AS
 
 As you can tell, that's not quite going to work. Where does the value for `company_id` come from? The answer to that is session variables. Unfortunately, as best as I can tell, Postgres doesn't support this idea natively, so we have to roll our own, which we'll do using plperl, the Postgres extension which allows writing stored procedures in Perl. There are other languages available, and perhaps I'll port this to, say, Python, because Perl is pretty nasty stuff. :) Nevertheless, this is working code:
 
-[source]
+[source,sql]
 -----
 CREATE OR REPLACE FUNCTION set_var(name text, val text) RETURNS text AS $$
     if ($_SHARED{$_[0]} = $_[1]) {
@@ -69,7 +71,7 @@ To get the value from a function in Postgres, you SELECT from it, which we've ad
 
 With all of this in place, we can test this using psql:
 
-[source]
+[source,sql]
 -----
 // <1>
 mydb=# insert into items (company_id, data) values (1, 'Company 1 data 1');
