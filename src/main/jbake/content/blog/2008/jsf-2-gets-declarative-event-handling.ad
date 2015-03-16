@@ -1,0 +1,74 @@
+title=JSF 2 Gets Declarative Event Handling
+date=2008-12-23
+tags=JavaServer Faces
+type=post
+status=published
+~~~~~~
+= JSF 2 Gets Declarative Event Handling
+Jason Lee
+2008-12-23
+
+If you've been following the evolution of the JSF 2 spec closely, you have probably seen the addition of a finer-grained event system (if you haven't seen it, section 3.4 of the spec is the relevant one).  These events include things like AfterAddToViewEvent, BeforeRenderEvent, ViewMapCreatedEvent, etc.  An application developer could subscribe to these events from a managed bean by using the API exposed by the new system.  While that is a big improvement over the way things work in 1.2, it still leave page authors out in the cold until, that is, this week.  Yesterday I committed the code to support declarative even handling to Mojarra.  In this short entry, we'll take a look at what that entails, and how to use it.
+<!-- Read More -->
+
+This change really has two parts:  a new `f:event` tag, and a new @NamedEvent annotation.  Let's start our discussion by looking at the tag.   The syntax for the tag is really quite simple.  You just add the tag to any component you desire, provide values for the tags only two attributes, and you're done.  For example (from the Mojarra systests):
+
+[source,xml,linenums]
+-----
+<h:outputText id="beforeRenderTest1" >
+    <f:event type="beforeRender" action="#{eventTagBean.beforeEncode}" />
+</h:outputText>
+-----
+
+In this simple example, we see that we an outputText component, `beforeRenderTest1`, with no value.  We also have the child `f:event` tag.  The first parameter, `type`, tells the tag which event type to which to subscribe.  The second attribute, `action`, specifies the method on a managed bean that will be called when the event requested is fired for the component in question.  In plain English, when JSF broadcasts the BeforeRenderEvent for the component `beforeRenderTest1`, EventTagBean.beforeEncode() will be called.  So what does that method look like?  The specification states that the action must match this signature:
+
+[source,java,linenums]
+-----
+public void methodName(ComponentSystemEvent event);
+-----
+
+Note that we are only dealing with `ComponentSystemEvent`, a child of `SystemEvent` not `SystemEvent`s directly.  Why?  Well, `ComponentSystemEvent` is the base class for `SystemEvent`s that are attached to a specific component instance, which is `HtmlOutputText` in our example.   That method might look like this:
+
+[source,java,linenums]
+-----
+public void beforeEncode(ComponentSystemEvent event) {
+    UIOutput output = (UIOutput)event.getComponent();
+    output.setValue("The '" + event.getClass().getName() + "' event fired!");
+}
+-----
+
+Your method would, I hope, do something more interesting, but we can see here how we handle the event.  We pull the UIComponent from the event object, optionally cast it to what we're expecting (probably using a healthy dose of instanceof), and perform some actions on the component, but you might not even need the component.  Maybe you just need to fire off some sort of backend logic/process when a component is rendered, for example.  I'm not sure why, off hand, but you could, and this new tag makes that possible.
+
+Before we close our discussion of this new tag, let's take a quick look at the new annotation, `@NamedEvent`.  One of the envisioned uses of this new event system is that application authors will likely want to create their own custom events.  All that is required to do so is to extend `SystemEvent`, either directly or indirectly through one of its children, and the broadcast the event when appropriate.  What if, though, the application author wants to make this event available to the page authors?  That's where @NamedEvent comes.  This annotation, which has the single, optional attribute `shortName`, can be placed on custom events to register them with the runtime, making them available to `f:event`.  
+
+During application startup, JSF scans for a number of annotations, including our new one.  If `@NamedEvent` is found on a class, the following logic is applied to get the name(s) for the event:
+
+# Get the unqualified class name (e.g., BeforeRenderEvent)
+# Strip off the trailing "Event", if present (e.g., BeforeRender)
+# Convert the first character to lower-case (e.g., beforeRender)
+# Prepend the package name to the lower-cased name (e.g., javax.faces.event.beforeRender)
+# If the `shortName` attribute is specified, register the event by that name as well.
+
+For the spec classes, the only events registered for use with `f:event` are BeforeRenderEvent, AfterAddToParentEvent, and AfterAddToViewEvent, with the appropriate short names as well, giving us these possible events out of the box:
+
+[options="header"]
+|===============
+|Long Name|Short Name
+|javax.faces.event.beforeRender | beforeRender
+|javax.faces.event.afterAddToParent | afterAddToParent
+|javax.faces.event.afterAddToView | afterAddToView
+|===============
+
+Armed with that knowledge, we could easily rewrite our markup below as
+
+[source,xml,linenums]
+-----
+<h:outputText id="beforeRenderTest1" >
+    <f:event type="javax.faces.event.beforeRender" 
+        action="#{eventTagBean.beforeEncode}" />
+</h:outputText>
+-----
+
+Which you use is up to you.
+
+It's important to note that, while the spec is currently in feature freeze, that doesn't mean it's done.  While what you see now is largely what you'll see when we ship JSF 2 and Mojarra 2.0, some things may be slightly different.  If anything changes in this are before we finalize the spec, I'll make sure I update you here.

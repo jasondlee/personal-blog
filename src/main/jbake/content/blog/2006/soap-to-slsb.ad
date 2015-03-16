@@ -1,0 +1,60 @@
+title=SOAP to slsb
+date=2006-05-09
+tags=Java
+type=post
+status=published
+~~~~~~
+= SOAP to slsb
+Jason Lee
+2006-05-09
+
+As part of our migration to Glassfish, one of my tasks is to migrate all of the web services we've exposed via http://mule.codehaus.org[Mule] to a session bean environment, which won't be too hard since we only have two such deployments.  The code changes are really pretty small, but non-obvious (given my nascent EJB3 knowledge).  For those that might be in a similar situation, let's take a quick look at what this process entailed.
+<!-- Read More -->
+
+Under Mule, the classes were http://springframework.org/[Spring]-managed, so we were able to leverage Spring's IoC and lifecycle offerings to make things pretty easy.  We simply created the bean definition (with all of its dependencies) in the Mule config, then wrote a little more XML to tell Mule to expose the bean's methods as a web service.  To make this class a session bean, all we'd have to do then, or so I though, was put a `@Remote` annotation on the interface and a `@Stateless` annotation on the implementation, and we'd be pretty much done.  My guess was close, but not quite accurate.
+
+As I started the code migration, I quickly realized that we wouldn't be able to use Spring dependency injection unless we cobbled it in somehow.  My first attempt was to create the Spring `ApplicationContext` in the constructor of my POJO, getting a reference to the `JdbcTemplate` from that context, and setting it on my POJO (which extended `JdbcDaoSupport`).  This seemed a bit clunky, but, in theory, would work.  For reasons I can't quite explain, though, it did not.  Attempts to create (implicity, via Spring) the `SQLErrorCodeSQLExceptionTranslator` would fail spectacularly with what appeared to be a NullPointerException (the stack trace was a little vague despite its verbosity).  
+
+My hunch was that the failure was related somehow to the lifecycle of my session bean.  To test my theory, I moved the context creation to `initDao()`, a `JdbcDaoSupport` method I overrode.  I then added an explicit call to that method to make sure it ran before my business method did.  After packaging and deploying the application, my out-of-container test client showed that that configuration did indeed work.  Putting an explicit call at the top of each business method, though, was quite distasteful, so I dove further into the EJB3 spec in search of something that would help.  Surely there were lifecycle methods I could use.  I was not disappointed.
+
+EJB3 offers the annotation `@PostConstruct` which, based on my limited research and conjecture, marks a method as one to call post-construction.  I know you're likely as mystified as I was. ;)  At any rate, I left my `initDao()` method as it was, added the annotation, and removed all explicit calls to the method.  Repeating my tests showed that this annotation did exactly what I had hoped it would, but I wasn't quite done with the code.  
+
+For no real good reason, I wanted to use container injection for the `DataSource`, thereby using the EJB container for everything I could.  With that goal in mind, I added a `DataSource` member variable as well as the annotation to ask for the injection of the resource:
+
+[source,java,linenums]
+-----
+@Resource (name = "jdbc/Comergent")
+DataSource dataSource;
+-----
+
+Then, in my `initDao()` method, I manually constructed the two Spring classes I needed.  Having done all of that, I tested again to make sure I had not broken anything, which I hadn't.  Some may question my choice to move the handling of these classes and resources from the Spring config to my code, and all I can say is that I have no real good reason.  At the time, it just felt like the right way to handle it.  I may at some point change my mind, but that's the way it is right now. :)
+
+Overall, knowing what I know now, the task itself was not that difficult, though the level of effort was certainly heightened due to my lack of depth with EJB3.  Migrating the remaining service, though, should be a breeze.  For those that like to see code, here it is:
+
+[source,java,linenums]
+-----
+@Stateless
+public class ComergentPartnersSessionBeanImpl implements IComergentPartners {
+    protected Log logger;
+    IComergentPartners service;
+    protected JdbcTemplate jdbcTemplate = null;
+    @Resource (
+            name = "jdbc/Comergent"
+    )
+    DataSource dataSource;
+    public ComergentPartnersSessionBeanImpl() throws Exception {
+        logger = LogFactory.getLog(this.getClass().getName());
+    }
+    @PostConstruct
+    protected void initDao() throws Exception {
+        if (jdbcTemplate == null) {
+            SQLErrorCodeSQLExceptionTranslator trans = new SQLErrorCodeSQLExceptionTranslator();
+            trans.setDataSource(dataSource);
+            jdbcTemplate  = new JdbcTemplate();
+            jdbcTemplate.setDataSource(dataSource);
+            jdbcTemplate.setExceptionTranslator(trans);
+        }
+    }
+    /* Lots of business methods removed for brevity */
+}
+-----

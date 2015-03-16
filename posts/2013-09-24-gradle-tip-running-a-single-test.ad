@@ -1,9 +1,0 @@
----
-title: "Gradle Tip: Running a Single Test"
-author: Jason Lee
-date: 2013-09-24
-layout: blog-post
-tags: [ Gradle, testing ]
----
-
-Using Maven, to run a single test (class), you would issue `mvn -Dtest=MyTest`. Gradle has similar functionality (`gradle -Dtest.single=MyTest`), though it seems to be much more powerful. You can get all the details http://www.gradle.org/docs/current/userguide/java_plugin.html#N12729[here].

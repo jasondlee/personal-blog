@@ -1,0 +1,69 @@
+title=FacesTester 0.2 Has Been Released
+date=2009-05-21
+tags=FacesTester, JavaServer Faces, testing
+type=post
+status=published
+~~~~~~
+= FacesTester 0.2 Has Been Released
+Jason Lee
+2009-05-21
+
+Today we released FacesTester 0.2.  While this release has a number of bug fixes and more minor enhancements, one of the biggest new features is injection support. Leveraging the `InjectionProvider` Service Provider Interface (SPI) provided by Mojarra, FacesTester now supports the automagic injection of mock/test objects.  For example, the following managed bean:
+<!-- Read More -->
+
+[source,java,linenums]
+-----
+public class ManagedBeanWithJpa {
+    @PersistenceContext(unitName = "em")
+    private EntityManager entityManager;
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+}
+-----
+
+can be tested like this:
+
+[source,java,linenums]
+-----
+@Test
+public void shouldHaveInjectionPerformed() {
+    InjectionManager.registerObject("em", new MockEntityManager());
+    ManagedBeanWithJpa mb = tester.getManagedBean(ManagedBeanWithJpa.class, "jpaBean");
+    assertNotNull(mb.getEntityManager());
+}
+-----
+
+In line 3 in the test code, we see the registration of our test `EntityManager`.  When JSF (Mojarra, in our FacesTester environment) creates the managed bean, it delegates to the `FacesTesterInjectionProvider`, when then injects `MockEntityManager` when it processes the `@PersistenceContext` annotation.  In a real test, one might create a test database using [http://hsqldb.org[HSQLDB] or http://db.apache.org/derby/[Derby] and http://dbunit.org[DBUnit].
+
+Also in this release is code to test the state saving on a component.  A pretty common source of bugs with custom components is inadequate coverage in the state saving code.  FacesTester will examine the component and insure that each property is correctly handled:
+
+[source,java,linenums]
+-----
+@Test
+public void testMyComponentStateSaving() {
+    FacesTester facesTester = new FacesTester();
+    facesTester.testStateSaving(MyComponentState.COMPONENT_TYPE);
+}
+-----
+
+FacesTester will create the component using `Application.createComponent()`, populate each property with a test value, and save the state.  It will then create a new component of the same type and restore the saved state into this new component.  Finally, it iterates over each property, comparing the results of each getter.   If they don't match, an `Exception` is thrown.  Fancy! :)
+
+The `FacesConfig` object was also updated to cover more JSF artfiacts, so if you're using this aspect of the tool, be sure to checkout the updated JavaDocs for full details.
+
+As always, FacesTester is available in the java.net Maven repository:
+
+[source,xml,linenums]
+-----
+<dependency>
+    <groupId>com.steeplesoft.jsf</groupId>
+    <artifactId>facestester</artifactId>
+    <version>0.2</version>
+    <scope>test</scope>
+</dependency>
+-----
+
+If you have any issues, please be sure to file issues http://kenai.com/jira/browse/FACESTESTER[here].

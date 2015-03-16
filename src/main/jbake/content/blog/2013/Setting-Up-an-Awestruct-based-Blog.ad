@@ -1,0 +1,312 @@
+title=Setting Up an Awestruct-based Blog
+date=2013-04-19
+tags=Awestruct
+type=post
+status=published
+~~~~~~
+= Setting Up an Awestruct-based Blog
+Jason Lee
+2013-04-19
+
+
+In case you missed the link:/posts/2013-04-15-farewell-wordpress[announcement], I recently migrated my blog from Wordpress to Awestruct, the static site generation tool written by several JBoss engineers. As can be expected with a tool this new, there were some bumps and bruises along the way, but I managed -- with lots of help -- to make it to production with my efforts. To be a good open source citizen, then, I thought I'd explain my process and try to pass on what I learned.
+
+<!-- Read More -->
+
+The first step is, of course, installing Awestruct, which is pretty simple:
+
+[source,bash,linenums]
+-----
+$ gem install awestruct
+$ awestruct -i -f bootstrap
+-----
+
+That will install Awestruct and bootstrap your site.  The "bootstrap" used in the command line tells Awestruct to use the bootstrap javascript framework. The other options are 'blueprint' and '960'.  I honestly can't tell you what the differences are. I think I used blueprint, which seems to be the smallest starting point.
+
+Once that's done, I would suggest deleting all of the `.haml` files. HAML seems to be Awestruct's default/preferred markup language, but it seems "everyone" is moving toward slim. We'll see what that looks like below.
+
+_config/site.yml
+----------------
+
+Let's start with the `_config/site.yml`. Something like this seems to be pretty common:
+
+[source,yaml,linenums]
+-----
+title: My Blog
+author: Jason Lee
+local_tz: America/Chicago
+interpolate: false
+disqus: myblog.com
+base_url: http://localhost:1234
+
+asciidoctor:
+  :compact: true
+  :eruby: erubis
+  :attributes:
+    idprefix: ''
+    idseparator: '-' 
+
+scss:
+  :line_numbers: true
+  :style: :expanded
+# if no profile is specified, the first with a deploy config is selected
+profiles:
+  development:
+    minify: false
+    disqus_developer: true
+    dev: true
+    deploy:
+      dummy:
+  production:
+    base_url: http://www.myblog.com
+    #disqus_developer: false
+    google_analytics: UA-1234567-1
+    minify: true
+    deploy:
+      host: user@myblog.com
+      path: /home/user/path/to/site
+-----
+
+A lot of these properties should be self-explantory, so I'll only discuss those that aren't. The first is `interpolate`. Most people may not need this, but I do a lot of blogging about JSF (though not as much I used to, I guess :).  As part of that, I have a lot of EL expressions, such as `#{someBean.someProperty}`, in my posts.  Without this option, Awestruct will try to "interpolate" the text, at which point that expression will be processed as if it were a Ruby string. Since `someBean` hasn't been defined in the Ruby process, an error occurs and the build fails. If you don't have EL expressions or something similar, it may be safe to leave this set to its default of true.
+
+I think the only one left that needs discussion is `profiles.production.deploy`. In my case, I have a shared host to which I want to deploy the generated site. With this configuration, when you tell Awestruct to deploy your site, it will rsync, via ssh, to `myblog.com`, logging in as `user`, and putting the files in `/home/user/path/to/site`. The nice thing is that it will remove files from the remote site if they are removed from the local build, so you don't have to manage that manually.
+
+We'll discuss (no pun intended), `disqus` and `disqus_developer` later.
+
+_ext/pipeline.rb
+----------------
+The next important file is `_ext/pipeline.rb`. While `site.yml` configures your site, `pipeline.rb` configures Awestruct itself. Here you enable extensions and helpers, basically turning features on and off.  As of the time of this writing, I have two Awestruct based sites, and their pipeline files look basically like this:
+
+[source,ruby,linenums]
+-----
+require 'readmore'
+require 'erubis'
+require 'tilt'
+
+Awestruct::Extensions::Pipeline.new do
+  extension Awestruct::Extensions::Posts.new( '/posts', :posts)
+  extension Awestruct::Extensions::Paginator.new( :posts, '/index', :per_page => 10 )
+  extension Awestruct::Extensions::Tagger.new( :posts, '/index', '/posts/tags', :per_page => 10)
+  extension Awestruct::Extensions::TagCloud.new( :tagcloud, '/posts/tags/index.html', :layout=>'base', :title=>'Tags')
+  extension Awestruct::Extensions::Disqus.new
+
+  extension Awestruct::Extensions::Indexifier.new
+  extension Awestruct::Extensions::Atomizer.new( :posts, '/feed.atom', :feed_title=>'Steeplesoft' )
+
+  helper Awestruct::Extensions::Partial
+  helper Awestruct::Extensions::GoogleAnalytics
+  helper Awestruct::Extensions::ReadMore
+end
+-----
+
+I don't know Ruby (though I've learned some in this process), but this seems pretty straightforward to me:  `require` is like a Java `import`, and the `do` block is configuring a new `Pipeline` object. Syntax questions aside, here's my understanding of the file:
+
+* The `Posts` extension is configured. We're telling the system to look for the posts in file under the `/posts` directory. An array of post objects is then stored in the `posts` variable.
+* The `Paginator` extension is added, using the `posts` array. It seems the paginator needs to know the location of the paginator, which is our index file, `/index`. I don't know why it doesn't seem to need the extension. Finally, we want to have 10 posts per page.
+* The `Tagger` extension will build data based on the `tags` information at the top of each post (which we'll see in a minute). It creates static tag navigation files under `/posts/tags`, and it also has only 10 posts per page.
+* The `TagCloud` extension is here mainly to show you that it exists. I have not yet figured out how to make it work. Maybe someone can show me what I'm doing wrong. :P
+* Since this is a static site, we can't use a local database for comments, so we're adding support for Disqus to our site.
+* The `Indexifier` and `Atomizer` extensions are used to create the news feed for your site, which I still find important and helpful, even if Google disagress (R.I.P., Google Reader! :)
+* The `Partial` helper allows us to define -- hold on to your seats -- reusable parts of a page. We'll see this in more detail later.
+* The `GoogleAnalytics` helper should be self-explanatory.
+* `ReadMore` is an extension I wrote to duplicate the "read more" functionality of Wordpress. It's in a file called `readmore.rb` and goes in `_ext`. It looks like this:
+
+[source,ruby,linenums]
+-----
+module Awestruct
+  module Extensions
+    module ReadMore
+      def truncate(content)
+        index = content.index("<!-- Read More -->")
+        if index != nil
+            if index > -1
+                return content[0..index-1]
+            end
+        end
+        return content
+      end 
+      def filter(content)
+        index = content.index("<!-- Read More -->")
+        if index != nil
+            if index > -1
+                content[index..index+11]= ""
+            end
+        end
+        content
+      end
+    end
+  end
+end
+-----
+
+Pages and posts should be able to put `<!-- Read More -->` on a line by itself and things will work as expected: in page listing, the content stops at `<!-- Read More -->`, and on full posts, `<!-- Read More -->` is removed from the output. The rest of the ugliness of the file is due to the fact that I don't know Ruby, so I was shooting in the dark. Feel free to clean it up, but, if you do, I'd love to see your better version. :)
+
+Layouts
+-------
+
+With the site and Awestruct configured, we now need to create the look and feel for the site.  This can, of course, be as fancy as you want. For this example, it's going to be simple and ugly, but, hopefully, educational. :) Again, the Awestruct initialization will create a .haml file, which we want to delete. Instead, we want to create `_layouts/base.html.slim`:
+
+[source,slim,linenums]
+-----
+doctype 5
+html
+  head
+    meta charset='utf-8'
+    title=(page.title ? [page.title, site.title] : [site.title]) * ' | '
+    link rel="stylesheet" href='/styles/style.css'
+    script src='/scripts/some.js'
+    javascript:
+        someInlineJs();
+    css:
+      .someInlineCss {
+      }
+  body class="someInlineCss"
+    div.header
+        h1
+            My Site
+    div.content
+        = content
+    div.footer
+        h3
+            I'm in the footer!
+    javascript:
+    - if site.google_analytics
+        =google_analytics_async
+-----
+
+The slim syntax is pretty simple, but, more importantly, really clean and light. No angle brackets. Yea! Hopefully, this all pretty straightforward. For more information on the slim syntax, you can visit its http://slim-lang.com/[home page]. The import part here is the `= content` line. This is where the information from each page, or post, will be inserted.  How do we do that? Let's go back to the index file.
+
+index.html.slim
+---------------
+My index pages look more or less like this:
+
+[source,linenums]
+-----
+layout: base
+#content
+    =partial('pagination.html.slim', :posts => page.posts)
+    div style="clear: both"
+    - page.posts.each do |post|
+        =partial('entry.html.slim', :post => post, :listing => true)
+    =partial('pagination.html.slim', :posts => page.posts)
+-----
+
+The text in between the `---` markers provides metadata Awestruct needs, such as title, author, tags, publish date, etc.  The `#content` line defines a `div` with an ID of `content`. The next line `=partial...`, makes use of the `Partial` helper. In this case, we tell it to use the template `pagination.html.slim`, which is under `_partials`, and assign the variable `posts` the value of `page.posts`. We'll look at the partial in a moment.
+
+The next line shows how to specify an HTML tag with arbitrary attributes.
+
+Next we have, as best as I can tell (and I'm just pulling a term from the air), a directive to Awestruct, which seems to be, more or less, straight Ruby code. Whatever the right term is, what we have is a loop over the array `page.posts`, and calls `partial` for each element, this time using `entry.html.slim`. Finally, we output the navigation partial again so we can have prev/next at the top and bottom.
+
+Partials
+--------
+Partials allow us to define a small snippet of...parameterized HTML that we can reuse. We've already seen the usages of two: pagination and entry. These files are simple slim files:
+
+.pagination.html.slim
+[source,slim,linenums]
+-----
+div.pagination
+    div.previous style="width:50%; float: left"
+        - if page.posts.previous_page
+          a href=page.posts.previous_page.url Previous
+        - if !page.posts.previous_page 
+          p Previous
+    div.next style="width:50%; float: right; text-align: right"
+        - if page.posts.next_page 
+          a href=page.posts.next_page.url Next
+        - if !page.posts.next_page
+          p Next
+-----
+
+In this partial, we use the variable `page.posts`, which we set in the call to `partial` above.
+
+.entry.html.slim
+[source,slim,linenums]
+-----
+article.post
+  header.entry-header
+    h1.title
+      a href=page.post.url =page.post.title
+    h4
+      time.pubdate datetime=page.post.date.strftime('%FT%T%:z') =page.post.date.strftime "%A, %B #{page.post.date.day}, %Y"
+  .entry-content
+    = truncate(page.post.content)
+  footer.entry-footer
+    - if page.post.tags
+      .tags
+        span.title
+          | tags: 
+        - page.post.tags.each do |tag|
+          a href="/posts/tags/#{tag}"
+            - if tag != page.post.tags.last
+              ="#{tag}, "
+            - else
+              ="#{tag} "
+  - if site.disqus
+    #comments
+      =page.post.disqus_comments
+-----
+
+This partial operates on a single element in our `posts` array, which we've assigned to `post`. Not also that, using an `=`, we can insert Ruby snippets to perform simple transformations. Here, I'm breaking the post date apart to generate a better looking date block.
+
+At the very end, we see Disqus come back up.  When the Disqus plugin is properly configured as we did above, all the needs to be done to make use of on the page is to put `=page.post.disqus_comments` somewhere on your page. At build time, Awestruct does all the work required to generate the HTML and JS to do the actual integration.
+
+Site Content
+------------
+We can now look at the important part of this exercise, the site content itself. Personally, I'm a pretty big fan of Asciidoc, so we're going to write our pages and post using that. Before we look at blog entries, let's take a quick look at the simple page use case.
+
+For a "normal" page, such as an About page, for which you simply need to create a page called `about.adoc`:
+
+[source,asciidoc,linenums]
+-----
+title: About
+author: Jason Lee
+h1
+    About
+This page is all about me!
+-----
+
+When the site is built, this page can be accessed via `http://localhost:1234/about`. Each .adoc file is compiled to a directory with the same name as the file, which contains the file `index.html`.
+
+Blog posts are only slight more complicated, as it seems there are conventions that need to be followed. Based on our configuration above, all blog posts must be put in the `posts/` directory, and it seems, must follow the naming scheme `yyyy-mm-dd-blog-post-title.adoc`. Other than that, they look pretty much like any other page, with a couple more metadata entries:
+
+[source,asciidoc,linenums]
+-----
+title: Blog Post Title
+author: Jason Lee
+date: 2013-04-19
+tags: [tag1, tag2]
+Blog content
+-----
+
+If you know Asciidoc, you should be ready to author your post. It's important to note that the value of `tags` must be an array, or the page will fail to compile.
+
+Testing
+-------
+Before we're ready to push this site live, we need to test it. Awestruct comes with a simple server that should be sufficient for most cases. While starting is very simple, I have a small shell script I use, as I like to force a site clean up before I start the server, and I need to change the port on which the server listens:
+
+[source,bash,linenums]
+-----
+#!/bin/bash
+
+rm -rf _tmp _site
+awestruct --auto --server --port 1234 --profile development
+-----
+
+The site is now available at `http://localhost:1234`. For simple changes, such as page content changes, Awestruct will detect changes and recompile the page, making it more or less immediately available. For other changes, such as configuration changes, you will have to restart the server.
+
+Deployment
+----------
+Once we have our site set up and looking the way want it to, we're ready to deploy. Again, Awestruct makes this very simple:
+
+[source,bash,linenums]
+-----
+$ awestruct -P production -g --force --deploy
+-----
+
+Here we're telling Awestruct to use the `production` profile, to generate the site (forcing it to do so even if it thinks it doesn't need to), and then to deploy the site using the configuration in `_config/site.yml`. In our case here, it will rsync the generated site with the remote host. Once that finishes, your very lightweight and, therefore, very fast web site is ready for public consumption.
+
+Final Notes
+-----------
+As I've kind of hinted at, I'm still pretty new to Awestruct, so there's a really good chance I have some things wrong: terms, techniques, other assumptions. What I've put together here, though, should, I hope, spare you some of the pain I went through in trying to come up to speed with tool.  For things I've not made clear -- or covered -- or got completely wrong, the folks in #awestruct on Freenode are very helpful. I've gotten great support from https://twitter.com/mojavelinux[Dan Allen], https://twitter.com/aslakknutsen[Aslak Knutsen], https://twitter.com/lightguardjp[Jason Porter], and https://twitter.com/bobmcwhirter[Bob McWhirter] and others there. I try to hang out there as well, but as of right now, everything I know is in this document. :)
+
+Give it a go, then, and let me know if you run into problems with my instructions, and I'll do my best to clarify and correct.  Good luck! :)

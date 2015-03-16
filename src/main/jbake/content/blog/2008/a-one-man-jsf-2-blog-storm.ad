@@ -1,0 +1,25 @@
+title=A One-Man JSF 2 Blog Storm
+date=2008-12-09
+tags=components, JavaServer Faces, tutorials
+type=post
+status=published
+~~~~~~
+= A One-Man JSF 2 Blog Storm
+Jason Lee
+2008-12-09
+
+
+As the specification writing part of JSF 2 comes to a close, we're getting a more complete implementation done on the reference implementation, Mojarra.  One of the primary developers on Mojarra is Jim Driscoll (the other being Ryan Lubke, who has done such an excellent job on the 1.2 series).  Jim, apparently, has been in a writing mood and has posted a number of very good (and small) posts on some of the features coming in JSF 2 (similar to Ryan's http://blogs.sun.com/rlubke/[series] from earlier this year). 
+
+I was about to start planning a smallish app, to be based on JSF 2, so I was perusing Jim's entries, and it occurred to me that a list of the links would be helpful for those following JSF 2 but not Jim's http://weblogs.java.net/blog/driscoll/atom.xml[feed], so here it is.  I hope it helps. :)
+
+* http://weblogs.java.net/blog/driscoll/archive/2008/11/writing_a_simpl.html[Writing a simple Composite Component with JSF 2.0]
+* http://weblogs.java.net/blog/driscoll/archive/2008/11/a_simple_ajax_j.html[A simple Ajax JSF 2.0 example]
+* http://weblogs.java.net/blog/driscoll/archive/2008/11/jsf_20_writing_1.html[JSF 2.0: Writing a Spinner component]
+* http://weblogs.java.net/blog/driscoll/archive/2008/11/jsf_20_adding_s_1.html[JSF 2.0: Adding Styles to the Spinner Component]
+* http://weblogs.java.net/blog/driscoll/archive/2008/11/jsf_20_writing.html[JSF 2.0: Writing fully reusable Ajax Component]
+* http://weblogs.java.net/blog/driscoll/archive/2008/11/another_jsf_20_1.html[Another JSF 2.0 Ajax Component: Editable Text]
+* http://weblogs.java.net/blog/driscoll/archive/2008/11/jsf_20_the_swit_1.html[JSF 2.0: The Switchlist example]
+* http://weblogs.java.net/blog/driscoll/archive/2008/12/jsf_20_the_faja.html[JSF 2.0: The f:ajax tag]
+
+I know Jim has more planned, so subscribe to his feed.  It should be well worth your time.

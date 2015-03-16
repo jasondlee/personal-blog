@@ -33,10 +33,18 @@
             <div class="col-md-9 columns">
                 <div class="pagination">
                     <div class="previous" style="width:50%; float: left">
-                        <p>Previous</p>
+                        <#if (previousFileName??)>
+                            <a href="${previousFileName}">Previous</a>
+                        <#else>
+                            <p>Previous</p>
+                        </#if>
                     </div>
                     <div class="next" style="width:50%; float: right; text-align: right">
-                        <a href="/page/2/">Next</a>
+                        <#if (nextFileName??)>
+                            <a href="${nextFileName}">Next</a>
+                        <#else>
+                            <p>Next</p>
+                        </#if>
                     </div>
                 </div>
                 <div style="clear: both"></div>
@@ -47,7 +55,7 @@
                                 <h1><#escape x as x?xml>${post.title}</#escape></h1>
                             </a>
                             <p>${post.date?string("dd MMMM yyyy")}</p>
-                            <p>${post.body}</p>
+                            <p>${post.body?keep_before("<!-- Read More -->")}</p>
                         </#if>
                     </#list>
                 </div>

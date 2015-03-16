@@ -1,0 +1,127 @@
+title=Putting Facelets in a Jar
+date=2010-05-04
+tags=Java
+type=post
+status=published
+~~~~~~
+= Putting Facelets in a Jar
+Jason Lee
+2010-05-04
+
+In a recent forum post, a user asked how to store a Facelets file in a database.  Although JSF doesn't support this out of the box (though it _would_ be a nice feature), it's not too difficult to add.  In this entry, I'll show you how to serve Facelets from a JAR file, then give some thoughts that will help, I hope, implement a database-backed approach.  I'll be using JSF 2, so if you're using Facelets 1.x with JSF 1.2, you'll have to extend com.sun.facelets classes to make this work in that environment.  With that out of the way, unto the breach!
+<!-- Read More -->
+
+To implement this solution, we'll need to provide JSF with three artifacts: and <<ExternalContextFactory>>, an <<ExternalContext>>, and a <<ResourceResolver>>.
+
+[[ExternalContextFactory]]
+ExternalContextFactory
+----------------------
+The http://java.sun.com/javaee/javaserverfaces/2.0/docs/api/javax/faces/context/ExternalContext.html[ExternalContext] "allows the Faces API to be unaware of the nature of its containing application environment.  In particular, this class allows JavaServer Faces based appications to run in either a Servlet or a Portlet environment."  JSF creates the `ExternalContext` by means of an http://java.sun.com/javaee/javaserverfaces/2.0/docs/api/javax/faces/context/ExternalContextFactory.html[ExternalContextFactory].  Since we're providing a custom `ExternalContext`, we must provide an `ExternalContextFactory`, which is really quite simple:
+
+[source,java,linenums]
+-----
+public class MyExternalContextFactory extends ExternalContextFactory {
+    private ExternalContextFactory parent;
+    public MyExternalContextFactory (ExternalContextFactory parent) {
+        super();
+        this.parent = parent;
+    }
+    @Override
+    public ExternalContext getExternalContext(Object context, Object request, Object response) throws FacesException {
+        return new MyExternalContext(getWrapped().getExternalContext(context, request, response));
+    }
+    @Override
+    public ExternalContextFactory getWrapped() {
+        return parent;
+    }
+}
+-----
+
+This factory decorates any existing `ExternalContextFactory`, returning the custom `ExternalContext` we'll see now.
+[[ExternalContext]]
+ExternalContext
+---------------
+
+As we noted briefly above, the `ExternalContext` is an abstraction over either a `ServletContext` or a `PortletContext` (in theory, an `ExternalContext` implementation could also wrap `BillyBobsRubyThingamajig` if one were so inclined to write one).  The function of the `ExternalContext` for our purposes here is to allow JSF to ask its external context for a URL to the resource requested by the client, and that's why we have to override this class.  Since the default `ExternalContext` looks in the document root of the web app for a resource, and since we're not storing some/any of our Facelets in the document root, we have to change the look up logic.  However, there will likely still be at least <em>some</em> resources in the doc root, so we look first in the classpath for the resource.  If that lookup fails, we call the wrapped `ExternalContext`, whatever it is, and let it take things from there.  That code, then, might look something like this:
+
+[source,java,linenums]
+-----
+public class MyExternalContext extends ExternalContextWrapper {
+    private ExternalContext wrapped;
+    public MyExternalContext(ExternalContext wrapped) {
+        this.wrapped = wrapped;
+    }
+    public URL getResource(String path) throws MalformedURLException {
+        System.out.println("Looking for " + path);
+        URL url = Thread.currentThread().getContextClassLoader().getResource(path.substring(1));
+        if (url == null) {
+            url = getWrapped().getResource(path);
+        }
+        return url;
+    }
+    @Override
+    public ExternalContext getWrapped() {
+        return wrapped;
+    }
+}
+-----
+
+The interesting method here is `getResource(String)`.  We interrogate the classpath for the resource (minus the leading '/' -- that code should probably be more robust than it is), then fallback to the wrapped/decorated `ExternalContext` on a lookup failure.  In the end, we return the URL even if it's null.  If we don't override this class, the default `ExternalContext` will look in the document root, not find the resource we want, and return null, which will result in a 404 for the user, which is clearly not what we want. : )
+With that done, we come to the final piece of the puzzle, the `ResourceResolver`.
+
+[[ResourceResolver]]
+ResourceResolver
+----------------
+The http://java.sun.com/javaee/javaserverfaces/2.0/docs/api/javax/faces/view/facelets/ResourceResolver.html[ResourceResolver] provides "a hook to decorate or override the way that Facelets loads template files."  Sadly, this class looks a lot like the custom `ExternalContext` from above:
+
+[source,java,linenums]
+-----
+public class MyResourceResolver extends ResourceResolver {
+    private ResourceResolver parent;
+    public MyResourceResolver(ResourceResolver parent) {
+        this.parent = parent;
+    }
+    @Override
+    public URL resolveUrl(String path) {
+        URL url = null;
+        try {
+            url = url = Thread.currentThread().getContextClassLoader().getResource(path.substring(1));
+            if (url == null) {
+                url = parent.resolveUrl(path);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return url;
+    }
+}
+-----
+
+Eerily familiar, isn't it?  It's certainly possible that this redundant code could be reduced or removed altogether, but I haven't found a way.  If you do, please let me know. : )
+With our artifacts coded, we now need to tell JSF to use them.  That's done in `faces-config.xml` (one of the few places where XML is still needed):
+
+[source,xml,linenums]
+-----
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
+    <factory>
+        <external-context-factory>com.foo.MyExternalContextFactory</external-context-factory>
+    </factory>
+</faces-config>
+-----
+
+We also need a context parameter to tell Facelets to use our new ResourceResolver:
+
+[source,xml,linenums]
+-----
+<context-param>
+    <param-name>javax.faces.FACELETS_RESOURCE_RESOLVER</param-name>
+    <param-value>com.foo.MyResourceResolver</param-value>
+</context-param>
+-----
+
+But what about the database?
+----------------------------
+At this point, it should be pretty clear how to pull things from the database, at least in general (WARNING: I've not actually tried this, so I'm shooting from the hip).  The problem as I see it is the use of URLs in the various APIs.  Since `java.net.URL` is final, you can't subclass it with something smart enough to know how to get its contents from a database.  That leaves (again, from the hip) caching the item to disk (in the `ResourceResolver`) and returning a URL to that (make sure to call `File.deleteOnExit()`! ;).  Perhaps there's a better solution, and I hope there is, but I'll leave that as an exercise for the reader.  Unless you get really stuck, then I'll try to find time to create a complete, working solution.

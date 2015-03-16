@@ -1,0 +1,347 @@
+title=Java EE&#039;s Buried Treasure: the Application Client Container
+date=2011-02-22
+tags=GlassFish, Java, Java EE, tutorials
+type=post
+status=published
+~~~~~~
+= Java EE&#039;s Buried Treasure: the Application Client Container
+Jason Lee
+2011-02-22
+
+
+From time to time, I'm asked about accessing various EE artifacts (EJBs, etc) from a standalone client.  Almost invariably, the user is having trouble getting the environment setup, grabbing an InitialContext, etc.  Also almost invariably, my answer to them is "use the application client container", which is as far as I can take them.  The topic of application client container, or ACC, came up again recently when I was asked on Twitter about an issue with ACC and GlassFish in a clustered environment. While this user (hi, Markus! : ) http://blog.eisele.net/2011/02/clustering-stateful-session-beans-with.html[figured out his issue] before I could be of much help, I took this opportunity finally to learn exactly what the ACC is and how to use it.  Thanks to Oracle's Tim Quinn for his patient and tireless help, here's what I learned...
+<!-- Read More -->
+
+= What _IS_ the Application Client Container
+http://download.oracle.com/docs/cd/E19229-01/819-0600/msgappclient.html[Officially], an ACC is defined this way:
+
+[quote]
+____
+The Application Client Container (ACC) includes a set of Java classes, libraries, and other files that are distributed along with Java client programs that execute on their own Java Virtual machine. The ACC provides system services that enable a Java client program to execute. It communicates with the Application Server using RMI/IIOP and manages communication of RMI/IIOP using the client ORB bundled with it. The ACC is specific to the EJB container and is often provided by the same vendor.
+____
+
+In a nutshell, an application client is a Java application (which would typically be, I'm guessing, a Swing app, for example) that is a client of a particular enterprise application.  It is run in an "application client container" which handles the lifecycle of the application, providing various enterprise type services (such as EJB injection).  An example might be an EJB-based order entry system, with a Swing frontend.  Much to my surprise, there doesn't seem to be any magic to it beyond the inclusion of the XML file, `META-INF/application-client.xml`, which we'll look at in just a moment.  First, let's build a simple enterprise application.
+
+= The Enterprise Application
+In order to have an application client, we need an application, so we're going to build one, but I'm going to do something a bit unusual.  Typically, my examples here all Maven-based.  This time, though, I'm going to walk you through building the application (and its client) using NetBeans, as it's support for what we're doing here is pretty slick.  Don't click away yet, Maven fans.  I'll have a Maven version further down.
+
+To create the application, click File -> New Project in NetBeans (I'm using a nightly of NetBeans 7.0, for what it's worth):
+
+image::/images/2011/02/newenterpriseapp1-300x211.png[class='aligncenter' title='New Enterprise Application Step 1', link='/images/2011/02/newenterpriseapp1.png']
+
+Choose the Jave EE category, and Enterprise Application under Projects.  On the next page, enter the project name and location:
+
+image::/images/2011/02/newenterpriseapp2-300x205.png[class='aligncenter' title='New Enterprise Application Step 2' , link='/images/2011/02/newenterpriseapp2.png']
+
+On the third step in the wizard, make sure you have a server selected (I, for example, chose the very excellent GlassFish 3.1 server : ).  Uncheck `Create Web Application Module`, and, if you would like, check `Enable Contexts and Dependency Injection`.  
+
+image::/images/2011/02/newenterpriseapp3-300x174.png[class='aligncenter' title='New Enterprise Application Step 3' , link='/images/2011/02/newenterpriseapp3.png']
+
+Finally, click finish and NetBeans will create your project for you.
+
+With our project ready, let's create a really simple EJB.  We'll do that in the new EnterpriseApplication-ejb project (for what it's worth, I modified my project to find its source under `src/main/java` to make Mavenization simpler later).  Let's start with an interface (yes, I know EJB 3.1 has interface-less EJBs, but the ACC doesn't seem to like that, and I still think programming to interfaces is a good idea):
+
+[source,java,linenums]
+-----
+@Remote
+public interface Dummy {
+    String sayHello(String name);
+}
+-----
+
+And here's the implementation:
+
+[source,java,linenums]
+-----
+public class DummyBean implements Dummy {
+    @Override
+    public String sayHello(String name) {
+        return "Hello, " + name;
+    }   
+}
+-----
+
+And that's our app. You can have NetBeans build and deploy it if you'd like, but you won't see much.  To fix that, let's write a simple Swing app to exercise this impressive EJB.
+
+= The Enterprise Application Client
+In NetBeans, click File -> New Project again.  Choose the Java EE category again, but this time select Enterprise Application Client under Projects:
+
+image::/images/2011/02/newappclient1-300x211.png[class='aligncenter' title='New Application Client Step 1', link='/images/2011/02/newappclient1.png']
+
+On the final page, select EnterpriseApplication for `Add to Enterprise Application`, make sure the correct server is selected, target Java EE 6, and check `Enable Contexts and Dependency Injection` if you'd like (all this does, by the way, is add a basically empty beans.xml to the project, so you can always do this later if you forget).
+
+image::/images/2011/02/newappclient3-300x174.png[class='aligncenter', title='New Application Client Step 3', link='/images/2011/02/newappclient3.png']
+
+Our app client will look something like this:
+
+[source,java,linenums]
+-----
+public class Main  extends javax.swing.JFrame {
+    @EJB
+    private static Dummy dummy;
+    /** Creates new form NewJFrame */
+    public Main() {
+        initComponents();
+    }   
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
+        label = new javax.swing.JLabel();
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        label.setText("label");
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .add(134, 134, 134)
+                .add(label, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .add(81, 81, 81)
+                .add(label)
+                .addContainerGap(203, Short.MAX_VALUE))
+        );
+        pack();
+    }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                final Main frame = new Main();
+                frame.label.setText(dummy.sayHello("Jason"));
+                frame.setVisible(true);
+            }
+        });
+    }
+    // Variables declaration - do not modify
+    protected javax.swing.JLabel label;
+    // End of variables declaration
+}
+-----
+
+We're now ready to run our application. In the Projects browser on the left, right click `EnterpriseApplication` and click `Run`. After a few seconds, you should see a window that looks like this:
+
+image::/images/2011/02/appclient-300x235.png[class='aligncenter' title='The running Application Client', link='/images/2011/02/appclient.png']
+
+Beautiful! 8-)
+
+= Deploying and running outside of NetBeans
+Obviously, you won't deploy this to production with NetBeans, so let's a take a quick look at deployment and execution via the command line.  If you want to deploy the app and immediately download the client stubs, you can do this:
+
+[source,bash,linenums]
+-----
+asadmin deploy --retrieve localdir/ --force dist/EnterpriseApplication.ear
+-----
+
+This will deploy the app and download the client stubs to `localdir` in the current directory.  If you don't need the client stubs at the time of deployment (say, you've deployed to the server from your machine, then need to download on a client machine), you can issue this command:
+
+[source,bash,linenums]
+-----
+asadmin get-client-stubs --appname EnterpriseApplication localdir
+-----
+
+To run the client, issue this command:
+
+[source,bash,linenums]
+-----
+appclient -jar localdir/EnterpriseApplicationClient.jar
+-----
+
+The problem with that approach is that it requires a pretty heavy configuration: grab some GlassFish client jars, configure XML, and on and on.  That's just too much.  Fortunately, GlassFish makes this really simple (remember when I said GlassFish was an excellent server? : ).  With the application deployed, point your browser at http://localhost:8080/EnterpriseApplication/ApplicationClient[http://localhost:8080/EnterpriseApplication/ApplicationClient] and wait for it.  GlassFish gives you Java Web Start for your application client for free.  No extra steps needed.  If this is the first time you've run the Application Client via JWS on this machine, it will take a few minutes to download the required libraries, but subsequent runs should be much quicker starting up.  How fancy is that?
+
+= Enough with the GUI! Give me some XML!
+For those that have been waiting patiently, here's how to accomplish the same thing via Maven.  Let's start with a parent POM:
+
+[source,xml,linenums]
+-----
+<project 
+        xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd' 
+        xmlns='http://maven.apache.org/POM/4.0.0' 
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.steeplesoft.enterpriseapp</groupId>
+    <artifactId>parent</artifactId>
+    <packaging>pom</packaging>
+    <version>0.1-SNAPSHOT</version>
+    <name>Enterprise Application - parent</name>
+    <modules>
+        <module>ejb</module>
+        <module>appclient</module>
+        <module>ear</module>
+    </modules>
+    <repositories>
+        <repository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+        </repository>
+    </repositories>
+    <properties>
+        <javaee-api.version>6.0</javaee-api.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>6.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+-----
+
+The EJB POM is very simple:
+
+[source,xml,linenums]
+-----
+<project 
+        xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd' 
+        xmlns='http://maven.apache.org/POM/4.0.0' 
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.steeplesoft.enterpriseapp</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>ejb</artifactId>
+    <packaging>jar</packaging>
+    <name>Enterprise Application - ejb</name>
+</project>
+-----
+
+As is the app client jar:
+
+[source,xml,linenums]
+-----
+<project 
+        xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd' 
+        xmlns='http://maven.apache.org/POM/4.0.0' 
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.steeplesoft.enterpriseapp</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>appclient</artifactId>
+    <packaging>jar</packaging>
+    <name>Enterprise Application - appclient</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.steeplesoft.enterpriseapp</groupId>
+            <artifactId>ejb</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.swinglabs</groupId>
+            <artifactId>swing-layout</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.steeplesoft.acc.client.Main</mainClass>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>    
+    </build>
+</project>
+-----
+
+Note that we add a dependency on our EJB module, as well as the `swing-layout` artifacts.  We also need to configure the Maven JAR plugin to tell it the name of our Main class.  I also have `application-client.xml` and `beans.xml` in `src/main/resources/META-INF`.
+
+Lastly, we have the POM for the ear module:
+
+[source,xml,linenums]
+-----
+<project 
+        xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd' 
+        xmlns='http://maven.apache.org/POM/4.0.0' 
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.steeplesoft.enterpriseapp</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>enterpriseapplication</artifactId>
+    <packaging>ear</packaging>
+    <name>Enterprise Application - ear</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.steeplesoft.enterpriseapp</groupId>
+            <artifactId>ejb</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>com.steeplesoft.enterpriseapp</groupId>
+            <artifactId>appclient</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <version>6</version>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <generateApplicationXml>false</generateApplicationXml>
+                    <modules>
+                        <ejbModule>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>ejb</artifactId>
+                        </ejbModule>
+                        <jarModule>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>appclient</artifactId>
+                            <bundleDir>/</bundleDir>
+                        </jarModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+-----
+
+The configuration for the EAR plugin took me a while to figure out, and there's a good chance I'm not doing it quite right, but it works. :)
+
+Issue `mvn install` from the top-level directory, and you have your deployable archive in `ear/target`.
+
+That's all there is to it.  Clearly, you'll want a more interesting enterprise application, which leads to a more interesting application client, but the basics of putting these pieces together remain the same.  So next time you need to access an EJB deployed to a remote application server, you know the official, portable way to get to it.
+
+As always, feel free to post questions, suggestions, critiques, etc in the comments below.  The source code can be found http://java.net/projects/steeplesoft/sources/appclient/show[here].

@@ -1,0 +1,26 @@
+title=A New Way to Blog
+date=2012-07-16
+tags=General
+type=post
+status=published
+~~~~~~
+= A New Way to Blog
+Jason Lee
+2012-07-16
+
+
+On the Sunday before the recent JAX conference in San Francisco, I was privileged to attend the Speakers' Summit with many of the other speakers for that week. There was a lot of really good discussions, but the biggest thing I took away from it, or at least the most practical, came from Dan Allen's lightning talk on documentation and removing the pain. That five minute talk stands a good chance of changing the way I write.
+
+<!-- Read More -->
+
+Dan's main point, as I saw it, is that documentation is hard enough, so why do we make it harder with all of those angle brackets? Whether we're writing a blog entry and using HTML or a full-length book and using docbook, those angle brackets get in the way. They're hard to type (correctly) and even harder to read.  If I recall correctly, he had two suggestions (with one building on the other): http://www.methods.co.nz/asciidoc/[asciidoc] and http://awestruct.org/[awestruct].
+
+`asciidoc` is utility that allows one to write HTML, docbook, etc in a more natural format.  There are no angle brackets (mostly). You just write your text, using a simpler, faster format. Once you have `asciidoc` installed, you can see the complete syntax by running `asciidoc --help syntax`. I am, in fact, writing this entry using `asciidoc`. My recent entry, http://blogs.steeplesoft.com/2012/07/writing-pluggable-java-ee-applications-the-explanation/[Writing Pluggable Java EE Applications, The Explanation] was also written in `asciidoc`. Once you're familiar with the syntax, it really is simpler to use, and, thanks to a tool called `blogpost`, I can work offline, then post when I'm ready.
+
+What is `blogpost`? It's another command-line utility that allows one to write a blog entry in `asciidoc`, then post (or update, delete, etc) that entry to a Wordpress-based blog.  You can find more details http://srackham.wordpress.com/blogpost1[here].  Locally, I can run `asciidoc` to produce HTML, which I can review, and when I'm happy with it, I can run `blogpost` to push it to my site.  So far, I like it. We'll see how it does in the long term, but, for now, I'm going to run with it. :)
+
+The other tool is awestruct. As I understand it, it's a tool for generating a static website, which can be authored in haml or markdown. It supports templating, theming, etc., and can even upload the generated content to your site for you. I intend to give this a whirl for http://cubtracker.com[Cub Tracker documentation] when I get the time.  It looks like a pretty nice tool. You can see some sample sites http://awestruct.org/gallery/[here], and you can get started http://awestruct.org/getting_started/[here].
+
+One last item I think I should mention is presentations. Dan didn't mention this here, but I see that he'll be covering it at http://therichwebexperience.com/conference/fort_lauderdale/2012/11/session?id=26491[The Rich Web Experience] (incidentally, it looks like he'll be also be http://therichwebexperience.com/conference/fort_lauderdale/2012/11/session?id=26492[covering] there what he shared briefly at the Summit). The idea is to author presentations without presentation packages (such as Powerpoint or OpenOffice.org Impress), but, rather, to use HTML5, JS, and CSS.  I wasn't able to catch any of Dan's presenations during the conference, but Brian Leathem used the same approach, and it looked rather nice. While not required, it seems the JBoss guys are using awestruct to do much of the heavy lifting, so once you learn that, you'll be set for this. :)  You can find the source to Brian's presentation on https://github.com/bleathem/talks[GitHub] to see how it's done.
+
+These are all certainly interesting approaches, and, based on my limited experience, much lighter and easier. I certainly intend to give them all a fair shake to see if they fit how I work, and, if not, if I should change how I work. :)  If you have time and/or interest, you should check it out as well.

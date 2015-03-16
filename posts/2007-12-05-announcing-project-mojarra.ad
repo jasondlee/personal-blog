@@ -1,8 +1,0 @@
----
-title: 'Announcing Project Mojarra'
-author: 'Jason Lee'
-layout: blog-post
-date: 2007-12-5
-tags: [ JavaServer Faces ]
----
-It is with a pretty high degree of excitement that we, the <strike>JSF RI</strike> Mojarra development team, announce Project Mojarra.  While the project itself is not new (it's the same, high quality and stable JSF implementation we're all familiar with ;), the announcement of the new moniker brings to an end a lengthy, and sometimes frustrating, process of deciding on a name that can pass legal muster.  For more details on the name change, see http://blogs.sun.com/rlubke/entry/project_mojarra_the_jsf_ri[this] entry by Ryan Lubke.

@@ -1,0 +1,62 @@
+title=Announcing FacesTester
+date=2009-03-03
+tags=JavaServer Faces, Kenai, testing
+type=post
+status=published
+~~~~~~
+= Announcing FacesTester
+Jason Lee
+2009-03-03
+
+One of the issues that has always troubled me with regard to writing JSF applications (or _any_ web application, really) is how hard it is to test them.  Some time ago, while discussing various Java web frameworks, I stumbled across a class called `WicketTester`, which is part of the Wicket project.  Using this class, as best as I can tell, Wicket authors can easily test their applications very quickly.  Having taken the advice of Dale Hanchey, and old http://www.okbu.edu[college] professor of mine, "Never be too proud to steal a good idea," FacesTester was born.
+<!-- Read More -->
+
+Unit testing a JSF application can be tricky, and there are a lot of different opinions and techniques for doing so.  Stan Silvert from JBoss, for example, just released a GA version of http://jboss.org/jsfunit[JSFUnit], an in-container end-to-end testing framework for JSF.  Dan Allen, also of JBoss but working on the Seam project, recently discussed SeamTest in this http://seamframework.org/Documentation/WhatIsTheDifferenceBetweenSeamTestAndJSFUnit[wiki] entry.  What bothers me about both of those solutions, though, is the need for a container.  What I'd like to be able to do is write a plain, simple JUnit test to exercise my managed beans, converters, etc. without the start-up penalty of starting a container (even if it's embedded) or deploying a .war to a container.  That's where FacesTester fits in.  Though in a very early stage, FacesTester is intended to allow a JSF application developer to inspect the component tree, validate the logic and/or output of managed bean methods, etc. with a very simple and light weight API.
+
+As exciting as that may sound (I don't know about you, but in my head, it's REALLY exciting : ), don't get carried away yet.  I started this project in a very low-key fashion several weeks ago, and poked at it in my scant free time.  Last week, though, I got a call from my good friend http://www.rodcoffin.com/[Rod Coffin], who had some unrelated JSF questions.  In the course of the conversation, testing came up, and I mentioned this pet project of mine.  Rod, a huge proponent of testing in general, immediately bit on the idea and volunteered to help.  Since that conversation, we have gotten the project to the state where we can instantiate the `FacesServlet` and request a page from our application.  We can then request a specific component and perform various tests on it.  Since we're leveraging the real, live FacesServlet, we get all the JSF goodness, including EL support, for free.  Here's an example (contrived, dumb, simple, etc) test:
+
+[source,xml,linenums]
+-----
+<h:form id="form">
+    <h:outputLabel id="stateLabel" value="State"></h:outputText>
+    <h:outputText id="elTest" value="#{4+5}"></h:outputText>
+    <h:outputText id="renderedTest" rendered="false" 
+        value="RenderedTest">
+    </h:outputText>
+</h:form>
+-----
+
+Given that page definition, we can then test it like this:
+
+[source,java,linenums]
+-----
+public class WhenNavigatingToPage {
+    private FacesTester tester;
+    @Before
+    public void setUp() throws Exception {
+        tester = new FacesTester();
+    }
+    @Test
+    public void shouldBeAbleToAssertValueOfComponents() throws Exception {
+        assertThat(tester.requestPage("/address.xhtml").getComponentWithId("form:stateLabel")
+            .getValueAsString(), is("State"));
+    }
+    @Test(expected = AssertionError.class)
+    public void shouldBeAbleToAssertValueOfNoExistentComponents() {
+        tester.requestPage("/address.xhtml").getComponentWithId("unknown");
+    }
+    @Test
+    public void shouldBeAbleToEvaluateEl() throws Exception {
+        assertThat(tester.requestPage("/address.xhtml"), is ("9"));
+    }
+    @Test
+    public void shouldBeAbleToTestRendered() throws Exception {
+        FacesComponent component = tester.requestPage("/address.xhtml")
+            .getComponentWithId("form:renderedTest");
+        assertThat(component.getValueAsString(),is ("RenderedTest"));
+        assertEquals(component.isRendered(), false);
+    }
+}
+-----
+
+As cool as that is, that's about the extent of the API at the moment, but Rod and I are very excited about what we might be able to offer with this.  The next big step for me is to get form submission working, and Rod is going to look at writing more tests and letting those drive the capabilities of FacesTester, as well writing some unit tests around bootstrapping the environment from different web.xml files.  There's a lot to be done still, so if you're interested, head over to the project http://kenai.com/projects/facestester[home page] on http://kenai.com[kenai.com] and join the fun!

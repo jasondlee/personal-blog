@@ -1,0 +1,12 @@
+title=LiveJournal Export
+date=2014-06-24
+tags=JavaFX
+type=post
+status=published
+~~~~~~
+= LiveJournal Export
+Jason lee
+2014-06-24
+
+
+I have a personal LiveJournal blog that I'd like to migrate to link:posts/2012/07/16/a-new-way-to-blog/[Awestruct]. Unfortunately, LiveJournal's export tool is really limited, allowing the export of only one month at a time. There are tools to work around that, but the only ones I've seen require Windows, which rules me out. In typical geek fashion, then, I wrote my own tool, https://bitbucket.org/jdlee/ljexport[ljexport], a very quick-and-dirty JavaFX 8 application. All this does is export each month to its own file. Once you have the data, you're on your own. :)

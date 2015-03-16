@@ -1,0 +1,153 @@
+title=Multitenant PostgreSQL
+date=2015-02-18
+tags=database, PostgreSQL, multitenancy
+type=post
+status=published
+~~~~~~
+= Multitenant PostgreSQL
+Jason Lee
+2015-02-18
+
+
+As more and more of our applications move into "the cloud", multi-tenancy has become a pretty big thing these days. In a nutshell, "multi-tenancy" means handling multiple customers data using, say, a single server. This concept scales, of course, to clusters, etc., but the concept is the same: a bunch of people's data all mixed together in one big bucket. The problem, then, for the development team is isolating one customer's data from another's, disallowing, for example, the viewing or editing of another customer's information. There are a myriad of ways to accomplish this, but I'd like to discuss here a way to accomplish this using a single database.
+
+<!-- Read More -->
+
+While the concept can certainly be applied on just about any database, for this discussion, we'll use PostgreSQL, my favorite database (and, yes, as a geek I'm allowed to say things like that). The concepts we'll use are views, triggers, and session variables.
+
+To keep things simple, our entity/model will be a very simple one called Item, which has one column, data. The DDL for its table might look something like this:
+
+[source,sql]
+-----
+CREATE TABLE items (
+	id SERIAL,
+	data text
+);
+-----
+
+It's not very exciting, but that's OK. I'm probably not either. In thinking about multiple customers, though, we need a way to discriminate between one customer's Items and another, so we'll add a company ID:
+
+[source,sql]
+-----
+CREATE TABLE items (
+	id SERIAL,
+	company_id int not null,
+	data text
+);
+-----
+
+But how do we restrict customer #1 from seeing customer #2's data? We'll do that with a view:
+
+[source,sql]
+-----
+CREATE OR REPLACE VIEW company_items AS
+	SELECT * FROM items WHERE company_id = ...
+-----
+
+As you can tell, that's not quite going to work. Where does the value for `company_id` come from? The answer to that is session variables. Unfortunately, as best as I can tell, Postgres doesn't support this idea natively, so we have to roll our own, which we'll do using plperl, the Postgres extension which allows writing stored procedures in Perl. There are other languages available, and perhaps I'll port this to, say, Python, because Perl is pretty nasty stuff. :) Nevertheless, this is working code:
+
+[source,sql]
+-----
+CREATE OR REPLACE FUNCTION set_var(name text, val text) RETURNS text AS $$
+    if ($_SHARED{$_[0]} = $_[1]) {
+        return 'ok';
+    } else {
+        return "cannot set shared variable $_[0] to $_[1]";
+    }
+$$ LANGUAGE plperl;
+
+CREATE OR REPLACE FUNCTION get_var(name text) RETURNS text AS $$
+    return $_SHARED{$_[0]};
+$$ LANGUAGE plperl;
+-----
+
+This creates two functions, `set_var` and `get_var`, whose functionality should be apparent from the function names. With these in place, we can update the view as follows:
+
+[source,sql]
+-----
+CREATE OR REPLACE VIEW company_items AS
+	SELECT * FROM items WHERE company_id = 
+		(select cast (get_var('company_id') AS NUMERIC));
+-----
+
+To get the value from a function in Postgres, you SELECT from it, which we've added to the query that builds the view. You'll also notice that `get_var` and `set_var` deal with strings, so the value needs to be cast to `NUMERIC` or the view creation will fail.
+
+With all of this in place, we can test this using psql:
+
+[source,sql]
+-----
+// <1>
+mydb=# insert into items (company_id, data) values (1, 'Company 1 data 1');
+mydb=# insert into items (company_id, data) values (1, 'Company 1 data 2');
+mydb=# insert into items (company_id, data) values (1, 'Company 1 data 3');
+mydb=# insert into items (company_id, data) values (2, 'Company 2 data 1');
+mydb=# insert into items (company_id, data) values (2, 'Company 2 data 2');
+// <2>
+mydb=# select * from company_items; 
+ id | company_id | data 
+----+------------+------
+(0 rows)
+
+// <3>
+mydb=# select set_var('company_id', '2');
+ set_var 
+---------
+ ok
+(1 row)
+
+// <4>
+mydb=# select * from company_items;
+ id | company_id |       data       
+----+------------+------------------
+  4 |          2 | Company 2 data 1
+  5 |          2 | Company 2 data 2
+(2 rows)
+
+// <5>
+mydb=# select set_var('company_id', '1');
+ set_var 
+---------
+ ok
+(1 row)
+
+// <6>
+mydb=# select * from company_items;
+ id | company_id |       data       
+----+------------+------------------
+  1 |          1 | Company 1 data 1
+  2 |          1 | Company 1 data 2
+  3 |          1 | Company 1 data 3
+(3 rows)
+-----
+<1> Create the data
+<2> Select from the view
+<3> Set the current company ID
+<4> Select from the view again and see data
+<5> Change the company ID
+<6> Select from the view again and see different data
+
+As you can see, the contents of the view `company_items` is controlled by the current state of the session variable `company_id`. It's also clear that if it's not set, then the view is empty, clearly indicating that the app must take care to set this session variable on each use. In the context of a web app, this would be done per request, just after authentication: the user's credentials are verified, the company to which the user belongs is identified, and the session variable is set. 
+
+[WARNING]
+One thing to be careful about that I have not yet had the chance to test is this: in a pooled connection environment, is the value of the session variable cleared when the connection is returned to the pool? My guess is that it is not. How to manage that, though, is beyond the scope of this post.
+
+One final nugget. In such an environment, it would be nice if the application didn't have to remember to set the company ID on the `Company_Item` explicitly. We can, in fact, handle that in the database layer with a trigger:
+
+[source,sql]
+-----
+CREATE OR REPLACE FUNCTION set_item_company() RETURNS trigger AS $$
+    BEGIN
+        NEW.company_id = (select cast (get_var('company_id') AS NUMERIC));
+        RETURN NEW;
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_item_company BEFORE INSERT OR UPDATE ON items
+    FOR EACH ROW EXECUTE PROCEDURE set_item_company();
+-----
+
+With this trigger in place, whenever a client inserts into either `company_items` or `items`, the field `company_id` is set automatically to whatever the current state of the session variable `company_id` is. Depending on your application's architecture, frameworks, etc., this may not be necessary, but, if it's helpful (and possible), this is an approach for handling it.
+
+There you have it. The seeds, at least, of a fairly robust multitenant database approach that doesn't involve separate databases or schemas for each tenant. As long as your application operates on only the views (exercise for the reader: can access to the tables be restricted at the database-level, leaving only the views accessible?) you should have a nice, clean segregation of customer data that is easy to maintain and migrate.
+
+Find any holes? Problems? Brain dead ideas? Let me know below! 8-)

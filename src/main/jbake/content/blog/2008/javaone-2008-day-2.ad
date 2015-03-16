@@ -1,0 +1,24 @@
+title=JavaOne 2008: Day 2
+date=2008-05-08
+tags=Java, JavaOne
+type=post
+status=published
+~~~~~~
+= JavaOne 2008: Day 2
+Jason Lee
+2008-05-08
+
+Day 2 of JavaOne is effectively over.  As I sit here typing, I have one more event, the hands-on-lab Plug Into GlassFish™ V3 With JavaServer™ Faces and jMaki in about an hour, which should be really good.  It's basically a lab showing how to do what Jerome demoed yesterday afternoon in the general session when he added a feature to the GlassFish admin console.
+<!-- Read More -->
+
+The day has been pretty good.  I skipped the Oracle general session this morning, but I was told that they announced that they are releasing Eclipse plug-ins that offer some of JDev's functionality with regard to the Oracle ESB.  While that doesn't help us NetBeans users, it _is_ is good news for Eclipse users, as now they won't be forced to use JDev if they have to talk to the Oracle ESB.  
+
+Another announcement I somehow missed is Sun's announcement of a partnership with Liferay, which is really good news, I think.  In a former life, I used Liferay briefly.  While I didn't get the chance to become really proficient with the system, I really liked it.  I think I might take a look at that as a solution for the OKC JUG (assuming I can solve the Java hosting issue).  http://blogs.sun.com/bytor/entry/sun_liferay_initiative[Here] are more details on the announcement, if you're interested.
+
+A funny note:  In the Web Beans talk today, Gavin was lamenting the lack of a real, full-featured event system in JSF, something which Web Beans hopes to fix and that will be fixed in JSF 2.  Someone in the crowd piped up, "What about JMS?"  Gavin responded, "'What about JMS?'  Are you serious?" <!--pull-->Gavin responded, "'What about JMS?'  Are you serious?"<!--/pull--> then went on to lambaste the idea.  He was right:  JMS is totally inappropriate for what he was discussing, but I really feel sorry for the guy that suggested it.  Apparently, no one warned him of Gavin's proclivity for blunt, brutally honest responses.
+
+One that strikes me as really phenomenal about Sun is their willingness to mingle with the unwashed masses (and I admit:  we can be a scary lot :).  As I was leaving the pavilion today, James Gosling was there talking to someone, when another conference attendee asked him if she could have her picture taken with him.  He affably replied, "Sure!" and posed for the camera.  A few moments later, he strolled through the same crowded hall as everyone else, completely unassuming.  He gets high marks from me for that (for what little worth those marks are worth ;).
+
+My only real complaint so far with the conference is that the network is awful.  It's almost useless.  What makes it worse is that this is a problem that recurs every year.  It's well known and oft joked about, even by Sun execs (see Rich Green's comments in Tuesday's general session).  It seems to me, though, that Sun has no one to blame but themselves.  If the network is the Moscone Center's, then Sun needs to push them to beef it up for the 15,000 constantly connected geeks that they know are coming.  If it's Sun's network, then they're really on the hook for the pain we go through, not to mention the poor speakers who foolishly depend on internet access for their demos.  The network is more than the computer;  Sun needs more tubes in here.
+
+Time to chug down the rest of this Diet Pepsi (it was either that or Diet Mt. Dew) and head to my lab.

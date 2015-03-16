@@ -1,0 +1,59 @@
+title=Syncing Playlists with Android Devices
+date=2013-04-29
+tags=Android, bash
+type=post
+status=published
+~~~~~~
+= Syncing Playlists with Android Devices
+Jason Lee
+2013-04-29
+
+
+While I love my Android devices, one thing that has always bugged me is syncing music with them. Sure, there are some apps that claim to be able to do it, but I've never found one that will do what it says _and_ be a decent music player at the same time (perhaps someone out there can point me to a good one). For the most part, then, I've settled on Banshee (which, as far as I can tell, doesn't sync, but is a decent player^1^). Here, then, is my very manual process for syncing music.
+<!-- Read More -->
+
+The first step is to create a playlist. You can, of course, sync all of your music, which is much easier, but my phone won't hold all of my music, so I have to be selective.  Once I've created my playlist, I then export it (Banshee seems to use a real database, so I have to export the .m3u manually), which I put in the root of my music directory. The only part of this post that might be of interest to anyone, is the shell script I run to sync, which looks like this:
+
+[source,bash,linenums]
+-----
+#!/bin/bash
+
+device=/media/jdlee/SD
+folder=Music
+
+if [ -d $device/$folder ]; then
+    cp "$1" $device/$folder
+fi
+
+while read line; do
+        song=${line}
+        path=${song#*/music_folder/}    # replace music_folder/  by your Music Folder (e.g. /home/foo/MUSIC -- use MUSIC/ instead) 
+        path=${path%/*}
+        file=${song##*/}
+
+        if [[ ${song:0:1} != "#" ]]; then
+                if [ -d $device/$folder ]; then
+                        mkdir -p "$device/$folder/$path"
+                        if [ ! -e "$device/$folder/$path/" ] ; then
+                            echo -e $song
+                            cp -r "$song" "$device/$folder/$path/"
+                        fi
+                else
+                        echo "The destination directory does not exist"
+                        echo "Please check the destination directory"
+                        exit
+                fi
+        fi
+done < "$1"
+-----
+
+I found the original script http://www.anythingbutipod.com/forum/showthread.php?t=35163[here], and made some minor modifications. You will likely need to modify the values of `$device` and `$folder`, but the rest should run as is.  It doesn't remove any music _not_ in the playlist (which I doubt is often desirable), but it will copy anything missing to the device, as well as putting the playlist on the device for consumption by your player of choice there. To run it, you just specify the name of the playlist file and watch it run:
+
+[source,bash,linenums]
+-----
+$ syncM3U NewMusic.m3u
+-----
+
+It's very manual, but simple and clean, and it saved me some hacking of my own, so I thought I'd share.  Ideally, my music player would do this for me, but I just haven't found one I like yet, so I get to do it this way, which does have a much higher geek appeal. :P
+
+^1^ It's at least good enough that I decided to quit looking. :P

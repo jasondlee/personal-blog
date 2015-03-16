@@ -1,0 +1,22 @@
+title=Yahoo! UI and JSF Update
+date=2006-12-14
+tags=Java, JavaServer Faces
+type=post
+status=published
+~~~~~~
+= Yahoo! UI and JSF Update
+Jason Lee
+2006-12-14
+
+I've had several people ask for an update on where things stand with my YUI components and their JSF component wrappers, so I figure I should take the time to answer that question. 
+<!-- Read More -->
+
+In terms of the _state_ of the components, I currently have (admittedly basic) support for three components:  `Calendar`, `Menu` and `TreeView`.  Of the three, the `Calendar` seems to be the most "complete" in terms of how _I_ intend to use it, i.e., as a pop-up, one-up calendar.  I'd like to add support for two-ups, as well as an always-showing form.  I have not had the need to use it in such ways, so those have remained on the to do list, but they're certainly there.
+
+The `Menu` component seems to work fairly well, but it has some issues with submenus and mouseovers.  If you try to mouse over to the submenu, it disappears as soon as the mouse leaves the parent menu's area.  I have not yet had a chance to track that down.
+
+The `TreeView` component, which just became functional about an hour ago, is fairly basic, but, again, "working." :)  On the Java side, I have defined a `TreeNode` class, and extended that to make `TextNode`, `MenuNode`, and `HtmlNode`, to match the corresponding Javascript classes.  One only needs to create a `TreeNode` object and add any children to it, then set that on the JSF component tag via the (currently) `model` attribute.  It's pretty basic, but, given its age, I've not had a chance to press it hard and see where it needs improvement.
+
+The big question has been, "Where can I get it?"  Until recently, I didn't have a good answer for that, but that is no longer the case.  I've made the decision to move these components, as well as my link:/2006/12/07/download-and-multi-file-upload-jsf-components/[upload and download components] into the Sandbox recently opened in the source tree for the JSF https://javaserverfaces.dev.java.net/[reference implementation]. Once the components have had a chance to bake a bit and get some more exposure and critique, they will be moved to a component library in the RI we're tentatively calling LionFish, in keeping with the theme started with the https://glassfish.dev.java.net/[GlassFish project].  Currently, the only component available in the tree (which you can get by http://wiki.java.net/bin/view/Projects/SunJSFImplFaq#AccessCode[checking out] the RI source code) is the `TreeView` wrapper, `YuiTree`.  I will begin migrating the rest of the source over during the Christmas holidays.
+
+That's about it.  If you have any other questions, feel free to email me, or, preferably, comment here.  I'll post again when all the source is available.

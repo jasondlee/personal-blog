@@ -1,0 +1,67 @@
+title=A Quick-start for Scala and Gradle
+date=2013-08-22
+tags=Gradle, Scala
+type=post
+status=published
+~~~~~~
+= A Quick-start for Scala and Gradle
+Jason Lee
+2013-08-22
+
+
+For those interested, here's a quick and simple project to get you started using Gradle and Scala together:
+
+.build.gradle
+[source,groovy,linenums]
+-----
+apply plugin: 'scala'
+
+repositories{
+    mavenCentral() 
+    mavenLocal()
+}
+
+dependencies{
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    compile "org.scala-lang:scala-library:2.10.1"
+    testCompile "junit:junit:4.11"
+}
+
+task run(type: JavaExec, dependsOn: classes) {
+    main = 'Main'
+    classpath sourceSets.main.runtimeClasspath
+    classpath configurations.runtime
+}
+-----
+
+
+.src/main/scala/Main.scala
+[source,scala,linenums]
+-----
+object Main extends App {
+  println("Hello, world")
+}
+-----
+
+You can run the app using the custom task `run`:
+
+
+[source,bash,linenums]
+-----
+$ gradle run
+:compileJava
+:compileScala
+:processResources
+:classes
+:run
+Hello, world
+
+BUILD SUCCESSFUL
+
+Total time: 9.79 secs
+-----
+
+
+Remember to add `--daemon` for faster startup times for your Gradle builds.
+
+Have fun!

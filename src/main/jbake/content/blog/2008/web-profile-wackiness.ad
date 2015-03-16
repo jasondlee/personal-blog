@@ -1,0 +1,23 @@
+title=Web Profile Wackiness
+date=2008-02-28
+tags=Java, JavaServer Faces
+type=post
+status=published
+~~~~~~
+= Web Profile Wackiness
+Jason Lee
+2008-02-28
+
+In a recent http://weblogs.java.net/blog/robc/archive/2008/02/profiles_in_the_1.html[blog post], Java EE 6 (JSR 316) specification co-lead Roberto Chinnici discussed the two leading proposals for the web profile in the upcoming Java EE 6 specification (For more information about profiles, one can start with http://www.theserverside.com/blogs/thread.tss?thread_id=48511[this article] on TheServerSide.)  The part that caught me by surprise and confuses me greatly is why the inclusion of JavaServer Faces in the web profile would be controversial.  Having spoken with an expert group member, who I will not out :), the argument comes down to this:  "We shouldn't force a broken technology, that is not the clear winner on people."  I think that's a very interesting statement, in that it precludes doing just about anything in the spec.
+<!-- Read More -->
+
+Java EE is a huge specification.  It encompasses a vast array of technologies, including JSF.  One of those technologies, for example, is the Java Persistence API, of which, I'll admit, I'm pretty fond.  It seems counter-intuitive that it would exclude the standard web application framework. It is, though, not without its faults, and definitely not without its own detractors.  There are many very vocal Hibernate fans (not to mention JDO fans) that question why we need JPA.  Their contention is that Hibernate is better, so why not just use that?  Whether or not they have a point isn't really relevant here, but their _contention_ is:  If JPA is not superior, and it's clearly not the leading persistence API, why force that on someone via the specification?  In fact, Java itself is not the clear winner when it comes to development platforms, so should there be _any_ spec at all?
+
+It's no secret that JSF is not perfect -- that's why the JSF 2 EG exists and is doing what we're doing.  I think, though, the question of whether or not JSF belongs in the web profile has already been answered back in the Java EE 5 specification.  The spec listed JSF as the standard<sup>1</sup> web application framework.  Since EE 5 took that stance, it seems to me to be the logical thing to put that library under the web profile umbrella.  The question of its brokenness is completely separate.  If it truly is broken, and there is a raft of people who would disagree, then the question of its inclusion the _specification_ should be revisited.  If it is decided that it stays in the spec, then it belongs in the web profile.  If it is decided to remove it from the spec, then that takes care of the profile question.  
+
+Furthermore, JSF's inclusion in the profile in no way forces the framework on anyone.  I write and deploy applications to GlassFish all the time, and it includes a messaging framework, but I don't feel compelled to use it.  It also includes JSP, which just about everyone in the JSF world feels is broken<sup>2</sup>, and I'm not forced to use it.  As with any complex development and deployment environment, there will be things one does not need, so one simply chooses not to use it.  The question before the EE, though, is what kind of environment can a web developer expect when he sits down in front of a web profile compliant application server, and it seems counter-intuitive that it would exclude the standard web application framework.
+
+One last point, and I'll quit rambling.  It has been rightly pointed out that option A is bascially Tomcat.  If that's all the web profile offers and I have to track down JSF, EL, Java Mail and a host of other libraries, why should I bother with the container, even if it is web profile compliant.  I can just install Tomcat, and get a simpler server.  To omit the technologies in option B will completely neuter the profile and help absolutely no one.  Except the Tomcat team. :)
+
+^1^ Standard in the sense that it's in the EE spec, not in the everyone-is-using-it sense of the word. Though they https://mojarra.dev.java.net[should be]. :)
+^2^ With JSF 2, in fact, all the cool new features will only be available in the Facelets-like page description language we're working into the spec.

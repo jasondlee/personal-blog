@@ -1,0 +1,74 @@
+title=New Components in Mojarra Scales: Part III – sc:imageZoomer and sc:lightbox
+date=2010-02-18
+tags=components, JavaServer Faces, Scales
+type=post
+status=published
+~~~~~~
+= New Components in Mojarra Scales: Part III – sc:imageZoomer and sc:lightbox
+Jason Lee
+2010-02-18
+
+In link:/2009/12/new-components-in-mojarra-scales-part-ii-–-scautocomplete/[Part II] of this series, I introduced the new auto complete component in Mojarra Scales.  In this installment, we'll take a look at two new closely related components, `sc:imageZoomer` and `sc:lightbox`.
+<!-- Read More -->
+
+The first component, `sc:imageZoomer`, displays a thumbnail, and, when clicked, "zooms" that thumbnail up to the full size image.  Here is a sample usage:
+
+[source,xhtml,linenums]
+-----
+<sc:imageZoomer thumb="#{request.contextPath}/images/thumbs/image1.jpg" 
+    image="#{request.contextPath}/images/image1.jpg"
+    caption="Some descriptive caption"/>
+-----
+
+Given the active nature of the component, a screen shot wouldn't be that interesting, so to see it in action, point your browser at the Image Zoomer http://demo.steeplesoft.com/mojarra-scales-demo/imageZoomer.jsf[demo].
+
+The next component is `sc:lightbox`.  Chances are good that you've seen a http://www.huddletogether.com/projects/lightbox2/[lightbox] before.  When an image is clicked, it "zooms" up, and navigation is offered to go to the previous or next image in the group.  While using the lightbox library linked above has never been tedious to use, Mojarra Scales makes it even easier now:
+
+[source,xhtml,linenums]
+-----
+<sc:lightbox id="lightbox2">
+    <h:outputLink id="boxer1" value="images/boxers/Boxer1.jpg" >
+        <h:graphicImage value="images/boxers/tBoxer1.jpg" 
+            alt="Good looking dog (demo 2)"/>
+    </h:outputLink>
+    <h:outputLink id="boxer2" value="images/boxers/BoxerFace.jpg">
+        <h:graphicImage value="images/boxers/tBoxerFace.jpg" 
+            alt="Only a mother could love that face. (demo 2)"/>
+    </h:outputLink>
+</sc:lightbox>
+-----
+
+The sample above puts two images on the page, adding them to the "lightbox2" group.  To use the lightbox inside another component, say `sc:carousel`, your markup may look something like this:
+
+[source,xhtml,linenums]
+-----
+<sc:carousel id="carousel1" numVisible="4" isCircular="true" isVertical="false">
+    <h:outputLink value="images/boxers/Boxer1.jpg" rel="lightbox[boxers]">
+        <h:graphicImage value="images/boxers/tBoxer1.jpg" alt="Good looking dog"/>
+    </h:outputLink>
+    <h:outputLink value="images/boxers/BoxerFace.jpg" rel="lightbox[boxers]">
+        <h:graphicImage value="images/boxers/tBoxerFace.jpg" alt="Only a mother could love that face."/>
+    </h:outputLink>
+    <h:outputLink value="images/boxers/DogGoat.jpg" rel="lightbox[boxers]">
+        <h:graphicImage value="images/boxers/tDogGoat.jpg" alt="Best of friends?"/>
+    </h:outputLink>
+    <h:outputLink value="images/boxers/boxer-pup.jpg" rel="lightbox[boxers]">
+        <h:graphicImage value="images/boxers/tboxer-pup.jpg" alt="In the sandbox"/>
+    </h:outputLink>
+    <h:outputLink value="images/boxers/boxer-dog.jpg" rel="lightbox[boxers]">
+        <h:graphicImage value="images/boxers/tboxer-dog.jpg" alt="Fun-loving dogs"/>
+    </h:outputLink>
+    <h:outputLink value="images/boxers/stonewall.gif" rel="lightbox[boxers]">
+        <h:graphicImage value="images/boxers/tstonewall.gif" alt="Boxers are intelligent and curious"/>
+    </h:outputLink>
+</sc:carousel>
+<sc:lightbox id="lightbox1" group="boxers"/>
+-----
+
+Notice that we created the carousel as we normally would, but we added the `rel` attribute to the `h:outputLink` components, then we create the lightbox and specify the group to use.  The lightbox JavaScript will gather all of the links with `rel="lightbox[boxers]"` and add them to the image group.  I'm sure you've noticed that the actual image and link construction has to be done manually.  A new component will be added shortly to do that work for you.  I'm still working through how that should look, but as soon as it's ready, I'll let you know here.
+
+Like `sc:imageZoomer`, a screen shot wouldn't do this component justice, so please take a look at the http://demo.steeplesoft.com/mojarra-scales-demo/lightbox.jsf[demo application] to see the lightbox in action.
+
+As a side note, I'd like to point out that this lightbox implementation is 100% custom, YUI-based code.  While the behavior and appearance of the widget was influenced by (read as, lifted from : ), the implementation linked above, I wanted to reduce, as much as possible, the number of external libraries Mojarra Scales ships with, so I wrote this implementation.  I also got the boxer images from Google Images (my wife and I have a Boxer named Sadie, who is our third Boxer, after Bosco and Abby : ). If you stumble across this and find an image of yours that you want removed, please let me know. :)
+
+As always, if you notice any bugs or deficiencies, or if there's a feature you'd like to see, please feel free to file an http://kenai.com/jira/browse/SCALES[issue].

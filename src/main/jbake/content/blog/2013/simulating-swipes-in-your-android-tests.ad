@@ -1,0 +1,95 @@
+title=Simulating Swipes in Your Android Tests
+date=2013-02-13
+tags=Android, Java
+type=post
+status=published
+~~~~~~
+= Simulating Swipes in Your Android Tests
+Jason Lee
+2013-02-13
+
+
+As some of you may or may not know, I have small Android project, http://cubtracker.com[Cub Tracker], that I've been working on for quite some time now in my spare time.  I've been trying to be better about quicker releases, but all the testing for the app is currently manual (and, therefore, hit-and-miss), so updates tend to be a bit slower and very cautious.  (For the record, it used to have pretty decent tests, but I rewrote the app for version 2 and just never got around to porting/rewriting the tests.)  My next change, though, will be pretty invasive, so I've decided it's time to fix that.  In doing so, though, I hit a snag pretty quickly.  Cub Tracker now uses a http://developer.android.com/reference/android/support/v4/view/ViewPager.html[ViewPager] as the main form of navigation, and I quickly realized I didn't know how to swipe from one page to another. It turns out there are several different ways to do it. Here are some...
+
+<!-- Read More -->
+
+We'll cover three, in descreasing order of complexity and pure geekiness.  The first will programmatically simulate the swiping action:
+
+[source,java,linenums]
+-----
+    protected void swipe(Direction direction) {
+        Instrumentation inst = getInstrumentation();
+        Point size = new Point();
+        activity.getWindowManager().getDefaultDisplay().getSize(size);
+        int width = size.x;
+        
+        long downTime = SystemClock.uptimeMillis();
+        float xStart = ((direction == Direction.Left) ? (width - 10) : 10);
+        float xEnd = ((direction == Direction.Left) ? 10 : (width - 10));
+        
+        // The value for y doesn't change, as we want to swipe straight across
+        inst.sendPointerSync(MotionEvent.obtain(downTime, SystemClock.uptimeMillis(), 
+            MotionEvent.ACTION_DOWN, xStart, size.y / 2, 0));
+        inst.sendPointerSync(MotionEvent.obtain(downTime, SystemClock.uptimeMillis(), 
+            MotionEvent.ACTION_MOVE, xEnd, size.y / 2, 0));
+        inst.sendPointerSync(MotionEvent.obtain(downTime, SystemClock.uptimeMillis() + 1000, 
+            MotionEvent.ACTION_UP, xEnd, size.y / 2, 0));
+    }
+-----
+
+In this implementation of our `swipe()` method, we simulate the physical act of swiping by using `MotionEvent` objects.  While I'm not going to pretend to understand every last nuance here, we start by determining the size of the screen, then setting our starting position 10 pixels from the edge.  The ending position is then set 10 pixels away from the other edge.  With those values set, we obtain tree `MotionEvent` objects for `ACTION_DOWN`, `ACTION_MOVE`, and `ACTION_UP`, passing them each to `Instrumentation.sendPointerSync()` in turn.  With that, we've completed our swipe.
+
+For completeness' sake, here is the super simple enum I used to make the method signature more self-explanatory:
+
+[source,java,linenums]
+-----
+public enum Direction {
+    Left, Right;
+}
+-----
+
+While that approach is pretty fun, there's a simpler way, which, oddly enough, actually uses the `ViewPager` API. :)
+
+[source,java,linenums]
+-----
+    protected void swipe(final Direction direction) {
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                int current = pager.getCurrentItem();
+                if (direction == Direction.Right) {
+                    if (current > 0) {
+                        pager.setCurrentItem(current - 1, true);
+                    }
+                } else {
+                    if  (current < pager.getChildCount()) {
+                        pager.setCurrentItem(current + 1, true);
+                    }
+                }
+            }
+        });
+    }
+-----
+
+In this implementation, we make sure that we can safely swipe to the left or right, as appropriate, then set the current item index on the `ViewPager` to "current" plus or minus one.  We pass `true` as the second argument to `setCurrentItem()` so that we can see the animation in the UI; otherwise, it just changes in a blink, and where's the fun in that. Note that this must run on the UI thread, so I've wrapped all of that in a `Runnable`, which is pass to `Activity.runOnUiThread()`.
+
+Lastly, we deviate from the `ViewPager` API usage, and look at another, simpler take on our first implementation, this time using http://code.google.com/p/robotium/[Robotium]
+
+[source,java,linenums]
+-----
+    protected void swipe(final Direction direction) {
+        Point size = new Point();
+        activity.getWindowManager().getDefaultDisplay().getSize(size);
+        int width = size.x;
+        float xStart = ((direction == Direction.Left) ? (width - 10) : 10);
+        float xEnd = ((direction == Direction.Left) ? 10 : (width - 10));
+
+        // The value for y doesn't change, as we want to swipe straight across
+        solo.drag(xStart, xEnd, size.y / 2, size.y / 2, 1);  
+    }
+-----
+
+Again, we do our endpoint calculations, but we use them in a single call to `solo.drag()`. Much simpler.
+
+Assuming you need to do something like this, I guess the implementation is a matter of preference.  I tend to prefer option #2, as it seems a more proper use of the API and is a little less hacky than options #1 and #3, but I did enjoy learning those.  In a more general sense, though, if you need to perform a swipe in a test and you don't have a control you can directly (and easily) manipulate like the `ViewPager`, these two options show how it can be done, either directly with the Android APIs, or with the very nice Robotium wrapper.
+
+Have you found another/better way to do all of this? Hit the comment box and show me the error of my ways! :)

@@ -1,0 +1,29 @@
+title=Webinar Covering GlassFish's ASadmin Tool
+date=2009-01-22
+tags=Aquarium, GlassFish, webinar
+type=post
+status=published
+~~~~~~
+= Webinar Covering GlassFish's ASadmin Tool
+Jason Lee
+2009-01-22
+
+
+Today at 1:00PM CST, the GlassFish team will host a webinar discussing the asadmin utility that ships with GlassFish.  Here's the official annoucment by Eduardo Pelegri-Llopart (webified be me : 
+
+_____
+This week's webinar set presents ASadmin, the GlassFish administration CLI.  The GlassFish GUI console is well designed and very well appreciated by the users but GUIs are not best for automation and power users tend to use CLIs for that reason.  The ASadmin console has been called the "hidden gem" in GlassFish; hopefully this webinar will make it a bit less hidden.
+
+The presenter is the asadmin lead, Jane Young.  We are likely to also have a panel on the value of asadmin with two non-Sun heavy users of asadmin: Dan Allen and Dick Davies.
+
+This is a free, online, presentation.  The presentation will be recorded and made available later for replays.
+
+Presentation Date/Time:
+Jan 22nd, 11amPT - http://www.timeanddate.com/worldclock/fixedtime.html?year=2009&month=1&day=22&hour=19&min=00&sec=0[Other TZs]
+Online at http://ustream.tv/channel/theaquarium[Ustream].
+Concall for Speakers (others, please mute with *6)
+Toll Free: (866) 545-5227
+Int'l Access: (215) 446-3648 (caller paid)
+Access Code: 3535518
+Additional details: http://wikis.sun.com/display/TheAquarium/ASAdmin[here]
+_____

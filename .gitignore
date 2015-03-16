@@ -6,3 +6,4 @@ assets.tar.gz
 posts/assets
 _hide
 *.ad~
+/target/

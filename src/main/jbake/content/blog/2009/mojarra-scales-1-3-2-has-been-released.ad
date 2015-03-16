@@ -1,0 +1,23 @@
+title=Mojarra Scales 1.3.2 Has Been Released
+date=2009-08-27
+tags=components, JavaServer Faces, Kenai, Scales
+type=post
+status=published
+~~~~~~
+= Mojarra Scales 1.3.2 Has Been Released
+Jason Lee
+2009-08-27
+
+Late last night, I published Mojarra Scales 1.3.2.  This is mostly a bug and performance fix, but here are some highlights from the release:
+
+* <sc:links /> (and related supporting classes and components) was modified to allow files _only_ from /scales to fix a pretty glaring security hole in some scenarios
+* When multiple, local requests for a given resource type (CSS or JS) are queued, they are now rendered to the page in such a way that they will be returned in a single request.  That is to say, Mojarra Scales will now concatenate these files into one response, so as to reduce the number of network operations.
+* Scales now correctly handles cached files.  When a CSS or JS resource is sent, Scales now employs etags to help the client cache the file properly.  On subsequent requests, if the client sends the last modified header, Scales properly handles the date, returning 304 when appropriate
+* <tab/> now supports the `style` and `styleClass` attributes.
+* The multi-file upload component has been moved out of the main jar into its own artifact so that those not using the component will have a smaller deployment.  This component can be found under the upload `artifactId` in the http://download.java.net/maven/2/com/sun/mojarra/mojarra-scales-upload/[maven repository].
+
+The jar files, including the demo app, can be downloaded from http://kenai.com/projects/scales/downloads/directory/Mojarra%20Scales%201.3.2[kenai.com] or via http://download.java.net/maven/2/com/sun/mojarra/mojarra-scales/[maven] (the demo is not in maven).
+
+With the architectural changes in 1.3 out of the way, the next version of Scales should include more components, as well as enhancements to existing components.  At some point, the project will be branched for a migration to JSF 2.  With the spec being final and Mojarra 2 scheduled to ship in a couple of weeks, it seems the time is right for the move.  Time will tell, of course, how soon that move is made.
+
+If you have any issues, please comment in the http://kenai.com/projects/scales/forums[forum].
