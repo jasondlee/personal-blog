@@ -1,3 +1,7 @@
+div #content {
+    max-width: none;
+}
+
 .blogname{
     letter-spacing:10px;
     font-size:48px;

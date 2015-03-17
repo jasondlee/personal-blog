@@ -1,3 +1,4 @@
+                    </div>
                     <div class="col-md-3 columns widget">
                         <div class="columns">
                             <h3>My Links
