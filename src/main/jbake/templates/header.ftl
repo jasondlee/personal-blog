@@ -27,7 +27,7 @@
         <script src="${content.rootpath}/scripts/lightbox/lightbox.js" type="text/javascript"></script>
         <#assign splitter="&lt;!-- Read More -&#8594;">
     </head>
-    <body style="padding-left: 10px; padding-right: 10px; margin-left: 10px; margin-right: 10px;">
+    <body style="padding-left: 10px; padding-right: 10px; margin-left1: 10px; margin-right1: 10px;">
         <div class="row">
             <div class="blogname"><span><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>">Coming Up for Air</a></span></div>
         </div>
