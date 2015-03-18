@@ -1,9 +1,0 @@
-.gitignore
-serve
-Gemfile*
-Rakefile
-trash
-javascripts
-assets.tar.gz
-convert
-
