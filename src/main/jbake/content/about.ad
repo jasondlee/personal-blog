@@ -1,10 +1,9 @@
----
-title  : "About"
-author : Jason Lee
-date   : 2013-11-04
-layout : base
-tags   : [  ]
----
+title=About
+author=Jason Lee
+date=2013-11-04
+type=page
+status=published
+~~~~~~
 
 My name is Jason Lee. I'm a software developer living in the middle of Oklahoma. I've
 been a professional developer since 1997, using a variety of languages, including Java, 

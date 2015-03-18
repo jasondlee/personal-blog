@@ -1,3 +1,4 @@
+                        </div>
                     </div>
                     <div class="col-md-3 columns widget">
                         <div class="columns">
@@ -5,22 +6,22 @@
                             </h3>
                             <ul>
                                 <li>
-                                    <a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>about" title="About">About</a>
+                                    <a href="${content.rootpath}about.html" title="About">About</a>
                                 </li>
                                 <li>
-                                    <a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>projects" title="Projects">Projects</a>
+                                    <a href="${content.rootpath}projects.html" title="Projects">Projects</a>
                                 </li>
                                 <li>
-                                    <a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>+" rel="me" title="Google+">Google+</a>
+                                    <a href="${content.rootpath}+" rel="me" title="Google+">Google+</a>
                                 </li>
                                 <li>
-                                    <a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>linkedin" rel="me" title="LinkedIn">LinkedIn</a>
+                                    <a href="${content.rootpath}linkedin" rel="me" title="LinkedIn">LinkedIn</a>
                                 </li>
                                 <li>
-                                    <a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>twitter" rel="me" title="Twitter">Twitter</a>
+                                    <a href="${content.rootpath}twitter" rel="me" title="Twitter">Twitter</a>
                                 </li>
                                 <li>
-                                    <a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>resume.pdf" rel="me" title="Resumé">Resumé</a>
+                                    <a href="${content.rootpath}resume.pdf" rel="me" title="Resumé">Resumé</a>
                                 </li>
                             </ul>
 
@@ -73,8 +74,8 @@
                     s.parentNode.insertBefore(ga, s);
                 })();
             </script>
-            <script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>scripts/quotes.js" type="text/javascript"></script>
-            <script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>scripts/local.js" type="text/javascript"></script>
+            <script src="${content.rootpath}scripts/quotes.js" type="text/javascript"></script>
+            <script src="${content.rootpath}scripts/local.js" type="text/javascript"></script>
         </div>
     </body>
 </html>

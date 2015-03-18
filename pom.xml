@@ -6,11 +6,6 @@
     <name>Steeplesoft Blog</name>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-    </properties>
     <build>
         <finalName>steeplesoft-blog</finalName>
         <plugins>
@@ -18,7 +13,6 @@
                 <groupId>br.com.ingenieux</groupId>
                 <artifactId>jbake-maven-plugin</artifactId>
                 <version>0.0.10-SNAPSHOT</version>
-
                 <dependencies>
                     <dependency>
                         <groupId>org.jbake</groupId>
@@ -45,6 +39,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.pcl-solutions.maven.wagons</groupId>
+                <artifactId>rsync-maven-wagon</artifactId>
+                <version>1.0</version>
             </plugin>
         </plugins>
     </build>

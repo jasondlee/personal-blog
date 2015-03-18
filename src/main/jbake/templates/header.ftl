@@ -25,11 +25,16 @@
         <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         <script src="${content.rootpath}/scripts/lightbox/jquery-1.7.2.min.js" type="text/javascript"></script>
         <script src="${content.rootpath}/scripts/lightbox/lightbox.js" type="text/javascript"></script>
-        <#assign splitter="&lt;!-- Read More -&#8594;">
     </head>
     <body style="padding-left: 10px; padding-right: 10px; margin-left1: 10px; margin-right1: 10px;">
+        <#assign splitter="&lt;!-- Read More -&#8594;">
         <div class="row">
-            <div class="blogname"><span><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>">Coming Up for Air</a></span></div>
+            <div class="blogname">
+                <span>
+                    <a href="${content.rootpath}/">Coming Up for Air</a>
+                </span>
+            </div>
         </div>
         <div class="row main">
             <div class="col-md-9 columns">
+                <div id="content">

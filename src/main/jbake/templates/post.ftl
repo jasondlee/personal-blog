@@ -1,6 +1,6 @@
 <#include "header.ftl">
         <div style="float: clear"></div>
-        <article class="post"
+        <article class="post" style="border: none;">
           <header class="entry-header">
             <h1 class="title">
               ${content.title}
