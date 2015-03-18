@@ -66,8 +66,7 @@ This creates two functions, `set_var` and `get_var`, whose functionality should 
 [source,sql]
 -----
 CREATE OR REPLACE VIEW company_items AS
-	SELECT * FROM items WHERE company_id = 
-		(select cast (get_var('company_id') AS NUMERIC));
+	SELECT * FROM items WHERE company_id = cast (get_var('company_id') AS NUMERIC);
 -----
 
 To get the value from a function in Postgres, you SELECT from it, which we've added to the query that builds the view. You'll also notice that `get_var` and `set_var` deal with strings, so the value needs to be cast to `NUMERIC` or the view creation will fail.
