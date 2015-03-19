@@ -40,11 +40,58 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>com.pcl-solutions.maven.wagons</groupId>
-                <artifactId>rsync-maven-wagon</artifactId>
-                <version>1.0</version>
-            </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>deploy</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                        <version>1.0-alpha-2</version>
+                        <executions>
+                            <execution>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>read-project-properties</goal>
+                                </goals>
+                                <configuration>
+                                    <files>
+                                        <file>site.properties</file>
+                                    </files>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.3.2</version>
+                        <executions>
+                            <execution>
+                                <id>deploy-blog</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>rsync</executable>
+                                    <workingDirectory>${project.build.directory}/${project.build.finalName}</workingDirectory>
+                                    <arguments>
+                                        <argument>-aP</argument>
+                                        <argument>--delete</argument>
+                                        <argument>-e ssh</argument>
+                                        <argument>.</argument>
+                                        <argument>${blog.username}@${blog.host}:${blog.dir}</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

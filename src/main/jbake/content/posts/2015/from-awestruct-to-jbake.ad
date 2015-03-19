@@ -1,0 +1,91 @@
+title=From Awestruct to JBake
+date=2015-03-19
+tags=general
+type=post
+status=published
+~~~~~~
+
+For some time now, I have been using awestruct[/posts/2013/fairwell-wordpress.html] to power my blog, and, for the most part, I've been happy.
+However, I have found, especially on the Mac, the Ruby-based environment more difficult to setup than I would like. While I have solved this 
+problem before, it presented itself once again when I was issued a Mac upon joining NetSuite. I can, of course, muddle through it, but I'm
+tired of fighting it, so I started looking around for an alternative and found jbake.org[JBake].
+
+<!-- Read More -->
+
+JBake, described by Dan Allen as the "jekyll of the JVM", is a Java-based static site generator. While the language the tool is written in is not all 
+that relevant in terms of site generation, it is important to me as a developer who has, from time to time, "needed" to extend the tool in 
+one way or another. Being Java-based also makes it a bit easier to integrate with my toolchain (NetBeans, Maven/Gradle, Hudson/Jenkins) for 
+composing and publishing posts. Long story short (http://www.imdb.com/title/tt0088930/quotes?item=qt0470195[too late!]), I've taken the plunge 
+and migrated my site to JBake.
+
+Naturally, as these things usually happen to be, JBake didn't support everything I needed, namely, pagination, so I did what all geeks do: 
+I started coding. Currently, pagination lives in my https://github.com/jasondlee/jbake/tree/pagination[fork]. A pull request has been created to 
+integrate this into JBake proper, but, for now, you must build and use my fork. Also note that, while pagination requires no external changes for 
+a user not interested in pagination, things may change the PR is considered and processed.
+
+To build it, I used the https://github.com/ingenieux/jbake-maven-plugin[JBake Maven Plugin]. Sadly, again, I needed to 
+https://github.com/jasondlee/jbake-maven-plugin[fork] the plugin to update it to use the current JBake API, so, again, a local build and install. 
+Neither of these is ideal, but, hopefully, these requirements will go away shortly.
+
+There is one more piece that awestruct provides that JBake does: deployment.  For that, I simply added a stanza to my Maven POM, which I 
+control/hide behind a profile:
+
+[source,xml]
+-----
+    <profiles>
+        <profile>
+            <id>deploy</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>properties-maven-plugin</artifactId>
+                        <version>1.0-alpha-2</version>
+                        <executions>
+                            <execution>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>read-project-properties</goal>
+                                </goals>
+                                <configuration>
+                                    <files>
+                                        <file>site.properties</file>
+                                    </files>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.3.2</version>
+                        <executions>
+                            <execution>
+                                <id>deploy-blog</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>rsync</executable>
+                                    <workingDirectory>${project.build.directory}/${project.build.finalName}</workingDirectory>
+                                    <arguments>
+                                        <argument>-aP</argument>
+                                        <argument>--delete</argument>
+                                        <argument>-e ssh</argument>
+                                        <argument>.</argument>
+                                        <argument>${blog.username}@${blog.host}:${blog.dir}</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+-----
+
+It was a bit more work than I'd anticipated, but, in the end, I think it's been worth it. The only change in the site itself 
+is the feed link has change from feed.atom to http://blogs.steeplesoft.com/feed.xml[feed.xml].  If you happen to see other 
+issues, though, please let me know.

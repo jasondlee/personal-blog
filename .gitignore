@@ -1,9 +1,2 @@
-.awestruct
-_tmp
-_site
-.sass-cache
-assets.tar.gz
-posts/assets
-_hide
-*.ad~
-/target/
+target
+site.properties

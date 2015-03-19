@@ -1,3 +1,4 @@
+<#include "misc.ftl">
 <?xml version="1.0"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -17,7 +18,7 @@
       <guid isPermaLink="false">${post.uri}</guid>
       	<description>
 	<#escape x as x?xml>	
-	${post.body}
+	${post.body?keep_before(splitter)}
 	</#escape>
 	</description>
     </item>

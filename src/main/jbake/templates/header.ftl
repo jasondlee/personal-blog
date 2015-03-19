@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<#include "misc.ftl">
 <html>
     <head>
         <title>Steeplesoft</title>
@@ -27,7 +28,6 @@
         <script src="${content.rootpath}/scripts/lightbox/lightbox.js" type="text/javascript"></script>
     </head>
     <body style="padding-left: 10px; padding-right: 10px; margin-left1: 10px; margin-right1: 10px;">
-        <#assign splitter="&lt;!-- Read More -&#8594;">
         <div class="row">
             <div class="blogname">
                 <span>
