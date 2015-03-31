@@ -4,5 +4,5 @@ document.getElementById("source").innerHTML = "-- " + (quotes[index].source);
 
 $(document).foundation()
 $(".image").each(function() {
-    $(tis).attr("rel","lightbox[group]");
+    $(this).attr("rel","lightbox[group]");
 });
