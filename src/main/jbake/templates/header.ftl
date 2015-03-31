@@ -26,6 +26,7 @@
         <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         <script src="${content.rootpath}/scripts/lightbox/jquery-1.7.2.min.js" type="text/javascript"></script>
         <script src="${content.rootpath}/scripts/lightbox/lightbox.js" type="text/javascript"></script>
+        <script src="${content.rootpath}scripts/foundation/foundation.js" type="text/javascript"></script>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
