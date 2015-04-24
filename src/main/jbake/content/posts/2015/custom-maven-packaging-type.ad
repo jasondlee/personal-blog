@@ -89,7 +89,8 @@ The plugin build does, though, need one tweak:
 This allows us to update the project metadata without having to edit `components.xml`. Bump the version?
 Change the `artifactId`? No problem, thanks to resource filtering.
 
-In the target project(s), you obviously need to configure the plugin. For my blog build, that looks like
+In the target project(s), you obviously need to configure the plugin. For my blog 
+https://bitbucket.org/jdlee/steeplesoft-blog/src/609502f0610a86236b33b9bfcf7fbc713372c794/pom.xml?at=master[build], that looks like
 this:
 
 [source,xml]
