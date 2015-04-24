@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.steeplesoft</groupId>
     <artifactId>steeplesoft-blog</artifactId>
     <name>Steeplesoft Blog</name>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>jbake</packaging>
     <build>
         <finalName>steeplesoft-blog</finalName>
-		<defaultGoal>clean install</defaultGoal>
+        <defaultGoal>clean install</defaultGoal>
         <plugins>
+            <plugin>
+                <groupId>com.steeplesoft</groupId>
+                <artifactId>sampleplugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <extensions>true</extensions>
+            </plugin>
+            <!--
+            <plugin>
+                <groupId>br.com.ingenieux</groupId>
+                <artifactId>jbake-maven-lifecycle</artifactId>
+                <version>0.0.10-SNAPSHOT</version>
+                <extensions>true</extensions>
+            </plugin>
+            -->
             <plugin>
                 <groupId>br.com.ingenieux</groupId>
                 <artifactId>jbake-maven-plugin</artifactId>
                 <version>0.0.10-SNAPSHOT</version>
+                <extensions>true</extensions>
                 <dependencies>
                     <dependency>
                         <groupId>org.jbake</groupId>
