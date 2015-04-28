@@ -16,7 +16,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 
 # WP-to-awestruct redirects
-RewriteRule feed http://blogs.steeplesoft.com/feed.atom [R=301,L]
+RewriteRule feed$ http://blogs.steeplesoft.com/feed.atom [R=301,L]
 RewriteRule ^posts\/([0-9]{4})\/[0-9]{2}\/[0-9]{2}\/(.*)\/ http://blogs.steeplesoft.com/posts/$1/$2.html [R=301,L]
 
 RewriteRule 2008/02/a-valuechangelistener-question-and-answer[/]? http://blogs.steeplesoft.com/posts/2008/02/19/a-valuechangelistener-question-and-answer/ [R=301,L]
