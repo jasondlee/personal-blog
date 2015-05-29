@@ -6,22 +6,22 @@
                             </h3>
                             <ul>
                                 <li>
-                                    <a href="${content.rootpath}about.html" title="About">About</a>
+                                    <a href="/about.html" title="About">About</a>
                                 </li>
                                 <li>
-                                    <a href="${content.rootpath}projects.html" title="Projects">Projects</a>
+                                    <a href="/projects.html" title="Projects">Projects</a>
                                 </li>
                                 <li>
-                                    <a href="${content.rootpath}+" rel="me" title="Google+">Google+</a>
+                                    <a href="/+" rel="me" title="Google+">Google+</a>
                                 </li>
                                 <li>
-                                    <a href="${content.rootpath}linkedin" rel="me" title="LinkedIn">LinkedIn</a>
+                                    <a href="/linkedin" rel="me" title="LinkedIn">LinkedIn</a>
                                 </li>
                                 <li>
-                                    <a href="${content.rootpath}twitter" rel="me" title="Twitter">Twitter</a>
+                                    <a href="/twitter" rel="me" title="Twitter">Twitter</a>
                                 </li>
                                 <li>
-                                    <a href="${content.rootpath}resume.pdf" rel="me" title="Resumé">Resumé</a>
+                                    <a href="/resume.pdf" rel="me" title="Resumé">Resumé</a>
                                 </li>
                             </ul>
 
@@ -74,8 +74,8 @@
                     s.parentNode.insertBefore(ga, s);
                 })();
             </script>
-            <script src="${content.rootpath}scripts/quotes.js" type="text/javascript"></script>
-            <script src="${content.rootpath}scripts/local.js" type="text/javascript"></script>
+            <script src="/scripts/quotes.js" type="text/javascript"></script>
+            <script src="/scripts/local.js" type="text/javascript"></script>
         </div>
     </body>
 </html>

@@ -23,6 +23,7 @@ done
 -----
 
 Want to see what users exist in the realm?
+
 [source,bash,linenums]
 -----
 $ curl -H 'Accept: application/json' http://localhost:4848/management/domain/configs/config/server-config/security-service/auth-realm/file/list-users

@@ -1,20 +1,5 @@
 <#include "header.ftl">
-    <div class="pagination">
-        <div class="previous" style="width:50%; float: left">
-            <#if (previousFileName??)>
-                <a href="${previousFileName}">Previous</a>
-            <#else>
-                <p>Previous</p>
-            </#if>
-        </div>
-        <div class="next" style="width:50%; float: right; text-align: right">
-            <#if (nextFileName??)>
-                <a href="${nextFileName}">Next</a>
-            <#else>
-                <p>Next</p>
-            </#if>
-        </div>
-    </div>
+<#include "pagination.ftl">
     <#list posts as post>
         <#if (post.status == "published")>
             <div style="float: clear"></div>
@@ -33,7 +18,7 @@
                     <span class="title">tags: </span>
                     <#if post.tags??>
                         <#list post.tags as tag>
-                            <a href="${content.rootpath}/posts/tags/${tag}">${tag}</a>
+                            <a href="/posts/tags/${tag}">${tag}</a>
                         </#list>
                     </#if>
                   </div>
@@ -41,4 +26,6 @@
             </article>
         </#if>
     </#list>
+    <div style="border-top: 2px solid #2BA6CB;"></div>
+<#include "pagination.ftl">
 <#include "footer.ftl">

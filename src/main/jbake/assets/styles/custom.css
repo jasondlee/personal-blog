@@ -138,3 +138,7 @@ code {
 .strike {
     text-decoration:  line-through;
 }
+
+.literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] {
+    padding: 0px;
+}
