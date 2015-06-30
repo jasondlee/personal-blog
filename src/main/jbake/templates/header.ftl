@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Steeplesoft - Coming Up for Air</title>
+        <title>Steeplesoft - Coming Up for Air<#if content.title?? && content.title?has_content>: ${content.title}</#if></title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
