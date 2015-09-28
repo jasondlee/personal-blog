@@ -6,6 +6,9 @@ Redirect 301 /facebook http://www.facebook.com/jasondaniellee
 Redirect 301 /resume /resume.pdf
 Redirect 301 /cv /resume.pdf
 
+AddHandler cgi-script .php .phps .htm .inc
+Options -ExecCGI
+
 AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript
 
 <IfModule mod_rewrite.c>
