@@ -5,12 +5,13 @@ type=post
 status=published
 ~~~~~~
 
+image::/images/dr-horrible-bad-horse.jpg[align=left]
 If you're a http://drhorrible.com/[Doctor Horrible] fan, here's something fun and goofy to start your week. No clue how they
 did it, but it's hilarious. :)
 
 (h/t https://plus.google.com/+JustinLee1/posts[to my brother])
 
-[source,bash]
+[source]
 -----
 $ traceroute -m 255 bad.horse
 traceroute to bad.horse (162.252.205.157), 255 hops max, 52 byte packets
