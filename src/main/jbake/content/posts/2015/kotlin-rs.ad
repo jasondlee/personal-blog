@@ -171,7 +171,7 @@ class BookResource {
 Kotlin syntax aside, this should look very familiar. We're using Java annotations seamlessly, 
 just as one would expect to see them in Java code. The method implementations themselves are very
 simple, demonstrating the conciseness of Kotlin's collections support. Note also that creating
-class instances in Kotlin does require the `new` keyword. Attempts to use it will result in a
+class instances in Kotlin does not require the `new` keyword. Attempts to use it will result in a
 compilation error. Also note that semicolons are not used as line endings. Attempts to use them
 will result in a compilation error. :)
 
@@ -195,6 +195,8 @@ requirement in Kotlin, with the magic incantation being `JavaClass::class.java`.
 find this documented anywhere, so I can't give a good explanation for it. I was given this
 tip by my http://antwerkz.com[brother], so feel free to pester him. :) Maybe a Kotlin dev
 will stumble across this and explain it in the comments.
+
+*UPDATE*: Documentation for `::class.java` found http://marker.to/4290s0[here].
 
 And, like I said list time, that's it. Build the app (`mvn package`) and deploy to your 
 http://www.payara.co.uk[favorite container]  and see it in all of its glory:
