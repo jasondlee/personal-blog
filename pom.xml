@@ -12,20 +12,20 @@
         <finalName>steeplesoft-blog</finalName>
         <defaultGoal>clean install</defaultGoal>
         <plugins>
+            <!--
             <plugin>
                 <groupId>com.steeplesoft</groupId>
                 <artifactId>sampleplugin</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <extensions>true</extensions>
             </plugin>
-            <!--
+            -->
             <plugin>
                 <groupId>br.com.ingenieux</groupId>
-                <artifactId>jbake-maven-lifecycle</artifactId>
+                <artifactId>jbake-maven-plugin</artifactId>
                 <version>0.0.10-SNAPSHOT</version>
                 <extensions>true</extensions>
             </plugin>
-            -->
             <plugin>
                 <groupId>br.com.ingenieux</groupId>
                 <artifactId>jbake-maven-plugin</artifactId>
@@ -35,7 +35,7 @@
                     <dependency>
                         <groupId>org.jbake</groupId>
                         <artifactId>jbake-core</artifactId>
-                        <version>2.3.3-SNAPSHOT</version>
+                        <version>2.5.0-SNAPSHOT</version>
                     </dependency>
                     <dependency>
                         <groupId>org.asciidoctor</groupId>
