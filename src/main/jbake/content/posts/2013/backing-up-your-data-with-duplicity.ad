@@ -25,7 +25,7 @@ BASE_DIR=file:///mnt/backups/duplicity
 DOW=`date +"%u"`
 REPORT_DATE=`date +%Y%m%d`;
 COMMON_OPTS="--asynchronous-upload --no-encryption --full-if-older-than=8D"
-LOG=~/Documents/BackupLogs/Backup_Log_$REPORT_DATE.log
+LOG=$HOME/Documents/BackupLogs/Backup_Log_$REPORT_DATE.log
 
 # If it's Sunday, do a full backup
 if [ "$DOW" == "7" ] ; then
@@ -33,16 +33,16 @@ if [ "$DOW" == "7" ] ; then
 fi
 
 # Create log directory
-mkdir -p ~/Documents/BackupLogs 2>&1 > /dev/null
+mkdir -p $HOME/Documents/BackupLogs 2>&1 > /dev/null
 
 duplicity $TYPE $COMMON_OPTS \
     --exclude-regexp '.*cache.*' \
-    --exclude-globbing-filelist=~/local/etc/backup.exclude \
+    --exclude-globbing-filelist=$HOME/local/etc/backup.exclude \
     /home/jdlee/ \
     $BASE_DIR/jdlee > $LOG
 duplicity $TYPE $COMMON_OPTS \
     --exclude-regexp '.*cache.*' \
-    --include-globbing-filelist=~/local/etc/backup.system.include \
+    --include-globbing-filelist=$HOME/local/etc/backup.system.include \
     --exclude '**' \
     / \
     $BASE_DIR/system >> $LOG

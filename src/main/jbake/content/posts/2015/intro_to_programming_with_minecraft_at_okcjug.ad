@@ -79,7 +79,7 @@ With those downloaded and installed, extract the zip file (using the tool of you
 
 [source,bash]
 -----
-$ cd ~
+$ cd 
 $ mkdir MinecraftMods
 $ cd MinecraftMods
 $ unzip $PATH_TO_ZIP/forge-1.8-11.14.1.1341-src.zip

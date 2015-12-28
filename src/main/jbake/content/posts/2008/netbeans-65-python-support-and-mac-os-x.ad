@@ -14,8 +14,8 @@ Fortunately, there is a pretty easy solution to this: if you already have an exi
 
 * Make sure NetBeans is not running
 * Download python cluster separately from http://download.netbeans.org/netbeans/6.5/python/ea/zip.html (search for netbeans-6.5-200811131701-python.zip -- or whatever the latest is -- in the second list "Module Clusters")
-* Put contents of the python1 directory in the zip in ~/.netbeans/6.5
-* Delete directory ~/.netbeans/6.5/var/cache
+* Put contents of the python1 directory in the zip in $HOME/.netbeans/6.5
+* Delete directory $HOME/.netbeans/6.5/var/cache
 * Add "python1" to /Applications/NetBeans/NetBeans 6.5.app/Contents/Resources/NetBeans/etc/netbeans.clusters
 * Start NetBeans
 * Profit? :)

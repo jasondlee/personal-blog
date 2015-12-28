@@ -33,7 +33,7 @@ function getRepoDir() {
     VERSION=$3
     
     REPODIR=`getDir $GROUP/$ARTIFACT`
-    echo ~/.ceylon/repo/$REPODIR/$VERSION
+    echo $HOME/.ceylon/repo/$REPODIR/$VERSION
 }
 
 function getUrl() {
@@ -63,7 +63,7 @@ function importJar() {
     GROUP=$1
     ARTIFACT=$2
     VERSION=$3
-    ceylon import-jar --out ~/.ceylon/repo $GROUP.$ARTIFACT/$VERSION $ARTIFACT-$VERSION.jar
+    ceylon import-jar --out $HOME/.ceylon/repo $GROUP.$ARTIFACT/$VERSION $ARTIFACT-$VERSION.jar
 }
 
 function getDeps() {

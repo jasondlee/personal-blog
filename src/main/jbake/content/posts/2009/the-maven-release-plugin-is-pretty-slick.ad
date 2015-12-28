@@ -44,7 +44,7 @@ To make it work, though, you need to make sure your parent POM has these two ent
 </scm>
 -----
 
-Of course, your Maven repository and SCM URLs will be different. ;)  I also needed to tell the SCM how to login to Mercurial.  I did that by adding this to `~/.m2/settings.xml`:
+Of course, your Maven repository and SCM URLs will be different. ;)  I also needed to tell the SCM how to login to Mercurial.  I did that by adding this to `$HOME/.m2/settings.xml`:
 
 [source,xml,linenums]
 -----

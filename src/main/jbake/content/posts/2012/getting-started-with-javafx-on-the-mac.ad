@@ -16,7 +16,7 @@ The first step, of course, is to download the binaries.  You can do that http://
 
 [source,bash,linenums]
 -----
-$ unzip javafx_sdk-2_1_0-beta-b19-macosx-universal-27_mar_2012.zip -d ~/local/
+$ unzip javafx_sdk-2_1_0-beta-b19-macosx-universal-27_mar_2012.zip -d $HOME/local/
 -----
 You can, of course, put it anywhere you want, but you'll need to adjust the following instructions.  The next step is set up NetBeans.  NetBeans has JavaFX support out of the box, assuming your JDK has JavaFX support.  Since the Mac JDK does not yet, we need fix that.  Otherwise, you'll see this error:
 

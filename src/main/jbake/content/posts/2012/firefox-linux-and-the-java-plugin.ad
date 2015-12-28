@@ -14,8 +14,8 @@ In a perfect world, Firefox, Linux and the Java plugin would get along happily. 
 
 [source,bash,linenums]
 -----
-$ mkdir ~/.mozilla/plugins
-$ ln -s $PATH_TO_JRE/lib/amd64/libnpjp2.so ~/.mozilla/plugins/libnpjp2.so
+$ mkdir $HOME/.mozilla/plugins
+$ ln -s $PATH_TO_JRE/lib/amd64/libnpjp2.so $HOME/.mozilla/plugins/libnpjp2.so
 -----
 
 And restart Firefox.  You can verify that Java (i.e., applets and webstart) is working by going http://www.java.com/en/download/installed.jsp[here].

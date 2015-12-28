@@ -20,12 +20,14 @@
                 <extensions>true</extensions>
             </plugin>
             -->
+            <!--
             <plugin>
                 <groupId>br.com.ingenieux</groupId>
                 <artifactId>jbake-maven-plugin</artifactId>
                 <version>0.0.10-SNAPSHOT</version>
                 <extensions>true</extensions>
             </plugin>
+            -->
             <plugin>
                 <groupId>br.com.ingenieux</groupId>
                 <artifactId>jbake-maven-plugin</artifactId>
@@ -40,7 +42,7 @@
                     <dependency>
                         <groupId>org.asciidoctor</groupId>
                         <artifactId>asciidoctorj</artifactId>
-                        <version>1.5.2</version>
+                        <version>1.5.3.2</version>
                     </dependency>
                     <dependency>
                         <groupId>org.freemarker</groupId>
@@ -51,7 +53,7 @@
                 <executions>
                     <execution>
                         <id>default-generate</id>
-                        <phase>generate-resources</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>

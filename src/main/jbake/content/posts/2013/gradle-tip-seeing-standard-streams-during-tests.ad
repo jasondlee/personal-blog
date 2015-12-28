@@ -21,7 +21,7 @@ test {
 
 If you'd like to make this change globally, that's also easy:
 
-.~/.gradle/init.gradle
+.$HOME/.gradle/init.gradle
 [source,groovy,linenums]
 -----
 allprojects {

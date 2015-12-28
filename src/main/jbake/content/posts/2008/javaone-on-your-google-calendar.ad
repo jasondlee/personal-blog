@@ -3,7 +3,7 @@ date=2008-04-29
 tags=Java, JavaOne
 type=post
 status=published
-~~~~~~
+~~~~~
 = JavaOne on Your Google Calendar
 Jason Lee
 2008-04-29
@@ -27,4 +27,4 @@ It's really not very exciting code, but I've found it to be pretty useful.  Sinc
 
 For those interested, the source code repository can be found in the Steeplesoft Mercurial http://hg.steeplesoft.com/j1sync/[repository].  I don't have a binary download yet, but I'll post a comment here when I do for those that don't care to build from source.  
 
-If anyone tries it out, let me know how it works for you.  I'd be curious to know if my ~hour effort is of use to anyone else. 
+If anyone tries it out, let me know how it works for you.  I'd be curious to know if my roughly one hour effort is of use to anyone else. 

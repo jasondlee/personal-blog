@@ -70,7 +70,7 @@ Listening for transport dt_socket at address: 9009
 
 To add this all of your projects, you can make this change to `init.gradle`:
 
-~/.gradle/init.gradle
+$HOME/.gradle/init.gradle
 [source,groovy,linenums]
 -----
 allprojects {
