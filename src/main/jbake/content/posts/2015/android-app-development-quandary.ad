@@ -1,0 +1,81 @@
+title=Android App Development Quandary
+date=2016-01-11
+tags=Android
+type=post
+status=published
+~~~~~~
+
+I have a grand total of one Android application in the Play Store, Cub Tracker. It serves
+two functions for me: it helps me manage my sons' Cub Scout den, and it gives me a means
+for experimentation in the mobile realm. For the most part, it has done well for me on both
+counts for the past few years. I am currently faced with an issue of new functionality (which
+is mostly irrelevant for this discussion) that has brought up a question in the realm of
+experimentation. This post is a discussion of my options which will allow me to think 
+out loud, if you will, as well as getting (I hope) some feedback on my options.
+
+<!-- Read More -->
+
+In a nutshell, I need to add data synchronization to Cub Tracker to allow users to share
+data amongst themselves (or simply across multiple devices). While there are certainly a 
+number of architectural choices, my current line of investigation uses Google Drive and
+JSON data files. I have looked at other options -- REST, for example -- but I'm looking at 
+Google Drive as it seems like it _might_ be the simplest solution. Time will tell, of course.
+
+That said, I've started working with the Google Drive https://developers.google.com/drive/android/get-started[Android APIs] and was making pretty
+good progress until I ran into a huge roadblock: the Android APIs currently only support
+accessing files created by your app, which means I can't access files and folders shared 
+with the user by someone else, which kills the whole point of the exercise. Two options 
+are to use the Drive REST APIs directly, or use the https://developers.google.com/api-client-library/java/apis/drive/v2[Java APIs]. The latter sounds like a 
+better solution, from a type safety and simplicity perspective, and it also opens up a 
+number of other options, which is the point of this whole rambling affair:
+
+=== Options
+* Implement a "native" Android solution (basically what I have now + the Google Drive Java APIs)
+* Implement a "native" Android solution in http://kotlinlang.org[Kotlin]. I'm _really_ enjoying Kotlin, and, so I've
+heard, the Kotlin team has put out a nice library to simplify Android development.
+* Reimplement the application completely using a cross-platform library. 
+* Reimplement using a cross-platform application...in Kotlin.
+
+
+=== Native Android Solution
+
+This is certainly the easiest solution. I already have an existing project, so all I would
+have to do is add the Google Drive support. It's also the most boring. :P As I'm sure you're
+aware, the wow factor of a solution is the primary consideration when making architectural
+choices.
+
+=== Native Android Solution in Kotlin
+
+This is an https://kotlinlang.org/docs/tutorials/android-plugin.html[incremental change], sort of. The structure of the app, in terms of classes and
+resources, is the same. The only difference is the language, and the IDE would do most of
+the work for me in converting the existing code. Making it idiomatic Kotlin might take a 
+good deal of work, but that's technically not necessary. I could also rewrite the app from
+scratch in Kotlin, which might clean up some semi-ugly legacyish code as well.
+
+=== Cross-platform Solution
+
+There are, of course, a number of options for this, but, since I'm primarly a Java/JVM guy, 
+I've narrowed it down to two options: http://codenameone.com/[CodenameOne] and http://gluonhq.com/open-source/javafxports/[JavaFxPorts]. I haven't used either 
+enough to have an opinion on which is easier. Either or both may require a recurring cost 
+for building and/or licensing, neither of which is enticing, given that my app is free. I 
+can't justify paying good money to give something away.
+
+The other downside is that resulting app doesn't really feel like a normal $PLATFORM application.
+That may not a very big deal, though. There are enough apps out there that have the same 
+problem, that I'm mostly numb to that "problem", but there are others that are not. Gluon
+Charm would help with that, but while I don't want a nag screen, I also can't justify 
+http://gluonhq.com/products/charm/buy/[$23/month] on a free app. :\
+
+=== Cross-platform Solution in Kotlin
+
+Are you sensing a theme here? This gives me the cross-platform support I'd like, in 
+a pretty cool new language. The biggest issue here is that it's almost 100% new (ish) 
+technologies at work. I don't want to be working on this next release forever, so this 
+might be biting off more than is reasonable. That doesn't mean it won't happen, though.
+
+There you have it. I'm sure there are other options, but I'm trying not to be _too_ wide open. 
+You have to limit your options somewhat, and these are the boundaries I've chosen. 
+Hopefully, having typed all of this so I can stare at it will help me reach some sort of
+decision soon. The next step, I guess, is some proof-of-concept work. If you've read
+this far, I'm guessing you're at least quasi-curious, so I'll report back here once
+I have something worth saying ("unlike this post!").
