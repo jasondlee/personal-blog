@@ -12,19 +12,13 @@ track of my many irons in the fire. Without further ado, then:
 
 === Cub Tracker
 * Group replication
-* Add awareness of when a scout has completed an item.
-* Possible UI rework (Navigation Drawer)
-* Add den support
-* Add item completion support
+* Rewrite in Kotlin
 
 === NetBeans Awestruct Plugin
 * Slim/HAML support. Keep an eye on jTilt/Tiltj
 * Flesh out NetBake, the standalone wrapper for the plugin
 * New file assumes a blog post
 * New files aren't shown in the project view. Fix file list refreshing.
-
-=== NetBeans Application platform Madsonic/Subsonic Streaming Player
-* ...
 
 == (Mostly) Inactive
 === Ceylon

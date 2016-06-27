@@ -16,7 +16,7 @@
         <ul>
     </#if>
 
-    <li>${post.date?string("dd")} - <a href="${content.rootpath}/${post.uri}">${post.title}</a></li>
+    <li>${post.date?string("dd")} - <a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>/${post.uri}">${post.title}</a></li>
     <#assign last_month = post.date?string("MMMM yyyy")>
     </#list>
     </ul>	
