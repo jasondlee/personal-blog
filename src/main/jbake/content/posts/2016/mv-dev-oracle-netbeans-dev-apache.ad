@@ -1,0 +1,34 @@
+title=mv /dev/oracle/NetBeans /dev/apache/
+date=2016-09-14
+tags=NetBeans
+type=post
+status=published
+~~~~~~
+
+Yesterday, the NetBeans team https://twitter.com/netbeans/status/775689829728280577[announced] plans to move NetBeans from Oracle to
+Apache. This move was met by a mix of skepticism and optimism. I've ranged between the two myself, to be honest, but I've landed on
+optimsim.
+
+<!-- Read More -->
+
+image:/images/netbeans.png[NetBeans, float="right", style="padding-left:10px; padding-bottom: 10px;"]
+My first thought, snarky as it is, was that "Apache is where projects go to die". Think Apache OpenOffice. After discussing that with 
+some peers, though, I remembered that 1) OpenOffice was already mostly dead before the move (and not even Miracle Max could fix that)
+and 2) there are a _lot_ of projects that are thriving at Apache such as Cassandra, Hadoop, Maven, Tomcat/TomEE, and the eponymous HTTP
+server. Moving to Apache, then, isn't a kiss of death and all, and, given that Apache has over 300 projects, we're going to see some
+die from time to time. That's life in software.
+
+I think, though, that this move could be very good overall for NetBeans for the reasons given by various Dream Team members: 
+transparency, easier access, better infrastructure, etc. There's also a possible political side where some may shy away from 
+contributing (or even using) because it's an Oracle product, but now might be tempted to give it a go with the Apache label on it. 
+That's pretty silly and I have nothing to back it up, but I would be shocked if that weren't the case for at least a small number.
+
+All that said, here's my biggest concern. I worry that over time, Oracle will spend less and less on the project. They do have another
+IDE, and they already spend quite a bit building tools for Eclipse, so they may decide that it doesn't make business sense to 
+continue to invest in the platform (some have argued that this is the reason for this move). When Oracle bought Sun, they continued
+to invest in GlassFish for some time, then decided that it wasn't making enough money and rather abruptly pulled most of us off 
+the project. I fear that might play out again with NetBeans. Only time will tell, of course, and NetBeans seems to be more importantly
+strategically for Oracle, with other products integrating with or building on the platform. We'll see.
+
+All told, though, I think this is a great move that, while it does carry some risk, holds tremendous promise for this great IDE and
+platform. 

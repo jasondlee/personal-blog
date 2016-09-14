@@ -1,4 +1,5 @@
 <#include "header.ftl">
+<#import "dump.ftl" as dumper>
 <#include "pagination.ftl">
     <#list posts as post>
         <#if (post.status == "published")>
