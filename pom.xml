@@ -12,26 +12,10 @@
         <finalName>steeplesoft-blog</finalName>
         <defaultGoal>clean install</defaultGoal>
         <plugins>
-            <!--
-            <plugin>
-                <groupId>com.steeplesoft</groupId>
-                <artifactId>sampleplugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <extensions>true</extensions>
-            </plugin>
-            -->
-            <!--
             <plugin>
                 <groupId>br.com.ingenieux</groupId>
                 <artifactId>jbake-maven-plugin</artifactId>
-                <version>0.0.10-SNAPSHOT</version>
-                <extensions>true</extensions>
-            </plugin>
-            -->
-            <plugin>
-                <groupId>br.com.ingenieux</groupId>
-                <artifactId>jbake-maven-plugin</artifactId>
-                <version>0.0.10-SNAPSHOT</version>
+                <version>0.3.0-SNAPSHOT</version>
                 <extensions>true</extensions>
                 <dependencies>
                     <dependency>
