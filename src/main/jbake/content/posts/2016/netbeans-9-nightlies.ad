@@ -1,0 +1,32 @@
+title=NetBeans 9 Nightlies
+date=2016-11-09
+tags=NetBeans
+type=post
+status=published
+~~~~~~
+
+Perhaps I'm a bit of a glutton for punishment, but I have an odd addiction to nightly
+builds. In working on this link:call-me-crazy-but-im-writing-a-book.html[book], I need
+to use NetBeans 9, which, of course, is not out yet. They are, however, publishing
+nightly builds. Being a command line guy at heart, I'd prefer not to have to go to the
+http://bits.netbeans.org/netbeans/trunk/nightly/latest/[download page] every time, so I
+did what any good geek would do: I wrote a script. It's not pretty, and it's not very
+fault tolerant, but it seems to work well enough. If you're a fellow addict, here you
+go:
+
+[source, bash]
+-----
+#!/bin/bash
+
+VERS=`curl -s http://bits.netbeans.org/netbeans/trunk/nightly/latest/js/build_info.js | grep BOUNCER_PRODUCT_PREFIX | cut -f 2 -d \"`
+FILE=$VERS-javase.zip
+
+cd ~/Downloads
+if [ ! -e $FILE ] ; then
+    wget http://bits.netbeans.org/netbeans/trunk/nightly/latest/zip/$FILE
+    if [ -e $FILE ] ; then
+        rm -rf netbeans
+        unzip $FILE
+    fi
+fi
+-----
