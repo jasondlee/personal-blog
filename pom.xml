@@ -84,7 +84,7 @@
                                     <executable>rsync</executable>
                                     <workingDirectory>${project.build.directory}/${project.build.finalName}</workingDirectory>
                                     <arguments>
-                                        <argument>-aP</argument>
+                                        <argument>-aPn</argument>
                                         <argument>--delete</argument>
                                         <argument>-e ssh</argument>
                                         <argument>.</argument>

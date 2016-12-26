@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Steeplesoft - Coming Up for Air<#if content.title?? && content.title?has_content>: ${content.title}</#if></title>
+        <title>Coming Up for Air<#if content.title?? && content.title?has_content>: ${content.title}</#if></title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="alternate" type="application/rss+xml" title="Steeplesoft RSS Feed" href="/feed.atom">
+        <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.atom">
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="/styles/asciidoctor-default.css">
         <link rel="stylesheet" type="text/css" href="/styles/coderay-asciidoctor.css">
