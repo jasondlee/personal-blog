@@ -20,12 +20,12 @@ JavaFX project. The shared module looks roughly like this:
 src
     main
         java
+            module-info.java
             com
                 steeplesoft
                     foo
                         model
                             Message.java
-            module-info.java
 -----
 
 Our module is defined this way:
