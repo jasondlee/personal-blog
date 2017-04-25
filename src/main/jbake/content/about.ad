@@ -5,15 +5,12 @@ type=page
 status=published
 ~~~~~~
 
-My name is Jason Lee. I'm a software developer living in the middle of Oklahoma. I've
-been a professional developer since 1997, using a variety of languages, including Java, 
-PHP, Python, Delphi, and even a bit of C#. I currently work for http://netsuite.com[NetSuite, Inc.], implementing
-REST services and other server-side technologies for our industry-changing e-commerce 
-solution. Previously, I have worked for Oracle Corporation (via Sun Microsystems),
-implementing REST APIs for http://glassfish.org[GlassFish] and Weblogic Server. (Full resume
-link:/resume.pdf[here]). I'm a member and former president of the http://okcjug.org[Oklahoma City JUG], and occasional speaker.
+My name is Jason Lee. I'm a software developer living in the middle of Oklahoma. I've been a professional developer since 1997, using a variety of languages, including Java, 
+Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for http://oracle.com[Oracle Corp], coming to them for a second time via acquisition. This time, I am continuing
+my work on the NetSuite e-commerce system, where my role is that of architect and technical lead. In my previous stint with Oracle, I implemented REST APIs for 
+http://glassfish.org[GlassFish] and Weblogic Server. (Full resume link:/resume.pdf[here]. LinkedIn https://www.linkedin.com/in/jasondlee[profile]).
 
-On the personal side, I'm married to a beautiful woman and have two kids, who, thankfully,
-look like their mother. I'm active in my http://qsbc.org[church], lead a 
-http://pack349.com[Cub Scout den], and am a black belt and instructor with a local
-https://www.facebook.com/groups/PiedmontABKA[chapter] of http://abkakarate.com[ABKA Karate].
+I am a member and current president of the http://okcjug.org[Oklahoma City JUG], and an occasional speaker at the JUG and a variety of technical conferences.
+
+On the personal side, I'm married to a beautiful woman and have two kids, who, thankfully, look like their mother. I'm active in my http://qsbc.org[church], 
+and am a black belt and instructor with a local https://www.facebook.com/groups/PiedmontABKA[chapter] of http://abkakarate.com[ABKA Karate].
