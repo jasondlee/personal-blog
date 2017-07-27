@@ -21,7 +21,7 @@
                                     <a href="/twitter" rel="me" title="Twitter">Twitter</a>
                                 </li>
                                 <li>
-                                    <a href="/resume.pdf" rel="me" title="Resumé">Resumé</a>
+                                    <a href="/resume.pdf" rel="me" title="Resume/CV">Resume/CV</a>
                                 </li>
                             </ul>
 
@@ -34,6 +34,9 @@
                         <div class="columns">
                             <h3>Publications</h3>
                             <ul>
+                                <li>
+                                    <a title="My Java 9 book" href="https://www.packtpub.com/application-development/java-9-programming-blueprints" style="text-weight: bold; font-size: large">Java 9 Programming Blueprints</a>
+                                </li>
                                 <li>
                                     <a title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries. " href="http://jaxenter.com/java-tech-journal/JTJ-2012-06">Tips for Writing Pluggable Java EE Applications</a>
                                 </li>
