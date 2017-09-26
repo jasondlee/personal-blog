@@ -7,11 +7,41 @@
     <artifactId>steeplesoft-blog</artifactId>
     <name>Steeplesoft Blog</name>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jbake</packaging>
+    <!--<packaging>jbake</packaging>-->
     <build>
         <finalName>steeplesoft-blog</finalName>
         <defaultGoal>clean install</defaultGoal>
         <plugins>
+            <plugin>
+                <groupId>com.blazebit</groupId>
+                <artifactId>jbake-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>build-site</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj</artifactId>
+                        <version>1.5.5</version>
+                    </dependency>
+<!--                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-diagram</artifactId>
+                        <version>1.5.4</version>
+                    </dependency>-->
+                </dependencies>
+            </plugin>
+            <!--
             <plugin>
                 <groupId>br.com.ingenieux</groupId>
                 <artifactId>jbake-maven-plugin</artifactId>
@@ -44,6 +74,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>

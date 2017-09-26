@@ -1,0 +1,38 @@
+title=Chesterton's Fence and the Software Developer
+date=2017-09-24
+tags=General
+type=post
+status=published
+~~~~~~
+
+Recently at work, we found an odd scenario with a REST (-ish ;) endpoint from another team:
+If the request provided a list of, say, 11 IDs in the query string, the system would only return information on
+the first 10 of them, silently dropping anything over that seemingly odd limit. The initial reaction was
+of, course, "Well, let's just increase the limit." To be honest, I had the same reaction, but
+then I remembered one of my favorite quotes, known as Chesteron's Fence:
+
+[quote, G.K. Chesterton]
+____
+In the matter of reforming things, as distinct from deforming them, there is one plain and simple 
+principle; a principle which will probably be called a paradox. There exists in such a case a 
+certain institution or law; let us say, for the sake of simplicity, a fence or gate erected across a 
+road. The more modern type of reformer goes gaily up to it and says, "I don't see the use of this; 
+let us clear it away." To which the more intelligent type of reformer will do well to answer:
+ "If you don't see the use of it, I certainly won't let you clear it away. Go away and think.
+ Then, when you can come back and tell me that you do see the use of it, I may allow you to destroy it."
+____
+
+Chesterton's context, politics in Great Britain of the 1920s, is, of course, quite different from a software
+development shop almost 100 years later, but the message is still extremely appropriate: Before
+you go tearing things down or otherwise changing something you've found, you really need to understand not
+only what you're changing, but _why_ it was made that way in the first place.
+
+In the case of this REST call, we should ask questions like
+
+* Are there system load concerns, such as memory or processing time?
+* Are there concerns about the on-the-wire response size?
+* Was there an explicit Product Management decision to set the limit this low for business reasons we don't see reflected in the code?
+
+And so on. Until we can answer those questions (or reasonably rule them out as 
+relevant), we need to be very hesitant in making the change. Once we've explained the 
+original developer(s) built that fence, then we can talk about ripping it down.
