@@ -1,0 +1,22 @@
+title=Roku and Hotel Wifi
+date=2018-02-01
+tags=Roku,Linux
+type=post
+status=unpublished
+~~~~~~
+
+I was recently on a business trip and, as is my custom, I took along my Roku box so that I would have something to watch in the hotel room in the evenings. Unfortunately, the hotel wifi required that you sign in on each device in order to access the internet, but this Roku is old enough that it didn't offer way to do that. I found some options in The Tubes, but I didn't care for them for various reasons, but, fortunately, I found an easy -- and free -- way to do what I needed.
+
+The two options I found included buying a "travel router", which might have worked, but that required that I buy the device (they appear to be about $15), but I'm kinda cheap at times, and even if I weren't, that didn't help me much at 10:00 at night _in_ the hotel room, so that was out. Another option involved downloading some software to a Windows machine, which, when run, would set up a small wifi network to which I'd connect my Roku. Since I have a Linux laptop, that would be a bit difficult, but, even in the Windows VM I have installed, it also required downloading and running software from a site I've not heard of, so I passed.
+
+What I finally did was a very simple hack. 
+
+. On the Roku, I looked at the network configuration and took note of the Mac address for the device. 
+. On my laptop, I changed the Mac address of my wireless adapter
+. Disconnected and reconnected from the laptop to make the Mac address change take effect.
+. From the laptop, I authenticated on the hotel's wifi network
+. Also from the laptop, disconnect the laptop's wifi.
+. Clear the overridden Mac address and reconnected.
+. From the Roku, connect to the hotel wifi
+. Stream until I fall asleep
+

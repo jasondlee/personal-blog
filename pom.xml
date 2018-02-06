@@ -34,11 +34,6 @@
                         <artifactId>asciidoctorj</artifactId>
                         <version>1.5.5</version>
                     </dependency>
-<!--                    <dependency>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctorj-diagram</artifactId>
-                        <version>1.5.4</version>
-                    </dependency>-->
                 </dependencies>
             </plugin>
             <!--
