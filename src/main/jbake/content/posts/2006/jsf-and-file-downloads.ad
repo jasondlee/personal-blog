@@ -10,7 +10,7 @@ Jason Lee
 
 At http://www.iec-okc.com[IEC], we have an application used to report inventory counts.  Part of the app creates an Excel spreadsheet using http://jakarta.apache.org/poi/[POI].  The user selects a batch from a select/combo, click on the button, and the server sends them a spreadsheet.  The basic work flow is this:
 
-<!-- Read More -->
++++// Read More+++
 
 . Display the page 
 . User selects a batch and clicks the button

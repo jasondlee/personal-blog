@@ -9,7 +9,7 @@ Jason Lee
 2011-03-10
 
 I was asked this morning about creating JDBC resources via REST. As with link:/2011/03/adding-users-to-a-glassfish-realm-via-rest/[user management], it's actually pretty simple, once you've seen how.  Let's take a look.
-<!-- Read More -->
++++// Read More+++
 
 To create a JDBC resource, you need two different objects, a `JDBC Connection Pool` and a `JDBC Resource`.  The endpoints for these two objects are http://localhost:4848/management/domain/resources/jdbc-connection-pool[] and http://localhost:4848/management/domain/resources/jdbc-resource[].  Let's start by creating the connection pool.  There are many parameters available (which you can see via OPTIONS), but we'll only deal with a small subset here:
 

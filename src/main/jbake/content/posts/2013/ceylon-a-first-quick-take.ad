@@ -11,7 +11,7 @@ Jason Lee
 
 Last week at Devoxx, Red Hat http://ceylon-lang.org/blog/2013/11/12/ceylon-1/[announced] the release of Ceylon 1.0, "a modern, modular, statically typed programming language for the Java and JavaScript virtual machines." A fan of learning languages, I started taking http://ceylon-lang.org/documentation/1.0/tour/[the tour]. In no particular order, and without any lengthy rumination, here are my initial thoughts on the language.
 
-<!-- Read More -->
++++// Read More+++
 
 = Mixin inheritance
 

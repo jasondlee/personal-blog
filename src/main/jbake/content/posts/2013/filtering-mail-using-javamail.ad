@@ -11,7 +11,7 @@ Jason Lee
 
 At the Lee House, we have an email problem: there's just too much of it. Over the years of signing up for contests, coupons, and other things, we seem to have amassed a giant number of subscriptions to various lists, which gives us a lot of (usually) junk email. The simple solution, of course, is just to unsubscribe, but some of those are actually occasionally useful. Throw in a pinch of proscratination and laziness, and, well... it all just keeps coming. Email clients can help manage this by providing email filters to move these emails out of the inbox, but, in the case of Thunderbird, there are only so many rules you can add to one filter, so you either create multiple rules, or give up trying. Several months back, I moved these rules to a perl-based system, but, thanks to a hard drive crash, I lost all of those. Rather than rebuild that setup, which had its own limitations, I did what every good geek would do: I wrote my own, and here it is. :)
 
-<!-- Read More -->
++++// Read More+++
 
 The system itself is really pretty simple. It's not pretty, probably not too terribly efficient, and may be, generally speaking, not as flexible as some would like it to be, but, so far, it works well for me, and, to be honest, I had fun writing it, so I'm happy. :)  The rules are expressed in a JSON file that might look something like this:
 

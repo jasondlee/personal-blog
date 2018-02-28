@@ -9,7 +9,7 @@ Jason Lee
 2012-01-26
 
 JAX-RS is the specification that describes how to build RESTful interfaces in a Java EE environment.  Jersey is the reference implementation of that spec, and, like many implementations, offers features above and beyond what spec does.  One feature that I've been working with recently is the POJOMapping feature, which makes writing services and clients much easier, as well as typesafe.
-<!-- Read More -->
++++// Read More+++
 
 In a nutshell, what this feature allows you to do is deal with actual model classes in your service with little to no regard for their serialization and deserialization.  That's a huge boon, as dealing with XML and JSON isn't always pretty, and really isn't what we're wanting to do with our service.  To see how this works, we'll develop a simple service and a client to interact with.  First things first, we need some sort of model.  Since I work on GlassFish, I've chosen something familiar to me, a Cluster.  Here's what our class might look like (Note: this is modeled roughly after GlassFish's `ConfigBean ` of the same name):
 

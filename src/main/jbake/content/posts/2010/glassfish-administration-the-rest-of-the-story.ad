@@ -9,7 +9,7 @@ Jason Lee
 2010-08-20
 
 Of the many great things about GlassFish, one that is often mentioned most (and is, in fact, what got me involved with GlassFish as an end user years ago) is the Administration Console.  It's an extremely powerful and capable interface, and is, if I may be so bold, orders of magnitudes better than its open source competition (it may even beat commercial competitors, but I have no experience with those).  Another powerful tool in GlassFish administration is the asadmin CLI utility, which allows for quick and easy scripting of server provisioning, etc.  Did you know, though, that GlassFish has a third administration interface?  As of GlassFish v3, we offer a RESTful administration API, based on Jersey, to allow non-Java clients to configure the app server easily.  For GlassFish 3.1, one of my main responsibilities, with the help, I should add of my coworkers Ludovic Champenois and Mitesh Meswani, has been to help improve upon the great start we had in in v3.  In this entry, we'll take a look at the current state of the interface and learn the basics of using.
-<!-- Read More -->
++++// Read More+++
 
 The Basics
 ----------

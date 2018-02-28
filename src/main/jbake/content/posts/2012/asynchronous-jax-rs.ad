@@ -11,7 +11,7 @@ Jason Lee
 
 Recently, I had to add support for asynchronous REST calls to the GlassFish REST interface to satisfy some customer requirements.  In process of doing so, I learned something pretty interesting: while asynchronous REST may mean different things to different people (e.g., I'm pretty sure https://github.com/Atmosphere/atmosphere[Atmosphere] provides some sort of REST asynchrony, but I'm not sure what *UPDATE #1: As noted in the comments, I know next to nothing about Atmosphere. I mention it here only as some weak attempt at completeness that is, in hind sight, a really bad choice*), implementing an async REST resource with JAX-RS is really quite simple.  In this post, we'll take a look at two different approaches to "asynchronous" REST.
 
-<!-- Read More -->
++++// Read More+++
 
 For the second post in a row, I have scare quotes in my teaser.  For the second post in a row, let me explain why. :)  In terms of JAX-RS, "asynchronous" really has two different...meanings, depending on the context in which it's used.  There's server-side, and there's client-side, and they're not quite the same thing.  
 

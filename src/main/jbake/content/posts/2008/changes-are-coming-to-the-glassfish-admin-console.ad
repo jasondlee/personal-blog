@@ -9,7 +9,7 @@ Jason Lee
 2008-12-16
 
 GlassFish isn't just an application server.  It's a community.  For that reason, we on the admin console team want to take some time to run some ideas by the user community.  For the GlassFish v3 final release due in the middle of next year, we plan to redesign the admin console.  Since the admin console is usually high on the list of differentiators, we are approaching these changes very cautiously, as we don't want to ruin a good thing.  Our goals are to make the console lighter and faster, and use a more modern design.  Our plan, then has several parts, which we'll look at individually.
-<!-- Read More -->
++++// Read More+++
 
 Table of Contents
 -----------------

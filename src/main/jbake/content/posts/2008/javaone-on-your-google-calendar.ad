@@ -9,7 +9,7 @@ Jason Lee
 2008-04-29
 
 Next week, I'll be off to JavaOne.  With everything that's going on, I thought it would be nice to have my JavaOne schedule on my Google Calendar, which I could then sync with my phone.  Sadly, it wasn't as easy as I thought it would be (though I certainly could be the failure in the process :).  After I imported my schedule into Outlook (used only -- and grudgingly -- as iTunes is broken in that it only supports Outlook) and then synced that with my Google Calendar, all of the event start times were adjusted for the time zone differences.  Importing by CSV resulted in cryptic messages about my calendar not being available, so I did what any good geek would do:  I wrote my own solution, creatively named J1Sync.
-<!-- Read More -->
++++// Read More+++
 
 The program itself is really rather simple.  Not counting all the imports, it's currently less than 100 lines of code.  In a nutshell, it reads its configuration from a properties file, connects to the specified Google Calendar, removes any entries it added (by looking for a special string appended to the description), then adds the events from an input file.  The input file is a CSV file downloaded from the JavaOne Schedule Builder application.  Execution is simple, as it takes one optional parameter, the path to the properties file, defaulting to j12008cal.csv in the current working directory:
 

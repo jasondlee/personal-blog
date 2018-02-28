@@ -11,7 +11,7 @@ Jason Lee
 
 Java Champion and JUG leader https://twitter.com/agoncal[Antonio Goncalves] recently released his third book on Java EE, http://www.amazon.com/gp/product/143024626X/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=143024626X&linkCode=as2&tag=antgonblo-20[Beginning Java EE 7]. Just from the title and the table of contents, it's clear that Antonio set a very ambitious goal for this book, and I think he delivered what he promised.
 
-<!-- Read More -->
++++// Read More+++
 
 Java EE is, of course, a large, diverse set of technologies, so the book itself, to do the platform justice, must also be pretty wide-ranging. At a high level, here is what the book covers (taken from the table of contents):
 

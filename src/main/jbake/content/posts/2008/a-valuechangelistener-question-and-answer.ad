@@ -29,7 +29,7 @@ and
 -----
 
 The question was, which is "better?"  There was also a question if the latter form automatically handled the JS on the parent component.  I will now attempt to answer those questions. :)
-<!-- Read More -->
++++// Read More+++
 
 The former form takes a MethodExpression (`#{optionBean.optionChanged}`) that points to a method that satisfies the following method signature:
 

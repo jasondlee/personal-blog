@@ -11,7 +11,7 @@ Jason Lee
 
 As more and more of our applications move into "the cloud", multi-tenancy has become a pretty big thing these days. In a nutshell, "multi-tenancy" means handling multiple customers data using, say, a single server. This concept scales, of course, to clusters, etc., but the concept is the same: a bunch of people's data all mixed together in one big bucket. The problem, then, for the development team is isolating one customer's data from another's, disallowing, for example, the viewing or editing of another customer's information. There are a myriad of ways to accomplish this, but I'd like to discuss here a way to accomplish this using a single database.
 
-<!-- Read More -->
++++// Read More+++
 
 While the concept can certainly be applied on just about any database, for this discussion, we'll use PostgreSQL, my favorite database (and, yes, as a geek I'm allowed to say things like that). The concepts we'll use are views, triggers, and session variables.
 

@@ -9,7 +9,7 @@ Jason Lee
 2009-05-21
 
 Today we released FacesTester 0.2.  While this release has a number of bug fixes and more minor enhancements, one of the biggest new features is injection support. Leveraging the `InjectionProvider` Service Provider Interface (SPI) provided by Mojarra, FacesTester now supports the automagic injection of mock/test objects.  For example, the following managed bean:
-<!-- Read More -->
++++// Read More+++
 
 [source,java,linenums]
 -----

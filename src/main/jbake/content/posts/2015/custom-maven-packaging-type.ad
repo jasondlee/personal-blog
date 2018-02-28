@@ -14,7 +14,7 @@ and the `install` phase didn't try to put anything in my local repo. Unfortunate
 documentation wasn't very clear (it's likely a combination of both :). At any rate, I finally had a eureka moment
 late last night and figured it out. Here is a distillation of my findings.
 
-<!-- Read More -->
++++// Read More+++
 To define a custom packaging type, you define a custom lifecycle and put the packaging type in the `role-hint` element.
 All of this is done in `components.xml`, which is found in `src/main/resources/META-INF/plexus`. This file can be
 in a project whose `packaging` is either `pom` or `maven-plugin` (others may be possible. I haven't tried).

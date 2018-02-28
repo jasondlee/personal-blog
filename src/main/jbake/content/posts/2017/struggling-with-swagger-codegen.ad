@@ -10,7 +10,7 @@ generate and manage my REST APIs in a contract-first manner using Swagger. From
 looking at the docs, the answer seems to be Swagger Codegen, but I'm finding that 
 it's not that simple.
 
-<!--Read More-->
++++// Read More+++
 
 Here's the workflow I'd like to accomplish:
 

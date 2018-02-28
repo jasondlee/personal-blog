@@ -10,7 +10,7 @@ Jason Lee
 
 
 I've been using a technique a lot, recently, for initializing an object a bit more succinctly.  It looks pretty odd, I'll admit, enough so that it really caught a coworker of mine off guard.  If you've been reading my recent REST posts, you've seen this a few times.  I like it a lot, so I thought I'd a take a quick look at it.
-<!-- Read More -->
++++// Read More+++
 
 Here's the technique in question:
 

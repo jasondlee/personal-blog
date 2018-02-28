@@ -9,7 +9,7 @@ Jason Lee
 2008-05-09
 
 My day started today with the Intel general session.  I went in with low expectations for some reason, but came away pretty pleased.  The speaker, Douglas Fisher, Vice President, Software and Solutions Group and General Manager, Systems Software Division of Intel Corporation, talked about how software drives innovation in hardware, which makes possible more interesting things in hardware, which in turn drives more innovation in hardware, and the cycle repeats.  Years ago, an Intel exec whose name escapes me  described this as the software spiral.  He then brought a Sun exec (Jeet Kaul, if I recall correctly) onto the stage to discuss performance gains in the JVM, presumably in the virtualization space.  He shared how from January 2007 to JavaOne 2007, they made a 20% gain in performance, so they set their goal for JavaOne 2008 at 60%.  They announced today a 68% gain, with the demo peaking at 74%, on the exact same hardware and software that was used last year.  The only difference was the JVM.  Very cool.
-<!-- Read More -->
++++// Read More+++
 
 Fisher then went on to speak about the mobile space for a bit, talking about Intel's Atom processor, which is TINY.  He had 1,000 Atom processors in a vial like one might find in a science lab.  Amazing.  He then showed a video for moblin.org, which highlighted where Intel sees things going with mobile devices, and there were some _very_ cool smoke and mirrors demos in the videos.  If any of those products ever make it to market, we're going to see some very, very cool things in terms of personalized, context-aware mobile devices.
 

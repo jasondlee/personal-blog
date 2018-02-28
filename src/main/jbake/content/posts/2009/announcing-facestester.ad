@@ -9,7 +9,7 @@ Jason Lee
 2009-03-03
 
 One of the issues that has always troubled me with regard to writing JSF applications (or _any_ web application, really) is how hard it is to test them.  Some time ago, while discussing various Java web frameworks, I stumbled across a class called `WicketTester`, which is part of the Wicket project.  Using this class, as best as I can tell, Wicket authors can easily test their applications very quickly.  Having taken the advice of Dale Hanchey, and old http://www.okbu.edu[college] professor of mine, "Never be too proud to steal a good idea," FacesTester was born.
-<!-- Read More -->
++++// Read More+++
 
 Unit testing a JSF application can be tricky, and there are a lot of different opinions and techniques for doing so.  Stan Silvert from JBoss, for example, just released a GA version of http://jboss.org/jsfunit[JSFUnit], an in-container end-to-end testing framework for JSF.  Dan Allen, also of JBoss but working on the Seam project, recently discussed SeamTest in this http://seamframework.org/Documentation/WhatIsTheDifferenceBetweenSeamTestAndJSFUnit[wiki] entry.  What bothers me about both of those solutions, though, is the need for a container.  What I'd like to be able to do is write a plain, simple JUnit test to exercise my managed beans, converters, etc. without the start-up penalty of starting a container (even if it's embedded) or deploying a .war to a container.  That's where FacesTester fits in.  Though in a very early stage, FacesTester is intended to allow a JSF application developer to inspect the component tree, validate the logic and/or output of managed bean methods, etc. with a very simple and light weight API.
 

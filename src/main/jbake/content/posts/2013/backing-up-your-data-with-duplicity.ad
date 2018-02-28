@@ -11,7 +11,7 @@ Jason Lee
 
 For those wanting to backup their data, there are a myriad of commercial products, ranging from economical to absurdly expensive, from basic to extremely flexible and robust. Depending on your needs, though, you need not spend any money at all to get a pretty poiwerful backup system. In this entry, I'll show how I backup my workstation using http://duplicity.nongnu.org/[duplicity].
 
-<!-- Read More -->
++++// Read More+++
 
 Installing duplicity should be as simple as telling yum or apt to install the package appropriate for your Linux distribution. Mac users can use MacPorts or homebrew. Windows users, you're on your own. :)  In a nutshell, duplicity will take the set of you files you specify, either implicitly via include-all pattern, or explicitly, through config files, pattern matches, etc.  We'll see and example of both in a bit. Given a backup set definition, duplicity will create the back up, either full or incremental, and upload it to the destination you specify, which can be a local drive, an FTP or SCP target, or even Amazon S3.
 

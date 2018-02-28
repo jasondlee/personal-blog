@@ -11,7 +11,7 @@ Jason Lee
 
 On the Sunday before the recent JAX conference in San Francisco, I was privileged to attend the Speakers' Summit with many of the other speakers for that week. There was a lot of really good discussions, but the biggest thing I took away from it, or at least the most practical, came from Dan Allen's lightning talk on documentation and removing the pain. That five minute talk stands a good chance of changing the way I write.
 
-<!-- Read More -->
++++// Read More+++
 
 Dan's main point, as I saw it, is that documentation is hard enough, so why do we make it harder with all of those angle brackets? Whether we're writing a blog entry and using HTML or a full-length book and using docbook, those angle brackets get in the way. They're hard to type (correctly) and even harder to read.  If I recall correctly, he had two suggestions (with one building on the other): http://www.methods.co.nz/asciidoc/[asciidoc] and http://awestruct.org/[awestruct].
 

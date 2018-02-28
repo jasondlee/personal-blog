@@ -9,7 +9,7 @@ Jason Lee
 2007-05-04
 
 While many have found GlassFish to be a great choice for an internal application server, there are others that would like to push it a bit further, and use it in an ASP/ISP envrionment.  Jan Luehe discussed GlassFish's virtual hosting features in a recent http://blogs.sun.com/jluehe/entry/virtual_hosting_features_in_glassfish[blog entry].  What I'd like to do in this entry is take the information that Jan presented, and walk through setting up a few different virtual hosting environments.
-<!-- Read More -->
++++// Read More+++
 
 Terms to Know
 -------------

@@ -10,7 +10,7 @@ Jason Lee
 
 
 While JSF has had Ajax support for a long time now, it has always been through external libraries such as http://www.jboss.org/richfaces[Ajax4Jsf/RichFaces], http://www.icefaces.org/main/home/[ICEfaces], http://directwebremoting.org/dwr/index.html[DWR], https://jsf-extensions.dev.java.net/nonav/mvn/reference-ajax.html[DynaFaces], etc.  With JSF 2, the framework now has first class, standardized support for Ajax.  This is good news on several fronts.  For those that want Ajax support but would rather not import another library, that capability is now baked in, and, for those familiar with a4j or DynaFaces, it should look very familiar.  However, for those that don't mind the external dependency, the standardized Ajax will make it much easier to mix and match component libraries on the same page, an issue that has plagued JSF for while.  In this post, I'd like to take the first approach and show how easy it is to achieve Ajaxy updates on your `h:dataTable` using only standard JSF.
-<!-- Read More -->
++++// Read More+++
 
 In this example, we're going to use a part of the JSF API that I have overlooked or ignored for a long time:  the `DataModel` class.  While you may not recognize the class, you've almost certainly used it.  When you pass a `List` to the a `h:dataTable`, JSF wraps that list in a `DataModel` implicitly.  However, if you use the class explicitly, you gain a lot more power over your data and your table.  We'll look at that in a moment.  First, though, let's start with our basic table:
 

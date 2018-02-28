@@ -9,7 +9,7 @@ Jason Lee
 2011-02-17
 
 After posting my last entry, link:/posts/2011/02/17/glassfish-3-1-rest-and-a-secured-admin-user[GlassFish 3.1, REST, and a Secured Admin User], I was asked about an entry on using GlassFish 3.1's REST interface with secure admin enabled. Some of you may be asking, "Isn't that what you just wrote about?" While the titles sound the same, they're slightly different, but in a very significant way. Let's take a quick look at secure admin and then see what our REST client needs to do make use of this new server configuration.
-<!-- Read More -->
++++// Read More+++
 
 Secure admin is defined as this in the `enable-secure-admin` help:
 

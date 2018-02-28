@@ -9,7 +9,7 @@ Jason Lee
 2010-02-18
 
 Yesterday brought us link:/2010/02/new-components-in-mojarra-scales-part-iii-scimagezoomer-and-sclightbox[Part III] in our look at some new components in Mojarra Scales.  Today, Part IV brings us `sc:combo`, combination, if you can imagine that, of a `h:selectOneMenu` and `h:inputText`.
-<!-- Read More -->
++++// Read More+++
 
 The `h:selectOneMenu` is a nice control as it allows the application author to limit what the user can enter, thus helping insure data integrity (and sanity).  Sometimes, though, it would be nice to offer a list of options for the user, but allow him to enter any arbitrary alternative.  Unfortunately, the HTML spec doesn't offer this kind of control.  Lucky for us, though, this is fairly easy to implement using some of the nice JavaScript widgets provided by YUI.  Here's a sample:
 

@@ -11,7 +11,7 @@ Jason Lee
 
 I've been getting a number of bug reports from my app http://cubtracker.com[Cub Tracker] that had me stumped. I was getting NullPointerExceptions where I shouldn't be. After some digging, I think I finally found the culprit: device rotation. While rotating the device does, indeed, trigger the error, it goes deeper than that. My problem is that the app doesn't correctly save the state of the view, which becomes problematic when, for example, the device is rotated. In trying to fix that, I discovered I don't understand the Android lifecycle as well as I should, so I set out to fix that.
 
-<!-- Read More -->
++++// Read More+++
 
 First off, for those that may not realize it, when an Android device is rotated, the current Activity is destroyed and recreated. This is done, at least in part, in case the Activity wants to use a different layout for the new screen dimensions. This is clearly documented for anyone interested in read the https://developer.android.com/guide/topics/resources/runtime-changes.html[documentation]. Ahem.
 

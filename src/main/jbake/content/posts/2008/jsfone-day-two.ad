@@ -9,7 +9,7 @@ Jason Lee
 2008-09-06
 
 Day two is over, as I sit here on the morning of the third, despite my best intentions.  It was a long day for me, but  a good one, overall.
-<!-- Read More -->
++++// Read More+++
 
 Despite my two talks scheduled for that afternoon, I took the time to attend one of the JSFOne sessions presented by Ted Goddard of http://www.icesoft.com/[ICEsoft] on "Ajax Push/ICEFaces."  Ajax Push is the term ICEsoft prefers for what others call http://cometdaily.com/[Comet] (Ajax...Comet... get it? : ) or http://directwebremoting.org/dwr/reverse-ajax[Reverse Ajax].  It's a technology that has interested me for quite a while, so I figured this was a good chance to learn from an expert, and I was completely blown away with how easy it is with ICEfaces.  I was expecting to have to add a lot of mark up to the template to use Ajax Push, and maybe a lot of plumbing on the server as well, but I was wrong.  The template remains completely unchanged -- it has no idea that Ajax Push is being used.  In fact, Ted suggested that we write our app as Web 1.0 app, and THEN add the push features.  It sounded crazy until I saw the changes on the server side:  two lines of code.  I don't have the code handy, but you basically subscribe a session to a group (I believe that's the term they use) with one line of code, and then, anywhere you want to notify interested clients of an update, you use another line of code.  That's it.  It's basically a very simple subscribe/notify mechanism.  Very impressive.  The Infragistics guys are here as well.  Someday, I'll have to play with both of those frameworks and see if I can cook up a compare and contrast of some of the major frameworks.  We'll see if that ever happens ; ).
 

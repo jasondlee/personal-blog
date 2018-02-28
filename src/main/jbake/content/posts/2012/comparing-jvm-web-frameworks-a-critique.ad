@@ -9,7 +9,7 @@ Jason Lee
 2012-02-15
 
 Recently, Matt Raible again presented his http://www.slideshare.net/mraible/comparing-jvm-web-frameworks-jfokus-2012[Comparing JVM Web Frameworks], this time at JFokus 2012.  The intent of the presentation, as best as I can gather from half a world away, is to prevent some of the major JVM-based web frameworks, showing the various strengths and weaknesses, which will allow the audience to choose a framework more easily.  While the goal is laudable, I'm just not sure how well executed the attempt was.
-<!-- Read More -->
++++// Read More+++
 
 Before I go any further, I should make some disclosures.  The most important, probably, is my connection to JSF.  I currently work for Oracle (and, of course, anything expressed on this blog is not necessarily shared by my employer, etc., etc. ; ), which I came to by way of Sun.  JSF and GlassFish were my introduction to various Sun engineers and how I eventually came to work for Sun.  I am a long time (and still current) user of JSF, I was a member of the JSF 2.0 Expert Group, and have worked on a handful of open source JSF projects (including Mojarra).
 

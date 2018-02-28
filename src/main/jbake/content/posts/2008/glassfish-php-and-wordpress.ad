@@ -10,7 +10,7 @@ Jason Lee
 
 
 With all the hype around JRuby, Jython, Scala, Groovy, etc., an oft-overlooked dynamic language with JVM support is PHP.  Thanks to the hard work of the folks at Caucho Technology, the Quercus project offers a pure Java implementation of the PHP language, sporting support for a lot of the major PHP-based applications.  In this entry, we'll look at how to configure GlassFish to provide easy PHP support, and then look at installing WordPress, the popular blogging software (which runs this site) on GlassFish.
-<!-- Read More -->
++++// Read More+++
 
 = Installing the library
 The first step, of course, is to download Quercus.  As of this writing, the current version is 3.1.6 and can be downloaded http://quercus.caucho.com/download/quercus-3.1.6.war[here].  The typical installation method is to wrap your PHP application inside the war, but that's always felt a little odd to me.  While that works, we're going to setup GlassFish to process a PHP file from any application.  To do that, let's open up the Quercus war file, and look in WEB-INF/lib, where you will find 3 jar files.  Now you have a choice.  If you want to make PHP support available to all domains, place these three jars (quercus.jar, resin-util.jar, and script-10.jar) in the lib/ directory in your GlassFish installation root.  If you only want to add support to one domain, copy the jars to the lib/ directory in your domain directory (e.g., `$GF_HOME/domains/domain1/lib/`).

@@ -10,7 +10,7 @@ it seemed pretty clear that the issue was a JDK version issue. While I think thi
 ago, I was forced to install Java 6 in order to install IDEA, but, apparently, the new version of the Checkstyle plugin was compiled with a newer 
 JDK (as it should be). Whether or not the Java 6 issue still exists with IDEA, you can make IDEA run on Java 8 pretty easily, and I'll show you how to do it.
 
-<!-- Read More -->
++++// Read More+++
 
 The first step, of course, is to install a more current JDK, which means (at the time of this writing), unless you have compelling 
 reasons not to, Java 8 build 45. Because we all long for the glory days of Sun, you can download the JDK at http://java.sun.com. Once that's done, you 

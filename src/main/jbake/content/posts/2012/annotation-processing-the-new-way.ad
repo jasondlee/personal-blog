@@ -11,7 +11,7 @@ Jason Lee
 
 I recently ran into an issue with our dependency injection system: it won't return a list of interfaces, only implementations. That system, for what it's worth, is http://hk2.java.net[HK2], but http://docs.oracle.com/javaee/6/tutorial/doc/giwhl.html[CDI] has the same "problem". Since the rest of the system worked using these interfaces, I really wanted to solve the discoverability issue rather than redesigning that part of the system. After considering and playing with a Maven plugin, I opted to use the http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/package-frame.html[javax.annotation.processing] API. Let's take a quick look.
 
-<!-- Read More -->
++++// Read More+++
 
 The first step, of course, is to create the annotation. We'll use this very simple one:
 

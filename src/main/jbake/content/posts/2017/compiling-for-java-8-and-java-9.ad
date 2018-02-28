@@ -11,7 +11,7 @@ run under Java 9, complete with module support. The problem with this is that th
 isn't quite ready for Java 9, so it's not as simple as I would like. I have, however, found 
 a solution that seems to work.
 
-<!-- Read More -->
++++// Read More+++
 In this setup, I have three projects: the shared module, the Android project, and the 
 JavaFX project. The shared module looks roughly like this:
 

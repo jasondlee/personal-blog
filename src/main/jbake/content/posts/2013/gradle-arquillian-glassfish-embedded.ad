@@ -11,7 +11,7 @@ Jason Lee
 
 I've recently been migrating all of my personal projects to Gradle. Since I use Arquillian, that means migrating that part of the build as well. However, being still fairly new to Gradle, how to handle that integration wasn't immediately obvious. Thanks to https://twitter.com/bmuschko[Benjamin Muschko] and https://twitter.com/aslakknutsen[Aslak Knutsen], I've finally gotten a working setup.
 
-<!-- Read More -->
++++// Read More+++
 
 While there _is_ a https://github.com/aslakknutsen/arquillian-gradle-plugin[Gradle plugin], as I understand things, it only supports the container lifecycle. All of the test deployment, etc. is work yet to be done. Fortunately, you don't need the plugin if you don't mind a little more work in your build.  Here is my current build file, which only supports GlassFish Embedded and JBoss AS 7 Managed (paritally) at the moment:
 

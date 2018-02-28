@@ -9,7 +9,7 @@ Jason Lee
 2009-06-02
 
 Today was CommunityOne, the free conference that precedes, and this year, runs concurrently with JavaOne.  This year, my wife was able to travel out with me for a little vacation after JavaOne concludes.  With her CommunityOne pass, she got to attend today's activities with me, which was a nice change from last year.  When we landed in San Francisco, we checked in, ate a quick lunch, then jumped into the sessions.
-<!-- Read More -->
++++// Read More+++
 
 The first session we attended was "Sun Cloud APIs Birds of a Feather."  As a Sun employee, I feel I should know what our cloud story is, but I don't.  While this session didn't really explain a lot of the business side, Java luminaries Tim Bray and Craig McClanahan (ironically, one responsible for XML itself and the other for a very XML-heavy web application framework) demonstrated the RESTful APIs we provide to manage the cloud which uses...JSON. :)  Tim and Craig clearly know their stuff, handling both the presentation and the audience questions comfortably.  I need to see if Sun employees or Java User Groups get any kind of special deal on a virtual data center, as I'd really like to play with one with breaking the bank.
 

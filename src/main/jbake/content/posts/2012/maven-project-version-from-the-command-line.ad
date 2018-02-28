@@ -11,7 +11,7 @@ Jason Lee
 
 A friend asked me today how to get a project's version out of a Maven POM file without having to read and parse it. A quick Google search brought up the http://stackoverflow.com/a/3545363[answer], which I thought I'd share here.
 
-<!-- Read More -->
++++// Read More+++
 
 The short answer is this:
 

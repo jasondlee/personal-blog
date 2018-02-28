@@ -12,7 +12,7 @@ Jason Lee
 I was recently sent a copy of http://www.amazon.com/gp/product/0071823093/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0071823093&linkCode=as2&tag=coupfoai0f-20[_Java EE and HTML5 Enterprise Application Development_]
 by https://twitter.com/peppertech[John Brock], https://twitter.com/arungupta[Arun Gupta], and https://twitter.com/GeertjanW[Geertjan Wielenga]. This is my review of the book.
 
-<!-- Read More -->
++++// Read More+++
 
 image:http://ecx.images-amazon.com/images/I/51vcYORnPLL._SY300_.jpg[Cover, 162, 300, float="right"] While this a fairly short book (176 pages), the authors managed to work a fair amount in. As you probably guessed from the title, the book
 covers Java EE in the context of an HTML5 application. Given the size of the book and the fairly large and expansive scope of Java EE, not

@@ -9,7 +9,7 @@ Jason Lee
 2011-10-06
 
 It happened a bit more quickly than I had planned, and, yes, I know that's a pretty bad Python joke, but, as link:/posts/2011/10/03/glassfish-rest-interface-a-client-side-perspective/[promised], I just committed code to add support for generating Python REST clients to the GlassFish RESTful Administration interface. Let's take a quick look at it.
-<!-- Read More -->
++++// Read More+++
 
 One easy egg to crack!
 ----------------------

@@ -11,7 +11,7 @@ Jason Lee
 
 I recently posted the slides and the source code from the presentation I gave at http://jaxconf.com/2012[JAXConf San Francisco]. While that's helpful for those who were in my session, it's probably less so for those who weren't.  What I'll do in this post, then, is discuss the slides and code in detail, skipping over the introductory slides, and getting right to the heart of the matter.
 
-<!-- Read More -->
++++// Read More+++
 
 The _idea_ of plugins is easy. The _how_ is, often the hard part.  To provide the "how", I've broken the question into two parts: how do I get access to the plugins, and how do I write the plugins.
 

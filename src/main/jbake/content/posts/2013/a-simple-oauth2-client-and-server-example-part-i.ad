@@ -11,7 +11,7 @@ Jason Lee
 
 When implementing web site security, OAuth2 almost always comes up. We've had requests to implement OAuth2 in the GlassFish REST interface, and, it turns out, I have a similar need on a personal project. Looking at the spec, though, OAuth2 can be pretty daunting. Fortunately, you don't need to understand it all, and Apache has a project, Oltu (nee Amber) that handles most of the implementation. 
 
-<!-- Read More -->
++++// Read More+++
 Before we get too excited, I need to qualify the statements I'm about to make: I am very new to OAuth2 and, then, by no means an expert. What I'm going to present here is my current understanding of part of what the spec offers. Hopefully, it's accurate and helpful. As with everything you read on the internet, though, it never hurts to verify. :)
 
 With that out of the way, we're going to implement a very simple token-based authorization system.  This will allow a third-party app to interact with your service on behalf of a user.  Here's the basic flow in English:

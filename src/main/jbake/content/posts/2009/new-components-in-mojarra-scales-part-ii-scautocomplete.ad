@@ -9,7 +9,7 @@ Jason Lee
 2009-12-22
 
 In link:/2009/12/new-components-in-mojarra-scales-part-i-sc-datatable/[Part I], I introduced the new YUI-backed Scales dataTable component.  In this installment in the series, we"ll take a look at another new component available in Scales 2.0, `sc:autoComplete`.
-<!-- Read More -->
++++// Read More+++
 
 The auto-complete component is likely very familiar to most seasoned web users.  As information is typed into a field on the form, suggestions are displayed in a box that appears below the input field.  The user is then free to select one of these options or to continue entering his value of choice.  To put such a component on the web page using Mojarra Scales, a component similar to the following can be used:
 

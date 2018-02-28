@@ -11,7 +11,7 @@ Jason Lee
 image::/images/2011/04/cubtracker_logo_220_white.png[width="140px"]
 
 For a few months now, I've been working on a small application called http://cubtracker.com[Cub Tracker] which is designed to help Cub Scout den and pack leaders track the progress of the scouts assigned them.  I'm a big fan of testing, so I've done my best to follow TDD as I've worked on the app.  Early on, it became clear that I needed a better way to test, as the official Android app is slow and unreliable at times.  Via Twitter, I was turned on to http://www.android-x86.org/[Android-x86] and after a couple nights of hacking, I think I have a usable installation of Android-x86 under http://www.virtualbox.org/[VirtualBox] that has sped up my testing considerably.  In this article, I'll show you how I did it.
-<!-- Read More -->
++++// Read More+++
 
 First up, let me clarify something, namely, my claim that the Android emulator is unreliable.  Unless I'm just really unlucky or doing something really wrong, sometimes the emulator comes up, for lack of a better term, in a funky state.  I can unlock the screen, interact with the "device" etc., but adb doesn't see the emulator, so I can't deploy my app (e.g., adb logcat sits waiting for the device to come online forever).  Usually, killing the zombie emulator and starting a new one solves the problem, but that type of manual interaction doesn't work under CI.  With what little experience I've had with Android-x86 and VirtualBox, that doesn't seem to be a problem anymore.  The device starts up quickly and is almost immediately ready to use.  
 

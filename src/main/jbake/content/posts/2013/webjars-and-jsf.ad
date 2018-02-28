@@ -11,7 +11,7 @@ Jason Lee
 
 http://www.webjars.org/[WebJars], for those that haven't heard, is a project that takes popular client-side web libraries and packages them in JARs to make their use in Java-/JVM-based web apps simpler. The web site notes that you can easily see which libraries a project is using simply by looking at its dependencies, and that transitive dependencies automatically appear. It's a pretty compelling project, but, for some reason, it doesn't http://www.webjars.org/documentation[show how to integrate it] with JSF. I'd like to think it's because it's so trivial, but I'll show it here anyway. :)
 
-<!-- Read More -->
++++// Read More+++
 
 The first step is to add it to your build. We'll use http://getbootstrap.com/[Bootstrap 3.0] in our example:
 

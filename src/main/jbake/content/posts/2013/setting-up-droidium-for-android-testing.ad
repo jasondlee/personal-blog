@@ -10,7 +10,7 @@ Jason Lee
 
 
 Many know Arquillian as a great integration, functional, acceptance testing platform. Until recently, I thought of it solely as a great Java EE tool, but an Arquillian extension, known as Droidium, allows you to use Arquillian to help drive your Android testing. I spent some time tonight trying to get it set up for http://cubtracker.com[Cub Tracker] and thought I'd share what (little) I have so far.
-<!-- Read More -->
++++// Read More+++
 
 Rather than use Ant as the Android SDK currently does, we're going to build this test app using Maven. My POM currently looks something like this:
 

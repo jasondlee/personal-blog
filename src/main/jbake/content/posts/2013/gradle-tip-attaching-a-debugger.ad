@@ -11,7 +11,7 @@ Jason Lee
 
 Maven offers a nice script to allow for attaching a debugger to your build, `mvnDebug`. Gradle does not. Again, though, Gradle makes it pretty easy to add this to your build. 
 
-<!-- Read More -->
++++// Read More+++
 
 Let's say you want to debug your tests:
 

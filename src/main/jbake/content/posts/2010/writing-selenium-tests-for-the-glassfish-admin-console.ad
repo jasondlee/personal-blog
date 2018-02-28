@@ -9,7 +9,7 @@ Jason Lee
 2010-03-25
 
 One of the results of the Oracle purchase of Sun has been an increased focus on testing -- not that we didn't test GlassFish before, but it was mostly manual in my area of the server.  The task of automating this fell to me, and, after a little -- ahem -- testing, I settled on http://seleniumhq.org/[Selenium].
-<!-- Read More -->
++++// Read More+++
 
 For those that don't know, Selenium is a web application testing tool.  It has a number of different modules, including the Selenium IDE, which is used to help write tests, and Selenium RC to run the tests.  Selenium server, which actually interacts with the browser, is, for us, a transitive dependency through RC.
 

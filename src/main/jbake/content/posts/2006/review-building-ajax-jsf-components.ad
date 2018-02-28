@@ -9,7 +9,7 @@ Jason Lee
 2006-10-12
 
 If you're doing web development, you have likely at least heard of Ajax, and, if you're not currently using it, you've likely investigated its possible use.  One of the tricky aspects of working with a technology like Ajax is integrating it with various frameworks.  JavaServer Faces, now a standard part of the Java EE stack, is no different.  For both a page and component author, the integration issue can be a big question.  Luckily for those of us in the JSF world, that question has been addressed by Chris Schalk and Ed Burns, in their new book http://www.amazon.com/JavaServer-Faces-Complete-Reference/dp/0072262400/ref=sr_11_1/104-8011241-4536743?ie=UTF8[JavaServer Faces:  The Complete Reference].
-<!-- Read More -->
++++// Read More+++
 
 While the book is a comprehensive look at the entirety of the JSF framework, one particular chapter, Building AJAX JSF Components, should be of interest to anyone working with Ajax, especially component authors.  The chapter begins by making the grandiose claim that "JSF and AJAX are a perfect match."  The authors then attempt to back up their claim by showing how JSF's lifecycle phase management helps implement components that use AJAX very cleanly, especially from the component users' perspective.
 

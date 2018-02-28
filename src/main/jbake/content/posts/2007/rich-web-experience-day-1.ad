@@ -9,7 +9,7 @@ Jason Lee
 2007-09-07
 
 Today, I'm attending http://www.nofluffjuststuff.com/[No Fluff Just Stuff]'s "http://therichwebexperience.com[The Rich Web Experience]" conference in San Jose.  Having had a great experience with NFJS's Greater Oklahoma Software Symposium, I have high expectations for this conference, and, so far, I've not been disappointed.
-<!-- Read More -->
++++// Read More+++
 
 After breakfast and an expert panel discussion, I headed off for the sessions.  While they were all good today, a couple stand out.  The first was the jMaki presentation from Greg Murray and Ludovic Champenois.  These two guys (along with others like Arun Gupta and Carla Mott) have put together a REALLY impressive package.  Perhaps the coolest thing about jMaki is that it works in languages other than Java, such as PHP and Ruby.  Greg and Ludo demonstrated a number of the features of the framework, including have one toolkit's component (a Dojo tree) control the state of another toolkit's component (a YUI tabview), all made possible by the normalization of the object model the widgets accept via the jMaki wrappers.  Extremely cool stuff and worth your attention.
 

@@ -17,7 +17,7 @@ odd attempt to work around concurrency issues, or was thread safety just overloo
 still one instance per JVM, or does the `private` actually change anything? My understanding was that this was a bug, but I thought I'd
 write a test just to make sure.
 
-<!-- Read More -->
++++// Read More+++
 
 Let's start with a class:
 

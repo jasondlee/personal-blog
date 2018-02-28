@@ -9,7 +9,7 @@ Jason Lee
 2007-06-08
 
 For my record setting, third blog in a single day, I thought I'd make a quick update on the state of the RI Sandbox components.  Just a couple of days ago, a former coworker started asking questions about my download component, which made me realize that I should probably find some time to do some work on them.  As a general rule, they're all fairly usable, with some gotchas here and there, as Brent was discovering.  Given my desire to see a 1.0 release, it's time to address those issues.
-<!-- Read More -->
++++// Read More+++
 
 I recently added a more generic https://javaserverfaces.dev.java.net/sandbox/components/prettyUrl.html[Pretty URL PhaseListener], based on an approach I discussed link:/2006/04/25/jsf-phaselisteners-and-get-requests/[last] link:/2006/08/17/jsf-phaselisteners-and-get-requests-redux/[year].  As I added that, I made a mental note that that would be the last thing I added to the library before 1.0.  There are still some YUI widgets I'd like to see supported, but, in the interest of putting (an admittedly somewhat arbitrary) bow on things, I'm going to try to hold myself to that.
 

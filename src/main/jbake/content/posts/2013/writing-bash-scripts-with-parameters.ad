@@ -11,7 +11,7 @@ Jason Lee
 
 In the course of my work, I often find myself writing a script to automate a routine task. Almost invariably, there are cases where I need the script to behave in slightly different fashion, but only occassionally. My early scripts rather crudely used one `if` after, which is not very elegant. Finally, after tiring of this clumsy approach, I searched for a better way and found one: `getopts`. In this shortish entry, I'll give a very brief introduction to `getopts`, and show how I write my scripts now.
 
-<!-- Read More -->
++++// Read More+++
 
 Let's start with a simple example:
 

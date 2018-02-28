@@ -11,7 +11,7 @@ Jason Lee
 
 If you search for how to upload a file to a JAX-RS 2 endpoint, most suggestions will point you to implementation-specific approaches. While that works, it defeats one of the purposes of a spec: portability. There are some posts out there that will point you in the right direction, though. What I'll do here, then, is present a clear, portable solution to the problem.
 
-<!-- Read More -->
++++// Read More+++
 
 In this example, we're going to upload arbitrary, binary data. Let's think of this in HTML terms: we have a form on a page that has a number of text input fields, and at least one file field. In this example, we'll use two fields: `name`, and `attachment`. A Java model (which will become more important later), might look like this:
 

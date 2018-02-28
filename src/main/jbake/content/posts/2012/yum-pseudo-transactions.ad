@@ -11,7 +11,7 @@ Jason Lee
 
 If you follow me on http://twitter.com/jasondlee[Twitter], you may have seen that I've been looking for a good media player. This long, painful process involved installing project Foo, along with its 87 dependencies, only to see that I didn't like it, then running into the same thing with Bar and Baz. Now I have a ton of packages installed that I don't need, which will irritate me as I think of all the wasted disk space.  This morning, I decided to give http://cinnamon.linuxmint.com/[Cinnamon] a try. After seeing its long list of dependencies, I decided to tackle that problem and (the sadly named) `tx_yum` was born.
 
-<!-- Read More -->
++++// Read More+++
 
 Before I get to the script, I'll admit that when it comes to maintaining the RPM database, my skills are sorely lacking. Beyond installing and uninstalling, I can't do much. :)  This script, then, may not be optimal, but it was a fun, quick effort, so *lay off*! :P  That said,
 

@@ -9,7 +9,7 @@ Jason Lee
 2009-04-21
 
 Early this morning, I published Mojarra Scales 1.3.1.  I've been remiss in making good updates where when I make release, so, rather than creating a new post for each release long after the fact, I'll try to being everyone up to the current state in just one.
-<!-- Read More -->
++++// Read More+++
 
 Much has changed over the past few weeks.  We started using Scales in the GlassFish Administration Console as part of UI update, which has been a great vehicle for driving change and finding bugs.  One of the most pressing changes, which should have been in since day 1, is the namespacing of the JavaScript code.  In 1.3 and earlier, all the JS functions and vars were in the global namespace.  As of 1.3.1, they are now in the `scales` namespace.  For the most part, this shouldn't affect most users, except, perhaps, for those `sc:panel`.  This namespace should go much farther in preventing naming collisions, which is is nice for all of us. :)
 

@@ -9,7 +9,7 @@ Jason Lee
 2006-07-27
 
 In October, I will be presenting Ajax at the <a target="_newwindow" href="http://wiki.okcjug.org">Oklahoma City Java Users Group</a>, of which I am a member (and vice president now, by the way, for what that's worth).  As I've prepared for that talk, I've thought quite a bit about the web apps I write, which are, for the most part, pretty boring.  I like to think that they're functional, but I have to admit that they're pretty plain. Ajax, though, along with the Javascript pretties that usually accompany an Ajaxified application, is a good way of fixing that "problem", assuming it's done properly.  That line of thinking has affected how I've approached a new app I started at work, but finding a library that works well with JSF (read as, in a JSF-friendly manner) has been a bit of a challenge.
-<!-- Read More -->
++++// Read More+++
 
 My goal with this part of the app is role and group management for users.  The behavior I was hoping to achieve was to allow the web user to select a system user from a list box (`<h:selectOneListbox/>`), and have four other list boxes (`<h:selectManyListbox/>`) populated with the assigned roles, avaialble roles, assigned groups, and available groups for the selected user.  Pretty simple, in theory.
 

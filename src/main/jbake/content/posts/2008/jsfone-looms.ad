@@ -24,7 +24,7 @@ so.write('player');
 </script>
 ++++
 
-<!-- Read More -->
++++// Read More+++
 
 At any rate, in preparation for my presentations at the conference, I volunteered to give one of my presentations, http://www.jsfone.com/show_session_view.jsp?presentationId=11089&showId=166[JSF 2-style Component Development in a JSF 1.2 World], to the http://okcjug.org[Oklahoma City JUG].  The only word that comes to mind is, "educational."
 

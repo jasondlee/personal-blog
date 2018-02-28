@@ -9,7 +9,7 @@ Jason Lee
 2006-05-08
 
 A reader brought to my attention that I have never posted the code to FacesUtil, a convenience class used, for example, in my link:/2006/04/25/jsf-phaselisteners-and-get-requests[JSF, PhaseListeners, and GET Requests] article, so I'll fix that oversight now.  Before I get to the code, though, let me preface it by saying this:  This code has grown as several developers have hacked on it, so it my not be consistent, and probably doesn't embody any sort of best practices.  It does, however, work well for us, and that's our primary concern. :)  Note also, that this code has not been updated to the 1.2 specification yet, so you'll at least get warnings if not errors should you use this in a 1.2 environment.  I am currently in the process of updating the class, but, for now, here it is in its current state.
-<!-- Read More -->
++++// Read More+++
 
 FacesUtil.java
 [source,java,linenums]

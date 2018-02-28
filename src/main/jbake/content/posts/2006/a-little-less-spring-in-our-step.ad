@@ -10,7 +10,7 @@ Jason Lee
 
 
 Friday I had an interesting discussion with my boss, Mitch.  I have been doing a lot of thinking about Java EE 5 and what it offers, and that has me reevaluating some of our technology decisions.  Most notably, which was the bulk of my discussion with Mitch, is, "Do we really need Spring anymore?"
-<!-- Read More -->
++++// Read More+++
 
 Currently, the way we use Spring is simply as a way to wire together classes and get us a `HibernateTemplate`.  While that is what it was designed to do, in part, our usage is admittledly likely very basic.  It is that realization, though,  that made me wonder if we need Spring at all.  As I've noted, we've committed to using Glassfish as our application server, which gives us a full JEE stack, something Spring was designed to obivate.  We're also a JSF shop, so we get a pretty decent dependency injection mechanism for free.  Given JSF's IoC/DI, and JEE 5's resource injection, I think we can get the benefits of Spring from the EE environment.
 

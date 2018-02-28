@@ -9,7 +9,7 @@ Jason Lee
 2006-05-09
 
 As part of our migration to Glassfish, one of my tasks is to migrate all of the web services we've exposed via http://mule.codehaus.org[Mule] to a session bean environment, which won't be too hard since we only have two such deployments.  The code changes are really pretty small, but non-obvious (given my nascent EJB3 knowledge).  For those that might be in a similar situation, let's take a quick look at what this process entailed.
-<!-- Read More -->
++++// Read More+++
 
 Under Mule, the classes were http://springframework.org/[Spring]-managed, so we were able to leverage Spring's IoC and lifecycle offerings to make things pretty easy.  We simply created the bean definition (with all of its dependencies) in the Mule config, then wrote a little more XML to tell Mule to expose the bean's methods as a web service.  To make this class a session bean, all we'd have to do then, or so I though, was put a `@Remote` annotation on the interface and a `@Stateless` annotation on the implementation, and we'd be pretty much done.  My guess was close, but not quite accurate.
 

@@ -9,7 +9,7 @@ Jason Lee
 2006-12-14
 
 I've been doing a fair amount of JSF component writing of late, and, invariably, I miss one or more "minor" details, causing my component to explode in spectacular fashion at runtime.  What follows, then, is a check list for writing JSF components, with notes on the differences between the 1.1 and 1.2 versions of the specification.
-<!-- Read More -->
++++// Read More+++
 <h3>Table of Contents</h3>
 <ul>
 <li>link:#uicomponent[Write the UIComponent Class]</li>

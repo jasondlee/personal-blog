@@ -9,7 +9,7 @@ Jason Lee
 2010-06-09
 
 Some time ago, I was given a copy of _http://www.amazon.com/gp/product/1847197620/ref=s9_simh_gw_p14_i1?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=center-2&pf_rd_r=1SRVBK771EN6ACN3W6GN&pf_rd_t=101&pf_rd_p=470938631&pf_rd_i=507846[JSF 1.2 Components]_ by http://www.jsfsummit.com/conference/speaker/ian_hlavats[Ian Hlavats] and asked if I'd write a review for it.  It's long overdue, but here are my thoughts on this book.
-<!-- Read More -->
++++// Read More+++
 
 http://www.amazon.com/gp/product/1847197620/ref=s9_simh_gw_p14_i1?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=center-2&pf_rd_r=1SRVBK771EN6ACN3W6GN&pf_rd_t=101&pf_rd_p=470938631&pf_rd_i=507846[<img src="http://ecx.images-amazon.com/images/I/51WxF2r1EEL._SL500_AA300_.jpg" align="right"/>]First off, in case you're guessing, like I did, based on the title, that this is a book about writing JSF 1.2 components, it's not.  It's book about some existing JSF 1.2 component libraries.  So if you need the former, I would suggest http://www.amazon.com/JavaServer-Faces-2-0-Complete-Reference/dp/0071625097/ref=sr_1_2?ie=UTF8&s=books&qid=1276116885&sr=8-2[JavaServer Faces: The Complete Reference]^1^ or http://www.amazon.com/Core-JavaServer-Faces-David-Geary/dp/0137012896/ref=sr_1_1?ie=UTF8&s=books&qid=1276116930&sr=8-1[Core JavaServer Faces]^1^.  That said, what this book _does_ offer is a nice overview/introduction to a number of different components including the standard JSF components and those from a number (five, to be exact) third party component sets.
 

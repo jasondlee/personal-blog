@@ -9,7 +9,7 @@ Jason Lee
 2007-03-27
 
 As we've done more and more EJB development, we've had to think pretty hard about how to unit test our beans.  We've tried a couple of different approaches (including _not_ testing, which I don't recommend ;), but weren't ever just real comfortable with the results.  I'm pretty happy with the method we're using now, and it's so simple, I'm a bit embarrassed that we didn't think of it earlier.
-<!-- Read More -->
++++// Read More+++
 
 One of our earliest attempts used JBoss' http://docs.jboss.org/ejb3/embedded/embedded.html[embeddable container], which we eventually discarded for a couple of reasons.  It was _really_ heavy in terms of configuration and startup time, and, as hard as I'm sure the JBoss team is working on AS 5 in terms of EE 5 compliance, the embeddable container is still using an _old_ version of the spec, which meant we had to change the way we handled resource look ups, which we didn't like.   We've also tried using mock objects, but, for the most part, we found that to be overkill.  What we ended up with is pretty light and simple.
 

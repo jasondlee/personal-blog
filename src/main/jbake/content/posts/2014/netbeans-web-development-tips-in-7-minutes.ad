@@ -11,7 +11,7 @@ Jason Lee
 
 Recently, Geertjan Wielenga, Principal Product Manager in the Oracle Developer Tools group, posted a video on his https://blogs.oracle.com/geertjan/entry/youtube_14_netbeans_web_development[blog] showing "14 NetBeans Web Development Tips in 7 Minutes", which showed off several nice tips for the IDE (#1 and #5 are my favorites). If you're like me, sometimes you don't have (or don't want to make) time to watch a video, so I thought I'd make a table of contents for the video, with links to relevant portion of it for those that would like to read the list and watch only the parts that interest them. 
 
-<!-- Read More -->
++++// Read More+++
 
 [cols="1,15,3", options="header", width="75%"]
 |===

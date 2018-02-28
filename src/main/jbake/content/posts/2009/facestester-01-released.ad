@@ -11,7 +11,7 @@ Jason Lee
 About a month ago, I link:/announcing-facestester/[announced] a new project, FacesTester, a JUnit-based testing tool for JSF that my good friend http://www.rodcoffin.com/[Rod Coffin] and I have undertaken.  Since then, Rod posted a very nice http://blog.rodcoffin.com/?p=137[introduction] to FacesTester usage.  Today, we made our first official release, FacesTester 0.1.  The version number should indicate that it's still a work in progress, but it is already quite functional (I, for one, have been using it to build a test suite for Mojarra Scales, which has helped drive out features and resolve bugs very quickly).  We wanted to push out a release to encourage people to download it, use it, and give us feedback.
 
 So what does FacesTester currently support?  Quite a bit.  In this entry, we'll take a quick look at what FacesTester offers, and what we have planned.
-<!-- Read More -->
++++// Read More+++
 
 Without diving into code too much, which Rod has covered nicely, here's a quick list of what we support:
 

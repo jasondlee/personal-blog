@@ -10,7 +10,7 @@ Jason Lee
 
 
 Byron Nevins, a colleague of mine here at Oracle, has a couple of nice https://blogs.oracle.com/foo/entry/how_to_run_glassfish_v3[blog] http://blogs.oracle.com/foo/entry/run_glassfish_v3_as_a[entries] showing how to run GlassFish as a service, both as root and non-root users, on Ubuntu or Debian.  As a Gentoo user, that doesn't help me much, unfortunately, but, some time ago, I developed a script that works great for me, so I thought I'd share it here.
-<!-- Read More -->
++++// Read More+++
 
 To make things a bit easier, go read Byron's non-root user entry (changing the install location to /opt/glassfish unless you want to edit the script below), and stop at step 5.  I'll wait. All done there?  Ok, great!
 

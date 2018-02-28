@@ -9,7 +9,7 @@ Jason Lee
 2010-02-18
 
 In link:/2009/12/new-components-in-mojarra-scales-part-ii-–-scautocomplete/[Part II] of this series, I introduced the new auto complete component in Mojarra Scales.  In this installment, we'll take a look at two new closely related components, `sc:imageZoomer` and `sc:lightbox`.
-<!-- Read More -->
++++// Read More+++
 
 The first component, `sc:imageZoomer`, displays a thumbnail, and, when clicked, "zooms" that thumbnail up to the full size image.  Here is a sample usage:
 

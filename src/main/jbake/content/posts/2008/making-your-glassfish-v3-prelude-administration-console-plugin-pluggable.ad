@@ -9,7 +9,7 @@ Jason Lee
 2008-11-06
 
 In my link:/extending-the-glassfish-v3-prelude-administration-console/[last article], I talked about writing plugins for the GlassFish v3 Prelude Administration Console, which showed the various integration types supported out-of-the box by the console, but what if a plugin developer would like to allow <i>other</i> plugins to extend it just like the console itself does.  In this short article, we'll show how to do exactly that.
-<!-- Read More -->
++++// Read More+++
 
 As we saw in the last article, the GlassFish v3 Prelude Administration Console offers a wide range of integration types, but it is also possible to create your own types, should you wish to allow other plugins to interact/integrate with your own plugin, and doing so is very simple.  All that is required is the selection of an integration type identifier, which must be unique across the system.  By convention, your integration types should be a Java package-like name followed by a colon and a specific integration point name (as we saw in the integration type table above in the other article).  For example, let's say you're writing a plugin for you company's fantastic GlassFish extension, Winnie.  In your plugin, your `ConsoleProvider` class in in `com.foo.winnie.admin`, and you'd like to be able allow other plugins to add tabs to main Winnie config page.  Your integration type, then, would be `com.foo.winnie.admin:tab`.  When the Winne plugin authors define the intregation point, they would specify that as the type, and your tab's `id` as the `parentId`.
 

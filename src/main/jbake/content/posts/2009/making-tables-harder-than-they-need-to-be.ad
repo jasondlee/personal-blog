@@ -9,7 +9,7 @@ Jason Lee
 2009-05-13
 
 I know you're not supposed to do this, but sometimes it's just easier.  Sometimes I use `table`s to layout out my forms.  Especially for big forms, it's just easier to put things in a table than deal with `label`s, CSS, etc.  Right or wrong, I do it from time to time, but, thanks to http://www.ibm.com/developerworks/java/library/j-jsf2fu1/index.html[David Geary], I just learned that I make it harder on myself than it needs to be.  The sad thing is that I've known about this solution for years now, but never put two and two together.
-<!-- Read More -->
++++// Read More+++
 
 Typically, my form may look something like this:
 

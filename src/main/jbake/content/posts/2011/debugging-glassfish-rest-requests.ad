@@ -9,7 +9,7 @@ Jason Lee
 2011-03-04
 
 If you've been following my series on using the GlassFish REST interface, you've probably noticed that your JSON and XML output isn't pretty-printed like mine.  While there are several http://xmlindent.com/[online] http://jsonformatter.curiousconcept.com/[tools] that can fix that for you, there's no need for the extra step.  GlassFish will do that for you.  Let's look at how to make that happen.
-<!-- Read More -->
++++// Read More+++
 
 To configure the REST interface, we can use the REST interface, in particular http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config[]
 

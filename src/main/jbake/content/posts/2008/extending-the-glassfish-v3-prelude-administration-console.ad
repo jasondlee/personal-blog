@@ -9,7 +9,7 @@ Jason Lee
 2008-11-06
 
 Today, the GlassFish community is launching https://glassfish.dev.java.net/downloads/v3-prelude.html[GlassFish v3 Prelude] (http://docs.sun.com/app/docs/doc/820-4494?l=en[Release Notes] and http://docs.sun.com/app/docs/doc/820-4836?l=en[Quick Start Guide]).  If you are not familiar with what Prelude is, http://weblogs.java.net/blog/kalali/archive/2008/10/one_pager_revie.html[here] is a short write up giving the high level details.  In this article, I'd like to focus on the third bullet there, "CLI and administration console extensibility."  Specifically, we'll look at what it takes to create a plugin that will extend GlassFish v3's Administration Console.
-<!-- Read More -->
++++// Read More+++
 
 Table of Contents
 -----------------

@@ -9,7 +9,7 @@ Jason Lee
 2009-07-29
 
 After a lot of changes and a long delay, I'm pleased to announce that we have released FacesTester 0.3 tonight.  This version has a large number of new features.  Read on the for details.
-<!-- Read More -->
++++// Read More+++
 
 This release has three major changes:  removal of almost all external dependencies, support for Servlet filters and listeners, and support for JSF 2.
 

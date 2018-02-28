@@ -11,7 +11,7 @@ Jason Lee
 
 I recently had the need to convert several scanned images into one multi-page PDF. While there are probably tools to help do this manually, I knew that there was a good chance I'd have to do something like this again, quite possibly with a large number of images, so I did what any good geek would do: I scripted it.  In this entry, I'll show how I went about that.
 
-<!-- Read More -->
++++// Read More+++
 
 For starters, let's take a look at the very small, simple Python script:
 

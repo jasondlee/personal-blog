@@ -10,7 +10,7 @@ Jason Lee
 
 
 In a recent post showing how to use JavaFX 2 and NetBeans on the Mac, I noted that I have been unable to run NetBeans using Java 7 on my Mac for reasons I had not been able to figure out.  Now, thanks to a pointer from http://skovatch.wordpress.com/[Scott Kovatch], the technical lead at Oracle for the Mac OS X port of Java, I think I can show you how to do that.
-<!-- Read More -->
++++// Read More+++
 
 In case you missed it, here is his suggestion: 
 

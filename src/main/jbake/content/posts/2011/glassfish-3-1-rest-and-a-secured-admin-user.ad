@@ -9,7 +9,7 @@ Jason Lee
 2011-02-17
 
 In my last post on using the GlassFish REST interface, a commenter asked about how GlassFish handles security.  So far, all of my examples have been using GlassFish 3.1 out of the box, which doesn't require authentication (as a convenience for developers, as well as system admins evaluating the server).  In production, of course, the server will be secured, which means our client code will have to be modified.  In this installment, we'll see how that might be done in Java.
-<!-- Read More -->
++++// Read More+++
 
 Let's start with a very simple class that deploys an application to the server:
 

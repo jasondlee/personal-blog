@@ -13,7 +13,7 @@ is mostly irrelevant for this discussion) that has brought up a question in the 
 experimentation. This post is a discussion of my options which will allow me to think 
 out loud, if you will, as well as getting (I hope) some feedback on my options.
 
-<!-- Read More -->
++++// Read More+++
 
 In a nutshell, I need to add data synchronization to Cub Tracker to allow users to share
 data amongst themselves (or simply across multiple devices). While there are certainly a 

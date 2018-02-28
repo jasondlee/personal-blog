@@ -16,7 +16,7 @@ Java webapps, I often reach for my webapp hammer when trying to learn a new lang
 I asked Hadi what Kotlin library he would suggest. His answer, in a nutshell, was that
 the Java interop in Kotlin is so good, just use whatever you want, so I thought I'd
 put that to the test with a _really_ simple JSF app. Here it is.
-<!-- Read More -->
++++// Read More+++
 First things first, you will probably want to use IntelliJ IDEA to help with the 
 Kotlin syntax. Also being from JetBrains, IDE support is first rate. :) Before we get to
 the actual Kotlin, let's get some minor details out of the way.  First, the pom.xml:

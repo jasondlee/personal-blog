@@ -13,7 +13,7 @@ For both work and fun, I run Linux.  I'm also a Java guy, which poses some inter
 
 Most of the time that works fine, but for reasons I don't remember, OpenJDK was installed on my system, and now everything is using that (which is at Update 7, and not the recently released and more secure Update 11 that I want).  I'd rather not monkey with changing PATH and all that, so I turned to the Linux alternatives system to handle things.  Sadly, it wasn't quite that easy, as alternatives needs to know about your alternatives, so before I could change things, I had to educate it, which turned out be easier than I feared.  With Java 7 Update 11 installed in `/opt/java/jdk1.7.0_11` and symlinked from `/opt/java/latest`, I had to do two things.
 
-<!-- Read More -->
++++// Read More+++
 
 First, it seems the actual update script, `update-java-alternatives`, needs a `.jinfo` file in `/usr/lib/jvm`.  Mine looks like this:
 

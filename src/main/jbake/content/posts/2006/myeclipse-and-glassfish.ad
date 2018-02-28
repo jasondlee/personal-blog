@@ -9,7 +9,7 @@ Jason Lee
 2006-04-21
 
 My shop has adopted MyEclipse as the standard development environment.  Our recent adoption of Glassfish, though, makes things a little difficult for MyEclipse (and likely Eclipse in general) as integration with the app server has not yet landed in any GA release that I'm aware of.  This difficulty, however, is not insurmountable.  Let's take a look at how to debug a Glassfish-hosted application using (My)Eclipse.
-<!-- Read More -->
++++// Read More+++
 
 Obviously, to start, you'll need MyEclipse and Glassfish installed.  Their respective web sites cover that, so I won't here.  The only change you'll need to make to Glassfish is to enable debugging.  To do that, log on the http://localhost:4848[admin console], and navigate to Application Server->JVM Settings->General.  On this page, you'll first need to make sure that the Enabled checkbox on the Debug line is checked.  In the next field, Debug Options, make a note of the value for the "address=" portion.  That will be the port that we give to MyEclipse.  Click Save to commit your changes, and let's move on to MyEclipse.
 

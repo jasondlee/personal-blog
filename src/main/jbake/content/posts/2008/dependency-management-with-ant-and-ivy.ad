@@ -9,7 +9,7 @@ Jason Lee
 2008-01-17
 
 One of my long-standing complaints with Ant is that project dependency management is non-existent in the core Ant distribution.  Many will quickly point to the Maven Ant tasks, but I've never been really fond of them for one reason or another.  The other advice I often get is to use Ivy, but even after several attempts, I had never gotten Ivy to work.  With the http://ant.apache.org/ivy/history/2.0.0-beta1/release-notes.html[recent release] of 2.0 beta 1, though, I thought I'd try again, and I'm glad I did.  Not only have I gotten it to work for me, but I was also able to successfully configure custom resolvers.  Below is what I had to do to migrate the Mojarra Scales dependency management to Ivy.
-<!-- Read More -->
++++// Read More+++
 
 Using Ivy requires, at least in the way I'm using it, two new files, ivy.xml, which defines my dependencies, and ivysettings.xml, which configures my custom resolvers.  The usage from my Ant build file is actually pretty simple, so we'll start there:
 

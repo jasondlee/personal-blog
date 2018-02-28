@@ -5,7 +5,7 @@
         <article class="post"
           <header class="entry-header">
             <h1 class="title">
-              <a href="${post.uri}">${post.title}</a>
+              <a href="${content.rootpath}${post.uri}">${post.title}</a>
             </h1>
             <span>
               <time class="pubdate" datetime="${post.date?date?string('dd MMMM yyyy')}">${post.date?date?string.full}</time> 
@@ -17,7 +17,7 @@
                 <span class="title">tags: </span>
                 <#if post.tags??>
                     <#list post.tags as tag>
-                        <a href="/posts/tags/${tag}">${tag}</a>
+                        <a href="${content.rootpath}posts/tags/${tag}">${tag}</a>
                     </#list>
                 </#if>
               </div>

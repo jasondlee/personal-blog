@@ -9,7 +9,7 @@ Jason Lee
 2008-06-23
 
 I have just uploaded RC2 for Mojarra Scales 1.0, a JSF component set born of the Mojarra Sandbox.  This release features a number of bug fixes and a handful of new enhancements.  When updating, make sure you grab the latest JSFTemplating snapshot from either its download page or Maven, as there are some bug fixes and features there that Scales needs.  You can download the last jar http://tinyurl.com/3snlu3[here].
-<!-- Read More -->
++++// Read More+++
 
 Changes in 1.0 RC2
 

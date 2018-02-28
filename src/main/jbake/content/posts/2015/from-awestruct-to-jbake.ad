@@ -10,7 +10,7 @@ However, I have found, especially on the Mac, the Ruby-based environment more di
 problem before, it presented itself once again when I was issued a Mac upon joining NetSuite. I can, of course, muddle through it, but I'm
 tired of fighting it, so I started looking around for an alternative and found http://jbake.org[JBake].
 
-<!-- Read More -->
++++// Read More+++
 
 JBake, described by Dan Allen as the "jekyll of the JVM", is a Java-based static site generator. While the language the tool is written in is not all 
 that relevant in terms of site generation, it is important to me as a developer who has, from time to time, "needed" to extend the tool in 

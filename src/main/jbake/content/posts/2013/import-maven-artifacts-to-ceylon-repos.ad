@@ -11,7 +11,7 @@ Jason Lee
 
 In trying to come up to speed on Ceylon, I've run into some issues with module import dependencies. I'm pretty sure they're all pilot error, but it was suggested that I import the jars into the Ceylon repository and specify the dependencies between the modules. This would, effectively, be functionally the same as the `<dependencies>` element in the Maven POM. In classic geek, over-engineer-the-solution fashion, I cobbled together this shell script. It could be more elegant, but it seems to work, and it was much simpler than a Java implementation using the Maven APIs. :)
 
-<!-- Read More -->
++++// Read More+++
 
 Here's the script:
 

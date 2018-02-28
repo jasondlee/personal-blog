@@ -10,7 +10,7 @@ Jason Lee
 
 
 I have just committed preliminary support for the http://tinymce.moxiecode.com/[TinyMCE] JavaScript HTML editor.  There are parts that still don't work correctly, but it's a good start.
-<!-- Read More -->
++++// Read More+++
 
 This example markup:
 

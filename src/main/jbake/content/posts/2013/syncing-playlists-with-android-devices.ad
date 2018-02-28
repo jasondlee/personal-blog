@@ -10,7 +10,7 @@ Jason Lee
 
 
 While I love my Android devices, one thing that has always bugged me is syncing music with them. Sure, there are some apps that claim to be able to do it, but I've never found one that will do what it says _and_ be a decent music player at the same time (perhaps someone out there can point me to a good one). For the most part, then, I've settled on Banshee (which, as far as I can tell, doesn't sync, but is a decent player^1^). Here, then, is my very manual process for syncing music.
-<!-- Read More -->
++++// Read More+++
 
 The first step is to create a playlist. You can, of course, sync all of your music, which is much easier, but my phone won't hold all of my music, so I have to be selective.  Once I've created my playlist, I then export it (Banshee seems to use a real database, so I have to export the .m3u manually), which I put in the root of my music directory. The only part of this post that might be of interest to anyone, is the shell script I run to sync, which looks like this:
 

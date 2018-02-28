@@ -9,7 +9,7 @@ Jason Lee
 2006-04-14
 
 Recently at work, we looked, ever so briefly, at a new web framework called http://stripes.mc4j.org/confluence/display/stripes/Home[Stripes].  It looked rather cool, as it was largely annotation-based, but, given its glaring lack of any wide-spread usage, we never seriously considered it.  Today, I was on http://www.theserverside.com[The Server Side] (you *_do_* read TSS, right? ;) ) and noticed that Struts has released a http://www.theserverside.com/news/thread.tss?thread_id=39840[Java 5 addon].  One of the additions is annotation support whose only problem appears to be that it's tied to Struts (that's a joke ;) ).
-<!-- Read More -->
++++// Read More+++
 
 At any rate, all of this annotation on the web tier got me to thinking (again) about my favorite Java web tier technology, JSF.  The only "real" complaint I have with the framework is the XML, minimal as it is (I'm past the JSF learning curve, so I don't have a problem with that anymore :) ).  Being a big fan of annotations and IoC, I've been wondering if/when JSF will finally support configuration via annotations.  Until this morning, I've just assumed that I won't see that support until 2.0, but a thought occured to me:  why can't it be bolted on to 1.x?
 

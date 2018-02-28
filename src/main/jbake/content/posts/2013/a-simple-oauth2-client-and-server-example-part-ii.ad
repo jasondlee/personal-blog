@@ -11,7 +11,7 @@ Jason Lee
 
 In the last link:/posts/2013/07/11/a-simple-oauth2-client-and-server-example-part-i/[post], we took a look at the server side of our OAuth2 system. In this post, we'll take a quick look at the unit tests that will act as _TheUser_.
 
-<!-- Read More -->
++++// Read More+++
 
 Let's get right to the code:
 

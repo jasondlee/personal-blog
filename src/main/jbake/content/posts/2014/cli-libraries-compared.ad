@@ -15,7 +15,7 @@ https://github.com/tomitribe/crest[crest] from http://tomitribe.com/[Tomitribe].
 spent the last few years working on administration for GlassFish, this is an area near and dear 
 to my heart, so I thought I'd cobble together a quick example using each to see how usable they are.
 
-<!-- Read More -->
++++// Read More+++
 
 Before we look at the code, I need to lay out a few caveats. First, both of these projects seem to be
 pretty new. Neither has reached a 1.0 release, and crest, in fact, was "cobbled" together rather recently it 

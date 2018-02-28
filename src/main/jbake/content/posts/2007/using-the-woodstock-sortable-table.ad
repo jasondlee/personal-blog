@@ -9,7 +9,7 @@ Jason Lee
 2007-02-27
 
 At long last, the https://woodstock.dev.java.net[Woodstock component set] is finally here.  At IEC, we have been anxiously awaiting its release for quite some time now, as we've been hoping to make use of the sortable data table component it offers, which we have now done.  Having done it, allow me to show off the component a bit, as well as explain what I had to do make things work.  It's not hard, necessarily, just different enough to give one pause at first glance.
-<!-- Read More -->
++++// Read More+++
 
 = Table of Contents
 

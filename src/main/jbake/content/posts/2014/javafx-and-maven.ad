@@ -11,7 +11,7 @@ Jason lee
 
 I've been tinkering with a couple of different JavaFX projects for a while now. Due to other commitments, they've been largely ignored recently, but I made some time this weekend to return to them. Since I last looked at them, Java 8, and, thus, JavaFX 8, have been release, so I decided to see how the tooling in NetBeans has changed to stay apace with the development of the libraries. While there are certainly updates, it seems new projects are still built using Ant. Yuck. :P I knew Adam Bien had a Maven archetype for his https://github.com/AdamBien/igniter.fx[igniter.fx] project, so I took a look to see what that POM does to support JavaFX. As it turns out, it's pretty simple. For those interested, I have extracted here the basic POM:
 
-<!-- Read More -->
++++// Read More+++
 
 [source,xml,linenums]
 -----

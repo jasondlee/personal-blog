@@ -9,7 +9,7 @@ Jason Lee
 2007-10-25
 
 Well, that wasn't hard.  I think I have the link:/2007/10/25/seam-jpa-hibernate-oc4j-maven2-archetype#redeploy[redeploy issue] fixed, and a shared library was the trick.
-<!-- Read More -->
++++// Read More+++
 
 It appeared that the redeployment issue was due to some odd class loading issue, so I decided to try a shared library.  To do that, I create the directory in `j2ee/home/shared-lib/hibernate/3.2` and put these jars there:
 

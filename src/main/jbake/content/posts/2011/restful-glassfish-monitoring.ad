@@ -9,7 +9,7 @@ Jason Lee
 2011-02-28
 
 In previous posts, I've shown various ways to manage a GlassFish 3.1 server via its REST interface.  As nice as that is, we also support monitoring your server via REST as well.  In this article, we'll take a look at some of the things you can ask of your server.
-<!-- Read More -->
++++// Read More+++
 
 If you're familiar with the management interface, you should be immediately comfortable with the monitoring interface.  To access it, you use http://localhost:4848/monitoring/domain[http://localhost:4848/monitoring/domain].  Just like the management interface, you can request HTML, XML, or JSON.  The simplest way to change the return type is to append an extension of the desired type.
 [source,bash,linenums]
