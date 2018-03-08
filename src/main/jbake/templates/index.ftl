@@ -10,7 +10,7 @@
             <span>
               <time class="pubdate" datetime="${post.date?date?string('dd MMMM yyyy')}">${post.date?date?string.full}</time> 
             </span>
-          <div class="entry-content">${post.body?keep_before(splitter)}</div>
+          <@readmore post/>
           <footer class="entry-footer">
               <div class="tags">
 
