@@ -9,10 +9,7 @@
                                     <a href="/about.html" title="About">About</a>
                                 </li>
                                 <li>
-                                    <a href="/projects.html" title="Projects">Projects</a>
-                                </li>
-                                <li>
-                                    <a href="/+" rel="me" title="Google+">Google+</a>
+                                    <a href="/resume.pdf" rel="me" title="Resume/CV">Resume/CV</a>
                                 </li>
                                 <li>
                                     <a href="/linkedin" rel="me" title="LinkedIn">LinkedIn</a>
@@ -21,8 +18,13 @@
                                     <a href="/twitter" rel="me" title="Twitter">Twitter</a>
                                 </li>
                                 <li>
-                                    <a href="/resume.pdf" rel="me" title="Resume/CV">Resume/CV</a>
+                                    <a href="/+" rel="me" title="Google+">Google+</a>
                                 </li>
+								<!--
+                                <li>
+                                    <a href="/projects.html" title="Projects">Projects</a>
+                                </li>
+								-->
                             </ul>
 
                         </div>
@@ -35,7 +37,15 @@
                             <h3>Publications</h3>
                             <ul>
                                 <li>
-                                    <a title="My Java 9 book" href="https://www.packtpub.com/application-development/java-9-programming-blueprints" style="text-weight: bold; font-size: large">Java 9 Programming Blueprints</a>
+									<a href="http://amzn.to/2FD2XAo" style="float: right">
+										<img src="/images/2017/j9pb.png" width="100"/>
+									</a>
+									<p style="text-weight: bold; font-size: large">
+										Java 9 Programming Blueprints:
+										<a title="My Java 9 book at Amazon" href="http://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+										<a title="My Java 9 book at Packt" href="https://www.packtpub.com/application-development/java-9-programming-blueprints" style="padding-left: 10px">Packt</a>
+									</p>
+									<span style="float: clear;"/>
                                 </li>
                                 <li>
                                     <a title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries. " href="http://jaxenter.com/java-tech-journal/JTJ-2012-06">Tips for Writing Pluggable Java EE Applications</a>
