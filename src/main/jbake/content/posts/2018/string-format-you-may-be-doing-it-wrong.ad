@@ -44,11 +44,13 @@ String foo2 = new StringBuilder("one ")
     .toString();
 -----
 
+image::/images/2018/get_on_with_it.jpg[align=center,float=right]
+
 Not really a whole lot prettier, but the point here isn't finding the prettiest way
 to write something like this. We're trying to see how to use String.format() in a safer, 
 more reliable way, so let's get to it.
 
-image::/images/2018/get_on_with_it.jpg[align=center]
++++<div style="clear: both"></div>+++
 
 The key is the "argument index", which you can read more about https://docs.oracle.com/javase/9/docs/api/java/util/Formatter.html#syntax[here]. 
 Using the argument index, you can specify which value in the argument list goes with
