@@ -17,7 +17,7 @@
                 <span class="title">tags: </span>
                 <#if post.tags??>
                     <#list post.tags as tag>
-                        <a href="${content.rootpath}posts/tags/${tag}">${tag}</a>
+                        <a href="${content.rootpath}tags/${tag}.html">${tag}</a>
                     </#list>
                 </#if>
               </div>

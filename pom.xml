@@ -7,7 +7,9 @@
     <artifactId>steeplesoft-blog</artifactId>
     <name>Steeplesoft Blog</name>
     <version>1.0-SNAPSHOT</version>
+
     <!--<packaging>jbake</packaging>-->
+
     <build>
         <finalName>steeplesoft-blog</finalName>
         <defaultGoal>clean install</defaultGoal>
@@ -32,15 +34,7 @@
                     <dependency>
                         <groupId>org.jbake</groupId>
                         <artifactId>jbake-core</artifactId>
-                        <version>2.6.0</version>
-                        <!--
-                        <exclusions>
-                            <exclusion>
-                                <groupId>org.eclipse.jetty</groupId>
-                                <artifactId>jetty-server</artifactId>
-                            </exclusion>
-                        </exclusions>
-                        -->
+                        <version>2.6.1</version>
                     </dependency>
 
                     <dependency>
@@ -50,40 +44,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <!--
-            <plugin>
-                <groupId>br.com.ingenieux</groupId>
-                <artifactId>jbake-maven-plugin</artifactId>
-                <version>0.3.0-SNAPSHOT</version>
-                <extensions>true</extensions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jbake</groupId>
-                        <artifactId>jbake-core</artifactId>
-                        <version>2.5.1</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.freemarker</groupId>
-                        <artifactId>freemarker</artifactId>
-                        <version>2.3.23</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctorj</artifactId>
-                        <version>1.5.4.1</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>default-generate</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
