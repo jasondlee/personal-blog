@@ -28,6 +28,11 @@
                         <goals>
                             <goal>build</goal>
                         </goals>
+                        <configuration>
+                            <properties>
+                                <site.url>http://localhost:49152/</site.url>
+                            </properties>
+                        </configuration>
                     </execution>
                 </executions>
                 <dependencies>
