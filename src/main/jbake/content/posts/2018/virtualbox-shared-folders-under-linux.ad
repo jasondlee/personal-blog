@@ -38,8 +38,8 @@ offer these simple commands that installed the GA for me on my Fedora VM:
 
 [source,bash]
 -----
-# dnf install kernel-devel elfutils-libelf-devel
-# bash /run/media/jdlee/VBox_GAs_5.2.12/VBoxLinuxAdditions.run
+$ dnf install kernel-headers kernel-devel elfutils-libelf-devel gcc dkms make bzip2 perl 
+$ bash /run/media/jdlee/VBox_GAs_*/VBoxLinuxAdditions.run
 -----
 
 One way to verify that the Guest Additions are properly installed is to load the kernel module:
