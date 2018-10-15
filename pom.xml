@@ -10,6 +10,10 @@
 
     <!--<packaging>jbake</packaging>-->
 
+    <properties>
+        <asciidoctorj.version>1.5.6</asciidoctorj.version>
+        <jbake.version>2.6.1</jbake.version>
+    </properties>
     <build>
         <finalName>steeplesoft-blog</finalName>
         <defaultGoal>clean install</defaultGoal>
@@ -39,20 +43,20 @@
                     <dependency>
                         <groupId>org.jbake</groupId>
                         <artifactId>jbake-core</artifactId>
-                        <version>2.6.1</version>
+                        <version>${jbake.version}</version>
                     </dependency>
 
                     <dependency>
                         <groupId>org.asciidoctor</groupId>
                         <artifactId>asciidoctorj</artifactId>
-                        <version>1.5.6</version>
+                        <version>${asciidoctorj.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.3.2</version>
+                <version>1.6.0</version>
                 <executions>
                     <!--
                     <execution>
@@ -104,7 +108,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>properties-maven-plugin</artifactId>
-                        <version>1.0-alpha-2</version>
+                        <version>1.0.1</version>
                         <executions>
                             <execution>
                                 <phase>initialize</phase>
@@ -122,7 +126,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.3.2</version>
+                        <version>1.6.0</version>
                         <executions>
                             <execution>
                                 <id>deploy-blog</id>
