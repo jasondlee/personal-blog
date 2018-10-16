@@ -1,2 +1,6 @@
 target
 site.properties
+
+\.idea/
+
+*.iml

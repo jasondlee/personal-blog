@@ -333,4 +333,4 @@ build to output the uberjar. That's awesome, as that means there's no real appli
 environment. We'll see that this _mostly_ holds true across the other MicroProfile, thus demonstrating the power of
 standards and portability.
 
-In the next installment, we'll take a look at https://thorntail.io/[Thorntail].
+In the next <</posts/2018/getting-started-with-eclipse-microprofile-part-3-thorntail.ad#,installment>>, we'll take a look at https://thorntail.io/[Thorntail].
