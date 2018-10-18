@@ -116,3 +116,6 @@ As I noted in the introduction, our main interest is in how to deploy this using
 implementations, so the application is intensely underwhelming. In
 <</posts/2018/getting-started-with-eclipse-microprofile-part-2-payara-micro.ad#,Part 2>>, we'll start looking at deploying using Payara
 Micro, so stick around for that.
+
+You can find the source for the whole project https://bitbucket.org/jdlee/microprofile-demo/[here], and for this part
+https://bitbucket.org/jdlee/microprofile-demo/src/master/common[here].

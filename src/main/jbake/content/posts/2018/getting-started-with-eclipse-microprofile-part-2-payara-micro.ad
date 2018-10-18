@@ -334,3 +334,6 @@ environment. We'll see that this _mostly_ holds true across the other MicroProfi
 standards and portability.
 
 In the next <</posts/2018/getting-started-with-eclipse-microprofile-part-3-thorntail.ad#,installment>>, we'll take a look at https://thorntail.io/[Thorntail].
+
+You can find the source for the whole project https://bitbucket.org/jdlee/microprofile-demo/[here], and for this part
+https://bitbucket.org/jdlee/microprofile-demo/src/master/payara-micro[here].

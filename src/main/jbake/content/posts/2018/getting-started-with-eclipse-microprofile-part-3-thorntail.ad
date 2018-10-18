@@ -151,4 +151,7 @@ Hello, Thorntail
 With that, we've finished another simple MicroProfile deployment with zero changes to our application, and no container-specific
 code, but we'll circle back to that idea when we wrap up the series.
 
+You can find the source for the whole project https://bitbucket.org/jdlee/microprofile-demo/[here], and for this part
+https://bitbucket.org/jdlee/microprofile-demo/src/master/thorntail[here].
+
 Up next, https://openliberty.io/[OpenLiberty]!

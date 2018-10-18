@@ -294,3 +294,6 @@ Connecting to http://localhost:8080/
 
 Like I said. It's not the most elegant, but it should get you going, and with that, we're done! In the next installment,
 well see what it takes to get MicroProfile and Apache TomEE up and running.
+
+You can find the source for the whole project https://bitbucket.org/jdlee/microprofile-demo/[here], and for this part
+https://bitbucket.org/jdlee/microprofile-demo/src/master/openliberty[here].
