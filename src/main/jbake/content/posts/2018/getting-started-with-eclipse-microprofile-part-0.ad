@@ -6,6 +6,7 @@ author=jdlee
 status=published
 ~~~~~~
 
+image:/images/2018/microprofile_logo.jpg[float="right"]
 The http://microprofile.io[Eclipse MicroProfile] is a community-driven profile initially developed by Red Hat, IBM,
 TomiTribe, Payara and the London Java Community (LJC).
 https://microprofile.io/2016/06/29/announcing-java-ee-microprofile/[Launched in 2016], it was intended to sit alongside
