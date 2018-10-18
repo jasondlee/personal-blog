@@ -93,7 +93,7 @@ We already have our Arquillian dependencies added, and there are no additional c
 basic case, so we can run our tests via `mvn test` as we've seen many times already.
 
 As Emeril would say, BAM! We're all done. Things get more complicated as the project gets more complicated, but I'll
-try to discuss that in our wrap.
+try to discuss that in our wrap up.
 
 Stay tuned for an implementation of a different color next time when we look at https://hammock-project.github.io/[Hammock].
 
