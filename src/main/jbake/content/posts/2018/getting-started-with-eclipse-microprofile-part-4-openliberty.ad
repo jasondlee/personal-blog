@@ -297,3 +297,10 @@ well see what it takes to get MicroProfile and Apache TomEE up and running.
 
 You can find the source for the whole project https://bitbucket.org/jdlee/microprofile-demo/[here], and for this part
 https://bitbucket.org/jdlee/microprofile-demo/src/master/openliberty[here].
+
+=== UPDATE
+Twitter user https://twitter.com/gcharters[gcharters] contacted me to
+https://twitter.com/gcharters/status/1053214740862898176[tell me] about a parent POM that OpenLiberty users can use to
+avoid some of the boilerplate above. You can find that POM
+https://search.maven.org/artifact/net.wasdev.wlp.maven.parent/liberty-maven-app-parent/2.6.1/pom[here] and cut the size
+of your POM significantly. Enjoy!
