@@ -1,0 +1,207 @@
+title=Getting Started with Eclipse MicroProfile, Part 7: Helidon
+date=2018-10-21
+tags=Java EE, MicroProfile
+type=post
+author=jdlee
+status=published
+~~~~~~
+
+Up next in our series comes an offering from, to me, a somewhat surprising source, Oracle, and that offering is
+https://helidon.io/[Helidon]. I first heard about in
+https://medium.com/oracledevs/helidon-takes-flight-fb7e9e390e9c[September 2018], and while it's still pre-1.0, it
+looks extremely promising.
+
++++// Read More+++
+
+Like Hammock, Helidon projects are `jar` projects, so we need to set the package type appropriately, then import
+the Helidon dependencies:
+
+[source,xml]
+-----
+<packaging>jar</packaging>
+
+<properties>
+    <helidon.version>0.10.1</helidon.version>
+    <package>com.steeplesoft.microprofile.helidon</package>
+    <mainClass>${package}.Main</mainClass>
+    <libs.classpath.prefix>libs</libs.classpath.prefix>
+    <copied.libs.dir>${project.build.directory}/${libs.classpath.prefix}</copied.libs.dir>
+</properties>
+
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>io.helidon</groupId>
+            <artifactId>helidon-bom</artifactId>
+            <version>${helidon.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+-----
+
+Our dependencies, then are very short:
+
+[source,xml]
+-----
+<dependencies>
+    <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>common</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>io.helidon.microprofile.bundles</groupId>
+        <artifactId>helidon-microprofile-1.2</artifactId>
+    </dependency>
+</dependencies>
+-----
+
+There are a number of dependencies pulled in transitively, but that's fine. We only have to manage the one. Unless I've
+missed something, you do need to code an entry point. It's an extremely small class that doesn't do anything special, so
+I hope I've either overlooked something, or it's something that will be fixed as the project matures. At any rate, here
+it is:
+
+[source,java]
+-----
+public final class Main {
+    public static void main(final String[] args) throws IOException {
+        Server.create().start();
+    }
+}
+-----
+
+It seems like a waste of time, but, as best as I can tell, it's required at the moment. :) With that in place, we're
+almost ready to run it. We can, of course, run directly from the IDE, but to run from the command line, we need a
+Maven plugin. Or two. The official docs show the `maven-jar-plugin`, but I've also thrown in the `maven-capsule-plugin`
+we saw from Hammock:
+
+[source,xml]
+-----
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>copy-dependencies</id>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${copied.libs.dir}</outputDirectory>
+                        <overWriteReleases>false</overWriteReleases>
+                        <overWriteSnapshots>false</overWriteSnapshots>
+                        <overWriteIfNewer>true</overWriteIfNewer>
+                        <overWriteIfNewer>true</overWriteIfNewer>
+                        <includeScope>runtime</includeScope>
+                        <excludeScope>test</excludeScope>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <addClasspath>true</addClasspath>
+                        <classpathPrefix>${libs.classpath.prefix}</classpathPrefix>
+                        <mainClass>${mainClass}</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>com.github.chrisdchristo</groupId>
+            <artifactId>capsule-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>build</goal>
+                    </goals>
+                    <configuration>
+                        <appClass>${mainClass}</appClass>
+                        <type>fat</type>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+-----
+
+The `maven-dependency-plugin` copies all of the projects runtime dependencies to the configured directory, and the
+`maven-jar-plugin` builds a jar, specifying where to find the dependencies (in the `lib` directory next to the jar) and
+the main class to run. Using this plugin, we would run the project like this:
+
+[source,bash]
+-----
+$ java -jar target/helidon-1.0-SNAPSHOT.jar
+-----
+
+The `libs` directory MUST be in `target` or you will get a `java.lang.NoClassDefFoundError` and the project will fail
+to start. If you move the jar, you must move `lib` as well.
+
+With the `maven-capsule-plugin`, it's all self-contained:
+
+[source,bash]
+-----
+$ java -jar target/helidon-1.0-SNAPSHOT-capsule.jar`
+-----
+
+If you move the jar, like, say, when you deploy your application, all you need is the jar. I like this approach better,
+and many thanks to John Ament for introducing me to the plugin. :)
+
+Testing, like Hammock, is also a bit different. There doesn't appear to be Arquillian support for Helidon (yet?), so we
+test much like we did Hammock:
+
+[source,java]
+-----
+public class HelidonTest {
+    private static Server server;
+
+    @BeforeClass
+    public static void setup() {
+        server = Server.create();
+        server.start();
+    }
+
+    @AfterClass
+    public static void shutdown() {
+        if (server != null) {
+            server.stop();
+        }
+    }
+
+    @Test
+    public void shouldSayWorld() throws URISyntaxException, IOException {
+        requestAndTest(new URI("http://localhost:8080"), "Hello, world");
+
+    }
+
+    @Test
+    public void shouldSayHelidon() throws URISyntaxException, IOException {
+        requestAndTest(new URIBuilder(new URI("http://localhost:8080"))
+                        .setParameter("name", "Helidon")
+                        .build(),
+                "Hello, Helidon");
+    }
+
+    private void requestAndTest(URI uri, String s) throws IOException {
+        try (CloseableHttpResponse response = HttpClients.createMinimal().execute(new HttpGet(uri))) {
+            Assertions.assertThat(EntityUtils.toString(response.getEntity()))
+                    .isEqualTo(s);
+        }
+    }
+}
+-----
+
+And Bob's your uncle! For more information, head over to the https://helidon.io[Helidon site] for their getting started docs,
+which seem quite thorough and complete for such a young project.
+
+In our next installment, we'll take a look a lesser known project, https://ee.kumuluz.com/microprofile/[KumuluzEE].

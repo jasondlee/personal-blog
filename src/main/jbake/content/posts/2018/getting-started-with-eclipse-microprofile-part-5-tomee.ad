@@ -49,29 +49,29 @@ We'll need a plugin to bundle our application:
 
 [source,xml]
 -----
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.tomee.maven</groupId>
-                <artifactId>tomee-maven-plugin</artifactId>
-                <version>${tomee.version}</version>
-                <configuration>
-                    <tomeeClassifier>webprofile</tomeeClassifier>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <context>ROOT</context>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.tomee.maven</groupId>
+            <artifactId>tomee-maven-plugin</artifactId>
+            <version>${tomee.version}</version>
+            <configuration>
+                <tomeeClassifier>webprofile</tomeeClassifier>
+            </configuration>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                    <configuration>
+                        <context>ROOT</context>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 -----
 
 The `exec` goal will build our uberjar, and we set the `context` to `ROOT` so that our application is deployed on the
