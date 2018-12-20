@@ -11,17 +11,27 @@
     <!--<packaging>jbake</packaging>-->
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <asciidoctorj.version>1.5.6</asciidoctorj.version>
-        <jbake.version>2.6.1</jbake.version>
+        <jbake.version>2.7.0-SNAPSHOT</jbake.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jbake</groupId>
+            <artifactId>jbake-maven-plugin</artifactId>
+            <version>${jbake.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <finalName>steeplesoft-blog</finalName>
         <defaultGoal>clean install</defaultGoal>
         <plugins>
             <plugin>
-                <groupId>com.blazebit</groupId>
+                <groupId>org.jbake</groupId>
                 <artifactId>jbake-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>${jbake.version}</version>
                 <configuration>
                     <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
                 </configuration>
