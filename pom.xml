@@ -34,6 +34,7 @@
                 <version>${jbake.version}</version>
                 <configuration>
                     <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+                    <port>49152</port>
                 </configuration>
                 <executions>
                     <execution>
