@@ -1,0 +1,421 @@
+title=Getting started with Micronaut: Kotlin, JPA, and JWT
+date=2019-02-12
+tags=Kotlin,Micronaut,JPA,JWT
+type=post
+author=jdlee
+status=published
+~~~~~~
+
+The Micronaut http://guides.micronaut.io/index.html[guides] are really pretty good. So far, I've found just about
+everything I need. The biggest obstacle so far has been that, at times, the content was scattered across several guides
+and usually in the wrong language: I'm interested in Kotlin, but the guides seem to be mostly in Java or Groovy. This
+isn't surprising, as budgets are limited, of course. What I would like to do here, then, is provide a small sample app,
+written in Kotlin, that demonstrates how to set up the project, configure and use JPA, and secure the app with JWT.
+
++++// Read More+++
+
+Micronaut comes with a CLI that helps bootstrap a project, as well create various artifacts. So far, I've found the
+project creation to be the most useful, with the rest being less so. Your mileage may vary, of course. That said,
+let's bootstrap the project:
+
+[source,bash]
+-----
+$ mn create-app -l kotlin -b maven --features=hibernate-jpa,security-jwt,jdbc-hikari,http-server jugdemo
+-----
+
+Once the script finishes, we're ready to open the project in the IDE of your choice, so let's do that now and make
+some build changes. These are mostly to update versions, but also to make some changes to the dependencies, especially
+around testing.
+
+[source,xml]
+.pom.xml
+-----
+<exec.mainClass>com.steeplesoft.micronaut.Application</exec.mainClass>
+<junit.jupiter.version>5.4.0-RC2</junit.jupiter.version>
+<kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
+<kotlinVersion>1.3.21</kotlinVersion>
+<maven.compiler.source>1.8</maven.compiler.source>
+<maven.compiler.target>1.8</maven.compiler.target>
+<micronaut.version>1.0.4</micronaut.version>
+-----
+
+Replace all of the test dependencies with this block:
+
+[source,xml]
+.pom.xml
+-----
+<dependency>
+    <groupId>io.micronaut</groupId>
+    <artifactId>micronaut-inject-java</artifactId>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>io.micronaut.test</groupId>
+    <artifactId>micronaut-test-junit5</artifactId>
+    <version>1.0.1</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-api</artifactId>
+    <version>${junit.jupiter.version}</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-engine</artifactId>
+    <version>${junit.jupiter.version}</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.hamcrest</groupId>
+    <artifactId>hamcrest-all</artifactId>
+    <version>1.3</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>io.micronaut.test</groupId>
+    <artifactId>micronaut-test-core</artifactId>
+    <version>1.0.1</version>
+    <scope>test</scope>
+</dependency>
+-----
+
+== The Controller
+With our build setup, let's create our first controller, `AuthorController`:
+
+[source,kotlin]
+.AuthorContoller.kt
+-----
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.security.annotation.Secured
+
+@Controller("/author")
+class AuthorController {
+
+    @Get("/")
+    fun index(): HttpResponse<String> {
+        return HttpResponse.ok("author")
+    }
+}
+-----
+
+This is a super dumb controller, but should work fine for our purposes. What do we do next? Write a test, of course.
+
+== The Test
+
+Micronaut comes with a really nice testing framework that handles bootstrapping the server for us, and allowing us to
+inject interesting things. We likely won't scratch the surface in this test, but I hope you'll at least get a hint of
+how cool and easy it is to do:
+
+[source,kotlin]
+.AuthorControllerTest
+-----
+import io.micronaut.context.ApplicationContext
+import io.micronaut.http.HttpHeaders
+import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.client.RxStreamingHttpClient
+import io.micronaut.http.client.exceptions.HttpClientResponseException
+import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.test.annotation.MicronautTest
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+
+@MicronautTest
+class AuthorControllerTest {
+    private val client = RxStreamingHttpClient.create(embeddedServer.url)!!
+
+    @Test
+    fun testIndex() {
+        val request = HttpRequest.GET<String>("/author")
+        assertEquals("author",
+                client.toBlocking().exchange(request, String::class.java).body())
+    }
+
+    companion object {
+        val embeddedServer = ApplicationContext.run(EmbeddedServer::class.java)!!
+    }
+}
+-----
+
+There is likely a better of way doing this, but, as best I can tell, this is a decent port of the Java test to Kotlin. If
+there's a better way, you know where to find the comments section. :)
+
+We start by annotating the test with `@Micronaut`. This signals to JUnit that this is a... wait for it... Micronaut test,
+so we things done for us. What we want is a single instance of the server (your needs may vary), so we create an instance
+of the server in the `companion object`. We also want a client, so we create _that_ as an instance variable in the test
+class itself. I tried putting that in the `companion object`, but it seemed to confuse... something deep in the bowels
+of Micronaut, so I wouldn't suggest that. Unless you're smarter than I am, then please do so and tell me what I did
+wrong. :)
+
+Our actual test is a pretty simple JUnit test: annotate the method, create the request, make the call, get the response
+body, and make an assertion. Unless you've typed something wrong, or you copied and pasted code and I copied into this
+post incorrectly, you should a green test suite. Kinda sweet, but very boring. Where's the JPA? The JWT? Let's see that
+now...
+
+== Entity and Service
+
+To set up JPA, we need to configure it in `application.yml`:
+
+[source,yaml]
+.application.yml
+-----
+datasources:
+  default:
+    url: jdbc:h2:mem:jugdemo_database
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+jpa:
+  default:
+    packages-to-scan:
+      - 'com.steeplesoft.micronaut'
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        show_sql: true
+-----
+
+We start by defining a datasource. Since we want this demo to be easy to setup and use, we're going to use an in-memory
+H2 database, so we define the url, driver class, and the login credentials. Next, we need to configure JPA, so we tell the
+system what packages (which may not be strictly necessary), then enable `hbm2ddl` so our schema gets created automatically,
+and turn on SQL logging to help with debugging.
+
+With that setup, let's define an entity. For our purpose here, we're just going to define a `User` entity, as we're just
+going to deal with JPA in the context of authentication:
+
+[source,kotlin]
+.User.kt
+-----
+@Entity
+@Table(name = "users")
+data class User(@Id
+                @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
+                @SequenceGenerator(name="user_generator", sequenceName = "user_seq")
+                var id: Long? = null,
+                val email : String? = null,
+                val pass : String? = null)
+-----
+
+That's probably a bit overwhelming, so I'll give some time to read through that. Ready? Excellent. As you can see, it's
+a simple Kotlin data class with three properties. We've annotated `id` so Hibernate/JPA will properly generate the
+primary key for us. We annotate the class, and we're done with our model. For now.
+
+Our very simple data access service looks like this:
+
+[source,kotlin]
+.UserService.kt
+-----
+import io.micronaut.aop.Around
+import io.micronaut.spring.tx.annotation.Transactional
+import javax.inject.Singleton
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
+
+@Singleton
+@Around
+class UserService(@PersistenceContext val entityManager: EntityManager) {
+    @Transactional(readOnly = true)
+    fun findUser(email : String) : User? {
+        return try {
+            entityManager.createQuery("SELECT u FROM User u WHERE email = :email", User::class.java)
+                    .setParameter("email", email)
+                    .singleResult
+        } catch (e : Exception) {
+            null
+        }
+    }
+}
+-----
+
+If you're familiar with JPA, nothing here should be too unusual. We use `@Singleton` to signal to Micronaut that this is
+a managed class (you'll have to forgive the Jakarta EE-isms peeking through. I just barely avoided calling it a managed
+bean. Oops. Looks like I did it anyway). The `@Around` annotation is, as best as I can tell, required to make the system
+honor the `@Transactional` annotations you see on the methods.
+
+Also note the constructor injection of the `EntityManager`. We'll use that same approach to inject this service anywhere
+it's needed. If you run your test now, you shouldn't see much change except, perhaps, some extra logging where the
+persistence context is being initialized.  The application, though, doesn't do anything with it. Let's fix that now by
+implementing security.
+
+== Security
+
+Securing a Micronaut application seems pretty straightforward. You have at least a couple of options, `session` and `JWT`.
+Since we're building a micro(ish)service, we should probably go full on hipster and use JWTs, right? I kid! They're really
+cool, and Micronaut makes them super to use.
+
+Let's start by updating the application config:
+
+[source,yaml]
+-----
+micronaut:
+  application:
+    name: jugdemo
+  security:
+    enabled: true
+    endpoints:
+      login:
+        enabled: true
+      oauth:
+        enabled: true
+    token:
+      jwt:
+        enabled: true
+        signatures:
+          secret:
+            generator:
+              secret: "${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"
+-----
+
+We've enabled security, enabled the `/login` endpoint, turned on oauth, and set the secret for signing the JWT (and,
+seriously, change that key. Please? :). At this point, we have options. We can go the super simple route and simply
+implement `AuthenticationProvider`, or we can go the slightly more complicated route and use the
+https://docs.micronaut.io/latest/api/io/micronaut/security/authentication/providers/DelegatingAuthenticationProvider.html[DelegatingAuthenticationProvider].
+I've used both approaches in my experimentation, and the latter approach seems to add a bit more complexity with no
+(apparent) added value, so we'll go the simple route:
+
+[source,kotlin]
+.DemoAuthenticationProvider.kt
+-----
+import com.steeplesoft.micronaut.UserService
+import io.micronaut.security.authentication.AuthenticationProvider
+import io.micronaut.security.authentication.AuthenticationRequest
+import io.micronaut.security.authentication.AuthenticationResponse
+import org.reactivestreams.Publisher
+import javax.inject.Singleton
+import io.micronaut.security.authentication.AuthenticationFailed
+import io.reactivex.Flowable
+import java.util.ArrayList
+import io.micronaut.security.authentication.UserDetails
+
+
+@Singleton
+class DemoAuthenticationProvider(private val userService: UserService,
+                                 private val passwordEncoder: DemoPasswordEncoder) : AuthenticationProvider {
+    override fun authenticate(authenticationRequest: AuthenticationRequest<*, *>): Publisher<AuthenticationResponse> {
+        val user = userService.findUser(authenticationRequest.identity as String)
+        return (if (user != null && passwordEncoder.matches(authenticationRequest.secret as String, user.password)) {
+            Flowable.just(UserDetails(user.email, ArrayList()))
+        } else {
+            Flowable.just(AuthenticationFailed())
+        })
+    }
+}
+-----
+
+The interface has a single method, `authenticate`, to which is passed a `AuthenticationRequest<*, *>`. Unfortunately, it
+doesn't appear we can specify actual types on that, so we're stuck, it seems, with the ugly casts in the method body. I
+think I'll survive. In the constructor, we inject an instance of our `UserService`, but also a `DemoPasswordEncoder`? That's
+an implementation (from our app) of the `PasswordEncoder` interface required by the `DelegatingAuthenticationProvider`. I
+kinda like that class, so we're going to use it. Our implementation simply hashes the password, but feel free to do what
+you want:
+
+[source,kotlin]
+.DemoPasswordEncoder.kt
+-----
+import io.micronaut.security.authentication.providers.PasswordEncoder
+import java.security.MessageDigest
+import javax.inject.Singleton
+
+@Singleton
+class DemoPasswordEncoder : PasswordEncoder {
+    private val md = MessageDigest.getInstance("SHA-256")
+
+    override fun matches(rawPassword: String?, encodedPassword: String?): Boolean {
+        return encodedPassword == encode(rawPassword)
+    }
+
+    override fun encode(rawPassword: String?): String {
+        return String(md.digest((rawPassword?:"").toByteArray()))
+    }
+}
+-----
+
+In our `AuthenticationProvider` provider, we look up the user by email address and compare the encoded passwords. If they
+match, we return a `UserDetails` instance. If they don't, we return an `AuthenticationFailed` instance. Either response
+is wrapped in a `Flowable`.
+
+If you run your tests now, you should get an authentication failure. Let's add authentication to the test:
+
+[source,kotlin]
+.AuthorControllerTest.kt
+-----
+    @Test
+    fun testIndex() {
+        val request = HttpRequest
+                .GET<String>("/author")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer ${login().accessToken}")
+        assertEquals("author",
+                client.toBlocking().exchange(request, String::class.java).body())
+    }
+
+    private fun login() : BearerAccessRefreshToken {
+        val request = HttpRequest.POST("/login", UsernamePasswordCredentials(USERNAME, PASSWORD))
+        val response = client.toBlocking().exchange(request, BearerAccessRefreshToken::class.java)
+        assertEquals(HttpStatus.OK, response.status);
+
+        return response.body()!!
+    }
+
+    companion object {
+        val USERNAME = "jugdemo@steeplesoft.com"
+        val PASSWORD = "password"
+        val embeddedServer = ApplicationContext.run(EmbeddedServer::class.java)!!
+    }
+-----
+
+Note the addition of the `login()` function. We want to POST the user credentials (modeled by `UsernamePasswordCredentials`)
+to the `/login` endpoint. Upon a successful response, we can pull the JWT from the response body. _Super_ simple. In our
+test method, we just need to add the `Authorization` header with our bearer token, and we're golden! Almost.
+
+The problem now is that our `login()` function fails because the user doesn't exist. So how should we load test data?
+You probably have a preferred method, if you've been doing this kind of testing for a while, but here's a pretty novel
+Micronaut-provided solution: an `ApplicationEventListener`. By creating a class that implements this interface in the
+`test` source tree, we can listen for the server to start and do $SOMETHING but ONLY when running tests. This startup
+code wouldn't affect a production deployment. You can, of course, use it in a production environment, but we don't want
+to create test users in production, so we won't. :)
+
+[source,kotlin]
+.ApplicationTestListener.kt
+-----
+@Singleton
+class ApplicationTestListener(private val userServer : UserService) : ApplicationEventListener<ServerStartupEvent> {
+    override fun onApplicationEvent(event: ServerStartupEvent?) {
+        if (userServer.findUser(AuthorControllerTest.USERNAME) == null) {
+            userServer.addUser(AuthorControllerTest.USERNAME, AuthorControllerTest.PASSWORD)
+        }
+    }
+}
+-----
+
+When the application starts, this code runs. It checks to see if the user exists. If it does not, it's added. Before running
+our tests, we need to make one more change to the system: `UserServer.addUser`:
+
+[source,kotlin]
+.UserService.kt
+-----
+class UserService(@PersistenceContext val entityManager: EntityManager,
+                  private val passwordEncoder: DemoPasswordEncoder) {
+    //...
+    @Transactional
+    fun addUser(userName : String, password : String) : User {
+        val user = User(email = userName, pass = passwordEncoder.encode(password))
+        entityManager.persist(user)
+        return user
+    }
+}
+-----
+
+We've added the `DemoPasswordEncoder` to our constructor injection, then, in `addUser`, we (naively) create a new
+`User` instance, encoding the password, then persisting it. If you run your tests now, you should once again be green, and
+you'll have a working, test Micronaut application, written in Kotlin, using JPA for persistence, and secured with JWTs,
+and that's pretty cool.
+
+There's a _lot_ more to Micronaut, and the https://objectcomputing.com/news/2019/02/12/micronaut-11-milestone-1-released[upcoming 1.1]
+release promises many great enhancements. Head over, then, to the Micronaut site and check out their great
+https://micronaut.io/documentation.html[documentation].
