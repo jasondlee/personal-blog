@@ -30,13 +30,15 @@ around testing.
 [source,xml]
 .pom.xml
 -----
-<exec.mainClass>com.steeplesoft.micronaut.Application</exec.mainClass>
-<junit.jupiter.version>5.4.0-RC2</junit.jupiter.version>
-<kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
-<kotlinVersion>1.3.21</kotlinVersion>
-<maven.compiler.source>1.8</maven.compiler.source>
-<maven.compiler.target>1.8</maven.compiler.target>
-<micronaut.version>1.0.4</micronaut.version>
+<properties>
+    <exec.mainClass>com.steeplesoft.micronaut.Application</exec.mainClass>
+    <junit.jupiter.version>5.4.0-RC2</junit.jupiter.version>
+    <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
+    <kotlinVersion>1.3.21</kotlinVersion>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <micronaut.version>1.0.4</micronaut.version>
+</properties>
 -----
 
 Replace all of the test dependencies with this block:
@@ -146,7 +148,7 @@ There is likely a better of way doing this, but, as best I can tell, this is a d
 there's a better way, you know where to find the comments section. :)
 
 We start by annotating the test with `@Micronaut`. This signals to JUnit that this is a... wait for it... Micronaut test,
-so we things done for us. What we want is a single instance of the server (your needs may vary), so we create an instance
+so we get some things done for us. What we want is a single instance of the server (your needs may vary), so we create an instance
 of the server in the `companion object`. We also want a client, so we create _that_ as an instance variable in the test
 class itself. I tried putting that in the `companion object`, but it seemed to confuse... something deep in the bowels
 of Micronaut, so I wouldn't suggest that. Unless you're smarter than I am, then please do so and tell me what I did
@@ -192,6 +194,14 @@ going to deal with JPA in the context of authentication:
 [source,kotlin]
 .User.kt
 -----
+import io.micronaut.security.authentication.providers.UserState
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.SequenceGenerator
+import javax.persistence.Table
+
 @Entity
 @Table(name = "users")
 data class User(@Id
@@ -283,16 +293,15 @@ I've used both approaches in my experimentation, and the latter approach seems t
 .DemoAuthenticationProvider.kt
 -----
 import com.steeplesoft.micronaut.UserService
+import io.micronaut.security.authentication.AuthenticationFailed
 import io.micronaut.security.authentication.AuthenticationProvider
 import io.micronaut.security.authentication.AuthenticationRequest
 import io.micronaut.security.authentication.AuthenticationResponse
-import org.reactivestreams.Publisher
-import javax.inject.Singleton
-import io.micronaut.security.authentication.AuthenticationFailed
-import io.reactivex.Flowable
-import java.util.ArrayList
 import io.micronaut.security.authentication.UserDetails
-
+import io.reactivex.Flowable
+import org.reactivestreams.Publisher
+import java.util.ArrayList
+import javax.inject.Singleton
 
 @Singleton
 class DemoAuthenticationProvider(private val userService: UserService,
@@ -383,22 +392,33 @@ to create test users in production, so we won't. :)
 [source,kotlin]
 .ApplicationTestListener.kt
 -----
+import io.micronaut.context.event.ApplicationEventListener
+import io.micronaut.runtime.server.event.ServerStartupEvent
+import javax.inject.Singleton
+
 @Singleton
-class ApplicationTestListener(private val userServer : UserService) : ApplicationEventListener<ServerStartupEvent> {
+class ApplicationTestListener(private val userService : UserService) : ApplicationEventListener<ServerStartupEvent> {
     override fun onApplicationEvent(event: ServerStartupEvent?) {
-        if (userServer.findUser(AuthorControllerTest.USERNAME) == null) {
-            userServer.addUser(AuthorControllerTest.USERNAME, AuthorControllerTest.PASSWORD)
+        if (userService.findUser(AuthorControllerTest.USERNAME) == null) {
+            userService.addUser(AuthorControllerTest.USERNAME, AuthorControllerTest.PASSWORD)
         }
     }
 }
 -----
 
 When the application starts, this code runs. It checks to see if the user exists. If it does not, it's added. Before running
-our tests, we need to make one more change to the system: `UserServer.addUser`:
+our tests, we need to make one more change to the system: `UserService.addUser`:
 
 [source,kotlin]
 .UserService.kt
 -----
+import com.steeplesoft.micronaut.security.DemoPasswordEncoder
+import io.micronaut.aop.Around
+import io.micronaut.spring.tx.annotation.Transactional
+import javax.inject.Singleton
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
+
 class UserService(@PersistenceContext val entityManager: EntityManager,
                   private val passwordEncoder: DemoPasswordEncoder) {
     //...
