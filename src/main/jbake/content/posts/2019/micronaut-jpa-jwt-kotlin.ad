@@ -129,17 +129,16 @@ import org.junit.jupiter.api.Test
 
 @MicronautTest
 class AuthorControllerTest {
-    private val client = RxStreamingHttpClient.create(embeddedServer.url)!!
+    @Inject
+    @field:Client("/")
+    lateinit var client : RxStreamingHttpClient
+
 
     @Test
     fun testIndex() {
         val request = HttpRequest.GET<String>("/author")
         assertEquals("author",
                 client.toBlocking().exchange(request, String::class.java).body())
-    }
-
-    companion object {
-        val embeddedServer = ApplicationContext.run(EmbeddedServer::class.java)!!
     }
 }
 -----
@@ -148,11 +147,14 @@ There is likely a better of way doing this, but, as best I can tell, this is a d
 there's a better way, you know where to find the comments section. :)
 
 We start by annotating the test with `@Micronaut`. This signals to JUnit that this is a... wait for it... Micronaut test,
-so we get some things done for us. What we want is a single instance of the server (your needs may vary), so we create an instance
-of the server in the `companion object`. We also want a client, so we create _that_ as an instance variable in the test
-class itself. I tried putting that in the `companion object`, but it seemed to confuse... something deep in the bowels
-of Micronaut, so I wouldn't suggest that. Unless you're smarter than I am, then please do so and tell me what I did
-wrong. :)
+so we get some things done for us, like a running server. Once the server is started for us, we can also have a client
+inject for us, which we see here.
+
+[NOTE]
+====
+An earlier version of the code used a companion object and started the server explicitly. As noted in the comments, this
+led to the server being started twice. The code has been updated accordingly.
+====
 
 Our actual test is a pretty simple JUnit test: annotate the method, create the request, make the call, get the response
 body, and make an assertion. Unless you've typed something wrong, or you copied and pasted code and I copied into this
@@ -374,7 +376,6 @@ If you run your tests now, you should get an authentication failure. Let's add a
     companion object {
         val USERNAME = "jugdemo@steeplesoft.com"
         val PASSWORD = "password"
-        val embeddedServer = ApplicationContext.run(EmbeddedServer::class.java)!!
     }
 -----
 
