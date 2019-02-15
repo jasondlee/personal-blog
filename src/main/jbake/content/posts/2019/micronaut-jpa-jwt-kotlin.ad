@@ -440,3 +440,5 @@ and that's pretty cool.
 There's a _lot_ more to Micronaut, and the https://objectcomputing.com/news/2019/02/12/micronaut-11-milestone-1-released[upcoming 1.1]
 release promises many great enhancements. Head over, then, to the Micronaut site and check out their great
 https://micronaut.io/documentation.html[documentation].
+
+You can find the demo source https://bitbucket.org/jdlee/micronaut-jugdemo/src/master/[here].
