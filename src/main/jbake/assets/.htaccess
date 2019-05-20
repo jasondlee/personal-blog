@@ -1,12 +1,12 @@
-Redirect 301 /+ https://plus.google.com/+JasonLee1
 Redirect 301 /tw https://twitter.com/jasondlee
 Redirect 301 /twitter https://twitter.com/jasondlee
 Redirect 301 /in http://www.linkedin.com/in/jasondlee
+Redirect 301 /li http://www.linkedin.com/in/jasondlee
 Redirect 301 /linkedin http://www.linkedin.com/in/jasondlee
-Redirect 301 /fb http://www.facebook.com/jasondaniellee
-Redirect 301 /facebook http://www.facebook.com/jasondaniellee
-Redirect 301 /resume /resume.pdf
-Redirect 301 /cv /resume.pdf
+#Redirect 301 /fb http://www.facebook.com/jasondaniellee
+#Redirect 301 /facebook http://www.facebook.com/jasondaniellee
+Redirect 301 /resume /resume.docx
+Redirect 301 /cv /resume.docx
 
 AddHandler cgi-script .php .phps .htm .inc
 Options -ExecCGI

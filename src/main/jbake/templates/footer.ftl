@@ -12,16 +12,13 @@
                                     <a href="/presentations" title="Presentations">Presentations</a>
                                 </li>
                                 <li>
-                                    <a href="/resume.pdf" rel="me" title="Resume/CV">Resume/CV</a>
+                                    <a href="/resume" rel="me" title="Resume/CV">Resume/CV</a>
                                 </li>
                                 <li>
                                     <a href="/linkedin" rel="me" title="LinkedIn">LinkedIn</a>
                                 </li>
                                 <li>
                                     <a href="/twitter" rel="me" title="Twitter">Twitter</a>
-                                </li>
-                                <li>
-                                    <a href="/+" rel="me" title="Google+">Google+</a>
                                 </li>
 								<!--
                                 <li>
