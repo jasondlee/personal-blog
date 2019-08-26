@@ -16,8 +16,6 @@ do
     esac
 done
 
-
-set -x
 if [ -n "$BUILD" -o -n "$SERVE" ] ; then
     jbake $BUILD $SERVE
 fi
