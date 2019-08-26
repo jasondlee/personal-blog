@@ -1,6 +1,5 @@
-target
-site.properties
-
-\.idea/
-
 *.iml
+\.idea/
+site.properties
+target
+output
