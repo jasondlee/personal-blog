@@ -37,15 +37,21 @@
                             <h3>Publications</h3>
                             <ul>
                                 <li>
-									<a href="http://amzn.to/2FD2XAo" style="float: right">
-										<img src="/images/2017/j9pb.png" width="100"/>
-									</a>
-									<p style="text-weight: bold; font-size: large">
-										Java 9 Programming Blueprints:
-										<a title="My Java 9 book at Amazon" href="http://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
-										<a title="My Java 9 book at Packt" href="https://www.packtpub.com/application-development/java-9-programming-blueprints" style="padding-left: 10px">Packt</a>
-									</p>
-									<span style="float: clear;"/>
+                                    <table width="100%" style="border: 0">
+                                    <tr>
+                                        <td>
+									        <p style="text-weight: bold; font-size: large">
+										        Java 9 Programming Blueprints:
+										        <a title="My Java 9 book at Amazon" href="http://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+										        <a title="My Java 9 book at Packt" href="https://www.packtpub.com/application-development/java-9-programming-blueprints" style="padding-left: 10px">Packt</a>
+									        </p>
+									    </td>
+                                        <td>
+									        <a href="http://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                                        </td>
+                                    </tr>
+                                    </table>
+
                                 </li>
                                 <li>
                                     <a title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries. " href="http://jaxenter.com/java-tech-journal/JTJ-2012-06">Tips for Writing Pluggable Java EE Applications</a>
