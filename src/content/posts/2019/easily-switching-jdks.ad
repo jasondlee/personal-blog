@@ -15,6 +15,9 @@ https://gist.github.com/happygiraffe/148320/aab71e624f4db87694717fef561e89c72b1a
 I've been happily using it, but I've made some minor tweaks, so I thought I'd share
 my version here in case it helps someone (and make it easier for me to find in the future ;).
 
+*UPDATE:* It seems the original author is https://twitter.com/nicksieger/status/1166070669244796929[Nick Sieger]. Thanks
+to you as well, Nick, for a great little utility!
+
 +++// Read More+++
 
 The two primary changes in my script versus Charles' is that I try to set JDKS_ROOT if it's not already set, and I try
