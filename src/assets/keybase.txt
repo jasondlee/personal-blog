@@ -86,3 +86,79 @@ View my publicly-auditable identity here: https://keybase.io/jasondlee
 
 ==================================================================
 
+==================================================================
+https://keybase.io/jasondlee
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://steeplesoft.com
+  * I am jasondlee (https://keybase.io/jasondlee) on keybase.
+  * I have a public key with fingerprint 83BB 41BB 7DEA 1B11 7BCC  4571 9681 08DD FD38 4F25
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012018623015e2ae75fa2b4a787bfa815537917a4817d255dfaa3e974702a7e08b050a",
+      "fingerprint": "83bb41bb7dea1b117bcc4571968108ddfd384f25",
+      "host": "keybase.io",
+      "key_id": "968108ddfd384f25",
+      "kid": "01017945cde475550cca8a45dfead0c9215840254971eb987353706328931efd92fc0a",
+      "uid": "96499576460a46205f83f025bdc51b00",
+      "username": "jasondlee"
+    },
+    "service": {
+      "hostname": "steeplesoft.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1568120435,
+  "expire_in": 157680000,
+  "prev": "c51377f297cf7281854523d974b2b7c3a9b68ec3d13b3c2e771585f71b40c4dc",
+  "seqno": 56,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.1.3
+Comment: https://keybase.io/crypto
+
+yMN1AnicbVJ7UBVVHL4YWOAwtzHRwspcU0hI93Xu2b1BIZNSQ0qhDEEy1z27Z3G5
+j73cu5cLEal/YJKJOWMPCiTLVw72YByGh/EokJdRDhKhQhMD4xgMgQUZ4rVdBv/r
+/HPm/M73fb/v+53TGv6AKSzow30PDd7lUtYGdbeU+0xZ/mPeQgKpUgFhLSTseH7D
+Dgl7NZtdkQgrQVI0SXEWmiEpgGkBQyALNGIFyEEkCxwFAAN5CgosR0GJBkCSBYHB
+PGQhSQsQkxwiASkQsYSsuLKxx+1RXJouyzEIsRRCUMIChSgKIlFkAaR4C0eRnCTJ
+EsOxMg104m7VazB0c0jw4g2Kqtf0g23e3v/g7/smKcizQJQwCwEApCgKnMDq/rAg
+kSJPU4BjSRqwPKQw4jnI6EFIC0NzPENhWeJpWZz37Vvow/I8gBbWQgqshSaBzDGy
+TkeSCChEkgbQiz0uwYl1dI7gVV2SA2OiKJbQy3mKiI3JGlEWIF4NY7cDe1VZ2yCq
+Tp3v9qiaKqoO/XK3prm9VoOsFbgNtB8j24KODSkuSZ+lzsjDHq+iuggrpSNFTTGE
+KaBPhCZZBsQSON+teLBNMRC6d47Ul9EH5+mSum8GQpnmoShDmqM4wAKakfSXQzSC
+IiPwyMJhkZEoBjEijSHUJwZkSCGWFFlJJIxkuS6VsAKL7lPINkIp2S5B83n03N+3
+7Aw2BYWZFocsMj6ZKSz04ftfTztuDsSLZw9nTTVObPPU4+WZNe1No51L2zZnLYm4
++EVocteRFW8wyTgm7l5rRYj2zNyjnuGEiqb9viZnz5HVt7uqnkqoztd2xZXO+svi
+Jq635X9i7ph+N7ndnrO8LKX1fHrAY8mIGyxOiyo+EQgQs4644R9uPT+bGH54YNzS
+nzKaxsxVV0alHjLXm0tJV27H+Lrpe2nF9WuqUmeI+KsJqKK6KHrLpwUZWc2T/lh/
+b5OyZ3b9H8vOnVOugOLtdUkN5lWJO6wxQ9ZS0Lf01PXft7667eOktL61wXfjW2qm
+7SVadMdzn2W2+epV5es2678f5PanF5atlPhXjl0FEZExY4HFtZFH76y3j1cPDgef
+jt4xtlrstHeNr7gwtabq8Z8m+vbevPy36WDFsyszy5PxkpaQxrLur2ztJY9EvRVR
+EbzMHVrnyT/x/m81PRsD1u86Rg+U3hizBr1gv5Lf/2RtTsPei8rBKbrk7Rr7e2ik
+MjZoduZayaLQAyHv7Jk6+uulyNdrX27mp/rSG3sqHaRl1dYHCw/9GXH6my2p+zJm
+S19C4RvnGjY580Jf+7zOebLol01f3rlx/kzh0NzI5h9BZ9+65DP2QcKeHXKh7OnJ
+F31/jWS19SZWyuaZpDd7pyGzM+mjW62T/7j2B6a9Z4v8127XCd2nLid8O+R8rPza
+Ex3lN7t3nTze6fn5UnPGwPaB/wBbGc5O
+=j3a7
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/jasondlee
+
+==================================================================
+

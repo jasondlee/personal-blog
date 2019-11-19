@@ -1,9 +1,28 @@
 #!/bin/bash
 
+BASEDIR="$( cd "$(dirname "$0")" ; pwd -P )"
 SRC=src
 DEST=output
 BUILD="-b $SRC $DEST"
 SERVE=""
+REVEAL_VER=3.8.0
+
+function buildReveal() {
+  REPO=$1
+
+  git clone $1 preso
+  cd preso
+  GEMFILE=`find . -name Gemfile`
+  BASEDIR=`dirname $GEMFILE`
+  cd $BASEDIR
+
+  bundle exec asciidoctor-revealjs \
+    -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/$REVEAL_VER \
+    --destination-dir build \
+    index.ad
+
+  cp -r assets/* build/
+}
 
 function usage() {
     echo "`basename $0`: <option>"
