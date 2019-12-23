@@ -1,0 +1,50 @@
+title=Executable Kotlin Scripts
+date=2019-12-23
+tags=Kotlin
+type=post
+author=jdlee
+status=published
+~~~~~~
+
+A user in #kotlin on http://freenode.net/[Freenode] asked how to run a Kotlin script. While the 
+https://kotlinlang.org/docs/tutorials/command-line.html[Kotlin docs] are pretty clear
+on how to do that, I thought I'd make a quick post to show how to make an easily executable Kotlin script.
+
++++// Read More+++
+
+The first step is to name the file with a `.kts` extension:
+
+.test.kts
+[source,kotlin]
+-----
+println("Hello, world!")
+-----
+
+You can then run it like this:
+
+[source,bash]
+-----
+$ kotlinc -script test.kts
+Hello, world!
+-----
+
+That's pretty cool (and pretty quick on my laptop), but the command line is a bit cumbersome. Let's fix that
+with two small changes. First, let's add a https://en.wikipedia.org/wiki/Shebang_(Unix)[shebang]:
+
+.test.kts
+[source,kotlin]
+-----
+#!/usr/bin/env -S kotlinc -script
+println("Hello, world!")
+-----
+
+Then we set the executable bit and run it:
+
+[source,bash]
+-----
+$ chmod +x test.kts
+$ ./test.kts
+Hello, world!
+-----
+
+Easy peasy. Now you a more powerful language in your shell scripting toolbox. Enjoy!
