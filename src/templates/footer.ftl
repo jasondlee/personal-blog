@@ -90,6 +90,7 @@
             </script>
             <script src="/scripts/quotes.js" type="text/javascript"></script>
             <script src="/scripts/local.js" type="text/javascript"></script>
+            <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=css&amp;skin=sunburst"></script>
         </div>
     </body>
 </html>

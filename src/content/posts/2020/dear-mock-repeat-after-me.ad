@@ -1,0 +1,60 @@
+title=Dear MockK, Repeat After Me
+date=2020-01-16
+tags=Kotlin, Mock
+type=post
+author=jdlee
+status=published
+source-highlighter=prettify
+~~~~~~
+
+The project I'm working on is using https://mockk.io[Mockk] in the unit tests. It's a great library that has made
+true unit testing so much easier. I ran into a problem, though, where I needed a method I was mocking to return the 
+value it was receiving. To be more specific, we were passing an object to a Spring repository method that had been
+built inside the method to test, and, to test thoroughly, I needed to get to that object. Turns out, that's pretty
+easy to do with Mockk. Let's take a look...
+
++++// Read More+++
+
+First, a clear set up. The code basically looks like something like this:
+
+[source,kotlin]
+-----
+@PostMapping("/foo")
+fun post(@RequestBody foo : Foo) : Bar {
+    val bar = Bar()
+    bar.prop1 = foo.prop1
+    bar.prop2 = calculatedValue(foo)
+
+    var newBar = repository.save(bar)
+
+    // Do some more work with newBar
+
+    return newBar
+}
+-----
+
+For the purposes of the test, I don't much care about the "Do some more work" part. I need the return value of 
+`repository.save()`. I set up the test like this:
+
+[source,kotlin]
+-----
+@Test
+fun testCreateFoo() {
+    val barSlot = slot<Bar>()
+
+    every { repository.save(capture(barSlot)) } answers { barSlot.captured } 
+
+    val result = mockMvc.perform(MockMvcRequestBuilders
+                .post("/foo")
+    // ...
+
+    val savedBar = gson.fromJson(result.response.contentAsString, Bar::class.java)
+    assertThat(savedBar.prop2).isEqualTo(expectedValue)
+}
+-----
+
+The interesting part is the call to `every`. Using a `CapturingSlot<T>`, I instruct the
+system to capture the `Bar` that the method under test passes in, and I simply return it in the lambda I pass to
+`answers`. It is true that we don't have access to the what the repository might do to the Bar instance (filling in
+related objects, etc.), but that's OK. I just want to look at the value of `prop2`, and this lets me do that 
+nice and neat. :)
