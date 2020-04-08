@@ -1,0 +1,77 @@
+title=Custom Methods in Spring Repositories
+date=2020-02-28
+tags=Spring,Kotlin
+type=post
+author=jdlee
+status=published
+source-highlighter=prettify
+~~~~~~
+
+One of the great things about Spring Data Repositories is that they provide a number of query methods out of the box, with the ability to
+add additional queries simply by adding carefully named methods to the interface, and Spring generates the actual implementation for you.
+Sometimes, though, you do need to color outside the lines a bit. Thankfully, Spring allows us to do this. You just have to ask it nicely.
+Here's now.
+
++++// Read More+++
+
+For the sake of space, I'm going to assume you know how to create a simple Spring Data repository, so I'll leave out the details. That 
+said, we'll start with a basic repository:
+
+[source,kotlin]
+-----
+interface FooRepository : CrudRepository<Foo, Long>
+-----
+
+Let's say, for demonstration purposes, that we need to add a method that requires a complex query that can't be modeled, easily, cleanly,
+or otherwise, using the required semantics. You can, of course, specify the query using `@Query` rather than letting Spring derive it, 
+but sometimes not even that's enough. You have some really complex logic you need to implement to make the query work, so you need to write
+it explicitly, let's say `getSomeFoosBasedOnComplexLogic`. Nice, huh? 
+
+Let's start by defining an additional interface:
+
+[source,kotlin]
+-----
+interface FooRepositoryCustom {
+    fun getSomeFoosBasedOnComplexLogic(oaram1 Int, param2 String) : List<Foo>
+}
+-----
+
+Having defined the `interface`, we need to define its implementation:
+
+[source,kotlin]
+-----
+class FooRepositoryCustomImpl(private val entityManager : EntityManager) : FooRepositoryCustom {
+    fun getSomeFoosBasedOnComplexLogic(param1 Int, param2 String) : List<Foo> {
+        // Do some JPA query here, but we'll return dummy data
+        return listOf(Foo("bar"), Foo("baz"))
+    }
+}
+-----
+
+Now we need to revisit `FooRepository` and update it:
+
+[source,kotlin]
+-----
+interface FooRepository : CrudRepository<Foo, Long>, FooRepositoryCustom
+-----
+
+When Spring creates the `FooRepository` instance, it will do all the magic required to wire in `FooRepositoryCustomImpl` as part of 
+the resulting class. How I don't know, to be honest (but I'm guessing it delegates from generated code), but it's not too terribly 
+important at this point. What is important is that we can call this custom method like any other. For example:
+
+[source,kotlin]
+-----
+@CrossOrigin
+@RestController
+@RequestMapping("/dummy")
+class DummyController(private val repo : FooRepository) {
+    @GetMapping
+    fun foo(): List<Foo> {
+        return repo.getSomeFoosBasedOnComplexLogic()
+    }
+}
+-----
+
+Hit that with your favorite client, and you should see, e.g., a nice JSON representation of a `List<Foo>`. 
+
+See? Super easy once you know how to hold your mouth just right!
