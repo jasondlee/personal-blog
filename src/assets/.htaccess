@@ -22,6 +22,8 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 #RedirectMatch ^/(20.*) /posts/$1
 
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # WP-to-awestruct redirects
 RewriteRule feed$ http://jasondl.ee/feed.atom [R=301,L]

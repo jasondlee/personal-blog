@@ -54,7 +54,8 @@
 
                                 </li>
                                 <li>
-                                    <a title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries. " href="http://jaxenter.com/java-tech-journal/JTJ-2012-06">Tips for Writing Pluggable Java EE Applications</a>
+                                    <!--<a title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries. " href="http://jaxenter.com/java-tech-journal/JTJ-2012-06">Tips for Writing Pluggable Java EE Applications</a>-->
+                                    <a title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries. " href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html">Tips for Writing Pluggable Java EE Applications</a>
                                 </li>
                                 <li>
                                     <a title="An article Ken Paulsen and I wrote detailing easy JSF component creation" href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html">JSFTemplating and Woodstock: Component Authoring Made Easy</a>
@@ -63,10 +64,12 @@
                                     <a href="http://jsfcentral.com/articles/lee-03-09.html">Jason Lee in depth: Mojarra and Scales</a>
                                 </li>
                                 <li>
-                                    <a title="My JavaOne 2008 Wrap Up" href="http://www.theserverside.com/news/thread.tss?thread_id=49343">Jason Lee: Postmortem for JavaOne 2008</a>
+                                    <!--<a title="My JavaOne 2008 Wrap Up" href="http://www.theserverside.com/news/thread.tss?thread_id=49343">Jason Lee: Postmortem for JavaOne 2008</a>-->
+                                    <a title="My JavaOne 2008 Wrap Up" href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343">Jason Lee: Postmortem for JavaOne 2008</a>
                                 </li>
                                 <li>
-                                    <a title="The GlassFish Adoption Story from my time at IEC" href="https://blogs.oracle.com/stories/entry/international_environmental">International Environmental: A Cooling Company Which Prefers Hot Software</a>
+                                    <!--<a title="The GlassFish Adoption Story from my time at IEC" href="https://blogs.oracle.com/stories/entry/international_environmental">International Environmental: A Cooling Company Which Prefers Hot Software</a>-->
+                                    <a title="The GlassFish Adoption Story from my time at IEC" href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental">International Environmental: A Cooling Company Which Prefers Hot Software</a>
                                 </li>
                                 <li>
                                     <a title="This details the project that spawned a couple of the Mojarra Scales components" href="http://www.jsfcentral.com/articles/trenches_7.html">IEC donates custom JSF component to Mojarra Scales</a>
@@ -77,7 +80,7 @@
                 </div>
             <div class="footer">
                 <div class="small-12 columns">
-                    <p>&#169; Copyright Jason Lee, 2005-2015. All rights reserved.</p>
+                    <p>&#169; Copyright Jason Lee, 2005-2020. All rights reserved.</p>
                 </div>
             </div>
             <script>
