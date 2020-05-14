@@ -39,11 +39,11 @@ To add Jooq and Flyway to a project, you need these dependencies:
     <artifactId>jooq-codegen</artifactId>
     <version>${jooq.version}</version>
 </dependency>
-<plugin>
+<dependency>
     <groupId>org.flywaydb</groupId>
     <artifactId>flyway-core</artifactId>
     <version>${flyway.version}</version>
-</plugin>
+</dependency>
 -----
 
 This will enable the use of the Jooq libraries in your code, as well as for runtime Flyway migrations. The mechanics of both of those are
