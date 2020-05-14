@@ -50,5 +50,5 @@ fi
 
 if [ "$DEPLOY" == "true" ] ; then
     source site.properties
-    rsync -varuP --delete -e ssh $DEST/* ${BLOG_USERNAME}@${BLOG_HOST}:${BLOG_DIR}/
+    rsync -varuP --delete -e ssh $DEST/.htaccess $DEST/* ${BLOG_USERNAME}@${BLOG_HOST}:${BLOG_DIR}/
 fi
