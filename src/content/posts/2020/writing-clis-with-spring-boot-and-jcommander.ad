@@ -1,0 +1,450 @@
+title=Writing CLIs with Spring Boot and JCommander
+date=2020-07-15
+tags=CLI, Spring Boot, JCommander
+type=post
+author=jdlee
+status=published
+source-highlighter=prettify
+~~~~~~
+
+I was recently asked to convert a Spring Boot-based "CLI" to a real CLI utility. It was actually just a normal Spring Boot
+application with REST endpoints that we'd hit with curl. Pretty ugly. After a few frustrating hours, I finally settled on a
+solution that seems to work pretty well for us. It uses Spring Boot, of course, as that's our library of choice, plus
+https://jcommander.org/[JCommander] for the argument handling. This is a pared-down example of how the application is
+structured. And because I care about of each you deeply, I'll present it in Java AND Kotlin. :)
+
+For those of you in a hurry, you can get the complete code in my https://github.com/jasondlee/spring-cli-demo[GitHub repo].
+Everyone else, feel free to read along.
+
++++// Read More+++
+
+== Setting up Maven
+The first step will be setting up your Maven POM (If you're using Gradle, I'm sorry. I'm already doing two languages. You
+can figure that part out on your own. :). We can start with this:
+
+[source, xml]
+-----
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.1.RELEASE</version>
+    </parent>
+
+    <properties>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+    </properties>
+
+    <groupId>com.steeplesoft.spring-cli-app</groupId>
+    <artifactId>spring-cli-app-master</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>spring-cli-app-java</module>
+        <module>spring-cli-app-kotlin</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.78</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+-----
+
+While the project I was modifying had a lot of existing Spring beans, including some JPA entities and repositories, this
+simple project does not, and I didn't feel the added complexity helped any, so I went with simple. To bring in the Spring
+dependencies, then, I declared a dependency on `org.springframework.boot:spring-boot-starter`. If you _are_ using, say,
+JPA, then feel free use `org.springframework.boot:spring-boot-starter-data-jpa` or whatever else may be appropriate.
+
+Note also the declaration of a parent. It does a lot of work for you, so don't skip it. :)
+
+For Java, there's no additional POM work required. In my multi-module setup, the POM is very basic and mostly just refers
+to the POM above as its parent. The Kotlin POM is a bit more involved, but it's just configuring the `kotlin-maven-plugin`.
+If you need help with that, check out the https://kotlinlang.org/docs/reference/using-maven.html[official docs].
+
+With Maven configured, we're ready to start writing our commands. Let's start with writing the application's entry point.
+Spring Boot, while most people probably think of it solely as a REST microservice framework, does actually come with
+built-in support for command line utilities via the `CommandLineRunner` interface. Our `@SpringBootApplication` starts
+out looking like this:
+
+.Java
+[source,java]
+-----
+@SpringBootApplication
+public class SpringBootCliApplication implements CommandLineRunner {
+    @Override
+    public void run(String... args) {
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootCliApplication.class, args);
+    }
+}
+-----
+
+.Kotlin
+[source,java]
+-----
+@SpringBootApplication
+class SpringBootCliApplication(val commands: List<Command>) : CommandLineRunner {
+    override fun run(vararg args: String?) {
+    }
+}
+
+fun main(args: Array<String>) {
+    runApplication<SpringBootCliApplication>(*args)
+}
+-----
+
+You can compile and run that now, but it's going to be awfully boring.
+
+== Adding commands
+
+When we start defining commands, which we're going  to do right now, we're immediately hit with two concerns:
+
+1. How do we define them? and
+2. How do we find them?
+
+=== Defining Commands
+JCommander lets us define commands using simple classes, so we'll create a very simple command, `ExampleCommand`, that
+takes one parameter:
+
+.Java
+[source, java]
+-----
+@Parameters(commandNames = ExampleCommand.COMMAND_NAME,
+        commandDescription = "Example command")
+public class ExampleCommand implements Command {
+    public static final String COMMAND_NAME = "example";
+
+    @Parameter(names = "--example", description = "Example parameter")
+    private String example;
+
+    @Override
+    public String commandName() {
+        return COMMAND_NAME;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("You ran the command " + COMMAND_NAME + " with the parameter --example set to " + example);
+    }
+}
+-----
+
+.Kotlin
+[source,java]
+-----
+@Parameters(commandNames = [ExampleCommand.COMMAND_NAME], commandDescription = "Example command")
+class ExampleCommand : Command {
+    @Parameter(names = ["--example"], description = "Example parameter")
+    private var example: String? = null
+
+    override fun commandName(): String {
+        return COMMAND_NAME
+    }
+
+    override fun run() {
+        println("You ran the command $COMMAND_NAME with the parameter --example set to $example")
+    }
+
+    companion object {
+        const val COMMAND_NAME = "example"
+    }
+}
+-----
+
+You'll see a bit of extra ceremony in this (the `public static final String`) than is strictly necessary, but you will
+see why in a moment. The first thing of important to note is the `@Parameters` annotation on the class. I'm not a JCommander
+expert, but I get the sense that the reason we're using that annotation rather than, say, the not-real `@Command` annotation
+is that we're technically building _one_ "command", and just defining here a sub-command, or a parameter, if you will, that
+refines what actions an invocation will perform. Total guess there, but that's certainly the annotation
+https://jcommander.org/#_more_complex_syntaxes_commands[you need].
+
+At any rate, inside the class, we define an actual parameter we want to support, `--example`. It's an optional `String`.
+You can define as many options as you want, and JCommander has very robust support for just about anything you would want
+to do, https://jcommander.org/#_types_of_options[it seems].
+
+Finally, we have a `run` method (or function for all you Kotlin folks!) that does the real work. That's not a JCommander
+requirement, but is something I built into the solution I'm showing here. Before we take a look at that, let's find out
+how to find the commands. We do that by leaning on Spring.
+
+=== Finding Commands ===
+
+Since we're suing Spring, we're going to let Spring do as much of the work as we can. This is especially helpful if you're
+injecting repositories or other Spring beans. The integration is very natural: we simply annotate the class with
+`@Component`:
+
+.Java
+[source,java]
+-----
+@Component
+@Parameters(commandNames = ExampleCommand.COMMAND_NAME,
+        commandDescription = "Example command")
+public class ExampleCommand {
+    // ...
+}
+-----
+
+.Kotlin
+[source,java]
+-----
+@Component
+@Parameters(commandNames = [ExampleCommand.COMMAND_NAME], commandDescription = "Example command")
+class ExampleCommand : Command {
+    // ...
+}
+-----
+
+When the Spring `ApplicationContext` starts up, our command is found and registered in Spring's metadata. All we have to
+do now is ask for it:
+
+.Java
+[source,java]
+-----
+@SpringBootApplication
+public class SpringBootCliApplication implements CommandLineRunner {
+    @Autowired
+    private List<Command> commands;
+
+    @Override
+    public void run(String... args) {
+        // ...
+    }
+    // ...
+}
+-----
+
+.Kotlin
+[source,java]
+-----
+@SpringBootApplication
+class SpringBootCliApplication(val commands: List<Command>) : CommandLineRunner {
+    override fun run(vararg args: String?) {
+        // ...
+    }
+}
+-----
+
+When our `Application` starts, Spring injects a list of any `Command` objects it finds. But what is that?
+
+.Java
+[source,java]
+-----
+public interface Command {
+    String commandName();
+    void run();
+}
+-----
+
+.Kotlin
+[source,java]
+-----
+interface Command {
+    fun commandName() : String
+    fun run()
+}
+-----
+
+It's a very simple `interface` that provides a way to find out _what_ it represents, and then to do the work. Armed with
+that, we can now build our JCommander objects:
+
+.Java
+[source,java]
+-----
+    @Override
+    public void run(String... args) {
+        JCommander.Builder builder = JCommander.newBuilder() // 1
+                .programName("spring-boot-cli");
+        commands.forEach((c) -> builder.addCommand(c));      // 2
+        JCommander jc = builder.build();
+        jc.parse(args);                                      // 3
+
+        Optional<Command> command = commands.stream()        // 4
+                .filter(c -> c.commandName().equals(jc.getParsedCommand()))
+                .findFirst();
+
+        if (command.isPresent()) {                           // 5
+            command.get().run();
+        } else {
+            jc.usage();                                      // 6
+        }
+    }
+-----
+
+.Kotlin
+[source,java]
+-----
+    override fun run(vararg args: String?) {
+        val builder = JCommander.newBuilder()                // 1
+                .programName("spring-boot-cli")
+        commands.forEach {                                   // 2
+            builder.addCommand(it.commandName(), it)
+        }
+        val jc = builder.build();
+
+        jc.parse(*args)                                      // 3
+
+        val command = commands                               // 4
+            .firstOrNull { it.commandName() == jc.parsedCommand }
+        if (command != null) {                               // 5
+            command.run()
+        } else {
+            jc.usage()                                       // 6
+        }
+    }
+-----
+
+This isn't terribly complex, but let's step through it:
+
+1. We create a `JCommander.Builder` instance, and start by giving our command a name, `spring-boot-cli`.
+2. We iterate through the injected list of `Command` instances, calling `builder.addCommand()` to register it with JCommander.
+3. Once we've finished configuring and building our JCommander instance, we need to parse the command line arguments
+4. Now we need to find the command the user requested. We do that by iterating over our list of commands again, comparing
+`Command.commandName()` with the value returned by `jc.getParsedCommand()`. We'll either get a `Command` instance, or an
+empty `Optional`
+5. If we have found a `Command`, we call its `run` method/function. JCommander takes care of injecting the command line
+options/parameters that have been defined, so by the time control enters `run()`, we're ready to do our work.
+6. On the other hand, if no `Command` is found, we ask JCommander to print a usage message, which it generates for us using
+the `@Parameter` and `@Parameters` annotations.
+
+== Running the commands
+
+We should be ready to build and run these now:
+
+[source,bash]
+-----
+$ mvn install
+...
+$ java -jar spring-cli-app-java/target/spring-cli-app-java-1.0-SNAPSHOT.jar
+Usage: spring-boot-cli [command] [command options]
+  Commands:
+    example      Example command
+      Usage: example [options]
+        Options:
+          --example
+            Example parameter
+$ java -jar spring-cli-app-kotlin/target/spring-cli-app-kotlin-1.0-SNAPSHOT.jar
+Usage: spring-boot-cli [command] [command options]
+  Commands:
+    example      Example command
+      Usage: example [options]
+        Options:
+          --example
+            Example parameter
+-----
+
+They look remarkable similar, don't they? :)
+
+Here's an example with setting a parameter:
+
+[source,bash]
+-----
+$ java -jar spring-cli-app-kotlin/target/spring-cli-app-kotlin-1.0-SNAPSHOT.jar example --example 'This is a Spring Boot cli!'
+You ran the command example with the parameter --example set to This is a Spring Boot cli!
+-----
+
+== Adding more commands
+
+Remember how I kinda made a big deal about finding commands and injecting lists? With this setup, it's super easy. Barely
+an inconvience:
+
+.Java
+[source,java]
+-----
+@Component
+@Parameters(commandNames = Example2Command.COMMAND_NAME,
+        commandDescription = "Example command #2")
+public class Example2Command implements Command {
+    public static final String COMMAND_NAME = "something-else";
+
+    @Override
+    public String commandName() {
+        return COMMAND_NAME;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("You ran something else!");
+    }
+}
+-----
+
+.Kotlin
+[source,java]
+-----
+@Component
+@Parameters(commandNames = [Example2Command.COMMAND_NAME], commandDescription = "Example command #2")
+class Example2Command : Command {
+    override fun commandName(): String {
+        return COMMAND_NAME
+    }
+
+    override fun run() {
+        println("You ran something else!")
+    }
+
+    companion object {
+        const val COMMAND_NAME = "something-else"
+    }
+}
+-----
+
+Making only that change, if we repackage our utility, and rerun the usage request, we get:
+
+[source,bash]
+-----
+$java -jar spring-cli-app-java/target/spring-cli-app-java-1.0-SNAPSHOT.jar
+Usage: spring-boot-cli [command] [command options]
+  Commands:
+    example      Example command
+      Usage: example [options]
+        Options:
+          --example
+            Example parameter
+
+    something-else      Example command #2
+      Usage: something-else
+-----
+
+The Kotlin version looks exactly the same. Trust me. :)
+
+One final note. Spring Boot can be pretty chatty in the logs/console, so I add this to my `application.properties`:
+
+.src/main/resource/application.properties
+[source,properties]
+-----
+spring.main.banner-mode=off
+logging.level.root=ERROR
+-----
+
+== Voila!
+That's it. Any real CLI utility will obviously do more, but that should get you the plumbing you need. Just `@Autowire`
+any Spring Beans you need, and you're off to the races!
