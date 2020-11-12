@@ -12,13 +12,13 @@
                                     <a href="/presentations" title="Presentations">Presentations</a>
                                 </li>
                                 <li>
-                                    <a href="/resume" rel="me" title="Resume/CV">Resume/CV</a>
+                                    <a href="resume.docx" rel="me" title="Resume/CV">Resume/CV</a>
                                 </li>
                                 <li>
-                                    <a href="/linkedin" rel="me" title="LinkedIn">LinkedIn</a>
+                                    <a href="https://linkedin.com/in/jasondlee" rel="me" title="LinkedIn">LinkedIn</a>
                                 </li>
                                 <li>
-                                    <a href="/twitter" rel="me" title="Twitter">Twitter</a>
+                                    <a href="https://twitter.com/jasondlee" rel="me" title="Twitter">Twitter</a>
                                 </li>
 								<!--
                                 <li>
