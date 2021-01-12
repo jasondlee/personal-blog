@@ -1,0 +1,126 @@
+title=Securing and Test Quarkus Application using Keycloak and Wiremock
+date=2020-09-15
+tags=Java,Quarkus,Keycloak,JUnit,Wiremock
+type=post
+author=jdlee
+status=unpublished
+source-highlighter=prettify
+~~~~~~
+
+Obviously, web apps need to be secured. If you're brave (and some might say foolish), you can roll your own security. Unless you have compelling reasons to do so, however, you probably shouldn't. Almost as if by design (nyuk nyuk), Quarkus makes it easy to use any OpenID Connect server. One such server is Keycloak, an open source offering also from Red Hat. If your experience is like mine, though, securing endpoints makes testing a touch more complicated. In this post, I'd like to present and walk through a complete example of a secured Quarkus app, using Keycloak, JUnit and Wiremock.
+
++++// Read More+++
+
+To begin, let's set up a *very* simple Quarkus application. All it contains is a single resource, `SampleResource`, with two endpoints: one for admins, and one for users. In the interest of completeness, we start by setting up the project's POM:
+
+.pom.xml
+[source,xml]
+-----
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.steeplesoft</groupId>
+    <artifactId>quarkus-keycloak-wiremock</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <version.quarkus.platform>1.10.5.Final</version.quarkus.platform>
+        <version.compiler-plugin>3.8.1</version.compiler-plugin>
+        <version.surefire-plugin>2.22.2</version.surefire-plugin>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${version.quarkus.platform}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-oidc</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${version.quarkus.platform}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+    </build>
+
+</project>
+-----
+
+There's typically more in a Quarkus POM, but I've stripped this down to the bare minimum. Next, our simple resource:
+
+.SampleResource.java
+[source,java]
+-----
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+
+@Path("/sample")
+public class SampleResource {
+    @GET
+    @Path("admin")
+    @RolesAllowed("ADMIN")
+    public String admin() {
+        return "admin";
+    }
+
+    @GET
+    @Path("user")
+    @RolesAllowed("USER")
+    public String user() {
+        return "user";
+    }
+}
+-----
+
+Before we can start the app, we need to configure the OIDC support:
+
+.application.properties
+[source]
+-----
+quarkus.oidc.auth-server-url=${OIDC_URL:https://localhost:8190/auth/realms/myrealm}
+quarkus.oidc.client-id=${OIDC_CLIENT_ID:backend-service}
+quarkus.oidc.credentials.secret=${OIDC_SECRET:049a7102-b7fa-4532-9364-014956dbe423}
+-----
+
+We are now ready, or so we might think, to run our project: `mvn compile quarkus:dev`. Assuming you have Keycloak running on `localhost` but haven't configured it, you should see an error like this:
+
+-----
+Caused by: io.vertx.core.impl.NoStackTraceThrowable: Not Found: {"error":"Realm does not exist"}</pre>
+-----
+
+Since we can't run our app just yet, let's configure Keycloak. For the sake of space, and since there are many ways to run Keycloak, I'm going to let the Keycloak docs[https://www.keycloak.org/getting-started/getting-started-zip] handle the installation of the server. Once the server is up and running, we need to create the realm. We're going to cheat a bit and use the sample realm json from the Quarkus docs[https://github.com/quarkusio/quarkus-quickstarts/tree/master/security-openid-connect-quickstart/config/quarkus-realm.json].
