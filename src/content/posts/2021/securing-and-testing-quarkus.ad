@@ -112,7 +112,7 @@ Before we can start the app, we need to configure the OIDC support:
 .application.properties
 [source]
 -----
-quarkus.oidc.auth-server-url=${OIDC_URL:https://localhost:8190/auth/realms/myrealm}
+quarkus.oidc.auth-server-url=${OIDC_URL:https://localhost:8190/auth/realms/quarkus}
 quarkus.oidc.client-id=${OIDC_CLIENT_ID:backend-service}
 quarkus.oidc.credentials.secret=${OIDC_SECRET:049a7102-b7fa-4532-9364-014956dbe423}
 -----
