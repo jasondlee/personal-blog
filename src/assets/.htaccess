@@ -1,3 +1,7 @@
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(http://.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 #Redirect 301 /tw https://twitter.com/jasondlee
 #Redirect 301 /twitter https://twitter.com/jasondlee
 #Redirect 301 /in https://www.linkedin.com/in/jasondlee
@@ -7,29 +11,4 @@
 #Redirect 301 /facebook http://www.facebook.com/jasondaniellee
 #Redirect 301 /resume /resume.docx
 #Redirect 301 /cv /resume.docx
-
-AddHandler cgi-script .php .phps .htm .inc
-Options -ExecCGI
-
-AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml application/xhtml+xml text/javascript text/css application/x-javascript
-BrowserMatch ^Mozilla/4 gzip-only-text/html
-BrowserMatch ^Mozilla/4.0[678] no-gzip
-BrowserMatch bMSIE !no-gzip !gzip-only-text/html
-
-#<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-#RedirectMatch ^/(20.*) /posts/$1
-
-#RewriteCond %{HTTPS} off
-#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-RewriteCond %{SERVER_PORT} 80
-RewriteRule ^(.*)$ https://jasondl.ee/$1 [R,L]
-
-# WP-to-awestruct redirects
-RewriteRule feed$ https://jasondl.ee/feed.atom [R=301,L]
-RewriteRule ^posts\/([0-9]{4})\/[0-9]{2}\/[0-9]{2}\/(.*)\/ https://jasondl.ee/posts/$1/$2.html [R=301,L]
-#</IfModule>
 
