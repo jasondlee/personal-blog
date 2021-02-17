@@ -1,9 +1,9 @@
 title=Securing and Test Quarkus Application using Keycloak and Wiremock
-date=2020-09-15
+date=2021-02-17
 tags=Java,Quarkus,Keycloak,JUnit,Wiremock
 type=post
 author=jdlee
-status=unpublished
+status=published
 source-highlighter=prettify
 ~~~~~~
 
@@ -12,6 +12,8 @@ Obviously, web apps need to be secured. If you're brave (and some might say fool
 +++// Read More+++
 
 To begin, let's set up a *very* simple Quarkus application. All it contains is a single resource, `SampleResource`, with two endpoints: one for admins, and one for users. In the interest of completeness, we start by setting up the project's POM:
+
+== The Application
 
 .pom.xml
 [source,xml]
@@ -29,7 +31,7 @@ To begin, let's set up a *very* simple Quarkus application. All it contains is a
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <version.quarkus.platform>1.10.5.Final</version.quarkus.platform>
+        <version.quarkus.platform>1.11.3.Final</version.quarkus.platform>
         <version.compiler-plugin>3.8.1</version.compiler-plugin>
         <version.surefire-plugin>2.22.2</version.surefire-plugin>
     </properties>
@@ -93,14 +95,14 @@ import javax.ws.rs.Path;
 public class SampleResource {
     @GET
     @Path("admin")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed("admin")
     public String admin() {
         return "admin";
     }
 
     @GET
     @Path("user")
-    @RolesAllowed("USER")
+    @RolesAllowed("user")
     public String user() {
         return "user";
     }
@@ -112,9 +114,9 @@ Before we can start the app, we need to configure the OIDC support:
 .application.properties
 [source]
 -----
-quarkus.oidc.auth-server-url=${OIDC_URL:https://localhost:8190/auth/realms/quarkus}
+quarkus.oidc.auth-server-url=${OIDC_URL:https://localhost:8180/auth/realms/quarkus-demo}
 quarkus.oidc.client-id=${OIDC_CLIENT_ID:backend-service}
-quarkus.oidc.credentials.secret=${OIDC_SECRET:049a7102-b7fa-4532-9364-014956dbe423}
+quarkus.oidc.credentials.secret=${OIDC_SECRET:51ebd5dc-5f2e-403c-be60-60fed3a75c47}
 -----
 
 We are now ready, or so we might think, to run our project: `mvn compile quarkus:dev`. Assuming you have Keycloak running on `localhost` but haven't configured it, you should see an error like this:
@@ -123,4 +125,375 @@ We are now ready, or so we might think, to run our project: `mvn compile quarkus
 Caused by: io.vertx.core.impl.NoStackTraceThrowable: Not Found: {"error":"Realm does not exist"}</pre>
 -----
 
-Since we can't run our app just yet, let's configure Keycloak. For the sake of space, and since there are many ways to run Keycloak, I'm going to let the Keycloak docs[https://www.keycloak.org/getting-started/getting-started-zip] handle the installation of the server. Once the server is up and running, we need to create the realm. We're going to cheat a bit and use the sample realm json from the Quarkus docs[https://github.com/quarkusio/quarkus-quickstarts/tree/master/security-openid-connect-quickstart/config/quarkus-realm.json].
+Since we can't run our app just yet, let's configure Keycloak. 
+
+== Keycloak
+
+For a more complete Getting Started, you can visit the Keycloak docs[https://www.keycloak.org/getting-started/getting-started-zip]. For our purposes, we'll be brief:
+
+* Download the latest version of https://www.keycloak.org/downloads[Keycloak]
+* Extract the zip
+* Start Keycloak with a port offset to avoid conflicts with our application: `$KEYCLOAK_DIR/bin/standalone.sh -Djboss.socket.binding.port-offset=100`
+* Create an admin user: http://localhost:8180
+** User: admin
+** Password: admin
+* Log on to the admin console by clicking on the `Administration Console` link
+* Add a realm
+** Move your mouse over `Master` in the left nav bar
+** Click `Add Realm`
+** Click `Select File`
+** Navigate to and select `quarkus-realm.json` that we downloaded above
+** Set the realm name to `quarkus-demo`
+** Click `Create`
+
+We now have a realm for our demo, so next we need to configure the roles and add a user. 
+
+Ordinarily, we would need to add these, but since we imported a realm, that work has been done for us. To verify:
+
+* Make sure the realm `quarkus-demo` is selected at the top the left nav bar.
+* Click `Roles` in the nav bar
+* In the list, you should see `admin` and `user` as well as a few others.
+
+Similarly, we don't need to add users, as the import handled that for us. To verify that:
+
+* Click `Users` under the `Manage section` in the nav bar
+* In the list, you should see `admin`, alice`, and `jdoe`
+* To verify `admin`
+** Click the UUID in the ID column
+** Click the `Role Mappings` tab
+** Verify that `admin` and `user` are listed under `Assigned Roles`
+** Let's change the password
+*** Click the `Credentials` tab
+*** Enter "password" in the `Password` and `Password Confirmation` fields
+*** Set `Temporary` to "Off"
+*** Click `Reset Password`
+* To view `alice` 's roles
+** Click the `Users` nav bar link to return to the user list
+** Click the UUID in the ID column for `alice`
+** Click the `Role Mapping` tab
+** Verify that only `user` is listed under `Assigned Roles`
+** Change the password for `alice` as we did above.
+
+We have one last step, configuring the client:
+
+* Click `Clients` in the left nav bar
+* Click `backend-service` in the table
+* Click the `Credentials` tab
+* Click the `Regenerate Secret` button
+* Copy the new value in the `Secret` field and update `quarkus.oidc.credentials.secret` in `application.properties`
+
+With our realm configured, we're ready to test our application:
+
+[code,bash]
+-----
+$ mvn compile quarkus:dev
+...
+INFO  [io.quarkus] (Quarkus Main Thread) quarkus-keycloak-wiremock 1.0-SNAPSHOT on JVM (powered by Quarkus 1.11.3.Final) 
+     started in 2.806s. Listening on: http://localhost:8080
+-----
+
+And in another console (I'm using https://httpie.io[httpie] here, btw):
+
+[code,bash]
+-----
+$ http --form \
+    --auth backend-service:51ebd5dc-5f2e-403c-be60-60fed3a75c47 \
+    :8180/auth/realms/quarkus-demo/protocol/openid-connect/token \
+    'Content-Type:application/x-www-form-urlencoded' \
+    username=alice \
+    password=alice \
+    grant_type=password 
+-----
+
+That gets a not-small JSON response, but we only want a part, so we can use the JSON query tool, `jq`, to help us extract the value:
+
+[code,bash]
+-----
+$ export TOKEN=`http --form \
+    --auth backend-service:51ebd5dc-5f2e-403c-be60-60fed3a75c47\
+    :8180/auth/realms/quarkus-demo/protocol/openid-connect/token \
+    'Content-Type:application/x-www-form-urlencoded' \
+    username=alice \
+    password=password \
+    grant_type=password | jq --raw-output '.access_token'`
+$ echo $TOKEN
+eyJhbGciOiJSUzI1Ni....    
+-----
+
+Let's try accessing the application now, first without a token, and then hitting each restricted endpoint:
+
+[code,bash]
+-----
+$ http :8080/sample/user
+HTTP/1.1 401 Unauthorized
+Content-Length: 0
+
+$ http :8080/sample/admin "Authorization:Bearer $TOKEN"
+HTTP/1.1 403 Forbidden
+Content-Length: 0
+
+$ http :8080/sample/user "Authorization:Bearer $TOKEN"
+HTTP/1.1 200 OK
+Content-Length: 4
+Content-Type: application/octet-stream
+
+user
+-----
+
+So we see unauthenticated users rejected, unauthorized users rejected, and authorized users allowed, exactly as expected. Let's check an admin user:
+
+[code,bash]
+-----
+$ export TOKEN=`http --form \
+    --auth backend-service:51ebd5dc-5f2e-403c-be60-60fed3a75c47\
+    :8180/auth/realms/quarkus-demo/protocol/openid-connect/token \
+    'Content-Type:application/x-www-form-urlencoded' \
+    username=admin \
+    password=password \
+    grant_type=password | jq --raw-output '.access_token'`
+
+$ http :8080/sample/admin "Authorization:Bearer $TOKEN"
+HTTP/1.1 200 OK
+Content-Length: 5
+Content-Type: application/octet-stream
+
+admin
+
+$ http :8080/sample/user "Authorization:Bearer $TOKEN"
+HTTP/1.1 200 OK
+Content-Length: 4
+Content-Type: application/octet-stream
+
+user
+-----
+
+We've manually tested the app, but that doesn't scale, so let's take a look at how to test this simple application programmatically.
+
+== Testing
+
+Part of the trick in testing an OIDC-secured apps can be tricky. Given how the token is verified behind the scenes, intercepting those calls can be difficult. Fortunately, http://wiremock.org/[WireMock] handles that for us. Setting up the project is easy. Here, we're adding JUnit5, WireMock, and some supporting libraries:
+
+[code,xml]
+-----
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-junit5</artifactId>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>io.rest-assured</groupId>
+    <artifactId>rest-assured</artifactId>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.assertj</groupId>
+    <artifactId>assertj-core</artifactId>
+    <version>3.18.1</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>com.github.tomakehurst</groupId>
+    <artifactId>wiremock-jre8</artifactId>
+    <version>2.26.3</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>com.nimbusds</groupId>
+    <artifactId>nimbus-jose-jwt</artifactId>
+    <version>8.20</version>
+    <scope>test</scope>
+</dependency>
+-----
+
+The test itself is also pretty simple:
+
+[code,java]
+-----
+@QuarkusTest
+@QuarkusTestResource(MockAuthorizationServer.class)
+public class SampleResourceTest {
+    @Test
+    public void testUserAsUser() {
+        RestAssured.given()
+                .contentType("application/json")
+                .auth()
+                .oauth2(generateJWT("user"))
+                .get("/sample/user")
+                .then()
+                .statusCode(200);
+    }
+
+    // ...
+    
+    private String generateJWT(String role) {
+        // Prepare JWT with claims set
+        SignedJWT signedJWT = new SignedJWT(
+                new JWSHeader.Builder(JWSAlgorithm.RS256)
+                        .keyID(MockAuthorizationServer.keyPair.getKeyID())
+                        .type(JOSEObjectType.JWT)
+                        .build(),
+                new JWTClaimsSet.Builder()
+                        .subject("backend-service")
+                        .issuer("https://wiremock")
+                        .claim(
+                                "realm_access",
+                                new JWTClaimsSet.Builder()
+                                        .claim("roles", Arrays.asList(role))
+                                        .build()
+                                        .toJSONObject()
+                        )
+                        .claim("scope", "openid email profile")
+                        .expirationTime(new Date(new Date().getTime() + 60 * 1000))
+                        .build()
+        );
+        // Compute the RSA signature
+        try {
+            signedJWT.sign(new RSASSASigner(MockAuthorizationServer.keyPair.toRSAKey()));
+        } catch (JOSEException e) {
+            throw new RuntimeException(e);
+        }
+        return signedJWT.serialize();
+    }
+-----
+
+Using https://github.com/rest-assured/rest-assured[REST Assured], we simply submit a request to server. The magic starts with the call to `generateJWT()`. In this method, we create a signed JWT using the key pair from our mock authorization server (which we'll look at next), we sign the key, and return it. REST Assured passes this as part of the request, which Quarkus will extract and pass to the authorization server to validate.
+
+So what does the mock authorization server look like?
+
+[code,java]
+-----
+public class MockAuthorizationServer implements QuarkusTestResourceLifecycleManager {
+    private WireMockServer wireMockServer;
+    public static RSAKey keyPair;
+
+    static {
+        try {
+            keyPair = new RSAKeyGenerator(2048)
+                    .keyID("123")
+                    .keyUse(KeyUse.SIGNATURE)
+                    .generate();
+        } catch (JOSEException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Map<String, String> start() {
+        wireMockServer = new WireMockServer(); 
+        wireMockServer.start();
+
+        postStubMapping(oidcConfigurationStub());
+        postStubMapping(publicKeysStub(keyPair.toPublicJWK().toJSONString()));
+
+        Map<String,String> props = new HashMap<>();
+        props.put("quarkus.oidc.auth-server-url", wireMockServer.baseUrl() + "/mock-server");
+        props.put("wiremock.url", wireMockServer.baseUrl());
+        return props;
+    }
+
+    @Override
+    public void stop() {
+        if (wireMockServer != null) {
+            wireMockServer.stop();
+        }
+    }
+    
+    private ResponseBody<?> postStubMapping(String request) {
+        RestAssured.baseURI = wireMockServer.baseUrl();
+        return RestAssured.given()
+                .body(request)
+                .post("/__admin/mappings")
+                .then()
+                .statusCode(Response.Status.CREATED.getStatusCode())
+                .extract()
+                .response()
+                .body();
+    }
+
+    private String oidcConfigurationStub() {
+        return readFile("/oidcconfig.json")
+                .replace("$baseUrl", wireMockServer.baseUrl());
+    }
+
+    private String publicKeysStub(String keys) {
+        return readFile("/publickey.json")
+                .replace("$keys", keys);
+    }
+
+    private String readFile(String fileName) {
+        return new Scanner(getClass()
+                .getResourceAsStream(fileName), "UTF-8")
+                .useDelimiter("\\A")
+                .next();
+    }
+}
+-----
+
+There's a lot going on here, and I'm not going to pretend to be an expert. In effect, we're setting up a mock server, configuring two endpoints, defined in `oidcconfig.json` and `publickey.json`, and those files look like this:
+
+.oidcconfig.json
+[code,json]
+-----
+{
+  "name": "oidc_configuration",
+  "request": {
+    "method": "GET",
+    "url": "/mock-server/.well-known/openid-configuration"
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json;charset=UTF-8" },
+    "jsonBody": {
+      "issuer": "$baseUrl/mock-server",
+      "authorization_endpoint": "$baseUrl/v1/authorize",
+      "token_endpoint": "$baseUrl/v1/token",
+      "userinfo_endpoint": "$baseUrl/v1/userinfo",
+      "registration_endpoint": "$baseUrl/v1/clients",
+      "jwks_uri": "$baseUrl/v1/keys",
+      "response_types_supported": ["code", "id_token", "code id_token", "code token", "id_token token", "code id_token token"],
+      "response_modes_supported": ["query", "fragment", "form_post", "okta_post_message"],
+      "grant_types_supported": ["authorization_code", "implicit", "refresh_token", "password"],
+      "subject_types_supported": ["public"],
+      "id_token_signing_alg_values_supported": ["RS256"],
+      "scopes_supported": ["sms", "openid", "profile", "email", "address", "phone", "offline_access"],
+      "token_endpoint_auth_methods_supported": ["client_secret_basic", "client_secret_post", "client_secret_jwt", "private_key_jwt", "none"],
+      "claims_supported": ["iss", "ver", "sub", "aud", "iat", "exp", "jti", "auth_time", "amr", "idp", "nonce", "name", "nickname", "preferred_username", "given_name", "middle_name", "family_name", "email", "email_verified", "profile", "zoneinfo", "locale", "address", "phone_number", "picture", "website", "gender", "birthdate", "updated_at", "at_hash", "c_hash"],
+      "code_challenge_methods_supported": ["S256"],
+      "introspection_endpoint": "$baseUrl/v1/introspect",
+      "introspection_endpoint_auth_methods_supported": ["client_secret_basic", "client_secret_post", "client_secret_jwt", "private_key_jwt", "none"],
+      "revocation_endpoint": "$baseUrl/v1/revoke",
+      "revocation_endpoint_auth_methods_supported": ["client_secret_basic", "client_secret_post", "client_secret_jwt", "private_key_jwt", "none"],
+      "end_session_endpoint": "$baseUrl/v1/logout",
+      "request_parameter_supported": true,
+      "request_object_signing_alg_values_supported": ["HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512"]
+    }
+  }
+}
+-----
+
+.publickey.json
+[code,json]
+-----
+{
+  "name": "public_keys_stub",
+  "request": {
+    "method": "GET",
+    "url": "/v1/keys"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json;charset=UTF-8"
+    },
+    "jsonBody": {
+      "keys": [
+        $keys
+      ]
+    }
+  }
+}
+-----
+
+These are basically mock objects, but representing requests. When a request for `request.url` comes in, WireMock returns `response`. Before passing the values to WireMock, we do a simple string replace to configure the responses to look how they should for a given request. We tie, so to speak, the Quarkus test to our `MockAuthorizatioServer` (which is a `QuarkusTestResourceLifecycleManager`) via the `@QuarkusTestResource` annotation on our test class. All that's left is to run it.
+
+And there you have it. A complete, albeit absurdly simple, Quarkus application, secured with OIDC via Keycloak, and tested with WireMock. It's a simple example, but it's a working one, so hopefully it will be enough to get you started. If you find any interesting tips or tricks, be sure to drop a comment below!
