@@ -1,4 +1,4 @@
-title=Securing and Test Quarkus Application using Keycloak and Wiremock
+title=Securing and Testing Quarkus Applications using Keycloak and Wiremock
 date=2021-02-17
 tags=Java,Quarkus,Keycloak,JUnit,Wiremock
 type=post
@@ -121,13 +121,16 @@ quarkus.oidc.credentials.secret=${OIDC_SECRET:51ebd5dc-5f2e-403c-be60-60fed3a75c
 
 We are now ready, or so we might think, to run our project: `mvn compile quarkus:dev`. Assuming you have Keycloak running on `localhost` but haven't configured it, you should see an error like this:
 
+[source]
 -----
-Caused by: io.vertx.core.impl.NoStackTraceThrowable: Not Found: {"error":"Realm does not exist"}</pre>
+Caused by: io.vertx.core.impl.NoStackTraceThrowable: Not Found: {"error":"Realm does not exist"}
 -----
 
 Since we can't run our app just yet, let's configure Keycloak. 
 
 == Keycloak
+
+=== Create the realm
 
 For a more complete Getting Started, you can visit the Keycloak docs[https://www.keycloak.org/getting-started/getting-started-zip]. For our purposes, we'll be brief:
 
@@ -147,6 +150,8 @@ For a more complete Getting Started, you can visit the Keycloak docs[https://www
 ** Click `Create`
 
 We now have a realm for our demo, so next we need to configure the roles and add a user. 
+
+=== Configure roles and users
 
 Ordinarily, we would need to add these, but since we imported a realm, that work has been done for us. To verify:
 
@@ -174,6 +179,8 @@ Similarly, we don't need to add users, as the import handled that for us. To ver
 ** Verify that only `user` is listed under `Assigned Roles`
 ** Change the password for `alice` as we did above.
 
+=== Configure the client
+
 We have one last step, configuring the client:
 
 * Click `Clients` in the left nav bar
@@ -182,9 +189,11 @@ We have one last step, configuring the client:
 * Click the `Regenerate Secret` button
 * Copy the new value in the `Secret` field and update `quarkus.oidc.credentials.secret` in `application.properties`
 
+=== Manually test the application
+
 With our realm configured, we're ready to test our application:
 
-[code,bash]
+[source,bash]
 -----
 $ mvn compile quarkus:dev
 ...
@@ -194,7 +203,7 @@ INFO  [io.quarkus] (Quarkus Main Thread) quarkus-keycloak-wiremock 1.0-SNAPSHOT 
 
 And in another console (I'm using https://httpie.io[httpie] here, btw):
 
-[code,bash]
+[source,bash]
 -----
 $ http --form \
     --auth backend-service:51ebd5dc-5f2e-403c-be60-60fed3a75c47 \
@@ -207,7 +216,7 @@ $ http --form \
 
 That gets a not-small JSON response, but we only want a part, so we can use the JSON query tool, `jq`, to help us extract the value:
 
-[code,bash]
+[source,bash]
 -----
 $ export TOKEN=`http --form \
     --auth backend-service:51ebd5dc-5f2e-403c-be60-60fed3a75c47\
@@ -222,7 +231,7 @@ eyJhbGciOiJSUzI1Ni....
 
 Let's try accessing the application now, first without a token, and then hitting each restricted endpoint:
 
-[code,bash]
+[source,bash]
 -----
 $ http :8080/sample/user
 HTTP/1.1 401 Unauthorized
@@ -242,7 +251,7 @@ user
 
 So we see unauthenticated users rejected, unauthorized users rejected, and authorized users allowed, exactly as expected. Let's check an admin user:
 
-[code,bash]
+[source,bash]
 -----
 $ export TOKEN=`http --form \
     --auth backend-service:51ebd5dc-5f2e-403c-be60-60fed3a75c47\
@@ -273,7 +282,8 @@ We've manually tested the app, but that doesn't scale, so let's take a look at h
 
 Part of the trick in testing an OIDC-secured apps can be tricky. Given how the token is verified behind the scenes, intercepting those calls can be difficult. Fortunately, http://wiremock.org/[WireMock] handles that for us. Setting up the project is easy. Here, we're adding JUnit5, WireMock, and some supporting libraries:
 
-[code,xml]
+.pom.xml
+[source,xml]
 -----
 <dependency>
     <groupId>io.quarkus</groupId>
@@ -307,7 +317,8 @@ Part of the trick in testing an OIDC-secured apps can be tricky. Given how the t
 
 The test itself is also pretty simple:
 
-[code,java]
+.SampleResourceTest.java
+[source,java]
 -----
 @QuarkusTest
 @QuarkusTestResource(MockAuthorizationServer.class)
@@ -324,7 +335,7 @@ public class SampleResourceTest {
     }
 
     // ...
-    
+
     private String generateJWT(String role) {
         // Prepare JWT with claims set
         SignedJWT signedJWT = new SignedJWT(
@@ -360,7 +371,8 @@ Using https://github.com/rest-assured/rest-assured[REST Assured], we simply subm
 
 So what does the mock authorization server look like?
 
-[code,java]
+.MockAuthorizationServer.java
+[source,java]
 -----
 public class MockAuthorizationServer implements QuarkusTestResourceLifecycleManager {
     private WireMockServer wireMockServer;
@@ -432,7 +444,7 @@ public class MockAuthorizationServer implements QuarkusTestResourceLifecycleMana
 There's a lot going on here, and I'm not going to pretend to be an expert. In effect, we're setting up a mock server, configuring two endpoints, defined in `oidcconfig.json` and `publickey.json`, and those files look like this:
 
 .oidcconfig.json
-[code,json]
+[source,json]
 -----
 {
   "name": "oidc_configuration",
@@ -472,7 +484,7 @@ There's a lot going on here, and I'm not going to pretend to be an expert. In ef
 -----
 
 .publickey.json
-[code,json]
+[source,json]
 -----
 {
   "name": "public_keys_stub",
@@ -496,4 +508,4 @@ There's a lot going on here, and I'm not going to pretend to be an expert. In ef
 
 These are basically mock objects, but representing requests. When a request for `request.url` comes in, WireMock returns `response`. Before passing the values to WireMock, we do a simple string replace to configure the responses to look how they should for a given request. We tie, so to speak, the Quarkus test to our `MockAuthorizatioServer` (which is a `QuarkusTestResourceLifecycleManager`) via the `@QuarkusTestResource` annotation on our test class. All that's left is to run it.
 
-And there you have it. A complete, albeit absurdly simple, Quarkus application, secured with OIDC via Keycloak, and tested with WireMock. It's a simple example, but it's a working one, so hopefully it will be enough to get you started. If you find any interesting tips or tricks, be sure to drop a comment below!
+And there you have it. A complete, albeit absurdly simple, Quarkus application, secured with OIDC via Keycloak, and tested with WireMock. It's a simple example, but it's a working one, so hopefully it will be enough to get you started. If you find any interesting tips or tricks, be sure to drop a comment below! You can find the full source for the project https://github.com/jasondlee/quarkus-keycloak-wiremock[here].

@@ -80,7 +80,7 @@
                 </div>
             <div class="footer">
                 <div class="small-12 columns">
-                    <p>&#169; Copyright Jason Lee, 2005-2020. All rights reserved.</p>
+                    <p>&#169; Copyright Jason Lee, 2005-2021. All rights reserved.</p>
                 </div>
             </div>
             <script>
