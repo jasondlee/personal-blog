@@ -3,7 +3,7 @@
 BASEDIR="$( cd "$(dirname "$0")" ; pwd -P )"
 SRC=src
 DEST=output
-BUILD="-b $SRC $DEST"
+BUILD="--reset -b $SRC $DEST"
 SERVE=""
 REVEAL_VER=3.8.0
 
@@ -36,7 +36,7 @@ function usage() {
 while getopts cdns opt
 do
     case "$opt" in
-        c) rm -rf $DEST ;;
+        c) echo "Cleaning..." ; rm -rf $DEST ;;
         d) DEPLOY=true ;;
         n) BUILD="" ;;
         s) SERVE="-s" ;;
