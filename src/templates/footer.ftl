@@ -83,6 +83,7 @@
                     <p>&#169; Copyright Jason Lee, 2005-2021. All rights reserved.</p>
                 </div>
             </div>
+            <!--
             <script>
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -91,6 +92,7 @@
                 ga('create', 'UA-1091049-6', 'auto');
                 ga('send', 'pageview');
             </script>
+            -->
             <script src="/scripts/quotes.js" type="text/javascript"></script>
             <script src="/scripts/local.js" type="text/javascript"></script>
             <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=css&amp;skin1=sunburst"></script>

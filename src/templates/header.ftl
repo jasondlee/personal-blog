@@ -3,6 +3,15 @@
     <head>
         <title>Coming Up for Air<#if content.title?? && content.title?has_content>: ${content.title}</#if></title>
 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-3GQK1YDRQM');
+        </script>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,6 +40,7 @@
         <script src="/scripts/lightbox/jquery-1.7.2.min.js" type="text/javascript"></script>
         <script src="/scripts/lightbox/lightbox.js" type="text/javascript"></script>
         <script src="/scripts/foundation/foundation.js" type="text/javascript"></script>
+
     </head>
     <body style="padding-left: 10px; padding-right: 10px;">
         <#include "misc.ftl">
