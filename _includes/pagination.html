@@ -1,0 +1,16 @@
+<div class="pagination">
+    <div class="previous" style="width:50%; float: left">
+        {% if paginator.previous_page %}
+            <a href="{{site.url}}/{{previousFileName}}">Previous</a>
+        {% else %}
+            <p>Previous</p>
+        {% endif %}
+    </div>
+    <div class="next" style="width:50%; float: right; text-align: right">
+        {% if paginator.next_page %}
+            <a href="{{site.url}}/{{nextFileName}}">Next</a>
+        {% else %}
+            <p>Next</p>
+        {% endif %}
+    </div>
+</div>

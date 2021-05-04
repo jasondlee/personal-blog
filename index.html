@@ -1,0 +1,33 @@
+---
+title: Home
+---
+{% include pagination.html %}
+
+{% for post in paginator.posts %}
+<div style="float: clear"></div>
+<article class="post"
+  <header class="entry-header">
+    <h1 class="title">
+      <a href="{{ site.url }}/{{ post.url }}">{{ post.title }}</a>
+    </h1>
+    <span>
+      <time class="pubdate" datetime="{{post.date}}">{{post.date}}</time> 
+    </span>
+  </header>
+  {{ post.excerpt }}
+  <footer class="entry-footer">
+      <div class="tags">
+
+        {% if post.tags and post.tags.size > 0 %}
+            <span class="title">tags: </span>
+            {% for tag in post.tags %}
+                <a href="{{site.url}}/tags/{{tag}}.html">{{tag}}</a>
+            {% endfor %}
+        {% endif %}
+      </div>
+  </footer>
+</article>
+{% endfor %}
+<div style="border-top: 2px solid #2BA6CB;"></div>
+
+{% include pagination.html %}
