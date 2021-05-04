@@ -5,7 +5,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
 baseurl: "/" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "http://jasondl.ee" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jasondlee
 github_username:  jasondlee
 
@@ -16,6 +16,21 @@ plugins:
   - jekyll-paginate
   - jekyll-asciidoc
 
+#markdown: kramdown
+highlighter: rouge
+#kramdown:
+#  input: GFM
+#  syntax_highlighter_opts:
+#    default_lang: java
+#    css_class   : 'syntax'
+
+asciidoctor:
+  attributes:
+    - icons=font
+    - source-highlighter=rouge
+    - rouge-css=style
+
+excerpt_separator: <!--more-->
 permalink: /:year/:title:output_ext
 paginate: 10
 defaults:
