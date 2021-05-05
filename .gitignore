@@ -4,3 +4,6 @@ site.properties
 target
 output
 tmp
+.jekyll-cache/
+_site/
+.jekyll-metadata

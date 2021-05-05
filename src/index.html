@@ -11,7 +11,7 @@ title: Home
       <a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
     </h1>
     <span>
-      <time class="pubdate" datetime="{{post.date}}">{{post.date}}</time> 
+      <time class="pubdate" datetime="{{post.date}}">{{post.date | date: "%A, %B %-d, %Y" }}</time> 
     </span>
   </header>
   {{ post.excerpt }}

@@ -6,6 +6,7 @@ SRC=src
 DEST=_site
 BUILD="build"
 SERVE=""
+DEV_CONFIG=",_dev_config.yml"
 CONFIG="_config.yml"
 REVEAL_VER=3.8.0
 
@@ -21,18 +22,21 @@ function usage() {
 while getopts cdns opt
 do
     case "$opt" in
-        c) echo "Cleaning..." ; rm -rf $DEST ;;
-        d) DEPLOY=true ;;
-        n) BUILD="" ;;
-        s) SERVE="serve --incremental" 
-            CONFIG="$CONFIG,_dev_config.yml"
+        c)  echo "Cleaning..." ; rm -rf $DEST ;;
+        d)  DEPLOY=true 
+            DEVCONFIG=""
+            ;;
+        n)  BUILD="" ;;
+        s)  SERVE="serve --incremental" 
+            BUILD=""
             ;;
         \?) usage ;;
     esac
 done
 
 if [ -n "$BUILD" -o -n "$SERVE" ] ; then
-    jekyll $BUILD $SERVE --config $CONFIG
+    set -x
+    jekyll $BUILD $SERVE -s $SRC --config $CONFIG$DEV_CONFIG
 fi
 
 if [ "$DEPLOY" == "true" ] ; then
