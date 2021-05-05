@@ -1,9 +1,10 @@
-title=Leveraging Identity with GlassFish and MySQL
-date=2009-02-11
-tags=GlassFish, identity, MySQL
-type=post
-status=published
-~~~~~~
+---
+title: "Leveraging Identity with GlassFish and MySQL"
+date: 2009-02-11
+tags: GlassFish, identity, MySQL
+type: post
+status: published
+---
 = Leveraging Identity with GlassFish and MySQL
 Jason Lee
 2009-02-11

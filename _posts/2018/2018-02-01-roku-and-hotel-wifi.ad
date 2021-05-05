@@ -1,9 +1,10 @@
-title=Roku and Hotel Wifi
-date=2018-02-01
-tags=Roku,Linux
-type=post
-status=unpublished
-~~~~~~
+---
+title: "Roku and Hotel Wifi"
+date: 2018-02-01
+tags: Roku,Linux
+type: post
+status: unpublished
+---
 
 I was recently on a business trip and, as is my custom, I took along my Roku box so that I would have something to watch in the hotel room in the evenings. Unfortunately, the hotel wifi required that you sign in on each device in order to access the internet, but this Roku is old enough that it didn't offer way to do that. I found some options in The Tubes, but I didn't care for them for various reasons, but, fortunately, I found an easy -- and free -- way to do what I needed.
 

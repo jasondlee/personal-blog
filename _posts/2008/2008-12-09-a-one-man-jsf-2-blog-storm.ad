@@ -1,9 +1,10 @@
-title=A One-Man JSF 2 Blog Storm
-date=2008-12-09
-tags=components, JavaServer Faces, tutorials
-type=post
-status=published
-~~~~~~
+---
+title: "A One-Man JSF 2 Blog Storm"
+date: 2008-12-09
+tags: components, JavaServer Faces, tutorials
+type: post
+status: published
+---
 = A One-Man JSF 2 Blog Storm
 Jason Lee
 2008-12-09

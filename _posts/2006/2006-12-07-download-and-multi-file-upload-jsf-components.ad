@@ -1,15 +1,16 @@
-title=Download and Multi-file Upload JSF Components
-date=2006-12-07
-tags=Java, JavaServer Faces
-type=post
-status=published
-~~~~~~
+---
+title: "Download and Multi-file Upload JSF Components"
+date: 2006-12-07
+tags: Java, JavaServer Faces
+type: post
+status: published
+---
 = Download and Multi-file Upload JSF Components
 Jason Lee
 2006-12-07
 
 At work, we have run into two issues several times:  1) We haves app that create PDFs, and we need our JSF apps to send that to the user, and 2) we need to be able to upload multiple files to one of our JSF apps.  The solutions we've used have been less than exciting.  For the first problem, we'd make the backing bean that coordinates the PDF creation (calling the service layer, basically) session-scoped, then have a hidden iframe on the result page whose source is a JSP that pulls the bean out the session (via Java code!) and sends the PDF to the browser in such a way that forces the user to save the file.  For the upload issue, we've been using http://jupload.sourceforge.net[JUpload], which works fine, but, since it lives outside the JSF lifecycle, we have to do some interesting things to make it work.  Luckily, my boss gave me time to create better solutions, resulting in the components `<fl:download/>` and `<fl:multiFileUpload/>`.
-+++// Read More+++
+// more
 
 File Downloads
 ---------------
@@ -44,7 +45,7 @@ Usage is pretty simple:
 
 which renders to this:
 
-image::/images/2006/12/download.screenshot.gif[title="Download Component Screenshot"]
+image::/images/2006/12/download.screenshot.gif[title: ""Download Component Screenshot"]"
 
 Multi-file Uploads
 ------------------
@@ -77,13 +78,13 @@ Full Mode:
 <fl:multiFileUpload maxFileSize="10240" 
     fileHolder="#{testBean.fileHolder}" 
     destinationUrl="#{testBean.destination}" 
-    width="750px" height="250px" type="full" 
+    width="750px" height="250px" type: "full" 
     fileFilter="Images|jpg,png,gif"/>
 -----
 
 which renders like this:
 
-image::/images/2006/12/upload.full.screenshot.gif[title="Full Upload Example Screenshot"]
+image::/images/2006/12/upload.full.screenshot.gif[title: ""Full Upload Example Screenshot"]"
 
 Button Mode:
 
@@ -92,13 +93,13 @@ Button Mode:
 <fl:multiFileUpload maxFileSize="10240" 
     fileHolder="#{testBean.fileHolder}" 
     destinationUrl="#{testBean.destination}" 
-    width="175px" height="25px" type="button" 
+    width="175px" height="25px" type: "button" 
     buttonText="Custom Text!"/>
 -----
 
 which renders like this:
 
-image::/images/2006/12/upload.button.screenshot.gif[title="Button Upload Example Screenshot"]
+image::/images/2006/12/upload.button.screenshot.gif[title: ""Button Upload Example Screenshot"]"
 
 What's Next?
 ------------

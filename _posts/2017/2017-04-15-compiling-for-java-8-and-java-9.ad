@@ -1,9 +1,10 @@
-title=Compiling for Java 8 and Java 9
-date=2017-04-15
-tags=Java 9
-type=post
-status=published
-~~~~~~
+---
+title: "Compiling for Java 8 and Java 9"
+date: 2017-04-15
+tags: Java 9
+type: post
+status: published
+---
 
 In a project I'm working on for my book, I need to share classes between two applications. 
 One, an Android project, requires Java 8. The other, a desktop JavaFX application, needs to 
@@ -11,7 +12,7 @@ run under Java 9, complete with module support. The problem with this is that th
 isn't quite ready for Java 9, so it's not as simple as I would like. I have, however, found 
 a solution that seems to work.
 
-+++// Read More+++
+// more
 In this setup, I have three projects: the shared module, the Android project, and the 
 JavaFX project. The shared module looks roughly like this:
 

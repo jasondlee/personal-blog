@@ -1,10 +1,11 @@
-title=My Book Has Finally Been Published
-date=2017-07-31
-tags=General, Java 9
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "My Book Has Finally Been Published"
+date: 2017-07-31
+tags: General, Java 9
+type: post
+author: jdlee
+status: published
+---
 
 image:/images/2017/j9pb.png[Java 9 Programming Blueprints, float="right", style="padding-left:10px; padding-bottom: 10px;" link=https://www.packtpub.com/application-development/java-9-programming-blueprints]
 

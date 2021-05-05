@@ -1,9 +1,10 @@
-title=My First Android App: Cub Tracker
-date=2011-04-19
-tags=Android
-type=post
-status=published
-~~~~~~
+---
+title: "My First Android App: Cub Tracker"
+date: 2011-04-19
+tags: Android
+type: post
+status: published
+---
 = My First Android App: Cub Tracker
 Jason Lee
 2011-04-19

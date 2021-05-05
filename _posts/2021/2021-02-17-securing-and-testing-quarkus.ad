@@ -1,15 +1,16 @@
-title=Securing and Testing Quarkus Applications using Keycloak and Wiremock
-date=2021-02-17
-tags=Java,Quarkus,Keycloak,JUnit,Wiremock
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: "Securing and Testing Quarkus Applications using Keycloak and Wiremock"
+date: 2021-02-17
+tags: Java,Quarkus,Keycloak,JUnit,Wiremock
+type: post
+author: jdlee
+status: published
+#source-highlighter: prettify
+---
 
 Obviously, web apps need to be secured. If you're brave (and some might say foolish), you can roll your own security. Unless you have compelling reasons to do so, however, you probably shouldn't. Almost as if by design (nyuk nyuk), Quarkus makes it easy to use any OpenID Connect server. One such server is Keycloak, an open source offering also from Red Hat. If your experience is like mine, though, securing endpoints makes testing a touch more complicated. In this post, I'd like to present and walk through a complete example of a secured Quarkus app, using Keycloak, JUnit and Wiremock.
 
-+++// Read More+++
+// more
 
 To begin, let's set up a *very* simple Quarkus application. All it contains is a single resource, `SampleResource`, with two endpoints: one for admins, and one for users. In the interest of completeness, we start by setting up the project's POM:
 
@@ -211,7 +212,7 @@ $ http --form \
     'Content-Type:application/x-www-form-urlencoded' \
     username=alice \
     password=alice \
-    grant_type=password 
+    grant_type: password 
 -----
 
 That gets a not-small JSON response, but we only want a part, so we can use the JSON query tool, `jq`, to help us extract the value:
@@ -224,7 +225,7 @@ $ export TOKEN=`http --form \
     'Content-Type:application/x-www-form-urlencoded' \
     username=alice \
     password=password \
-    grant_type=password | jq --raw-output '.access_token'`
+    grant_type: password | jq --raw-output '.access_token'`
 $ echo $TOKEN
 eyJhbGciOiJSUzI1Ni....    
 -----
@@ -259,7 +260,7 @@ $ export TOKEN=`http --form \
     'Content-Type:application/x-www-form-urlencoded' \
     username=admin \
     password=password \
-    grant_type=password | jq --raw-output '.access_token'`
+    grant_type: password | jq --raw-output '.access_token'`
 
 $ http :8080/sample/admin "Authorization:Bearer $TOKEN"
 HTTP/1.1 200 OK

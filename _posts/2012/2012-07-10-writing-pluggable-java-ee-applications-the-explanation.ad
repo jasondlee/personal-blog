@@ -1,9 +1,10 @@
-title=Writing Pluggable Java EE Applications, The Explanation
-date=2012-07-10
-tags=CDI, Java EE, JSF, REST
-type=post
-status=published
-~~~~~~
+---
+title: "Writing Pluggable Java EE Applications, The Explanation"
+date: 2012-07-10
+tags: CDI, Java EE, JSF, REST
+type: post
+status: published
+---
 = Writing Pluggable Java EE Applications, The Explanation
 Jason Lee
 2012-07-10
@@ -11,7 +12,7 @@ Jason Lee
 
 I recently posted the slides and the source code from the presentation I gave at http://jaxconf.com/2012[JAXConf San Francisco]. While that's helpful for those who were in my session, it's probably less so for those who weren't.  What I'll do in this post, then, is discuss the slides and code in detail, skipping over the introductory slides, and getting right to the heart of the matter.
 
-+++// Read More+++
+// more
 
 The _idea_ of plugins is easy. The _how_ is, often the hard part.  To provide the "how", I've broken the question into two parts: how do I get access to the plugins, and how do I write the plugins.
 
@@ -114,7 +115,7 @@ This simple interface defines `type` and `parent` properties. A plugin author wo
 [source,java,linenums]
 -----
 public class SamplePlugin implements Plugin {
-    @ViewFragment(type="foo")
+    @ViewFragment(type: "foo")
     public static String sample1 = "sample1.xhtml";
 
     @Override
@@ -144,7 +145,7 @@ Very simple. The question that should come to mind now is, "How does the system 
 
 [source,xml,linenums]
 -----
-<pl:viewFragment type="foo"/>
+<pl:viewFragment type: "foo"/>
 -----
 
 The system does the rest.  What you put in your view fragments is completely up to you.  We've put everything from simple markup to `h:form`s with no known issues. One note with regard to resources: since the resources are stored in JARs and not in the application's document root, you will need to use JSF 2's resource mechanism to reference images, javascript, CSS, etc:
@@ -152,7 +153,7 @@ The system does the rest.  What you put in your view fragments is completely up 
 [source,xml,linenums]
 -----
 <h:graphicImage value="#{resource['myImage.JPG']}" height="200"
-    title="Here's a picture of something really cool!"/>
+    title: ""Here's a picture of something really cool!"/>"
 -----
 
 You can see a complete example of this in `plummer-sample2`.

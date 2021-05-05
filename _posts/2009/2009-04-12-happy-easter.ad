@@ -1,9 +1,10 @@
-title=Happy Easter
-date=2009-04-12
-tags=personal
-type=post
-status=published
-~~~~~~
+---
+title: "Happy Easter"
+date: 2009-04-12
+tags: personal
+type: post
+status: published
+---
 = Happy Easter
 Jason Lee
 2009-04-12

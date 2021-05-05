@@ -1,18 +1,19 @@
-title=Book Review: Real World Java EE Night Hacks - Dissecting the Business Tier
-date=2011-11-14
-tags=EJB3, Java EE, JPA, REST, reviews, testing
-type=post
-status=published
-~~~~~~
+---
+title: "Book Review: Real World Java EE Night Hacks - Dissecting the Business Tier"
+date: 2011-11-14
+tags: EJB3, Java EE, JPA, REST, reviews, testing
+type: post
+status: published
+---
 = Book Review: Real World Java EE Night Hacks - Dissecting the Business Tier
 Jason Lee
 2011-11-14
 
-image::/images/2011/11/nighthacks.jpg[title='Real World Java EE Night Hacks--Dissecting the Business Tier']
+image::/images/2011/11/nighthacks.jpg[title: "'Real World Java EE Night Hacks--Dissecting the Business Tier']"
 
 Last week, a great http://www.adam-bien.com/roller/abien/entry/building_plug_in_with_java[post] by http://www.adam-bien.com/roller/abien/[Adam] https://twitter.com/#!/AdamBien[Bien] brought his latest book, _Real World Java EE Night Hacks - Dissecting the Business Tier_, to mind.  I have since gotten myself a copy and thought I'd share my thoughts here.
 
-+++// Read More+++
+// more
 
 For starters, this is a very different kind of book.  In the foreword, James Gosling describes it this way (and I'll just quote the whole thing : ) :
 

@@ -1,9 +1,10 @@
-title=Kotlin and CDI
-date=2015-11-05
-tags=Kotlin, CDI
-type=post
-status=published
-~~~~~~
+---
+title: "Kotlin and CDI"
+date: 2015-11-05
+tags: Kotlin, CDI
+type: post
+status: published
+---
 
 If you've been following my blog, you've probably noticed that I've been spending a 
 lot of time with Kotlin of late. (For the curious, I really like it so far, but I haven't
@@ -14,7 +15,7 @@ I'm a sucker for a bad joke, I've dubbed the project _KotlinEE_. I'm not quite r
 walk through that application yet, but I what I would like to discuss now is an issue I ran into
 trying to get CDI working with Kotlin.
 
-+++// Read More+++
+// more
 
 In theory, it should be pretty straightforward:
 

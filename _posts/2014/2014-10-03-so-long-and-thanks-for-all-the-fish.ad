@@ -1,9 +1,10 @@
-title=So long, and thanks for all the fish
-date=2014-10-03
-tags=General
-type=post
-status=published
-~~~~~~
+---
+title: "So long, and thanks for all the fish"
+date: 2014-10-03
+tags: General
+type: post
+status: published
+---
 = So long, and thanks for all the fish
 Jason Lee
 2014-10-03

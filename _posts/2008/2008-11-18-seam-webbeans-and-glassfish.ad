@@ -1,9 +1,10 @@
-title=Seam, WebBeans and GlassFish
-date=2008-11-18
-tags=EJB3, GlassFish, JavaServer Faces, Seam
-type=post
-status=published
-~~~~~~
+---
+title: "Seam, WebBeans and GlassFish"
+date: 2008-11-18
+tags: EJB3, GlassFish, JavaServer Faces, Seam
+type: post
+status: published
+---
 = Seam, WebBeans and GlassFish
 Jason Lee
 2008-11-18

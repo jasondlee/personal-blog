@@ -1,9 +1,10 @@
-title=Gradle Tip: Running a Single Test
-date=2013-09-24
-tags=Gradle, testing
-type=post
-status=published
-~~~~~~
+---
+title: "Gradle Tip: Running a Single Test"
+date: 2013-09-24
+tags: Gradle, testing
+type: post
+status: published
+---
 = Gradle Tip: Running a Single Test
 Jason Lee
 2013-09-24

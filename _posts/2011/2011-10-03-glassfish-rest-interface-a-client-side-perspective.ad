@@ -1,15 +1,16 @@
-title=GlassFish REST Interface, a Client-side Perspective
-date=2011-10-03
-tags=GlassFish, REST
-type=post
-status=published
-~~~~~~
+---
+title: "GlassFish REST Interface, a Client-side Perspective"
+date: 2011-10-03
+tags: GlassFish, REST
+type: post
+status: published
+---
 = GlassFish REST Interface, a Client-side Perspective
 Jason Lee
 2011-10-03
 
 As I've covered here before, GlassFish sports (and has for a while now), a pretty comprehensive set of management and monitoring REST endpoints.  While this goes a long way toward opening up GlassFish management to various scripting solutions, the client side is still pretty manual.  One my goals in GlassFish 4.0 is to fix that.  In this article, I'm going to give you a sneak peak into what we on the REST team have planned for the GlassFish RESTful administration interface.
-+++// Read More+++
+// more
 
 So, What's New?
 ---------------

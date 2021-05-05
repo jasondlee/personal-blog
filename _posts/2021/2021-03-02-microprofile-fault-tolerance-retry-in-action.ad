@@ -1,15 +1,16 @@
-title=Microprofile Fault Tolerance Retry in Action
-date=2021-03-02
-tags=Java,Quarkus,Microprofile,Fault Tolerance,Wiremock
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: "Microprofile Fault Tolerance Retry in Action"
+date: 2021-03-02
+tags: Java,Quarkus,Microprofile,Fault Tolerance,Wiremock
+type: post
+author: jdlee
+status: published
+#source-highlighter: prettify
+---
 
 As part of some of my recent work, I've gotten some exposure to some Microprofile specs I've not had the opportunity or need to use. One of those is https://github.com/eclipse/microprofile-fault-tolerance[Fault Tolerance]. I was curious to see it action, so I've cobbled together this simple example that demonstrates some of that spec's features, namely retries and fallback.
 
-+++// Read More+++
+// more
 
 It should be noted that the Fault Tolerance spec actually provides several mechanisms to improve the reliability of a distributed system including timeouts, retries, bulkheads, circuit breakers, and fallbacks. We are only going to look at retries and fallbacks here. Perhaps in a future post we'll explore the others. 
 

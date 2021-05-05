@@ -1,15 +1,16 @@
-title=Using Acegi Security With JSF
-date=2006-11-09
-tags=JavaServer Faces
-type=post
-status=published
-~~~~~~
+---
+title: "Using Acegi Security With JSF"
+date: 2006-11-09
+tags: JavaServer Faces
+type: post
+status: published
+---
 = Using Acegi Security With JSF
 Jason Lee
 2006-11-09
 
 A question that often comes up in when looking through JSF <a target="blank" href="http://forum.java.sun.com/forum.jspa?forumID=427&start=0">forums</a> or idling on IRC is, "How do I secure my JSF app?"  to which, of course, there are a myriad of options.  At <a target="blank" href="http://www.iec-okc.com">IEC</a>, we use <a target="blank" href="http://www.acegisecurity.org/">Acegi Security</a>.  That answers only part of the "how," though, as Acegi is not the easiest thing to learn.  In this blog entry, I'll detail how we have Acegi implemented at IEC.  While it's not perfect, it works well for us, and should be enough to get someone moving in the right direction.
-+++// Read More+++
+// more
 
 The first step, of course, is to download Acegi, and integrate with the web application.  Once the jars have been installed in `WEB-INF/lib`, `web.xml` needs to be edited:
 
@@ -181,10 +182,10 @@ Here's an example from an app we have in poroduction.  In this particular snippe
 <acegijsf:authorize ifAllGranted="ROLE_OrderManager]
     <h:form id="requestForm" rendered="#{dwmoForm.isRequest == true}" 
         style="display: inline">
-        <input type="button" value="Approve Request" 
+        <input type: "button" value="Approve Request" 
             onclick="return approveRequest();" />
     </h:form>
-    <h:commandButton id="resubmitButton" type="button" 
+    <h:commandButton id="resubmitButton" type: "button" 
         value="Resubmit Order" onclick="return resubmitOrder();" 
         style="display: inline; margin: 0px; padding: 0px;"/>
 </acegijsf:authorize>

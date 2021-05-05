@@ -1,11 +1,12 @@
-title=Best Advice I've Been Given: Check Your Ego
-date=2020-02-05
-tags=General
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: "Best Advice I've Been Given: Check Your Ego"
+date: 2020-02-05
+tags: General
+type: post
+author: jdlee
+status: published
+#source-highlighter: prettify
+---
 
 The Red Hat twitter account just asked this https://twitter.com/RedHat/status/1225075337878495232[question]: "Communities grow by uplifting 
 others. What is one piece of advice you'd offer to a new developer? Reply below and then check out some advice from #RedHatter 

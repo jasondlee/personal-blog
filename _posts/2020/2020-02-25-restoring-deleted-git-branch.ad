@@ -1,16 +1,17 @@
-title=Restoring a Deleted Git Branch
-date=2020-02-25
-tags=Git
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: "Restoring a Deleted Git Branch"
+date: 2020-02-25
+tags: Git
+type: post
+author: jdlee
+status: published
+#source-highlighter: prettify
+---
 
 Thanks to haste and some sloppy copy-and-paste, today I deleted the _wrong_ remote Git branch. There's nothing like
 learning in a panic, but that's what happened. Here's what I learned on how to fix that.
 
-+++// Read More+++
+// more
 
 While watching that all-important branch being deleted erroneously is a heart-stopping moment, as it turns out, 
 restoring the deleted branch is Super Easy. Barely an Inconvenience. All you need to know the hash of the last commit

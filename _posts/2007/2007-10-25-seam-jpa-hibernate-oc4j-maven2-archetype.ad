@@ -1,15 +1,16 @@
-title=A Seam+JPA/Hibernate on OC4J Maven 2 Archetype
-date=2007-10-25
-tags=JPA, Maven, OC4J, Seam
-type=post
-status=published
-~~~~~~
+---
+title: "A Seam+JPA/Hibernate on OC4J Maven 2 Archetype"
+date: 2007-10-25
+tags: JPA, Maven, OC4J, Seam
+type: post
+status: published
+---
 = A Seam+JPA/Hibernate on OC4J Maven 2 Archetype
 Jason Lee
 2007-10-25
 
 As a follow-up to my link:/2007/10/17/seam-and-jpa-hibernate-on-oc4j-1013/[entry] on getting a Seam and JPA/Hibernate application running on OC4J, I now have an alpha release of a Maven 2 archetype available for use and testing, with heavy emphasis on testing.
-+++// Read More+++
+// more
 
 Using the archetype is pretty simple (assuming you know how to use Maven 2 archetypes in general):
 

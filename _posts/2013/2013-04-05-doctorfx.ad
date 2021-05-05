@@ -1,9 +1,10 @@
-title=DoctorFX
-date=2013-04-05
-tags=JavaFX, AsciiDoc
-type=post
-status=published
-~~~~~~
+---
+title: "DoctorFX"
+date: 2013-04-05
+tags: JavaFX, AsciiDoc
+type: post
+status: published
+---
 = DoctorFX
 Jason Lee
 2013-04-05

@@ -1,9 +1,10 @@
-title=Building \"Fat Jars\" with Gradle
-date=2013-09-04
-tags=Gradle
-type=post
-status=published
-~~~~~~
+---
+title: "Building \"Fat Jars\" with Gradle"
+date: 2013-09-04
+tags: Gradle
+type: post
+status: published
+---
 = Building \"Fat Jars\" with Gradle
 Jason Lee
 2013-09-04

@@ -1,9 +1,10 @@
-title=Android App Development Quandary
-date=2016-01-11
-tags=Android
-type=post
-status=published
-~~~~~~
+---
+title: "Android App Development Quandary"
+date: 2016-01-11
+tags: Android
+type: post
+status: published
+---
 
 I have a grand total of one Android application in the Play Store, Cub Tracker. It serves
 two functions for me: it helps me manage my sons' Cub Scout den, and it gives me a means
@@ -13,7 +14,7 @@ is mostly irrelevant for this discussion) that has brought up a question in the 
 experimentation. This post is a discussion of my options which will allow me to think 
 out loud, if you will, as well as getting (I hope) some feedback on my options.
 
-+++// Read More+++
+// more
 
 In a nutshell, I need to add data synchronization to Cub Tracker to allow users to share
 data amongst themselves (or simply across multiple devices). While there are certainly a 

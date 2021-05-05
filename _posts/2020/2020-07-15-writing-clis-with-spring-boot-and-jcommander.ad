@@ -1,11 +1,12 @@
-title=Writing CLIs with Spring Boot and JCommander
-date=2020-07-15
-tags=CLI, Spring Boot, JCommander
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: "Writing CLIs with Spring Boot and JCommander"
+date: 2020-07-15
+tags: CLI, Spring Boot, JCommander
+type: post
+author: jdlee
+status: published
+#source-highlighter: prettify
+---
 
 I was recently asked to convert a Spring Boot-based "CLI" to a real CLI utility. It was actually just a normal Spring Boot
 application with REST endpoints that we'd hit with curl. Pretty ugly. After a few frustrating hours, I finally settled on a
@@ -16,7 +17,7 @@ structured. And because I care about of each you deeply, I'll present it in Java
 For those of you in a hurry, you can get the complete code in my https://github.com/jasondlee/spring-cli-demo[GitHub repo].
 Everyone else, feel free to read along.
 
-+++// Read More+++
+// more
 
 == Setting up Maven
 The first step will be setting up your Maven POM (If you're using Gradle, I'm sorry. I'm already doing two languages. You

@@ -1,16 +1,17 @@
-title=From Awestruct to JBake
-date=2015-03-19
-tags=general
-type=post
-status=published
-~~~~~~
+---
+title: "From Awestruct to JBake"
+date: 2015-03-19
+tags: general
+type: post
+status: published
+---
 
 For some time now, I have been using link:/posts/2013/fairwell-wordpress.html[awestruct] to power my blog, and, for the most part, I've been happy.
 However, I have found, especially on the Mac, the Ruby-based environment more difficult to setup than I would like. While I have solved this 
 problem before, it presented itself once again when I was issued a Mac upon joining NetSuite. I can, of course, muddle through it, but I'm
 tired of fighting it, so I started looking around for an alternative and found http://jbake.org[JBake].
 
-+++// Read More+++
+// more
 
 JBake, described by Dan Allen as the "jekyll of the JVM", is a Java-based static site generator. While the language the tool is written in is not all 
 that relevant in terms of site generation, it is important to me as a developer who has, from time to time, "needed" to extend the tool in 

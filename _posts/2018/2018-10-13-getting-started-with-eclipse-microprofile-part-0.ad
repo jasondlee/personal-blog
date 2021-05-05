@@ -1,10 +1,11 @@
-title=Getting Started with Eclipse MicroProfile, Part 0
-date=2018-10-13
-tags=Java EE, MicroProfile
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Getting Started with Eclipse MicroProfile, Part 0"
+date: 2018-10-13
+tags: Java EE, MicroProfile
+type: post
+author: jdlee
+status: published
+---
 
 image:/images/2018/microprofile_logo.jpg[float="right"]
 The http://microprofile.io[Eclipse MicroProfile] is a community-driven profile initially developed by Red Hat, IBM,

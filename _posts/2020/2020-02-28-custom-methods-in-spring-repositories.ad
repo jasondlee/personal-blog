@@ -1,18 +1,19 @@
-title=Custom Methods in Spring Repositories
-date=2020-02-28
-tags=Spring,Kotlin
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: "Custom Methods in Spring Repositories"
+date: 2020-02-28
+tags: Spring,Kotlin
+type: post
+author: jdlee
+status: published
+#source-highlighter: prettify
+---
 
 One of the great things about Spring Data Repositories is that they provide a number of query methods out of the box, with the ability to
 add additional queries simply by adding carefully named methods to the interface, and Spring generates the actual implementation for you.
 Sometimes, though, you do need to color outside the lines a bit. Thankfully, Spring allows us to do this. You just have to ask it nicely.
 Here's now.
 
-+++// Read More+++
+// more
 
 For the sake of space, I'm going to assume you know how to create a simple Spring Data repository, so I'll leave out the details. That 
 said, we'll start with a basic repository:

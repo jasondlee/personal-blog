@@ -1,16 +1,17 @@
-title=Java to Kotlin Conversion Question. And Answer.
-date=2019-07-18
-tags=Kotlin
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Java to Kotlin Conversion Question. And Answer."
+date: 2019-07-18
+tags: Kotlin
+type: post
+author: jdlee
+status: published
+---
 
 Recently, in the #kotlin channel on https://freenode.net[Freenode], a user asked a question about what was happening to his
 Java code when using IDEA's convert-to-Kotlin functionality. He left before anyone had the time to answer, and while he
 likely doesn't read my blog, I'm going to answer his question here anyway. :)
 
-+++// Read More+++
+// more
 
 Here is his (slightly edited) question:
 

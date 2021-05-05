@@ -1,9 +1,10 @@
-title=Another RI Sandbox Progress Report
-date=2007-06-15
-tags=Java, JavaServer Faces
-type=post
-status=published
-~~~~~~
+---
+title: "Another RI Sandbox Progress Report"
+date: 2007-06-15
+tags: Java, JavaServer Faces
+type: post
+status: published
+---
 = Another RI Sandbox Progress Report
 Jason Lee
 2007-06-15
@@ -26,4 +27,4 @@ and several minor fixes here and there.  Having done that, I've bumped the versi
 ** Animations (https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=585[585])
 ** MyFaces support (https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=564'[564] - I may just make these all 1.2-only since MyFaces 1.2 finally appears to be close) 
 
-If you have any comments, questions, suggestions, etc., please let me know here or in the issue https://javaserverfaces.dev.java.net/issues/enter_bug.cgi?issue_type=DEFECT&subcomponent=sandbox[tracker].
+If you have any comments, questions, suggestions, etc., please let me know here or in the issue https://javaserverfaces.dev.java.net/issues/enter_bug.cgi?issue_type: DEFECT&subcomponent=sandbox[tracker].

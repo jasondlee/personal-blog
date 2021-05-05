@@ -1,16 +1,17 @@
-title=Getting Started with Eclipse MicroProfile, Part 2: Payara Micro
-date=2018-10-15
-tags=Java EE, MicroProfile
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Getting Started with Eclipse MicroProfile, Part 2: Payara Micro"
+date: 2018-10-15
+tags: Java EE, MicroProfile
+type: post
+author: jdlee
+status: published
+---
 
 http://payara.fish/software/payara-server/payara-micro/[Payara Micro] is a MicroProfile implementation from the good folks at Payara, based on Payara Server, which is itself
 based on GlassFish. Whew! If you're familiar with either GlassFish or Payara, you should feel right at home with Payara
 Micro.
 
-+++// Read More+++
+// more
 
 To start, we need to understand how Payara Micro deploys the application. Payara Micro spins up an instance, albeit a
 somewhat stripped down version, of Payara Server. Once the server instance has started, Payara Micro deploys your MP application

@@ -1,10 +1,11 @@
-title=A Possibly Silly Question about Java Visibility
-date=2018-12-20
-tags=Java
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "A Possibly Silly Question about Java Visibility"
+date: 2018-12-20
+tags: Java
+type: post
+author: jdlee
+status: published
+---
 
 This morning, I was asked a question by a coworker that we both thought we knew
 the answer to: if a method is `protected`, can other classes see that method? The
@@ -12,7 +13,7 @@ answer surprised us: maybe. :) It's a pretty simple, basic question, but I thoug
 I'd mention it in case there's a beginner wondering, or more senior developers, such
 as myself and my team mate, that just have it wrong. :)
 
-+++// Read More+++
+// more
 The official https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html[Java docs] 
 provide a nice chart, which I've reproduced here:
 

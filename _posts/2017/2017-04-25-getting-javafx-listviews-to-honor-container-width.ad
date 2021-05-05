@@ -1,16 +1,17 @@
-title=Getting JavaFX ListViews to Honor Container Width
-date=2017-04-25
-tags=JavaFX
-type=post
-status=published
-~~~~~~
+---
+title: "Getting JavaFX ListViews to Honor Container Width"
+date: 2017-04-25
+tags: JavaFX
+type: post
+status: published
+---
 
 I recently struggled trying to text in a JavaFX ListView to wrap inside the container like 
 I asked it to, rather than extend (and disappear) past the boundaries of the container. After
 some discussion on Twitter and a bit of Googling, I found an answer that I thought I'd share 
 here to, perhaps, save someone some time.
 
-+++// Read More+++
+// more
 
 Let's start by looking at what I'm trying to solve using this contrived example:
 

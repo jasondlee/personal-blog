@@ -1,9 +1,10 @@
-title=String.split(), Java 8 style
-date=2017-09-27
-tags=Java 8
-type=post
-status=published
-~~~~~~
+---
+title: "String.split(), Java 8 style"
+date: 2017-09-27
+tags: Java 8
+type: post
+status: published
+---
 
 Today I found myself with a common problem: I had a delimited string of an unknown
 number of parts that that I needed split apart and process. Prior to Java 8, implementing

@@ -1,9 +1,10 @@
-title=New Blog Site
-date=2006-04-19
-tags=
-type=post
-status=published
-~~~~~~
+---
+title: "New Blog Site"
+date: 2006-04-19
+tags: 
+type: post
+status: published
+---
 = New Blog Site
 Jason Lee
 2006-04-19

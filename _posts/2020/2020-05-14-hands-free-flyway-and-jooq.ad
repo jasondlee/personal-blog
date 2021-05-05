@@ -1,11 +1,12 @@
-title=Hands-free Flyway and Jooq
-date=2020-05-14
-tags=Maven,Flyway,Jooq
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: "Hands-free Flyway and Jooq"
+date: 2020-05-14
+tags: Maven,Flyway,Jooq
+type: post
+author: jdlee
+status: published
+#source-highlighter: prettify
+---
 
 Recently, I started working on a new project and I wanted to give https://www.jooq.org/[Jooq] a go. I also wanted to integrate
 https://flywaydb.org/[Flyway]: I wanted Jooq to generate its various classes based off the database schema, and I want to 
@@ -13,7 +14,7 @@ Flyway to create that schema. That's all easy enough, but I'm resisting, right n
 control (to avoid the churn and additional maintenance), so how do I make that happen with as little work as possible? How do I make
 it work in a CI environment? Thanks to Maven, the answer is lots and lots of XML. :) Let's take a look...
 
-+++// Read More+++
+// more
 
 == Adding the dependencies 
 To add Jooq and Flyway to a project, you need these dependencies:

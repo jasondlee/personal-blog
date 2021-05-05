@@ -1,10 +1,11 @@
-title=Getting Started with Eclipse MicroProfile, Part 6: Hammock
-date=2018-10-19
-tags=Java EE, MicroProfile
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Getting Started with Eclipse MicroProfile, Part 6: Hammock"
+date: 2018-10-19
+tags: Java EE, MicroProfile
+type: post
+author: jdlee
+status: published
+---
 
 This time around, we're going to start looking at a slightly different take on MicroProfile implemenations. Whereas
 Payara Micro, Thorntail, OpenLibery, and TomEE are all based on application servers (albeit stripped down versions), our
@@ -13,7 +14,7 @@ what amounts to an app server under which a web is deployed, we'll be spinning u
 look for CDI beans to load/start/etc. That may sound weird, and I may not be describing it clearly, so let's just jump in
 to the code and take a look.
 
-+++// Read More+++
+// more
 
 https://hammock-project.github.io/[Hammock], as I noted above, is a CDI-based MicroServices framework. I should note that, as best
 as I can tell, while it supports MicroProfile features, I'm not entirely sure which version (seems to be 1.2), and it

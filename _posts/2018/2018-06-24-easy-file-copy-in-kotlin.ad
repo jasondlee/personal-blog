@@ -1,10 +1,11 @@
-title=Easy File Copy in Kotlin
-date=2018-06-24
-tags=Kotlin
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Easy File Copy in Kotlin"
+date: 2018-06-24
+tags: Kotlin
+type: post
+author: jdlee
+status: published
+---
 
 Copying files in Java is, I think, header than it seems it should be. Typically, I see that
 done with, say, a `ByteArrayInputStream` and a `ByteArrayOutputStream` . Thanks to Kotlin's 

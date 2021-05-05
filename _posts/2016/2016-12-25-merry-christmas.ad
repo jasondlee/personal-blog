@@ -1,9 +1,10 @@
-title=Merry Christmas, 2016
-date=2016-12-25
-tags=Personal
-type=post
-status=published
-~~~~~~
+---
+title: "Merry Christmas, 2016"
+date: 2016-12-25
+tags: Personal
+type: post
+status: published
+---
 
 ++++
 <link href="https://fonts.googleapis.com/css?family=Stalemate" rel="stylesheet"/>

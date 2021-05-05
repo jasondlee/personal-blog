@@ -1,16 +1,17 @@
-title=Executable Kotlin Scripts
-date=2019-12-23
-tags=Kotlin
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Executable Kotlin Scripts"
+date: 2019-12-23
+tags: Kotlin
+type: post
+author: jdlee
+status: published
+---
 
 A user in #kotlin on http://freenode.net/[Freenode] asked how to run a Kotlin script. While the 
 https://kotlinlang.org/docs/tutorials/command-line.html[Kotlin docs] are pretty clear
 on how to do that, I thought I'd make a quick post to show how to make an easily executable Kotlin script.
 
-+++// Read More+++
+// more
 
 The first step is to name the file with a `.kts` extension:
 

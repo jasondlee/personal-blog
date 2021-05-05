@@ -1,15 +1,16 @@
-title=Virtual Hosting using Apache and GlassFish
-date=2007-05-04
-tags=GlassFish, Java
-type=post
-status=published
-~~~~~~
+---
+title: "Virtual Hosting using Apache and GlassFish"
+date: 2007-05-04
+tags: GlassFish, Java
+type: post
+status: published
+---
 = Virtual Hosting using Apache and GlassFish
 Jason Lee
 2007-05-04
 
 While many have found GlassFish to be a great choice for an internal application server, there are others that would like to push it a bit further, and use it in an ASP/ISP envrionment.  Jan Luehe discussed GlassFish's virtual hosting features in a recent http://blogs.sun.com/jluehe/entry/virtual_hosting_features_in_glassfish[blog entry].  What I'd like to do in this entry is take the information that Jan presented, and walk through setting up a few different virtual hosting environments.
-+++// Read More+++
+// more
 
 Terms to Know
 -------------
@@ -21,11 +22,11 @@ One Domain, Multiple Servers
 ----------------------------
 We'll start by configuring GlassFish.  We'll use two vhosts, vh1 and vh2.  To add a virtual server from the admin console, go to Configuration->HTTP Service->Virtual Servers:
 
-image::/images/2007/05/virtual_servers_01.thumbnail.png[title='Virtual Server screen' link="/images/2007/05/virtual_servers_01.png"]
+image::/images/2007/05/virtual_servers_01.thumbnail.png[title: "'Virtual Server screen' link="/images/2007/05/virtual_servers_01.png"]"
 
 Click add, and fill out the form:
 
-image::/images/2007/05/virtual_servers_02.thumbnail.png[title='Adding a virtual server", link="/images/2007/05/virtual_servers_02.png"]
+image::/images/2007/05/virtual_servers_02.thumbnail.png[title: "'Adding a virtual server", link="/images/2007/05/virtual_servers_02.png"]"
 
 I've chosen to use _http-listener-1_ only, as I only care about http://vh1:8080/ being available.  Repeat the process for server _vh2_.  For those that prefer the command line, the server can be created with this command:
 
@@ -53,7 +54,7 @@ While there are a myriad of options regarding port usage, I like to have Apache 
 
 With that, your virtual hosts should be ready.  To test that things are working correctly, let's deploy two applications (which, I'm afraid, you'll have to supply :) ).
 
-image::/images/2007/05/app_deployment_01.thumbnail.png[title='Deploying an app to a virtual server' link='/images/2007/05/app_deployment_01.png']
+image::/images/2007/05/app_deployment_01.thumbnail.png[title: "'Deploying an app to a virtual server' link='/images/2007/05/app_deployment_01.png']"
 
 Command line users can do:
 

@@ -1,10 +1,11 @@
-title=Getting Started with Eclipse MicroProfile, Part 8: The Conclusion
-date=2018-10-24
-tags=Java EE, MicroProfile
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Getting Started with Eclipse MicroProfile, Part 8: The Conclusion"
+date: 2018-10-24
+tags: Java EE, MicroProfile
+type: post
+author: jdlee
+status: published
+---
 
 Many times, one of the hardest parts of getting started with a particular piece of technology is figuring out how to get
 started. :) In this series, I've used an _extremely_ simple project to show how to do just that with a number of MicroProfile
@@ -12,7 +13,7 @@ implementations. Obviously, a real application will have many more concerns than
 what this effort gave us is working, runnable, and  testable build for six different MicroProfile implementations. What
 I'd like to do in this final installment in the series, is give some closing thoughts.
 
-+++// Read More+++
+// more
 
 In case you missed a post, here are links to each part:
 

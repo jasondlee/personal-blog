@@ -1,10 +1,11 @@
-title=Jerkey: A Kotlin DSL for Jersey
-date=2018-04-11
-tags=Kotlin, Jersey, REST
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Jerkey: A Kotlin DSL for Jersey"
+date: 2018-04-11
+tags: Kotlin, Jersey, REST
+type: post
+author: jdlee
+status: published
+---
 
 I'm currently working on a DSLs-in-Kotlin presentation for my local JUG, so I need a good domain in which to work. HTML is a great sample
 domain, but it's been done to death. After a bit of head scratching, I've come up with what is, I think, a somewhat novel domain: REST
@@ -12,7 +13,7 @@ application building. Sure, there are libraries like https://ktor.io/[Ktor], but
 kidding, but the dearth of discussions regarding REST applications and DSL construction was good enough for me, so let's see what we have
 so far.
 
-+++// Read More+++
+// more
 
 What really sold me on the idea was that Jersey already offers an API for programmatically creating REST endpoints, which you can read
 about https://jersey.github.io/documentation/latest/resource-builder.html[here]. All we need to do then, is define a DSL to build the

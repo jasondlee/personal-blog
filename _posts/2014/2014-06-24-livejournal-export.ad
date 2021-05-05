@@ -1,9 +1,10 @@
-title=LiveJournal Export
-date=2014-06-24
-tags=JavaFX
-type=post
-status=published
-~~~~~~
+---
+title: "LiveJournal Export"
+date: 2014-06-24
+tags: JavaFX
+type: post
+status: published
+---
 = LiveJournal Export
 Jason lee
 2014-06-24

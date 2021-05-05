@@ -1,9 +1,10 @@
-title=Chesterton's Fence and the Software Developer
-date=2017-09-24
-tags=General
-type=post
-status=published
-~~~~~~
+---
+title: "Chesterton's Fence and the Software Developer"
+date: 2017-09-24
+tags: General
+type: post
+status: published
+---
 
 Recently at work, we found an odd scenario with a REST (-ish ;) endpoint from another team:
 If the request provided a list of, say, 11 IDs in the query string, the system would only return information on

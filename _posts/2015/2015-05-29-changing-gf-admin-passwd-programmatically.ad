@@ -1,9 +1,10 @@
-title=Changing the GlassFish Admin Users's Password Programmatically
-date=2015-05-29
-tags=GlassFish, REST, Docker
-type=post
-status=published
-~~~~~~
+---
+title: "Changing the GlassFish Admin Users's Password Programmatically"
+date: 2015-05-29
+tags: GlassFish, REST, Docker
+type: post
+status: published
+---
 
 Recently, in the #glassfish channel on Freenode, a user was having trouble configuring GlassFish in a Docker environment. He was scripting the configuration
 of the server, but was having trouble setting the admin user's password, since the `change-admin-password` command takes input from `stdin`. 

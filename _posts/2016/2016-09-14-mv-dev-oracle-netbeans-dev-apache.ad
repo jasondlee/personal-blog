@@ -1,15 +1,16 @@
-title=mv /dev/oracle/NetBeans /dev/apache/
-date=2016-09-14
-tags=NetBeans
-type=post
-status=published
-~~~~~~
+---
+title: "mv /dev/oracle/NetBeans /dev/apache/"
+date: 2016-09-14
+tags: NetBeans
+type: post
+status: published
+---
 
 Yesterday, the NetBeans team https://twitter.com/netbeans/status/775689829728280577[announced] plans to move NetBeans from Oracle to
 Apache. This move was met by a mix of skepticism and optimism. I've ranged between the two myself, to be honest, but I've landed on
 optimsim.
 
-+++// Read More+++
+// more
 
 image:/images/netbeans.png[NetBeans, float="right", style="padding-left:10px; padding-bottom: 10px;"]
 My first thought, snarky as it is, was that "Apache is where projects go to die". Think Apache OpenOffice. After discussing that with 

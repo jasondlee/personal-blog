@@ -30,7 +30,7 @@ asciidoctor:
     - source-highlighter=rouge
     - rouge-css=style
 
-excerpt_separator: <!--more-->
+excerpt_separator: "// more"
 permalink: /:year/:title:output_ext
 paginate: 10
 defaults:

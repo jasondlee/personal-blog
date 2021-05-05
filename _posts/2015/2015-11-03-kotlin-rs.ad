@@ -1,14 +1,15 @@
-title=Kotlin-RS
-date=2015-11-03
-tags=Kotlin, JAX-RS
-type=post
-status=published
-~~~~~~
+---
+title: "Kotlin-RS"
+date: 2015-11-03
+tags: Kotlin, JAX-RS
+type: post
+status: published
+---
 
 In keeping with theme of "use existing frameworks with Kotlin" and misleading titles,
 here's a quick and dirty demonstration of writing JAX-RS applications using Kotlin.
 
-+++// Read More+++
+// more
 
 For those that read my link:kotlin-jsf.html[Kotlin Faces] post, the pom.xml for 
 the project will look very familiar:

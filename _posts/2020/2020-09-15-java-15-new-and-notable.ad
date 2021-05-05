@@ -1,17 +1,18 @@
-title=Java 15: New and Notable
-date=2020-09-15
-tags=Java
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: "Java 15: New and Notable"
+date: 2020-09-15
+tags: Java
+type: post
+author: jdlee
+status: published
+#source-highlighter: prettify
+---
 
 JDK 15 hit General Availability today. While I spend most of my time in Kotlin these days, I do keep a close on Java, as it still has
 a special place in my heart, so I thought I'd make a quick post highlighting some of its new features. :) There are quite a few changes 
 in the release, so I'll list all of them, but focus on the ones I think most developers will find more interesting.
 
-+++// Read More+++
+// more
 
 == The Complete List
 If you look at the https://openjdk.java.net/projects/jdk/15/[project page], you will see a list of all the JEPs (https://openjdk.java.net/jeps/0[JDK Enhancement Propsals]). I'll save you a click and reproduce that list here:

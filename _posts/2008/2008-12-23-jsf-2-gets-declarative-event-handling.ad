@@ -1,22 +1,23 @@
-title=JSF 2 Gets Declarative Event Handling
-date=2008-12-23
-tags=JavaServer Faces
-type=post
-status=published
-~~~~~~
+---
+title: "JSF 2 Gets Declarative Event Handling"
+date: 2008-12-23
+tags: JavaServer Faces
+type: post
+status: published
+---
 = JSF 2 Gets Declarative Event Handling
 Jason Lee
 2008-12-23
 
 If you've been following the evolution of the JSF 2 spec closely, you have probably seen the addition of a finer-grained event system (if you haven't seen it, section 3.4 of the spec is the relevant one).  These events include things like AfterAddToViewEvent, BeforeRenderEvent, ViewMapCreatedEvent, etc.  An application developer could subscribe to these events from a managed bean by using the API exposed by the new system.  While that is a big improvement over the way things work in 1.2, it still leave page authors out in the cold until, that is, this week.  Yesterday I committed the code to support declarative even handling to Mojarra.  In this short entry, we'll take a look at what that entails, and how to use it.
-+++// Read More+++
+// more
 
 This change really has two parts:  a new `f:event` tag, and a new @NamedEvent annotation.  Let's start our discussion by looking at the tag.   The syntax for the tag is really quite simple.  You just add the tag to any component you desire, provide values for the tags only two attributes, and you're done.  For example (from the Mojarra systests):
 
 [source,xml,linenums]
 -----
 <h:outputText id="beforeRenderTest1" >
-    <f:event type="beforeRender" action="#{eventTagBean.beforeEncode}" />
+    <f:event type: "beforeRender" action="#{eventTagBean.beforeEncode}" />
 </h:outputText>
 -----
 
@@ -64,7 +65,7 @@ Armed with that knowledge, we could easily rewrite our markup below as
 [source,xml,linenums]
 -----
 <h:outputText id="beforeRenderTest1" >
-    <f:event type="javax.faces.event.beforeRender" 
+    <f:event type: "javax.faces.event.beforeRender" 
         action="#{eventTagBean.beforeEncode}" />
 </h:outputText>
 -----

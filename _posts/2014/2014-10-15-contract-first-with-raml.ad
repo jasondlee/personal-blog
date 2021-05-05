@@ -1,9 +1,10 @@
-title=Contract-First REST APIs with RAML
-date=2014-10-15
-tags=REST, Java EE
-type=post
-status=published
-~~~~~~
+---
+title: "Contract-First REST APIs with RAML"
+date: 2014-10-15
+tags: REST, Java EE
+type: post
+status: published
+---
 = Contract-First REST APIs with RAML
 Jason Lee
 2014-10-15
@@ -13,7 +14,7 @@ Yesterday, at the http://okcjug.org[OKC JUG], I presented on the topic of Contra
 
 === *tl;dr*: You can find the demo source https://bitbucket.org/jdlee/raml-demo[here] and play around with it.
 
-+++// Read More+++
+// more
 
 == Introduction
 

@@ -1,16 +1,17 @@
-title=String.format()... You May Be Doing It Wrong
-date=2018-03-29
-tags=Java
-type=post
-status=published
-~~~~~~
+---
+title: "String.format()... You May Be Doing It Wrong"
+date: 2018-03-29
+tags: Java
+type: post
+status: published
+---
 
 If you've been working with Java for very long, you've probably had occasion to use
 `String.format()` . And, if you're like me, you may very well have been doing it "wrong".
 Let's take a look at what was, for me, common usage, and how, maybe, you _should_ be
 doing it.
 
-+++// Read More+++
+// more
 
 Let's start by taking a look at a mildly complex -- and highly contrived -- usage:
 

@@ -1,9 +1,10 @@
-title=Be Careful with Statics
-date=2015-07-16
-tags=Java
-type=post
-status=published
-~~~~~~
+---
+title: "Be Careful with Statics"
+date: 2015-07-16
+tags: Java
+type: post
+status: published
+---
 
 I recently came across an interesting piece of code at work:
 
@@ -17,7 +18,7 @@ odd attempt to work around concurrency issues, or was thread safety just overloo
 still one instance per JVM, or does the `private` actually change anything? My understanding was that this was a bug, but I thought I'd
 write a test just to make sure.
 
-+++// Read More+++
+// more
 
 Let's start with a class:
 

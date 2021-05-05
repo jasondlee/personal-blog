@@ -1,10 +1,11 @@
-title=Resurrecting Turbo Vision
-date=2018-04-23
-tags=TurboVision, Java
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Resurrecting Turbo Vision"
+date: 2018-04-23
+tags: TurboVision, Java
+type: post
+author: jdlee
+status: published
+---
 
 If you wrote software on a DOS system in the 80s or 90s, you probably used one of the Borland
 products, Turbo Pascal or Turbo C++, with that beautiful, beautiful blue, mouse-enabled
@@ -22,7 +23,7 @@ it off and on for many, many moons now with the C++ version of the library open 
 long ago, before they were sold off and the Borland brand quietly disappeared. Tonight, I made 
 *great* progress on it.
 
-+++// Read More+++
+// more
 
 First, for those not familiar with Turbo Vision and don't want to google, here's a screen shot
 from one of the examples:

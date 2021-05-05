@@ -1,9 +1,10 @@
-title=Opinions Wanted: v3 GUI Prototype
-date=2009-02-25
-tags=GlassFish
-type=post
-status=published
-~~~~~~
+---
+title: "Opinions Wanted: v3 GUI Prototype"
+date: 2009-02-25
+tags: GlassFish
+type: post
+status: published
+---
 = Opinions Wanted: v3 GUI Prototype
 Jason Lee
 2009-02-25
@@ -11,7 +12,7 @@ Jason Lee
 As I mentioned in a recent post, we're investigating some changes to the GlassFish v3 Administration Console.  We finally have something fairly concrete to show, and have set up a demo site for you to play with.  Ken Pauslen sent an email regarding our demo to the GlassFish users' list, so instead of repeating all of that, I'll simply quote his email for you below.  Note the comment on performance toward the end.  :)
 
 Please send feedback to the link:mailto:webtier@glassfish.dev.java.net?subject=RE: Opinions Wanted: v3 GUI Prototype[webtier list] or the link:mailto:dev@glassfish.dev.java.net?subject=RE: Opinions Wanted: v3 GUI Prototype[dev list].  Many thanks! :)
-+++// Read More+++
+// more
 
 _____
 Hi everyone,

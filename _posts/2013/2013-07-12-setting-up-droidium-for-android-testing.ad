@@ -1,16 +1,17 @@
-title=Setting Up Droidium for Android Testing
-date=2013-07-12
-tags=Android, Droidium
-type=post
-status=published
-~~~~~~
+---
+title: "Setting Up Droidium for Android Testing"
+date: 2013-07-12
+tags: Android, Droidium
+type: post
+status: published
+---
 = Setting Up Droidium for Android Testing
 Jason Lee
 2013-07-12
 
 
 Many know Arquillian as a great integration, functional, acceptance testing platform. Until recently, I thought of it solely as a great Java EE tool, but an Arquillian extension, known as Droidium, allows you to use Arquillian to help drive your Android testing. I spent some time tonight trying to get it set up for http://cubtracker.com[Cub Tracker] and thought I'd share what (little) I have so far.
-+++// Read More+++
+// more
 
 Rather than use Ant as the Android SDK currently does, we're going to build this test app using Maven. My POM currently looks something like this:
 

@@ -1,10 +1,11 @@
-title=When Testing with a Different Database Chokes on Your DDL
-date=2019-12-13
-tags=Testing,SQL,H2
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "When Testing with a Different Database Chokes on Your DDL"
+date: 2019-12-13
+tags: Testing,SQL,H2
+type: post
+author: jdlee
+status: published
+---
 
 I recently found myself writing a test that needed a database. Unfortunately, our testing database,
 https://h2database.com[H2], doesn't support all of the features of our production database, 
@@ -12,7 +13,7 @@ https://www.postgresql.org/[PostgreSQL]. This meant that the
 https://flywaydb.org/[Flyway] migrates used to manage the production database broke in the testing environment. The fix for
 this turned out to be pretty simple.
 
-+++// Read More+++
+// more
 
 To set the scenario, imagine you have this table:
 

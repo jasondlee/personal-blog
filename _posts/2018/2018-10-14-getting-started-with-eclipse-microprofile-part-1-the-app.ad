@@ -1,10 +1,11 @@
-title=Getting Started with Eclipse MicroProfile, Part 1: the Application
-date=2018-10-14
-tags=Java EE, MicroProfile
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Getting Started with Eclipse MicroProfile, Part 1: the Application"
+date: 2018-10-14
+tags: Java EE, MicroProfile
+type: post
+author: jdlee
+status: published
+---
 
 To start our investigation, we need an application to work with. Part of the problem with getting started
 applications is making sure that your example is complicated enough to be interesting, but not so complicated that
@@ -30,7 +31,7 @@ which is injected a single CDI bean. The point is to have a working REST endpoin
 a MicroProfile in action, allowing us to verify that our basic environment is configured and working correctly. From there
 you are free to load on all the complexity you find you need. That's exactly what I'll be doing in a separate project. :)
 
-+++// Read More+++
+// more
 
 I may be covering far too basic a level, but I want to make sure I don't leave too many behind, so let's start at the very
 beginning: the JAX-RS `Application`:

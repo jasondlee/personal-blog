@@ -1,17 +1,18 @@
-title=Getting Started with Eclipse MicroProfile, Part 4: OpenLiberty
-date=2018-10-17
-tags=Java EE, MicroProfile
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Getting Started with Eclipse MicroProfile, Part 4: OpenLiberty"
+date: 2018-10-17
+tags: Java EE, MicroProfile
+type: post
+author: jdlee
+status: published
+---
 
 Having looked at <</posts/2018/getting-started-with-eclipse-microprofile-part-3-thorntail.ad#,Thorntail>> last time,
 we'll take a look at http://openliberty.io[OpenLiberty] this time. OpenLiberty is the open source project
 under which, as I understand the state of things, IBM's WebSphere Liberty is developed. In this installment, we'll
 give its MicroProfile support a quick spin.
 
-+++// Read More+++
+// more
 
 We start by setting up our POM:
 

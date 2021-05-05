@@ -1,9 +1,10 @@
-title=Merry Christmas
-date=2014-12-25
-tags=general, personal
-type=post
-status=published
-~~~~~~
+---
+title: "Merry Christmas"
+date: 2014-12-25
+tags: general, personal
+type: post
+status: published
+---
 = Merry Christmas
 Jason Lee
 2014-12-25

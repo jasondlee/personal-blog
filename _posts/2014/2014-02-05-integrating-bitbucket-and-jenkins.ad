@@ -1,9 +1,10 @@
-title=Integrating Bitbucket and Jenkins
-date=2014-02-05
-tags=Bitbucket, Jenkins, git, ci
-type=post
-status=published
-~~~~~~
+---
+title: "Integrating Bitbucket and Jenkins"
+date: 2014-02-05
+tags: Bitbucket, Jenkins, git, ci
+type: post
+status: published
+---
 = Integrating Bitbucket and Jenkins
 Jason Lee
 2014-02-05
@@ -15,7 +16,7 @@ http://bitbucket.org[Bitbucket]), but you have a local continuous integration se
 build your project every time you commit, but without the heavy requirement of polling
 your repo. In this post, I'll show you how to integrate the two to do just that.
 
-+++// Read More+++
+// more
 
 The first step is to get Jenkins set up (the zeroth step, of course, is to have your
 code hosted by Bitbucket. I'll leave that as an exercise for the reader ;). The basic

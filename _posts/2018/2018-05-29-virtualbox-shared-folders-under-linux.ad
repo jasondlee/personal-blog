@@ -1,10 +1,11 @@
-title=VirtualBox Shared Folders under Linux
-date=2018-05-29
-tags=VirtualBox, Linux
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "VirtualBox Shared Folders under Linux"
+date: 2018-05-29
+tags: VirtualBox, Linux
+type: post
+author: jdlee
+status: published
+---
 
 My work machine runs Windows (go ahead and laugh. I'll wait). While I've been able to tweak the machine
 and get a moderately acceptable setup, there are times when I'd really like to use Linux for something,
@@ -15,7 +16,7 @@ folders working so I can keep the source on my host machine, and just do the wor
 it doesn't seem to be as simple as adding a shared folder to the VirtualBox config. This post, then, will
 detail the steps I took to make things work for me.
 
-+++// Read More+++
+// more
 
 The zeroth step, clearly, is to set up the VM. I'll not cover that here (though perhaps I can in another post
 if there's interest, but it seems to be a well-covered topic already). Once you have a working VM, we need to

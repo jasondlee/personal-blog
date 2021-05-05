@@ -1,9 +1,10 @@
-title=Fairwell, Wordpress!
-date=2013-04-15
-tags=general
-type=post
-status=published
-~~~~~~
+---
+title: "Fairwell, Wordpress!"
+date: 2013-04-15
+tags: general
+type: post
+status: published
+---
 = Fairwell, Wordpress!
 Jason Lee
 2013-04-15

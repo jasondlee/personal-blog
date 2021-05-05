@@ -1,15 +1,16 @@
-title=Extending the GlassFish v3 Prelude Administration Console
-date=2008-11-06
-tags=GlassFish, Java, JSFTemplating, tutorials, v3
-type=post
-status=published
-~~~~~~
+---
+title: "Extending the GlassFish v3 Prelude Administration Console"
+date: 2008-11-06
+tags: GlassFish, Java, JSFTemplating, tutorials, v3
+type: post
+status: published
+---
 = Extending the GlassFish v3 Prelude Administration Console
 Jason Lee
 2008-11-06
 
 Today, the GlassFish community is launching https://glassfish.dev.java.net/downloads/v3-prelude.html[GlassFish v3 Prelude] (http://docs.sun.com/app/docs/doc/820-4494?l=en[Release Notes] and http://docs.sun.com/app/docs/doc/820-4836?l=en[Quick Start Guide]).  If you are not familiar with what Prelude is, http://weblogs.java.net/blog/kalali/archive/2008/10/one_pager_revie.html[here] is a short write up giving the high level details.  In this article, I'd like to focus on the third bullet there, "CLI and administration console extensibility."  Specifically, we'll look at what it takes to create a plugin that will extend GlassFish v3's Administration Console.
-+++// Read More+++
+// more
 
 Table of Contents
 -----------------
@@ -52,15 +53,15 @@ So that defines the plugin for the console, but how do we make it do anything in
 [source,xml,linenums]
 -----
 <console-config id='console-plugin-example'>
-        type="org.glassfish.admingui:treeNode" 
+        type: "org.glassfish.admingui:treeNode" 
     priority="40" 
     parentId="Resources" 
     content="treeNode.jsf" />
-        type="org.glassfish.admingui:tab" 
+        type: "org.glassfish.admingui:tab" 
     priority="22" 
     parentId="jvmSettings" 
     content="newTab2.jsf" />
-        type="org.glassfish.admingui:tab" 
+        type: "org.glassfish.admingui:tab" 
     priority="28" 
     parentId="serverInstTabs" 
     content="newTab1.jsf" />
@@ -157,10 +158,10 @@ The Handler, `executeSomeBusinessLogic` might look like this:
 -----
     @Handler(id="executeSomeBusinessLogic",
         input = {
-            @HandlerInput(name="amount", type=Double.class, required=true)
+            @HandlerInput(name="amount", type: Double.class, required=true)
         },
         output= {
-            @HandlerOutput(name="result", type=String.class)
+            @HandlerOutput(name="result", type: String.class)
         }
     )
     public static void myBusinessLogicMethod (HandlerContext handlerContext) {
@@ -180,4 +181,4 @@ Inside the method, we extract the input parameter using `HandlerContext.getInput
 [[summary]]
 Summary
 -------
-And that's all there is to writing a plugin for the GlassFish v3 Prelude Administration Console:  one simple class, an XML config file, a few managed beans or Handlers, and just a few JSF markup files as necessary for your plugin.  These simple building blocks make it extremely simple to http://docs.sun.com/app/docs/doc/820-6583' title='Sun GlassFish Enterprise Server v3 Prelude Add-On Component Development Guide[extend] the GlassFish v3 Prelude Administration Console.  In fact, most of the functionality that ships in the console uses this approach, demonstrating the power of the mechanism quite nicely.  The modularity of the GlassFish v3 kernel provides system integrators a practically unbounded array of opportunities for extending the application server, and the administration console's plugin service makes it extremely easy to add administration support for any extension you might create.  How will you extend GlassFish?
+And that's all there is to writing a plugin for the GlassFish v3 Prelude Administration Console:  one simple class, an XML config file, a few managed beans or Handlers, and just a few JSF markup files as necessary for your plugin.  These simple building blocks make it extremely simple to http://docs.sun.com/app/docs/doc/820-6583' title: "'Sun GlassFish Enterprise Server v3 Prelude Add-On Component Development Guide[extend] the GlassFish v3 Prelude Administration Console.  In fact, most of the functionality that ships in the console uses this approach, demonstrating the power of the mechanism quite nicely.  The modularity of the GlassFish v3 kernel provides system integrators a practically unbounded array of opportunities for extending the application server, and the administration console's plugin service makes it extremely easy to add administration support for any extension you might create.  How will you extend GlassFish?"

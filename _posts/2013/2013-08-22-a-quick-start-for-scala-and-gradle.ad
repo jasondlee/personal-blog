@@ -1,9 +1,10 @@
-title=A Quick-start for Scala and Gradle
-date=2013-08-22
-tags=Gradle, Scala
-type=post
-status=published
-~~~~~~
+---
+title: "A Quick-start for Scala and Gradle"
+date: 2013-08-22
+tags: Gradle, Scala
+type: post
+status: published
+---
 = A Quick-start for Scala and Gradle
 Jason Lee
 2013-08-22

@@ -1,11 +1,12 @@
-title=Dear MockK, Repeat After Me
-date=2020-01-16
-tags=Kotlin, Mock
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: "Dear MockK, Repeat After Me"
+date: 2020-01-16
+tags: Kotlin, Mock
+type: post
+author: jdlee
+status: published
+#source-highlighter: prettify
+---
 
 The project I'm working on is using https://mockk.io[Mockk] in the unit tests. It's a great library that has made
 true unit testing so much easier. I ran into a problem, though, where I needed a method I was mocking to return the 
@@ -13,7 +14,7 @@ value it was receiving. To be more specific, we were passing an object to a Spri
 built inside the method to test, and, to test thoroughly, I needed to get to that object. Turns out, that's pretty
 easy to do with Mockk. Let's take a look...
 
-+++// Read More+++
+// more
 
 First, a clear set up. The code basically looks like something like this:
 

@@ -1,10 +1,11 @@
-title=Getting started with Micronaut: Kotlin, JPA, and JWT
-date=2019-02-12
-tags=Kotlin,Micronaut,JPA,JWT
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Getting started with Micronaut: Kotlin, JPA, and JWT"
+date: 2019-02-12
+tags: Kotlin,Micronaut,JPA,JWT
+type: post
+author: jdlee
+status: published
+---
 
 The Micronaut http://guides.micronaut.io/index.html[guides] are really pretty good. So far, I've found just about
 everything I need. The biggest obstacle so far has been that, at times, the content was scattered across several guides
@@ -12,7 +13,7 @@ and usually in the wrong language: I'm interested in Kotlin, but the guides seem
 isn't surprising, as budgets are limited, of course. What I would like to do here, then, is provide a small sample app,
 written in Kotlin, that demonstrates how to set up the project, configure and use JPA, and secure the app with JWT.
 
-+++// Read More+++
+// more
 
 Micronaut comes with a CLI that helps bootstrap a project, as well create various artifacts. So far, I've found the
 project creation to be the most useful, with the rest being less so. Your mileage may vary, of course. That said,

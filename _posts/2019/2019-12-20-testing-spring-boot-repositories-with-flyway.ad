@@ -1,10 +1,11 @@
-title=Testing Spring Repositories with Flyway
-date=2019-12-20
-tags=Testing,SQL,Spring,Flyway
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Testing Spring Repositories with Flyway"
+date: 2019-12-20
+tags: Testing,SQL,Spring,Flyway
+type: post
+author: jdlee
+status: published
+---
 
 With my recent job change, I've gotten a chance to use https://spring.io/projects/spring-boot[Spring Boot] 
 in anger a bit. It's been fun, and I've learned a fair bit about the current state of Spring (I still love you,
@@ -13,10 +14,10 @@ make sure the query worked before I pushed it upstream. To do that confidently, 
 In this post, I'll show how remarkably simple it is to test Spring Repositories using Flyway to set up schemas and 
 test data.
 
-+++// Read More+++
+// more
 
 To start off the demo, I created a simple Spring Boot project using 
-https://start.spring.io/#!type=maven-project&language=kotlin&platformVersion=2.2.2.RELEASE&packaging=jar&jvmVersion=1.8&groupId=com.steeplesoft&artifactId=spring-boot-repository-test-demo&name=spring-boot-repository-test-demo&description=Demo%20project%20for%20Spring%20Boot&packageName=com.steeplesoft.spring-boot-repository-test-demo&dependencies=data-jpa,flyway,h2,postgresql[Spring Intializr].
+https://start.spring.io/#!type: maven-project&language=kotlin&platformVersion=2.2.2.RELEASE&packaging=jar&jvmVersion=1.8&groupId=com.steeplesoft&artifactId=spring-boot-repository-test-demo&name=spring-boot-repository-test-demo&description=Demo%20project%20for%20Spring%20Boot&packageName=com.steeplesoft.spring-boot-repository-test-demo&dependencies=data-jpa,flyway,h2,postgresql[Spring Intializr].
 
 Opening that in my IDE, I needed to configure the database connection, which I did in `src/main/resources/application.properties`:
 

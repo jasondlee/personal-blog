@@ -1,15 +1,16 @@
-title=Using the Woodstock Sortable Table
-date=2007-02-27
-tags=Java, JavaServer Faces, Woodstock
-type=post
-status=published
-~~~~~~
+---
+title: "Using the Woodstock Sortable Table"
+date: 2007-02-27
+tags: Java, JavaServer Faces, Woodstock
+type: post
+status: published
+---
 = Using the Woodstock Sortable Table
 Jason Lee
 2007-02-27
 
 At long last, the https://woodstock.dev.java.net[Woodstock component set] is finally here.  At IEC, we have been anxiously awaiting its release for quite some time now, as we've been hoping to make use of the sortable data table component it offers, which we have now done.  Having done it, allow me to show off the component a bit, as well as explain what I had to do make things work.  It's not hard, necessarily, just different enough to give one pause at first glance.
-+++// Read More+++
+// more
 
 = Table of Contents
 
@@ -89,7 +90,7 @@ We're now ready to put a table on the page.  Here's a snippet from the applicati
 [source,html,linenums]
 -----
 <w:table id="table" clearSortButton="true" sortPanelToggleButton="true" 
-    title="Pending Units" filterText="#{ewl.group.filter.filterText}" 
+    title: ""Pending Units" filterText="#{ewl.group.filter.filterText}" "
     deselectMultipleButton="true" selectMultipleButton="false">
     <f:facet name="actionsTop">
         <f:subview id="actionsTop">
@@ -242,7 +243,7 @@ public void applyCustomFilter() {
 = What It Looks Like
 Here is a screen shot from the application from which this table was taken.  It shows the rows sorted by the "Assigned To" field, a row is selected, and the custom filter panel is displayed:
 
-image::/images/2007/02/tablescreenshot.png[title='Table Screen Shot']
+image::/images/2007/02/tablescreenshot.png[title: "'Table Screen Shot']"
 
 [[closing]]
 = Closing

@@ -1,9 +1,10 @@
-title=My Thoughts on AT&T U-verse
-date=2009-01-05
-tags=General
-type=post
-status=published
-~~~~~~
+---
+title: "My Thoughts on AT&T U-verse"
+date: 2009-01-05
+tags: General
+type: post
+status: published
+---
 = My Thoughts on AT&T U-verse
 Jason Lee
 2009-01-05
@@ -11,7 +12,7 @@ Jason Lee
 In a recent discussion, the fact that I have AT&amp;T U-verse came up.  I was asked what my thoughts on it are, and I promised a blog about it.  This entry is the somewhat belated fulfillment of the promise.
 
 First off, for those that don't know, U-verse is, as best as I can tell, their answer to cable television.  With the full package, which we have, you get a digital phone line, digital television, and high-speed internet all over fiber.  Since the cable companies are offering telephone, it seems the phone companies are now offering television, with everyone in on this internet thing.  For the impatient, the punch line here is that it's a nice, but not perfect, offering.  Let's jump into the details.
-+++// Read More+++
+// more
 
 As I noted, U-verse offers phone, internet, and television.  We'll start with the phone, as it's probably the least...interesting of the three.  If you have digital telephone, there's not much exciting here.  If you have a plain ol' telephone (POTS) line, then you're in for a treat.  As you may or may not know, I work for Sun Microsystems from home.  Being remote, I spend a _lot_ of time on the phone.  On my POTS line, I had a pretty awful buzz on the line, even though my house is brand new.  After U-verse phone was installed, calls are crystal clear.  No more I'm-sorry-can-you-repeat-thats.  It's made a huge difference for such a simple thing.
 
@@ -23,7 +24,7 @@ Having said that, the DVR does have its faults.  One of the things we actually l
 
 Another oddity is DVR access from other rooms.  When the system was first installed, if we wanted to watch a recorded program, we had to do it in the living.  Typically, that's OK, because that's where the 52" is, but, occasionally, we might want to watch a Psych from our bedroom before we turn in.  Until recently, that wasn't possible.  To their credit, AT&amp;T recently released "Total Home DVR" which was a transparent upgrade (transparent in that I have no clue when it was installed.  The system just did it automagically), which enabled limited DVR usage in other rooms.  This is an improvement, of course, but it appears to be read only.  We don't seem to be able to schedule new recordings or delete existing ones.  Better than nothing, I guess, but it still has a way to go.
 
-image::/images/2009/01/dvr_online-150x150.png[link='/images/2009/01/dvr_online.png' title='U-verse DVR Online Screen Shot']
+image::/images/2009/01/dvr_online-150x150.png[link='/images/2009/01/dvr_online.png' title: "'U-verse DVR Online Screen Shot']"
 
 Of course, what DVR from an internet provider would be complete without web access?  The good news is that U-verse offers that.  The bad news is that it is leagues behind http://www.mythtv.org/wiki/index.php/MythWeb[MythWeb]. Look at the screen shot to the right.  What you see there is pretty much the most exciting page in the system.  Like Total Home DVR, it's better than nothing, but I think the developers on that part of the system would be well-served to look at MythWeb.
 

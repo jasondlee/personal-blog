@@ -1,10 +1,11 @@
-title=Kotlin+Micronaut and IDEA Don't Get Along Together
-date=2019-01-25
-tags=Kotlin,Micronaut,IDEA
-type=post
-author=jdlee
-status=published
-~~~~~~
+---
+title: "Kotlin+Micronaut and IDEA Don't Get Along Together"
+date: 2019-01-25
+tags: Kotlin,Micronaut,IDEA
+type: post
+author: jdlee
+status: published
+---
 
 Recently, I've been experimenting with http://micronaut.io[Micronaut], a new-ish "modern, JVM-based, full-stack framework
 for building modular, easily testable microservice and serverless applications" from the makers of Grail. So far, I've
@@ -13,7 +14,7 @@ though, run in to some trouble writing tests, or, more accurately running tests.
 it out until I finally broke down and asked, and it turns out that it's https://youtrack.jetbrains.com/issue/KT-15040[IDEA's fault].
 While that's a bit annoying, there is a workaround, which I'd like to document briefly here.
 
-+++// Read More+++
+// more
 
 If you read the https://docs.micronaut.io/latest/guide/index.html[getting started guide] for Micronaut, you'll notice a
 section on https://docs.micronaut.io/latest/guide/index.html#ideSetup[setting up your IDE]. Having grown accustomed to

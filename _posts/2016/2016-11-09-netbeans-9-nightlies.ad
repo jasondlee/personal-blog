@@ -1,9 +1,10 @@
-title=NetBeans 9 Nightlies
-date=2016-11-09
-tags=NetBeans
-type=post
-status=published
-~~~~~~
+---
+title: "NetBeans 9 Nightlies"
+date: 2016-11-09
+tags: NetBeans
+type: post
+status: published
+---
 
 Perhaps I'm a bit of a glutton for punishment, but I have an odd addiction to nightly
 builds. In working on this link:call-me-crazy-but-im-writing-a-book.html[book], I need

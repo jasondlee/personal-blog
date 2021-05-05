@@ -1,10 +1,11 @@
-title=Awestruct NetBeans Plugin
-date=2013-09-30
-draft=false
-tags=Awestruct, NetBeans
-type=post
-status=published
-~~~~~~
+---
+title: "Awestruct NetBeans Plugin"
+date: 2013-09-30
+draft: false
+tags: Awestruct, NetBeans
+type: post
+status: published
+---
 = Awestruct NetBeans Plugin
 Jason lee
 2013-09-30

@@ -1,9 +1,10 @@
-title=Gradle Tip: Seeing Standard Streams During Tests
-date=2013-09-10
-tags=Gradle
-type=post
-status=published
-~~~~~~
+---
+title: "Gradle Tip: Seeing Standard Streams During Tests"
+date: 2013-09-10
+tags: Gradle
+type: post
+status: published
+---
 = Gradle Tip: Seeing Standard Streams During Tests
 Jason Lee
 2013-09-10

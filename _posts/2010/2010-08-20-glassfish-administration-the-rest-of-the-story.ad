@@ -1,15 +1,16 @@
-title=GlassFish Administration: The REST of the Story Part I
-date=2010-08-20
-tags=administration, GlassFish, Java, json, REST, xml
-type=post
-status=published
-~~~~~~
+---
+title: "GlassFish Administration: The REST of the Story Part I"
+date: 2010-08-20
+tags: administration, GlassFish, Java, json, REST, xml
+type: post
+status: published
+---
 = GlassFish Administration: The REST of the Story Part I
 Jason Lee
 2010-08-20
 
 Of the many great things about GlassFish, one that is often mentioned most (and is, in fact, what got me involved with GlassFish as an end user years ago) is the Administration Console.  It's an extremely powerful and capable interface, and is, if I may be so bold, orders of magnitudes better than its open source competition (it may even beat commercial competitors, but I have no experience with those).  Another powerful tool in GlassFish administration is the asadmin CLI utility, which allows for quick and easy scripting of server provisioning, etc.  Did you know, though, that GlassFish has a third administration interface?  As of GlassFish v3, we offer a RESTful administration API, based on Jersey, to allow non-Java clients to configure the app server easily.  For GlassFish 3.1, one of my main responsibilities, with the help, I should add of my coworkers Ludovic Champenois and Mitesh Meswani, has been to help improve upon the great start we had in in v3.  In this entry, we'll take a look at the current state of the interface and learn the basics of using.
-+++// Read More+++
+// more
 
 The Basics
 ----------
@@ -49,7 +50,7 @@ Early on, the structure of the document the REST interface could vary depending 
 The structure, then, is an object with the following fields:  `message`, `command`, `exit_code`, `properties`, and `extraProperties`.  An example is often best, so here's the three representations of the endpoint http://localhost:4848/management/domain/[http://localhost:4848/management/domain/]:
 
 JSON
-~~~~
+---
 
 [source,js,linenums]
 -----
@@ -95,7 +96,7 @@ JSON
 -----
 
 XML
-~~~
+---
 
 [source,xml,linenums]
 -----
@@ -158,12 +159,12 @@ XML
 -----
 
 HTML
-~~~~
+---
 
-image::/images/2010/08/html_interfaces_screenshot-300x207.png[link="/images/2010/08/html_interfaces_screenshot.png", title='HTML Interface Screenshot']
+image::/images/2010/08/html_interfaces_screenshot-300x207.png[link="/images/2010/08/html_interfaces_screenshot.png", title: "'HTML Interface Screenshot']"
 
 The Details
-~~~~~~~~~~~
+---
 As you can see from these trimmed down version, there's quite a bit of data there.  For the most part (though we still have areas we need to clean up), the data you will be most interested in as an end user will be under 'extraProperties'.  This property is an object that lists the various HTTP methods the endpoint supports, giving information on parameters it supports; the entity's state, if there is any (more on that later); any commands nested under this endpoint (more on that later as well); and any child resources this resource may have.
 
 It's worth noting that the documents you see above were pretty-printed by the server, a feature that is off by default.  To enable this feature, the HTTP Accept header `__debug` must be set to true.  If this header is not present, or if the value is not 'true', the server will not format the document.  In this case, the unformatted JSON document is just over half the size of the pretty-printed one, resulting in much less going over the wire, an important production consideration.
