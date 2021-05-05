@@ -5,6 +5,7 @@ BASEDIR="$( cd "$(dirname "$0")" ; pwd -P )"
 SRC=src
 DEST=_site
 BUILD="build"
+DRAFTS="--drafts"
 SERVE=""
 DEV_CONFIG=",_dev_config.yml"
 CONFIG="_config.yml"
@@ -25,6 +26,7 @@ do
         c)  echo "Cleaning..." ; rm -rf $DEST ;;
         d)  DEPLOY=true 
             DEVCONFIG=""
+            DRAFTS=""
             ;;
         n)  BUILD="" ;;
         s)  SERVE="serve --incremental" 
@@ -36,7 +38,7 @@ done
 
 if [ -n "$BUILD" -o -n "$SERVE" ] ; then
     set -x
-    jekyll $BUILD $SERVE -s $SRC --config $CONFIG$DEV_CONFIG
+    jekyll $BUILD $SERVE -s $SRC --config $CONFIG$DEV_CONFIG $DRAFTS
 fi
 
 if [ "$DEPLOY" == "true" ] ; then
