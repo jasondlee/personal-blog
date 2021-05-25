@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteCond %{HTTPS} off
+RewriteCond %{HTTPS} on
 RewriteRule ^(http://.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 Redirect 301 /tw https://twitter.com/jasondlee
