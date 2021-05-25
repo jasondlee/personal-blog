@@ -25,7 +25,7 @@ do
     case "$opt" in
         c)  echo "Cleaning..." ; rm -rf $DEST ;;
         d)  DEPLOY=true 
-            DEVCONFIG=""
+            DEV_CONFIG=""
             DRAFTS=""
             ;;
         n)  BUILD="" ;;
@@ -37,11 +37,11 @@ do
 done
 
 if [ -n "$BUILD" -o -n "$SERVE" ] ; then
-    set -x
+set -x
     jekyll $BUILD $SERVE -s $SRC --config $CONFIG$DEV_CONFIG $DRAFTS
 fi
 
 if [ "$DEPLOY" == "true" ] ; then
     source site.properties
-    rsync -n -varuP --delete -e ssh $DEST/* ${BLOG_USERNAME}@${BLOG_HOST}:${BLOG_DIR}/
+    rsync -varuP --delete -e ssh $DEST/* ${BLOG_USERNAME}@${BLOG_HOST}:${BLOG_DIR}/
 fi

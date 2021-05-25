@@ -12,4 +12,5 @@ Redirect 301 /linkedin https://www.linkedin.com/in/jasondlee
 Redirect 301 /resume /resume.docx
 Redirect 301 /cv /resume.docx
 
-RewriteRule feed$ https://jasondl.ee/feed.atom [R=301,L]
+RewriteRule feed$ https://jasondl.ee/feed.xml [R=301,L]
+RewriteRule feed.atom$ https://jasondl.ee/feed.xml [R=301,L]
