@@ -12,7 +12,7 @@
                                     <a href="/presentations" title="Presentations">Presentations</a>
                                 </li>
                                 <li>
-                                    <a href="resume.docx" rel="me" title="Resume/CV">Resume/CV</a>
+                                    <a href="/resume.docx" rel="me" title="Resume/CV">Resume/CV</a>
                                 </li>
                                 <li>
                                     <a href="https://linkedin.com/in/jasondlee" rel="me" title="LinkedIn">LinkedIn</a>
