@@ -11,27 +11,6 @@
     <link href="${config.site_host}/feed.atom" rel="self" type="application/atom+xml" />
     <link href="${config.site_host}" rel="alternate" type="text/html" />
     <#list published_posts as post>
-    <entry>
-        <id>${config.site_host}/${post.uri}</id>
-        <title><#escape x as x?xml>${post.title}</#escape></title>
-        <updated>${post.date?datetime?iso_local}</updated>
-        <published>${post.date?datetime?iso_local}</published>
-        <link href="${config.site_host}/${post.uri}" rel="alternate" type="text/html" />
-        <author>
-            <name><#if post.author??>${post.author}<#else>${config.site_author}</#if></name>
-        </author>
-        <#if post.tags??>
-        <#list post.tags as tag>
-        <category term="${tag}"></category>
-        </#list>
-        </#if>
-        <summary>
-            <![CDATA[
-                ${post.body?keep_before(splitter)}
-            ]]>
-        </summary>
-        <content type="html">
-        </content>
-    </entry>
+        <@feed_item_atom post />
     </#list>
 </feed>

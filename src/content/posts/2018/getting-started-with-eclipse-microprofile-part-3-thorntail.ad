@@ -1,14 +1,14 @@
 title=Getting Started with Eclipse MicroProfile, Part 3: Thorntail
 date=2018-10-16
-tags=Java EE, MicroProfile
+tags=Java EE, MicroProfile,WildFly
 type=post
 author=jdlee
 status=published
 ~~~~~~
 
 In the last <</posts/2018/getting-started-with-eclipse-microprofile-part-2-payara-micro.ad#,installment>>, we talked about
-Payara Micro. In this, we're going to look at https://thorntail.io/[Thorntail]. Thorntail, née Wildfly Swarm, is based
-on Wildfly from Red Hat and is said to be "just enough app-server". Much like Payara Micro, Thorntail exposes a
+Payara Micro. In this, we're going to look at https://thorntail.io/[Thorntail]. Thorntail, née WildFly Swarm, is based
+on WildFly from Red Hat and is said to be "just enough app-server". Much like Payara Micro, Thorntail exposes a
 battle-tested application server platform, stripped down for microservices usage. Let's a take a look at what it takes
 to deploy our application on Thorntail.
 

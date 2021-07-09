@@ -1,13 +1,13 @@
-title=Microprofile Fault Tolerance Retry in Action
+title=MicroProfile Fault Tolerance Retry in Action
 date=2021-03-02
-tags=Java,Quarkus,Microprofile,Fault Tolerance,Wiremock
+tags=Java,Quarkus,MicroProfile,Fault Tolerance,Wiremock
 type=post
 author=jdlee
 status=published
 source-highlighter=prettify
 ~~~~~~
 
-As part of some of my recent work, I've gotten some exposure to some Microprofile specs I've not had the opportunity or need to use. One of those is https://github.com/eclipse/microprofile-fault-tolerance[Fault Tolerance]. I was curious to see it action, so I've cobbled together this simple example that demonstrates some of that spec's features, namely retries and fallback.
+As part of some of my recent work, I've gotten some exposure to some MicroProfile specs I've not had the opportunity or need to use. One of those is https://github.com/eclipse/microprofile-fault-tolerance[Fault Tolerance]. I was curious to see it action, so I've cobbled together this simple example that demonstrates some of that spec's features, namely retries and fallback.
 
 +++// Read More+++
 
@@ -43,7 +43,7 @@ public class FailingResource {
 
 It's a pretty vanilla resource. On the resource method itself, note that we have two additional annotionations: `@Retry` and `@Fallback`. Using `@Retry`, we specifiy how many times the method should be called (`maxRetries`), how long to wait between invocations (`delay`), as well as a random "jitter", or variation, in the delay (`jitter`). Should `maxRetries` be exceeded, `@Fallback` comes into play, instructing the system to call `doWorkFallback()`.
 
-In this example, we're also using the https://microprofile.io/project/eclipse/microprofile-rest-client[Microprofile REST Client]. Note the injection of a `GoogleClient`:
+In this example, we're also using the https://microprofile.io/project/eclipse/microprofile-rest-client[MicroProfile REST Client]. Note the injection of a `GoogleClient`:
 
 .GoogleClient.java
 [source,java]
@@ -57,7 +57,7 @@ public interface GoogleClient {
 }
 -----
 
-I don't want to spend too much time here, so I'll just note that the MP REST Client allows us to create a type-safe REST client as an `interface`, with which "the system" will then create a concrete instance that does the actual work of making the remote calls. We configure that client using yet another specification, https://microprofile.io/project/eclipse/microprofile-config[Microprofile Config]:
+I don't want to spend too much time here, so I'll just note that the MP REST Client allows us to create a type-safe REST client as an `interface`, with which "the system" will then create a concrete instance that does the actual work of making the remote calls. We configure that client using yet another specification, https://microprofile.io/project/eclipse/microprofile-config[MicroProfile Config]:
 
 .application.properties
 [source]
@@ -139,7 +139,7 @@ public class MockServer implements QuarkusTestResourceLifecycleManager {
 }
 -----
 
-Since we're stubbing the responses in our test, our setup is pretty simple. The super important part here, though, is the `Map` we return. Remember how we configure the REST Client using Microprofile Config? We can override the value of that configuration property by adding a key of the same name to the map, but providing the URL representing our mock server: `wireMockServer.baseUrl()`. Now if you run your test, you should get a green test. Huzzah!
+Since we're stubbing the responses in our test, our setup is pretty simple. The super important part here, though, is the `Map` we return. Remember how we configure the REST Client using MicroProfile Config? We can override the value of that configuration property by adding a key of the same name to the map, but providing the URL representing our mock server: `wireMockServer.baseUrl()`. Now if you run your test, you should get a green test. Huzzah!
 
 But what about the retry? The fallback? Let's add another test, with a slightly different scenario setup. Here's where `reset()` is important ;)
 
