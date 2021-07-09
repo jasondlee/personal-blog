@@ -1,12 +1,12 @@
 <#function wanted tags>
     <#assign wanted_tags = [
         "Arquillian",
-        "CDI",
+<#--        "CDI",-->
         "Hibernate",
-        "JAX-RS",
-        "JPA",
-        "Jakarta",
+<#--        "JAX-RS",-->
+<#--        "JPA",-->
         "Jakarta EE",
+        "Jakarta",
         "Java 8",
         "Java 9",
         "Java EE",
@@ -15,8 +15,6 @@
         "MicroProfile",
         "OpenTelemetry",
         "Quarkus",
-        "REST",
-        "Testing",
         "WildFly"
     ]>
     <#assign found=false/>
