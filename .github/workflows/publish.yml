@@ -13,12 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Set up JDK 11
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@master
         with:
           java-version: 11
 
       - name: Build
-        run: mvn clean site
+        run: mvn clean generate-resources
       
       - name: Publish
         uses: nogsantos/scp-deploy@master
