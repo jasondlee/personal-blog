@@ -29,7 +29,7 @@ Along with that runtime functionality, you can configure how OpenTelemetry behav
 * `exporter`: Can either be `jaeger` or `otlp`. The default is `jaeger` using gRPC.
 * `endpoint`: The endpoint of the trace collector. The default is for Jaeger on `localhost`.
 * `span-processor`: Can either be `batch` or `simple`. The default is `batch`.
-* `batch-delay': The time in milliseconds to delay a batch processing. This is only used if `span-processor` is set to `batch`. The default is 5000ms.
+* `batch-delay`: The time in milliseconds to delay a batch processing. This is only used if `span-processor` is set to `batch`. The default is 5000ms.
 * `max-queue-size`: The maximum size of the batch before sending. The default is 2048.
 * `max-export-batch-size`: The maximum number of samples to export at a time. The default is 512.
 * `export-timeout`: The maximum wait time while exporting traces. The default is 30000ms, or 30 seconds.
