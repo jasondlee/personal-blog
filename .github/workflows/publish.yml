@@ -28,13 +28,21 @@ jobs:
 
       - name: Build
         run: mvn clean generate-resources
-      
+
       - name: Publish
-        uses: nogsantos/scp-deploy@master
-        with:
-          src: ./output/*
-          host: ${{ secrets.SSH_HOST }}
-          remote: ${{ secrets.SSH_DIR }}
-          port: ${{ secrets.SSH_PORT }}
-          user: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
+        uses: up9cloud/action-rsync@master
+        env:
+          HOST: ${{ secrets.SSH_HOST }}
+          USER: ${{ secrets.SSH_USER }}
+          KEY: ${{secrets.SSH_KEY}}
+          SOURCE: ./output/*
+          TARGET: ${{ secrets.SSH_DIR }}
+#      - name: Publish
+#        uses: nogsantos/scp-deploy@master
+#        with:
+#          src: ./output/*
+#          host: ${{ secrets.SSH_HOST }}
+#          remote: ${{ secrets.SSH_DIR }}
+#          port: ${{ secrets.SSH_PORT }}
+#          user: ${{ secrets.SSH_USER }}
+#          key: ${{ secrets.SSH_KEY }}
