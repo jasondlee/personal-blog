@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html th:replace="~{masterindex.thyme :: layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{masterindex.thyme :: layout(~{::section})}" >
 <body>
 <section>
-    Content!
-    <th:block th:utext="${content}"/>
-<!--    <div th:replace="~{article.thyme :: article(${content}, false)}"/>&ndash;&gt;-->
+    <th:block >
+        <div style="float: clear"></div>
+<!--        <div th:replace="~{article.thyme :: article(${post}, true)}"/>-->
+    </th:block>
+    <div style="border-top: 2px solid #2BA6CB;"></div>
 </section>
 </body>
 </html>
