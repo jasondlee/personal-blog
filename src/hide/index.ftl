@@ -1,5 +1,5 @@
-<#include "header.ftl">
-<#include "pagination.ftl">
+<#include "../templates/header.thyme">
+<#include "../templates/pagination.thyme">
 <#list published_posts as post>
     <div style="float: clear"></div>
     <article class="post">
@@ -27,5 +27,5 @@
     </article>
 </#list>
 <div style="border-top: 2px solid #2BA6CB;"></div>
-<#include "pagination.ftl">
-<#include "footer.ftl">
+<#include "../templates/pagination.thyme">
+<#include "../templates/footer.thyme">

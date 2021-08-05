@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="article (post, split)">
+    <article class="post">
+        <header class="entry-header">
+            <h1 class="title">
+                <a th:href="${post.uri}" href="href" th:text="${post.title}"/>
+            </h1>
+            <span>
+                  <time class="pubdate"
+                        th:datetime="${#dates.format(post.date, 'dd MMMM yyyy')}"
+                        th:text="${#dates.format(post.date, 'E, MMMM dd, yyyy')}"
+                        datetime="datetime"></time>
+                </span>
+        </header>
+        <div th:replace="~{readmore.thyme :: readmore(${post.body}, ${post.uri}, ${split})}"/>
+        <footer class="entry-footer">
+            <div class="tags">
+                <th:block th:if="${#lists.size(post.tags) > 0}">
+                    <span class="title">tags: </span>
+                    <span th:each="tag : ${post.tags}">
+                            <a th:href="|/tags/${tag}.html|" th:text="${tag}" href="href"/>
+                        </span>
+                </th:block>
+            </div>
+        </footer>
+    </article>
+</th:block>
+</body>

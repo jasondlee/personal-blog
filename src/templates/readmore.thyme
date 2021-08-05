@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div class="entry-content" th:fragment="readmore (body, uri, split)"
+        th:with="splitter='// Read More'">
+        <th:block th:switch="${#strings.containsIgnoreCase(body, splitter) && split}">
+            <th:block th:case="true">
+                <p th:utext="${#strings.substringBefore(body, splitter)}"/>
+                <p>
+                    <a th:href="${uri}" href="href" style="font-style: italic; font-weight: bold;">Read more...</a>
+                </p>
+            </th:block>
+            <th:block th:case="false">
+                <p th:utext="${body}"/>
+            </th:block>
+        </th:block>
+    </div>
+</body>
+</html>

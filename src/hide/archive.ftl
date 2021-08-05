@@ -1,4 +1,4 @@
-<#include "header.ftl">
+<#include "../templates/header.thyme">
 
 	<#include "menu.ftl">
 	
@@ -24,4 +24,4 @@
 		</#list>
 	</ul>
 	
-<#include "footer.ftl">
+<#include "../templates/footer.thyme">

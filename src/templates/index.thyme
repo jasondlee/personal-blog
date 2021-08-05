@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{masterindex.thyme :: layout(~{::section})}" >
+<body>
+<section>
+    <th:block th:each="post : ${published_posts}">
+        <div style="float: clear"></div>
+        <div th:replace="~{article.thyme :: article(${post}, true)}"/>
+    </th:block>
+<div style="border-top: 2px solid #2BA6CB;"></div>
+</section>
+</body>
+</html>
