@@ -1,0 +1,24 @@
+---
+title: "NetBeans 6.5, Python Support, and Mac OS X"
+date: 2008-11-26
+tags: [NetBeans, Python]
+type: post
+status: published
+---
+= NetBeans 6.5, Python Support, and Mac OS X
+Jason Lee
+2008-11-26
+
+The NetBeans team recently released version 6.5 of the NetBeans IDE, which I really, really like.  They also released an Early Access peek at the Python support coming for NetBeans.  Unfortunately, it's not straightforward to get Python and Java EE support in the same installation.  The Python EA release is a complete NetBeans installation, i.e., you can't just add the modules to an existing NetBeans installation.  
+
+Fortunately, there is a pretty easy solution to this: if you already have an existing 6.5 installation, you can simply run the Python EA installer, which will detect the existing 6.5 install and update it to add Python support.  Unfortunately, the installer has a bug on OS X, which breaks this functionality.  The end result is that your existing installation is replaced, which is likely not what you want.  The good news is that there is a workaround, albeit ugly and manual, to get us Mac users running while they fix the installer issue.  Here are the steps I followed to add Python support to NetBeans 6.5 on the Mac (big thanks to the NetBeans Users list for the tips that led to this solution):
+
+* Make sure NetBeans is not running
+* Download python cluster separately from http://download.netbeans.org/netbeans/6.5/python/ea/zip.html (search for netbeans-6.5-200811131701-python.zip -- or whatever the latest is -- in the second list "Module Clusters")
+* Put contents of the python1 directory in the zip in $HOME/.netbeans/6.5
+* Delete directory $HOME/.netbeans/6.5/var/cache
+* Add "python1" to /Applications/NetBeans/NetBeans 6.5.app/Contents/Resources/NetBeans/etc/netbeans.clusters
+* Start NetBeans
+* Profit? :)
+
+You should now be able to create a new Python project.  The installer bug should be fixed in the next release (my guess is that it's already fixed in the NB hg repo), but these "easy" steps should get you going in the interim.

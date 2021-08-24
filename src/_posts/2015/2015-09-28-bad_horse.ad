@@ -1,0 +1,62 @@
+---
+title: "Bad Horse!"
+date: 2015-09-28
+tags: [Misc]
+type: post
+status: published
+---
+
+image::/images/dr-horrible-bad-horse.jpg[align=left]
+If you're a http://drhorrible.com/[Doctor Horrible] fan, here's something fun and goofy to start your week. No clue how they
+did it, but it's hilarious. :)
+
+(h/t https://plus.google.com/+JustinLee1/posts[to my brother])
+
+// more
+
+[source]
+-----
+$ traceroute -m 255 bad.horse
+traceroute to bad.horse (162.252.205.157), 255 hops max, 52 byte packets
+ 1  172.23.195.1 (172.23.195.1)  1.863 ms  1.193 ms  8.432 ms
+ 2  172.23.192.14 (172.23.192.14)  1.251 ms  1.302 ms  2.180 ms
+ 3  172.23.192.1 (172.23.192.1)  0.554 ms  0.401 ms  0.400 ms
+ 4  cox-66-210-47-177-static.coxinet.net (66.210.47.177)  3.500 ms  3.563 ms  3.333 ms
+ 5  cox-68-12-8-220-static.coxinet.net (68.12.8.220)  2.972 ms  2.963 ms  2.983 ms
+ 6  dalsbprj01-ae1.0.rd.dl.cox.net (68.1.2.109)  29.083 ms  26.024 ms  29.997 ms
+ 7  10ge6-9.core1.dal1.he.net (184.105.16.77)  16.917 ms  22.353 ms  17.668 ms
+ 8  10ge12-6.core1.chi1.he.net (184.105.213.118)  29.513 ms  37.725 ms  25.116 ms
+ 9  100ge10-1.core1.msp1.he.net (184.105.223.178)  32.957 ms  32.794 ms  32.878 ms
+10  ip-house.gigabitethernet3-6.core1.msp1.he.net (216.66.78.110)  33.122 ms  33.239 ms  33.032 ms
+11  c4500-1.mpls.iphouse.net (216.250.189.170)  33.936 ms  33.598 ms  33.692 ms
+12  egw-iphouse.mplsc1.mn.us.sn11.net (209.240.64.149)  33.744 ms  33.605 ms  33.668 ms
+13  sandwichnet.dmarc.lga1.atlanticmetro.net (208.68.168.214)  56.210 ms  56.156 ms  56.163 ms
+14  bad.horse (162.252.205.130)  56.499 ms  56.783 ms  56.824 ms
+15  bad.horse (162.252.205.131)  61.368 ms  61.363 ms  61.439 ms
+16  bad.horse (162.252.205.132)  66.525 ms  66.505 ms  64.767 ms
+17  bad.horse (162.252.205.133)  71.454 ms  71.391 ms  71.412 ms
+18  he.rides.across.the.nation (162.252.205.134)  76.406 ms  75.851 ms  76.446 ms
+19  the.thoroughbred.of.sin (162.252.205.135)  81.519 ms  81.448 ms  81.426 ms
+20  he.got.the.application (162.252.205.136)  86.507 ms  86.381 ms  86.568 ms
+21  that.you.just.sent.in (162.252.205.137)  91.715 ms  91.295 ms  91.773 ms
+22  it.needs.evaluation (162.252.205.138)  96.556 ms  95.746 ms  96.438 ms
+23  * so.let.the.games.begin (162.252.205.139)  101.632 ms  101.821 ms
+24  a.heinous.crime (162.252.205.140)  106.578 ms  103.700 ms  106.612 ms
+25  a.show.of.force (162.252.205.141)  111.822 ms  111.720 ms  111.808 ms
+26  a.murder.would.be.nice.of.course (162.252.205.142)  116.950 ms  116.620 ms  116.451 ms
+27  bad.horse (162.252.205.143)  121.838 ms  121.337 ms  122.248 ms
+28  bad.horse (162.252.205.144)  126.569 ms  126.612 ms  126.250 ms
+29  bad.horse (162.252.205.145)  131.561 ms  131.406 ms  131.673 ms
+30  he-s.bad (162.252.205.146)  136.584 ms  136.540 ms  136.502 ms
+31  the.evil.league.of.evil (162.252.205.147)  141.520 ms  141.335 ms  140.794 ms
+32  is.watching.so.beware (162.252.205.148)  146.593 ms  146.525 ms  146.524 ms
+33  the.grade.that.you.receive (162.252.205.149)  151.503 ms  151.561 ms  151.658 ms
+34  will.be.your.last.we.swear (162.252.205.150)  156.368 ms  156.522 ms  156.493 ms
+35  so.make.the.bad.horse.gleeful (162.252.205.151)  161.639 ms  161.546 ms  159.510 ms
+36  or.he-ll.make.you.his.mare (162.252.205.152)  166.361 ms  166.409 ms  166.456 ms
+37  o_o (162.252.205.153)  171.485 ms  171.530 ms  171.417 ms
+38  you-re.saddled.up (162.252.205.154)  176.307 ms  176.493 ms  176.275 ms
+39  there-s.no.recourse (162.252.205.155)  181.482 ms  181.329 ms  179.026 ms
+40  it-s.hi-ho.silver (162.252.205.156)  186.695 ms  186.395 ms  185.716 ms
+41  signed.bad.horse (162.252.205.157)  199.462 ms  186.534 ms  186.546 m
+-----

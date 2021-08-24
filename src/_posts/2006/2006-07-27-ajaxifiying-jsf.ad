@@ -1,0 +1,78 @@
+---
+title: "Ajaxifiying JSF"
+date: 2006-07-27
+tags: [Java, JavaServer Faces]
+type: post
+status: published
+---
+= Ajaxifiying JSF
+Jason Lee
+2006-07-27
+
+In October, I will be presenting Ajax at the <a target="_newwindow" href="http://wiki.okcjug.org">Oklahoma City Java Users Group</a>, of which I am a member (and vice president now, by the way, for what that's worth).  As I've prepared for that talk, I've thought quite a bit about the web apps I write, which are, for the most part, pretty boring.  I like to think that they're functional, but I have to admit that they're pretty plain. Ajax, though, along with the Javascript pretties that usually accompany an Ajaxified application, is a good way of fixing that "problem", assuming it's done properly.  That line of thinking has affected how I've approached a new app I started at work, but finding a library that works well with JSF (read as, in a JSF-friendly manner) has been a bit of a challenge.
+// more
+
+My goal with this part of the app is role and group management for users.  The behavior I was hoping to achieve was to allow the web user to select a system user from a list box (`<h:selectOneListbox/>`), and have four other list boxes (`<h:selectManyListbox/>`) populated with the assigned roles, avaialble roles, assigned groups, and available groups for the selected user.  Pretty simple, in theory.
+
+My first effort used http://getahead.ltd.uk/dwr/[Direct Web Remoting (DWR)], and it worked pretty well.  The documentation was a bit difficult for me to follow (which could be more my fault than the docs), but, with a little persistence, I got it working.  It was not pretty, though.  Here's what my view markup looked like:
+
+[source,java,linenums]
+-----
+<h:selectOneListbox id="users" size="20" style="width: 175px" 
+	onclick="getUserRoles(this);">
+	<f:selectItems value="#{authBean.users}" />
+</h:selectOneListbox>
+-----
+
+with the accompanying Javascript looking like this:
+
+[source,java,linenums]
+-----
+function getUserRoles(elem) {
+	var id = elem.options[elem.selectedIndex].value;
+	AuthBean.getDwrUserRolesMap(populateRoles, id);
+}
+-----
+
+The ugly part was the JSF code.  One of the main complaints I heard about DWR and JSF going into this effort is that DWR lives outside the JSF lifecycle, and that showed itself in how I handled the server side.  I'll not show the code as it's not that interesting, but I basically created four `Map`s (they translate quite nicely to Javascript associative arrays), populate them with the appropriate data, and return them all in a `List`.  Here is what the `populateRoles()` function looked like which updated the UI with the returned data:
+
+[source,java,linenums]
+-----
+function populateRoles(data) {
+	DWRUtil.removeAllOptions("authForm:user_roles");
+	DWRUtil.removeAllOptions("authForm:user_groups");
+	DWRUtil.removeAllOptions("authForm:remaining_roles");
+	DWRUtil.removeAllOptions("authForm:remaining_groups");
+	DWRUtil.addOptions("authForm:user_roles", data[0]);
+	DWRUtil.addOptions("authForm:remaining_roles", data[1]);
+	DWRUtil.addOptions("authForm:user_groups", data[2]);
+	DWRUtil.addOptions("authForm:remaining_groups", data[3]);
+}
+-----
+
+A little ugly, but it worked.  I was pretty happy with the overall result, but not real happy with the means, so I decided to look for a more JSFy way to go about it.  Having been privy to discussions by Ed Burns about his https://jsf-extensions.dev.java.net[jsf-extensions project], I decided to give it a go.  Unfortunately, it was not a pleasant experience.
+
+Based on the documentation, I _think_ should be able to do this:
+
+[source,html,linenums]
+-----
+<h:selectOneListbox id="users" size="20" style="width: 175px"
+	onclick="new Faces.Event(this, { render: 'authForm:user_roles,authForm:remaining_roles,authForm:user_groups,authForm:remaining_groups' }); return false;"value="#{authBean.currentUser}">
+	<f:selectItems value="#{authBean.users}" />
+</h:selectOneListbox>
+-----
+
+Despite several variations, including the use of ajaxZones as suggested on the mailing list, I was unable to get to much of anything to work.  I know that it _can_ work; I've seen the car store demo, which is pretty cool.  I was not, however, able to replicate that success in my project.  I could get it to make the call to the server, but it never updated the UI.  Very frustrating.  Needing to get something working so that I can actually code my app, I decided to try <a target="_newwindow" href="https://ajax4jsf.dev.java.net">Ajax4jsf</a> and had _much_ better success.
+
+The change for Ajax4jsf was pretty simple.  Here's that very same select box:
+
+[source,java,linenums]
+-----
+<h:selectOneListbox id="users" size="20" style="width: 175px"
+	value="#{authBean.currentUser}">
+	<a4j:support event="onclick" reRender="user_roles,remaining_roles,user_groups,remaining_groups"/>
+	<f:selectItems value="#{authBean.users}" />
+</h:selectOneListbox>
+-----
+
+I also apparently had to wrap the area in a `<a4j:region selfRendered="true">` tag to make things work (though I may test that a bit more when I get a chance).  After making the requisite web app changes, I redeployed and tested the application.  When I clicked the user list, the action on the backend was indeed fired, but I ended up getting nothing but a blank page in my browser at the end of the request.  After a quick email to the mailing list and a very helpful link from Adam Brod, I found my problem:  a JSF newbie mistake.  I had forgotten to wrap my form in `<h:form>` tags.  Once I made that change, it worked like a charm.  That, of course, could be the reason jsf-extensions didn't work for me -- something I plan to test, if for nothing else, peace of mind.  I have A4J working, though, so I'm not sure I see the value in switching to jsf-extensions (beyond the personalities -- Ed Burns, Jacob Hookom, etc -- behind it and the stated goal of the project which is to be a playground of sorts for possible JSF 2.0 features).  If I can get it working, I'll sit down with the rest of the guys in my office, and we'll make a decision.  For now, though, I have a working solution, and I can continue implementing the application and getting some real work done. :)

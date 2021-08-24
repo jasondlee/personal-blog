@@ -1,0 +1,31 @@
+---
+title: "JavaOne on Your Google Calendar"
+date: 2008-04-29
+tags: [Java, JavaOne]
+type: post
+status: published
+---
+= JavaOne on Your Google Calendar
+Jason Lee
+2008-04-29
+
+Next week, I'll be off to JavaOne.  With everything that's going on, I thought it would be nice to have my JavaOne schedule on my Google Calendar, which I could then sync with my phone.  Sadly, it wasn't as easy as I thought it would be (though I certainly could be the failure in the process :).  After I imported my schedule into Outlook (used only -- and grudgingly -- as iTunes is broken in that it only supports Outlook) and then synced that with my Google Calendar, all of the event start times were adjusted for the time zone differences.  Importing by CSV resulted in cryptic messages about my calendar not being available, so I did what any good geek would do:  I wrote my own solution, creatively named J1Sync.
+// more
+
+The program itself is really rather simple.  Not counting all the imports, it's currently less than 100 lines of code.  In a nutshell, it reads its configuration from a properties file, connects to the specified Google Calendar, removes any entries it added (by looking for a special string appended to the description), then adds the events from an input file.  The input file is a CSV file downloaded from the JavaOne Schedule Builder application.  Execution is simple, as it takes one optional parameter, the path to the properties file, defaulting to j12008cal.csv in the current working directory:
+
+[source,bash,linenums]
+-----
+java -cp dist/j1sync.jar;lib/gdata-calendar-1.0.jar;\
+    lib/gdata-client-1.0.jar;lib/gdata-core-1.0.jar;\
+    lib/xercesImpl-2.8.1.jar \
+    com.steeplesoft.j1sync.J1Sync
+-----
+
+And that's all there is to it.
+
+It's really not very exciting code, but I've found it to be pretty useful.  Since it removes anything it added, I can freely change my schedule as I see fit, then safely download the CSV and rerun the process with no duplicated calendar entries.  If I have time, I'd like to change it so that it can log on to the Schedule Builder and grab the CSV itself, removing the manual download step.  That it would make a cron job, for example, much simpler.
+
+For those interested, the source code repository can be found in the Steeplesoft Mercurial http://hg.steeplesoft.com/j1sync/[repository].  I don't have a binary download yet, but I'll post a comment here when I do for those that don't care to build from source.  
+
+If anyone tries it out, let me know how it works for you.  I'd be curious to know if my roughly one hour effort is of use to anyone else. 

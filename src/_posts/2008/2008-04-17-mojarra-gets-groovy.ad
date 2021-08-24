@@ -1,0 +1,17 @@
+---
+title: "Mojarra Gets Groovy"
+date: 2008-04-17
+tags: [Groovy, JavaServer Faces]
+type: post
+status: published
+---
+= Mojarra Gets Groovy
+Jason Lee
+2008-04-17
+
+
+Today, http://blogs.sun.com/rlubke/[Ryan Lubke] committed code to the Mojarra tree that will allow a JSF developer to prototype and/or develop just about every JSF artifact using http://groovy.codehaus.org/[Groovy].  When deployed to the server in development mode, the Groovy file can be changed on disk, and the changes will be picked up automatically, allowing one to avoid the compile/package/deploy cycle that can make Java web development so tedious.  Once the artifact is "done," the Groovy source can be copied to a Java source file and compiled (or the build process can compile the .groovy files to .class files) for production deployment.  This could be a really nice feature for component development, for example.  
+
+For more details, including a sample NetBeans project, visit Ryan's http://blogs.sun.com/rlubke/entry/groovy_mojarra[entry].  
+
+All around, a very, very cool enhancement.  Great work, Ryan!

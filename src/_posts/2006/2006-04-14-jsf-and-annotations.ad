@@ -1,0 +1,22 @@
+---
+title: "JSF and Annotations"
+date: 2006-04-14
+tags: [JavaServer Faces]
+type: post
+status: published
+---
+= JSF and Annotations
+Jason Lee
+2006-04-14
+
+Recently at work, we looked, ever so briefly, at a new web framework called http://stripes.mc4j.org/confluence/display/stripes/Home[Stripes].  It looked rather cool, as it was largely annotation-based, but, given its glaring lack of any wide-spread usage, we never seriously considered it.  Today, I was on http://www.theserverside.com[The Server Side] (you *_do_* read TSS, right? ;) ) and noticed that Struts has released a http://www.theserverside.com/news/thread.tss?thread_id=39840[Java 5 addon].  One of the additions is annotation support whose only problem appears to be that it's tied to Struts (that's a joke ;) ).
+// more
+
+At any rate, all of this annotation on the web tier got me to thinking (again) about my favorite Java web tier technology, JSF.  The only "real" complaint I have with the framework is the XML, minimal as it is (I'm past the JSF learning curve, so I don't have a problem with that anymore :) ).  Being a big fan of annotations and IoC, I've been wondering if/when JSF will finally support configuration via annotations.  Until this morning, I've just assumed that I won't see that support until 2.0, but a thought occured to me:  why can't it be bolted on to 1.x?
+
+In the interest of full disclosure, I've never written my own annotations, and I'm not too terribly familiar with the internals of either major JSF implementation, but I have in my mind a back-of-a-napkin sketch of a possible solution.  My initial guess is that it might be possible to write a class (a FacesServlet child, maybe) that scans the classpath (optionally restricted by context-params, for example) looking for annotated classes and methods.  Armed with the knowledge gleaned from the scan, we would then be able to build the context (I'm hoping) in a similar fashion to parsing faces-config.xml.
+
+Is it doable?  Am I off my rocker?  I don't know.  Hopefully, I'll have a chance to find out soon, assuming someone in the know doesn't disabuse of the notion before I get started. :)
+
+*World's Fastest Update*:
+Ed Burns gave me http://struts.apache.org/struts-shale/features-tiger-extensions.html[this] link, which looks to be exactly what I was looking for.  That will save me a lot of time. :)

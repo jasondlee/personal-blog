@@ -1,0 +1,80 @@
+---
+title: "Kotlin+Micronaut and IDEA Don't Get Along Together"
+date: 2019-01-25
+tags: [Kotlin,Micronaut,IDEA]
+type: post
+author: Jason Lee
+status: published
+---
+
+Recently, I've been experimenting with http://micronaut.io[Micronaut], a new-ish "modern, JVM-based, full-stack framework
+for building modular, easily testable microservice and serverless applications" from the makers of Grail. So far, I've
+been really impressed. The documentation has been excellent, and the framework is very easy to get started with. I have,
+though, run in to some trouble writing tests, or, more accurately running tests. I spent far too much time trying to figure
+it out until I finally broke down and asked, and it turns out that it's https://youtrack.jetbrains.com/issue/KT-15040[IDEA's fault].
+While that's a bit annoying, there is a workaround, which I'd like to document briefly here.
+
+// more
+
+If you read the https://docs.micronaut.io/latest/guide/index.html[getting started guide] for Micronaut, you'll notice a
+section on https://docs.micronaut.io/latest/guide/index.html#ideSetup[setting up your IDE]. Having grown accustomed to
+having my projects "just work" in an IDE thanks to the excellent support for Maven and Gradle build files, I was a bit taken
+aback by this, but it turns out that Micronaut uses annotation processing fairly heavily, so you just have to tell IDEA
+to do the same when using its internal build system:
+
+image:/images/2019/intellij-annotation-processors.png[]
+
+If you're using Java or Groovy, you're all set. If you're using Kotlin, however, you're not. As the bug linked above points
+out, Kotlin's kapt tool is not working correctly with IDEA's internal build system. You have a couple of options, then.
+You can run your tests from the command line, using either Maven or Gradle, or you can change the test configuration to
+execute the build using the external tool before running or debugging your test.
+
+For example, I created a brand new (demo) application, then added a controller:
+
+[source,bash]
+-----
+$ mn create-app -l kotlin -b maven --features=junit demo
+|Generating Kotlin project...
+...................................
+|Application created at C:\Users\jdlee\src\micronaut\demo
+$ cd demo
+$ mn create-controller Author
+|Rendered template Controller.kt to destination src\main\kotlin\demo\AuthorController.kt
+|Rendered template ControllerTest.java to destination src\test\java\demo\AuthorControllerTest.java
+-----
+
+From IDEA, if I Run AuthorControllerTest, the test will fail with a very unhelpful message:
+
+[source]
+-----
+C:\java\jdk8\bin\java.exe ...
+13:15:35.686 [main] INFO  i.m.context.env.DefaultEnvironment - Established active environments: [test]
+13:15:35.700 [main] INFO  i.m.context.env.DefaultEnvironment - Established active environments: [test]
+
+io.micronaut.http.client.exceptions.HttpClientResponseException: Page Not Found
+
+-----
+
+The trick is to change how IDEA builds the project before starting the test. With the AuthorControllerTest configuration
+created for us by virtue of having just tried to run the test, we just need to edit that configuration and change the
+"Before Launch" steps.
+
+This is how it should look by default:
+
+image:/images/2019/micronaut-default-test-config.png[]
+
+We want to click plus icon and tell it to run a Maven goal (or a Gradle task):
+
+image:/images/2019/micronaut-default-add-configuration.png[]
+
+image:/images/2019/micronaut-default-test-maven-goal.png[]
+
+Once you've added the goal/task configuration, click on the `Build` configuration and click the minus icon to remove it,
+then click OK. You're now ready to run/debug your test, which should you give a green build.
+
+Given that this is a per-test configuration change, you'll either have to repeat it for every test (if you run them
+individually) or change the default JUnit test configuration. How you want to handle that is completely up to you. If you
+don't want to have to do that at all, you can either use Java or Groovy, or go vote on this
+https://youtrack.jetbrains.com/issue/KT-15040[issue].
+
+In fact, whatever you do, go https://youtrack.jetbrains.com/issue/KT-15040[vote]! :)

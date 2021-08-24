@@ -1,0 +1,180 @@
+div #content {
+    max-width: none;
+}
+
+.blogname{
+    letter-spacing:10px;
+    font-size:48px;
+    margin:auto;
+    text-align:center;
+    color:#cecfd1;
+    font-family:'Philosopher','Cherry Cream Soda',arial,serif;
+    background-color:#47586d;
+    letter-spacing: 30px;
+}
+
+.blogname a {
+    color: inherit;
+    text-decoration: none;
+}
+/*
+
+    width:170px;
+    height:227px;
+    float:left
+*/
+
+.entry-header {
+    background-image: none;
+}
+tt {
+    font-family: monospace;
+    background-color: #dddddd;
+    #border-bottom: 1px dashed black;
+}
+div.title {
+    font-size: 18px;
+    border-bottom: 1px dashed #dddddd;
+}
+.aligncenter,
+.alignleft,
+.alignright {
+    clear: both;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.imageblock .content {
+    background-image: url(none);
+}
+
+blockquote *:first-child:after, q *:first-child:after, blockquote *:first-child:before, q *:first-child:before {
+    content: "";
+}
+
+img {
+    max-width: 775px;
+}
+
+h1.title {
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+article:not(:first-child) {
+    border-top: 2px;
+    border-top-style: solid;
+    border-top-color: #2BA6CB;
+    padding-bottom: 20px;
+}
+
+header h4 {
+    line-height: 18px
+}
+
+.footer {
+    border-top: 1px;
+    border-top-style: dotted;
+    border-top-color: #2BA6CB;
+    font-size: small;
+    font-style: italic;
+}
+
+time {
+    font-weight: normal;
+    font-size: 14px;
+    font-style: italic; 
+    padding-bottom: 10px;
+}
+
+.widget h3 { font-size: 18px; color: #54667d; padding-bottom: 5px; border-bottom: 1px #666 dotted; }
+.widget ul { list-style: none; }
+.widget ul { margin-left: 0px; }
+.widget ul li { border-bottom: 1px #666 dotted; padding: 3px 0px; }
+.widget ul li ul { display: none; /* Hides any nested uls */ }
+.widget ul li a { color: #666; text-decoration: none; display: block; }
+.widget ul li:hover { border-bottom: 1px #111 dotted }
+.widget ul li a:hover { color: #111; }
+.pagination {
+    margin-top: 5px;
+}
+
+p#quote,p#source {
+    color: #666666;
+    font-size: small;
+}
+
+p#quote{ margin-bottom: 0px }
+p#source { text-align:right; padding-right: 5px; font-style: italic; }
+
+code {
+    color: #7F0A0C;
+    font-family: Consolas,"Liberation Mono",Courier,monospace;
+    font-weight: bold;
+}
+code, kbd, pre, samp {
+    font-family: monospace,serif;
+    font-size: 1em;
+}
+code {
+    padding-bottom: 0;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 0;
+}
+
+.pagination {
+    width: 100%;
+}
+
+.main {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.strike {
+    text-decoration:  line-through;
+}
+
+.literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] {
+    padding: 0px;
+}
+
+
+
+
+
+.admonitionblock td.icon [class^="fa icon-"] {
+    font-size: 2.5em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    cursor: default
+}
+
+.admonitionblock td.icon .icon-note:before {
+    content: "\f05a";
+    color: #19407c
+}
+
+.admonitionblock td.icon .icon-tip:before {
+    content: "\f0eb";
+    text-shadow: 1px 1px 2px rgba(155,155,0,0.8);
+    color: #111
+}
+
+.admonitionblock td.icon .icon-warning:before {
+    content: "\f071";
+    color: #bf6900
+}
+
+.admonitionblock td.icon .icon-caution:before {
+    content: "\f06d";
+    color: #bf3400
+}
+
+.admonitionblock td.icon .icon-important:before {
+    content: "\f06a";
+    color: #bf0000
+}

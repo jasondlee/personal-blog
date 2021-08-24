@@ -1,0 +1,185 @@
+---
+title: "Kotlin Faces"
+date: 2015-10-29
+tags: [Kotlin, JavaServer Faces]
+type: post
+status: published
+---
+
+There's a chance that at least some of you saw the blog title and thought: "Ah ha!
+A Kotlin wrapper/helper for JSF!" and rushed over to check it out. If so, mission 
+accomplished. :) This really isn't anything that ambitious. Sorry. :) 
+
+At JavaOne this week, I spent a good deal of time talk to 
+https://twitter.com/hhariri[Hadi Hariri], Developer Advocacy Team Lead at JetBrains,
+about their https://kotlinlang.org/[Kotlin] language. With my long background in
+Java webapps, I often reach for my webapp hammer when trying to learn a new language, so
+I asked Hadi what Kotlin library he would suggest. His answer, in a nutshell, was that
+the Java interop in Kotlin is so good, just use whatever you want, so I thought I'd
+put that to the test with a _really_ simple JSF app. Here it is.
+// more
+First things first, you will probably want to use IntelliJ IDEA to help with the 
+Kotlin syntax. Also being from JetBrains, IDE support is first rate. :) Before we get to
+the actual Kotlin, let's get some minor details out of the way.  First, the pom.xml:
+
+[source,xml]
+-----
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                        http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.steeplesoft</groupId>
+    <artifactId>KotlinFaces</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <name>KotlinFaces</name>
+
+    <properties>
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <kotlin.version>1.0.0-beta-1038</kotlin.version>
+    </properties>
+    <repositories>
+        <repository>
+            <id>sonatype.oss.snapshots</id>
+            <name>Sonatype OSS Snapshot Repository</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sonatype.oss.snapshots</id>
+            <name>Sonatype OSS Snapshot Repository</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    
+    <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <version>${kotlin.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>process-sources</phase>
+                        <goals> 
+                            <goal>compile</goal> 
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>process-test-sources</phase>
+                        <goals> 
+                            <goal>test-compile</goal> 
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <compilerArguments>
+                        <endorseddirs>${endorsed.dir}</endorseddirs>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+-----
+
+Pretty standard with the exception of the `kotlin-maven-plugin` and Kotlin runtime 
+configuration and related repository entries. You'll need one for the plugin, 
+and another for runtime libs. Next, the Facelets page:
+
+[source,xhtml]
+-----
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>JSF+Kotlin Example</title>
+    </h:head>
+    <h:body>
+        <h2>JSF+Kotlin Example</h2>
+        <h:form>
+            <p>Text from a Kotlin-based bean: #{myBean.text}</p>
+            <h:inputText value="#{myBean.text}"></h:inputText>
+            <h:commandButton value="Change Me"></h:commandButton>
+        </h:form>
+    </h:body>
+</html>
+-----
+
+Nothing unusual there. And now, the moment we've all been waiting for: The Kotlin-based
+managed bean:
+
+[source,java]
+-----
+@Named
+@SessionScoped
+class MyBean : Serializable {
+    var text = "My Text"
+}
+-----
+
+That's it. It's a really dumb bean, but here's an explanation:
+
+. There are no parameters declared with the class, so we get a no arg ctor. This may or may not be idomatic Kotlin, but it's good enough here. :)
+. There's a single property, `text`, defined. We give it a default value of "My Text" which also allows the compiler to infer the type, `String`.
+. We are using Java EE annotations, `@Named` and `@SessionScoped`, seamlessly. Just add the imports and move along.
+
+And... that's it. Build the app (`mvn package`) and deploy to your favorite container 
+and see it in all of its glory. Not an exciting app, but that I can make it work with 
+a Kotlin-based class with minimal extra work (just a build tweak) is really cool. With a 
+proof-of-concept done, it's time to try something more complex, but that's a story for
+another time. :)

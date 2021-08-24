@@ -1,0 +1,162 @@
+---
+title: "GlassFish 3.1, REST, and Secure Admin"
+date: 2011-02-17
+tags: [GlassFish, REST]
+type: post
+status: published
+---
+= GlassFish 3.1, REST, and Secure Admin
+Jason Lee
+2011-02-17
+
+After posting my last entry, link:/posts/2011/02/17/glassfish-3-1-rest-and-a-secured-admin-user[GlassFish 3.1, REST, and a Secured Admin User], I was asked about an entry on using GlassFish 3.1's REST interface with secure admin enabled. Some of you may be asking, "Isn't that what you just wrote about?" While the titles sound the same, they're slightly different, but in a very significant way. Let's take a quick look at secure admin and then see what our REST client needs to do make use of this new server configuration.
+// more
+
+Secure admin is defined as this in the `enable-secure-admin` help:
+
+_____
+The enable-secure-admin subcommand creates or modifies secure-admin and secure-admin-principal elements under the domain element in the domain.xml for the domain. Enabling secure admin affects the entire domain, including the DAS and all instances.
+
+As part of this action, the enable-secure-admin subcommand performs the following functions:
+
+* Sets the secure-admin enabled attribute to true in domain.xml
+* Adjusts all configurations in the domain, including default-config, and creates or updates secure-admin
+- If the secure-admin fragment already exists in domain.xml, then the alias values in the secure-admin-principal elements are changed only if the --adminalias or --instancealias options is specified with the enable-secure-admin subcommand.
+- The hidden _instance-enable-secure-admin sub-command is sent to all non-DAS targets in the domain. This hidden command performs the same configuration changes on the instances as enable-secure-admin does on the DAS.
+* Creates the necessary truststore if it is missing
+- If the keystore and truststore do not contain a certificate for the instance alias, then the instance self-signed key pair is generated and the private key is added to the keystore and the public certificate is added to the trust-store.
+- If the truststore does not contain a certificate for the DAS alias, the DAS certificate from the keystore is added to the truststore.
+* Adjusts Grizzly settings
+- SSL/TLS is enabled using the specified --adminalias value in the DAS's admin listener and the --instancealias value in the instances' admin listeners.
+- Port unification, redirection, and client-auth=want are enabled.
+
+A server restart is required to change the Grizzly adapter behavior. This also synchronizes the restarted instances that will deliver any updated keystore and truststore files.
+_____
+
+There's a lot to that, but all you _really_ need to understand from the client's perspective is that you're going to have to use SSL. So... sorry to make you read all of that. :)
+
+First up, let's prepare the server:
+
+[source, bash,linenums]
+-----
+$ asadmin enable-secure-admin
+$ asadmin stop-domain
+$ asadmin start-domain
+-----
+
+Unless you installed a signed certificate, if you run the example from my last post, you should now see a giant stack trace with `sun.security.validator.ValidatorException: PKIX path building failed` toward the end. There are at least two ways to handle this. The first, and perhaps the best, is simply to import the server's certificate. One way to do this is via http://blogs.sun.com/andreas/resource/InstallCert.java[this utility] (written by a Sun engineer whose name I can't find):
+
+[source, bash,linenums]
+-----
+$ javac InstallCert.java
+$ java InstallCert localhost
+-----
+
+Another approach, albeit riskier, is to accept all certificates. You can achieve that with this code:
+
+[source,java,linenums]
+-----
+public static void disableCertificateValidation() {
+    // Create a trust manager that does not validate certificate chains
+    TrustManager[] trustAllCerts = new TrustManager[]{
+        new X509TrustManager() {
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+             return null;
+        }
+
+        @Override
+         public void checkClientTrusted(X509Certificate[] certs, String authType) {
+            return;
+        }
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] certs, String authType) {
+            return;
+        }
+    }
+};
+
+ // Install the all-trusting trust manager
+try {
+    SSLContext sc = SSLContext.getInstance("SSL");
+    sc.init(null, trustAllCerts, new SecureRandom());
+    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+} catch (Exception e) {
+    }
+}
+-----
+
+Note that this will affect all HTTPS connections in the JVM, so use it with caution. Once a call to that method has been added to the class' constructor, we can then change the GlassFish url to use HTTPS:
+
+[source,java,linenums]
+-----
+public class SslExample {
+    private Client client;
+    public SslExample() throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
+        disableCertificateValidation();
+        client = Client.create();
+    }
+
+    public static void disableCertificateValidation() {
+        // Create a trust manager that does not validate certificate chains
+        TrustManager[] trustAllCerts = new TrustManager[] {
+            new X509TrustManager() {
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+
+                @Override
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                    return;
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                    return;
+                }
+            }
+        };
+
+        // Install the all-trusting trust manager
+        try {
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+        }
+    }
+
+    public boolean deployApp(String fileName) throws URISyntaxException {
+        FormDataMultiPart form = new FormDataMultiPart();
+        form.getBodyParts().add(new FileDataBodyPart("id", new File(fileName)));
+        form.field("name", fileName.substring(0, fileName.indexOf(".")), 
+            MediaType.TEXT_PLAIN_TYPE);
+        form.field("contextroot", fileName.substring(0, fileName.indexOf(".")), 
+            MediaType.TEXT_PLAIN_TYPE);
+        form.field("force", "true", MediaType.TEXT_PLAIN_TYPE);
+        ClientResponse response = 
+            client.resource("https://localhost:4848/management/domain/applications/application/")
+                .type(MediaType.MULTIPART_FORM_DATA)
+                .accept(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, form);
+        return response.getStatus() == 200;
+    }
+
+    public static void main(String... args) {
+        try {
+            SslExample example = new SslExample();
+            if (example.deployApp(args[0])) {
+                System.out.println("Success");
+            } else {
+                System.out.println("Failure");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+-----
+
+There _are_ likely cleaner, safer ways of going about this, but this will certainly get you going.

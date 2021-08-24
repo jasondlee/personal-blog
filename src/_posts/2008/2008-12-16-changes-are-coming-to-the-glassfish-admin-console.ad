@@ -1,0 +1,89 @@
+---
+title: "Changes Are Coming to the GlassFish Admin Console"
+date: 2008-12-16
+tags: [GlassFish]
+type: post
+status: published
+---
+= Changes Are Coming to the GlassFish Admin Console
+Jason Lee
+2008-12-16
+
+GlassFish isn't just an application server.  It's a community.  For that reason, we on the admin console team want to take some time to run some ideas by the user community.  For the GlassFish v3 final release due in the middle of next year, we plan to redesign the admin console.  Since the admin console is usually high on the list of differentiators, we are approaching these changes very cautiously, as we don't want to ruin a good thing.  Our goals are to make the console lighter and faster, and use a more modern design.  Our plan, then has several parts, which we'll look at individually.
+// more
+
+Table of Contents
+-----------------
+
+* link:#removing[What we're removing] 
+** link:#remove-frames[Frames]
+** link:#remove-tree[Tree Navigation]
+* link:#adding[What we're adding] 
+** link:#add-menus[Menus]
+** link:#add-desktop[Desktop Paradigm]
+** link:#add-dock[Dock Bar]
+** link:#add-search[Searching and Tagging]
+** link:#add-prefs[Preferences]
+* link:#you[What we'd like from you]
+
+[[removing]]
+What we're removing
+-------------------
+Let's start this discussion by listing what we want to get rid of.
+
+[[remove-frames]]
+Frames
+---
+The general concensus amongst web developers these days is that frames are no good, and we agree, so we're going to get rid of them for several reasons:  
+
+* Less redundancy in serving multiple resources to the various frames - Since each frame is bascially its own document, various resources are requested by each frame.  Specifically, since each frame uses the same JSF component set, each frame requests the various Javascript and CSS files, for example, resulting in many, many duplicate trips to the server.  If we can cut down on the number of trips back to the server, we'll see a lighter, snappier UI.</li> 
+* Better UI experience - Having frames either breaks a lot of things, or makes them difficult or awkward.  For example:  Printing a page in a frameset ie harder than it ought to be.  Extra care must be taken when using the mouse wheel to scroll to make sure you're over the correct frame.  The use of the back button sometimes doesn't do what you think it might.  Screen real estate is wasted on the the frames' scrollbars, etc.  </li> 
+* Opportunity for bookmarkable URLs - One of the big problems with frames is that they make it difficult to link easily to a specific page.  Sure, the user can right click on the frame, open that frame in a new tab and then get the correct URL, but that's not user friendly at all (in fact, it's as un-funny as its namesake comic strip!).  If we remove the frame, the page you're on is the location bar at the top.  Copy. Paste. Done.</li> 
+* Reduce implementation complexity - JSF only caches a certain number of pages for you, so if you don't use a frame for while (the header is the best example of this), it's server-side state may no longer be cached, which will cause the application to throw an exception.  If the pages don't live in a frame, there's no chance for the view's state to be purged from the cache.</li> 
+* Don't need to worry about the artificial boundaries that frames impose (menus overlapping frames, JS across frames, etc). - Our UI choices are a bit limited, especially in the tree navigation and header frames, as content from the frame can't extend beyond the frame's boundaries.  It is either clipped, or the frame displays scroll bars.  For that reason, we have to make sure our content fits inside the frame, or increase the frame size when we need more room.  It makes for a less than ideal user experience, and some pretty ugly code, so it has to go. :)</li> 
+
+[[remove-tree]]
+Tree navigation
+---
+For years now, we've used a tree on the left side of the page for navigation.  It works well enough, I suppose, on the client side, but maintaining the tree has issues, primarily that it's slow to create.  Since it is so slow, so we put in a frame (see above : ) to avoid recreation as much as possible.  Moving to a lighter-weight solution will remove the need for a frame.
+
+[[adding]]
+What we'd like to add
+---------------------
+
+image::/images/2008/12/v3design-300x235.png[link='/images/2008/12/v3design.png' title: "'Example of the proposed UI changes']"
+
+If we get rid of the tree navigation, we obviously need to replace it with something.  We have several ideas as to what can replace the tree, and what can be added to improve further the user experience in the console.
+
+[[add-menus]]
+Menus
+---
+The direction we're heading is a menu bar, the horizontal application menu bar type.  This gets us a way to organize the navigation options, but also _greatly_ reduces the amount of real estate the navigation aid consumes (the tree takes a large chunk out of our usable space, especially at lower resolutions).  We're also considering changing how things are grouped.  Currently, the tree is grouped largely by objects:  applications, JNDI entries, connection pools, etc.  What we're considering is moving to a more action-oriented grouping:  deploy, configure, edit, etc.
+
+[[add-desktop]]
+Desktop Paradigm
+---
+In my experience, when interacting with the console, I often have to work in different areas.  Take creating a JDBC resource.  Currently, I have to create the connection pool, then navigate to the JDBC resource page.  To help reduce the amount of navigation needed for common tasks like this, we're experimenting with a window-based interface -- not multiple windows, but those fancy DIV-based "windows" that so many sites have these days.  Our ultimate goal, should be implement this particular change, is to allow multiple open windows, allowing the user to work in several area "simultaneously."  Our initial plan is to support only one window at a time, given our time frame, but this will get us moving in the right direction.  
+
+[[add-dock]]
+Dock Bar
+---
+In addition to having multiple windows, we've kicked around the idea of a Mac OS X-like dock bar.  Exactly how it would work hasn't been decided yet.  One proposal is that it is just like the Mac dock bar:  certain aplications (which would be windows, in our case) are opened automatically and are always in the dock bar, while some windows are avaiable in the dock bar, but not yet opened, as well as any minimized windows.  The other proposed approach is closer to the Windows task bar in function, where the dock would contain only windows that have been opened via the menu bar and minimized.
+
+[[add-search]]
+Searching and Tagging
+---
+In the course of discussing all this, the idea of searching, which was raised initially as a possible feature for v2, came back up.  Let's say you need to create a JMS destination, but you're not sure where all of the JMS-related options are in the console.  With the search feature, you would be able to enter the phrase "JMS" into the search bar and see a list of options you can click, which will open the appropriate window.
+To complement the search, we're also discussing the idea of "tagging" the windows.  Let's say, for example, the every Monday morning and do the same tasks, such as monitoring, checking logs, etc.  Using this proposed feature, you would be able to tag each of those windows with, for example, "monday" and then, each Monday morning when you get to work, you can simply search for "monday" and see every window you need to visit.  This has the potential to be a huge timesaver.
+
+[[add-prefs]]
+Preferences
+---
+Of course, if we add features like tagging, we'll need somewhere to save it, so we're investigating the use of the Preferences API.  This would allow for a per-user set of preferences that would follow him/her from one browser/workstation to another.  It would also allow us to do such things saving window locations, so you won't have to constantly rearrange windows.  We would also be able to customize the task bar or a common tasks page, remembering frequently entered values, etc.
+
+[[you]]
+What we'd like from you
+-----------------------
+As I stated at the top, we on the admin console are very aware of the fact that users love our console.  It's a very powerful and usable addition to GlassFish, we think, and market research seems to bear that out.  With that in mind, we don't want to make sweeping changes that our users don't want, need, like, etc.  We'd also really like to make sure that we integrate as many changes as possible (and make sense ; ) that our users would like to see.  So, then, what do you think?  Are the ideas I listed above heading in the right direction?  Is there something you'd like to see us do?  Is there something you'd rather see us NOT do?  Now is your chance to affect the admin console that GlassFish will have for the foreseeable future.  You can join the discussion on our mailing list or on IRC (#jsftemplating on irc.freenode.net) where our team is almost always on.
+
+Speak now, or forever hold your peace! :)

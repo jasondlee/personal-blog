@@ -1,0 +1,19 @@
+---
+title: "Two 'Quick' Notes"
+date: 2006-09-18
+tags: [Java]
+type: post
+status: published
+---
+= Two 'Quick' Notes
+Jason Lee
+2006-09-18
+
+I thought I'd take a second to make two quick fairly self-congratulatory announcements:
+// more
+
+Last Friday, I took and passed the http://www.sun.com/training/certification/java/scjp.xml[Sun Certified Java Programmer] exam.  To be honest, going in, I was extremely nervous and wondering if it was worth it, as the practice http://www.amazon.com/Certified-Programmer-310-055-Certification-Guides/dp/0072253606/sr=8-1/qid=1158613676/ref=pd_bbs_1/103-5793288-5466248?ie=UTF8&s=books[exams title: ""A book for which I give a qualified and hesitant recommendation"] were _extremely_ difficult and tended to focus on little, annoying gotchas like missing `import`s.  The test itself wasn't that bad.  Either the practice exams were designed to over prepare you for the real thing, or I got a lucky set of questions, as the real thing wasn't as scary.  That's about all I can say about the test, given the confidentiality agreement I had to sign.  In fact, I may have already said too much, so I'll move on. :)  I plan to move next to the http://www.sun.com/training/certification/java/scjd.xml[Sun Certified Java Developer] test at some point, probably late this year or early next.  An Ajax presentation at my local http://wiki.okcjug.org[JUG] and my second son due in November will likely keep me busy for a while, though."
+
+The second "quick" note is that I was given today commit access to the reference implementation of https://javaserverfaces.dev.java.net/[JavaServer Faces].  I've been working with the development team (Ryan Lubke in particular) for quite some time now doing things like fixing bugs, expanding i18n support, and helping implement a few features.  After proving I understand the system they use and that I'm not likely to delete the whole source tree, Ryan gave me access to commit directly instead of through him.  I'm pretty excited about it.  Given my blog's almost solitary focus on JSF-related issues, my interest in the framework should be somewhat self-evident.  It will be exciting to be able to help the continued development of what I feel is one of the best Java web frameworks on the market.
+
+That's it.  If you were hoping for something useful and insightful from this post, I apologize.  I'll try to post something substantive in the next few days. :)

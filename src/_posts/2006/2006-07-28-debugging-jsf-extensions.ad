@@ -1,0 +1,25 @@
+---
+title: "Debugging jsf-extensions"
+date: 2006-07-28
+tags: [Java, JavaServer Faces]
+type: post
+status: published
+---
+= Debugging jsf-extensions
+Jason Lee
+2006-07-28
+
+One of the things that has been frustrating with trying to come up to speed with jsf-extensions is that I just didn't know where to look in all the Javascript involved to see what was going on.  Today, I "watched" as Ed Burns walked a fellow extensions learner through debugging his app.  Here's what I learned.
+// more
+
+Assuming you're using it (and if you're not, you should be), open up https://addons.mozilla.org/firefox/1843/[Firebug] and click on the "Debugger" tab.  In the "Scripts" drop down at the bottom, select the script ending in `com_sun_faces_ajax.js`.  Here are some useful lines in this script^1^:
+
+* Line 440:  By inspecting the variable xml, you can see the response from the server.
+* Line 453:  You can see the id of each component that is to be rendered.
+* Line 454:  You can see, in the "content" variable on the right, the actual content that will be rendered.
+
+There are obviously countless more interesting lines, but these are the only ones Ed discussed specifically, and should be enough to show those interested in such things where to start looking.  Hope that helps.
+
+While I'm on the subject, my boss was able to get jsf-extensions working in his project, so we'll now be able to get a better feel for both jsf-extensions _and_ Ajax4jsf.
+
+^1^ In the interests of full disclosure and fairness to Ed, the descriptions of the lines you see are mostly direct quotes of him, with minor changes to make it more readable in this context. :)

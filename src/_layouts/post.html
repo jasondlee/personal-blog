@@ -1,0 +1,41 @@
+---
+layout: default
+---
+<div style="float: clear"></div>
+<article class="post" style="border: none;">
+    <header class="entry-header">
+    <h1 class="title">
+        {{ page.title }}
+    </h1>
+    <span>
+        <time class="pubdate" datetime="{{ page.date }}">{{ page.date | date_to_string }}</time> 
+    </span>
+    </header>
+
+    <div class="entry-content">
+        {{ content }}
+    </div>
+    <footer class="entry-footer">
+        <div class="tags">
+
+        {% if page.tags and page.tags.size > 0 %}
+        <span class="title">tags: </span>
+            {% for tag in page.tags %}
+                <a href="/{{ site.tag_page_dir }}/{{ tag | slugify: 'pretty' }}/">{{ tag }}</a>
+<!--                <a href="{{site.url}}/tags/{{tag}}.html">{{tag}}</a>-->
+            {% endfor %}
+        {% endif %}
+        </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'steeplesoft';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </footer>
+</article>

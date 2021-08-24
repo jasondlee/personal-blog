@@ -1,0 +1,47 @@
+---
+title: "Getting Started with Eclipse MicroProfile, Part 8: The Conclusion"
+date: 2018-10-24
+tags: [Java EE, MicroProfile]
+type: post
+author: Jason Lee
+status: published
+---
+
+Many times, one of the hardest parts of getting started with a particular piece of technology is figuring out how to get
+started. :) In this series, I've used an _extremely_ simple project to show how to do just that with a number of MicroProfile
+implementations. Obviously, a real application will have many more concerns than we dealt with in this application, but
+what this effort gave us is working, runnable, and  testable build for six different MicroProfile implementations. What
+I'd like to do in this final installment in the series, is give some closing thoughts.
+
+// more
+
+In case you missed a post, here are links to each part:
+
+* <</posts/2018/getting-started-with-eclipse-microprofile-part-0.ad#,The Introduction>>
+* <</posts/2018/getting-started-with-eclipse-microprofile-part-1-the-app.ad#,The Application>>
+* <</posts/2018/getting-started-with-eclipse-microprofile-part-2-payara-micro.ad#,Payara Micro>>
+* <</posts/2018/getting-started-with-eclipse-microprofile-part-3-thorntail.ad#,Thorntail>>
+* <</posts/2018/getting-started-with-eclipse-microprofile-part-4-openliberty.ad#,OpenLiberty>>
+* <</posts/2018/getting-started-with-eclipse-microprofile-part-5-tomee.ad#,TomEE>>
+* <</posts/2018/getting-started-with-eclipse-microprofile-part-6-hammock.ad#,Hammock>>
+* <</posts/2018/getting-started-with-eclipse-microprofile-part-7-helidon.ad#,Helidon>>
+
+As I noted, we have hardly scratched the surface of the MicroProfile specification or, more generally, a
+[line-through]#Java EE# Jakarta EE application. There are things like DataSources, clustering, transactions, etc. that we
+didn't even attempt to address. What your application needs will likely drive, at least in part, which implementation
+you choose. For example, if you want to use JSF, JNDI, JTA, etc., you might prefer one of the more... traditional
+implementations (Payara Micro, Thorntail, TomEE or OpenLiberty). However, if you aren't using any of those, then perhaps the
+smaller CDI-based implementations (Hammock, or Helidon) might be more appealing. Either way, if you don't have any of
+these technologies already in place, it would probably be prudent to experiment with them and find the best fit.
+
+One thing that struck me about each of the implementations is the variation in startup times. Microservices being what
+they are, startup times can be a significant concern. I'm not a performance expert, so I won't attempt a rigorous
+analysis, but I will say, just based on wall time, the Helidon seemed the fastest, and OpenLiberty was the slowest. Given
+the difference in the nature of the two implementations, I guess that's not too surprising, but the size of the difference
+(less than a second versus north of 15) in my admittedly non-scientific tests was. Is that a valid concern? Again,
+your needs will vary, so take a look and decide for yourself.
+
+Regardless of your implementation choice, there are several great specifications that make up the profile. Two that
+intrigue/excite me the most are JWT Auth and Config, both of which I'll look at in future posts, but this is it for now.
+What do you think of MicroProfile? Was this getting started series helpful? Hit me up on https://jasondl.ee/tw[Twitter]
+and let me know what you think!

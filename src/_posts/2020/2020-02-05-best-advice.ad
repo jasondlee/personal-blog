@@ -1,0 +1,30 @@
+---
+title: "Best Advice I've Been Given: Check Your Ego"
+date: 2020-02-05
+tags: [General]
+type: post
+author: Jason Lee
+status: published
+#source-highlighter: prettify
+---
+
+The Red Hat twitter account just asked this https://twitter.com/RedHat/status/1225075337878495232[question]: "Communities grow by uplifting 
+others. What is one piece of advice you'd offer to a new developer? Reply below and then check out some advice from #RedHatter 
+https://twitter.com/somalley108[@somalley108]." Here's my input.
+
+As a general rule, if you're writing software, you're probably pretty intelligent. That intelligence, while important, of course, can 
+also become a hindrance. For example, I've been told by coworkers, "You may write buggy code, but I don't" and "We don't need techincal oversight". I 
+think both of those statements are patently false, and they -- and others like them -- always take me back to that advice from my first
+manager, Chris Anderson, gave me way back in 1997:  
+
+[NOTE]
+____
+Check your ego at the door.
+____
+
+It's really easy to walk in to a coding review, a design session, or one of a myriad of other meetings with your ideas and think they're the 
+best. It's also really easy to overlook the fact that other people in that room are also pretty intelligent -- maybe even more so (it happens), 
+and that we all have blindspots and weaknesses. In my experience, and I've certainly been on both sides more than I care to admit, many conflicts 
+in software development are ego-driven. There's a difference between being passionate about something and being an arrogant jerk. The latter 
+type does nobody any good, so check your ego. Go in humbly, and see what there is to learn from your coworkers, even if you're more senior than 
+they. With that mindset, everyone will come out a winner.

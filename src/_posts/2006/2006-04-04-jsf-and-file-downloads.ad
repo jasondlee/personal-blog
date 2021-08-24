@@ -1,0 +1,96 @@
+---
+title: "JSF and File Downloads"
+date: 2006-04-04
+tags: [JavaServer Faces]
+type: post
+status: published
+---
+= JSF and File Downloads
+Jason Lee
+2006-04-04
+
+At http://www.iec-okc.com[IEC], we have an application used to report inventory counts.  Part of the app creates an Excel spreadsheet using http://jakarta.apache.org/poi/[POI].  The user selects a batch from a select/combo, click on the button, and the server sends them a spreadsheet.  The basic work flow is this:
+
+// more
+
+. Display the page 
+. User selects a batch and clicks the button
+. JSF calls the specified action on the backing
+. The backing bean creates the spreadsheet, then navigates to success.jsp, a plain ol' JSP
+. The JSP pulls the backing bean from the session, gets the workbook reference from it, and streams that to the user using a ServletOutputStream.
+
+This works well under Tomcat and JSF 1.1.  Our goal, though, is to migrate to a full JEE 5 environment, hosted on https://glassfish.java.net[Glassfish].  Glassfish, though, ships with JSF 1.2, as JSF is now part of the JEE spec (starting with version 5).  This poses a problem, though, as there has apparently been a good deal of work in view handling in 1.2 that breaks this behavior.  http://weblogs.java.net/blog/edburns/[Ed Burns] has been nice enough to take a look for me, but, while waiting for him to get time to help me, I took a stab at fixing it.  My tentative work around for it is as follows:
+
+* Alter the form to use a "normal" (read as: non-JSF) form and submit to a servlet.
+* Write a servlet that in effect duplicates the JSF lifecycle:
+** Build/load the FacesContext
+** Get a reference to the backing bean
+** Pull the batch id from the request and set it on the backing bean.
+** Call the action method.
+
+At this point, the servlet works the same as the JSP:
+
+* Get the reference to the workbook
+* Stream the workbook to the user.
+
+This works, but is a pretty ugly hack.  In fact, check out the code:
+
+[source,java,linenums]
+-----
+public class ExcelServlet extends HttpServlet {
+    /**
+     * If you examine FacesContext, you'll find that the setFacesContextAsCurrentInstance method is protected.
+     */
+    private abstract static class ProtectedFacesContext extends FacesContext {
+        protected static void setFacesContextAsCurrentInstance(FacesContext facesContext) {
+                FacesContext.setCurrentInstance(facesContext);
+        }
+    }
+    public ExcelServlet() {
+        super();
+    }
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
+        this.getFacesContext(request, response);
+        BatchAuditReportBean report = (BatchAuditReportBean) FacesUtils.getManagedBean("batchAuditReportBean");
+        report.performTask();
+        org.apache.poi.hssf.usermodel.HSSFWorkbook workBook = report
+                        .getWorkBook();
+        ServletOutputStream sos;
+        try {
+                response.setHeader("Cache-Control", "max-age=1");
+                response.setHeader("Content-Disposition",
+                                "attachment; filename=\"InventoryErrorReportServlet.xls\"");
+                response.setContentType("application/vnd.ms-excel");
+                sos = response.getOutputStream();
+                workBook.write(sos);
+                sos.flush();
+        } catch (IOException ioe) {
+                System.out.println("IO Exception: " + ioe.toString());
+        }
+        response.getOutputStream().close();
+    }
+    private FacesContext getFacesContext(ServletRequest req,
+                ServletResponse res) {
+        /** Try to get it first */
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        if (facesContext != null)
+                return facesContext;
+        // Use the FactoryFinder to grab the Lifecycle object
+        FacesContextFactory contextFactory = (FacesContextFactory)
+        FactoryFinder.getFactory(FactoryFinder.FACES_CONTEXT_FACTORY);
+        LifecycleFactory lifecycleFactory = (LifecycleFactory)
+        FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
+        Lifecycle lifecycle =
+                lifecycleFactory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
+        // Here's where the ProtectedFacesContext comes in
+        facesContext = contextFactory.getFacesContext(this.getServletContext(),
+                        req, res, lifecycle);
+        ProtectedFacesContext.setFacesContextAsCurrentInstance(facesContext);
+        return facesContext;
+    }
+}
+-----
+
+This code doesn't yet have the parameter fetching, but you can see how unattractive it is. Hopefully, Ed will have a nicer fix for me.  Until then, I may have to put this monstrosity in production.

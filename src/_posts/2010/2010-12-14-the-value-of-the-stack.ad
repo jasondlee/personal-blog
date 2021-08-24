@@ -1,0 +1,26 @@
+---
+title: "The Value of the Stack"
+date: 2010-12-14
+tags: [GlassFish, Java EE]
+type: post
+status: published
+---
+= The Value of the Stack
+Jason Lee
+2010-12-14
+
+This morning on twitter, I saw an http://twitter.com/#!/johanvos/status/14692015212068865[announcement] that http://mollom.com/[Mollom] has a new backend, one based on http://glassfish.org[GlassFish].  I have to be honest.  I don't know much of anything about Mollom beyond this, nor do I know anything about their previous backend other than it was Java-based.  The blog http://buytaert.net/mollom-gets-a-new-backend[post], though, immediately made me think of dynamic languages.
+
+These days, it's hot to be dynamic, whether it's http://www.ruby-lang.org/en/[Ruby], http://python.org[Python], http://groovy.codehaus.org/[Groovy], or something else.  There's no denying that they have some very compelling features.  One of the quotes in the blog post, though, really stood out to me:
+
+_____
+With our move to Glassfish, we'll have to worry a lot less about memory management, REST handling, XML parsing, database connection pooling, and all the other ancillary things that make big systems work. That frees us up to focus on the domain-specific problems -- the actual moving parts of Mollom itself -- and will help both support our growth and allow us to implement new features and improve the old ones.
+_____
+
+As I've noted, their former architecture was Java-based, but the same idea applies to the typical deployment of projects based on dynamic languages.  While readily admitting I've done precious little with dynalang projects in the enterprise, from what I've read and have heard people discuss, it seems the most common deployment scenario is, for example, Apache httpd with mod_foo installed.  There might even be a cluster of these httpd instances (or some other web server that a language or framework suggests) behind a load balancer or two, and that seems to work for a lot of people.  While effective, though, it seems that such a configuration leaves a lot of grunt infrastructure work up to the development or production support team.
+
+Enter the Java EE stack.  As the Mollom engineer noted, using an application server like GlassFish gives the developer and support teams quite a bit of infrastructure for free.  In addition to what he listed, a full EE stack can also give you clustering/high-availability, monitoring, server management, etc. (Note: GlassFish v2 support all of these.  GlassFish v3 does not support clustering, but GlassFish 3.1, which is just about ready to ship, will).  Many of the "ancillary things that make big systems work" are provided for you.  It's not free, of course.  The system demands are typically higher, and those "ancillary things" have to be configured, tuned and monitored, but they don't have to be developed, which makes the systems that run on them a fair bit simpler.
+
+It is possible, of course, to get the best of both worlds.  Some dynamic languages, like http://groovy.codehaus.org/[Groovy], already run on the JVM, while projects like http://jruby.org/[JRuby] and http://jython.org/[Jython] allow running those languages in a Java EE container, all while still reaping the benefits that dynamic languages offer.  For shops that using those languages, or would like to, this is a very compelling option.
+
+Dynamic languages do offer a lot that we Java developers would love to use, but users of those dynamic languages would be well-served to take a good look at the Java EE stack and see if perhaps Java can add value to their deployment.

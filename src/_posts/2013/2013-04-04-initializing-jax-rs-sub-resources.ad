@@ -1,0 +1,64 @@
+---
+title: "Initializing JAX-RS Sub-resources"
+date: 2013-04-04
+tags: [Java, Java EE, JAX-RS, REST]
+type: post
+status: published
+---
+= Initializing JAX-RS Sub-resources
+Jason Lee
+2013-04-04
+
+
+This morning, I was reading through the http://download.oracle.com/otndocs/jcp/jaxrs-2_0-pfd-spec/index.html[Proposed Final Draft for JAX-RS 2.0 specification], when I found a little nugget that could have saved me some work, specificially in initializing subresources.
+
+// more
+
+This is kind of sad to admit (though, surely -- hopefully -- I'm not alone in this :), but I have been initializing subresource manually. For example:
+
+[source,java,linenums]
+-----
+public <T> T getSubResource(Class<T> clazz) {
+    try {
+        T resource = clazz.newInstance();
+        BaseResource br = (BaseResource)resource;
+        br.uriInfo = uriInfo;
+        br.securityContext = securityContext;
+        br.requestHeaders = requestHeaders;
+
+        return resource;
+    } catch (Exception ex) {
+        throw new WebApplicationException(ex, Status.INTERNAL_SERVER_ERROR);
+    }
+}
+-----
+
+While this works, the problems should be pretty obvious: it's extremely inflexible.  Fortunately, the JAX-RS Expert Group, who has clearly thought about this more than I, has a better solution: `ResourceContext`. Take this example, pulled from the spec:
+
+[source,java,linenums]
+-----
+@Path("widgets")
+public class WidgetsResource {
+    @Context
+    private ResourceContext rc;
+
+    @Path("{id}")
+    public WidgetResource findWidget(@PathParam("id") String id) {
+        return rc.initResource(new WidgetResource(id));
+    }
+}
+
+public class WidgetResource {
+    @Context
+    private HttpHeaders headers;
+
+    public WidgetResource(String id) {...}
+
+    @GET
+    public Widget getDetails() {...}
+}
+-----
+
+Notice the method `WidgetsResource.findWidget()`. The parent resource, `WidgetsResource`, has an instance of `ResourceContext` injected, which is then used to initialize the subresource instantiated in `findWidget()`. The benefit of this approach over the approach above is that _everthing_ is injected, regardless of what I'm expecting to find.
+
+I've been working with JAX-RS for over 3 years now, and I'm just now learning this. Shows that there's always something to learn, and that reading specs pays off. :)

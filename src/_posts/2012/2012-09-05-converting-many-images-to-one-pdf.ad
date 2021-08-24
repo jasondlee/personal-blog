@@ -1,0 +1,57 @@
+---
+title: "Converting Many Images to One PDF"
+date: 2012-09-05
+tags: [Java]
+type: post
+status: published
+---
+= Converting Many Images to One PDF
+Jason Lee
+2012-09-05
+
+
+I recently had the need to convert several scanned images into one multi-page PDF. While there are probably tools to help do this manually, I knew that there was a good chance I'd have to do something like this again, quite possibly with a large number of images, so I did what any good geek would do: I scripted it.  In this entry, I'll show how I went about that.
+
+// more
+
+For starters, let's take a look at the very small, simple Python script:
+
+[source,python,linenums]
+-----
+#!/usr/bin/python
+
+import os,sys, PythonMagick
+from pyPdf import PdfFileReader,PdfFileWriter
+
+if  not ((len(sys.argv) > 2) and sys.argv[1].endswith('.pdf')):
+    print "usage: images_to_pdf.py <finalname.pdf> <image1.pdf> <imagen.pdf>"
+else:
+    final_name = sys.argv[1]
+    merged = PdfFileWriter()
+
+    for file in sys.argv[2:]:
+        print "Processing %s..." % (file)
+        img = PythonMagick.Image()
+        img.read(file)
+        img.write('temp.pdf')
+        pdf = PdfFileReader(open('temp.pdf'))
+        for page in pdf.pages:
+            merged.addPage(page)
+        os.remove('temp.pdf')
+
+    merged_file = open(final_name, mode='wb')
+    merged.write(merged_file)
+    merged_file.close()
+-----
+There's not a lot to it, thanks in large part to http://wiki.python.org/moin/ImageMagick[PythonMagick] and http://pybrary.net/pyPdf/[pyPDF]. This script takes at least two parameters: the final name of the PDF, and at least on image file.  The bulk of the work flow is this:
+
+* Create a `PdfFileWriter` object. This handles the heavy lifting in actually writing the PDF
+* Iterate over the image file names given
+** Create an `Image` object and read the image source into it
+** Write the image to a temporary PDF file. This implicitly converts the image to a PDF.
+** Read the temporary PDF into memory via `PdfFileReader`
+** For each page in the temporary PDF (which should be exactly 1), add it to the real, final PDF
+** Delete the temporary PDF
+* Write the newly constructed PDF to disk and exit
+
+It's very simple, and pretty dumb (I added only enough error checking to make it work for me ;), and it may be a suboptimal use of the APIs, but it works pretty well for me.  Hopefully, it will help someone else out.

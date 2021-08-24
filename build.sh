@@ -1,28 +1,15 @@
 #!/bin/bash
 
+
 BASEDIR="$( cd "$(dirname "$0")" ; pwd -P )"
 SRC=src
-DEST=output
-BUILD="--reset -b $SRC $DEST"
+DEST=_site
+BUILD="build"
+DRAFTS="--drafts"
 SERVE=""
+DEV_CONFIG=",_dev_config.yml"
+CONFIG="_config.yml"
 REVEAL_VER=3.8.0
-
-function buildReveal() {
-  REPO=$1
-
-  git clone $1 preso
-  cd preso
-  GEMFILE=`find . -name Gemfile`
-  BASEDIR=`dirname $GEMFILE`
-  cd $BASEDIR
-
-  bundle exec asciidoctor-revealjs \
-    -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/$REVEAL_VER \
-    --destination-dir build \
-    index.ad
-
-  cp -r assets/* build/
-}
 
 function usage() {
     echo "`basename $0`: <option>"
@@ -36,16 +23,22 @@ function usage() {
 while getopts cdns opt
 do
     case "$opt" in
-        c) echo "Cleaning..." ; rm -rf $DEST ;;
-        d) DEPLOY=true ;;
-        n) BUILD="" ;;
-        s) SERVE="-s" ;;
+        c)  echo "Cleaning..." ; rm -rf $DEST ;;
+        d)  DEPLOY=true 
+            DEV_CONFIG=""
+            DRAFTS=""
+            ;;
+        n)  BUILD="" ;;
+        s)  SERVE="serve --incremental" 
+            BUILD=""
+            ;;
         \?) usage ;;
     esac
 done
 
 if [ -n "$BUILD" -o -n "$SERVE" ] ; then
-    jbake $BUILD $SERVE
+set -x
+    jekyll $BUILD $SERVE -s $SRC --config $CONFIG$DEV_CONFIG $DRAFTS
 fi
 
 if [ "$DEPLOY" == "true" ] ; then

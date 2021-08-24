@@ -1,0 +1,22 @@
+---
+title: "Webinar: From Ajax Push to JSF 2.0: ICEfaces on GlassFish"
+date: 2009-03-12
+tags: [Aquarium, Components, GlassFish, JavaServer Faces, webinar]
+type: post
+status: published
+---
+= Webinar: From Ajax Push to JSF 2.0: ICEfaces on GlassFish
+Jason Lee
+2009-03-12
+
+The GlassFish webinar series is, I think,  a pretty valuable resource for regular readers of my blog, as it covers a lot of topics that I cover here.  Today's http://wikis.sun.com/display/TheAquarium/ICEFaces+and+JSF2.0[webinar], "From Ajax Push to JSF 2.0: ICEfaces on GlassFish," is particularly relevant, as it's a JSF-related session.  Here's the abstract:
+
+_____
+Ted will provide details on how to build and deploy rich web applications with Ajax and Ajax Push (aka Comet) and catch a glimpse of the future with an overview of JavaServer Faces 2.0.
+
+This presentation illustrates the fundamentals of Ajax Push, covering application design, development, and deployment, drawing on ICEfaces sample applications and implementation. Topics will include network protocols, application-level push APIs, GlassFish Grizzly integration, and the ramifications of the two-connection limit.
+
+Looking forward to JSF 2.0, we will cover Ajax integration, new scopes and annotations, and custom components.
+_____
+
+I had the opportunity to see Ted present Ajax Push (their term for Reverse Ajax or Comet, if you prefer those monikers) at last year's http://jsfone.com[JSFOne] conference.  The ICEfaces demos are very, very slick, and the level of simplicity they managed to achieve is absolutely amazing.  If you have any interest in Ajax Push/Reverse Ajax/Comet, you should certainly attend this session.  If you are currently using JSF, this is a really good example of the power of component-based frameworks like JSF.

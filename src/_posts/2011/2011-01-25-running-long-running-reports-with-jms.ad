@@ -1,0 +1,125 @@
+---
+title: "Running Long-Running Reports with JMS"
+date: 2011-01-25
+tags: [GlassFish, JavaServer Faces, JMS]
+type: post
+status: published
+---
+= Running Long-Running Reports with JMS
+Jason Lee
+2011-01-25
+
+At a recent meeting of the Oklahoma City JUG, I was asked by a member how her group could "script" JSF report generation.  After a couple of questions, I figured what she really wanted:  she wanted a way to allow users to request reports in an ad hoc manner, as opposed to the reports being run on a schedule.  In a general sense, this is a pretty easy question to answer, but I've run into situations where the reports take a long time to run -- and I'm sure she will, as well -- making a web interface for generating the report less useful (due to timeouts, etc).  In this entry, we'll take a look at one way to handle that.
+// more
+
+In a prior shop, I solved this problem using a Thread.  As you may or may not know, the use of Threads in user applications is STRONGLY discouraged in Java EE.  A thread improperly started and managed can cause all sorts of problems for the server.  Fortunately, Java EE offers a way to perform long-running operation like we're discussion in an asynchronous manner: JMS.  For old-timers, the first reaction to hearing that may be wailing and gnashing of teeth, but Java EE 5 (and, of course, Java EE 6) makes this really, really easy.  
+
+Our sample app will be a really simple JSF application.  It will ask the user for an email address, then send that address to a JMS queue, where a message-driven bean will pick it up, fake generating the report and email it to the user.  Let's start with the JSF managed bean:
+
+[source,java,linenums]
+-----
+@ManagedBean
+@RequestScoped
+public class JmsBean {
+    @Resource(mappedName = "jms/ConnectionFactory") // [1]
+    private ConnectionFactory connectionFactory;
+    @Resource(mappedName = "jms/Queue") // [2]
+    private Queue queue;
+    protected String emailAddress;
+    private static final Logger logger = Logger.getLogger(ReportMdb.class.getName());
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String generateReport() {
+        try {
+            Connection connection = connectionFactory.createConnection();
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE); // [3]
+            MessageProducer messageProducer = session.createProducer(queue); // [4]
+            ObjectMessage message = session.createObjectMessage(); // ([5])
+            ReportRequest request = new ReportRequest(emailAddress);
+            message.setObject(request);
+            messageProducer.send(message); // ([6])
+            return "queued";
+        } catch (JMSException ex) {
+            Logger.getLogger(JmsBean.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+}
+-----
+
+At the top of the class, we see two `@Resource`-annotated members,  `connectionFactory`([1]) and `queue` ([2]).  These two objects are then used in `generateReport` to send our message.  We get a connection, then create `javax.jms.Session` ([3]) and `javax.jms.MessageProducer` ([4]) instances.  
+
+Next we create an http://download.oracle.com/javaee/6/api/javax/jms/ObjectMessage.html[ObjectMessage] ([5]).  In this case, `ReportRequest` is a really simple class that just has a single, public member: `emailAddress`.  In a real world app, this would have a myriad of members that hold the user's criteria for the report.  Note that the `ObjectMessage` payload must implement `Serializable`.  With our message created, we send it ([6]) and tell JSF to navigate to the `queued` view.  At this point, from the user's perspective, the job is done, and the report wil be delivered via email when it's done.  On the backend, though, we still have work to do.
+
+A JMS message-driven bean, or MDB, is a bean that watches a particular JMS http://download.oracle.com/javaee/6/api/javax/jms/Destination.html[Destination] (usually a http://download.oracle.com/javaee/6/api/javax/jms/Topic.html[Topic] or a http://download.oracle.com/javaee/6/api/javax/jms/Queue.html[Queue]) and performs some action when a message is delivered, and in Java EE 5 and later, they're incredibly simple:
+
+[source,java,linenums]
+-----
+@MessageDriven(mappedName = "jms/Queue", activationConfig = { // [1]
+    @ActivationConfigProperty(propertyName = "acknowledgeMode",
+    propertyValue = "Auto-acknowledge"),
+    @ActivationConfigProperty(propertyName = "destinationType",
+    propertyValue = "javax.jms.Queue")
+})
+
+public class ReportMdb implements MessageListener { // [2]
+    @Resource(name = "mail/myserver")
+    private Session mailSession; // [3]
+    private static final Logger logger = Logger.getLogger(ReportMdb.class.getName());
+    @Override
+    public void onMessage(Message inMessage) {
+        ObjectMessage msg = null;
+        try {
+            if (inMessage instanceof ObjectMessage) { // [4]
+                msg = (ObjectMessage) inMessage;
+                Object obj = msg.getObject();
+                if (! (obj instanceof ReportRequest)) {
+                    throw new 
+                        RuntimeException("Invalid message payload. ReportRequest required, but found " + 
+                        obj.getClass().getName());
+                }
+
+                ReportRequest request = (ReportRequest)obj;
+                logger.log(Level.INFO, "Sending report to {0}", request.emailAddress);
+                sendMessage(request.emailAddress);
+            } else {
+                logger.log(Level.WARNING, "Message of wrong type: {0}", 
+                    inMessage.getClass().getName());
+            }
+        } catch (JMSException e) {
+            logger.log(Level.SEVERE, "Error:  {0}", e.getLocalizedMessage());
+        }
+    }
+
+    protected void sendMessage(String emailAddress) {
+        MimeMessage msg = new MimeMessage(mailSession);
+        try {
+            msg.setSubject("Your Report");
+            msg.setRecipient(RecipientType.TO, new InternetAddress(emailAddress));
+            msg.setText("Here is your report!");
+            Transport.send(msg);
+        } catch (MessagingException me) {
+            logger.log(Level.SEVERE, "Error:  {0}", me.getLocalizedMessage());
+        }
+    }
+}
+-----
+
+There are two parts to creating this MDB.  First, we must create a class that implements `javax.jms.MessageListener` ([2]), which has one method, `void onMessage(Message inMessage)`.  Next, we add annotations to tell the container to deploy the MDB, `@MessageDriven` ([1]).  I don't want to get lost in the weeds of all the options here, so I'll only make note of two:  the `mappedName`, and the `destinationType` (`javax.jms.Queue`).  The container will look, then, for a `Queue` called `jms/Queue`, which we'll look at in a moment.
+
+Since we're going to be emailing the report, we inject a `javax.mail.Session` ([3], which we'll not spend any time on here).  In `onMessage`, we have some defensive coding ([4]) to make sure we were sent an `ObjectMessage` (since the `Queue` will take anything you send it), and that the `ObjectMessage` payload is a `ReportRequest` (I did, though, leave out the null check, which you will definitely want).  Once we're sure we have a good message, we extract the email address, "generate" the report, and email it to the user.  Our work here, then, is done!
+
+Before we leave the issue, though, it's important to note that the JMS `Queue` must be configured in the broker as part of the application deployment process.  Here's how that would look for a GlassFish deployment.
+
+image::/images/2011/01/connectionfactory-300x197.jpg[link='/images/2011/01/connectionfactory.jpg' title: "'Connection Factory Creation' width='600']"
+
+image::/images/2011/01/destinationresource-300x197.jpg[link='/images/2011/01/destinationresource.jpg' title: "'Creating the Destination Resource' width='600']"
+
+And that should do it.  If you're interested in the source, you can find that link:/images/2011/01/jsfjms.tar.gz[here]. If you have any questions, feel free to post them below.

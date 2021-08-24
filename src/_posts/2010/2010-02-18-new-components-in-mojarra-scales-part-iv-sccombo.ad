@@ -1,0 +1,30 @@
+---
+title: "New Components in Mojarra Scales: Part IV – sc:combo"
+date: 2010-02-18
+tags: [Components, JavaServer Faces, Scales]
+type: post
+status: published
+---
+= New Components in Mojarra Scales: Part IV – sc:combo
+Jason Lee
+2010-02-18
+
+Yesterday brought us link:/2010/02/new-components-in-mojarra-scales-part-iii-scimagezoomer-and-sclightbox[Part III] in our look at some new components in Mojarra Scales.  Today, Part IV brings us `sc:combo`, combination, if you can imagine that, of a `h:selectOneMenu` and `h:inputText`.
+// more
+
+The `h:selectOneMenu` is a nice control as it allows the application author to limit what the user can enter, thus helping insure data integrity (and sanity).  Sometimes, though, it would be nice to offer a list of options for the user, but allow him to enter any arbitrary alternative.  Unfortunately, the HTML spec doesn't offer this kind of control.  Lucky for us, though, this is fairly easy to implement using some of the nice JavaScript widgets provided by YUI.  Here's a sample:
+
+[source,xhtml,linenums]
+-----
+<sc:combo id='combo' style='width: 500px' value='#{comboBean.value}'>
+    <f:selectItems value='#{comboBean.selectItems}'/>
+</sc:combo>
+-----
+
+This should look very familiar to anyone who has used any of the selection components in JSF (`h:selectBooleanCheckbox`, `h:selectManyCheckbox`, `h:selectManyListbox`, `h:selectManyMenu`, `h:selectOneListbox`, `h:selectOneMenu`, or `h:selectOneRadio`).  About the only change is the name of the parent tag.  Rendered, you should see something like this:
+
+image::/images/2010/02/combo.png[alt='Mojarra Scales sc:combo screenshot', title: "'sc:combo']"
+
+As the user keys in his choice, should he choose to do so, type-ahead will attempt to complete his entry for him from the available options.  If one is not found, though, the user is free to enter what he desires.
+
+In the next installment, we'll take a look at `sc:resize`, a component that adds resizing capabilities to another control on the screen.

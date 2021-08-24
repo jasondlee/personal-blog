@@ -1,0 +1,20 @@
+---
+layout: default
+---
+<div style="float: clear"></div>
+<h1>Posts about {{ page.tag }}</h1>
+
+{% assign posts = site.tags[page.tag] %}
+{% for post in posts %}
+<article class="post">
+    <header class="entry-header">
+        <h1 class="title">
+            <a href="{{ post.url }}">{{ post.title }}</a>
+        </h1>
+        <span>
+      <time class="pubdate" datetime="{{post.date}}">{{post.date | date: "%A, %B %-d, %Y" }}</time>
+    </span>
+    </header>
+    <p>{{ post.excerpt }}</p>
+</article>
+{% endfor %}

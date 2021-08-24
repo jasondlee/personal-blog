@@ -1,0 +1,20 @@
+---
+title: "Rich Web Experience, Day 3"
+date: 2007-09-09
+tags: [General]
+type: post
+status: published
+---
+= Rich Web Experience, Day 3
+Jason Lee
+2007-09-09
+
+The third and final day of the Rich Web Experience has come and gone. Today's schedule is a bit lighter, with two morning sessions, a keynote at lunch, and workshops in the afternoon, leaving us finished (and done with the conference : ) just before dinner.  To be honest, I was a bit distracted this morning, as the http://www.soonersports.com/[Sooners] were busy http://sports.espn.go.com/ncf/columns/story?columnist=maisel_ivan&id=3010576&campaign=rss&source=NCFHeadlines[shellacking] Miami.  Though I couldn't watch it on TV, I _did_ have http://cbs.sportsline.com/collegefootball/gamecenter/preview/NCAAF_20070908_MIA@OK[cbsportsline.com] open so I could see live stats.
+
+Despite the distraction, though, I really enjoyed Nicholas Zakas' talk on "Enterprise JavaScript Error Handling."  He started off by telling us that the only difference between enterprise JavaScript error handling and JavaScript error handling is that you can't give a talk on JavaScript error handling. :)  After the bad joke, he showed some pretty novel ways of handling errors, and even getting those errors logged to the same place the server errors are by using an `img` tag.  He is a very eloquent and entertaining speaker, and, for me at least, very effective.
+
+Next up, I sat in on Joe Walker's talk on http://getahead.org/dwr[DWR].  Since I've used DWR quite a bit, there was a fair amount of review, but Joe's section on Reverse Ajax was new to me, and really, really cool.  Joe's passion and acumen certainly shone not only in this session, but in his participation on the expert panel.  
+
+After lunch and a keynote by Eric Miller, it was off to a performance workshop with a couple of people from the Yahoo! http://developer.yahoo.com/performance/[Exceptional Performance] team.  Steve Souders and Tenni Theurer discussed various ways to increase web site performance (including pipelining, using sprites, and locating CSS and JS imports strategically), the http://developer.yahoo.com/yslow/[YSlow] http://www.getfirebug.com/[Firebug] plugin, and then walked through the http://developer.yahoo.com/performance/rules.html[rules] that YSlow helps a page author enforce.
+
+As much as I enjoyed the conference, I'd have to say I'm glad it's over.  The NFJS team crammed so much into this weekend that I don't think I could have taken much more.  Apparently, even though my wife wonders some times, I actually do have a threshold for that kind of thing, and the RWE got dangerously close to finding it.  It was a great conference, though, and I highly recommend it.  Next year, they're going to try to do one "on each coast" with the plans being one in San Jose again, and the other, tentatively, in Atlanta.  It's definitely worth the money, and I'm not just saying that because I won an iPhone. :)

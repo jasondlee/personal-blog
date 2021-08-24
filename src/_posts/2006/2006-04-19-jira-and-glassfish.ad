@@ -1,0 +1,89 @@
+---
+title: "JIRA and Glassfish"
+date: 2006-04-19
+tags: [Java]
+type: post
+status: published
+---
+= JIRA and Glassfish
+Jason Lee
+2006-04-19
+
+Officially, https://glassfish.dev.java.net/[Glassfish] is not a supported platform for http://atlassian.com/software/jira/[JIRA], Atlassian's extremly popular issue tracker.  Since we're migrating to Glassfish at http://www.iec-okc.com[work], it's pretty important that we get it the two to work together.  As it turns out, it's really not that bad at all.  Here's what I had to do to get JIRA, http://www.postgresql.org[PostgreSQL], http://www.microsoft.com/windowsserver2003/technologies/activedirectory/default.mspx[Active Directory] and Glassfish all playing nicely together.
+// more
+
+The first step, of course, is to download the JIRA distribution (For our purpose here, I'm going to assume that Glassfish and PostgreSQL are already installed an running.)  Once JIRA has been downloaded, we need to extract the archive to our work area and make our mods.  In our case, the mods were pretty simple:  database location, plus Active Directory integration, which means two files need to be modified.
+
+For the database, you'll need to modify entityengine.xml, which you will want to copy from `webapp/WEB-INF/classes` to `edit-webapp/WEB-INF/classes`.  We'll need to make two changes in this file:  the transaction factory, and the data source.  For the transaction factory, we need to locate the element, and edit it to look like this:
+
+[source,xml,linenums]
+-----
+<transaction-factory class="org.ofbiz.core.entity.transaction.JNDIFactory">
+    <user-transaction-jndi jndi-server-name="default" jndi-name="UserTransaction"/>
+    <transaction-manager-jndi jndi-server-name="default" jndi-name="UserTransaction"/>
+</transaction-factory>
+-----
+
+For the curious, that change is just the removal of `java:comp/` from the JNDI name.  For the data source, find the  element toward the end of the file.  This is what ours looks like:
+[source,xml,linenums]
+-----
+<datasource name="defaultDS" field-type-name="postgres72"
+	helper-class="org.ofbiz.core.entity.GenericHelperDAO"
+	check-on-start="true"
+	use-foreign-keys="true"
+	use-foreign-key-indices="true"
+	check-fks-on-start="true"
+	check-fk-indices-on-start="true"
+	add-missing-on-start="true"
+	check-indices-on-start="true">
+	<jndi-jdbc jndi-server-name="default" jndi-name="jdbc/Jira"/>
+</datasource>
+-----
+
+Of course, you need to make sure that the datasource `jdbc/Jira` is configured in Glassfish.  If you need help with that, http://blogs.sun.com/roller/page/Glassfish_PostgreSQL?entry=introducing_support_for_postgresql_in[this] blog entry should be helpful. For Active Directory integration, copy osuser.xml from `webapp/WEB-INF/classes` to `edit-webapp/WEB-INF/classes`.  Since this file is smaller, I'll show it in its entirety:
+
+[source,xml,linenums]
+-----
+<opensymphony-user>
+	<authenticator 
+		class="com.opensymphony.user.authenticator.SmartAuthenticator"/>
+	<provider 
+		class="com.opensymphony.user.provider.ldap.LDAPCredentialsProvider">
+		<property name="java.naming.factory.initial">
+			com.sun.jndi.ldap.LdapCtxFactory
+		</property>
+		<property name="java.naming.provider.url">
+			ldap://foo:389
+		</property>
+		<property name="searchBase">
+			cn=Users,dc=foo
+		</property>
+		<property name="uidSearchName">
+			sAMAccountName
+		</property>
+		<property name="java.naming.security.principal">
+			cn=ESP Service Account,cn=Users,dc=foo
+		</property>
+		<property name="java.naming.security.credentials">
+			bar
+		</property>
+		<property name="exclusive-access">
+			true
+		</property>
+	</provider>
+	<provider 
+		class="com.atlassian.core.ofbiz.osuser.CoreOFBizCredentialsProvider">
+		<property name="exclusive-access">true</property>
+	</provider>
+	<provider 
+		class="com.opensymphony.user.provider.ofbiz.OFBizProfileProvider">
+		<property name="exclusive-access">true</property>
+	</provider>
+	<provider 
+		class="com.opensymphony.user.provider.ofbiz.OFBizAccessProvider">
+		<property name="exclusive-access">true</property>
+	</provider>
+</opensymphony-user>
+-----
+
+Once those files have been created, from the root of the JIRA work directory, issue the command "build ear".  Technically, you have a choice between WAR and EAR deployment.  I chose EAR, as it saves me one step (changing the context root) at deployment.  It will most likely take a few minutes for that task to complete.  Once it has, log on to the Glassfish http://localhost:4848[admin app], navigate to Applications->Enterprise Applications, click deploy, then click Browse to find your EAR, which will be in the directory dist-generic in your JIRA working directory.  Select the ear, click OK, click Next, change the app name if you'd like, then click Finish.  This process, too, will likely take a few minutes, but, once it's done, you're ready to point your browser at your http://localhost:8080/jira[new JIRA installation] and begin configuring it. It's that easy! ;)

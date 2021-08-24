@@ -1,0 +1,44 @@
+---
+title: "FacesTester 0.3 Has Been Released"
+date: 2009-07-29
+tags: [FacesTester, JavaServer Faces, Testing]
+author: Jason Lee
+type: post
+status: published
+---
+= FacesTester 0.3 Has Been Released
+
+After a lot of changes and a long delay, I'm pleased to announce that we have released FacesTester 0.3 tonight.  This version has a large number of new features.  Read on the for details.
+// more
+
+This release has three major changes:  removal of almost all external dependencies, support for Servlet filters and listeners, and support for JSF 2.
+
+External Dependencies
+---------------------
+From the start, we have always depended on Spring Mock/Test to provide the Servlet API classes.  While this works, it poses a couple of problems.  For non-Maven users, gathering and managing the various required jar files can be tedious.  While manageable, it's nice not to have to do that.  Another big issue is the "build from source" requirement on GlassFish technologies.  As we looked into using FacesTester on Mojarra, this requirement became increasingly important, so the removal of external dependencies, where possible and reasonable, became a high priority.
+
+Servlet Filters and Listeners Support
+-------------------------------------
+When I talked to Stan Silvert about his JSFUnit project, one of the things he lamented about other testing solutions is that they usually don't exercise the Filters and Listeners a web app might have, so the testing, he says, is incomplete.  That made good sense to me, so we added support for these two Servlet APIs to FacesTester.  If there are filters or listeners configured in the application's web.xml, they will be called automatically -- no special steps required.
+
+JSF 2 Support
+-------------
+With this release, we now support running in a JSF 2 environment, with full access to all annotation-based objects the new spec makes available.  I should be a bit more precise here, in that when I say "JSF 2," I mean Mojarra 2, primarily as it's the only JSF 2 implementation available.  To use FacesTester with JSF 2, you will need one extra jar, which includes the Mojarra2-specific bits:
+
+[source,xml,linenums]
+-----
+<dependency>
+    <groupId>com.steeplesoft.jsf</groupId>
+    <artifactId>facestester-jsf2</artifactId>
+    <version>0.3</version>
+    <scope>test</scope>
+</dependency>
+-----
+
+On that note, after a good discussion with Matthias Wessendorf of MyFaces fame at JavaOne back in June, we did some restructuring of the code in FacesTester that will make it easier to add support for other implementations.  Currently, there's a small bit of Mojarra-specific code that's used internally to bootstrap the JSF environment.  In theory, equivalent functionality can be written, where needed, to make sure MyFaces bootstraps correctly, with no need for the Mojarra jars on the classpath.  It may be that MyFaces is supported now out of the box, but I haven't had the chance to test that.  If there are any interested MyFaces users, we'd appreciate the contribution.  If not, we'll try to get to it eventually.
+
+Licensing was also addressed in this release.  At the request of Matthias, and after some internal discussions, we've relicensed the project (or, more correctly, added an explicit license) under the BSD license, which should make all but the most license zealous users happy.
+
+There were also many bugs fixed and other minor improvements.  I should note that we've gotten a lot of additional help from http://kenai.com/people/11184-Imre-Osswald[Imre Osswald], http://kenai.com/people/6325-rlubke[Ryan Lubke], http://kenai.com/people/5711-IngoHofmann[Ingo Hofmann] and http://kenai.com/jira/secure/ViewProfile.jspa?name=guy_veraghtert[Guy Veraghtert].
+
+I'm pretty happy with the progress we made on this release, but there's much left to be done, so if you're interested in helping, now's as good a time as any. :)

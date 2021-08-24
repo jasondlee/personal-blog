@@ -1,0 +1,12 @@
+---
+title: "GlassFish Success Stories"
+date: 2007-03-26
+tags: [Java]
+type: post
+status: published
+---
+= GlassFish Success Stories
+Jason Lee
+2007-03-26
+
+Jamey Wood and Shreedhar Ganapathy of https://glassfish.dev.java.net[GlassFish] fame asked me some time ago if I would be interested in filling out a questionnaire describing my http://www.iec-okc.com[company]'s use of GlassFish.  I finally got the questionnaire completed and turned back in, allowing Jamey and Shreedhar to finish up the article, which is now posted http://blogs.sun.com/stories/entry/international_environmental[here].  We've been using GlassFish in production since, if I recall correctly, March of last year, well before Java EE 5 went "final."  We've been very happy with it, so this piece was a nice way of giving back to a community of developers and users that have helped us a lot over the past year.

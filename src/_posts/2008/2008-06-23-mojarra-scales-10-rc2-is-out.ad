@@ -1,0 +1,34 @@
+---
+title: "Mojarra Scales 1.0 RC2 is out"
+date: 2008-06-23
+tags: [Java, JavaServer Faces, Mojarra, Scales]
+type: post
+status: published
+---
+= Mojarra Scales 1.0 RC2 is out
+Jason Lee
+2008-06-23
+
+I have just uploaded RC2 for Mojarra Scales 1.0, a JSF component set born of the Mojarra Sandbox.  This release features a number of bug fixes and a handful of new enhancements.  When updating, make sure you grab the latest JSFTemplating snapshot from either its download page or Maven, as there are some bug fixes and features there that Scales needs.  You can download the last jar http://tinyurl.com/3snlu3[here].
+// more
+
+Changes in 1.0 RC2
+
+In no particular order:
+<ul>
+* A bug was fixed in JSFTemplating regarding ':' encoding in URLs. This will affect  sc:download if it is used inside a NamingContainer (such as h:form or h:dataTable).  If  you use the component in this manner, you will need to grab a JSFTemplating build from  June 9 or later.
+* Added code to try to automatically determine the mime type if one is not provided.  For  this to work, a filename must be given.  If both properties are null, the default is  text/plain.
+* Fixed a method="download" bug affecting IE.
+* Added null pointer checks needed for when verifyObjects is set to true (issue #15)
+* Added build-time support for a GlassFish Update Center module
+* Upgraded to YUI 2.5.2
+* Added missing / in templates/multiFileUpload.xhtml (issue #16)
+* Fixed some build issues regarding @Override caused by Java 6 vs Java 5 differences
+* Added support for f:param to sc:download.  For each f:param found with a name/value pair, that pair will be added to the URL generated.  This will help in situations in which the component is in a table and you need to pass some sort of identifier to the managed bean to load the data associated with the  current row, for example.
+* Added f:param to the demo under the "Default url variable" example
+* Localization now supported on sc:dateSelector.  Currently, the only two locales supported are en and de.  New localizations can be added as need (I only speak English, so they'll have to be contributed), but projects should be able to create com.sun.mojarra.scales.MessageResources_xx_yy.properties, and set the locale attribute on the component to "xx_yy" to get immediate use of the new locale.  This method has not been tested yet, but works in my head. :)
+* It appears that YUI 2.5.2 doesn't like a null axis on the charts, so the default value  now is "''" (i.e., an empty pair of single quotes).  Odd, but it seems to fix the cases where there is no Axis defined.  Ideally, that parameter wouldn't even be used if there  is no value, but doing that will take a bit more work than I have time for at the moment, so this work around will have to suffice.  End users shouldn't notice either way.
+
+If you have any more (or new) issues, please be sure to raise them on the users list (or, better yet, in the Scales issue tracker) to make sure they are addressed.  Hopefully, the next release will be 1.0.
+
+A big thanks to everyone for the feedback!

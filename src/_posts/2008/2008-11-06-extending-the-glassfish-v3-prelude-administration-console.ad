@@ -1,0 +1,173 @@
+---
+title: "Extending the GlassFish v3 Prelude Administration Console"
+date: 2008-11-06
+tags: [GlassFish, Java, JSFTemplating, Tutorials, v3]
+type: post
+status: published
+---
+= Extending the GlassFish v3 Prelude Administration Console
+Jason Lee
+2008-11-06
+
+Today, the GlassFish community is launching https://glassfish.dev.java.net/downloads/v3-prelude.html[GlassFish v3 Prelude] (http://docs.sun.com/app/docs/doc/820-4494?l=en[Release Notes] and http://docs.sun.com/app/docs/doc/820-4836?l=en[Quick Start Guide]).  If you are not familiar with what Prelude is, http://weblogs.java.net/blog/kalali/archive/2008/10/one_pager_revie.html[here] is a short write up giving the high level details.  In this article, I'd like to focus on the third bullet there, "CLI and administration console extensibility."  Specifically, we'll look at what it takes to create a plugin that will extend GlassFish v3's Administration Console.
+// more
+
+== Table of Contents
+* link:#java-class[The Java Class]
+* link:#console-plugin-xml[The Config File]
+* link:#integration-points[Integration Points]
+** link:#config-integration-type[Integration Type]
+** link:#config-priority[Plugin Priority]
+** link:#config-parent-id[Parent ID]
+** link:#config-content[Plugin Content]
+* link:#define-content[Defining the Plugin Content]
+** link:#defining-content-events[JSFTemplating Events]
+** link:#defining-content-handlers[JSFTemplating Handlers]
+* link:#summary[Summary]
+
+Creating a plugin is really quite simple.  The bare minimum is one Java class, a ConsoleProvider, and one XML config file, console-config.xml.  
+[[java-class]]
+== The Java Class
+
+The Java class is very simple.  It must implement the `ConsoleProvider` interface, which will require one method, `getConfiguration`, and it must be annotated with the https://hk2.dev.java.net/[HK2] annotation, `@Service`:
+
+[source,java,linenums]
+-----
+@Service
+public class ConsolePluginExample implements ConsoleProvider {
+    public URL getConfiguration() {
+        return null;
+    }
+}
+-----
+
+Despite its apparent simplicity, this class does a couple of things for us.  By implementing the `Interface`, of course, it gives the Plugin service a type it knows about.  By using the `@Service` annotation, the Plugin service will able to locate this plugin (and any others in the system) by asking HK2 for all the `ConsoleProvider` instances it knows about.  But what about that `getConfiguration()` method?  That method tells the Plugin service where to find the plugin's configuration file.  Unless you put that in a non-standard location, this implementation is what you will see.  If, however, you would like to move or rename the file, then this method will return a `URL` to that file.
+
+[[console-plugin-xml]]
+== The Config File
+So that defines the plugin for the console, but how do we make it do anything interesting?  For that, we need to take a look at `/META-INF/admingui/console-plugin.xml`:
+
+[source,xml,linenums]
+-----
+<console-config id='console-plugin-example'>
+        type: "org.glassfish.admingui:treeNode" 
+    priority="40" 
+    parentId="Resources" 
+    content="treeNode.jsf" />
+        type: "org.glassfish.admingui:tab" 
+    priority="22" 
+    parentId="jvmSettings" 
+    content="newTab2.jsf" />
+        type: "org.glassfish.admingui:tab" 
+    priority="28" 
+    parentId="serverInstTabs" 
+    content="newTab1.jsf" />
+</console-config> 
+-----
+
+This file does two things:  it gives a name for the plugin, "console-plugin-example," and defines a number of integration points, which are the really interesting part here.
+
+[[integration-points]]
+== Integration Points
+
+An integration point defines a small, discrete bit of content to be included in the console, providing information about what it is and where it should go.  Let's take a look at each piece of the integration point definiton.
+
+[[config-integration-type]]
+=== Integration Type
+
+Each `integration-point` element has several important pieces.  The first is the ID.  This must be unique for the current plugin.  Next is the type.  This describes the type of content we want to insert via this integration point.  The admin console defines several integration point types:
+
+[options="header"]
+|=====
+|Integration Type|Description|Screen Shot
+|org.glassfish.admingui:applications|This integration type allows a plugin to add itself to the list of managed applications (e.g, enterprise, web, etc).  This screen shot shows how the web plugin adds the "Web Application" link.|image:/images/2008/11/applications-150x150.png[link="/images/2008/11/applications.png"]
+|org.glassfish.admingui:commonTask|This type allows users to add entries to the Common Tasks page.  The implementation of this type is a good example of how flexible an integration type can be.  With this, plugin authors can add common tasks to existing sections (as the web plugin does) or create a new section (as the updatecenter plugin does).|image:/images/2008/11/common-tasks-150x150.png[link='/images/2008/11/common-tasks.png']
+|org.glassfish.admingui:configuration|Like the applications type, this type allows a plugin author to add modules to the configuration start page.|image:/images/2008/11/configuration-150x150.png[link="/images/2008/11/configuration.png"]
+|org.glassfish.admingui:mastheadStatusArea|This type allows the user to add content to the status area of the masthead, which is the area in the header right below the product name (see screenshots).  Multiple plugins are allowed to use this integration type, with entries being list left to right, based on priority (see below).|image:/images/2008/11/masthead-status-area-150x150.png[link='/images/2008/11/masthead-status-area.png']
+|org.glassfish.admingui:resources|This type allows a plugin author to add modules to the resources start page.|image:/images/2008/11/resources-150x150.png[link="/images/2008/11/resources.png"]
+|org.glassfish.admingui:serverInstTab|This integration type allows a plugin author to create a new tab on the Application Server page, or to add content to an existing tab. In this screen shot, the web plugin adds the Monitoring tab to the main tab set, as well three tabs to the newly added Monitoring tab.|image:/images/2008/11/server-inst-tabs-150x150.png[link="/images/2008/11/server-inst-tabs.png"]
+|org.glassfish.admingui:treeNode|This integration point allows plugins to add nodes to the navigation tree.  The nodes can be added either to the root, or to any other node in the tree.  In this screen shot, we can see how the web plugin added the "Web Applications" node to "Applications,", and the "Web Container" and "Monitoring" nodes to "Configuration."|image:/images/2008/11/tree-150x150.png[link="/images/2008/11/tree.png"]
+|=====
+
+[[config-priority]]
+=== Plugin Priority
+The next attribute is `priority`.  This attribute controls the order in which integration points are included, with the lower numbers coming <i>first</i> (It might be best to think of this as "order" rather than "priority," despite the name).
+
+[[config-parent-id]]
+=== Parent ID
+The next attribute is `parentId`.  This tells the plugin service to which component to parent the included content.  Using our example above, the integration point `tabtestTreeNode` will be a child of the component whose ID is `Resources`.
+
+[[config-content]]
+=== Plugin Content
+Finally, the `content` attribute tells the plugin service where to find the content of the integration point.  This value is typically the path, relative to the plugin's root, to the file that defines the content, which is simply a JSF page.  In our example, we point to "treeNode.jsf."  In a Maven project, this file would be in `src/main/resources`, and would be in the root directory of the resulting jar.  This example file's contents look like this:
+
+[source,xml,linenums]
+-----
+<sun:treeNode id='tabtest' imageURL='resource/images/instance.gif' 
+    target='main' text='Test Node #1' url='tabtest/jdbcLists.jsf'/>
+<sun:treeNode id='tabtest2' imageURL='resource/images/instance.gif' 
+    target='main' text='Test Node #2' url='tabtest/jdbcLists.jsf'/>
+-----
+
+The contents, of course, will vary depending on the plugins needs, and the type of the integration point, but, as you can see, this is just a snippet of JSF markup, which, in this case, defines two `sun:treeNode`s that will be inserted into the navigation tree.
+
+[[define-content]]
+== Defining the Plugin Content
+At this point, we've created the plugin.  We've defined the integration points and specified their contents.  If that's all a plugin needed to do, we'd be done, but it's not, so we aren't. :)  Once you have the UI elements specified and integrated with the console, you have to be able to make those components display data, perform actions, etc.  From this perspective, the plugin is just a normal JavaServer Faces application.  Given the architecture of the GlassFish v3 Prelude Administration Console, a plugin author has two options:  the normal JSF managed bean approach, or the JSFTemplating events/handlers approach.  JSF managed beans are a well understood and documented approach, but the same can't be said about JSFTemplating Handlers and events.  While an exhaustive discussion is outside the scope of this article, I'd like to offer at least a cursory introduction.
+
+[[defining-content-events]]
+== JSFTemplating Events
+JSFTemplating provides a number of events that much more finely-grained than the standard JavaServer Faces lifecycle phases.  There are a number of events, but the ones of interest here are (for more information, please see the https://jsftemplating.dev.java.net/doc[JSFTemplating] site):
+
+[options="header"]
+|=====
+|Event(s)|Description
+|beforeCreate/afterCreate|This event fires before/after a component is created.  It fires once per view, so, as long as the user stays on the same page, this event will not fire over and over.
+|beforeEncode/afterEncode|This event fires before/after a component is rendered.  Since this is at render time, this event fires every time the page is requested, so care should be taken in handling expensive operations in this event.
+|initPage|This event fires everytime the page is requested.  As with beforeEncode/afterEncode, care should be taken in handling expensive operations in this event.
+|command|This event is for ActionSource components only and fires when the UICommand component is clicked.
+|=====
+
+[[defining-content-handlers]]
+=== JSFTemplating Handlers
+To attach a handler to an event, using JSFTemplating's "template" syntax, one would do something like this:
+
+[source,xml,linenums]
+-----
+<sun:button id='button' text='Push Me!'>
+    <!command executeSomeBusinessLogic(amount="5.25", 
+        result=>$pageSession{businessLogicResult}); />
+</sun:button>
+-----
+
+This creates a `sun:button` and attaches the Handler `executeSomeBusinessLogic` to button.  When the button is clicked, the Handler is called, with the input variable `amount` being set to 5.  After execution, the value of the Handler's output variable `result` is assigned a page-scoped variable called `businessLogicResult`, which can be referenced on the page using the EL expression `#{businessLogicResult}` or `#{pageSession.businessLogicResult}`.
+
+The Handler, `executeSomeBusinessLogic` might look like this:
+
+[source,java,linenums]
+-----
+    @Handler(id="executeSomeBusinessLogic",
+        input = {
+            @HandlerInput(name="amount", type: Double.class, required=true)
+        },
+        output= {
+            @HandlerOutput(name="result", type: String.class)
+        }
+    )
+    public static void myBusinessLogicMethod (HandlerContext handlerContext) {
+        Double amount = (Double)handlerContext.getInputValue("amount");
+        // Do some work.
+        //     Get a reference to some external server
+        //     Perform all calculations locally
+        //     Whatever you need...
+        handlerContext.setOutputValue("result", "Some string built from the business logic.");
+    }
+-----
+
+There are several things to note.  First, the annotation defines the id by which we reference the Handler (`executeSomeBusinessLogic`) and it need not match the actual method name.  Second, we have one input, `amount` which must be a `Double`, and is required.  If it is not provided, an `Exception` will be thrown.  Third, a single output variable, `result` of type `String` is returned.  Last, the method must be `public static void` and must take a single parameter of type `HandlerContext`.
+
+Inside the method, we extract the input parameter using `HandlerContext.getInputValue()` and cast it to the expected type.  When we reach this point in the code, we can cast with out worrying about a `ClassCastException`, as JSFTemplating insures that the type is correct.  Since null could be a valid value, though, the Handler must perform null value checking as appropriate.  Next the Handler performs the business logic, whether it does it internally or delegates to another object, be it local or remote, then sets the value of the output variable, `result`.  The JSFTemplating event and Handler mechanism is, conceptually, a very simple, yet very powerful mechanism, of which the GlassFish v3 Prelude Administration Console makes heavy (and exclusive) use.
+
+[[summary]]
+== Summary
+And that's all there is to writing a plugin for the GlassFish v3 Prelude Administration Console:  one simple class, an XML config file, a few managed beans or Handlers, and just a few JSF markup files as necessary for your plugin.  These simple building blocks make it extremely simple to http://docs.sun.com/app/docs/doc/820-6583' title: "'Sun GlassFish Enterprise Server v3 Prelude Add-On Component Development Guide[extend] the GlassFish v3 Prelude Administration Console.  In fact, most of the functionality that ships in the console uses this approach, demonstrating the power of the mechanism quite nicely.  The modularity of the GlassFish v3 kernel provides system integrators a practically unbounded array of opportunities for extending the application server, and the administration console's plugin service makes it extremely easy to add administration support for any extension you might create.  How will you extend GlassFish?"

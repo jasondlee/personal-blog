@@ -1,0 +1,58 @@
+---
+title: "Restoring a Deleted Git Branch"
+date: 2020-02-25
+tags: [Git]
+type: post
+author: Jason Lee
+status: published
+---
+
+Thanks to haste and some sloppy copy-and-paste, today I deleted the _wrong_ remote Git branch. There's nothing like
+learning in a panic, but that's what happened. Here's what I learned on how to fix that.
+
+// more
+
+While watching that all-important branch being deleted erroneously is a heart-stopping moment, as it turns out, 
+restoring the deleted branch is Super Easy. Barely an Inconvenience. All you need to know the hash of the last commit
+to the branch. If you just deleted the branch, it's even easier. 
+
+When you delete branch, you should see something like this:
+
+-----
+Deleted branch super_important (was 15060e768).
+To github.com:yourcompany/super_secret_project.git
+ - [deleted]             super_important
+-----
+
+In this case, you have your hash: `15060e768`
+
+If you don't still have that message available, you can use `reflog`:
+
+-----
+$ git reflog
+15060e768 HEAD@{0}: commit: Fix test
+84a524673 HEAD@{1}: commit: Really important work
+7a2f75f1f HEAD@{2}: commit: So much I forgot what I did
+f2a2afa24 HEAD@{3}: commit: Added dependencies
+224260b95 HEAD@{4}: commit: Implement new knob
+68ae60023 HEAD@{5}: checkout: moving from foo to dev
+-----
+
+This is a little tricker, as you'll need to find the hash of the last commit to the branch you want. In this contrived data, it's
+right there at the top. Once you have that, you checkout out that hash, create a new branch (of the same name or different. Your
+call), then push to the remote repository.
+
+-----
+$ git checkout 15060e768
+$ git checkout -b super_important
+$ git push origin super_important
+-----
+
+You can also shorthand that a bit:
+
+-----
+$ git checkout -b super_important 15060e768
+$ git push origin super_important
+-----
+
+You should now see your branch in your remote repository. Take a deep breath. Crisis averted. :)

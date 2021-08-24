@@ -1,0 +1,17 @@
+---
+title: "The Means Stultify the End"
+date: 2008-09-12
+tags: [General, JavaServer Faces]
+type: post
+status: published
+---
+= The Means Stultify the End
+Jason Lee
+2008-09-12
+
+From time to time, someone, trying to cut through all the hype and spin, will attempt some sort of statistical analysis to determine which web framework is "winning."  The results are almost always disappointing, and not because I don't agree with the outcome, but because the methodology is so flawed.  The http://www.ideyatech.com/2008/09/java-ui-trends-whos-gaining-popularity/[most recent attempt] I've discovered, noble as it is, is no different.
+// more
+
+If you read the post, you'll notice the page author is basing his efforts on data from Google Trends, which, I guess, is a fair starting place.  The problem, though, as was pointed out in the comments, is that his search criteria is flawed, particularly with regard to JSF, a technology near and dear to my heart. :)  He uses "myfaces+icefaces" as the discriminator for JSF-related queries.  The flaw there, of course, is that MyFaces is only one implementation of JSF, not everyone searches for "myfaces," and ICEfaces is a component library, not an implementation, and is a keyword not used in all JSF queries.  Commendably taking a cue from a commenter, the author then links to an "improved" http://www.google.com/insights/search/#cat=&q=struts%202%2Cmyfaces%20%2B%20mojarra%2Cspring%20mvc%2Cjboss%20seam&geo=&date: &clp=&cmpt=q[query], but this one is actually _worse_.  In this attempt, his JSF-related query used "myfaces+mojarra" which will capture the number of times someone queried for both major JSF implementations at the same, a scenario I dare say is not even slightly common.  One of the issues with trying to quantify searches for JSF-related data, is that, if you're not careful, you'll get some data that's not http://www.jsf.mil/[even slightly related].
+
+I understand why authors write these kinds of posts.  I was even asked the question this post tries to answer at JSFOne.  Since there's no reliable way to get usage information for open source projects, we have no hard numbers to work with, so we're left using Google statistics to try to make an educated guess.  More often than not, though, the results fall far short of mark.  Now on the issue of "tell me which framework is 'winning' or 'better' so I know which one to use," while I have an opinion, depends on a whole slew of issues, which is a topic for a different post someday.  Perhaps. :)

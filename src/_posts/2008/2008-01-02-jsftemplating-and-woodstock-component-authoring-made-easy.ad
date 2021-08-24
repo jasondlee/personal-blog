@@ -1,0 +1,14 @@
+---
+title: "JSFTemplating and Woodstock: Component Authoring Made Easy "
+date: 2008-01-02
+tags: [JavaServer Faces, JSFTemplating, Scales]
+type: post
+status: published
+---
+= JSFTemplating and Woodstock: Component Authoring Made Easy
+Jason Lee
+2008-01-02
+
+In my last link:/2008/01/02/announcing-mojarra-scales/[post], I alluded to some refactoring done inside the Sandbox / https://scales.dev.java.net[Scales] library to simplify the components' code.  If you are interested in learning more about what was done, and how you can apply the same techniques to your own JSF components, please see http://java.sun.com/developer/technicalArticles/J2EE/jsf_templating/index.html[this article], written by http://blogs.sun.com/paulsen/[Ken Paulsen] and myself, with editing help from Rick Palkovic, which shows how one can use https://jsftemplating.dev.java.net[JSFTemplating] and some (currently "private") annotations from the https://woodstock.dev.java.net[Woodstock] project to greatly simplify JSF component authoring.  I think it's a very interesting and helpful technique, which, by the way, resembles what JSF 2 will likely offer when we finally ship it later this year.
+
+Oh, yeah.  Happy New Year's! :)

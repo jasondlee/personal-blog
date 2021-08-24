@@ -1,0 +1,92 @@
+---
+title: "New Components in Mojarra Scales: Part I - sc:dataTable"
+date: 2009-12-05
+tags: [Components, JavaServer Faces, Scales]
+type: post
+status: published
+---
+= New Components in Mojarra Scales: Part I - sc:dataTable
+Jason Lee
+2009-12-05
+
+The migration of Mojarra Scales to JSF 2, adding new components has become much easier due to JSF 2's new composite component feature.  In the past couple of weeks, this new capability has paid off in spades as Mojarra Scales has gotten (so far) three new components in rapid succession.  In this, the first part of a multi-part series, we'll take a look at the most complex of the new components, `sc:dataTable`.
+// more
+
+The JSF spec details a data table, but it's nothing fancy.  It doesn't offer pagination or sorting, for example.  For simple applications, this may be sufficient, but for more complex or dynamic applications, it can be pretty plain and boring.  The YAHOO! User Interface library provides a very nice table, which supports sorting, pagination, ajax updates, row and cell selecting, etc.  In keeping with Scales' original intent, it is this Javascript that Scales wraps and provides as a JSF component.  For those familiar with the standard `h:dataTable`, the usage should look very familiar.  From the Scales demo, we find something like this:
+
+[source,xml,linenums]
+-----
+<sc:dataTable id='people' pagination='true' rowsPerPage='#{tableBean.rowsPerPage}' rowsPerPageTemplate='4 8 16 32' value='#{tableBean.peopleList}' var='person' width='50%'>
+    <sc:column resizeable='true' sortable='true' width='200'>
+        <f:facet name='header'>First Name</f:facet>
+        #{person.firstName}
+    </sc:column>
+    <sc:column resizeable='true' sortable='true'>
+        <f:facet name='header'>Last Name</f:facet>
+        #{person.lastName}
+    </sc:column>
+    <sc:column resizeable='true' sortable='true'>
+        <f:facet name='header'>Position</f:facet>
+        #{person.position}
+    </sc:column>
+</sc:dataTable>
+-----
+
+In short, we specify a table with three columns, all of which are sortable and resizeable, and will be paginated.  Like the standard data table, the value passed to the component can be a JSF `DataModel`, a `List`, or an `Array`.  Internally, the Scales dataTable will wrap the value in a `Paginator` object that handles the heavy lifting.  Just to show that there's no magic in the managed bean, here's the full bean (can you tell what television show I like to watch? : ) :
+
+[source,java,linenums]
+-----
+@ManagedBean
+@SessionScoped
+public class TableBean {
+    protected List<Person> list;
+    protected int index = 0;
+    protected int rowsPerPage = 4;
+    public int getRowsPerPage() {
+        return rowsPerPage;
+    }
+    public void setRowsPerPage(int rowsPerPage) {
+        this.rowsPerPage = rowsPerPage;
+    }
+    public List<Person> getPeopleList() {
+        if (list == null) {
+            list = new ArrayList<Person>();
+            list.add(new Person("Michael", "Scott", "Co-Manager of Dunder Mufflin Scranton"));
+            list.add(new Person("Jim", "Halpert", "Co-Manager of Dunder Mufflin Scranton"));
+            list.add(new Person("Pam", "Halpert", "Sales Representative"));
+            list.add(new Person("Andy", "Bernard", "Sales Representative"));
+            list.add(new Person("Stanley", "Hudson", "Sales Representative"));
+            list.add(new Person("Phyllis", "Lapin-Vance", "Sales Representative"));
+            list.add(new Person("Dwight", "Schrute", "Sales Representative / \"Assistant to the Regional Manager\""));
+            list.add(new Person("Angela", "Martin", "Senior Accountant"));
+            list.add(new Person("Kevin", "Malone", "Accountant"));
+            list.add(new Person("Oscar", "Martinez", "Accountant"));
+            list.add(new Person("Meredith", "Palmer", "Supplier Relations Representative"));
+            list.add(new Person("Kelly", "Kapoor", "Customer Service Representative"));
+            list.add(new Person("Creed", "Bratton", "Quality Assurance Representative"));
+            list.add(new Person("Kelly Erin", "Hannon", "Receptionist"));
+            list.add(new Person("Ryan", "Howard", "Temp"));
+            list.add(new Person("Toby", "Flenderson", "Human Resources Representative"));
+            list.add(new Person("Darryl", "Philbin", "Warehouse Foreman"));
+            list.add(new Person("Roy", "Anderson", "Warehouse Dock Worker"));
+            list.add(new Person("David", "Wallace", "Chief Financial Officer"));
+            list.add(new Person("Jan", "Levinson", "Vice President of Regional Sales; Owner and Chandler of Serenity by Jan Candles"));
+            list.add(new Person("Holly", "Flax", "Human Resources Representative of Dunder Mifflin Scranton; Human Resources Representative of Dunder Mifflin Nashua"));
+            list.add(new Person("Charles", "Miner", "Vice President of North East Region"));
+        }
+        return list;
+    }
+}
+-----
+
+When the component is rendered, you will see something like this:
+
+image::/images/2009/12/dataTable.png[alt='Scales DataTable', title: "'Scales DataTable']"
+
+Currently, row selection is not supported, but that should be available by the time Scales hits 2.0 GA.
+
+One of the things that I think is really nice about this component is that your application doesn't necessarily need to implement and Scales interfaces or extend any Scales classes.  If, however, you need more control over pagination, you can extend the Paginator class (which, incidentally, is based on code created by NetBeans.  Credit where credit is due : ).  It's likely that 2.0 GA will ship with a JPA-aware Paginator that your application can consume without require custom code.  If you do extend the Paginator, all you have to do is return that as the value for your data table, and everything else works as expected.
+
+If you'd like to play with a live demo of the table, you can find one http://demo.steeplesoft.com/mojarra-scales-demo/dataTable.jsf[here].  As the demo notes, the table is currently labeled as a beta, but the basic Ajax pagination seems to work, so please feel free to give it a try.
+
+In the next installment of this series, we'll take a look at Scales' new `autoComplete` component.

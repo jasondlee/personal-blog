@@ -1,0 +1,98 @@
+---
+title: "Debugging GlassFish REST Requests"
+date: 2011-03-04
+tags: [GlassFish, REST]
+type: post
+status: published
+---
+= Debugging GlassFish REST Requests
+Jason Lee
+2011-03-04
+
+If you've been following my series on using the GlassFish REST interface, you've probably noticed that your JSON and XML output isn't pretty-printed like mine.  While there are several http://xmlindent.com/[online] http://jsonformatter.curiousconcept.com/[tools] that can fix that for you, there's no need for the extra step.  GlassFish will do that for you.  Let's look at how to make that happen.
+// more
+
+To configure the REST interface, we can use the REST interface, in particular http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config[]
+
+[source,bash,linenums]
+-----
+$ curl -X OPTIONS http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config
+{
+    "command": "_set-rest-admin-config",
+    "exit_code": "SUCCESS",
+    "extraProperties": {"methods": [
+        {"name": "GET"},
+        {
+            "name": "POST",
+            "messageParameters": {
+                "debug": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "string",
+                    "defaultValue": ""
+                },
+                "indentLevel": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "int",
+                    "defaultValue": "-100"
+                },
+                "logInput": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "string",
+                    "defaultValue": ""
+                },
+                "logOutput": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "string",
+                    "defaultValue": ""
+                },
+                "showDeprecatedItems": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "string",
+                    "defaultValue": ""
+                },
+                "showHiddenCommands": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "string",
+                    "defaultValue": ""
+                },
+                "wadlGeneration": {
+                    "acceptableValues": "",
+                    "optional": "true",
+                    "type": "string",
+                    "defaultValue": ""
+                }
+            }
+        }
+    ]}
+}
+-----
+
+Here's what each of those options mean:
+
+* *debug* - To the best of my knowledge, this option is not used.
+* *indentLevel* - If this option is 0 or greater, the output is pretty-printed, using this value as the indentation level.
+* *logInput* - Echo to the server log all REST requests.
+* *logOutput* - Echo to the server log all REST responses.
+* *showDeprecatedItems* - By default, deprecated items are not shown.  If you need to see them, set this to true.
+* *showHiddenCommands* - By default, hidden commands are not shown.  If you need to see them, set this to true.  Be warned, though, that hidden commands are hidden for a reason.  They are internal, undocumented commands and can be changed or removed without notice.
+* *wadlGeneration* - Since WADL generation is an expensive process, it is turned off by default.  If you need WADL, set this to true.  You can then retrieve the WADL document from http://localhost:4848/management/application.wadl[http://localhost:4848/management/application.wadl].  Be careful with that, the resulting file is _HUGE_.
+
+For technical, implementation-specific reasons (which I won't go into here), the first attempt to manipulate the REST configuration must be done via http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config[http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config].  Once that's done, the `rest-config` element will show up under `server-config` as expected.  For example, to enable pretty-printing, for example, we can issue these requests:
+
+[source,bash,linenums]
+-----
+$ curl -s -S -H "Accept: application/json" -X POST http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config
+$ curl -s -S -H "Accept: application/json" -X POST -d indentLevel=4 http://localhost:4848/management/domain/configs/config/server-config/rest-config
+{
+    "message": "\"http:\/\/localhost:4848\/management\/domain\/configs\/config\/server-config\/rest-config\" updated successfully.",
+    "exit_code": "SUCCESS"
+}
+-----
+
+And that's all there is to it.  Debugging your REST client issues should now be much simpler.
