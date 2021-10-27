@@ -1,0 +1,130 @@
+title=WildFly and Micrometer
+date=2021-10-18
+tags=Java,WildFly,Micrometer
+type=post
+author=jdlee
+status=published
+source-highlighter=prettify
+~~~~~~
+
+:git-repo: https://github.com/jasondlee/wildfly/tree/WFLY-14947
+:archive-link: /assets/2021/wildfly-micrometer.tar.gz
+
+Earlier in the summer, I wrote link:an-update-on-opentelemetry-and-wildfly.html[some] about the addition of OpenTelemetry support in WildFly. With the release of https://www.wildfly.org/news/2021/10/05/WildFly25-Final-Released/[WildFly 25], that support is now official and in the wild. With 25 behind us, we start looking at 26, and my next effort will be to integrate https://micrometer.io[Micrometer metrics] into the server. In this post, we'll take a look at what that might mean, as well as presenting a way to take an early look.
+
++++// Read More +++
+
+Savvy users will likely note that WildFly already has metrics support. In fact, it has two: what we call "base" or "WildFly metrics" available out-of-the-box in `standalone.xml`, as well as MicroProfile Metrics, available in `standalone-microprofile.xml`. If we have those two, why a third? The answer is simple: Micrometer seems to be where Java-land is heading, so much so, in fact, that MicroProfile Metrics is, currently, basically dead (there are ongoing discussions about how to move forward with regard to Micrometer and MP Metrics, but those are out of scope here). What adding another metrics to the system means for the two existing systems is a big topic, and I'll touch on that below.
+
+== Getting Started
+
+So how does one get started with Micrometer on WildFly? Of course, you've always been able to add Micrometer to your application and deploy it, but we're hoping to do is integrate it with the server so that it's always available, and so that administrators can get server- and JVM-level metrics as well, right out of the box. Since this feature is still under discussion and development, though, it doesn't reside in the main WildFly git repo. It lives, instead, in my own {git-repo}[repository] as a feature branch.
+
+To install it, you have two options: 1) Install link:{archive-link}[this archive], or 2) Build from {git-repo}[source]. Once you have a server running, it's time (no pun intended) to get some metrics.
+
+As a small demo, take this Jakarta REST resource:
+
+[source,java]
+-----
+@RequestScoped
+@Path("/")
+public class MetricResource {
+    @Inject
+    private MeterRegistry meterRegistry;
+
+    @GET
+    @Path("/")
+    public double getCount() {
+        Counter counter = meterRegistry.counter("demo_counter");
+        Timer timer = meterRegistry.timer("demo_timer");
+
+        Timer.Sample sample = Timer.start();
+        try {
+            Thread.sleep((long) (Math.random() * 1000L));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        counter.increment();
+        sample.stop(timer);
+
+        return counter.count();
+    }
+}
+-----
+
+This sample creates two meters, a `Counter` and `Timer`, and makes some pretty trivial updates. We can see this when we
+request metrics from the server. As noted above, this support is still under active discussion at the time of this writing,
+so a lot of details on how things will look when this support is released are still uncertain. That being so, I've exposed
+the Micrometer metrics on a new management endpoint http://localhost:9990/micrometer[]. Accessing that, we can see our
+metrics show up:
+
+[source,bash]
+-----
+$ http :9990/micrometer | grep demo
+# HELP demo_counter_total
+# TYPE demo_counter_total counter
+demo_counter_total 1.0
+# HELP demo_timer_seconds
+# TYPE demo_timer_seconds summary
+demo_timer_seconds_count 1.0
+demo_timer_seconds_sum 0.952373899
+# HELP demo_timer_seconds_max
+# TYPE demo_timer_seconds_max gauge
+demo_timer_seconds_max 0.952373899
+-----
+
+There are, of course, a number of other metrics. When the Micrometer subsystem is loaded, we automatically register a number of meters to capture JVM and system data as well, similar to what one would expect from WildFly Metrics or MicroProfile Metrics. For example:
+
+[source]
+-----
+# HELP datasources_pool_total_get_time The total time spent obtaining physical connections
+# TYPE datasources_pool_total_get_time gauge
+datasources_pool_total_get_time{app="wildfly",deployment="",name="ExampleDS",subdeployment="",type="data-source",} 0.0
+# HELP ee_current_queue_size The current size of the executor's task queue.
+# TYPE ee_current_queue_size gauge
+ee_current_queue_size{app="wildfly",deployment="",name="default",subdeployment="",type="managed-scheduled-executor-service",} 0.0
+ee_current_queue_size{app="wildfly",deployment="",name="default",subdeployment="",type="managed-executor-service",} 0.0
+# HELP ee_hung_thread_count The number of executor threads that are hung.
+# TYPE ee_hung_thread_count gauge
+ee_hung_thread_count{app="wildfly",deployment="",name="default",subdeployment="",type="managed-scheduled-executor-service",} 0.0
+ee_hung_thread_count{app="wildfly",deployment="",name="default",subdeployment="",type="managed-executor-service",} 0.0
+# HELP messaging_activemq_global_client_thread_pool_keepalive_time_seconds The amount of time that pool threads should be kept running when idle.
+# TYPE messaging_activemq_global_client_thread_pool_keepalive_time_seconds gauge
+messaging_activemq_global_client_thread_pool_keepalive_time_seconds{app="wildfly",deployment="",subdeployment="",} 60.00000000000001
+# HELP batch_jberet_completed_task_count The approximate total number of tasks that have completed execution.
+# TYPE batch_jberet_completed_task_count gauge
+batch_jberet_completed_task_count{app="wildfly",deployment="",name="batch",subdeployment="",type="thread-pool",} 0.0
+# HELP infinispan_success_ratio The data replication success ratio (successes/successes+failures).
+# TYPE infinispan_success_ratio gauge
+infinispan_success_ratio{app="wildfly",deployment="",name="http-remoting-connector",subdeployment="",type="cache",} 0.0
+# HELP jvm_buffer_count_buffers An estimate of the number of buffers in the pool
+# TYPE jvm_buffer_count_buffers gauge
+jvm_buffer_count_buffers{id="mapped",} 0.0
+jvm_buffer_count_buffers{id="direct",} 90.0
+-----
+
+There are many more, of course, but you get the point, and this being Micrometer, what we see represented here is
+Prometheus-compatible output ready for consumption by your tool of choice.
+
+== Where Next?
+
+It can't be overstated that is all under development, so things may change, but we would definitely appreciate any
+experimentation and feedback you care to offer, either on the https://issues.redhat.com/browse/WFLY-14947[JIRA] or the
+https://lists.jboss.org/archives/list/wildfly-dev@lists.jboss.org/[WildFly developers' list]. We have a number of open
+questions, which, while listed on the JIRA, I'll reproduce here:
+
+* We have two subsystems for doing metrics now (WF metrics and MP metrics). Are we adding a third? Removing/replacing WF Metrics?
+* What's the long term relationship with MP Metrics?
+* Other components that we integrate have their own Micrometer integration. What happens with those?
+* How does this affect RBAC?
+* Does each application get its own registry, or are all the apps lumped together?
+* If each application gets its own, do we prefix each metric name with, say, the deployment name?
+* WF and MP Metrics have the concept of "base" and "vendor" metrics (with MP Metrics adding an "application" scope). Do we want to continue this convention?
+* Should we prefix each "vendor" metric name with "wildfly"/"eap" as we are doing now?
+
+Some of these we've already answered internally. For example, for "WF and MP Metrics have the concept of "base" and "vendor" metrics (with MP Metrics adding an "application" scope). Do we want to continue this convention?", we're moving forward with "No" on that, as that does not seem to match what we're seeing in terms of customer desires. There is time, of course,
+to make your case on this question, or any of them, if you feel strongly one way or another.
+
+We're hoping to ship this in WildFly 26 (no promises from me, of course), so you have a few weeks to take a look and
+provided feed should you so desire. We're 100% interested in making this a feature that meets your needs, so please don't
+be shy. :)
