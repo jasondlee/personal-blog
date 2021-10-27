@@ -8,7 +8,7 @@ source-highlighter=prettify
 ~~~~~~
 
 :git-repo: https://github.com/jasondlee/wildfly/tree/WFLY-14947
-:archive-link: /assets/2021/wildfly-micrometer.tar.gz
+:archive-link: /wildfly/wildfly-micrometer.tar.gz
 
 Earlier in the summer, I wrote link:an-update-on-opentelemetry-and-wildfly.html[some] about the addition of OpenTelemetry support in WildFly. With the release of https://www.wildfly.org/news/2021/10/05/WildFly25-Final-Released/[WildFly 25], that support is now official and in the wild. With 25 behind us, we start looking at 26, and my next effort will be to integrate https://micrometer.io[Micrometer metrics] into the server. In this post, we'll take a look at what that might mean, as well as presenting a way to take an early look.
 
