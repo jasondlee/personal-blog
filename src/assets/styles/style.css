@@ -61,3 +61,29 @@ div.attribution {
 td.line-numbers {
     border-right: 1px solid #ccc;
 }
+
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+   margin-top: 1.0em;
+   margin-bottom: 1.5em;
+}
+div.admonitionblock {
+   margin-top: 2.0em;
+   margin-bottom: 2.0em;
+   margin-right: 10%;
+   color: #606060;
+}
+
+div.admonitionblock .icon {
+   vertical-align: top;
+   font-size: 1.1em;
+   font-weight: bold;
+   text-decoration: underline;
+   color: #527bbd;
+   padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+   padding-left: 0.5em;
+   border-left: 3px solid #dddddd;
+}
