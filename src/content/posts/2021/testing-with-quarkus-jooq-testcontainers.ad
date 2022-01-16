@@ -1,17 +1,17 @@
-title=Testing with Quarkus, Jooq, and Testcontainers
+title=Testing with Quarkus, jOOQ, and Testcontainers
 date=2021-12-29
-tags=Java,Quarkus,Jooq,Testcontainers
+tags=Java,Quarkus,jOOQ,Testcontainers
 type=post
 author=jdlee
 status=published
 source-highlighter=prettify
 ~~~~~~
 
-In a project I've been working on, I've been targeting PostgreSQL, but testing with H2. While that works, I'm a big fan of having the test environment match production as much as possible. That said, I don't like to have external system dependencies for tests, such as requiring having a database installed. That's where https://testcontainers.org[Testcontainers] comes in. In this post, I'll look at how I integrated Testcontainers into my Quarkus+Jooq project
+In a project I've been working on, I've been targeting PostgreSQL, but testing with H2. While that works, I'm a big fan of having the test environment match production as much as possible. That said, I don't like to have external system dependencies for tests, such as requiring having a database installed. That's where https://testcontainers.org[Testcontainers] comes in. In this post, I'll look at how I integrated Testcontainers into my Quarkus+jOOQ project
 
 +++// Read More+++
 
-To set the stage, I should describe how my project is set up as far as data access goes. I'm using https://jooq.org[Jooq], rather than, say, JPA or Panache. I manage the central Jooq object, `DSLContext`, via CDI, and `@Inject` that as needed. The `@Produces` method looks something like this:
+To set the stage, I should describe how my project is set up as far as data access goes. I'm using https://jooq.org[jOOQ], rather than, say, JPA or Panache. I manage the central jOOQ object, `DSLContext`, via CDI, and `@Inject` that as needed. The `@Produces` method looks something like this:
 
 [source,kotlin]
 -----
@@ -59,7 +59,7 @@ This works great until I start testing. The problem as I saw it is this: Testcon
 @Priority(1)
 /**
  * This class handles the creation and start of the Docker-based pgsql database, as well as
- * @Producing a DataSource to be injected into DslContextProvider, allowing JOOQ to talk to
+ * @Producing a DataSource to be injected into DslContextProvider, allowing jOOQ to talk to
  * our container-based DB.
  */
 class DynamicDataSourceProvider {

@@ -1,0 +1,193 @@
+title=Testing with Quarkus, jOOQ, and Testcontainers Redux
+date=2022-01-15
+tags=Java,Quarkus,jOOQ,Testcontainers,Flyway
+type=post
+author=jdlee
+status=published
+source-highlighter=prettify
+~~~~~~
+
+In a link:../2021/testing-with-quarkus-jooq-testcontainers.html[recent post], I showed how one could fairly easily test your Quarkus application against a Testcontainers-managed Postgres database. While that works great, my set up is a little more complex, and I found the solution lacking. In a nutshell, as part of my build, I use Flyway with H2 to create a schema, then jOOQ's code generation against H2 to create the needed classes. That all worked well enough until I found some types that didn't quite map correctly against newer versions of H2 (a security issue necessitated the update), so I decided I should finally make use of the same database from start to finish. In this post, I'll show how I did it.
+
++++// Read More+++
+Technically, one could easily make use of Testcontainer's JDBC URL approach for starting the container. I could simply specify, say, `jdbc:tc:postgresql:14:///testdb` and let the container be started and ended automatically, and indeed that works. Sort of. If I specify that as `flyway.url`, the container is started and the migrations are run. If I then pass that to jOOQ's codegen, the container is started and... nothing is generated, as the schema went away when the container shut down after the flyway step. I can, of course, make sure that the container stays running, but that leaves the problem of my tests starting _another_ container and running migrations again. I want a single instance against which migrations are run, code is generated, and tests are run. To do that, we need to start the container manually, and to do _that_, we turn to `groovy-maven-plugin`:
+
+[source,xml]
+-----
+<plugin>
+    <groupId>org.codehaus.gmaven</groupId>
+    <artifactId>groovy-maven-plugin</artifactId>
+    <version>2.1.1</version>
+    <executions>
+        <execution>
+            <id>startdb</id>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>execute</goal>
+            </goals>
+            <configuration>
+                <source>
+                    db = new org.testcontainers.containers.PostgreSQLContainer("postgres:14")
+                            .withUsername("${flyway.user}")
+                            .withDatabaseName("${flyway.user}")
+                            .withPassword("${flyway.password}")
+                    db.start()
+                    project.properties.setProperty('flyway.url', db.getJdbcUrl())
+                </source>
+            </configuration>
+        </execution>
+    </executions>
+    <dependencies>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${version.testcontainers}</version>
+        </dependency>
+    </dependencies>
+</plugin>
+-----
+
+The script is pretty simple:
+
+- We create a new instance of `PostgresqlContainer`, passing the username, and password configured in the `properties` section above (not shown). The database name doesn't matter much, so we're just reusing the username.
+- We start the instance, which causes all the Docker lifecycle events to happen.
+- Finally, we get the JDBC url from the now-running instance and store that in the `flyway.url` property that the next step will need.
+
+Note that we place this first in the order for `generate-sources` lifecycle phase to make it runs before the migration and code generation steps.
+
+Next we want to set up the migration step, which is pretty straightforward:
+
+[source,xml]
+-----
+<plugin>
+    <groupId>org.flywaydb</groupId>
+    <artifactId>flyway-maven-plugin</artifactId>
+    <version>${version.flyway}</version>
+    <executions>
+        <execution>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>migrate</goal>
+            </goals>
+        </execution>
+    </executions>
+    <dependencies>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${version.pgsql-jdbc}</version>
+        </dependency>
+    </dependencies>
+    <configuration>
+        <locations>
+            <location>filesystem:src/main/resources/db/migration</location>
+        </locations>
+    </configuration>
+</plugin>
+-----
+
+Since we're using project properties, the url, username, and password do not need to be explicitly configured. All we need to do is provide the correct dependencies for the plugin and tell it where to find the migration scripts.
+
+Finally, we get to the code generation:
+
+[source,xml]
+-----
+<plugin>
+    <groupId>org.jooq</groupId>
+    <artifactId>jooq-codegen-maven</artifactId>
+    <version>${version.jooq}</version>
+    <executions>
+        <execution>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+        </execution>
+    </executions>
+    <configuration>
+        <jdbc>
+            <url>${flyway.url}</url>
+            <user>${flyway.user}</user>
+            <password>${flyway.password}</password>
+            <schema>public</schema>
+        </jdbc>
+        <generator>
+            <database>
+                <name>org.jooq.meta.postgres.PostgresDatabase</name>
+                <includes>.*</includes>
+                <inputSchema>public</inputSchema>
+                <outputSchema>public</outputSchema>
+            </database>
+            <target>
+                <packageName>com.foo.models.jooq</packageName>
+                <directory>${jooq.outputdir}</directory>
+            </target>
+        </generator>
+    </configuration>
+    <dependencies>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${version.pgsql-jdbc}</version>
+        </dependency>
+    </dependencies>
+</plugin>
+-----
+
+For those familiar with this process, this is pretty typical:
+
+- We configure the JDBC connection, using the same properties that Flyway uses. Notice that we're using the `flyway.url` configured via the `groovy-maven-plugin` execution.
+- We tell jOOQ that we're using a `PostgresDatabase`, and we configure the input and output schemas.
+- Finally, we configure the package we want the generate code to be in, and tell jOOQ where to write the files.
+
+There are two more plugins we need to configure: we need to add our generated code to the build, and we need to configure the test run, via Surefire, so that it knows where the database is. First, let's compile the generated source:
+
+[source,xml]
+-----
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>build-helper-maven-plugin</artifactId>
+    <version>${version.build-helper}</version>
+    <executions>
+        <execution>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>add-source</goal>
+            </goals>
+            <configuration>
+                <sources>
+                    <source>${jooq.outputdir}</source>
+                </sources>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+-----
+
+and configure the test:
+
+[source,xml]
+-----
+<plugin>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>${version.surefire-plugin}</version>
+    <configuration>
+        <systemProperties>
+            <quarkus.datasource.jdbc.url>${flyway.url}</quarkus.datasource.jdbc.url>
+        </systemProperties>
+    </configuration>
+</plugin>
+-----
+
+Here we simply set `quarkus.datasource.jdbc.url` to the computed value of `flyway.url`, which is the standard Quarkus property, so it will be picked up automatically.
+
+When we run the build now, a PostgreSQL container will be started, its database will be built using Flyway, jOOQ type-safe code will be generated using that databse, these new classes will be compiled along with the hand-written code, tests will be run against the Docker-based database, and, finally, the container will be torn down and cleaned up by Testcontainers, so there's no need for us to worry about it explicitly.
+
+[NOTE]
+=====
+While Testcontainers will shut down and remove containers, the imagaes it downloads will remain on disk, so it will be up to you (or someone in your organization) to manage that disk space. This may be especially important in a shared CI environment.
+=====
+
+With this setup, which _does_ work in the context of GitHub actions, you don't need to download and install a database, or worry about your tests damaging any existing databases on the local machine; they're always given a new, pristine database image against which to work. The downside, though, is that if a test fails, analyzing the test data in the database gets trickier. That is, however, solvable, though I'll leave that as an exercise for the reader. For now, at least.
+
+Enjoy!
