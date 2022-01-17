@@ -183,10 +183,7 @@ Here we simply set `quarkus.datasource.jdbc.url` to the computed value of `flywa
 
 When we run the build now, a PostgreSQL container will be started, its database will be built using Flyway, jOOQ type-safe code will be generated using that databse, these new classes will be compiled along with the hand-written code, tests will be run against the Docker-based database, and, finally, the container will be torn down and cleaned up by Testcontainers, so there's no need for us to worry about it explicitly.
 
-[NOTE]
-=====
-While Testcontainers will shut down and remove containers, the imagaes it downloads will remain on disk, so it will be up to you (or someone in your organization) to manage that disk space. This may be especially important in a shared CI environment.
-=====
+NOTE: While Testcontainers will shut down and remove containers, the imagaes it downloads will remain on disk, so it will be up to you (or someone in your organization) to manage that disk space. This may be especially important in a shared CI environment.
 
 With this setup, which _does_ work in the context of GitHub actions, you don't need to download and install a database, or worry about your tests damaging any existing databases on the local machine; they're always given a new, pristine database image against which to work. The downside, though, is that if a test fails, analyzing the test data in the database gets trickier. That is, however, solvable, though I'll leave that as an exercise for the reader. For now, at least.
 

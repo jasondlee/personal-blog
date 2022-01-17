@@ -34,8 +34,7 @@
         <!-- Web Fonts -->
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Philosopher">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
-        <style type="text/css"></style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
         <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         <script src="/scripts/lightbox/jquery-1.7.2.min.js" type="text/javascript"></script>
         <script src="/scripts/lightbox/lightbox.js" type="text/javascript"></script>
