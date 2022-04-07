@@ -4,7 +4,7 @@ tags=Java,Quarkus,jOOQ,Testcontainers,Flyway
 type=post
 author=jdlee
 status=published
-source-highlighter=prettify
+source-highlighter=highlight.js
 ~~~~~~
 
 In a link:/posts/2021/testing-with-quarkus-jooq-testcontainers.html[recent post], I showed how one could fairly easily test your Quarkus application against a Testcontainers-managed Postgres database. While that works great, my set up is a little more complex, and I found the solution lacking. In a nutshell, as part of my build, I use Flyway with H2 to create a schema, then jOOQ's code generation against H2 to create the needed classes. That all worked well enough until I found some types that didn't quite map correctly against newer versions of H2 (a security issue necessitated the update), so I decided I should finally make use of the same database from start to finish. In this post, I'll show how I did it.
