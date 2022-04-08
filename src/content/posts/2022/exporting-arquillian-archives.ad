@@ -1,0 +1,31 @@
+title=Exporting Arquillian Archives
+date=2022-03-22
+tags=Java,Arquillian
+type=post
+author=jdlee
+status=published
+source-highlighter=prettify
+~~~~~~
+
+A big part of the testing we do on WildFly involves in-container testing, for which we use https://arquillian.org/[Arquillian]. It's a great tool when it works right, but sometimes things don't. When that happens, I find it helpful to examine the archives that the tests produce. Fortunately, Arquillian makes that easy *_if_* you know that magic words, and they're not easy to find, so I'm going to fix that here. :P
+
+There are actually (at least) two ways to it, programmatic (thanks to James Perkins for this tidbit!) or declarative (in `arquillian.xml`):
+
+.Programmatic
+[source,java]
+-----
+war.as(ZipExporter.class)
+    .exportTo(new File("target/deployments", war.getName()), true);
+-----
+
+.Declarative
+[source,xml]
+-----
+<engine>
+    <property name="deploymentExportPath">target/deployments</property>
+</engine>
+-----
+
+Now, when you run your tests, you'll find something like `+++target/deployments/_DEFAULT___DEFAULT__my-test-archive.war+++` (the name will vary, of course, based on your test's configuration).
+
+I hope that helps someone. It will definitely help me when I can't remember how to do this next time. :)
