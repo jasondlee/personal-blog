@@ -7,5 +7,8 @@ status=published
 
 Below is a (non-exhaustive) list of the presentations I've given over the years, ordered roughly by date. It's a bit bare, but I'll try to get others added as soon as I can.
 
-* link:oracle-turns-java-up-to-11[Oracle Turns Java up to 11]
+=== April 2022
 * link:jooq-abstractions.pdf[jOOQ: Database Abstractions Without Distractions]
+
+=== ... Older :)
+* link:oracle-turns-java-up-to-11[Oracle Turns Java up to 11]
