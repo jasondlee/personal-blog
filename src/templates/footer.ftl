@@ -61,7 +61,8 @@
                                     <a title="An article Ken Paulsen and I wrote detailing easy JSF component creation" href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html">JSFTemplating and Woodstock: Component Authoring Made Easy</a>
                                 </li>
                                 <li>
-                                    <a href="http://jsfcentral.com/articles/lee-03-09.html">Jason Lee in depth: Mojarra and Scales</a>
+                                    <!-- <a href="http://jsfcentral.com/articles/lee-03-09.html">Jason Lee in depth: Mojarra and Scales</a> -->
+                                    <a href="https://web.archive.org/web/20160312215758/http://jsfcentral.com/articles/lee-03-09.html">Jason Lee in depth: Mojarra and Scales</a>
                                 </li>
                                 <li>
                                     <!--<a title="My JavaOne 2008 Wrap Up" href="http://www.theserverside.com/news/thread.tss?thread_id=49343">Jason Lee: Postmortem for JavaOne 2008</a>-->
@@ -72,7 +73,8 @@
                                     <a title="The GlassFish Adoption Story from my time at IEC" href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental">International Environmental: A Cooling Company Which Prefers Hot Software</a>
                                 </li>
                                 <li>
-                                    <a title="This details the project that spawned a couple of the Mojarra Scales components" href="http://www.jsfcentral.com/articles/trenches_7.html">IEC donates custom JSF component to Mojarra Scales</a>
+                                    <!-- <a title="This details the project that spawned a couple of the Mojarra Scales components" href="http://www.jsfcentral.com/articles/trenches_7.html">IEC donates custom JSF component to Mojarra Scales</a> -->
+                                    <a title="This details the project that spawned a couple of the Mojarra Scales components" href="https://web.archive.org/web/20200221113231/http://www.jsfcentral.com/articles/trenches_7.html">IEC donates custom JSF component to Mojarra Scales</a>
                                 </li>
                             </ul>
                         </div>
