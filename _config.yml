@@ -3,7 +3,7 @@ email: jason@steeplesoft.com
 description: >- # this means to ignore newlines until "baseurl:"
   Coming Up for Air
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://jasondl.ee" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://gh.jasondl.ee" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jasondlee
 github_username:  jasondlee
 source: src
