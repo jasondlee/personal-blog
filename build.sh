@@ -37,8 +37,7 @@ do
 done
 
 if [ -n "$BUILD" -o -n "$SERVE" ] ; then
-set -x
-    jekyll $BUILD $SERVE -s $SRC --config $CONFIG$DEV_CONFIG $DRAFTS
+    bundle exec jekyll $BUILD $SERVE -s $SRC --config $CONFIG$DEV_CONFIG $DRAFTS
 fi
 
 if [ "$DEPLOY" == "true" ] ; then

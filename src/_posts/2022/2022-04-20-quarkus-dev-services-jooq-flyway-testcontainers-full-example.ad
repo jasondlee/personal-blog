@@ -1,15 +1,16 @@
-title=Quarkus Dev Services, jOOQ, Flyway, and Testcontainers: A Full Example
-date=2022-04-20
-tags=Java,Quarkus,Flyway,Testcontainers
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: 'Quarkus Dev Services, jOOQ, Flyway, and Testcontainers: A Full Example'
+date: 2022-04-20
+tags: Java,Quarkus,Flyway,Testcontainers
+type: post
+author: jdlee
+status: published
+source-highlighter: prettify
+---
 
 I have written a few posts about using Quarkus with https://www.testcontainers.org/[Testcontainers], https://flywaydb.org/[Flyway], and https://www.jooq.org/[jOOQ]. Since posting those, I've learned some new tricks that have changed how I integrate the various tools. In this post, I'd like to share a complete example that shows how use Quarkus, https://quarkus.io/guides/dev-services[Quarkus Dev Services], https://www.testcontainers.org/[Testcontainers], and https://flywaydb.org/[Flyway] together for a zero (ish) local config setup.
 
-++// Read More++
+// more
 
 == Introduction
 To state things more clearly, the project developed here will have the following features:

@@ -1,18 +1,19 @@
-title=WildFly and Micrometer
-date=2021-10-18
-tags=Java,WildFly,Micrometer
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: WildFly and Micrometer
+date: 2021-10-18
+tags: Java,WildFly,Micrometer
+type: post
+author: jdlee
+status: published
+source-highlighter: prettify
+---
 
 :git-repo: https://github.com/jasondlee/wildfly/tree/WFLY-14947
 :archive-link: /wildfly/wildfly-micrometer.tar.gz
 
-Earlier in the summer, I wrote link:an-update-on-opentelemetry-and-wildfly.html[some] about the addition of OpenTelemetry support in WildFly. With the release of https://www.wildfly.org/news/2021/10/05/WildFly25-Final-Released/[WildFly 25], that support is now official and in the wild. With 25 behind us, we start looking at 26, and my next effort will be to integrate https://micrometer.io[Micrometer metrics] into the server. In this post, we'll take a look at what that might mean, as well as presenting a way to take an early look.
+Earlier in the summer, I wrote xref:an-update-on-opentelemetry-and-wildfly.ad[some] about the addition of OpenTelemetry support in WildFly. With the release of https://www.wildfly.org/news/2021/10/05/WildFly25-Final-Released/[WildFly 25], that support is now official and in the wild. With 25 behind us, we start looking at 26, and my next effort will be to integrate https://micrometer.io[Micrometer metrics] into the server. In this post, we'll take a look at what that might mean, as well as presenting a way to take an early look.
 
-+++// Read More +++
+// more
 
 Savvy users will likely note that WildFly already has metrics support. In fact, it has two: what we call "base" or "WildFly metrics" available out-of-the-box in `standalone.xml`, as well as MicroProfile Metrics, available in `standalone-microprofile.xml`. If we have those two, why a third? The answer is simple: Micrometer seems to be where Java-land is heading, so much so, in fact, that MicroProfile Metrics is, currently, basically dead (there are ongoing discussions about how to move forward with regard to Micrometer and MP Metrics, but those are out of scope here). What adding another metrics to the system means for the two existing systems is a big topic, and I'll touch on that below.
 

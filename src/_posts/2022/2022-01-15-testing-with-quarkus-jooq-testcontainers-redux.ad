@@ -1,15 +1,17 @@
-title=Testing with Quarkus, jOOQ, and Testcontainers Redux
-date=2022-01-15
-tags=Java,Quarkus,jOOQ,Testcontainers,Flyway
-type=post
-author=jdlee
-status=published
-source-highlighter=highlight.js
-~~~~~~
+---
+title: Testing with Quarkus, jOOQ, and Testcontainers Redux
+date: 2022-01-15
+tags: Java,Quarkus,jOOQ,Testcontainers,Flyway
+type: post
+author: jdlee
+status: published
+source-highlighter: highlight.js
+---
 
 In a link:/posts/2021/testing-with-quarkus-jooq-testcontainers.html[recent post], I showed how one could fairly easily test your Quarkus application against a Testcontainers-managed Postgres database. While that works great, my set up is a little more complex, and I found the solution lacking. In a nutshell, as part of my build, I use Flyway with H2 to create a schema, then jOOQ's code generation against H2 to create the needed classes. That all worked well enough until I found some types that didn't quite map correctly against newer versions of H2 (a security issue necessitated the update), so I decided I should finally make use of the same database from start to finish. In this post, I'll show how I did it.
 
-+++// Read More+++
+// more
+
 Technically, one could easily make use of Testcontainer's JDBC URL approach for starting the container. I could simply specify, say, `jdbc:tc:postgresql:14:///testdb` and let the container be started and ended automatically, and indeed that works. Sort of. If I specify that as `flyway.url`, the container is started and the migrations are run. If I then pass that to jOOQ's codegen, the container is started and... nothing is generated, as the schema went away when the container shut down after the flyway step. I can, of course, make sure that the container stays running, but that leaves the problem of my tests starting _another_ container and running migrations again. I want a single instance against which migrations are run, code is generated, and tests are run. To do that, we need to start the container manually, and to do _that_, we turn to `groovy-maven-plugin`:
 
 [source,xml]

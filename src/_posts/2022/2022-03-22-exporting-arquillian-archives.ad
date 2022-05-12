@@ -1,13 +1,16 @@
-title=Exporting Arquillian Archives
-date=2022-03-22
-tags=Java,Arquillian
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: Exporting Arquillian Archives
+date: 2022-03-22
+tags: Java,Arquillian
+type: post
+author: jdlee
+status: published
+source-highlighter: prettify
+---
 
 A big part of the testing we do on WildFly involves in-container testing, for which we use https://arquillian.org/[Arquillian]. It's a great tool when it works right, but sometimes things don't. When that happens, I find it helpful to examine the archives that the tests produce. Fortunately, Arquillian makes that easy *_if_* you know that magic words, and they're not easy to find, so I'm going to fix that here. :P
+
+// more
 
 There are actually (at least) two ways to it, programmatic (thanks to James Perkins for this tidbit!) or declarative (in `arquillian.xml`):
 

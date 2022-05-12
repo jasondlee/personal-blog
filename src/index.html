@@ -1,5 +1,8 @@
 ---
+layout: default
 title: Home
+pagination:
+    enabled: true
 ---
 {% include pagination.html %}
 
@@ -14,15 +17,17 @@ title: Home
     </span>
   </header>
   {{ post.excerpt }}
-  <footer class="entry-footer">
+  <div class="grid__item width-8-12 read-more small"><a href="{{site.baseurl}}{{ post.url }}">Read More &rsaquo;</a></div>
+  <footer class="entry-footer small">
+      {% if post.tags and post.tags.size > 0 %}
       <div class="tags">
-        {% if post.tags and post.tags.size > 0 %}
             <span class="title">tags: </span>
             {% for tag in post.tags %}
                 <a href="{{site.url}}/tags/{{ tag | downcase | slugify }}.html">{{tag}}</a>
             {% endfor %}
-        {% endif %}
       </div>
+      {% endif %}
+      <div class="grid__item width-4-12 width-12-12-m share-post">{% include share-page.html title=post.title url=post.url %}</div>
   </footer>
 </article>
 {% endfor %}

@@ -1,15 +1,16 @@
-title=A Quarkus Command Line Application
-date=2021-10-10
-tags=Java,Quarkus,CLI
-type=post
-author=jdlee
-status=published
-source-highlighter=prettify
-~~~~~~
+---
+title: A Quarkus Command Line Application
+date: 2021-10-10
+tags: Java,Quarkus,CLI
+type: post
+author: jdlee
+status: published
+source-highlighter: prettify
+---
 
 Most people know Quarkus as a great way to build fast, scalable microservices. What many may not be aware of, however, is that Quarkus can also be used to build command line applications as well. In this post, we'll take a look at how we can leverage the Quarkus ecosystem we already know to build a command line utility quickly and easily.
 
-+++// Read More +++
+// more
 
 The command line application we'll build actually already exists. The GitHub user https://github.com/techpavan[techpavan] has a utility, https://github.com/techpavan/mvn-repo-cleaner[mvn-repo-cleaner], that can be used to clean up old, unused artifacts from the local Maven repository. It's a great utility, but it hasn't been updated in at least a couple of years. Using this as a practical target, then, let's see what Quarkus can offer.
 

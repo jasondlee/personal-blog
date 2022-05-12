@@ -46,7 +46,7 @@ div.title {
 }
 
 div.imageblock .content {
-    background-image: url(none);
+    /*background-image: url(none);*/
 }
 
 blockquote *:first-child:after, q *:first-child:after, blockquote *:first-child:before, q *:first-child:before {
@@ -177,4 +177,8 @@ code {
 .admonitionblock td.icon .icon-important:before {
     content: "\f06a";
     color: #bf0000
+}
+
+.share-page a {
+    text-decoration: none;
 }
