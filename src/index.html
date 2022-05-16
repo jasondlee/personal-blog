@@ -8,29 +8,30 @@ pagination:
 
 {% for post in paginator.posts %}
 <article class="post">
-  <header class="entry-header">
-    <h1 class="title">
-      <a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
-    </h1>
-    <span>
-      <time class="pubdate" datetime="{{post.date}}">{{post.date | date: "%A, %B %-d, %Y" }}</time> 
-    </span>
-  </header>
-  {{ post.excerpt }}
-  <div class="grid__item width-8-12 read-more small"><a href="{{site.baseurl}}{{ post.url }}">Read More &rsaquo;</a></div>
-  <footer class="entry-footer small">
-      {% if post.tags and post.tags.size > 0 %}
-      <div class="tags">
-            <span class="title">tags: </span>
-            {% for tag in post.tags %}
-                <a href="{{site.url}}/tags/{{ tag | downcase | slugify }}.html">{{tag}}</a>
-            {% endfor %}
-      </div>
-      {% endif %}
-      <div class="grid__item width-4-12 width-12-12-m share-post">{% include share-page.html title=post.title url=post.url %}</div>
-  </footer>
+    <div class="grid">
+        <div class="col-1" style="padding-top: 0.4rem">
+            <div class="entry-date">
+                <div class="date-box updated">
+                    <div class="date">{{ post.date | date: "%d" }}</div>
+                    <div class="month-year">{{ post.date | date: "%b %Y" }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-10">
+            <h1 class="title">
+                <a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
+            </h1>
+            <div class="col" style="text1-align: right;">
+                {% include share-page.html title=post.title url=post.url %}
+            </div>
+        </div>
+    </div>
+    {{ post.excerpt }}
+    <div class="read-more small">
+        <a href="{{site.baseurl}}{{ post.url }}">Read More &rsaquo;</a>
+    </div>
 </article>
 {% endfor %}
-<div style="border-top: 2px solid #2BA6CB;"></div>
+<div style="border-top: 2px solid #47586d;"></div>
 
 {% include pagination.html %}

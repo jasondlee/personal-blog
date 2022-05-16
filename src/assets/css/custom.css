@@ -14,7 +14,11 @@ div #content {
 }
 
 .blogname a {
-    color: inherit;
+    color: #cecfd1;
+    text-decoration: none;
+}
+.blogname a:visited {
+    color: #cecfd1;
     text-decoration: none;
 }
 /*
@@ -62,12 +66,17 @@ h1.title {
     line-height: 28px;
     font-weight: 400;
     margin-bottom: 0px;
+    margin-top: 0.5rem;
+}
+
+h1 a {
+    text-decoration: none;
 }
 
 article:not(:first-child) {
     border-top: 2px;
     border-top-style: solid;
-    border-top-color: #2BA6CB;
+    border-top-color: #47586d;
     padding-bottom: 20px;
 }
 
@@ -98,7 +107,9 @@ time {
 .widget ul li a { color: #666; text-decoration: none; display: block; }
 .widget ul li:hover { border-bottom: 1px #111 dotted }
 .widget ul li a:hover { color: #111; }
+
 .pagination {
+    padding: 5px;
     margin-top: 5px;
 }
 
@@ -181,4 +192,44 @@ code {
 
 .share-page a {
     text-decoration: none;
+}
+
+
+
+
+button, .button, .entry-date .date-box {
+    background-color: #47586d;
+}
+
+div .entry-date {
+    margin-right: 17px;
+    width: 82px;
+    text-align: center;
+}
+
+.entry-date .date-box {
+    border-bottom: 3px solid rgba(0,0,0,0.1);
+    padding: 8px 0 5px 0px;
+    color: #fff;
+}
+
+.date-box .date {
+    display: block;
+    line-height: 29px;
+    font-size: 29px;
+    font-weight: bold;
+}
+.date-box .month-year {
+    line-height: 24px;
+}
+
+.fa {
+    color: #47586d;
+}
+
+a {
+    color: #47586d;
+}
+a:visited {
+    color: rgb(85, 26, 139)
 }
