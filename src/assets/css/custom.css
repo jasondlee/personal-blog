@@ -3,7 +3,7 @@ body {
     font-size: 14px;
     line-height: 1.42857143;
     color: #333;
-    background-color: #fff
+    background-color: #fff;
 }
 
 div #content {
@@ -29,23 +29,21 @@ div #content {
     color: #cecfd1;
     text-decoration: none;
 }
-/*
 
-    width:170px;
-    height:227px;
-    float:left
-*/
+pre{white-space:pre-wrap}
 
 .entry-header {
     background-image: none;
 }
+
 tt {
     font-family: monospace;
     background-color: #dddddd;
     #border-bottom: 1px dashed black;
 }
+
 div.title {
-    font-size: 18px;
+    /*font-size: 18px;*/
     border-bottom: 1px dashed #dddddd;
 }
 .aligncenter,
@@ -67,6 +65,13 @@ blockquote *:first-child:after, q *:first-child:after, blockquote *:first-child:
 
 img {
     max-width: 775px;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
 }
 
 h1.title {
@@ -152,6 +157,7 @@ code {
 .main {
     padding-left: 10px;
     padding-right: 10px;
+    padding-top: 10px;
 }
 
 .strike {

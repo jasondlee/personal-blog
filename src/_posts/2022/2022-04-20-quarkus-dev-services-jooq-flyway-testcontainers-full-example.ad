@@ -174,7 +174,7 @@ It is our responsibility to make sure that repeatable migrations can, indeed, be
 
 Now we need to wire https://flywaydb.org/[Flyway] into our application. Fortunately, Quarkus has built-in support for this, so we simply need to add a property to enable it. We add this in `src/main/resources/application.properties`:
 
-[source]
+[source,properties]
 -----
 quarkus.flyway.migrate-at-start=true
 -----
@@ -187,7 +187,7 @@ Quoting from the https://quarkus.io/guides/dev-services[documentation], "Quarkus
 
 So to enable https://quarkus.io/guides/dev-services[Dev Services], we need to _not_ configure a datasource, but we still need a datasource in production. Fortunately, Quarkus has us covered there as well. We can qualify our configuration properties for various modes. That leads us to a configuration that might look like this:
 
-[source]
+[source,properties]
 -----
 quarkus.datasource.db-kind=postgresql
 quarkus.datasource.devservices.port=54321
@@ -229,7 +229,7 @@ Let's define some properties, and the profile for the code gen:
 <properties>
     <jooq.outputdir>src/main/jooq</jooq.outputdir>
 </properties>
-...
+
 <profiles>
     <profile>
         <id>codegen</id>

@@ -9,7 +9,7 @@ pagination:
 {% for post in paginator.posts %}
 <article class="post">
     <div class="grid">
-        <div class="col-1" style="padding-top: 0.4rem">
+        <div class="col-fixed" style="padding-top: 0.4rem; width: 100px;">
             <div class="entry-date">
                 <div class="date-box updated">
                     <div class="date">{{ post.date | date: "%d" }}</div>
@@ -17,7 +17,7 @@ pagination:
                 </div>
             </div>
         </div>
-        <div class="col-10">
+        <div class="col">
             <h1 class="title">
                 <a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
             </h1>

@@ -87,6 +87,7 @@ asciidoctor:
   attributes:
     icons: font
     source-highlighter: rouge
+    source-linenums-option: true
     rouge-css: style
 
 tag_page_layout: tag
