@@ -1,8 +1,7 @@
 title: jasondl.ee
 email: jason@steeplesoft.com
-description: >- # this means to ignore newlines until "baseurl:"
-  Coming Up for Air
-baseurl: "" # the subpath of your site, e.g. /blog
+description: Coming Up for Air
+baseurl: ""
 url: "https://gh.jasondl.ee" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jasondlee
 github_username:  jasondlee
@@ -91,7 +90,7 @@ asciidoctor:
     rouge-css: style
 
 tag_page_layout: tag
-tag_page_dir: tags
+tag_page_dir: tag
 
 excerpt_separator: "// more"
 permalink: /:year/:title:output_ext
@@ -120,9 +119,14 @@ jekyll-archives:
   enabled:
     - tags
   layouts:
-    tag: tag-archive
+    tag: tag
   permalinks:
-    tag: '/blog/tag/:name/'
+    year: '/:year/'
+    month: '/:year/:month/'
+    day: '/:year/:month/:day/'
+    tag: '/tag/:name/'
+    category: '/category/:name/'
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
@@ -131,8 +135,8 @@ jekyll-archives:
 # Excluded items can be processed by explicitly listing the directories or
 # their entries' file path in the `include:` list.
 #
-exclude:
-  - myblog
+#exclude:
+#  - myblog
 #   - .sass-cache/
 #   - .jekyll-cache/
 #   - gemfiles/

@@ -1,7 +1,7 @@
 ---
 title: Testing with Quarkus, jOOQ, and Testcontainers
 date: 2021-12-29
-tags: Java,Quarkus,jOOQ,Testcontainers
+tags: [Java, Quarkus, jOOQ, Testcontainers]
 type: post
 author: jdlee
 status: published

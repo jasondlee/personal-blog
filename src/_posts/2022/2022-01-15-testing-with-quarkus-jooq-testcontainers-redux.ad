@@ -1,7 +1,7 @@
 ---
 title: Testing with Quarkus, jOOQ, and Testcontainers Redux
 date: 2022-01-15
-tags: Java,Quarkus,jOOQ,Testcontainers,Flyway
+tags: [Java, Quarkus, jOOQ, Testcontainers, Flyway]
 type: post
 author: jdlee
 status: published

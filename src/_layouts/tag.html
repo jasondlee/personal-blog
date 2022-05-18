@@ -1,20 +1,21 @@
 ---
 layout: default
 ---
-<div style="float: clear"></div>
-<h1>Posts about {{ page.tag }}</h1>
+{% assign postsByYear = page.posts | group_by_exp:"post", "post.date | date: '%Y'" %}
+{% for year in postsByYear %}
+<h1>{{ year.name }}</h1>
+{% assign postsByMonth = year.items | group_by_exp:"post", "post.date | date: '%B'" %}
 
-{% assign posts = site.tags[page.tag] %}
-{% for post in posts %}
-<article class="post">
-    <header class="entry-header">
-        <h1 class="title">
-            <a href="{{ post.url }}">{{ post.title }}</a>
-        </h1>
-        <span>
-      <time class="pubdate" datetime="{{post.date}}">{{post.date | date: "%A, %B %-d, %Y" }}</time>
-    </span>
-    </header>
-    <p>{{ post.excerpt }}</p>
-</article>
+{% for month in postsByMonth %}
+<h2>{{ month.name }}</h2>
+<ul>
+    {% for post in month.items %}
+    <li>
+        <a href="{{ post.url }}">{{ post.title }}</a>
+        <div>{{ post.excerpt }}</div>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endfor %}
 {% endfor %}
