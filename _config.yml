@@ -13,22 +13,12 @@ gems:
 plugins:
   - jekyll-feed
   - jekyll-archives
-#  - jekyll-paginate
-#  - jekyll-asciidoc
-#  - jekyll/tagging
 
 sass:
   style: compressed
 
-#markdown: kramdown
 highlighter: rouge
-#kramdown:
-#  input: GFM
-#  syntax_highlighter_opts:
-#    default_lang: java
-#    css_class   : 'syntax'
 pagination:
-
   # Site-wide kill switch, disabled here it doesn't run at all
   enabled: true
 
@@ -126,24 +116,3 @@ jekyll-archives:
     day: '/:year/:month/:day/'
     tag: '/tag/:name/'
     category: '/category/:name/'
-
-# Exclude from processing.
-# The following items will not be processed, by default.
-# Any item listed under the `exclude:` key here will be automatically added to
-# the internal "default list".
-#
-# Excluded items can be processed by explicitly listing the directories or
-# their entries' file path in the `include:` list.
-#
-#exclude:
-#  - myblog
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
