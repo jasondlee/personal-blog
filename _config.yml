@@ -2,7 +2,7 @@ title: jasondl.ee
 email: jason@steeplesoft.com
 description: Coming Up for Air
 baseurl: ""
-url: "https://gh.jasondl.ee" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://jasondl.ee" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jasondlee
 github_username:  jasondlee
 source: src
