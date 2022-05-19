@@ -48,7 +48,7 @@ I'll admit that's not a very helpful message, but the issue here is that while m
 
 or via the Admin Console:
 
-image::/images/2011/02/monitoringpage.png[title: "'Monitoring Page']"
+image::/images/2011/02/monitoringpage.png[title: "'Monitoring Page'"]
 
 Select the modules you're interested in (if you're just experimenting, it might be best to select all of them), select the level you want (again, I'd suggest `HIGH` for now), then click save.  Your monitoring requests will now give you the data you're seeking.
 

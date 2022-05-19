@@ -11,7 +11,6 @@ div #content {
 }
 
 .blogname{
-    letter-spacing:10px;
     font-size:48px;
     margin:auto;
     text-align:center;
@@ -25,12 +24,10 @@ div #content {
     color: #cecfd1;
     text-decoration: none;
 }
-.blogname a:visited {
-    color: #cecfd1;
-    text-decoration: none;
-}
 
-pre{white-space:pre-wrap}
+pre {
+    white-space: pre-wrap
+}
 
 .entry-header {
     background-image: none;
@@ -46,21 +43,12 @@ div.title {
     /*font-size: 18px;*/
     border-bottom: 1px dashed #dddddd;
 }
-.aligncenter,
-.alignleft,
-.alignright {
+
+.aligncenter {
     clear: both;
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-div.imageblock .content {
-    /*background-image: url(none);*/
-}
-
-blockquote *:first-child:after, q *:first-child:after, blockquote *:first-child:before, q *:first-child:before {
-    content: "";
 }
 
 img {
@@ -143,6 +131,7 @@ code, kbd, pre, samp {
     font-family: monospace,serif;
     font-size: 1em;
 }
+
 code {
     padding-bottom: 0;
     padding-left: 3px;
@@ -204,11 +193,12 @@ code {
     color: #bf0000
 }
 
+
+/* Newer */
+
 .share-page a {
     text-decoration: none;
 }
-
-
 
 
 button, .button, .entry-date .date-box {
@@ -243,7 +233,4 @@ div .entry-date {
 
 a {
     color: #47586d;
-}
-a:visited {
-    color: rgb(85, 26, 139)
 }

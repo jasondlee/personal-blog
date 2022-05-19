@@ -40,6 +40,6 @@ public List autoCompleteValues(String query) {
 Elsewhere in the bean, we have a static `String[]` with all of the possible values.  We then iterate over this list, finding words that start with the value the user has entered.  For each hit, we that to a `List`, which we then return to the client.  It"s probably not the most efficient implementation, but should serve to demonstrate the use.
 On the page, this component will look something like this:
 
-image::/images/2009/12/autocomplete.png[title: ""autocomplete"]"
+image::/images/2009/12/autocomplete.png[title: "autocomplete"]
 
 In the next installment, we"ll take a look at two image components, `sc:imageZoomer` and `sc:lightbox`.  Until then, please feel free to experiment with `sc:autoComplete`.  If you notice any bugs or deficiencies, or if there"s a feature you"d like to see, please feel free to file an http://kenai.com/jira/browse/SCALES[issue].

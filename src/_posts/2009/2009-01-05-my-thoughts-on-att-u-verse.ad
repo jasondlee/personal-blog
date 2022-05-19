@@ -24,7 +24,7 @@ Having said that, the DVR does have its faults.  One of the things we actually l
 
 Another oddity is DVR access from other rooms.  When the system was first installed, if we wanted to watch a recorded program, we had to do it in the living.  Typically, that's OK, because that's where the 52" is, but, occasionally, we might want to watch a Psych from our bedroom before we turn in.  Until recently, that wasn't possible.  To their credit, AT&amp;T recently released "Total Home DVR" which was a transparent upgrade (transparent in that I have no clue when it was installed.  The system just did it automagically), which enabled limited DVR usage in other rooms.  This is an improvement, of course, but it appears to be read only.  We don't seem to be able to schedule new recordings or delete existing ones.  Better than nothing, I guess, but it still has a way to go.
 
-image::/images/2009/01/dvr_online-150x150.png[link='/images/2009/01/dvr_online.png' title: "'U-verse DVR Online Screen Shot']"
+image::/images/2009/01/dvr_online-150x150.png[link='/images/2009/01/dvr_online.png' title: "'U-verse DVR Online Screen Shot'"]
 
 Of course, what DVR from an internet provider would be complete without web access?  The good news is that U-verse offers that.  The bad news is that it is leagues behind http://www.mythtv.org/wiki/index.php/MythWeb[MythWeb]. Look at the screen shot to the right.  What you see there is pretty much the most exciting page in the system.  Like Total Home DVR, it's better than nothing, but I think the developers on that part of the system would be well-served to look at MythWeb.
 

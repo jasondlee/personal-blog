@@ -16,7 +16,7 @@ The day started off early.  I grabbed breakfast in the press room then hopped in
 
 |=====
 |image:/images/2008/05/gosling_tshirt_toss-150x150.jpg[link="/images/2008/05/gosling_tshirt_toss.jpg" title: "'James Gosling firing t-shirts into the crowd']|"
-image:/images/2008/05/gosling_tshirt_toss2-150x150.jpg[link="/image/2008/05/gosling_tshirt_toss2.jpg" title: "'James Gosling t-shirt toss #2']"
+image:/images/2008/05/gosling_tshirt_toss2-150x150.jpg[link="/image/2008/05/gosling_tshirt_toss2.jpg" title: "'James Gosling t-shirt toss #2'"]
 |=====
 
 Finally, the keynote began and Rich Green the stage.  His speech was a pretty typical rah rah speech, in which he paraded various vendors with Java-based products on stage, such as Ian Freed of Amazon with the Amazon Kindle, and Rikko Sakaguchi of Sony Ericsson with...a phone whose model number I can't remember, but which I want to check out nonetheless.  There was also a fairly disastrous JavaFX demo by Nandini Ramani.  The demo crashed three times on her, though we learned from Josh Marinacci that the demo had a race condition which they fixed later.  Embarrassing for Nandini, I'm sure, but it didn't dent my enthusiasm for the platform.

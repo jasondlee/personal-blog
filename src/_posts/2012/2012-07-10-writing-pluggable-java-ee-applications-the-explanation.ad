@@ -153,7 +153,7 @@ The system does the rest.  What you put in your view fragments is completely up 
 [source,xml,linenums]
 -----
 <h:graphicImage value="#{resource['myImage.JPG']}" height="200"
-    title: ""Here's a picture of something really cool!"/>"
+    title: "Here's a picture of something really cool!"/>"
 -----
 
 You can see a complete example of this in `plummer-sample2`.

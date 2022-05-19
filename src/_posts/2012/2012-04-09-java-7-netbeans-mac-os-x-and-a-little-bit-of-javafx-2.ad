@@ -21,11 +21,11 @@ _____
 
 It's a simple enough fix that you probably won't need screen shots, but I'll do it anyway. :) First, open up your System Preferences and select "Energy Saver": 
 
-image::/images/2012/04/systemprefs-300x251.png[link="/images/2012/04/systemprefs.png" title: "'System Preferences']"
+image::/images/2012/04/systemprefs-300x251.png[link="/images/2012/04/systemprefs.png" title: "'System Preferences'"]
 
 Now uncheck "Automatic Grahpics Switching": 
 
-image::/images/2012/04/graphicsswitching-300x251.png[link="/images/2012/04/graphicsswitching.png" title: "'Graphics Switching Preference']"
+image::/images/2012/04/graphicsswitching-300x251.png[link="/images/2012/04/graphicsswitching.png" title: "'Graphics Switching Preference'"]
 
 In case you haven't installed Java 7, you can grab it http://jdk7.java.net/download.html[here].  Once that's downloaded, open the image and run the installer.  This will install the JVM into `/Library/Java/JavaVirtualMachines/1.7.0.jdk`.  Once that's ready, you need to modify NetBeans to use the new JDK.  The only way I've found to do this is to edit `netbeans.conf`: 
 
@@ -50,7 +50,7 @@ netbeans_jdkhome=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
 
 Save that, then (re)start NetBeans.  You can verify that you are running the correct JDK by opening the About window: 
 
-image::/images/2012/04/aboutnetbeans-256x300.png[link="/images/2012/04/aboutnetbeans-256x300.png" title: "'About NetBeans']"
+image::/images/2012/04/aboutnetbeans-256x300.png[link="/images/2012/04/aboutnetbeans-256x300.png" title: "'About NetBeans'"]
 
 From here, if you want to set things up for JavaFX work, just follow the steps in my last post, but point the Platform Home as well as the JavaFX SDK folder at your Java 7 installation folder, as the Mac OS X JDK previews now ship with JavaFX bundled.
 

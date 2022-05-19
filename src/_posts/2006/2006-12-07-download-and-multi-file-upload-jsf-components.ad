@@ -45,7 +45,7 @@ Usage is pretty simple:
 
 which renders to this:
 
-image::/images/2006/12/download.screenshot.gif[title: ""Download Component Screenshot"]"
+image::/images/2006/12/download.screenshot.gif[title: "Download Component Screenshot"]
 
 Multi-file Uploads
 ------------------
@@ -84,7 +84,7 @@ Full Mode:
 
 which renders like this:
 
-image::/images/2006/12/upload.full.screenshot.gif[title: ""Full Upload Example Screenshot"]"
+image::/images/2006/12/upload.full.screenshot.gif[title: "Full Upload Example Screenshot"]
 
 Button Mode:
 
@@ -99,7 +99,7 @@ Button Mode:
 
 which renders like this:
 
-image::/images/2006/12/upload.button.screenshot.gif[title: ""Button Upload Example Screenshot"]"
+image::/images/2006/12/upload.button.screenshot.gif[title: "Button Upload Example Screenshot"]
 
 What's Next?
 ------------

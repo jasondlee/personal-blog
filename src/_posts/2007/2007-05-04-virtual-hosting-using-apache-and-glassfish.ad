@@ -22,11 +22,11 @@ One Domain, Multiple Servers
 ----------------------------
 We'll start by configuring GlassFish.  We'll use two vhosts, vh1 and vh2.  To add a virtual server from the admin console, go to Configuration->HTTP Service->Virtual Servers:
 
-image::/images/2007/05/virtual_servers_01.thumbnail.png[title: "'Virtual Server screen' link="/images/2007/05/virtual_servers_01.png"]"
+image::/images/2007/05/virtual_servers_01.thumbnail.png[title: "'Virtual Server screen' link="/images/2007/05/virtual_servers_01.png"]
 
 Click add, and fill out the form:
 
-image::/images/2007/05/virtual_servers_02.thumbnail.png[title: "'Adding a virtual server", link="/images/2007/05/virtual_servers_02.png"]"
+image::/images/2007/05/virtual_servers_02.thumbnail.png[title: "'Adding a virtual server", link="/images/2007/05/virtual_servers_02.png"]
 
 I've chosen to use _http-listener-1_ only, as I only care about http://vh1:8080/ being available.  Repeat the process for server _vh2_.  For those that prefer the command line, the server can be created with this command:
 
@@ -54,7 +54,7 @@ While there are a myriad of options regarding port usage, I like to have Apache 
 
 With that, your virtual hosts should be ready.  To test that things are working correctly, let's deploy two applications (which, I'm afraid, you'll have to supply :) ).
 
-image::/images/2007/05/app_deployment_01.thumbnail.png[title: "'Deploying an app to a virtual server' link='/images/2007/05/app_deployment_01.png']"
+image::/images/2007/05/app_deployment_01.thumbnail.png[title: "'Deploying an app to a virtual server' link='/images/2007/05/app_deployment_01.png'"]
 
 Command line users can do:
 

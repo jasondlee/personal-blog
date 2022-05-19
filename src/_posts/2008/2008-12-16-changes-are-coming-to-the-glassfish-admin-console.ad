@@ -51,7 +51,7 @@ For years now, we've used a tree on the left side of the page for navigation.  I
 What we'd like to add
 ---------------------
 
-image::/images/2008/12/v3design-300x235.png[link='/images/2008/12/v3design.png' title: "'Example of the proposed UI changes']"
+image::/images/2008/12/v3design-300x235.png[link='/images/2008/12/v3design.png' title: "'Example of the proposed UI changes'"]
 
 If we get rid of the tree navigation, we obviously need to replace it with something.  We have several ideas as to what can replace the tree, and what can be added to improve further the user experience in the console.
 

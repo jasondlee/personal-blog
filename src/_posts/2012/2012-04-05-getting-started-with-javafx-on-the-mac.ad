@@ -21,23 +21,23 @@ $ unzip javafx_sdk-2_1_0-beta-b19-macosx-universal-27_mar_2012.zip -d $HOME/loca
 -----
 You can, of course, put it anywhere you want, but you'll need to adjust the following instructions.  The next step is set up NetBeans.  NetBeans has JavaFX support out of the box, assuming your JDK has JavaFX support.  Since the Mac JDK does not yet, we need fix that.  Otherwise, you'll see this error:
 
-image::/images/2012/04/newprojectbad-300x224.png[link="/images/2012/04/newprojectbad.png" title: "'New Project - Missing JavaFX bins']"
+image::/images/2012/04/newprojectbad-300x224.png[link="/images/2012/04/newprojectbad.png" title: "'New Project - Missing JavaFX bins'"]
 
 To fix this, we need to create a Java Platform with JavaFX support (I don't know why we can't modify the default platform, but we can't, so we get to create a new one, which we can set to be the default if we want).  To do that, go to Tools > Java Platforms, where you should see something like this:
 
-image::/images/2012/04/javaplatforms.png[link="/images/2012/04/javaplatforms-300x185.png" title: "'Java Platforms']"
+image::/images/2012/04/javaplatforms.png[link="/images/2012/04/javaplatforms-300x185.png" title: "'Java Platforms'"]
 
 To create a new Java Platform, click the (wait for it...!) "Add Platform..." button in the lower left corner.  OS X likes to put things in decidedly (to me) un-Unixy locations, and the JDK is no different. You can find the current JDK under `/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents`:
 
-image::/images/2012/04/selectjdk-300x185.png[link="/images/2012/04/selectjdk.png" title: "'Select JDK Home']"
+image::/images/2012/04/selectjdk-300x185.png[link="/images/2012/04/selectjdk.png" title: "'Select JDK Home'"]
 
 We now need to give it a name, so we'll call this "JDK 1.6 with JavaFX" and click OK.  But wait, there's no JavaFX support! To enable JavaFX support, we have to...um..enable it.  Doing so looks like this:
 
-image::/images/2012/04/addjavafxsupport-300x185.png[link="/images/2012/04/addjavafxsupport.png" title: "'Enable JavaFX Support']"
+image::/images/2012/04/addjavafxsupport-300x185.png[link="/images/2012/04/addjavafxsupport.png" title: "'Enable JavaFX Support'"]
 
 We can now create a new JavaFX project:
 
-image::/images/2012/04/newprojectgood.png[link="/images/2012/04/newprojectgood.png" title: "'New Project - JavaFX bins found']"
+image::/images/2012/04/newprojectgood.png[link="/images/2012/04/newprojectgood.png" title: "'New Project - JavaFX bins found'"]
 
 Your new project is ready to run.
 

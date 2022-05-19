@@ -20,8 +20,8 @@ Next up, after a long break, was Migrating (Large) Applications to OSGi.  I don'
 
 The close of my day in terms of sessions as Ed Burns and Roger Kitain's talk on JSF 2.  As an Expert Group member, I know (or should know ; ) everything that might be in the talk, but I still wanted the recap.  I wish they had gone into more detail on the annotations side of things, as I think that's pretty exciting in terms of productivity, though it likely would have devolved into one slide after another of "here's another annotation!" so they probably made a wise choice.  Ed did show off the composite component support currently in the draft spec.  That support, coupled with Ryan's Groovy work, made for a very cool demo.  Given the short time allotted, they did a fine job.  I hope it got everyone in the room as excited as I am about the upcoming spec.  Here are some pictures from that session:
 |=====
-|image:/images/2008/05/burns_kitain_jsf2_talk1-150x150.jpg[link="/images/2008/05/burns_kitain_jsf2_talk1.jpg" title: ""Ed discusses JSF 2"]|image:/images/2008/05/burns_kitain_jsf2_talk2-150x150.jpg[link="/images/2008/05/burns_kitain_jsf2_talk2.jpg" title="Roger shows his Ajax demo"]|"
-image:/images/2008/05/burns_kitain_jsf2_talk3-150x150.jpg[link="/images/2008/05/burns_kitain_jsf2_talk3.jpg" title: ""Ed shows his ezcomp demo"]"
+|image:/images/2008/05/burns_kitain_jsf2_talk1-150x150.jpg[link="/images/2008/05/burns_kitain_jsf2_talk1.jpg" title: "Ed discusses JSF 2"]|image:/images/2008/05/burns_kitain_jsf2_talk2-150x150.jpg[link="/images/2008/05/burns_kitain_jsf2_talk2.jpg" title="Roger shows his Ajax demo"]|"
+image:/images/2008/05/burns_kitain_jsf2_talk3-150x150.jpg[link="/images/2008/05/burns_kitain_jsf2_talk3.jpg" title: "Ed shows his ezcomp demo"]
 |=====
 Before I left, I got my picture taken with Duke:
 image::/images/2008/05/meandduke.jpg

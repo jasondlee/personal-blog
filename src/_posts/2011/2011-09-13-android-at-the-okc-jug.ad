@@ -9,7 +9,7 @@ status: published
 Jason Lee
 2011-09-13
 
-image::/images/2011/09/android-logo-150x150.png[title: "'android-logo']"
+image::/images/2011/09/android-logo-150x150.png[title: "'android-logo'"]
 
 Today, I presented basic Android development at the Oklahoma City JUG.  In the presentation, we walked through a very simple (and very ugly) note-taking application.  The app allows the user to list, view, add, edit, and delete notes.  There are no bells and whistles in the app, as I was trying to find something that is non-trivial enough to be interesting, yet no so complex that the audience gets lost in all the details.  Overall, I think I succeeded there, though I guess the evaluation slips should tell me how far off I really was. :)
 

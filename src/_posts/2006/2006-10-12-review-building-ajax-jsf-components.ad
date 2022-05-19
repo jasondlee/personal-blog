@@ -16,7 +16,7 @@ While the book is a comprehensive look at the entirety of the JSF framework, one
 
 After a brief introduction to how AJAX works, the authors implement an employee directory search page using hand-written AJAX code and a servlet (no JSF involved at all).  This component, in a fashion similar to the myriad of autocomplete components available, allows the user to type in the name of the desired employee and see, as he types, a list of possible matches appear in a table below the text field:
 
-image::/images/2006/10/F11-03.png[title: ""Ajax Directory Search"]"
+image::/images/2006/10/F11-03.png[title: "Ajax Directory Search"]
 
 Complete code for this component is shown, demonstrating what many of us already know:  there's much to be done on the both client and server sides to make AJAX work.  It also highlights well one of the downsides of Ajax:  there's a fair amount of work a page developer must do to set up the Ajax environment.  
 
@@ -37,7 +37,7 @@ And, if that one example were not enough, Schalk and company go on to implement 
 
 which results in something like this:
 
-image::/images/2006/10/F11-06.png[title: ""Spell Check Text Area"]"
+image::/images/2006/10/F11-06.png[title: "Spell Check Text Area"]
 
 That's all there is to it.  For component authors, this should be extremely exciting, as it very handily encapsulates all the desired functionality in an easy to deploy and use package, instantly making the component more attractive to end users.  That, I think, is the crux of the authors' assertion that JSF and Ajax are a perfect match.  There's nothing magic about JSF that makes Ajax components easier to write, but the encapsulation provided by a JSF component offers a perfect way for component authors to deliver their components.
 

@@ -81,7 +81,7 @@ public class TableBean {
 
 When the component is rendered, you will see something like this:
 
-image::/images/2009/12/dataTable.png[alt='Scales DataTable', title: "'Scales DataTable']"
+image::/images/2009/12/dataTable.png[alt='Scales DataTable', title: "'Scales DataTable'"]
 
 Currently, row selection is not supported, but that should be available by the time Scales hits 2.0 GA.
 
