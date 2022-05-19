@@ -3,12 +3,12 @@ layout: none
 ---
 <?xml version="1.0" encoding="utf-8" ?>
 <feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
-    <id>{{ site.name | xml_escape }}</id>
-    <title>{{ site.name | xml_escape }}</title>
+    <id>{{ site.title | xml_escape }}</id>
+    <title>{{ site.title | xml_escape }}</title>
     <author>
         <name>Jason Lee</name>
     </author>
-    <updated>{{ site.date | date_to_rfc822 }}</updated>
+    <updated>{{ site.time | date_to_rfc822 }}</updated>
     <link href="{{ site.url }}/feed.atom" rel="self" type="application/atom+xml" />
     <link href="{{ site.url }}" rel="alternate" type="text/html" />
     {% for post in site.posts limit:25 %}
