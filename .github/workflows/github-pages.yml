@@ -1,6 +1,9 @@
 name: Build and deploy Jekyll site to GitHub Pages
 
 on:
+  workflow_dispatch:
+    branches:
+      - jekyll
   push:
     branches:
       - jekyll
