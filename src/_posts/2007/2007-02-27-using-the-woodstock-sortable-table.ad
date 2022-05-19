@@ -1,7 +1,7 @@
 ---
 title: "Using the Woodstock Sortable Table"
 date: 2007-02-27
-tags: [Java, JavaServer Faces, Woodstock]
+tags: [Java, JSF, Woodstock]
 type: post
 status: published
 ---
@@ -248,4 +248,4 @@ image::/images/2007/02/tablescreenshot.png[title: "'Table Screen Shot'"]
 == Closing
 And that's "all" there is to it.  I've worked with (and on) a fair number of JSF components, but this is likely the coolest with which I've had personal experience.  The "coolness" comes at a cost, though, in that the component can be difficult to grasp at first.  Hopefully, this "little" will flatten the learning curve just a little bit.  And while you're playing with the table, be sure to https://woodstock.dev.java.net/Preview.htm[check out] some of the other Woodstock components.  They did a great job.
 
-As a side note, many thanks to http://blogs.sun.com/paulsen/[Ken Paulsen] (of https://jsftemplating.dev.java.net[JSFTemplating] and https://glassfish.dev.java.net[Glassfish admin console] fame) for answering all of my questions, regardless of how silly they seemed.  My employer, IEC (namely, my boss Mitch, and not just because he reads this ;) ) deserves many thanks as well for giving me the time to add Facelets support, without which we couldn't be using Woodstock.
+As a side note, many thanks to http://blogs.sun.com/paulsen/[Ken Paulsen] (of https://jsftemplating.dev.java.net[JSFTemplating] and https://glassfish.dev.java.net[GlassFish admin console] fame) for answering all of my questions, regardless of how silly they seemed.  My employer, IEC (namely, my boss Mitch, and not just because he reads this ;) ) deserves many thanks as well for giving me the time to add Facelets support, without which we couldn't be using Woodstock.

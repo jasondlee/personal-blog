@@ -1,7 +1,7 @@
 ---
 title: "Embedding JSF with Winstone"
 date: 2006-05-08
-tags: [JavaServer Faces]
+tags: [JSF]
 type: post
 status: published
 ---
@@ -9,7 +9,7 @@ status: published
 Jason Lee
 2006-05-08
 
-Sometimes, when developing a JSF application, it would be nice not to have to wait for your favorite container to start up.  That's especially true if your container is a full JEE stack like Glassfish or JBoss.  Likewise, there are times when you might need to embed a web application in another, say some server process or desktop application.  While there are a number of options available, I'd like to demonstrate how to embed a simple JSF application using the http://winstone.sourceforge.net/[Winstone Servlet Container].  To help demonstrate how this is done, we'll use a well know sample application:  http://java.sun.com/developer/technicalArticles/GUI/JavaServerFaces/[Duke's guessNumber game], and, to make things even more interesting, we'll convert the application to use Facelets (mostly because I love Facelets, but partly because I didn't care to figure out how to make Winstone compile JSPs ;) ).
+Sometimes, when developing a JSF application, it would be nice not to have to wait for your favorite container to start up.  That's especially true if your container is a full JEE stack like GlassFish or JBoss.  Likewise, there are times when you might need to embed a web application in another, say some server process or desktop application.  While there are a number of options available, I'd like to demonstrate how to embed a simple JSF application using the http://winstone.sourceforge.net/[Winstone Servlet Container].  To help demonstrate how this is done, we'll use a well know sample application:  http://java.sun.com/developer/technicalArticles/GUI/JavaServerFaces/[Duke's guessNumber game], and, to make things even more interesting, we'll convert the application to use Facelets (mostly because I love Facelets, but partly because I didn't care to figure out how to make Winstone compile JSPs ;) ).
 // more
 
 First, let's take a look at the web app itself.  To convert the application to a Facelets app, we'll have to rename the JSPs, then make them conform to XHTML and Facelets specifications.  First off, a really easy one:  index.html.  This page simply redirects us to guessNumber.xhtml.  I could probably have done this in web.xml, but it was in the original app, so we'll just run with it like that.  

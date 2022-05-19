@@ -1,7 +1,7 @@
 ---
 title: "JSF and File Downloads"
 date: 2006-04-04
-tags: [JavaServer Faces]
+tags: [JSF]
 type: post
 status: published
 ---
@@ -19,7 +19,7 @@ At http://www.iec-okc.com[IEC], we have an application used to report inventory 
 . The backing bean creates the spreadsheet, then navigates to success.jsp, a plain ol' JSP
 . The JSP pulls the backing bean from the session, gets the workbook reference from it, and streams that to the user using a ServletOutputStream.
 
-This works well under Tomcat and JSF 1.1.  Our goal, though, is to migrate to a full JEE 5 environment, hosted on https://glassfish.java.net[Glassfish].  Glassfish, though, ships with JSF 1.2, as JSF is now part of the JEE spec (starting with version 5).  This poses a problem, though, as there has apparently been a good deal of work in view handling in 1.2 that breaks this behavior.  http://weblogs.java.net/blog/edburns/[Ed Burns] has been nice enough to take a look for me, but, while waiting for him to get time to help me, I took a stab at fixing it.  My tentative work around for it is as follows:
+This works well under Tomcat and JSF 1.1.  Our goal, though, is to migrate to a full JEE 5 environment, hosted on https://glassfish.java.net[GlassFish].  GlassFish, though, ships with JSF 1.2, as JSF is now part of the JEE spec (starting with version 5).  This poses a problem, though, as there has apparently been a good deal of work in view handling in 1.2 that breaks this behavior.  http://weblogs.java.net/blog/edburns/[Ed Burns] has been nice enough to take a look for me, but, while waiting for him to get time to help me, I took a stab at fixing it.  My tentative work around for it is as follows:
 
 * Alter the form to use a "normal" (read as: non-JSF) form and submit to a servlet.
 * Write a servlet that in effect duplicates the JSF lifecycle:
