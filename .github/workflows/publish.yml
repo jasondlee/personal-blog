@@ -1,9 +1,9 @@
 name: Publish Blog
 
-on:
-  push:
-    branches:
-      - master
+#on:
+#  push:
+#    branches:
+#      - master
 
 jobs:
   build:

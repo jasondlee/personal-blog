@@ -3,10 +3,10 @@ name: Build and deploy Jekyll site to GitHub Pages
 on:
   workflow_dispatch:
     branches:
-      - jekyll
+      - master
   push:
     branches:
-      - jekyll
+      - master
 
 jobs:
   build_and_deploy:
