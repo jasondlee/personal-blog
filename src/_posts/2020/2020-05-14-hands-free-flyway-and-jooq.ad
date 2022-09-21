@@ -192,10 +192,4 @@ One last note: if you make changes to the Flyway migrate file, you'll need to ex
 database and any Flyway checksum caches. If you don't, your build will fail.
 
 All of this _does_ add a bit to the build process, but, for me, so far it's justified. As I make changes to the schema,
-<<<<<<< HEAD
 my jOOQ classes are automatically recreated, and the test database is brought up to date.
-||||||| parent of 5b6db80 (Add tag generation)
-my Jooq classes are automatically recreated, and the test database is brought up to date.
-=======
-my Jooq classes are automatically recreated, and the test database is brought up to date.
->>>>>>> 5b6db80 (Add tag generation)

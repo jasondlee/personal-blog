@@ -49,8 +49,11 @@
     </div>
     <div class="col-3 widget">
         <div>
-            <h3>My Links
-            </h3>
+            <h3>About</h3>
+            {% include about.html %}
+        </div>
+        <div>
+            <h3>My Links</h3>
             <ul>
                 {% for item in site.data.links %}
                 <li>

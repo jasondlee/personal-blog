@@ -1,7 +1,5 @@
-- title: About
-  link: /about.html
-- title: Tags
-  link: /tag
+#- title: About
+#  link: /about.html
 - title: Presentations
   link: /presentations
 - title: Resume/CV
@@ -10,3 +8,5 @@
   link: https://linkedin.com/in/jasondlee
 - title: Twitter
   link: https://twitter.com/jasondlee
+- title: Tags
+  link: /tag
