@@ -1,12 +1,12 @@
------
+---
 title: "Hands-free Flyway and jOOQ"
 date: 2020-05-14
 tags: [Maven,Flyway,jOOQ]
 type: post
 author: jdlee
 status: published
-source-highlighter: prettify
------
+source-highlighter: highlight.js
+---
 
 Recently, I started working on a new project and I wanted to give https://www.jooq.org/[Jooq] a go. I also wanted to integrate
 https://flywaydb.org/[Flyway]: I wanted jOOQ to generate its various classes based off the database schema, and I want to
