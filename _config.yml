@@ -11,6 +11,7 @@ source: src
 theme: minima
 gems:
 plugins:
+  - jekyll/mastodon_webfinger
   - jekyll-feed
   - jekyll-archives
 
@@ -116,3 +117,9 @@ jekyll-archives:
     day: '/:year/:month/:day/'
     tag: '/tag/:name/'
     category: '/category/:name/'
+
+mastodon:
+  username: jasondlee
+  instance: mastodon.cloud
+
+
