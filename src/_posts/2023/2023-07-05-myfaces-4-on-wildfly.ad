@@ -35,7 +35,7 @@ Pretty cool, but why is this important? Well, prior to WildFly 29, in order to i
 
 Since there aren't any downloads for 29 yet, I'm going to use a locally built version:
 
-[code,bash]
+[source,bash]
 -----
 $ unzip wildfly-29.0.0.Beta1-SNAPSHOT.zip
 $ galleon.sh install org.wildfly:wildfly-myfaces-feature-pack:1.0.0-SNAPSHOT \
@@ -49,7 +49,7 @@ $ wildfly-29.0.0.Beta1-SNAPSHOT/bin/standalone.sh
 
 We can now deploy any Jakarta Faces application, and you should see something like this:
 
-[code]
+[source]
 -----
 [org.apache.myfaces.webapp.FacesInitializerImpl] (ServerService Thread Pool -- 84) MyFaces Core has started, it took [218] ms.
 -----

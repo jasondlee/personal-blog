@@ -17,7 +17,7 @@ Perhaps the more pressing/disruptive is that we've removed support for MicroProf
 The more interesting changes are the addition (or modification) of two other libraries: Micrometer and OpenTelemetry (both of which I've written about before link:/tag/micrometer[here] and link:/tag/opentelemetry[here]). Both of these new subsystems are disabled by default (to avoid any unwanted potential performance impacts), so I'll show how to enable them:
 
 .Micrometer
-[source]
+[source,bash]
 -----
 $ jboss-cli.sh -c <<EOF
     if (outcome != success) of /extension=org.wildfly.extension.micrometer:read-resource
