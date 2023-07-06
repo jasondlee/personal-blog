@@ -33,18 +33,19 @@ $ my-wildfly-server/bin/standalone.sh
 
 Pretty cool, but why is this important? Well, prior to WildFly 29, in order to install a given feature pack, you _had_ to provision your server using Galleon. Perhaps not a very big deal, but if you have an existing server, then discover a feature pack you'd like to try, you had to provision a new server, migrate configs, etc. Not a lot of fun, though I could be overstating that. Regardless, as of 29, you can now install a given feature pack into an exising WildFly installation. To demonstrate that, we'll install MyFaces support into an existing provisioning of WildFly 29.
 
-Since there aren't any downloads for 29 yet, I'm going to use a locally built version:
+To demo this, we'll use the just released https://github.com/wildfly/wildfly/releases/download/29.0.0.Beta1/wildfly-29.0.0.Beta1.zip[WildFly 29 Beta]:
 
 [source,bash]
 -----
-$ unzip wildfly-29.0.0.Beta1-SNAPSHOT.zip
+$ wget https://github.com/wildfly/wildfly/releases/download/29.0.0.Beta1/wildfly-29.0.0.Beta1.zip
+$ unzip wildfly-29.0.0.Beta1.zip
 $ galleon.sh install org.wildfly:wildfly-myfaces-feature-pack:1.0.0-SNAPSHOT \
-    --dir=wildfly-29.0.0.Beta1-SNAPSHOT \
+    --dir=wildfly-29.0.0.Beta1 \
     --config=standalone.xml \
     --layers=myfaces
-$ grep myfaces wildfly-29.0.0.Beta1-SNAPSHOT/standalone/configuration/standalone.xml
+$ grep myfaces wildfly-29.0.0.Beta1/standalone/configuration/standalone.xml
         <subsystem xmlns="urn:jboss:domain:jsf:1.1" default-jsf-impl-slot="myfaces"/>
-$ wildfly-29.0.0.Beta1-SNAPSHOT/bin/standalone.sh
+$ wildfly-29.0.0.Beta1/bin/standalone.sh
 -----
 
 We can now deploy any Jakarta Faces application, and you should see something like this:
