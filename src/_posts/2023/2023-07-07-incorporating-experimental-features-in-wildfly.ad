@@ -19,6 +19,9 @@ This is Paul's email (and, thus, none of my work and all credit to him) copied, 
 
 ''''
 
++++++
+<div style="margin-left: 2rem">
++++++
 We have long wanted the ability to easily give users opt-in access to less-than-stable features within WildFly. To this end, WildFly currently includes a preview feature pack that facilitates the delivery of preview features to WildFly users. This gives us the ability to include new or alternate versions of modules not included in our default feature pack. However, this mechanism is not well utilized, as evident by the large number of feature proposals sitting the pull request queue, largely because the vast majority of "features" do not naturally arrive via a new module (or different version of an existing module), but rather via changes to existing modules usually residing within the WildFly codebase. For the purpose of this proposal, I am mostly concerned with "features" as defined as new runtime behavior enabled via configuration within a new or existing subsystem.
 
 Usually, development of a new feature not only involves the feature code itself, which may be bundled with the wildfly codebase, or via an external component; but also changes to the management model of the corresponding subsystem otherwise required to enable the feature.  This might be a new subsystem, but more typically, a new resource within an existing subsystem, or a new attribute of an existing resource, etc.
@@ -337,3 +340,6 @@ Paul Ferraro
 [2] https://github.com/pferraro/wildfly-core/tree/[] +
 [3] https://github.com/wildfly/wildfly-core/pull/5413[] +
 [4] https://github.com/pferraro/wildfly-core/tree/WFCORE-6221/subsystem-test/tests/src/test/java/org/jboss/as/subsystem/test/experimental[] +
++++++
+</div>
++++++
