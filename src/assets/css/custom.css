@@ -157,10 +157,6 @@ code {
     padding: 0px;
 }
 
-
-
-
-
 .admonitionblock td.icon [class^="fa icon-"] {
     font-size: 2.5em;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
@@ -193,13 +189,10 @@ code {
     color: #bf0000
 }
 
-
 /* Newer */
-
 .share-page a {
     text-decoration: none;
 }
-
 
 button, .button, .entry-date .date-box {
     background-color: #47586d;
@@ -233,4 +226,8 @@ div .entry-date {
 
 a {
     color: #47586d;
+}
+
+div.ulist {
+    line-height: 0.5;
 }

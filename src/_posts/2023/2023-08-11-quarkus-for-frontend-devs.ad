@@ -1,0 +1,192 @@
+---
+title: "Quarkus for Frontend Devs"
+date: 2023-08-11
+tags: [Quarkus,JavaScript,Getting Started]
+type: post
+author: jdlee
+status: published
+source-highlighter: highlight.js
+---
+
+A friend of mine is a very good Angular developer. For a project he's been asked to help with, though, he finds himself needing to do some backend work. Since that's a bit outside his wheelhouse, he asked me for advice. In this post, I'll write up what I told him in case it might be of use to someone else.
+
+// more
+
+== Executive Summary
+
+In my opinion, the "best" starting point is this stack:
+
+* Quarkus for the framework
+* Java for the language
+* Maven for the build
+* Terms to know (to search for help)
+  ** Jakarta REST (previously known as JAX-RS)
+  ** Contexts and Dependency Injection (CDI)
+  ** Java Persistence API (JPA)
+    *** Hibernate
+    *** Panache
+
+== The Framework
+
+The first question is, of course, "What do I use?" One of the great strengths of the Java ecosystem is the plethora of options. I gave him four. :)
+
+- https://spring.io/projects/spring-boot[Spring Boot]
+- https://quarkus.io/[Quarkus]
+- https://micronaut.io/[Micronaut]
+- https://helidon.io/[Helidon]
+
+Spring Boot is, of course, the dominant option in that last. It has a _lot_ of documentation, examples, community resources, conference sessions/speakers, etc. It's extremely well-supported. My take on it, though, is that it is heavier -- both on disk and in memory -- than the other options. Additionally, while benchmarks can be finicky and sometimes misleading, it _seems_ that Spring Boot is also slower at runtime than the others (yes, much of that depends on your workload and a thousand other things, so if your case proves me wrong in this, I'm happy for you. No need to "well akshually" me. I get it. :)
+
+Long story short, I suggested Quarkus (Yes, I work at Red Hat, but my use of Quarkus pre-dates my little fedora, so it's not just company loyalty). On the technical side, it's small and super easy to get started. At runtime, it has fast startup and excellent performance (yes, again, workloads affect these things). It's cloud-native, and has native compilation (i.e., Graal VM) baked in. Perhaps most importantly for my friend, I can provide actual help with it. :)
+
+== The "Stack"
+
+The next set of questions were about the technologies used. For this, I started at the build.
+
+=== Build Tool
+
+Much like the JavaScript world, Java developers have a variety of options for build tools. The two primary, though, are Gradle and Maven. Both tools are functionally similar, but have a number of significant differences. Trying to avoid going too deep, I summarized the difference this way:
+
+
+* Maven
+** The build file is XML-based. Polyglot Maven exists but does not appear to be stable yet
+** It is highly opinionated. Projects, in general, have a very quickly and easily understood structure
+** The XML files tend to be more verbose
+* Gradle
+** The build file is primarily Groovy-based, though Kotlin seems to be gaining prominence.
+** The build file is more of a script, so projects can be very free-form. Understanding project structure and build capabilities takes (IME) more time and reading to fully understand
+** Groovy/Kotlin can be much more terse.
+
+Ultimately, the build tool is mostly a personal preference, but my (strong) preference is Maven, which is what I suggested.
+
+=== REST Endpoints
+
+Once the framework has been chosen, and we're created a project, it's time to write the actual API endpoints. Generally speaking, we use REST for that, which means Jakarta REST, which Quarkus supports out of the box. There are alternatives such as https://quarkus.io/guides/grpc-getting-started[gRPC] or https://quarkus.io/guides/smallrye-graphql[GraphQL], but those are a bit more complicated, and, for the project in mind here, overkill.
+
+My advice for my friend was to follow the Quarkus guides, which are numerous and thorough. For a quick start on Java REST development with Quarkus, https://quarkus.io/guides/getting-started#the-jakarta-rest-resources[this guide] provides a nice, simple example.
+
+From the docs:
+
+[source,java]
+-----
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+@Path("/hello")
+public class GreetingResource {
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        return "Hello from RESTEasy Reactive";
+    }
+}
+-----
+
+=== Dependency Injection
+
+Java, much like Angular, supports dependency injection (or inversion of control). The most common DI framework, at least in my corner of the world, is CDI. Again, while much can said about the many advanced features of CDI, a https://quarkus.io/guides/getting-started#using-injection[simple example] should suffice to get one started.
+
+[source,java]
+-----
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+@Path("/hello")
+public class GreetingResource {
+
+    @Inject
+    GreetingService service;
+
+    // ...
+}
+-----
+
+=== Data Access
+
+For a frontend developer, database access may be a foreign concept, so my advice here is to go as simple as you can until/unless you need something more. Quarkus again offers a nice tool, https://quarkus.io/guides/hibernate-orm-panache[Panache]. Panache builds on top of JPA, providing a number of common database operations without any existing code. For example (taken from the docs), here is an entity using the Active Record pattern:
+
+[source,java]
+-----
+import java.time.LocalDate;
+import java.util.List;
+import jakarta.persistence.Entity;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
+@Entity
+public class Person extends PanacheEntity {
+    public String name;
+    public LocalDate birth;
+    public Status status;
+
+    public static Person findByName(String name){
+        return find("name", name).firstResult();
+    }
+
+    public static List<Person> findAlive(){
+        return list("status", Status.Alive);
+    }
+
+    public static void deleteStefs(){
+        delete("name", "Stef");
+    }
+}
+-----
+
+This defines an entity, `Person` which inherits operations such as `find`, `list`, and `delete`.
+
+Some people may not like having such operations defined in the entity, so Panache also supports the repository pattern:
+
+[source,java]
+-----
+@Entity
+public class Person {
+    @Id @GeneratedValue private Long id;
+    private String name;
+    private LocalDate birth;
+    private Status status;
+// ...
+}
+@ApplicationScoped
+public class PersonRepository implements PanacheRepository<Person> {
+   public Person findByName(String name){
+       return find("name", name).firstResult();
+   }
+
+   public List<Person> findAlive(){
+       return list("status", Status.Alive);
+   }
+
+   public void deleteStefs(){
+       delete("name", "Stef");
+  }
+}
+-----
+
+The same methods available via the Active Record pattern above are now exposed on the `PersonRepository` class. Which you use is personal preference, but for someone getting started with Java persistence, either approach offers a very easy starting point.
+
+=== Getting Started
+
+Finally, there's how to create a project. This may seem a bit backwards, but as you'll see, we need to know what technologies we're going to be using as we're about to asked for them.
+
+Quarkus provides a https://code.quarkus.io/["Start coding"] page that helps you bootstrap a project. On this page, the developer can specify the `groupId` and `artifactId` of the project, select a build tool, and a JDK version, as well selecting which Quarkus extensions to use for the project.
+
+To build a project that will expose REST endpoints and use Panache to access a MySQL database, we would:
+
+- Search for "panache" and select "REST resources for Hibernate ORM with Panache"
+- Search for MySQL and select "JDBC Driver - MySQL"
+
+Once those have been check, you're ready to click `Generate your application (alt + ⏎)` and download the ZIP file. Extract the zip and open the project in https://www.jetbrains.com/idea/[the IDE of your choice], and you're off to the races.
+
+image:/images/2023/quarkus-get-started.png[align="right"]
+
+== Conclusion
+
+Obviously, there is _much_ that has been glossed over. The hope, though, is that if you are a JavaScript developer who finds the need to do backend work, this brief guide will give you enough information to get started, and enough knowledge to know how to search when you run into trouble.
+
+As always, if you have questions or comments, feel free to find me on https://twitter.com/jasondlee[Twitter] (or whatever it's called these days)
