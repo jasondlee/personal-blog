@@ -1,0 +1,246 @@
+---
+# this ensures Jekyll reads the file to be transformed into CSS later
+# only Main files contain this front matter, not partials.
+---
+
+$baseurl: "{{ site.baseurl }}";
+$content-width: 1000px;
+
+@import "colors";
+@import "copy";
+
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: $white;
+}
+
+div #content {
+  max-width: none;
+}
+
+.blogname{
+  font-size:48px;
+  margin:auto;
+  text-align:center;
+  color:$headerTextColor;
+  font-family:'Philosopher','Cherry Cream Soda',arial,serif;
+  background-color:$mainColor;
+  letter-spacing: 30px;
+}
+
+.blogname a {
+  color: $headerTextColor;
+  text-decoration: none;
+}
+
+pre {
+  white-space: pre-wrap
+}
+
+.entry-header {
+  background-image: none;
+}
+
+//tt {
+//  font-family: monospace;
+//  background-color: #dddddd;
+//  #border-bottom: 1px dashed black;
+//}
+
+//div.title {
+//  /*font-size: 18px;*/
+//  border-bottom: 1px dashed #dddddd;
+//}
+
+.aligncenter {
+  clear: both;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img {
+  max-width: 775px;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+h1.title {
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 400;
+  margin-bottom: 0px;
+  margin-top: 0.5rem;
+}
+
+h1 a {
+  text-decoration: none;
+}
+
+article:not(:first-child) {
+  border-top: 2px;
+  border-top-style: solid;
+  border-top-color: $mainColor;
+  padding-bottom: 20px;
+}
+
+header h4 {
+  line-height: 18px
+}
+
+.footer {
+  border-top: 1px;
+  border-top-style: dotted;
+  border-top-color: $footerBorderColor;
+  font-size: small;
+  font-style: italic;
+}
+
+time {
+  font-weight: normal;
+  font-size: 14px;
+  font-style: italic;
+  padding-bottom: 10px;
+}
+
+.widget h3 { font-size: 18px; color: $mainColor; padding-bottom: 5px; border-bottom: 1px $widgetBorderColor dotted; }
+.widget ul { list-style: none; }
+.widget ul { margin-left: 0px; }
+.widget ul li { border-bottom: 1px $widgetBorderColor dotted; padding: 3px 0px; }
+.widget ul li ul { display: none; /* Hides any nested uls */ }
+.widget ul li a { color: $widgetBorderColor; text-decoration: none; display: block; }
+.widget ul li:hover { border-bottom: 1px $mainColor dotted }
+.widget ul li a:hover { color: $mainColor; }
+
+.pagination {
+  padding: 5px;
+  margin-top: 5px;
+}
+
+p#quote,p#source {
+  color: #666666;
+  font-size: small;
+}
+
+p#quote{ margin-bottom: 0px }
+p#source { text-align:right; padding-right: 5px; font-style: italic; }
+
+code {
+  color: $defaultCodeColor;
+  font-family: Consolas,"Liberation Mono",Courier,monospace;
+  font-weight: bold;
+}
+
+code, kbd, pre, samp {
+  font-family: monospace,serif;
+  font-size: 1em;
+}
+
+code {
+  padding-bottom: 0;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 0;
+}
+
+.pagination {
+  width: 100%;
+}
+
+.main {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+.strike {
+  text-decoration:  line-through;
+}
+
+.literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] {
+  padding: 0px;
+}
+
+.admonitionblock td.icon [class^="fa icon-"] {
+  font-size: 2.5em;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  cursor: default
+}
+
+.admonitionblock td.icon .icon-note:before {
+  content: "\f05a";
+  color: #19407c
+}
+
+.admonitionblock td.icon .icon-tip:before {
+  content: "\f0eb";
+  text-shadow: 1px 1px 2px rgba(155,155,0,0.8);
+  color: #111
+}
+
+.admonitionblock td.icon .icon-warning:before {
+  content: "\f071";
+  color: #bf6900
+}
+
+.admonitionblock td.icon .icon-caution:before {
+  content: "\f06d";
+  color: #bf3400
+}
+
+.admonitionblock td.icon .icon-important:before {
+  content: "\f06a";
+  color: #bf0000
+}
+
+/* Newer */
+.share-page a {
+  text-decoration: none;
+}
+
+button, .button, .entry-date .date-box {
+  background-color: $mainColor;
+}
+
+div .entry-date {
+  margin-right: 17px;
+  width: 82px;
+  text-align: center;
+}
+
+.entry-date .date-box {
+  border-bottom: 3px solid rgba(0,0,0,0.1);
+  padding: 8px 0 5px 0px;
+  color: $white;
+}
+
+.date-box .date {
+  display: block;
+  line-height: 29px;
+  font-size: 29px;
+  font-weight: bold;
+}
+.date-box .month-year {
+  line-height: 24px;
+}
+
+.fa {
+  color: $mainColor;
+}
+
+a {
+  color: $mainColor;
+}
+
+div.ulist {
+  line-height: 0.5;
+}
