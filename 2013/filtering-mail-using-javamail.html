@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : Filtering Mail using JavaMail</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            <article class="post">
+    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+        Filtering Mail using JavaMail
+    </h1>
+    Wednesday, September 04, 2013 | <span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2013/filtering-mail-using-javamail&title=Filtering Mail using JavaMail" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Filtering Mail using JavaMail&url=https://jasondl.ee/2013/filtering-mail-using-javamail&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2013/filtering-mail-using-javamail" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2013/filtering-mail-using-javamail" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Filtering Mail using JavaMail&amp;body=Filtering Mail using JavaMail https://jasondl.ee/2013/filtering-mail-using-javamail" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+
+    <div>
+        <div class="paragraph">
+<p>At the Lee House, we have an email problem: there&#8217;s just too much of it. Over the years of signing up for contests, coupons, and other things, we seem to have amassed a giant number of subscriptions to various lists, which gives us a lot of (usually) junk email. The simple solution, of course, is just to unsubscribe, but some of those are actually occasionally useful. Throw in a pinch of proscratination and laziness, and, well&#8230;&#8203; it all just keeps coming. Email clients can help manage this by providing email filters to move these emails out of the inbox, but, in the case of Thunderbird, there are only so many rules you can add to one filter, so you either create multiple rules, or give up trying. Several months back, I moved these rules to a perl-based system, but, thanks to a hard drive crash, I lost all of those. Rather than rebuild that setup, which had its own limitations, I did what every good geek would do: I wrote my own, and here it is. :)</p>
+</div>
+<div class="paragraph">
+<p>The system itself is really pretty simple. It&#8217;s not pretty, probably not too terribly efficient, and may be, generally speaking, not as flexible as some would like it to be, but, so far, it works well for me, and, to be honest, I had fun writing it, so I&#8217;m happy. :)  The rules are expressed in a JSON file that might look something like this:</p>
+</div>
+<div class="listingblock">
+<div class="title">rules.json</div>
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="javascript"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+</pre></td><td class="code"><pre><span style="color: #24292f;background-color: #f6f8fa">[</span>
+    <span style="color: #24292f;background-color: #f6f8fa">{</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">serverName</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">imap.myserver.com</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">serverPort</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">993</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">useSsl</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0550ae">true</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">userName</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">myaddress@example.com</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">password</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">mypassword</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">rules</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">[</span>
+            <span style="color: #24292f;background-color: #f6f8fa">{</span><span style="color: #0a3069">"</span><span style="color: #0a3069">destFolder</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">Ads</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span><span style="color: #0a3069">"</span><span style="color: #0a3069">matchingText</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">deals@somesite.com</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">},</span>
+            <span style="color: #24292f;background-color: #f6f8fa">{</span><span style="color: #0a3069">"</span><span style="color: #0a3069">type</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">delete</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">sourceFolder</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">Ads</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">olderThan</span><span style="color: #0a3069">"</span> <span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0550ae">90</span><span style="color: #24292f;background-color: #f6f8fa">}</span>
+        <span style="color: #24292f;background-color: #f6f8fa">]</span>
+    <span style="color: #24292f;background-color: #f6f8fa">}</span>
+<span style="color: #24292f;background-color: #f6f8fa">]</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The system knows of two types of objects: <code>Acccount</code> and <code>Rule</code>. Each <code>Account</code> gives the server&#8217;s name and port, whether or not to use SSL (though this is currently ignored), and the user name and password. The <code>Account</code> also has a list of <code>Rule</code> objects. Each <code>Rule</code> can have a type (whose default is "move"), a source folder (whose default is "INBOX"), a desination folder, a matching text field, and/or an "olderThan" field. In this example, we have two rules. The first moves all email from "<a href="mailto:deals@somesite.com">deals@somesite.com</a>" from the inbox to a folder called Ads. The second will delete all emails in Ads that are older than 90 days.</p>
+</div>
+<div class="paragraph">
+<p>Multiple accounts are supported as well. All you have to do is add a new <code>Account</code> object to the top-level list:</p>
+</div>
+<div class="listingblock">
+<div class="title">rules.json</div>
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="javascript"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="code"><pre><span style="color: #24292f;background-color: #f6f8fa">[</span>
+    <span style="color: #24292f;background-color: #f6f8fa">{</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">serverName</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">imap.myserver.com</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">serverPort</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">993</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">useSsl</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0550ae">true</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">userName</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">myaddress@example.com</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">password</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">mypassword</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">rules</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">[</span>
+            <span style="color: #24292f;background-color: #f6f8fa">{</span><span style="color: #0a3069">"</span><span style="color: #0a3069">destFolder</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">Ads</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span><span style="color: #0a3069">"</span><span style="color: #0a3069">matchingText</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">deals@somesite.com</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">},</span>
+            <span style="color: #24292f;background-color: #f6f8fa">{</span><span style="color: #0a3069">"</span><span style="color: #0a3069">type</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">delete</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">sourceFolder</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">Ads</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">olderThan</span><span style="color: #0a3069">"</span> <span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0550ae">90</span><span style="color: #24292f;background-color: #f6f8fa">}</span>
+        <span style="color: #24292f;background-color: #f6f8fa">]</span>
+    <span style="color: #24292f;background-color: #f6f8fa">},</span>
+    <span style="color: #24292f;background-color: #f6f8fa">{</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">serverName</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">imap.myserver.com</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">serverPort</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">993</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">useSsl</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0550ae">true</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">userName</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">mysecondaddress@example.com</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">password</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">mypassword</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #0a3069">"</span><span style="color: #0a3069">rules</span><span style="color: #0a3069">"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">[</span>
+            <span style="color: #6e7781">// ...</span>
+        <span style="color: #24292f;background-color: #f6f8fa">]</span>
+    <span style="color: #24292f;background-color: #f6f8fa">}</span>
+<span style="color: #24292f;background-color: #f6f8fa">]</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The build generates a <a href="/posts/2013/09/04/building-fat-jars-with-gradle/">fat jar</a>, so running it can be done simply with</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span>java <span style="color: #116329">-jar</span> /path/to/mailfilter.jar /path/to/rules.json
+Deleted 0 message<span style="color: #0550ae">(</span>s<span style="color: #0550ae">)</span> <span style="color: #cf222e">for </span>account myaddress@example.com
+Moved   0 message<span style="color: #0550ae">(</span>s<span style="color: #0550ae">)</span> <span style="color: #cf222e">for </span>account myaddress@example.com
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add that to cron, for example, and you&#8217;re all set.</p>
+</div>
+<div class="paragraph">
+<p>As I said, it&#8217;s not necessarily pretty, but it works (for me) and I thought someone might like to see the JavaMail API in action (even if amateurishly), so I thought I&#8217;d share. You can find the source for this cleverly named project on <a href="https://bitbucket.org/jdlee/mailfilter">Bitbucket</a>. Suggestions, critiques, pull requests, etc. are always welcome. :)</p>
+</div>
+    </div>
+    <footer>
+        <div class="grid">
+            <div class="col tags">
+                
+                <span class="title">tags: </span>
+                
+                <a href="/tag/javamail/">JavaMail</a>
+                <!--                <a href="https://jasondl.ee/tags/JavaMail.html">JavaMail</a>-->
+                
+                
+            </div>
+            <div class="col"><span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2013/filtering-mail-using-javamail&title=Filtering Mail using JavaMail" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Filtering Mail using JavaMail&url=https://jasondl.ee/2013/filtering-mail-using-javamail&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2013/filtering-mail-using-javamail" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2013/filtering-mail-using-javamail" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Filtering Mail using JavaMail&amp;body=Filtering Mail using JavaMail https://jasondl.ee/2013/filtering-mail-using-javamail" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+</div>
+        </div>
+    </footer>
+</article>
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>

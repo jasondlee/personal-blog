@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : JSF 2, h:dataTable, and Ajax Updates</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            <article class="post">
+    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+        JSF 2, h:dataTable, and Ajax Updates
+    </h1>
+    Wednesday, October 28, 2009 | <span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2009/jsf-2-hdatatable-and-ajax-updates&title=JSF 2, h:dataTable, and Ajax Updates" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=JSF 2, h:dataTable, and Ajax Updates&url=https://jasondl.ee/2009/jsf-2-hdatatable-and-ajax-updates&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2009/jsf-2-hdatatable-and-ajax-updates" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2009/jsf-2-hdatatable-and-ajax-updates" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=JSF 2, h:dataTable, and Ajax Updates&amp;body=JSF 2, h:dataTable, and Ajax Updates https://jasondl.ee/2009/jsf-2-hdatatable-and-ajax-updates" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+
+    <div>
+        <div class="paragraph">
+<p>While JSF has had Ajax support for a long time now, it has always been through external libraries such as <a href="http://www.jboss.org/richfaces">Ajax4Jsf/RichFaces</a>, <a href="http://www.icefaces.org/main/home/">ICEfaces</a>, <a href="http://directwebremoting.org/dwr/index.html">DWR</a>, <a href="https://jsf-extensions.dev.java.net/nonav/mvn/reference-ajax.html">DynaFaces</a>, etc.  With JSF 2, the framework now has first class, standardized support for Ajax.  This is good news on several fronts.  For those that want Ajax support but would rather not import another library, that capability is now baked in, and, for those familiar with a4j or DynaFaces, it should look very familiar.  However, for those that don&#8217;t mind the external dependency, the standardized Ajax will make it much easier to mix and match component libraries on the same page, an issue that has plagued JSF for while.  In this post, I&#8217;d like to take the first approach and show how easy it is to achieve Ajaxy updates on your <code>h:dataTable</code> using only standard JSF.</p>
+</div>
+<div class="paragraph">
+<p>In this example, we&#8217;re going to use a part of the JSF API that I have overlooked or ignored for a long time:  the <code>DataModel</code> class.  While you may not recognize the class, you&#8217;ve almost certainly used it.  When you pass a <code>List</code> to the a <code>h:dataTable</code>, JSF wraps that list in a <code>DataModel</code> implicitly.  However, if you use the class explicitly, you gain a lot more power over your data and your table.  We&#8217;ll look at that in a moment.  First, though, let&#8217;s start with our basic table:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="code"><pre><span style="color: #116329">&lt;h:dataTable</span> <span style="color: #116329">id=</span><span style="color: #0a3069">"memberTable"</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"#{memberBean.members}"</span> <span style="color: #116329">var=</span><span style="color: #0a3069">"member"</span><span style="color: #116329">&gt;</span>
+    <span style="color: #116329">&lt;h:column&gt;</span>
+        <span style="color: #116329">&lt;f:facet</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"header"</span><span style="color: #116329">&gt;</span>
+            <span style="color: #116329">&lt;h:outputText</span> <span style="color: #116329">style=</span><span style="color: #0a3069">"font-weight: bold;"</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"Last Name"</span><span style="color: #116329">/&gt;</span>
+        <span style="color: #116329">&lt;/f:facet&gt;</span>
+        #{member.lastName}
+    <span style="color: #116329">&lt;/h:column&gt;</span>
+    <span style="color: #116329">&lt;h:column&gt;</span>
+        <span style="color: #116329">&lt;f:facet</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"header"</span><span style="color: #116329">&gt;</span>
+            <span style="color: #116329">&lt;h:outputText</span> <span style="color: #116329">style=</span><span style="color: #0a3069">"font-weight: bold;"</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"First Name"</span><span style="color: #116329">/&gt;</span>
+        <span style="color: #116329">&lt;/f:facet&gt;</span>
+        #{member.firstName}
+    <span style="color: #116329">&lt;/h:column&gt;</span>
+    <span style="color: #116329">&lt;h:column&gt;</span>
+        <span style="color: #116329">&lt;f:facet</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"header"</span><span style="color: #116329">&gt;</span>
+            <span style="color: #116329">&lt;h:outputText</span> <span style="color: #116329">style=</span><span style="color: #0a3069">"font-weight: bold;"</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"Email Addresss"</span><span style="color: #116329">/&gt;</span>
+        <span style="color: #116329">&lt;/f:facet&gt;</span>
+        #{member.emailAddress}
+    <span style="color: #116329">&lt;/h:column&gt;</span>
+<span style="color: #116329">&lt;/h:dataTable&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This should look pretty familiar to most of you.  We&#8217;re simply creating a three column table, using the data return by <code>MemberBean.getMembers()</code>.  As I mentioned earlier, we&#8217;ll be using the <code>DataModel</code> API directly, so let&#8217;s take a look at <code>MemberBean</code> now:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+</pre></td><td class="code"><pre><span style="color: #8250df">@ManagedBean</span>
+<span style="color: #8250df">@SessionScoped</span>
+<span style="color: #cf222e">public</span> <span style="color: #cf222e">class</span> <span style="color: #953800">MemberBean</span> <span style="color: #cf222e">implements</span> <span style="color: #953800">Serializable</span> <span style="color: #0550ae">{</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">static</span> <span style="color: #cf222e">final</span> <span style="color: #953800">String</span> <span style="color: #953800">NAV_LIST</span> <span style="color: #0550ae">=</span> <span style="color: #0a3069">"/admin/members/list"</span><span style="color: #0550ae">;</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">static</span> <span style="color: #cf222e">final</span> <span style="color: #953800">String</span> <span style="color: #953800">NAV_REDIRECT</span> <span style="color: #0550ae">=</span> <span style="color: #0a3069">"?faces-redirect=true"</span><span style="color: #0550ae">;</span>
+    <span style="color: #cf222e">private</span> <span style="color: #953800">DataAccessController</span> <span style="color: #24292f;background-color: #f6f8fa">dataAccess</span> <span style="color: #0550ae">=</span> <span style="color: #cf222e">new</span> <span style="color: #953800">DataAccessController</span><span style="color: #0550ae">();</span>
+    <span style="color: #cf222e">private</span> <span style="color: #953800">DataModel</span> <span style="color: #24292f;background-color: #f6f8fa">dataModel</span><span style="color: #0550ae">;</span>
+    <span style="color: #cf222e">private</span> <span style="color: #cf222e">int</span> <span style="color: #24292f;background-color: #f6f8fa">rowsPerPage</span> <span style="color: #0550ae">=</span> <span style="color: #0550ae">5</span><span style="color: #0550ae">;</span>
+    <span style="color: #cf222e">private</span> <span style="color: #953800">GroupMember</span> <span style="color: #24292f;background-color: #f6f8fa">current</span><span style="color: #0550ae">;</span>
+    <span style="color: #cf222e">private</span> <span style="color: #cf222e">int</span> <span style="color: #24292f;background-color: #f6f8fa">selectedItemIndex</span> <span style="color: #0550ae">=</span> <span style="color: #0550ae">-</span><span style="color: #0550ae">1</span><span style="color: #0550ae">;</span>
+    <span style="color: #cf222e">private</span> <span style="color: #953800">Paginator</span> <span style="color: #24292f;background-color: #f6f8fa">paginator</span><span style="color: #0550ae">;</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">resetList</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #24292f;background-color: #f6f8fa">dataModel</span> <span style="color: #0550ae">=</span> <span style="color: #0550ae">null</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #953800">String</span> <span style="color: #8250df">prepareList</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #24292f;background-color: #f6f8fa">resetList</span><span style="color: #0550ae">();</span>
+        <span style="color: #cf222e">return</span> <span style="color: #953800">NAV_LIST</span> <span style="color: #0550ae">+</span> <span style="color: #953800">NAV_REDIRECT</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">resetPagination</span><span style="color: #0550ae">(</span><span style="color: #953800">ComponentSystemEvent</span> <span style="color: #24292f;background-color: #f6f8fa">event</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+        <span style="color: #24292f;background-color: #f6f8fa">paginator</span> <span style="color: #0550ae">=</span> <span style="color: #0550ae">null</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #953800">Paginator</span> <span style="color: #8250df">getPaginator</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">if</span> <span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">paginator</span> <span style="color: #0550ae">==</span> <span style="color: #0550ae">null</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+            <span style="color: #24292f;background-color: #f6f8fa">paginator</span> <span style="color: #0550ae">=</span> <span style="color: #cf222e">new</span> <span style="color: #953800">Paginator</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">rowsPerPage</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+                <span style="color: #8250df">@Override</span>
+                <span style="color: #cf222e">public</span> <span style="color: #cf222e">int</span> <span style="color: #8250df">getItemsCount</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+                    <span style="color: #cf222e">return</span> <span style="color: #24292f;background-color: #f6f8fa">dataAccess</span><span style="color: #0550ae">.</span><span style="color: #116329">count</span><span style="color: #0550ae">(</span><span style="color: #953800">GroupMember</span><span style="color: #0550ae">.</span><span style="color: #116329">class</span><span style="color: #0550ae">);</span>
+                <span style="color: #0550ae">}</span>
+                <span style="color: #8250df">@Override</span>
+                <span style="color: #cf222e">public</span> <span style="color: #953800">DataModel</span> <span style="color: #8250df">createPageDataModel</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+                    <span style="color: #cf222e">return</span> <span style="color: #cf222e">new</span> <span style="color: #8250df">ListDataModel</span><span style="color: #0550ae">(</span>
+                        <span style="color: #24292f;background-color: #f6f8fa">dataAccess</span><span style="color: #0550ae">.</span><span style="color: #116329">findRange</span><span style="color: #0550ae">(</span><span style="color: #953800">GroupMember</span><span style="color: #0550ae">.</span><span style="color: #116329">class</span><span style="color: #0550ae">,</span> <span style="color: #24292f;background-color: #f6f8fa">getPageFirstItem</span><span style="color: #0550ae">(),</span>
+                        <span style="color: #24292f;background-color: #f6f8fa">getPageFirstItem</span><span style="color: #0550ae">()+</span><span style="color: #24292f;background-color: #f6f8fa">getPageSize</span><span style="color: #0550ae">()));</span>
+                <span style="color: #0550ae">}</span>
+            <span style="color: #0550ae">};</span>
+        <span style="color: #0550ae">}</span>
+        <span style="color: #cf222e">return</span> <span style="color: #24292f;background-color: #f6f8fa">paginator</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #953800">DataModel</span> <span style="color: #8250df">getMembers</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">if</span> <span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">dataModel</span> <span style="color: #0550ae">==</span> <span style="color: #0550ae">null</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+            <span style="color: #24292f;background-color: #f6f8fa">dataModel</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">getPaginator</span><span style="color: #0550ae">().</span><span style="color: #116329">createPageDataModel</span><span style="color: #0550ae">();</span>
+        <span style="color: #0550ae">}</span>
+        <span style="color: #cf222e">return</span> <span style="color: #24292f;background-color: #f6f8fa">dataModel</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">next</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #24292f;background-color: #f6f8fa">getPaginator</span><span style="color: #0550ae">().</span><span style="color: #116329">nextPage</span><span style="color: #0550ae">();</span>
+        <span style="color: #24292f;background-color: #f6f8fa">resetList</span><span style="color: #0550ae">();</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">previous</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #24292f;background-color: #f6f8fa">getPaginator</span><span style="color: #0550ae">().</span><span style="color: #116329">previousPage</span><span style="color: #0550ae">();</span>
+        <span style="color: #24292f;background-color: #f6f8fa">resetList</span><span style="color: #0550ae">();</span>
+    <span style="color: #0550ae">}</span>
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The interesting methods here are <code>getPaginator()</code>, <code>getMembers()</code>, <code>next()</code>, and <code>previous()</code>.  Before getting too far along, I feel I should note that this code is based off that generated by the really nice JSF 2 support in NetBeans 6.8, though I have done some editing.  At any rate, starting with <code>getMembers()</code>, we see the null check on the <code>DataModel</code>.  If it&#8217;s null, we ask the <code>pagintator</code> to create it for us.  In <code>getPaginator()</code>, we create a new instance of the abstract <code>Paginator</code> class (see below), overriding a couple of methods to make use of instance variables from our class.  In <code>createDataModel()</code>, we see that we ask our <code>DataAccessController</code> [1] to return a <code>List</code> of <code>GroupMember`s, starting at index `getPageFirstItem()</code>, of, at most <code>getPageSize()</code> items.  While the <code>DataAccessController</code> is not too important to our discussion here, the <code>Paginator</code> certainly is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+</pre></td><td class="code"><pre><span style="color: #cf222e">public</span> <span style="color: #cf222e">abstract</span> <span style="color: #cf222e">class</span> <span style="color: #953800">Paginator</span> <span style="color: #0550ae">{</span>
+    <span style="color: #cf222e">private</span> <span style="color: #cf222e">int</span> <span style="color: #24292f;background-color: #f6f8fa">pageSize</span><span style="color: #0550ae">;</span>
+    <span style="color: #cf222e">private</span> <span style="color: #cf222e">int</span> <span style="color: #24292f;background-color: #f6f8fa">page</span><span style="color: #0550ae">;</span>
+    <span style="color: #cf222e">public</span> <span style="color: #8250df">Paginator</span><span style="color: #0550ae">(</span><span style="color: #cf222e">int</span> <span style="color: #24292f;background-color: #f6f8fa">pageSize</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">this</span><span style="color: #0550ae">.</span><span style="color: #116329">pageSize</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">pageSize</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">abstract</span> <span style="color: #cf222e">int</span> <span style="color: #8250df">getItemsCount</span><span style="color: #0550ae">();</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">abstract</span> <span style="color: #953800">DataModel</span> <span style="color: #8250df">createPageDataModel</span><span style="color: #0550ae">();</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">int</span> <span style="color: #8250df">getPageFirstItem</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">return</span> <span style="color: #24292f;background-color: #f6f8fa">page</span><span style="color: #0550ae">*</span><span style="color: #24292f;background-color: #f6f8fa">pageSize</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">int</span> <span style="color: #8250df">getPageLastItem</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">int</span> <span style="color: #24292f;background-color: #f6f8fa">i</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">getPageFirstItem</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">+</span> <span style="color: #24292f;background-color: #f6f8fa">pageSize</span> <span style="color: #0550ae">-</span><span style="color: #0550ae">1</span><span style="color: #0550ae">;</span>
+        <span style="color: #cf222e">int</span> <span style="color: #24292f;background-color: #f6f8fa">count</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">getItemsCount</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">-</span> <span style="color: #0550ae">1</span><span style="color: #0550ae">;</span>
+        <span style="color: #cf222e">if</span> <span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">i</span> <span style="color: #0550ae">&gt;</span> <span style="color: #24292f;background-color: #f6f8fa">count</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+            <span style="color: #24292f;background-color: #f6f8fa">i</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">count</span><span style="color: #0550ae">;</span>
+        <span style="color: #0550ae">}</span>
+        <span style="color: #cf222e">if</span> <span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">i</span> <span style="color: #0550ae">&lt;</span> <span style="color: #0550ae">0</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+            <span style="color: #24292f;background-color: #f6f8fa">i</span> <span style="color: #0550ae">=</span> <span style="color: #0550ae">0</span><span style="color: #0550ae">;</span>
+        <span style="color: #0550ae">}</span>
+        <span style="color: #cf222e">return</span> <span style="color: #24292f;background-color: #f6f8fa">i</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">boolean</span> <span style="color: #8250df">isHasNextPage</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">return</span> <span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">page</span><span style="color: #0550ae">+</span><span style="color: #0550ae">1</span><span style="color: #0550ae">)*</span><span style="color: #24292f;background-color: #f6f8fa">pageSize</span><span style="color: #0550ae">+</span><span style="color: #0550ae">1</span> <span style="color: #0550ae">&lt;=</span> <span style="color: #24292f;background-color: #f6f8fa">getItemsCount</span><span style="color: #0550ae">();</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">nextPage</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">if</span> <span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">isHasNextPage</span><span style="color: #0550ae">())</span> <span style="color: #0550ae">{</span>
+            <span style="color: #24292f;background-color: #f6f8fa">page</span><span style="color: #0550ae">++;</span>
+        <span style="color: #0550ae">}</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">boolean</span> <span style="color: #8250df">isHasPreviousPage</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">return</span> <span style="color: #24292f;background-color: #f6f8fa">page</span> <span style="color: #0550ae">&gt;</span> <span style="color: #0550ae">0</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">previousPage</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">if</span> <span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">isHasPreviousPage</span><span style="color: #0550ae">())</span> <span style="color: #0550ae">{</span>
+            <span style="color: #24292f;background-color: #f6f8fa">page</span><span style="color: #0550ae">--;</span>
+        <span style="color: #0550ae">}</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">int</span> <span style="color: #8250df">getPageSize</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">return</span> <span style="color: #24292f;background-color: #f6f8fa">pageSize</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There&#8217;s no real complex logic there, so I&#8217;ll let you read that, and we&#8217;ll move on to the next and previous links.  Immediately under the table, I have this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span style="color: #116329">&lt;h:commandLink</span> <span style="color: #116329">id=</span><span style="color: #0a3069">"prevLink"</span> <span style="color: #116329">action=</span><span style="color: #0a3069">"#{memberBean.previous}"</span>
+    <span style="color: #116329">value=</span><span style="color: #0a3069">"Previous #{memberBean.paginator.pageSize}"</span>
+    <span style="color: #116329">rendered=</span><span style="color: #0a3069">"#{memberBean.paginator.hasPreviousPage}"</span><span style="color: #116329">/&gt;</span>
+<span style="color: #24292f">&amp;#160;</span>
+<span style="color: #116329">&lt;h:commandLink</span> <span style="color: #116329">id=</span><span style="color: #0a3069">"nextLink"</span> <span style="color: #116329">action=</span><span style="color: #0a3069">"#{memberBean.next}"</span>
+    <span style="color: #116329">value=</span><span style="color: #0a3069">"Next #{memberBean.paginator.pageSize}"</span>
+    <span style="color: #116329">rendered=</span><span style="color: #0a3069">"#{memberBean.paginator.hasNextPage}"</span><span style="color: #116329">/&gt;</span>
+<span style="color: #116329">&lt;/div&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you were to click on the next link, <code>MemberBean.next()</code> would execute, which would increment the page number, and the table would rerender, getting us the next set of five `GroupMember`s.  It does this, however, using a full page refresh (FPR), which is exactly what we&#8217;re trying to avoid. So, then, how does one ajaxify these links?  Looking at just the next link for brevity and clarity, we add on simple line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span style="color: #116329">&lt;h:commandLink</span> <span style="color: #116329">id=</span><span style="color: #0a3069">"nextLink"</span> <span style="color: #116329">action=</span><span style="color: #0a3069">"#{memberBean.next}"</span>
+    <span style="color: #116329">value=</span><span style="color: #0a3069">"Next #{memberBean.paginator.pageSize}"</span>
+    <span style="color: #116329">rendered=</span><span style="color: #0a3069">"#{memberBean.paginator.hasNextPage}"</span><span style="color: #116329">&gt;</span>
+    <span style="color: #116329">&lt;f:ajax</span> <span style="color: #116329">execute=</span><span style="color: #0a3069">"@this"</span> <span style="color: #116329">render=</span><span style="color: #0a3069">"@form"</span><span style="color: #116329">/&gt;</span>
+<span style="color: #116329">&lt;/h:commandLink&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>f:ajax</code> tag is all you need.  There are <a href="http://java.sun.com/javaee/javaserverfaces/2.0/docs/pdldocs/facelets/f/ajax.html">many more options</a> for the tag, but in this simple use case, we&#8217;re telling JSF to add Ajax behavior to the default event for the component (in this case, the click), we want to execute the current component (<code>@this</code> tells JSF to call the action method specified on the parent component, <code>#{memberBean.next}</code>), and then rerender the form that encloses this component (<code>@form</code>).  That&#8217;s all there is to it.  Very easy and very clean.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s go a step further.  Let&#8217;s add the ability to change the number of rows per page, and, of course, let&#8217;s do it in an Ajaxy manner.  First, we must add some methods to our managed bean to make it all happen:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+</pre></td><td class="code"><pre><span style="color: #cf222e">public</span> <span style="color: #cf222e">int</span> <span style="color: #8250df">getRowsPerPage</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+    <span style="color: #cf222e">return</span> <span style="color: #24292f;background-color: #f6f8fa">rowsPerPage</span><span style="color: #0550ae">;</span>
+<span style="color: #0550ae">}</span>
+<span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">setRowsPerPage</span><span style="color: #0550ae">(</span><span style="color: #cf222e">int</span> <span style="color: #24292f;background-color: #f6f8fa">rowsPerPage</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+    <span style="color: #cf222e">this</span><span style="color: #0550ae">.</span><span style="color: #116329">rowsPerPage</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">rowsPerPage</span><span style="color: #0550ae">;</span>
+    <span style="color: #24292f;background-color: #f6f8fa">resetList</span><span style="color: #0550ae">();</span>
+    <span style="color: #24292f;background-color: #f6f8fa">resetPagination</span><span style="color: #0550ae">();</span>
+<span style="color: #0550ae">}</span>
+<span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">resetPagination</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+    <span style="color: #24292f;background-color: #f6f8fa">paginator</span> <span style="color: #0550ae">=</span> <span style="color: #0550ae">null</span><span style="color: #0550ae">;</span>
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is the basic getter/setter pattern managed beans typically expose, plus some extra logic in the setter to destroy the <code>Paginator</code>, which will force its recreation when the table renders.  The markup on the page might look something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span style="color: #116329">&lt;h:outputText</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"#{memberBean.paginator.pageFirstItem + 1} to #{memberBean.paginator.pageLastItem + 1} of #{memberBean.paginator.itemsCount}"</span><span style="color: #116329">/&gt;</span>
+(
+<span style="color: #116329">&lt;h:selectOneMenu</span> <span style="color: #116329">id=</span><span style="color: #0a3069">"rowsPerPage"</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"#{memberBean.rowsPerPage}"</span><span style="color: #116329">&gt;</span>
+    <span style="color: #116329">&lt;f:ajax</span> <span style="color: #116329">execute=</span><span style="color: #0a3069">"@this"</span> <span style="color: #116329">render=</span><span style="color: #0a3069">"@form"</span><span style="color: #116329">/&gt;</span>
+    <span style="color: #116329">&lt;f:selectItem</span> <span style="color: #116329">itemValue=</span><span style="color: #0a3069">"5"</span> <span style="color: #116329">/&gt;</span>
+    <span style="color: #116329">&lt;f:selectItem</span> <span style="color: #116329">itemValue=</span><span style="color: #0a3069">"10"</span> <span style="color: #116329">/&gt;</span>
+    <span style="color: #116329">&lt;f:selectItem</span> <span style="color: #116329">itemValue=</span><span style="color: #0a3069">"15"</span> <span style="color: #116329">/&gt;</span>
+<span style="color: #116329">&lt;/h:selectOneMenu&gt;</span>
+) per page
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This snippet adds some text telling the user the range he&#8217;s currently viewing, as well as a <code>h:selectOneMenu</code> listing some (hardcoded) options for the number of rows per page.  If you&#8217;ve been doing JSF long, this looks pretty normal.  The ajaxification, just like the `commandLink`s above, is a simple, one-line addition (line 4), that works the same way.</p>
+</div>
+<div class="paragraph">
+<p>Note that in each Ajax case, we&#8217;re rerendering the entire form.  While convenient, it&#8217;s not necessary.  If we wanted to, we could list each component clientId, separated by spaces, that we want to rerender.  For large complex forms, a more selective rerendering would probably be desirable.  However, if the number of components to rerender is high, it&#8217;s a better idea to group them (in one or more groups as necessary) with, say, <code>h:panelGroup</code>, and rerender the groups, as that makes for a more maintainable list.  In this case, we simply rerender the form as it&#8217;s small enough to do that quickly.</p>
+</div>
+<div class="paragraph">
+<p>Before we finish up, let me touch on why I stressed the explicit use of <code>DataModel</code>.  While not even indirectly related to Ajax interactions, its explicit use makes master/detail relationships, for example, a little easier.  In this example, if we want to edit a particular member, the <code>DataModel</code> makes it really easy.  Let&#8217;s add a "command" column to the end of our table:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span style="color: #116329">&lt;h:column&gt;</span>
+    <span style="color: #116329">&lt;f:facet</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"header"</span><span style="color: #116329">&gt;</span>
+        <span style="color: #116329">&lt;h:outputText</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"&amp;nbsp;"</span><span style="color: #116329">/&gt;</span>
+    <span style="color: #116329">&lt;/f:facet&gt;</span>
+    <span style="color: #116329">&lt;h:commandLink</span> <span style="color: #116329">action=</span><span style="color: #0a3069">"#{memberBean.view}"</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"View"</span><span style="color: #116329">/&gt;</span><span style="color: #24292f">&amp;nbsp;</span>
+    <span style="color: #116329">&lt;h:commandLink</span> <span style="color: #116329">action=</span><span style="color: #0a3069">"#{memberBean.edit}"</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"Edit"</span><span style="color: #116329">/&gt;</span><span style="color: #24292f">&amp;nbsp;</span>
+    <span style="color: #116329">&lt;h:commandLink</span> <span style="color: #116329">action=</span><span style="color: #0a3069">"#{memberBean.delete}"</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"Delete"</span>
+        <span style="color: #116329">onclick=</span><span style="color: #0a3069">"return confirm('Are you sure you want to delete #{member.firstName} #{member.lastName}?');"</span> <span style="color: #116329">/&gt;</span>
+<span style="color: #116329">&lt;/h:column&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, lets take a look at <code>MemberBean.edit()</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre><span style="color: #cf222e">public</span> <span style="color: #953800">String</span> <span style="color: #8250df">edit</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+    <span style="color: #24292f;background-color: #f6f8fa">current</span> <span style="color: #0550ae">=</span> <span style="color: #0550ae">(</span><span style="color: #953800">GroupMember</span><span style="color: #0550ae">)</span><span style="color: #24292f;background-color: #f6f8fa">getMembers</span><span style="color: #0550ae">().</span><span style="color: #116329">getRowData</span><span style="color: #0550ae">();</span>
+    <span style="color: #cf222e">return</span> <span style="color: #0a3069">"edit?faces-redirect=true"</span><span style="color: #0550ae">;</span>
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This method asks the <code>DataModel</code> what the current row is and saves that in an instance variable.  It then navigates, using JSF 2&#8217;s simplified navigation to the view "edit."  The inclusiong of "?faces-redirect=true" in the action outcome tells JSF to redirect to the target view.  This allows the location in the browser to reflect the current page, rather than being one page behind.</p>
+</div>
+<div class="paragraph">
+<p>JSF handles updating the state of the <code>DataModel</code> for you, so all that&#8217;s left for you is asking it what its state is.  The approach I&#8217;ve seen (and used, sadly) most often, is to use either <code>f:param</code> or <code>f:setPropertyActionListener</code> to pass the id of the current member back to the server.  My action method would then have to either query the <code>Request</code> or an instance variable for the ID, ask the model layer for the <code>GroupMember</code> that matched the ID, and then forward.  While it worked, it was pretty ugly and often required more getters and setters than I cared to put on the bean.  By using <code>DataModel</code> directly, we avoid all that cruft and left JSF do the heavy lifting for us, which is, of course, what frameworks are for.</p>
+</div>
+<div class="paragraph">
+<p>So there you have a basic Ajaxy data table using only standard JSF components.  Given how simple it is to add Ajax to a JSF page with JSF 2, you can easily start adding such features to existing JSF 1.2 applications as you upgrade to the new version without requiring massive changes to your application.  Of course, if you want more complex Ajax interactions, there are still myriads of third party component sets that offer that.  For the simple case, though, you no longer need to shop around.</p>
+</div>
+<div class="paragraph">
+<p>[1] This class is simple a JPA 2 utility class.  It performs the basic JPA functions, including transaction support, etc.  It&#8217;s specific contents are not relevant here. :)</p>
+</div>
+    </div>
+    <footer>
+        <div class="grid">
+            <div class="col tags">
+                
+                <span class="title">tags: </span>
+                
+                <a href="/tag/ajax/">ajax</a>
+                <!--                <a href="https://jasondl.ee/tags/ajax.html">ajax</a>-->
+                
+                <a href="/tag/java/">Java</a>
+                <!--                <a href="https://jasondl.ee/tags/Java.html">Java</a>-->
+                
+                <a href="/tag/jsf/">JSF</a>
+                <!--                <a href="https://jasondl.ee/tags/JSF.html">JSF</a>-->
+                
+                
+            </div>
+            <div class="col"><span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2009/jsf-2-hdatatable-and-ajax-updates&title=JSF 2, h:dataTable, and Ajax Updates" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=JSF 2, h:dataTable, and Ajax Updates&url=https://jasondl.ee/2009/jsf-2-hdatatable-and-ajax-updates&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2009/jsf-2-hdatatable-and-ajax-updates" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2009/jsf-2-hdatatable-and-ajax-updates" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=JSF 2, h:dataTable, and Ajax Updates&amp;body=JSF 2, h:dataTable, and Ajax Updates https://jasondl.ee/2009/jsf-2-hdatatable-and-ajax-updates" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+</div>
+        </div>
+    </footer>
+</article>
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>
