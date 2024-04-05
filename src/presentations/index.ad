@@ -5,10 +5,9 @@ date: 2018-09-11
 type: page
 ---
 
-Below is a (non-exhaustive) list of the presentations I've given over the years, ordered roughly by date. It's a bit bare, but I'll try to get others added as soon as I can.
+Below is a (non-exhaustive) list of the presentations I've given over the years, ordered alphabetically. It's a bit bare, but I'll try to get others added as soon as I can.
 
-=== April 2022
+
 * link:/assets/presentations/jooq-abstractions.pdf[jOOQ: Database Abstractions Without Distractions]
-
-=== ... Older :)
 * link:/assets/presentations/oracle-turns-java-up-to-11[Oracle Turns Java up to 11]
+* link:subatomic/index.html[Supersonic, Subatomic GitHub]

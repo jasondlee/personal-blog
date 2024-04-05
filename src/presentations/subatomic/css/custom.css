@@ -1,0 +1,31 @@
+.reveal .footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    font-size: 0.5em;
+    background-color: #900;
+}
+
+.reveal pre {
+    width: 100%;
+}
+
+li code {
+    background-color: lightgray;
+}
+
+.reveal pre code {
+    min-width: 100%;
+    max-height: none;
+}
+
+.reveal a {
+    color: var(--r-link-color-dark);
+}
+
+:root {
+    --r-link-color: #ff3333;
+    --r-link-color-dark: #990000;
+    --r-link-color-hover: #ff3333;
+}
