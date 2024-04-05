@@ -4,7 +4,12 @@
     left: 0px;
     right: 0px;
     font-size: 0.5em;
-    background-color: #900;
+    background-color: var(--r-link-color);
+}
+
+.footer img {
+    max-height: 40px;
+    padding-left: 20px
 }
 
 .reveal pre {
@@ -21,11 +26,15 @@ li code {
 }
 
 .reveal a {
-    color: var(--r-link-color-dark);
+    color: var(--r-link-color);
+}
+
+.reveal .controls button {
+    color: white;
 }
 
 :root {
-    --r-link-color: #ff3333;
+    --r-link-color: #cc0000;
     --r-link-color-dark: #990000;
-    --r-link-color-hover: #ff3333;
+    --r-link-color-hover: #990000;
 }

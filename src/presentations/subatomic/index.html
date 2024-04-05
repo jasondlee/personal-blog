@@ -34,19 +34,19 @@
             <!-- This is the second slide, the speaker's info -->
             <h3>About Me</h3>
             <ul>
-                <li>I’m a Principal Software Engineer at Red Hat
-                    <img src="img/duke_champion.png" style="height: 150px; float: right;">
+                <li class="fragment" data-fragment-index="1">I’m a Principal Software Engineer at Red Hat
+                    <img class="fragment"  data-fragment-index="3" src="img/duke_champion.png" style="height: 150px; float: right;">
                 </li>
-                <li>Software developer since 1997</li>
-                <li>Java Champion</li>
-                <li>President of the <a href="https://okcjug.org">Oklahoma City Java Users' Group</a></li>
-                <li>
+                <li class="fragment" data-fragment-index="2">Software developer since 1997</li>
+                <li class="fragment" data-fragment-index="3">Java Champion</li>
+                <li class="fragment" data-fragment-index="5">President of the <a href="https://okcjug.org">Oklahoma City Java Users' Group</a></li>
+                <li class="fragment"  data-fragment-index="6">
                     Author -
                     <a href="https://www.packtpub.com/application-development/java-9-programming-blueprints">
                         Java 9 Programming Blueprints
                     </a>
                 </li>
-                <li>Blogger - <a href="https://jasondl.ee">https://jasondl.ee</a></li>
+                <li class="fragment" data-fragment-index="7">Blogger - <a href="https://jasondl.ee">https://jasondl.ee</a></li>
             </ul>
         </section>
 
@@ -76,7 +76,7 @@
                         <li>Validate Issue, comment, or PR format/details</li>
                         <li>Control CI/CD jobs</li>
                         <li>Interact with issue tracker</li>
-                        <li>Send messages via (e.g.) Twilio</li>
+                        <li>Send messages via SMS, email, chat, etc.</li>
                     </ul>
                 </li>
             </ul>
@@ -200,21 +200,21 @@
             <h3>Code the Quarkus app</h3>
             <ul>
                 <li class="fragment">Create the application using the Quarkus CLI
-                    <pre><code data-trim data-noescape data-line-numbers>
+                    <pre><code data-trim data-noescape data-line-numbers><script type="text/template">
 $ quarkus create app \
     -x quarkus-github-app \
     com.steeplesoft:dn2024demo \
-    --no-code</code></pre>
+    --no-code</script></code></pre>
                 </li>
                 <li class="fragment">Create .env file
-                    <pre><code data-trim data-noescape data-line-numbers>
-QUARKUS_GITHUB_APP_APP_ID=&lt;the numeric app id&gt;
-QUARKUS_GITHUB_APP_APP_NAME=&lt;the name of your app&gt;
-QUARKUS_GITHUB_APP_WEBHOOK_PROXY_URL=&lt;your smee.io channel URL&gt;
-QUARKUS_GITHUB_APP_WEBHOOK_SECRET=&lt;your webhook secret&gt;
+                    <pre><code data-trim data-noescape data-line-numbers><script type="text/template">
+QUARKUS_GITHUB_APP_APP_ID=<the numeric app id>
+QUARKUS_GITHUB_APP_APP_NAME=<the name of your app>
+QUARKUS_GITHUB_APP_WEBHOOK_PROXY_URL=<your smee.io channel URL>
+QUARKUS_GITHUB_APP_WEBHOOK_SECRET=<your webhook secret>
 QUARKUS_GITHUB_APP_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----\
-&lt;your private key&gt; \
------END RSA PRIVATE KEY-----</code></pre>
+<your private key> \
+-----END RSA PRIVATE KEY-----</script></code></pre>
                 </li>
                 <li class="fragment">Fire it up
                     <pre><code data-trim data-noescape>
@@ -228,7 +228,7 @@ QUARKUS_GITHUB_APP_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----\
             <h3>Respond to your first event</h3>
             <ul>
                 <li>Simple Java methods with annotated parameters
-                    <pre><code data-trim data-noescape data-line-numbers>
+                    <pre><code data-trim data-noescape data-line-numbers><script type="text/template">
 import java.io.IOException;
 
 import io.quarkiverse.githubapp.event.Issue;
@@ -242,7 +242,7 @@ public class IssueProcessor {
         issuePayload.getIssue().comment("Hello from my GitHub App");
     }
 }
-            </code></pre>
+                    </script></code></pre>
                 </li>
             </ul>
         </section>
@@ -266,25 +266,25 @@ public class IssueProcessor {
             <h3>Configuration (cont)</h3>
             <ul>
                 <li>Definition
-                    <pre><code data-trim data-noescape data-line-numbers="">
+                    <pre><code data-trim data-noescape data-line-numbers=""><script type="text/template">
 public class BotConfigFile {
     public NestedConfig nested = new NestedConfig();
-    public List&lt;String&gt; canComment;
+    public List<String> canComment;
 
     public static class NestedConfig {
         public String one;
         public String two;
         public String three;
     }
-}
+}</script>
                     </code></pre>
                 </li>
                 <li class="fragment">Injection
-                    <pre><code data-trim data-noescape data-line-numbers="">
+                    <pre><code data-trim data-noescape data-line-numbers=""><script type="text/template">
 void onOpen(@Issue.Opened GHEventPayload.Issue issuePayload,
             @ConfigFile("bot-config.yml") BotConfigFile configFile) throws IOException {
     issuePayload.getIssue().comment("Hello from my GitHub App");
-}
+}</script>
                     </code></pre>
                 </li>
             </ul>
@@ -295,7 +295,7 @@ void onOpen(@Issue.Opened GHEventPayload.Issue issuePayload,
             <ul>
                 <li class="fragment">JUnit and Mockito are your friends</li>
                 <li class="fragment">Example
-                    <pre><code data-trim data-noescape data-line-numbers>
+                    <pre><code data-trim data-noescape data-line-numbers><script type="text/template">
 @QuarkusTest
 @GitHubAppTest
 @ExtendWith(MockitoExtension.class)
@@ -313,7 +313,7 @@ public class EventHandlerTest {
                     .comment("Hello from my GitHub App");
             });
     }
-}
+}</script>
                     </code></pre>
                 </li>
             </ul>
@@ -323,19 +323,19 @@ public class EventHandlerTest {
             <h3>Testing (cont)</h3>
             <ul>
                 <li>Add the following dependencies:
-                    <pre><code data-trim data-noescape>
-&lt;dependency&gt;
-    &lt;groupId&gt;io.quarkiverse.githubapp&lt;/groupId&gt;
-    &lt;artifactId&gt;quarkus-github-app-testing&lt;/artifactId&gt;
-    &lt;version&gt;${version.quarkus.github.app}&lt;/version&gt;
-    &lt;scope&gt;test&lt;/scope&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.mockito&lt;/groupId&gt;
-    &lt;artifactId&gt;mockito-junit-jupiter&lt;/artifactId&gt;
-    &lt;version&gt;5.3.1&lt;/version&gt;
-    &lt;scope&gt;test&lt;/scope&gt;
-&lt;/dependency&gt;
+                    <pre><code data-trim data-noescape><script type="text/template">
+<dependency>
+    <groupId>io.quarkiverse.githubapp</groupId>
+    <artifactId>quarkus-github-app-testing</artifactId>
+    <version>${version.quarkus.github.app}</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-junit-jupiter</artifactId>
+    <version>5.3.1</version>
+    <scope>test</scope>
+</dependency></script>
                     </code></pre>
                 </li>
                 <li>Create <code>test/resources/bot-config.yml</code></li>
@@ -352,12 +352,19 @@ public class EventHandlerTest {
 
         <section>
             <h1>Thank You!</h1>
+            <ul>
+                <li><a href="https://jasondl.ee/presentations/subatomic/">Presentation</a></li>
+                <li><a href="https://docs.quarkiverse.io/quarkus-github-app/dev/index.html">Quarkus App Documentation</a></li>
+                <li><a href="https://code.quarkus.io">Quarkus Starter</a></li>
+            </ul>
+            <br/>
+            <img src="img/preso_qr.png" alt="preso qr" style="height: 200px;">
         </section>
 
     </div>
 
     <div class="footer">
-        <img src="img/rh200.png" style="align-content: end" widtha="100" heighta="30" alt="Red Hat logo"/>
+        <img src="img/rh200.png" alt="Red Hat logo"/>
     </div>
 
     <script src="reveal/reveal.js"></script>
@@ -379,5 +386,6 @@ public class EventHandlerTest {
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
+</div>
 </body>
 </html>
