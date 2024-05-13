@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : JSFTemplating</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            
+
+<h1>2008</h1>
+
+
+
+<h2>November</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/extending-the-glassfish-v3-prelude-administration-console">Extending the GlassFish v3 Prelude Administration Console</a>
+        <div><div class="paragraph">
+<p>Today, the GlassFish community is launching <a href="https://glassfish.dev.java.net/downloads/v3-prelude.html">GlassFish v3 Prelude</a> (<a href="http://docs.sun.com/app/docs/doc/820-4494?l=en">Release Notes</a> and <a href="http://docs.sun.com/app/docs/doc/820-4836?l=en">Quick Start Guide</a>).  If you are not familiar with what Prelude is, <a href="http://weblogs.java.net/blog/kalali/archive/2008/10/one_pager_revie.html">here</a> is a short write up giving the high level details.  In this article, I&#8217;d like to focus on the third bullet there, "CLI and administration console extensibility."  Specifically, we&#8217;ll look at what it takes to create a plugin that will extend GlassFish v3&#8217;s Administration Console.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>May</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/mojarra-scales-10-release-candidate-1">Mojarra Scales 1.0 Release Candidate 1</a>
+        <div><div class="paragraph">
+<p>Today, I released the first release candidate for Mojarra Scales, the JSF component library I helped create.  Rather than repeat myself, I&#8217;ll just paste the email announcement here:</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>March</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/reintroducing-the-jsftemplating-filestreamer">Reintroducing the JSFTemplating FileStreamer</a>
+        <div><div class="paragraph">
+<p>In a <a href="http://blogs.sun.com/paulsen/entry/streaming_content_in_jsf_with">blog entry</a> last year, Ken Paulsen gave a <a href="http://blogs.sun.com/paulsen/entry/streaming_content_in_jsf_with">short introduction</a> to the FileStreamer utility in <a href="https://jsftemplating.dev.java.net/">JSFTemplating</a>.  Since Scales is now using JSFTemplating to make the component authoring process easier, I have been able to use this facility, allowing me to deprecate some custom code.  In the process of making the migration, I&#8217;ve made changes to JSFTemplating that will be of benefit to all.  In this entry, I&#8217;d like to highlight those changes, and show you how you, too, can use this great facility.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>January</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/jsftemplating-and-woodstock-component-authoring-made-easy">JSFTemplating and Woodstock: Component Authoring Made Easy</a>
+        <div><div class="paragraph">
+<p>In my last <a href="/2008/01/02/announcing-mojarra-scales/">post</a>, I alluded to some refactoring done inside the Sandbox / <a href="https://scales.dev.java.net">Scales</a> library to simplify the components' code.  If you are interested in learning more about what was done, and how you can apply the same techniques to your own JSF components, please see <a href="http://java.sun.com/developer/technicalArticles/J2EE/jsf_templating/index.html">this article</a>, written by <a href="http://blogs.sun.com/paulsen/">Ken Paulsen</a> and myself, with editing help from Rick Palkovic, which shows how one can use <a href="https://jsftemplating.dev.java.net">JSFTemplating</a> and some (currently "private") annotations from the <a href="https://woodstock.dev.java.net">Woodstock</a> project to greatly simplify JSF component authoring.  I think it&#8217;s a very interesting and helpful technique, which, by the way, resembles what JSF 2 will likely offer when we finally ship it later this year.</p>
+</div>
+<div class="paragraph">
+<p>Oh, yeah.  Happy New Year&#8217;s! :)</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2008/announcing-mojarra-scales">Announcing Mojarra Scales</a>
+        <div><div class="paragraph">
+<p>Some of you may be wondering what the status is on the RI Sandbox.  With the <a href="/2007/12/05/announcing-project-mojarra/">announcement</a> of <a href="https://mojarra.dev.java.net/">Project Mojarra</a>, we can finally take the wraps off of <a href="https://scales.dev.java.net/">Mojarra Scales</a>, the promotion of the RI/Mojarra Sandbox to its own project.  There are a few differences between the Sandbox of Scales to note, such as package names, namespace, etc.  There has also been a fair amount of refactoring inside the library to simplify the components somewhat (more on that later).  To migrate from the RI Sandbox to Mojarra Scales, you will need to do the following:</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2007</h1>
+
+
+
+<h2>June</h2>
+<ul>
+    
+    <li>
+        <a href="/2007/jsftemplating-announcing-beta-support-for-facelets-templates">JSFTemplating: Announcing beta support for Facelets templates</a>
+        <div><div class="paragraph">
+<p>The <a href="https://jsftemplating.dev.java.net/">JSFTemplating</a> team is proud to announce that a new, Facelets-compatible format has been added to JSFTemplating and has reached the beta stage.  Not all of the Facelets components are currently supported; those that are currently supported are <code>ui:component</code>, <code>ui:decorate</code>, <code>ui:include</code>, <code>ui:define</code>, and <code>ui:remove</code>, with the addition of a new <code>ui:event</code>, which brings the power of JSFTemplating&#8217;s events to this new Facelets format.  In addition other JSFTemplating features are also available to Facelets pages, such as "pageSession" (i.e. <code>#{pageSession.variable}</code>) and ability to reference relative information like <code>$this{componentId}</code>.</p>
+</div>
+<div class="paragraph">
+<p>Please remember that this <em>is</em> beta software, but should be stable enough to support the basic Facelets functionality (note that we do not yet have support for Facelets tag handlers, etc).  Should you find a bug in this new format, please file an issue against it on the issue <a href="https://jsftemplating.dev.java.net/issues/enter_bug.cgi?issue_type" class="bare">https://jsftemplating.dev.java.net/issues/enter_bug.cgi?issue_type</a>: DEFECT&amp;subcomponent=Facelets+Format[tracker].</p>
+</div>
+<div class="paragraph">
+<p>If you would like to see a demo of the functionality, we have deployed an <a href="http://www.jsftemplating.org/FaceletsDemo/">application</a> that shows the exact same templates as processed by Facelets itself as well as JSFTemplating, thus showing how well the implementations match up.  As the implementation matures, this application will be updated to show the current state.</p>
+</div>
+<div class="paragraph">
+<p>If you have questions or comments, please join the discussion on the <a href="https://jsftemplating.dev.java.net/servlets/ProjectMailingListList">dev mailing list</a>.  You might also be able to catch one of the developers on irc.freenode.net in #jsftemplating.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>

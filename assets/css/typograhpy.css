@@ -1,0 +1,83 @@
+/**
+ * Site Specific Styles (screen.css) - Theme specific CSS styles.
+ *
+ * @package WP_Framework
+ */
+
+/* Document Body */
+body { color: #333; font: 13px/18px "lucida sans", Verdana, Arial, Helvetica, sans-serif; }
+
+/* Vertical Rhythm */
+p, pre, ul, ol, dl, dd, blockquote, address, table, fieldset, form, .entry-content img, .wp-caption, .widget, .hentry, .comment, #content, .navigation-links, .page .entry-title { margin-bottom: 22px; }
+
+/* Links */
+a { color: #2361a1; text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus { outline: 1px dotted invert; }
+
+.entry-content a { color: #2361a1; text-decoration: underline; }
+.entry-content a:hover { text-decoration: none; }
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 { font-weight: normal; font-family: "Helvetica Neue", Arial, Helvetica, sans-serif; padding: 5px 0px; }
+h1 { font-size: 24px; line-height: 28px; }
+h2 { font-size: 20px; line-height: 22px; }
+h3 { font-size: 16px; line-height: 20px; }
+h4 { font-size: 14px; line-height: 18px; }
+h5 { font-size: 12px; line-height: 18px; }
+h6 { font-size: 10px; line-height: 16px; padding-top: 0px; }
+
+/* Text Elements */
+address { font-style: italic; }
+abbr, acronym, dfn { cursor: help; border-bottom: 1px dotted #666; }
+
+blockquote { color: #666; font-style: italic; border-left: 1px solid #ddd; margin-left: 10px; padding-left: 10px; }
+blockquote *:first-child:before, q *:first-child:before { content: "\201C"; }
+blockquote *:first-child:after, q *:first-child:after { content: "\201D"; }
+
+strong { font-weight: bold; }
+em, dfn, cite { font-style: italic; }
+dfn { font-weight: bold; }
+
+sup { bottom: 1ex; }
+sub { top: .5ex; }
+
+del { text-decoration: line-through; }
+ins { text-decoration: underline; }
+
+var, kbd, samp, code, pre { font: 12px/1.4 Consolas, "Andale Mono", Courier, "Courier New", monospace; background: #eee; }
+kbd { font-weight: bold; }
+samp, var { font-style: italic; }
+pre { white-space: pre; overflow: auto; padding: 10px; border: 1px solid #ddd; clear: both; }
+code { padding: 0px 3px; }
+
+/* Lists */
+ul, ol { margin-left: 15px; }
+.entry-content ul, .entry-content ol { margin-left: 25px; }
+
+/*
+.entry-content li ul { margin-top: 15px; }
+.entry-content li { margin-bottom: 15px; }
+*/
+
+li ul, li ol { margin-bottom: 0; }
+ul ul, ol ol, ul ol, ol ul { margin-bottom: 0; }
+
+ol { list-style-type: decimal; }
+
+ul { list-style-type: disc; }
+ul ul { list-style-type: circle; }
+ul ul ul { list-style-type: square; }
+
+dt { font-weight: bold; }
+
+/* [gallery] */
+.gallery img { margin: 0; }
+.gallery { margin: auto; }
+.gallery-item { float: left; margin: 0 auto; overflow: hidden; text-align: center; }
+.gallery-image { border: 2px solid #cfcfcf; }
+.gallery .gallery-columns-1 { width: 100%; }
+.gallery .gallery-columns-2 { width: 49%; }
+.gallery .gallery-columns-3 { width: 33%; }
+.gallery .gallery-columns-4 { width: 24%; }
+.gallery .gallery-columns-5 { width: 19%; }

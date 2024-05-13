@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : Java to Kotlin Conversion Question. And Answer.</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            <article class="post">
+    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+        Java to Kotlin Conversion Question. And Answer.
+    </h1>
+    Thursday, July 18, 2019 | <span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2019/java-to-kotlin-conversion-question-and-answer&title=Java to Kotlin Conversion Question. And Answer." rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Java to Kotlin Conversion Question. And Answer.&url=https://jasondl.ee/2019/java-to-kotlin-conversion-question-and-answer&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2019/java-to-kotlin-conversion-question-and-answer" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2019/java-to-kotlin-conversion-question-and-answer" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Java to Kotlin Conversion Question. And Answer.&amp;body=Java to Kotlin Conversion Question. And Answer. https://jasondl.ee/2019/java-to-kotlin-conversion-question-and-answer" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+
+    <div>
+        <div class="paragraph">
+<p>Recently, in the #kotlin channel on <a href="https://freenode.net">Freenode</a>, a user asked a question about what was happening to his
+Java code when using IDEA&#8217;s convert-to-Kotlin functionality. He left before anyone had the time to answer, and while he
+likely doesn&#8217;t read my blog, I&#8217;m going to answer his question here anyway. :)</p>
+</div>
+<div class="paragraph">
+<p>Here is his (slightly edited) question:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>I use intellij idea to convert a java code to kotlin, but there&#8217;s something I don&#8217;t understand, <a href="https://paste.ubuntu.com/p/NNbRwmR4mG/" class="bare">https://paste.ubuntu.com/p/NNbRwmR4mG/</a></p>
+</div>
+<div class="paragraph">
+<p>I don&#8217;t know why kotlin convert the second parameter in memory.subscribeToEvent which is a object to a lambda?</p>
+</div>
+<div class="paragraph">
+<p>and idea turn f(a,b) in java to f(a)(b) in kotlin</p>
+</div>
+<div class="paragraph">
+<p>auto currying?</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>And, just in case the paste disappears, here are its contents:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre></td><td class="code"><pre><span style="color: #0550ae">java:</span>
+<span style="color: #24292f;background-color: #f6f8fa">tts</span> <span style="color: #0550ae">=</span> <span style="color: #cf222e">new</span> <span style="color: #953800">ALTextToSpeech</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">session</span><span style="color: #0550ae">);</span>
+        <span style="color: #24292f;background-color: #f6f8fa">frontTactilSubscriptionId</span> <span style="color: #0550ae">=</span> <span style="color: #0550ae">0</span><span style="color: #0550ae">;</span>
+
+        <span style="color: #6e7781">// Subscribe to FrontTactilTouched event,</span>
+        <span style="color: #6e7781">// create an EventCallback expecting a Float.</span>
+        <span style="color: #24292f;background-color: #f6f8fa">frontTactilSubscriptionId</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">memory</span><span style="color: #0550ae">.</span><span style="color: #116329">subscribeToEvent</span><span style="color: #0550ae">(</span>
+                <span style="color: #0a3069">"FrontTactilTouched"</span><span style="color: #0550ae">,</span> <span style="color: #cf222e">new</span> <span style="color: #953800">EventCallback</span><span style="color: #0550ae">&lt;</span><span style="color: #953800">Float</span><span style="color: #0550ae">&gt;()</span> <span style="color: #0550ae">{</span>
+                    <span style="color: #8250df">@Override</span>
+                    <span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">onEvent</span><span style="color: #0550ae">(</span><span style="color: #953800">Float</span> <span style="color: #24292f;background-color: #f6f8fa">arg0</span><span style="color: #0550ae">)</span>
+                            <span style="color: #cf222e">throws</span> <span style="color: #953800">InterruptedException</span><span style="color: #0550ae">,</span> <span style="color: #953800">CallError</span> <span style="color: #0550ae">{</span>
+                        <span style="color: #6e7781">// 1 means the sensor has been pressed</span>
+                        <span style="color: #cf222e">if</span> <span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">arg0</span> <span style="color: #0550ae">&gt;</span> <span style="color: #0550ae">0</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+                            <span style="color: #24292f;background-color: #f6f8fa">tts</span><span style="color: #0550ae">.</span><span style="color: #116329">say</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"ouch!"</span><span style="color: #0550ae">);</span>
+                        <span style="color: #0550ae">}</span>
+                    <span style="color: #0550ae">}</span>
+                <span style="color: #0550ae">});</span>
+
+<span style="color: #0550ae">kotlin:</span>
+<span style="color: #24292f;background-color: #f6f8fa">tts</span> <span style="color: #0550ae">=</span> <span style="color: #953800">ALTextToSpeech</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">session</span><span style="color: #0550ae">)</span>
+    <span style="color: #24292f;background-color: #f6f8fa">frontTactilSubscriptionId</span> <span style="color: #0550ae">=</span> <span style="color: #0550ae">0</span>
+
+    <span style="color: #6e7781">// Subscribe to FrontTactilTouched event,</span>
+    <span style="color: #6e7781">// create an EventCallback expecting a Float.</span>
+    <span style="color: #24292f;background-color: #f6f8fa">frontTactilSubscriptionId</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">memory</span><span style="color: #0550ae">.</span><span style="color: #116329">subscribeToEvent</span><span style="color: #0550ae">(</span>
+        <span style="color: #0a3069">"FrontTactilTouched"</span>
+    <span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span> <span style="color: #24292f;background-color: #f6f8fa">arg0</span> <span style="color: #0550ae">-&gt;</span>
+        <span style="color: #6e7781">// 1 means the sensor has been pressed</span>
+        <span style="color: #cf222e">if</span> <span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">arg0</span> <span style="color: #0550ae">&gt;</span> <span style="color: #0550ae">0</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+            <span style="color: #24292f;background-color: #f6f8fa">tts</span><span style="color: #0550ae">.</span><span style="color: #116329">say</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"ouch!"</span><span style="color: #0550ae">)</span>
+        <span style="color: #0550ae">}</span>
+    <span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To understand <em>why</em> the Kotlin code looks the way it does, it&#8217;s important to understand a bit about the Java code. Without
+knowing anything about the method <code>memory.subscribeToEvent</code>, it seems clear that it takes a <code>String</code> (perhaps an event name?),
+and a callback which is, of course, called when the event happens. Incidentally, and not important <em>here</em>, it seems to return
+a subscription ID, which I assume one can use to cancel the subscription.</p>
+</div>
+<div class="paragraph">
+<p>The interesting part of all of this is that second parameter, <code>EventCallBack&lt;T&gt;</code>. What the Java code is doing is creating an
+anonymous instance of the interface and passing it directly to the method. What&#8217;s interesting about the interface is that it
+is what is known as a Single Abstract Method interface, meaning it has&#8230;&#8203; wait for it&#8230;&#8203; only one abstract method. In Java,
+lambdas are actually implemented internally, if I recall correctly, as instances of SAMs, often done silently by the compiler.
+This code, then, could be written like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span style="color: #24292f;background-color: #f6f8fa">frontTactilSubscriptionId</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">memory</span><span style="color: #0550ae">.</span><span style="color: #116329">subscribeToEvent</span><span style="color: #0550ae">(</span>
+    <span style="color: #0a3069">"FrontTactilTouched"</span><span style="color: #0550ae">,</span>
+    <span style="color: #0550ae">(</span><span style="color: #953800">Float</span> <span style="color: #24292f;background-color: #f6f8fa">arg0</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">-&gt;</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">if</span> <span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">arg0</span> <span style="color: #0550ae">&gt;</span> <span style="color: #0550ae">0</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+            <span style="color: #24292f;background-color: #f6f8fa">tts</span><span style="color: #0550ae">.</span><span style="color: #116329">say</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"ouch!"</span><span style="color: #0550ae">);</span>
+        <span style="color: #0550ae">}</span>
+    <span style="color: #0550ae">});</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If memory serves, the compiler is smart enough to know that the method takes an <code>EventCallback</code>, and sees that the lambda requires a single
+<code>Float</code>, which happens to match the single abstract method of the interface, so this lambda-ized version of the code is
+magically converted to the non-lambda version above in the bytecode, and life moves on.</p>
+</div>
+<div class="paragraph">
+<p>Now, when we move to Kotlin, the converter code is also smart enough to recognize the SAM in the original Java code, so it
+converts that to a lambda. It goes a step further, though, and makes the code more idiomatic: in Kotlin, if the last
+parameter to a method is a lambda, the compiler will allow you to specify that <em>outside</em> the parenthesis in your calling code.
+This code, then:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="kotlin"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span style="color: #24292f;background-color: #f6f8fa">frontTactilSubscriptionId</span> <span style="color: #24292f;background-color: #f6f8fa">=</span> <span style="color: #24292f;background-color: #f6f8fa">memory</span><span style="color: #24292f;background-color: #f6f8fa">.</span><span style="color: #8250df">subscribeToEvent</span><span style="color: #24292f;background-color: #f6f8fa">(</span>
+        <span style="color: #0a3069">"FrontTactilTouched"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        <span style="color: #24292f;background-color: #f6f8fa">{</span> <span style="color: #24292f;background-color: #f6f8fa">arg0</span> <span style="color: #24292f;background-color: #f6f8fa">-&gt;</span>
+        <span style="color: #6e7781">// 1 means the sensor has been pressed</span>
+        <span style="color: #cf222e">if</span> <span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #24292f;background-color: #f6f8fa">arg0</span> <span style="color: #24292f;background-color: #f6f8fa">&gt;</span> <span style="color: #0550ae">0</span><span style="color: #24292f;background-color: #f6f8fa">)</span> <span style="color: #24292f;background-color: #f6f8fa">{</span>
+            <span style="color: #24292f;background-color: #f6f8fa">tts</span><span style="color: #24292f;background-color: #f6f8fa">.</span><span style="color: #8250df">say</span><span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #0a3069">"ouch!"</span><span style="color: #24292f;background-color: #f6f8fa">)</span>
+        <span style="color: #24292f;background-color: #f6f8fa">}</span>
+    <span style="color: #24292f;background-color: #f6f8fa">)</span>
+<span style="color: #24292f;background-color: #f6f8fa">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is functionally equivalent to this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="kotlin"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span style="color: #24292f;background-color: #f6f8fa">frontTactilSubscriptionId</span> <span style="color: #24292f;background-color: #f6f8fa">=</span> <span style="color: #24292f;background-color: #f6f8fa">memory</span><span style="color: #24292f;background-color: #f6f8fa">.</span><span style="color: #8250df">subscribeToEvent</span><span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #0a3069">"FrontTactilTouched"</span><span style="color: #24292f;background-color: #f6f8fa">)</span> <span style="color: #24292f;background-color: #f6f8fa">{</span> <span style="color: #24292f;background-color: #f6f8fa">arg0</span> <span style="color: #24292f;background-color: #f6f8fa">-&gt;</span>
+        <span style="color: #6e7781">// 1 means the sensor has been pressed</span>
+        <span style="color: #cf222e">if</span> <span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #24292f;background-color: #f6f8fa">arg0</span> <span style="color: #24292f;background-color: #f6f8fa">&gt;</span> <span style="color: #0550ae">0</span><span style="color: #24292f;background-color: #f6f8fa">)</span> <span style="color: #24292f;background-color: #f6f8fa">{</span>
+            <span style="color: #24292f;background-color: #f6f8fa">tts</span><span style="color: #24292f;background-color: #f6f8fa">.</span><span style="color: #8250df">say</span><span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #0a3069">"ouch!"</span><span style="color: #24292f;background-color: #f6f8fa">)</span>
+        <span style="color: #24292f;background-color: #f6f8fa">}</span>
+<span style="color: #24292f;background-color: #f6f8fa">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And there you go. That&#8217;s my take on what&#8217;s going with that conversion. I hope you find that helpful. And accurate. :) If I
+missed something, hit the comments below and let&#8217;s talk.</p>
+</div>
+    </div>
+    <footer>
+        <div class="grid">
+            <div class="col tags">
+                
+                <span class="title">tags: </span>
+                
+                <a href="/tag/kotlin/">Kotlin</a>
+                <!--                <a href="https://jasondl.ee/tags/Kotlin.html">Kotlin</a>-->
+                
+                
+            </div>
+            <div class="col"><span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2019/java-to-kotlin-conversion-question-and-answer&title=Java to Kotlin Conversion Question. And Answer." rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Java to Kotlin Conversion Question. And Answer.&url=https://jasondl.ee/2019/java-to-kotlin-conversion-question-and-answer&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2019/java-to-kotlin-conversion-question-and-answer" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2019/java-to-kotlin-conversion-question-and-answer" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Java to Kotlin Conversion Question. And Answer.&amp;body=Java to Kotlin Conversion Question. And Answer. https://jasondl.ee/2019/java-to-kotlin-conversion-question-and-answer" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+</div>
+        </div>
+    </footer>
+</article>
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>
