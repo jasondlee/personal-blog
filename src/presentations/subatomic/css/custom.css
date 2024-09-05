@@ -33,6 +33,11 @@ li code {
     color: white;
 }
 
+.reveal ul {
+    display: block;
+    padding-left: 5pc;
+}
+
 :root {
     --r-link-color: #cd0000;
     --r-link-color-dark: #990000;

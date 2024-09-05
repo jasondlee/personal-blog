@@ -39,11 +39,9 @@
                 <li class="fragment" data-fragment-index="2">Software developer since 1997</li>
                 <li class="fragment" data-fragment-index="3">
                     Java Champion
-                    <img src="img/duke_champion.png" style="height: 50px; vertical-align: bottom;">
                 </li>
                 <li class="fragment" data-fragment-index="5">
                     President of the <a href="https://okcjug.org">Oklahoma City Java Users Group</a>
-                    <img src="https://okcjug.org/img/logo-vertical.png" style="height: 75px; vertical-align: bottom; float: right;">
                 </li>
                 <li class="fragment" data-fragment-index="6">
                     Author -
@@ -54,6 +52,13 @@
                 <li class="fragment" data-fragment-index="7">Blogger | <a href="https://jasondl.ee">https://jasondl.ee</a></li>
                 <li class="fragment" data-fragment-index="8">Misc: Martial Arts, Bass Guitar, Smoking Meats</li>
             </ul>
+            <div>
+                <img class="fragment" data-fragment-index="3" src="img/duke_champion.png" style="height: 150px; vertical-align: bottom;">
+                <img class="fragment" data-fragment-index="5" src="https://okcjug.org/img/logo-vertical.png"
+                     style="height: 150px; vertical-align: bottom;">
+                <img class="fragment" data-fragment-index="6" src="https://content.packt.com/_/image/original/B05785/cover_image_large.jpg"
+                     style="height: 150px; vertical-align: bottom;"/>
+            </div>
         </section>
 
         <section data-background-image="img/seine.jpg" style="position: relative">
@@ -153,15 +158,18 @@
         <section>
             <h3>Notes on the Webhook URL</h3>
             <ul>
-                <li class="fragment">Your app is probably behind a firewall, so we'll need a proxy.</li>
-                <li class="fragment">
-                    <img src="img/smee.png" height="250" style="float: right;">
+                <li class="fragment" data-fragment-index="1">Your app is probably behind a firewall, so we'll need a proxy.</li>
+                <li class="fragment" data-fragment-index="2">
+
                     Smee to the rescue: <a href="https://smee.io">https://smee.io</a>
                 </li>
-                <li class="fragment">Click on <code>Start a new channel</code></li>
-                <li class="fragment">Make a copy of the <code>Webhook Proxy URL</code></li>
-                <li class="fragment">Quarkus GitHub App connects to smee.io automatically in dev mode</li>
+                <li class="fragment" data-fragment-index="3">Click on <code>Start a new channel</code></li>
+                <li class="fragment" data-fragment-index="4">Make a copy of the <code>Webhook Proxy URL</code></li>
+                <li class="fragment" data-fragment-index="5">Quarkus GitHub App connects to smee.io automatically in dev mode</li>
             </ul>
+            <div>
+                <img class="fragment" data-fragment-index="2" src="img/smee.png" height="300">
+            </div>
         </section>
 
         <section>
@@ -209,15 +217,14 @@
                     <pre><code data-trim data-noescape data-line-numbers><script type="text/template">
 $ quarkus create app \
     -x quarkus-github-app \
-    com.steeplesoft:dn2024demo \
-    --no-code</script></code></pre>
+    com.steeplesoft:qgha_demo</script></code></pre>
                 </li>
                 <li class="fragment">Create .env file
                     <pre><code data-trim data-noescape data-line-numbers><script type="text/template">
 QUARKUS_GITHUB_APP_APP_ID=<the numeric app id>
-QUARKUS_GITHUB_APP_APP_NAME=<the name of your app>
+QUARKUS_GITHUB_APP_APP_NAME=Quarkus Github App Demo
 QUARKUS_GITHUB_APP_WEBHOOK_PROXY_URL=<your smee.io channel URL>
-QUARKUS_GITHUB_APP_WEBHOOK_SECRET=<your webhook secret>
+QUARKUS_GITHUB_APP_WEBHOOK_SECRET=<secret>
 QUARKUS_GITHUB_APP_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----\
 <your private key> \
 -----END RSA PRIVATE KEY-----</script></code></pre>
@@ -243,8 +250,7 @@ import org.kohsuke.github.GHIssue;
 import org.kohsuke.github.GHIssueChanges;
 
 public class IssueProcessor {
-    void onOpen(@Issue.Opened GHEventPayload.Issue issuePayload)
-		        throws IOException {
+    void onOpen(@Issue.Opened GHEventPayload.Issue issuePayload) throws IOException {
         issuePayload.getIssue().comment("Hello from my GitHub App");
     }
 }
@@ -360,7 +366,7 @@ public class EventHandlerTest {
             <h1>Thank You!</h1>
             <ul>
                 <li><a href="https://docs.quarkiverse.io/quarkus-github-app/dev/index.html">Quarkus App Documentation</a></li>
-                <li> Examples
+                <li>Examples
                     <ul>
                         <li>Quarkus Bot - <a href="https://github.com/quarkusio/quarkus-github-bot">https://github.com/quarkusio/quarkus-github-bot</a></li>
                         <li>WildFly Bot - <a href="https://github.com/wildfly/wildfly-github-bot">https://github.com/wildfly/wildfly-github-bot</a></li>
@@ -369,10 +375,11 @@ public class EventHandlerTest {
                 </li>
                 <li><a href="https://code.quarkus.io">Quarkus Starter</a></li>
             </ul>
-            <br>
-            <a href="https://jasondl.ee/presentations/subatomic/">
-                <img src="img/preso_qr.png" alt="preso qr" style="height: 200px;">
-            </a>
+            <div>
+                <a href="https://jasondl.ee/presentations/subatomic/">
+                    <img src="img/preso_qr.png" alt="preso qr" style="height: 200px;">
+                </a>
+            </div>
         </section>
 
     </div>
