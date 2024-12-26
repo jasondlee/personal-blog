@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : Managing GlassFish JDBC Resources via REST</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            <article class="post">
+    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+        Managing GlassFish JDBC Resources via REST
+    </h1>
+    Thursday, March 10, 2011 | <span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2011/managing-glassfish-jdbc-resources-via-rest&title=Managing GlassFish JDBC Resources via REST" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Managing GlassFish JDBC Resources via REST&url=https://jasondl.ee/2011/managing-glassfish-jdbc-resources-via-rest&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2011/managing-glassfish-jdbc-resources-via-rest" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2011/managing-glassfish-jdbc-resources-via-rest" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Managing GlassFish JDBC Resources via REST&amp;body=Managing GlassFish JDBC Resources via REST https://jasondl.ee/2011/managing-glassfish-jdbc-resources-via-rest" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+
+    <div>
+        <div class="paragraph">
+<p>I was asked this morning about creating JDBC resources via REST. As with <a href="/2011/03/adding-users-to-a-glassfish-realm-via-rest/">user management</a>, it&#8217;s actually pretty simple, once you&#8217;ve seen how.  Let&#8217;s take a look.</p>
+</div>
+<div class="paragraph">
+<p>To create a JDBC resource, you need two different objects, a <code>JDBC Connection Pool</code> and a <code>JDBC Resource</code>.  The endpoints for these two objects are <a href="http://localhost:4848/management/domain/resources/jdbc-connection-pool" class="bare">http://localhost:4848/management/domain/resources/jdbc-connection-pool</a> and <a href="http://localhost:4848/management/domain/resources/jdbc-resource" class="bare">http://localhost:4848/management/domain/resources/jdbc-resource</a>.  Let&#8217;s start by creating the connection pool.  There are many parameters available (which you can see via OPTIONS), but we&#8217;ll only deal with a small subset here:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span>curl <span style="color: #116329">-X</span> POST <span style="color: #116329">-H</span> <span style="color: #0a3069">'Accept: application/json'</span> <span style="color: #0a3069">\</span>
+    <span style="color: #116329">-d</span> <span style="color: #0550ae">driverClassname</span><span style="color: #0550ae">=</span>org.postgresql.Driver <span style="color: #0a3069">\</span>
+    <span style="color: #116329">-d</span> <span style="color: #0550ae">resType</span><span style="color: #0550ae">=</span>java.sql.Driver <span style="color: #0a3069">\</span>
+    <span style="color: #116329">-d</span> <span style="color: #953800">id</span><span style="color: #0550ae">=</span><span style="color: #0a3069">"ExamplePool"</span> <span style="color: #0a3069">\</span>
+    http://localhost:4848/management/domain/resources/jdbc-connection-pool
+<span style="color: #0550ae">{</span>
+    <span style="color: #0a3069">"message"</span>: <span style="color: #0a3069">"</span><span style="color: #0a3069">\"</span><span style="color: #0a3069">http:</span><span style="color: #0a3069">\/\/</span><span style="color: #0a3069">localhost:4848</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">management</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">domain</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">resources</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">jdbc-connection-pool</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">ExamplePool</span><span style="color: #0a3069">\"</span><span style="color: #0a3069"> created successfully."</span>,
+    <span style="color: #0a3069">"exit_code"</span>: <span style="color: #0a3069">"SUCCESS"</span>
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This connection pool will, of course, need to know where to connect, and how to log in.  To do that, we need to set some properties on the connection pool. Setting properties, though, is a bit different.  Properties in GlassFish&#8217;s <code>domain.xml</code> aren&#8217;t simple name/value pairs.  Each property has a name, a value, and a description.  To support that, the <code>property</code> endpoint takes an object which, expressed in JSON, is a list of objects: <code>[{'name':'propertyName','value':'propertyValue','description':'optionalPropertyDescription'}]</code>.  In our case, the command will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span>curl <span style="color: #116329">-X</span> POST <span style="color: #116329">-H</span> <span style="color: #0a3069">'Accept: application/json'</span> <span style="color: #0a3069">\</span>
+    <span style="color: #116329">-H</span> <span style="color: #0a3069">'Content-Type: application/json'</span> <span style="color: #116329">-d</span> <span style="color: #0a3069">"[{'name':'user','value':'test'},{'name':'password','value':'test'},{'name':'databaseName','value':'test'},{'name':'serverName','value':'localhost'},{'name':'url','value':'jdbc:postgresql://localhost/test/'}]"</span> <span style="color: #0a3069">\</span>
+    http://localhost:4848/management/domain/resources/jdbc-connection-pool/ExamplePool/property
+<span style="color: #0550ae">{</span>
+    <span style="color: #0a3069">"message"</span>: <span style="color: #0a3069">"</span><span style="color: #0a3069">\"</span><span style="color: #0a3069">http:</span><span style="color: #0a3069">\/\/</span><span style="color: #0a3069">localhost:4848</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">management</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">domain</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">resources</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">jdbc-connection-pool</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">ExamplePool</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">property</span><span style="color: #0a3069">\"</span><span style="color: #0a3069"> updated successfully."</span>,
+    <span style="color: #0a3069">"command"</span>: <span style="color: #0a3069">"Property"</span>,
+    <span style="color: #0a3069">"exit_code"</span>: <span style="color: #0a3069">"SUCCESS"</span>
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can now view this connection pool like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span>curl <span style="color: #116329">-H</span> <span style="color: #0a3069">'Accept: application/json'</span> <span style="color: #0a3069">\</span>
+    http://localhost:4848/management/domain/resources/jdbc-connection-pool/ExamplePool
+<span style="color: #0550ae">{</span>
+    <span style="color: #0a3069">"command"</span>: <span style="color: #0a3069">"Jdbc-connection-pool"</span>,
+    <span style="color: #0a3069">"exit_code"</span>: <span style="color: #0a3069">"SUCCESS"</span>,
+    <span style="color: #0a3069">"extraProperties"</span>: <span style="color: #0550ae">{</span>
+        <span style="color: #0a3069">"commands"</span>: <span style="color: #0550ae">[]</span>,
+        <span style="color: #0a3069">"methods"</span>: <span style="color: #0550ae">[</span>
+// ...
+        <span style="color: #0550ae">]</span>,
+        <span style="color: #0a3069">"entity"</span>: <span style="color: #0550ae">{</span>
+//...
+            <span style="color: #0a3069">"datasourceClassname"</span>: null,
+            <span style="color: #0a3069">"description"</span>: null,
+            <span style="color: #0a3069">"driverClassname"</span>: <span style="color: #0a3069">"org.postgresql.Driver"</span>,
+//...
+            <span style="color: #0a3069">"name"</span>: <span style="color: #0a3069">"ExamplePool"</span>,
+//...
+            <span style="color: #0a3069">"resType"</span>: <span style="color: #0a3069">"java.sql.Driver"</span>,
+//...
+        <span style="color: #0550ae">}</span>,
+        <span style="color: #0a3069">"childResources"</span>: <span style="color: #0550ae">{</span><span style="color: #0a3069">"property"</span>: <span style="color: #0a3069">"http:</span><span style="color: #0a3069">\/\/</span><span style="color: #0a3069">localhost:4848</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">management</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">domain</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">resources</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">jdbc-connection-pool</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">ExamplePool</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">property"</span><span style="color: #0550ae">}</span>
+    <span style="color: #0550ae">}</span>
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now that we have a connection pool, let&#8217;s create the JDBC Resource:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span>curl <span style="color: #116329">-X</span> POST <span style="color: #116329">-H</span> <span style="color: #0a3069">'Accept: application/json'</span> <span style="color: #0a3069">\</span>
+    <span style="color: #116329">-d</span> <span style="color: #953800">id</span><span style="color: #0550ae">=</span>jdbc/test <span style="color: #0a3069">\</span>
+    <span style="color: #116329">-d</span> <span style="color: #0550ae">poolName</span><span style="color: #0550ae">=</span>ExamplePool <span style="color: #0a3069">\</span>
+    http://localhost:4848/management/domain/resources/jdbc-resource
+<span style="color: #0550ae">{</span>
+    <span style="color: #0a3069">"message"</span>: <span style="color: #0a3069">"</span><span style="color: #0a3069">\"</span><span style="color: #0a3069">http:</span><span style="color: #0a3069">\/\/</span><span style="color: #0a3069">localhost:4848</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">management</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">domain</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">resources</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">jdbc-resource</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">jdbc</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">test</span><span style="color: #0a3069">\"</span><span style="color: #0a3069"> created successfully."</span>,
+    <span style="color: #0a3069">"exit_code"</span>: <span style="color: #0a3069">"SUCCESS"</span>
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Your connection pool and resource are now ready to use.  As an added bonus, let&#8217;s ping our new connection pool to make sure it works:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span>curl <span style="color: #116329">-H</span> <span style="color: #0a3069">'Accept: application/json'</span> <span style="color: #0a3069">\</span>
+    http://localhost:4848/management/domain/resources/ping-connection-pool?id<span style="color: #0550ae">=</span>ExamplePool
+<span style="color: #0550ae">{</span>
+    <span style="color: #0a3069">"command"</span>: <span style="color: #0a3069">"ping-connection-pool AdminCommand"</span>,
+    <span style="color: #0a3069">"exit_code"</span>: <span style="color: #0a3069">"SUCCESS"</span>
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Deleting the pool and the resource are both very simple. Note that the JNDI name (<code>jdbc/test</code>) must be properly encoded (<code>jdbc%2Ftest</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span>curl <span style="color: #116329">-X</span> DELETE <span style="color: #116329">-H</span> <span style="color: #0a3069">'Accept: application/json'</span> <span style="color: #0a3069">\</span>
+    http://localhost:4848/management/domain/resources/jdbc-resource/jdbc%2Ftest
+<span style="color: #0550ae">{</span>
+    <span style="color: #0a3069">"message"</span>: <span style="color: #0a3069">"</span><span style="color: #0a3069">\"</span><span style="color: #0a3069">http:</span><span style="color: #0a3069">\/\/</span><span style="color: #0a3069">localhost:4848</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">management</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">domain</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">resources</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">jdbc-resource</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">jdbc%2Ftest</span><span style="color: #0a3069">\"</span><span style="color: #0a3069"> deleted successfully."</span>,
+    <span style="color: #0a3069">"exit_code"</span>: <span style="color: #0a3069">"SUCCESS"</span>
+<span style="color: #0550ae">}</span>
+<span style="color: #0550ae">$ </span>curl <span style="color: #116329">-X</span> DELETE <span style="color: #116329">-H</span> <span style="color: #0a3069">'Accept: application/json'</span> <span style="color: #0a3069">\</span>
+    http://localhost:4848/management/domain/resources/jdbc-connection-pool/ExamplePool
+<span style="color: #0550ae">{</span>
+    <span style="color: #0a3069">"message"</span>: <span style="color: #0a3069">"</span><span style="color: #0a3069">\"</span><span style="color: #0a3069">http:</span><span style="color: #0a3069">\/\/</span><span style="color: #0a3069">localhost:4848</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">management</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">domain</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">resources</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">jdbc-connection-pool</span><span style="color: #0a3069">\/</span><span style="color: #0a3069">ExamplePool</span><span style="color: #0a3069">\"</span><span style="color: #0a3069"> deleted successfully."</span>,
+    <span style="color: #0a3069">"exit_code"</span>: <span style="color: #0a3069">"SUCCESS"</span>
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There you have it.  If you have any questions, or have some examples you&#8217;d like to see, feel free to ask. : )</p>
+</div>
+    </div>
+    <footer>
+        <div class="grid">
+            <div class="col tags">
+                
+                <span class="title">tags: </span>
+                
+                <a href="/tag/glassfish/">GlassFish</a>
+                <!--                <a href="https://jasondl.ee/tags/GlassFish.html">GlassFish</a>-->
+                
+                <a href="/tag/rest/">REST</a>
+                <!--                <a href="https://jasondl.ee/tags/REST.html">REST</a>-->
+                
+                
+            </div>
+            <div class="col"><span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2011/managing-glassfish-jdbc-resources-via-rest&title=Managing GlassFish JDBC Resources via REST" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Managing GlassFish JDBC Resources via REST&url=https://jasondl.ee/2011/managing-glassfish-jdbc-resources-via-rest&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2011/managing-glassfish-jdbc-resources-via-rest" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2011/managing-glassfish-jdbc-resources-via-rest" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Managing GlassFish JDBC Resources via REST&amp;body=Managing GlassFish JDBC Resources via REST https://jasondl.ee/2011/managing-glassfish-jdbc-resources-via-rest" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+</div>
+        </div>
+    </footer>
+</article>
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>

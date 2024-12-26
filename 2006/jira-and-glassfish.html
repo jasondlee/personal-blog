@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : JIRA and GlassFish</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            <article class="post">
+    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+        JIRA and GlassFish
+    </h1>
+    Wednesday, April 19, 2006 | <span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2006/jira-and-glassfish&title=JIRA and GlassFish" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=JIRA and GlassFish&url=https://jasondl.ee/2006/jira-and-glassfish&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2006/jira-and-glassfish" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2006/jira-and-glassfish" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=JIRA and GlassFish&amp;body=JIRA and GlassFish https://jasondl.ee/2006/jira-and-glassfish" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+
+    <div>
+        <div class="paragraph">
+<p>Officially, <a href="https://glassfish.dev.java.net/">GlassFish</a> is not a supported platform for <a href="http://atlassian.com/software/jira/">JIRA</a>, Atlassian&#8217;s extremly popular issue tracker.  Since we&#8217;re migrating to GlassFish at <a href="http://www.iec-okc.com">work</a>, it&#8217;s pretty important that we get it the two to work together.  As it turns out, it&#8217;s really not that bad at all.  Here&#8217;s what I had to do to get JIRA, <a href="http://www.postgresql.org">PostgreSQL</a>, <a href="http://www.microsoft.com/windowsserver2003/technologies/activedirectory/default.mspx">Active Directory</a> and GlassFish all playing nicely together.</p>
+</div>
+<div class="paragraph">
+<p>The first step, of course, is to download the JIRA distribution (For our purpose here, I&#8217;m going to assume that GlassFish and PostgreSQL are already installed an running.)  Once JIRA has been downloaded, we need to extract the archive to our work area and make our mods.  In our case, the mods were pretty simple:  database location, plus Active Directory integration, which means two files need to be modified.</p>
+</div>
+<div class="paragraph">
+<p>For the database, you&#8217;ll need to modify entityengine.xml, which you will want to copy from <code>webapp/WEB-INF/classes</code> to <code>edit-webapp/WEB-INF/classes</code>.  We&#8217;ll need to make two changes in this file:  the transaction factory, and the data source.  For the transaction factory, we need to locate the element, and edit it to look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre><span style="color: #116329">&lt;transaction-factory</span> <span style="color: #116329">class=</span><span style="color: #0a3069">"org.ofbiz.core.entity.transaction.JNDIFactory"</span><span style="color: #116329">&gt;</span>
+    <span style="color: #116329">&lt;user-transaction-jndi</span> <span style="color: #116329">jndi-server-name=</span><span style="color: #0a3069">"default"</span> <span style="color: #116329">jndi-name=</span><span style="color: #0a3069">"UserTransaction"</span><span style="color: #116329">/&gt;</span>
+    <span style="color: #116329">&lt;transaction-manager-jndi</span> <span style="color: #116329">jndi-server-name=</span><span style="color: #0a3069">"default"</span> <span style="color: #116329">jndi-name=</span><span style="color: #0a3069">"UserTransaction"</span><span style="color: #116329">/&gt;</span>
+<span style="color: #116329">&lt;/transaction-factory&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the curious, that change is just the removal of <code>java:comp/</code> from the JNDI name.  For the data source, find the  element toward the end of the file.  This is what ours looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+</pre></td><td class="code"><pre><span style="color: #116329">&lt;datasource</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"defaultDS"</span> <span style="color: #116329">field-type-name=</span><span style="color: #0a3069">"postgres72"</span>
+	<span style="color: #116329">helper-class=</span><span style="color: #0a3069">"org.ofbiz.core.entity.GenericHelperDAO"</span>
+	<span style="color: #116329">check-on-start=</span><span style="color: #0a3069">"true"</span>
+	<span style="color: #116329">use-foreign-keys=</span><span style="color: #0a3069">"true"</span>
+	<span style="color: #116329">use-foreign-key-indices=</span><span style="color: #0a3069">"true"</span>
+	<span style="color: #116329">check-fks-on-start=</span><span style="color: #0a3069">"true"</span>
+	<span style="color: #116329">check-fk-indices-on-start=</span><span style="color: #0a3069">"true"</span>
+	<span style="color: #116329">add-missing-on-start=</span><span style="color: #0a3069">"true"</span>
+	<span style="color: #116329">check-indices-on-start=</span><span style="color: #0a3069">"true"</span><span style="color: #116329">&gt;</span>
+	<span style="color: #116329">&lt;jndi-jdbc</span> <span style="color: #116329">jndi-server-name=</span><span style="color: #0a3069">"default"</span> <span style="color: #116329">jndi-name=</span><span style="color: #0a3069">"jdbc/Jira"</span><span style="color: #116329">/&gt;</span>
+<span style="color: #116329">&lt;/datasource&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Of course, you need to make sure that the datasource <code>jdbc/Jira</code> is configured in GlassFish.  If you need help with that, <a href="http://blogs.sun.com/roller/page/GlassFish_PostgreSQL?entry=introducing_support_for_postgresql_in">this</a> blog entry should be helpful. For Active Directory integration, copy osuser.xml from <code>webapp/WEB-INF/classes</code> to <code>edit-webapp/WEB-INF/classes</code>.  Since this file is smaller, I&#8217;ll show it in its entirety:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+</pre></td><td class="code"><pre><span style="color: #116329">&lt;opensymphony-user&gt;</span>
+	<span style="color: #116329">&lt;authenticator</span>
+		<span style="color: #116329">class=</span><span style="color: #0a3069">"com.opensymphony.user.authenticator.SmartAuthenticator"</span><span style="color: #116329">/&gt;</span>
+	<span style="color: #116329">&lt;provider</span>
+		<span style="color: #116329">class=</span><span style="color: #0a3069">"com.opensymphony.user.provider.ldap.LDAPCredentialsProvider"</span><span style="color: #116329">&gt;</span>
+		<span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"java.naming.factory.initial"</span><span style="color: #116329">&gt;</span>
+			com.sun.jndi.ldap.LdapCtxFactory
+		<span style="color: #116329">&lt;/property&gt;</span>
+		<span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"java.naming.provider.url"</span><span style="color: #116329">&gt;</span>
+			ldap://foo:389
+		<span style="color: #116329">&lt;/property&gt;</span>
+		<span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"searchBase"</span><span style="color: #116329">&gt;</span>
+			cn=Users,dc=foo
+		<span style="color: #116329">&lt;/property&gt;</span>
+		<span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"uidSearchName"</span><span style="color: #116329">&gt;</span>
+			sAMAccountName
+		<span style="color: #116329">&lt;/property&gt;</span>
+		<span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"java.naming.security.principal"</span><span style="color: #116329">&gt;</span>
+			cn=ESP Service Account,cn=Users,dc=foo
+		<span style="color: #116329">&lt;/property&gt;</span>
+		<span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"java.naming.security.credentials"</span><span style="color: #116329">&gt;</span>
+			bar
+		<span style="color: #116329">&lt;/property&gt;</span>
+		<span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"exclusive-access"</span><span style="color: #116329">&gt;</span>
+			true
+		<span style="color: #116329">&lt;/property&gt;</span>
+	<span style="color: #116329">&lt;/provider&gt;</span>
+	<span style="color: #116329">&lt;provider</span>
+		<span style="color: #116329">class=</span><span style="color: #0a3069">"com.atlassian.core.ofbiz.osuser.CoreOFBizCredentialsProvider"</span><span style="color: #116329">&gt;</span>
+		<span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"exclusive-access"</span><span style="color: #116329">&gt;</span>true<span style="color: #116329">&lt;/property&gt;</span>
+	<span style="color: #116329">&lt;/provider&gt;</span>
+	<span style="color: #116329">&lt;provider</span>
+		<span style="color: #116329">class=</span><span style="color: #0a3069">"com.opensymphony.user.provider.ofbiz.OFBizProfileProvider"</span><span style="color: #116329">&gt;</span>
+		<span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"exclusive-access"</span><span style="color: #116329">&gt;</span>true<span style="color: #116329">&lt;/property&gt;</span>
+	<span style="color: #116329">&lt;/provider&gt;</span>
+	<span style="color: #116329">&lt;provider</span>
+		<span style="color: #116329">class=</span><span style="color: #0a3069">"com.opensymphony.user.provider.ofbiz.OFBizAccessProvider"</span><span style="color: #116329">&gt;</span>
+		<span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"exclusive-access"</span><span style="color: #116329">&gt;</span>true<span style="color: #116329">&lt;/property&gt;</span>
+	<span style="color: #116329">&lt;/provider&gt;</span>
+<span style="color: #116329">&lt;/opensymphony-user&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once those files have been created, from the root of the JIRA work directory, issue the command "build ear".  Technically, you have a choice between WAR and EAR deployment.  I chose EAR, as it saves me one step (changing the context root) at deployment.  It will most likely take a few minutes for that task to complete.  Once it has, log on to the GlassFish <a href="http://localhost:4848">admin app</a>, navigate to Applications&#8594;Enterprise Applications, click deploy, then click Browse to find your EAR, which will be in the directory dist-generic in your JIRA working directory.  Select the ear, click OK, click Next, change the app name if you&#8217;d like, then click Finish.  This process, too, will likely take a few minutes, but, once it&#8217;s done, you&#8217;re ready to point your browser at your <a href="http://localhost:8080/jira">new JIRA installation</a> and begin configuring it. It&#8217;s that easy! ;)</p>
+</div>
+    </div>
+    <footer>
+        <div class="grid">
+            <div class="col tags">
+                
+                <span class="title">tags: </span>
+                
+                <a href="/tag/java/">Java</a>
+                <!--                <a href="https://jasondl.ee/tags/Java.html">Java</a>-->
+                
+                
+            </div>
+            <div class="col"><span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2006/jira-and-glassfish&title=JIRA and GlassFish" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=JIRA and GlassFish&url=https://jasondl.ee/2006/jira-and-glassfish&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2006/jira-and-glassfish" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2006/jira-and-glassfish" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=JIRA and GlassFish&amp;body=JIRA and GlassFish https://jasondl.ee/2006/jira-and-glassfish" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+</div>
+        </div>
+    </footer>
+</article>
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>
