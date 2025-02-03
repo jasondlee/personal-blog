@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : JSFOne: Day Two</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            <article class="post">
+    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+        JSFOne: Day Two
+    </h1>
+    Saturday, September 06, 2008 | <span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2008/jsfone-day-two&title=JSFOne: Day Two" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=JSFOne: Day Two&url=https://jasondl.ee/2008/jsfone-day-two&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2008/jsfone-day-two" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2008/jsfone-day-two" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=JSFOne: Day Two&amp;body=JSFOne: Day Two https://jasondl.ee/2008/jsfone-day-two" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+
+    <div>
+        <div class="paragraph">
+<p>Day two is over, as I sit here on the morning of the third, despite my best intentions.  It was a long day for me, but  a good one, overall.</p>
+</div>
+<div class="paragraph">
+<p>Despite my two talks scheduled for that afternoon, I took the time to attend one of the JSFOne sessions presented by Ted Goddard of <a href="http://www.icesoft.com/">ICEsoft</a> on "Ajax Push/ICEFaces."  Ajax Push is the term ICEsoft prefers for what others call <a href="http://cometdaily.com/">Comet</a> (Ajax&#8230;&#8203;Comet&#8230;&#8203; get it? : ) or <a href="http://directwebremoting.org/dwr/reverse-ajax">Reverse Ajax</a>.  It&#8217;s a technology that has interested me for quite a while, so I figured this was a good chance to learn from an expert, and I was completely blown away with how easy it is with ICEfaces.  I was expecting to have to add a lot of mark up to the template to use Ajax Push, and maybe a lot of plumbing on the server as well, but I was wrong.  The template remains completely unchanged&#8201;&#8212;&#8201;it has no idea that Ajax Push is being used.  In fact, Ted suggested that we write our app as Web 1.0 app, and THEN add the push features.  It sounded crazy until I saw the changes on the server side:  two lines of code.  I don&#8217;t have the code handy, but you basically subscribe a session to a group (I believe that&#8217;s the term they use) with one line of code, and then, anywhere you want to notify interested clients of an update, you use another line of code.  That&#8217;s it.  It&#8217;s basically a very simple subscribe/notify mechanism.  Very impressive.  The Infragistics guys are here as well.  Someday, I&#8217;ll have to play with both of those frameworks and see if I can cook up a compare and contrast of some of the major frameworks.  We&#8217;ll see if that ever happens ; ).</p>
+</div>
+<div class="paragraph">
+<p>After lunch, I gave my first presentation of the day, "JSF 2-Style Component Development in a 1.2 World." This is the talk I gave at the <a href="http://okcjug.org">Oklahoma City JUG</a>, and it went <em>much</em> better the second time around.  The attendance was pretty good, with lots of good discussion.  I changed the presentation a bit, based on the feedback from the first go 'round, and spent more time in the code than on the slides, using a print out of the slides as my outline.  I think it flowed better and seemed to be well appreciated by the audience.</p>
+</div>
+<div class="paragraph">
+<p>After that, I attended Kito Mann&#8217;s presentation on Shale Test, a JSF testing framework from the Apache Shale group.  Having attended Stan&#8217;s BOF on JSFUnit the night before, I wanted to see what Shale Test offered.  Kito seems to like it a lot, so there must be something there.  Overall, it seems like a pretty nice tool.  While it does seem to support in-container testing, all we looked at was out-of-container, JUnit-style tests, which I tend to lean toward.  Stan made a good point in his BOF, though, that out-of-container testing isn&#8217;t often as complete as in-container, as any Servlet Filters, etc. that the app may have aren&#8217;t every applied.  Of course, that approach to testing, as Stan quickly notes, blurs the line between unit and integration testing.  That debate aside, both Shale Test and JSFUnit offer very functional ways to test JSF apps, though, to be honest, I&#8217;m inclined toward JSFUnit, for what that&#8217;s worth.</p>
+</div>
+<div class="paragraph">
+<p>In the last slot of the day was my presentation on JSFTemplating, which was also well attended and received.  From a presentation perspective, I felt it flowed pretty well (especially since that was the first time I&#8217;ve given that talk) with no major hiccups (or minor, from what I can remember : ).  The audience seemed really engaged, asking a lot of good questions.  I was initially afraid it wouldn&#8217;t fill the whole time slot, but we actually went the full 90 minutes.</p>
+</div>
+<div class="paragraph">
+<p>With all of my presentations done, I headed to dinner, where I got to have a fun chat with a native Virginian, a Bostonian, and a German.  All nice, sharp guys, which made for good conversation.  After dinner was the JSFOne/Rich Web Experience 2008 Party.  I don&#8217;t drink, so that part didn&#8217;t appeal to me much, but I made the mistake of heading back to my room to drop off my backpack, at which point I got comfortable and wasn&#8217;t able to force myself to get back out. :)  I spent the rest of the evening, then, watching the hotel&#8217;s TV system trip and fall and finally basically quit working altogether.  With no wifi in the hotel room, that made for an interesting evening.</p>
+</div>
+<div class="paragraph">
+<p>Day 3 will be a short one, and I will be heading to the airport before things are done, so I won&#8217;t have much to say.  In fact, I&#8217;m typing this as sessions are going on, so I won&#8217;t have much to report.  This, then, will likely be my last post from/about the conference.  One quick note about Day 3, though.  I got to meet David Chandler, a fellow JSF enthusiast and JSFOne speaker, and a fellow Believer, and we had a very good discussion over breakfast, which was an unexpected, but very welcome surprise.  He has a neat project going on, which I may discuss in a more appropriate forum at some point (if you&#8217;re interested in what that is or where that might be discussed, feel free to email me : ).</p>
+</div>
+    </div>
+    <footer>
+        <div class="grid">
+            <div class="col tags">
+                
+                <span class="title">tags: </span>
+                
+                <a href="/tag/java/">Java</a>
+                <!--                <a href="https://jasondl.ee/tags/Java.html">Java</a>-->
+                
+                <a href="/tag/jsfone/">JSFOne</a>
+                <!--                <a href="https://jasondl.ee/tags/JSFOne.html">JSFOne</a>-->
+                
+                
+            </div>
+            <div class="col"><span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2008/jsfone-day-two&title=JSFOne: Day Two" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=JSFOne: Day Two&url=https://jasondl.ee/2008/jsfone-day-two&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2008/jsfone-day-two" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2008/jsfone-day-two" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=JSFOne: Day Two&amp;body=JSFOne: Day Two https://jasondl.ee/2008/jsfone-day-two" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+</div>
+        </div>
+    </footer>
+</article>
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>

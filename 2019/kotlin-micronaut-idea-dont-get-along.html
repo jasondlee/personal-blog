@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : Kotlin+Micronaut and IDEA Don't Get Along Together</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            <article class="post">
+    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+        Kotlin+Micronaut and IDEA Don't Get Along Together
+    </h1>
+    Friday, January 25, 2019 | <span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2019/kotlin-micronaut-idea-dont-get-along&title=Kotlin+Micronaut and IDEA Don't Get Along Together" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Kotlin+Micronaut and IDEA Don't Get Along Together&url=https://jasondl.ee/2019/kotlin-micronaut-idea-dont-get-along&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2019/kotlin-micronaut-idea-dont-get-along" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2019/kotlin-micronaut-idea-dont-get-along" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Kotlin+Micronaut and IDEA Don't Get Along Together&amp;body=Kotlin+Micronaut and IDEA Don't Get Along Together https://jasondl.ee/2019/kotlin-micronaut-idea-dont-get-along" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+
+    <div>
+        <div class="paragraph">
+<p>Recently, I&#8217;ve been experimenting with <a href="http://micronaut.io">Micronaut</a>, a new-ish "modern, JVM-based, full-stack framework
+for building modular, easily testable microservice and serverless applications" from the makers of Grail. So far, I&#8217;ve
+been really impressed. The documentation has been excellent, and the framework is very easy to get started with. I have,
+though, run in to some trouble writing tests, or, more accurately running tests. I spent far too much time trying to figure
+it out until I finally broke down and asked, and it turns out that it&#8217;s <a href="https://youtrack.jetbrains.com/issue/KT-15040">IDEA&#8217;s fault</a>.
+While that&#8217;s a bit annoying, there is a workaround, which I&#8217;d like to document briefly here.</p>
+</div>
+<div class="paragraph">
+<p>If you read the <a href="https://docs.micronaut.io/latest/guide/index.html">getting started guide</a> for Micronaut, you&#8217;ll notice a
+section on <a href="https://docs.micronaut.io/latest/guide/index.html#ideSetup">setting up your IDE</a>. Having grown accustomed to
+having my projects "just work" in an IDE thanks to the excellent support for Maven and Gradle build files, I was a bit taken
+aback by this, but it turns out that Micronaut uses annotation processing fairly heavily, so you just have to tell IDEA
+to do the same when using its internal build system:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/2019/intellij-annotation-processors.png" alt="intellij annotation processors"></span></p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re using Java or Groovy, you&#8217;re all set. If you&#8217;re using Kotlin, however, you&#8217;re not. As the bug linked above points
+out, Kotlin&#8217;s kapt tool is not working correctly with IDEA&#8217;s internal build system. You have a couple of options, then.
+You can run your tests from the command line, using either Maven or Gradle, or you can change the test configuration to
+execute the build using the external tool before running or debugging your test.</p>
+</div>
+<div class="paragraph">
+<p>For example, I created a brand new (demo) application, then added a controller:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span>mn create-app <span style="color: #116329">-l</span> kotlin <span style="color: #116329">-b</span> maven <span style="color: #116329">--features</span><span style="color: #0550ae">=</span>junit demo
+|Generating Kotlin project...
+...................................
+|Application created at C:<span style="color: #0a3069">\U</span>sers<span style="color: #0a3069">\j</span>dlee<span style="color: #0a3069">\s</span>rc<span style="color: #0a3069">\m</span>icronaut<span style="color: #0a3069">\d</span>emo
+<span style="color: #0550ae">$ </span><span style="color: #953800">cd </span>demo
+<span style="color: #0550ae">$ </span>mn create-controller Author
+|Rendered template Controller.kt to destination src<span style="color: #0a3069">\m</span>ain<span style="color: #0a3069">\k</span>otlin<span style="color: #0a3069">\d</span>emo<span style="color: #0a3069">\A</span>uthorController.kt
+|Rendered template ControllerTest.java to destination src<span style="color: #0a3069">\t</span>est<span style="color: #0a3069">\j</span>ava<span style="color: #0a3069">\d</span>emo<span style="color: #0a3069">\A</span>uthorControllerTest.java
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From IDEA, if I Run AuthorControllerTest, the test will fail with a very unhelpful message:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>C:\java\jdk8\bin\java.exe ...
+13:15:35.686 [main] INFO  i.m.context.env.DefaultEnvironment - Established active environments: [test]
+13:15:35.700 [main] INFO  i.m.context.env.DefaultEnvironment - Established active environments: [test]
+
+io.micronaut.http.client.exceptions.HttpClientResponseException: Page Not Found
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The trick is to change how IDEA builds the project before starting the test. With the AuthorControllerTest configuration
+created for us by virtue of having just tried to run the test, we just need to edit that configuration and change the
+"Before Launch" steps.</p>
+</div>
+<div class="paragraph">
+<p>This is how it should look by default:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/2019/micronaut-default-test-config.png" alt="micronaut default test config"></span></p>
+</div>
+<div class="paragraph">
+<p>We want to click plus icon and tell it to run a Maven goal (or a Gradle task):</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/2019/micronaut-default-add-configuration.png" alt="micronaut default add configuration"></span></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/2019/micronaut-default-test-maven-goal.png" alt="micronaut default test maven goal"></span></p>
+</div>
+<div class="paragraph">
+<p>Once you&#8217;ve added the goal/task configuration, click on the <code>Build</code> configuration and click the minus icon to remove it,
+then click OK. You&#8217;re now ready to run/debug your test, which should you give a green build.</p>
+</div>
+<div class="paragraph">
+<p>Given that this is a per-test configuration change, you&#8217;ll either have to repeat it for every test (if you run them
+individually) or change the default JUnit test configuration. How you want to handle that is completely up to you. If you
+don&#8217;t want to have to do that at all, you can either use Java or Groovy, or go vote on this
+<a href="https://youtrack.jetbrains.com/issue/KT-15040">issue</a>.</p>
+</div>
+<div class="paragraph">
+<p>In fact, whatever you do, go <a href="https://youtrack.jetbrains.com/issue/KT-15040">vote</a>! :)</p>
+</div>
+    </div>
+    <footer>
+        <div class="grid">
+            <div class="col tags">
+                
+                <span class="title">tags: </span>
+                
+                <a href="/tag/kotlin/">Kotlin</a>
+                <!--                <a href="https://jasondl.ee/tags/Kotlin.html">Kotlin</a>-->
+                
+                <a href="/tag/micronaut/">Micronaut</a>
+                <!--                <a href="https://jasondl.ee/tags/Micronaut.html">Micronaut</a>-->
+                
+                <a href="/tag/idea/">IDEA</a>
+                <!--                <a href="https://jasondl.ee/tags/IDEA.html">IDEA</a>-->
+                
+                
+            </div>
+            <div class="col"><span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2019/kotlin-micronaut-idea-dont-get-along&title=Kotlin+Micronaut and IDEA Don't Get Along Together" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Kotlin+Micronaut and IDEA Don't Get Along Together&url=https://jasondl.ee/2019/kotlin-micronaut-idea-dont-get-along&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2019/kotlin-micronaut-idea-dont-get-along" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2019/kotlin-micronaut-idea-dont-get-along" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Kotlin+Micronaut and IDEA Don't Get Along Together&amp;body=Kotlin+Micronaut and IDEA Don't Get Along Together https://jasondl.ee/2019/kotlin-micronaut-idea-dont-get-along" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+</div>
+        </div>
+    </footer>
+</article>
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+==================================================================
+https://keybase.io/jasondlee
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://jasondl.ee
+  * I am jasondlee (https://keybase.io/jasondlee) on keybase.
+  * I have a public key with fingerprint 04FB 9F2C C0F8 6C59 9875  70E7 C50A 1004 5A8C C862
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01014d864a98cb0fc3b3185c346b2daa7a96c43844f10ad13bed594dad3fe84d2b890a",
+      "fingerprint": "04fb9f2cc0f86c59987570e7c50a10045a8cc862",
+      "host": "keybase.io",
+      "key_id": "c50a10045a8cc862",
+      "kid": "01014d864a98cb0fc3b3185c346b2daa7a96c43844f10ad13bed594dad3fe84d2b890a",
+      "uid": "96499576460a46205f83f025bdc51b00",
+      "username": "jasondlee"
+    },
+    "merkle_root": {
+      "ctime": 1563534671,
+      "hash_meta": "85b76428a10f3b27e6fd5aacd3939959cc2acd473276ac91ec695bfa1b9329ad",
+      "seqno": 5796948
+    },
+    "revoke": {
+      "sig_ids": [
+        "635a752e1c20226373016e55d375e538289f988149d0936087fa2babf68671f10f"
+      ]
+    },
+    "service": {
+      "hostname": "jasondl.ee",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1563534695,
+  "expire_in": 157680000,
+  "prev": "58c44d75852713dbe88eee490215da0cd9cf33d77a3f763ceea27bb78edb04ef",
+  "seqno": 41,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.1.0
+Comment: https://keybase.io/crypto
+
+yMPRAnicrZN7bBRFHMevpZy0lliKUmzFwlYUSSn7mt2Zg6ZEEpFSVLCQopRldma2
+d33cnXt7rU3tA6U0aC2EGmMggA8eimLLQwGpERpehlYolkeIQVLRRp4FkaRpEWcb
+jdH4p/vPZCbf3/f3nc9v59DIYZ6EmMMJSXEvNh4zY463R6OeQmlzUZVghmil4KsS
+StjQwkopizhGSYAKPkGUREmlUFMxgsQULaKYigQBUVTNlCnGOkYaURWoqpYkYiop
+JqMAqRRTxWJQpbIJkYiFTMEKBIuYHbYDQce1VS0TWTIhogU1AhCCOtBFphMgYkkU
+VYAhIVCTeaE/FHEreDgTR1hWIMTP+MYYivcf+v85d3TIDmkqQkDXVE3EqiaLwIKK
+JcrApARIpii6wgizg7iMcXUxjoSCtJQxoTpTKGN2SSkz7FDIcekSJ+BqJKApgIfR
+JX5DHPEbZczBvBQCk3eRIb+VpZiyzjSLAowJVZDCEyBCZL5RdUXWNUyQxIiGgGlh
+yUSKjDDlQSLs5WBI8AEdaUiFPIHNykMlzG0eCRRxbhHB95LA22MdyEwisijLmqIr
+oqQxAKiiAwYUKENkIQglFVERKZoIdQvLJjYtDfLQHJolFFa7zezyABkydwf1TwBZ
+nECmELZDToiESvm533HCEZ9LxakMu8IKZhp/WhhmIEj5T8IrypkdCYSCnBJX/gsY
+ApkCeyUcsJkRcBV8KFDkn9uHlXNLAImqUh1AIOuSQk0GIWNMRaIsAYpFQhGxFIXq
+OlYsXVMIY1jWTVOHjJqiyqy/Cap8Ng4u4p6cWxA7UZsPtP3g4jhPTILHOzzWfT2e
+hPikv97U1YVJnk97H/thSo190Nuf3obSyz+IK8uRDz/x9aqW2hXfVvz+SFrJC3Kx
+d957m4j9VuH+4vCYfTW5tz85d7KbFJgfT/gyKDkLbrUm39uzJeXEV3MPjLlE62ds
+mbOrKmXs0nBBq7c6fyCr21rv2//qsl3jS37MESsvr953O+ZY061VdbG9q/MX19QN
+vLHx8vu/3GscG1uMR4/MHjB66tt8o4/0TxwPPfWNwyY7uHO0Na87O/9UYcPENUJe
+y4g9A7dzupqnXRF6n697Ltq7tnX+5WHr5vhjLyzd3bnk7a1PnzQOtd44EJ+eNsse
+Pvs6WFI6LSP7mTv6qYYzcNu87DWdNdvJo3lnP5xz37rGlc76pBUdcXdHfZaalt6z
+oaJ2MH/jouTJy/p+fTzx6LW96RNOx6xIe9gbru3KnqoYDZ5rLbN+jpaRHe9cTM/r
+rZs2LrW9Kd/bs7FrUZ+2P+PJ+Idy/fcvmZrTrw2/ng++39ZuxJbfjWFdR1IX37Ss
+B6+0XkycfXJ6/XenT9hjz7SdN7rGpW4XUqY/YFRVnBhT2deSsff4ykne2h0/4et2
+7pF9k27O3bz83TvN5/oG5+6c/+yxz29OwucvjXvTO6Nn8GhDU4a0u21n8mDRbv83
+r1dtOn23Ly/lavVgx6jO5dumkKzEjoazV24EZ0Z/a7rQ4U+M73xtRPKUheZHuXbz
+2q1fFDR5nxq1oGBDd1//HxGz+Ak=
+=qu8O
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/jasondlee
+
+==================================================================
+
+==================================================================
+https://keybase.io/jasondlee
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://steeplesoft.com
+  * I am jasondlee (https://keybase.io/jasondlee) on keybase.
+  * I have a public key with fingerprint 83BB 41BB 7DEA 1B11 7BCC  4571 9681 08DD FD38 4F25
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012018623015e2ae75fa2b4a787bfa815537917a4817d255dfaa3e974702a7e08b050a",
+      "fingerprint": "83bb41bb7dea1b117bcc4571968108ddfd384f25",
+      "host": "keybase.io",
+      "key_id": "968108ddfd384f25",
+      "kid": "01017945cde475550cca8a45dfead0c9215840254971eb987353706328931efd92fc0a",
+      "uid": "96499576460a46205f83f025bdc51b00",
+      "username": "jasondlee"
+    },
+    "service": {
+      "hostname": "steeplesoft.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1568120435,
+  "expire_in": 157680000,
+  "prev": "c51377f297cf7281854523d974b2b7c3a9b68ec3d13b3c2e771585f71b40c4dc",
+  "seqno": 56,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.1.3
+Comment: https://keybase.io/crypto
+
+yMN1AnicbVJ7UBVVHL4YWOAwtzHRwspcU0hI93Xu2b1BIZNSQ0qhDEEy1z27Z3G5
+j73cu5cLEal/YJKJOWMPCiTLVw72YByGh/EokJdRDhKhQhMD4xgMgQUZ4rVdBv/r
+/HPm/M73fb/v+53TGv6AKSzow30PDd7lUtYGdbeU+0xZ/mPeQgKpUgFhLSTseH7D
+Dgl7NZtdkQgrQVI0SXEWmiEpgGkBQyALNGIFyEEkCxwFAAN5CgosR0GJBkCSBYHB
+PGQhSQsQkxwiASkQsYSsuLKxx+1RXJouyzEIsRRCUMIChSgKIlFkAaR4C0eRnCTJ
+EsOxMg104m7VazB0c0jw4g2Kqtf0g23e3v/g7/smKcizQJQwCwEApCgKnMDq/rAg
+kSJPU4BjSRqwPKQw4jnI6EFIC0NzPENhWeJpWZz37Vvow/I8gBbWQgqshSaBzDGy
+TkeSCChEkgbQiz0uwYl1dI7gVV2SA2OiKJbQy3mKiI3JGlEWIF4NY7cDe1VZ2yCq
+Tp3v9qiaKqoO/XK3prm9VoOsFbgNtB8j24KODSkuSZ+lzsjDHq+iuggrpSNFTTGE
+KaBPhCZZBsQSON+teLBNMRC6d47Ul9EH5+mSum8GQpnmoShDmqM4wAKakfSXQzSC
+IiPwyMJhkZEoBjEijSHUJwZkSCGWFFlJJIxkuS6VsAKL7lPINkIp2S5B83n03N+3
+7Aw2BYWZFocsMj6ZKSz04ftfTztuDsSLZw9nTTVObPPU4+WZNe1No51L2zZnLYm4
++EVocteRFW8wyTgm7l5rRYj2zNyjnuGEiqb9viZnz5HVt7uqnkqoztd2xZXO+svi
+Jq635X9i7ph+N7ndnrO8LKX1fHrAY8mIGyxOiyo+EQgQs4644R9uPT+bGH54YNzS
+nzKaxsxVV0alHjLXm0tJV27H+Lrpe2nF9WuqUmeI+KsJqKK6KHrLpwUZWc2T/lh/
+b5OyZ3b9H8vOnVOugOLtdUkN5lWJO6wxQ9ZS0Lf01PXft7667eOktL61wXfjW2qm
+7SVadMdzn2W2+epV5es2678f5PanF5atlPhXjl0FEZExY4HFtZFH76y3j1cPDgef
+jt4xtlrstHeNr7gwtabq8Z8m+vbevPy36WDFsyszy5PxkpaQxrLur2ztJY9EvRVR
+EbzMHVrnyT/x/m81PRsD1u86Rg+U3hizBr1gv5Lf/2RtTsPei8rBKbrk7Rr7e2ik
+MjZoduZayaLQAyHv7Jk6+uulyNdrX27mp/rSG3sqHaRl1dYHCw/9GXH6my2p+zJm
+S19C4RvnGjY580Jf+7zOebLol01f3rlx/kzh0NzI5h9BZ9+65DP2QcKeHXKh7OnJ
+F31/jWS19SZWyuaZpDd7pyGzM+mjW62T/7j2B6a9Z4v8127XCd2nLid8O+R8rPza
+Ex3lN7t3nTze6fn5UnPGwPaB/wBbGc5O
+=j3a7
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/jasondlee
+
+==================================================================
+

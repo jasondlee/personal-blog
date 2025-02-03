@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : Java</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            
+
+<h1>2022</h1>
+
+
+
+<h2>August</h2>
+<ul>
+    
+    <li>
+        <a href="/2022/wildfly-arquillian-testcontainers-and-kafka">WildFly, Arquillian, Testcontainers, and Kafka</a>
+        <div><div class="paragraph">
+<p>Back again with another Testcontainers example. This time, though, the environment is a bit different. We&#8217;ll be looking at a Jakarta EE application using <a href="https://wildfly.org">WildFly</a> and <a href="https://github.com/eclipse/microprofile-reactive-messaging">MicroProfile Reactive Messaging</a> (MP RM), and we&#8217;re going to test it using <a href="http://arquillian.org/">Arquillian</a> and <a href="https://www.testcontainers.org/">Testcontainers</a>. Let&#8217;s get to it. :)</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2022/quarkus-dev-services-jooq-flyway-testcontainers-full-example">Quarkus Dev Services, jOOQ, Flyway, and Testcontainers: A Full Example</a>
+        <div><div class="paragraph">
+<p>I have written a few posts about using Quarkus with <a href="https://www.testcontainers.org/">Testcontainers</a>, <a href="https://flywaydb.org/">Flyway</a>, and <a href="https://www.jooq.org/">jOOQ</a>. Since posting those, I&#8217;ve learned some new tricks that have changed how I integrate the various tools. In this post, I&#8217;d like to share a complete example that shows how use Quarkus, <a href="https://quarkus.io/guides/dev-services">Quarkus Dev Services</a>, <a href="https://www.testcontainers.org/">Testcontainers</a>, and <a href="https://flywaydb.org/">Flyway</a> together for a zero (ish) local config setup.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>March</h2>
+<ul>
+    
+    <li>
+        <a href="/2022/exporting-arquillian-archives">Exporting Arquillian Archives</a>
+        <div><div class="paragraph">
+<p>A big part of the testing we do on WildFly involves in-container testing, for which we use <a href="https://arquillian.org/">Arquillian</a>. It&#8217;s a great tool when it works right, but sometimes things don&#8217;t. When that happens, I find it helpful to examine the archives that the tests produce. Fortunately, Arquillian makes that easy <strong><em>if</em></strong> you know that magic words, and they&#8217;re not easy to find, so I&#8217;m going to fix that here. :P</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>January</h2>
+<ul>
+    
+    <li>
+        <a href="/2022/testing-with-quarkus-jooq-testcontainers-redux">Testing with Quarkus, jOOQ, and Testcontainers Redux</a>
+        <div><div class="paragraph">
+<p>In a <a href="/posts/2021/testing-with-quarkus-jooq-testcontainers.html">recent post</a>, I showed how one could fairly easily test your Quarkus application against a Testcontainers-managed Postgres database. While that works great, my set up is a little more complex, and I found the solution lacking. In a nutshell, as part of my build, I use Flyway with H2 to create a schema, then jOOQ&#8217;s code generation against H2 to create the needed classes. That all worked well enough until I found some types that didn&#8217;t quite map correctly against newer versions of H2 (a security issue necessitated the update), so I decided I should finally make use of the same database from start to finish. In this post, I&#8217;ll show how I did it.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2021</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2021/testing-with-quarkus-jooq-testcontainers">Testing with Quarkus, jOOQ, and Testcontainers</a>
+        <div><div class="paragraph">
+<p>In a project I&#8217;ve been working on, I&#8217;ve been targeting PostgreSQL, but testing with H2. While that works, I&#8217;m a big fan of having the test environment match production as much as possible. That said, I don&#8217;t like to have external system dependencies for tests, such as requiring having a database installed. That&#8217;s where <a href="https://testcontainers.org">Testcontainers</a> comes in. In this post, I&#8217;ll look at how I integrated Testcontainers into my Quarkus+jOOQ project</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>October</h2>
+<ul>
+    
+    <li>
+        <a href="/2021/wildfly-and-micrometer">WildFly and Micrometer</a>
+        <div><div class="paragraph">
+<p>Earlier in the summer, I wrote <a href="an-update-on-opentelemetry-and-wildfly.ad">some</a> about the addition of OpenTelemetry support in WildFly. With the release of <a href="https://www.wildfly.org/news/2021/10/05/WildFly25-Final-Released/">WildFly 25</a>, that support is now official and in the wild. With 25 behind us, we start looking at 26, and my next effort will be to integrate <a href="https://micrometer.io">Micrometer metrics</a> into the server. In this post, we&#8217;ll take a look at what that might mean, as well as presenting a way to take an early look.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2021/a-quarkus-command-line-app">A Quarkus Command Line Application</a>
+        <div><div class="paragraph">
+<p>Most people know Quarkus as a great way to build fast, scalable microservices. What many may not be aware of, however, is that Quarkus can also be used to build command line applications as well. In this post, we&#8217;ll take a look at how we can leverage the Quarkus ecosystem we already know to build a command line utility quickly and easily.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>July</h2>
+<ul>
+    
+    <li>
+        <a href="/2021/an-update-on-opentelemetry-and-wildfly">An Update on OpenTelemetry and WildFly</a>
+        <div><div class="paragraph">
+<p>In a <a href="opentelemetry-and-jakarta-rest-services.html">recent post</a>, I worked through setting up OpenTelemetry support in your Jakarta EE application. Since that time, I&#8217;ve put quite a bit of work into integrating that support, as teased in the post, into WildFly. In this post, I&#8217;d like to provide an update on what that WildFly support currently looks like, and put out a request for feedback.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>June</h2>
+<ul>
+    
+    <li>
+        <a href="/2021/opentelemetry-and-jakarta-rest-services">OpenTelemetry and Jakarta REST Services</a>
+        <div><div class="paragraph">
+<p>Knowing what&#8217;s going on in your microservices deployment is extremely important when something goes wrong. In a distributed system, though, it can be difficult to know where things have gone wrong. That&#8217;s where a tracing system such as <a href="https://opentelemetry.io">OpenTelemetry</a> can be immensely valuable. In this post, we&#8217;ll build two simple services, one of which calls the other, and trace the execution from end to end.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>May</h2>
+<ul>
+    
+    <li>
+        <a href="/2021/a-simple-jakarta-ee-91-rest-project">A Simple Jakarta EE 9.1 REST Project</a>
+        <div><div class="paragraph">
+<p>Jakarta EE 9.1 was released today, which now lets developers use&#8201;&#8212;&#8201;officially&#8201;&#8212;&#8201;Java 11 with the shiny new Jakarta EE
+namespace introduce in EE 9. So what does a simple Jakarta EE 9.1 REST project look like? I&#8217;m so glad you asked. :)</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>March</h2>
+<ul>
+    
+    <li>
+        <a href="/2021/microprofile-fault-tolerance-retry-in-action">Microprofile Fault Tolerance Retry in Action</a>
+        <div><div class="paragraph">
+<p>As part of some of my recent work, I&#8217;ve gotten some exposure to some Microprofile specs I&#8217;ve not had the opportunity or need to use. One of those is <a href="https://github.com/eclipse/microprofile-fault-tolerance">Fault Tolerance</a>. I was curious to see it action, so I&#8217;ve cobbled together this simple example that demonstrates some of that spec&#8217;s features, namely retries and fallback.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>February</h2>
+<ul>
+    
+    <li>
+        <a href="/2021/securing-and-testing-quarkus">Securing and Testing Quarkus Applications using Keycloak and Wiremock</a>
+        <div><div class="paragraph">
+<p>Obviously, web apps need to be secured. If you&#8217;re brave (and some might say foolish), you can roll your own security. Unless you have compelling reasons to do so, however, you probably shouldn&#8217;t. Almost as if by design (nyuk nyuk), Quarkus makes it easy to use any OpenID Connect server. One such server is Keycloak, an open source offering also from Red Hat. If your experience is like mine, though, securing endpoints makes testing a touch more complicated. In this post, I&#8217;d like to present and walk through a complete example of a secured Quarkus app, using Keycloak, JUnit and Wiremock.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2020</h1>
+
+
+
+<h2>September</h2>
+<ul>
+    
+    <li>
+        <a href="/2020/java-15-new-and-notable">Java 15: New and Notable</a>
+        <div><div class="paragraph">
+<p>JDK 15 hit General Availability today. While I spend most of my time in Kotlin these days, I do keep a close on Java, as it still has
+a special place in my heart, so I thought I&#8217;d make a quick post highlighting some of its new features. :) There are quite a few changes
+in the release, so I&#8217;ll list all of them, but focus on the ones I think most developers will find more interesting.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2018</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2018/a-possible-silly-question-about-java-visibility">A Possibly Silly Question about Java Visibility</a>
+        <div><div class="paragraph">
+<p>This morning, I was asked a question by a coworker that we both thought we knew
+the answer to: if a method is <code>protected</code>, can other classes see that method? The
+answer surprised us: maybe. :) It&#8217;s a pretty simple, basic question, but I thought
+I&#8217;d mention it in case there&#8217;s a beginner wondering, or more senior developers, such
+as myself and my team mate, that just have it wrong. :)</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2018/resurrecting-turbo-vision">Resurrecting Turbo Vision</a>
+        <div><div class="paragraph">
+<p>If you wrote software on a DOS system in the 80s or 90s, you probably used one of the Borland
+products, Turbo Pascal or Turbo C, with that beautiful, beautiful blue, mouse-enabled
+text-based user interface (TUI, if you will). Those IDEs were powered by a library called
+Turbo Vision (TV), which Borland documented and published for others to use. I loved it. While
+we all live in a GUI world and there are lots of libraries for building GUIS, I have for
+years now been dying to be able to use TV again, if for no other reason than hard core
+nostalgia. The problem being that I have used C in about 2 decades, and, to be honest, I&#8217;m
+not sure I&#8217;m too excited about writing even toy apps in the language. Dead end, right? Not so fast.</p>
+</div>
+<div class="paragraph">
+<p>Enter, stage left: SWIG. SWIG, the Simplified Wrapper and Interface Generator, is a tool for
+building wrappers for libraries written in, say, C or C, for languages such as Python, PHP, and...
+Java. While it may not be the best option, it's an option, and I've been tinkering with
+it off and on for many, many moons now with the C version of the library open source by Borland
+long ago, before they were sold off and the Borland brand quietly disappeared. Tonight, I made
+<strong>great</strong> progress on it.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>March</h2>
+<ul>
+    
+    <li>
+        <a href="/2018/string-format-you-may-be-doing-it-wrong">String.format()... You May Be Doing It Wrong</a>
+        <div><div class="paragraph">
+<p>If you&#8217;ve been working with Java for very long, you&#8217;ve probably had occasion to use
+<code>String.format()</code> . And, if you&#8217;re like me, you may very well have been doing it "wrong".
+Let&#8217;s take a look at what was, for me, common usage, and how, maybe, you <em>should</em> be
+doing it.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2015</h1>
+
+
+
+<h2>July</h2>
+<ul>
+    
+    <li>
+        <a href="/2015/be_careful_with_statics">Be Careful with Statics</a>
+        <div><div class="paragraph">
+<p>I recently came across an interesting piece of code at work:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+</pre></td><td class="code"><pre>    <span style="color: #cf222e">private</span> <span style="color: #cf222e">static</span> <span style="color: #cf222e">final</span> <span style="color: #953800">DateFormat</span> <span style="color: #953800">DATE_FORMAT</span> <span style="color: #0550ae">=</span> <span style="color: #cf222e">new</span> <span style="color: #953800">SimpleDateFormat</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"yyyy-MM-dd"</span><span style="color: #0550ae">);</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What struck me as odd was the <code>private</code> qualifier and that the fact that <code>SimpleDateFormat</code> is not thread-safe. Is the <code>private</code> some
+odd attempt to work around concurrency issues, or was thread safety just overlooked? That led me to this question: Is a <code>private static</code>
+still one instance per JVM, or does the <code>private</code> actually change anything? My understanding was that this was a bug, but I thought I&#8217;d
+write a test just to make sure.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>June</h2>
+<ul>
+    
+    <li>
+        <a href="/2015/intro_to_programming_with_minecraft_at_okcjug">An Introduction to Programming with Minecraft at the Oklahoma City JUG</a>
+        <div><div class="paragraph">
+<p>On Monday, July 13, I will be leading the monthly <a href="http://okcjug.org">OKC JUG</a> session, whose topic this month is "An Introduction to Programming with
+Minecraft Mods". We&#8217;ll be using a modified version of the curriculum Arun Gupta has developed for this Devoxx4Kids program, with
+examples taken from the book he and his son wrote, <a href="http://amzn.to/1Jpwz0j">Minecraft Modding with Forge: A Family-Friendly Guide to
+Building Fun Mods in Java</a>.</p>
+</div>
+<div class="paragraph">
+<p>Here is the announcement sent to the Oklahoma City tech community. If you&#8217;re in the area, come check it out!</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2015/running_idea_14_on_java8_mac">Running IDEA 14 on Java 8 on the Mac</a>
+        <div><div class="paragraph">
+<p>My team at work was having some issues with IDEA and the Checkstyle plugin. Based on the error message, and without actually looking at the JARs,
+it seemed pretty clear that the issue was a JDK version issue. While I think this issue has been resolved, when I set up my Mac months
+ago, I was forced to install Java 6 in order to install IDEA, but, apparently, the new version of the Checkstyle plugin was compiled with a newer
+JDK (as it should be). Whether or not the Java 6 issue still exists with IDEA, you can make IDEA run on Java 8 pretty easily, and I&#8217;ll show you how to do it.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2014</h1>
+
+
+
+<h2>February</h2>
+<ul>
+    
+    <li>
+        <a href="/2014/cli-libraries-compared">CLI Libraries Compared</a>
+        <div><div class="paragraph">
+<p>I recently ran across a couple of pretty cool libraries for creating command-line tools:
+<a href="https://github.com/airlift/airline">Airline</a> from the Airlift project, and
+<a href="https://github.com/tomitribe/crest">crest</a> from <a href="http://tomitribe.com/">Tomitribe</a>. Having
+spent the last few years working on administration for GlassFish, this is an area near and dear
+to my heart, so I thought I&#8217;d cobble together a quick example using each to see how usable they are.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2013</h1>
+
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2013/initializing-jax-rs-sub-resources">Initializing JAX-RS Sub-resources</a>
+        <div><div class="paragraph">
+<p>This morning, I was reading through the <a href="http://download.oracle.com/otndocs/jcp/jaxrs-2_0-pfd-spec/index.html">Proposed Final Draft for JAX-RS 2.0 specification</a>, when I found a little nugget that could have saved me some work, specificially in initializing subresources.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>February</h2>
+<ul>
+    
+    <li>
+        <a href="/2013/simulating-swipes-in-your-android-tests">Simulating Swipes in Your Android Tests</a>
+        <div><div class="paragraph">
+<p>As some of you may or may not know, I have small Android project, <a href="http://cubtracker.com">Cub Tracker</a>, that I&#8217;ve been working on for quite some time now in my spare time.  I&#8217;ve been trying to be better about quicker releases, but all the testing for the app is currently manual (and, therefore, hit-and-miss), so updates tend to be a bit slower and very cautious.  (For the record, it used to have pretty decent tests, but I rewrote the app for version 2 and just never got around to porting/rewriting the tests.)  My next change, though, will be pretty invasive, so I&#8217;ve decided it&#8217;s time to fix that.  In doing so, though, I hit a snag pretty quickly.  Cub Tracker now uses a <a href="http://developer.android.com/reference/android/support/v4/view/ViewPager.html">ViewPager</a> as the main form of navigation, and I quickly realized I didn&#8217;t know how to swipe from one page to another. It turns out there are several different ways to do it. Here are some&#8230;&#8203;</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>January</h2>
+<ul>
+    
+    <li>
+        <a href="/2013/oracle-jdk-and-the-linux-alternatives-system">Oracle JDK and the Linux Alternatives System</a>
+        <div><div class="paragraph">
+<p>For both work and fun, I run Linux.  I&#8217;m also a Java guy, which poses some interesting challenges, as most Linux distributions have a long, sad tale regarding shipping Java.  Things are a bit better, I guess, with OpenJDK, but I&#8217;ve always liked running the "real thing", which historically meant the Sun JDK, and now Oracle&#8217;s JDK (Note: current employment has no bearing on that choice ; ).  If I were running an RPM-based distribution, I would be <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">set</a>.  At the moment, though, I&#8217;m running <a href="http://www.linuxmint.com/">Linux Mint</a>, so I get to use the tarball.</p>
+</div>
+<div class="paragraph">
+<p>Most of the time that works fine, but for reasons I don&#8217;t remember, OpenJDK was installed on my system, and now everything is using that (which is at Update 7, and not the recently released and more secure Update 11 that I want).  I&#8217;d rather not monkey with changing PATH and all that, so I turned to the Linux alternatives system to handle things.  Sadly, it wasn&#8217;t quite that easy, as alternatives needs to know about your alternatives, so before I could change things, I had to educate it, which turned out be easier than I feared.  With Java 7 Update 11 installed in <code>/opt/java/jdk1.7.0_11</code> and symlinked from <code>/opt/java/latest</code>, I had to do two things.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2012</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/asynchronous-jax-rs">Asynchronous JAX-RS</a>
+        <div><div class="paragraph">
+<p>Recently, I had to add support for asynchronous REST calls to the GlassFish REST interface to satisfy some customer requirements.  In process of doing so, I learned something pretty interesting: while asynchronous REST may mean different things to different people (e.g., I&#8217;m pretty sure <a href="https://github.com/Atmosphere/atmosphere">Atmosphere</a> provides some sort of REST asynchrony, but I&#8217;m not sure what <strong>UPDATE #1: As noted in the comments, I know next to nothing about Atmosphere. I mention it here only as some weak attempt at completeness that is, in hind sight, a really bad choice</strong>), implementing an async REST resource with JAX-RS is really quite simple.  In this post, we&#8217;ll take a look at two different approaches to "asynchronous" REST.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>October</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/maven-project-version-from-the-command-line">Maven Project Version from the Command Line</a>
+        <div><div class="paragraph">
+<p>A friend asked me today how to get a project&#8217;s version out of a Maven POM file without having to read and parse it. A quick Google search brought up the <a href="http://stackoverflow.com/a/3545363">answer</a>, which I thought I&#8217;d share here.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>September</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/converting-many-images-to-one-pdf">Converting Many Images to One PDF</a>
+        <div><div class="paragraph">
+<p>I recently had the need to convert several scanned images into one multi-page PDF. While there are probably tools to help do this manually, I knew that there was a good chance I&#8217;d have to do something like this again, quite possibly with a large number of images, so I did what any good geek would do: I scripted it.  In this entry, I&#8217;ll show how I went about that.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>July</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/annotation-processing-the-new-way">Annotation Processing the New Way</a>
+        <div><div class="paragraph">
+<p>I recently ran into an issue with our dependency injection system: it won&#8217;t return a list of interfaces, only implementations. That system, for what it&#8217;s worth, is <a href="http://hk2.java.net">HK2</a>, but <a href="http://docs.oracle.com/javaee/6/tutorial/doc/giwhl.html">CDI</a> has the same "problem". Since the rest of the system worked using these interfaces, I really wanted to solve the discoverability issue rather than redesigning that part of the system. After considering and playing with a Maven plugin, I opted to use the <a href="http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/package-frame.html">javax.annotation.processing</a> API. Let&#8217;s take a quick look.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>June</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/firefox-linux-and-the-java-plugin">Firefox, Linux, and the Java Plugin</a>
+        <div><div class="imageblock">
+<div class="content">
+<a class="image" href="/images/2012/06/java-plugin.png"><img src="/images/2012/06/java-plugin-300x284.png" alt="java plugin 300x284" width="title: "'java-plugin'""></a>
+</div>
+</div>
+<div class="paragraph">
+<p>In a perfect world, Firefox, Linux and the Java plugin would get along happily.  You&#8217;d install all three, and things would just work.  If memory serves, that&#8217;s exactly what happened under Ubuntu.  However, after installing Fedora 17, it just didn&#8217;t want to work for me (I&#8217;m not blaming Fedora, mind you.  I like to live on the bleeding edge, so I install Java 7 nightlies from tar balls and not RPMs, so I probably broke something along the way). After much fumbling and guessing, I finally found a solution, which I&#8217;ll share here in case you&#8217;re in the same boat:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span><span style="color: #953800">mkdir</span> <span style="color: #0550ae">$HOME</span>/.mozilla/plugins
+<span style="color: #0550ae">$ </span><span style="color: #953800">ln</span> <span style="color: #116329">-s</span> <span style="color: #0550ae">$PATH_TO_JRE</span>/lib/amd64/libnpjp2.so <span style="color: #0550ae">$HOME</span>/.mozilla/plugins/libnpjp2.so
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And restart Firefox.  You can verify that Java (i.e., applets and webstart) is working by going <a href="http://www.java.com/en/download/installed.jsp">here</a>.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/java-7-netbeans-mac-os-x-and-a-little-bit-of-javafx-2">Java 7, NetBeans, Mac OS X, and a Little Bit of JavaFX 2</a>
+        <div><div class="paragraph">
+<p>In a recent post showing how to use JavaFX 2 and NetBeans on the Mac, I noted that I have been unable to run NetBeans using Java 7 on my Mac for reasons I had not been able to figure out.  Now, thanks to a pointer from <a href="http://skovatch.wordpress.com/">Scott Kovatch</a>, the technical lead at Oracle for the Mac OS X port of Java, I think I can show you how to do that.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2012/book-review-pro-javafx-2-a-definitive-guide-to-rich-clients-with-java-technology">Book Review: Pro JavaFX 2: A Definitive Guide to Rich Clients with Java Technology</a>
+        <div><div class="paragraph">
+<p>image::http://www.apress.com/media/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/A/9/A9781430268727-3d_11.png</p>
+</div>
+<div class="paragraph">
+<p>I was privileged to be given a copy of the recently released <a href="http://www.amazon.com/gp/product/1430268727/ref=as_li_ss_tl?ie=UTF8&amp;tag=coupfoai0f-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1430268727">Pro JavaFX 2: A Definitive Guide to Rich Clients with Java Technology</a> <span class="image"><img src="http://www.assoc-amazon.com/e/ir?t=coupfoai0f-20&amp;l=as2&amp;o=1&amp;a=1430268727" alt="ir?t=coupfoai0f 20&amp;l=as2&amp;o=1&amp;a=1430268727"></span> from Apress, authored by <a href="https://twitter.com/<mark>!/JavaFXpert">James</a> <a href="http://www.learnjavafx.typepad.com/weblog/">Weaver</a>, <a href="https://twitter.com/</mark>!/weiqigao">Weiqi</a> <a href="http://www.weiqigao.com/blog/">Gao</a>, <a href="https://twitter.com/<mark>!/steveonjava">Stephen</a> <a href="http://steveonjava.com/">Chin</a>, <a href="https://twitter.com/</mark>!/deanriverson">Dean</a> <a href="http://pleasingsoftware.blogspot.com/">Iverson</a>, <a href="https://twitter.com/#!/johanvos">Johan</a> <a href="http://blogs.lodgon.com/johan">Vos</a>.  This review is a bit overdue, but I hope you find it as helpful as I found the book.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>February</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/comparing-jvm-web-frameworks-a-critique">Comparing JVM Web Frameworks - A Critique</a>
+        <div><div class="paragraph">
+<p>Recently, Matt Raible again presented his <a href="http://www.slideshare.net/mraible/comparing-jvm-web-frameworks-jfokus-2012">Comparing JVM Web Frameworks</a>, this time at JFokus 2012.  The intent of the presentation, as best as I can gather from half a world away, is to prevent some of the major JVM-based web frameworks, showing the various strengths and weaknesses, which will allow the audience to choose a framework more easily.  While the goal is laudable, I&#8217;m just not sure how well executed the attempt was.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>January</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/grabbing-screenshots-of-failed-selenium-tests">Grabbing Screenshots of Failed Selenium Tests</a>
+        <div><div class="paragraph">
+<p>For the GlassFish Administration Console, we have quite a few tests (about 133 at last count).  Given the nature and architecture of the application, we&#8217;ve chosen Selenium to drive our tests.  One of the problems we&#8217;ve faced, though, is understanding why a test failed due to the length of time the tests take (roughly 1.5 hours to run the whole suite).  Sometimes, we can look at the log and know exactly what failed, but not the why.  Did the screen render correctly?  Did, perhaps, the click, etc. not get performed (we&#8217;ve seen instances of that) leaving the application in a state not expected by the test?  Since I usually start the tests and move on to something else, we had no way of knowing.  Until now.  I finally sat down and figured out how to grab a screen shot when a test fails.  I&#8217;ve distilled that technique down to its essentials, which I&#8217;ll share here.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2011</h1>
+
+
+
+<h2>October</h2>
+<ul>
+    
+    <li>
+        <a href="/2011/funky-object-initialization">Funky Object Initialization</a>
+        <div><div class="paragraph">
+<p>I&#8217;ve been using a technique a lot, recently, for initializing an object a bit more succinctly.  It looks pretty odd, I&#8217;ll admit, enough so that it really caught a coworker of mine off guard.  If you&#8217;ve been reading my recent REST posts, you&#8217;ve seen this a few times.  I like it a lot, so I thought I&#8217;d a take a quick look at it.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2011/glassfish-rest-client-goes-to-the-flying-circus">GlassFish REST Client Goes to the Flying Circus</a>
+        <div><div class="paragraph">
+<p>It happened a bit more quickly than I had planned, and, yes, I know that&#8217;s a pretty bad Python joke, but, as <a href="/posts/2011/10/03/glassfish-rest-interface-a-client-side-perspective/">promised</a>, I just committed code to add support for generating Python REST clients to the GlassFish RESTful Administration interface. Let&#8217;s take a quick look at it.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>February</h2>
+<ul>
+    
+    <li>
+        <a href="/2011/restful-glassfish-monitoring">RESTful GlassFish Monitoring</a>
+        <div><div class="paragraph">
+<p>In previous posts, I&#8217;ve shown various ways to manage a GlassFish 3.1 server via its REST interface.  As nice as that is, we also support monitoring your server via REST as well.  In this article, we&#8217;ll take a look at some of the things you can ask of your server.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2011/java-ees-buried-treasure-the-application-client-container">Java EE&#039;s Buried Treasure: the Application Client Container</a>
+        <div><div class="paragraph">
+<p>From time to time, I&#8217;m asked about accessing various EE artifacts (EJBs, etc) from a standalone client.  Almost invariably, the user is having trouble getting the environment setup, grabbing an InitialContext, etc.  Also almost invariably, my answer to them is "use the application client container", which is as far as I can take them.  The topic of application client container, or ACC, came up again recently when I was asked on Twitter about an issue with ACC and GlassFish in a clustered environment. While this user (hi, Markus! : ) <a href="http://blog.eisele.net/2011/02/clustering-stateful-session-beans-with.html">figured out his issue</a> before I could be of much help, I took this opportunity finally to learn exactly what the ACC is and how to use it.  Thanks to Oracle&#8217;s Tim Quinn for his patient and tireless help, here&#8217;s what I learned&#8230;&#8203;</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2011/deploying-applications-to-glassfish-using-curl">Deploying Applications to GlassFish Using curl</a>
+        <div><div class="paragraph">
+<p>Over the past few months, I&#8217;ve been posting tips on how to use the REST interface in GlassFish v3 and later to perform various functions.  My <a href="/posts/2010/12/17/glassfish-administration-the-rest-of-the-story-part-ii-deploying-apps-using-scala/">last post</a> used Scala.  In this much briefer and far less ambitious post, I thought I&#8217;d share how to deploy an app using curl (from the shell of your choice).  If you&#8217;re familiar with the REST endpoint, there&#8217;s really not just a whole lot new here:</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2010</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2010/merry-christmas-2010">Merry Christmas, 2010</a>
+        <div><div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>I&#8217;d like to wish all of my readers a very merry Christmas.  It is my hope and prayer that in all the hustle and bustle of the season, that the first Christmas, the birth of the Jesus, the Savior of  the  world, is not lost.  To help with that, I&#8217;d like to leave you with some of my current favorite Christmas songs.  I hope you enjoy them.  God bless.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="hallelujah-light-has-come-barlowgirl">Hallelujah! Light Has Come - Barlowgirl</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><div  style="margin: auto; width:640px"><object width="640" height="385"><param name="movie" value="http://www.youtube.com/v/SarPJv6rUiQ?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/SarPJv6rUiQ?fs=1&amp;hl=en_US" type: "application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="385"></embed></object></div></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="josephs-lullaby-mercyme-fan-video">Joseph&#8217;s Lullaby - MercyMe (fan video)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><div  style="margin: auto; width:480px"><object width="480" height="385" style="margin: auto"><param name="movie" value="http://www.youtube.com/v/he9BdHNrXTs?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/he9BdHNrXTs?fs=1&amp;hl=en_US" type: "application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="385"></embed></object></div></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="christmas-like-a-child-third-day">Christmas Like a Child - Third Day</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><div  style="margin: auto; width:640px"><object width="640" height="385"><param name="movie" value="http://www.youtube.com/v/JqtBVn1rMCA?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/JqtBVn1rMCA?fs=1&amp;hl=en_US" type: "application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="385"></embed></object></div></p>
+</div>
+</div>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>August</h2>
+<ul>
+    
+    <li>
+        <a href="/2010/glassfish-administration-the-rest-of-the-story">GlassFish Administration: The REST of the Story Part I</a>
+        <div><div class="paragraph">
+<p>Of the many great things about GlassFish, one that is often mentioned most (and is, in fact, what got me involved with GlassFish as an end user years ago) is the Administration Console.  It&#8217;s an extremely powerful and capable interface, and is, if I may be so bold, orders of magnitudes better than its open source competition (it may even beat commercial competitors, but I have no experience with those).  Another powerful tool in GlassFish administration is the asadmin CLI utility, which allows for quick and easy scripting of server provisioning, etc.  Did you know, though, that GlassFish has a third administration interface?  As of GlassFish v3, we offer a RESTful administration API, based on Jersey, to allow non-Java clients to configure the app server easily.  For GlassFish 3.1, one of my main responsibilities, with the help, I should add of my coworkers Ludovic Champenois and Mitesh Meswani, has been to help improve upon the great start we had in in v3.  In this entry, we&#8217;ll take a look at the current state of the interface and learn the basics of using.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>May</h2>
+<ul>
+    
+    <li>
+        <a href="/2010/putting-facelets-in-a-jar">Putting Facelets in a Jar</a>
+        <div><div class="paragraph">
+<p>In a recent forum post, a user asked how to store a Facelets file in a database.  Although JSF doesn&#8217;t support this out of the box (though it <em>would</em> be a nice feature), it&#8217;s not too difficult to add.  In this entry, I&#8217;ll show you how to serve Facelets from a JAR file, then give some thoughts that will help, I hope, implement a database-backed approach.  I&#8217;ll be using JSF 2, so if you&#8217;re using Facelets 1.x with JSF 1.2, you&#8217;ll have to extend com.sun.facelets classes to make this work in that environment.  With that out of the way, unto the breach!</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2009</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2009/glassfish-v3-virtual-conference">GlassFish v3 Virtual Conference</a>
+        <div><div class="paragraph">
+<p>This is a little late notice, but we at Sun are holding a "virtual conference" covering GlassFish v3, Java EE 6, etc.  You can find details <a href="http://www.sun.com/events/javaee6glassfishv3/virtualconference/?cid=928443r2">here</a>.  It starts in 30 minutes (10:00 CST, 8:00 PST). :)</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>November</h2>
+<ul>
+    
+    <li>
+        <a href="/2009/the-mojarra-scales-demo-has-moved">The Mojarra Scales Demo Has Moved</a>
+        <div><div class="paragraph">
+<p>With the recent migration of <a href="http://kenai.com/projects/scales/pages/Home">Mojarra Scales</a> to <a href="https://javaserverfaces.dev.java.net">JSF 2</a>, the old location of the Mojarra Scales demo was no longer adequate (upgrading that server posed some issues).  For that reason, I have moved the demo to a <a href="http://demo.steeplesoft.com/mojarra-scales-demo/index.jsf">new home</a>.  This server should be more up-to-date (both in terms of the application as well as the application server&#8201;&#8212;&#8201;which is <a href="http://glassfish.org">GlassFish v3</a>, of course&#8201;&#8212;&#8201;that runs it).  When accessing the application, please keep in mind that it&#8217;s on an old server that&#8217;s running on an AT&amp;T U-verse line, and the download times will reflect that. :)</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;d also like to not that this showcases a couple of new components at the moment.  I&#8217;ve begun an implementation of the <a href="http://developer.yahoo.com/yui/datatable/">YUI data table widget</a>.  At the time of this posting, basic table functions work, including client-side sorting.  More complex functionality, such as Ajax updates, are in the offing.</p>
+</div>
+<div class="paragraph">
+<p>Another new component, which the demo uses extensively, is the excellent <a href="http://alexgorbatchev.com/wiki/SyntaxHighlighter">SyntaxHighligher</a> script from Alex Gorbatchev.  The demo uses this new component to show the page source for each demo, finally allowing you to see a given component in action, as well seeing the page markup that makes those components.  The demo is still in flux, so some things aren&#8217;t quite "perfect" yet.  For example, Safari really hates the markup the demo produces, which is a bug in the demo application itself.  Hopefully, that will soon be fixed.  For now, Safari users will need to use another <a href="http://getfirefox.org">browser</a>.</p>
+</div>
+<div class="paragraph">
+<p>As I&#8217;ve noted, Scales has been migrated to JSF 2.  While most components are working as expected, there are likely some minor issues to work out.  If you run into any of these issues, or if you&#8217;d like to see extra functionality in any of the components, please feel free to file an issue on the Scales <a href="http://kenai.com/jira/browse/SCALES">issue tracker</a> on the Kenai project site.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>October</h2>
+<ul>
+    
+    <li>
+        <a href="/2009/jsf-2-hdatatable-and-ajax-updates">JSF 2, h:dataTable, and Ajax Updates</a>
+        <div><div class="paragraph">
+<p>While JSF has had Ajax support for a long time now, it has always been through external libraries such as <a href="http://www.jboss.org/richfaces">Ajax4Jsf/RichFaces</a>, <a href="http://www.icefaces.org/main/home/">ICEfaces</a>, <a href="http://directwebremoting.org/dwr/index.html">DWR</a>, <a href="https://jsf-extensions.dev.java.net/nonav/mvn/reference-ajax.html">DynaFaces</a>, etc.  With JSF 2, the framework now has first class, standardized support for Ajax.  This is good news on several fronts.  For those that want Ajax support but would rather not import another library, that capability is now baked in, and, for those familiar with a4j or DynaFaces, it should look very familiar.  However, for those that don&#8217;t mind the external dependency, the standardized Ajax will make it much easier to mix and match component libraries on the same page, an issue that has plagued JSF for while.  In this post, I&#8217;d like to take the first approach and show how easy it is to achieve Ajaxy updates on your <code>h:dataTable</code> using only standard JSF.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>June</h2>
+<ul>
+    
+    <li>
+        <a href="/2009/ive-updated-my-about-page">I&#039;ve Updated My About Page</a>
+        <div><div class="paragraph">
+<p>I should note here, for those that don&#8217;t follow me on <a href="http://www.twitter.com/jasondlee">Twitter</a>, that I have updated and expanded my <a href="about">About</a> page, for those that are interested in that sort of thing.  A word of warning: There&#8217;s some personal stuff in there! :)</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2009/javaone-2009-day-4">JavaOne 2009 Day 4</a>
+        <div><div class="paragraph">
+<p>It just occurred to me that I never posted my final wrap up on JavaOne 2009.  While it may be that, at this last date, no one cares anymore, I feel I should finish what I started, even if only for me.  With that said, here&#8217;s my closing thoughts on what I hope is NOT the last JavaOne.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2009/mojarra-scales-131-has-been-released">Mojarra Scales 1.3.1 Has Been Released</a>
+        <div><div class="paragraph">
+<p>Early this morning, I published Mojarra Scales 1.3.1.  I&#8217;ve been remiss in making good updates where when I make release, so, rather than creating a new post for each release long after the fact, I&#8217;ll try to being everyone up to the current state in just one.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2009/facestester-01-released">FacesTester 0.1 Released</a>
+        <div><div class="paragraph">
+<p>About a month ago, I <a href="/announcing-facestester/">announced</a> a new project, FacesTester, a JUnit-based testing tool for JSF that my good friend <a href="http://www.rodcoffin.com/">Rod Coffin</a> and I have undertaken.  Since then, Rod posted a very nice <a href="http://blog.rodcoffin.com/?p=137">introduction</a> to FacesTester usage.  Today, we made our first official release, FacesTester 0.1.  The version number should indicate that it&#8217;s still a work in progress, but it is already quite functional (I, for one, have been using it to build a test suite for Mojarra Scales, which has helped drive out features and resolve bugs very quickly).  We wanted to push out a release to encourage people to download it, use it, and give us feedback.</p>
+</div>
+<div class="paragraph">
+<p>So what does FacesTester currently support?  Quite a bit.  In this entry, we&#8217;ll take a quick look at what FacesTester offers, and what we have planned.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>February</h2>
+<ul>
+    
+    <li>
+        <a href="/2009/another-netbeans-update">Another NetBeans Update</a>
+        <div><div class="paragraph">
+<p>Since the announcement in the recent layoffs at Sun on how the NetBeans team was affected, there&#8217;s been much concern over the health of the project.  I&#8217;m not on the NetBeans team (I&#8217;m just a big Finkel fan! ;) so I can&#8217;t say for certain what&#8217;s going on, but it seems to me that Sun is still committed to the platform.  Evidence of that comes in the form of an email I got today about the upcoming 6.7 release.  Here is the email:</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>January</h2>
+<ul>
+    
+    <li>
+        <a href="/2009/mojarra-scales-gets-a-z-order-update">Mojarra Scales Gets a Z-Order Update</a>
+        <div><div class="paragraph">
+<p>As I noted in a recent <a href="/posts/changes-are-coming-to-the-glassfish-admin-console">entry</a>, we are considering moving to a desktop-like interface for the GlassFish Administration Console, where the content is in separate "windows" (decorated DIVs, basically) which can be moved, closed, minimized, etc.  As I&#8217;ve started working on a concrete implementation of some of those ideas, I quickly realized that we were going to have issues with multiple, overlapping windows.  Once you have multiple windows open, the user has to be able to bring the desired window to the front, but YUI, which will likely be the library used, doesn&#8217;t support that natively.  Fortunately, that&#8217;s easy to fix.  First, an example of the problem:</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2008</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/javafx-10-release-set-for-december-4">JavaFX 1.0 Release Set for December 4</a>
+        <div><div class="paragraph">
+<p>With the release of JavaFX 1.0 scheduled for this Thursday, December 4, the JavaFX team set up a technical pre-launch call and invited JUG leaders, Java Champions, NetBeans Dream Team members and others to call in and get a sneak peak at what was coming (audio and slides available <a href="http://javafx10-launch-dec08.eventbrite.com/">here</a>).  Josh Marinacci was the engineer on hand to give us the preview.  A couple of things stood out to me that has me pretty excited.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>November</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/extending-the-glassfish-v3-prelude-administration-console">Extending the GlassFish v3 Prelude Administration Console</a>
+        <div><div class="paragraph">
+<p>Today, the GlassFish community is launching <a href="https://glassfish.dev.java.net/downloads/v3-prelude.html">GlassFish v3 Prelude</a> (<a href="http://docs.sun.com/app/docs/doc/820-4494?l=en">Release Notes</a> and <a href="http://docs.sun.com/app/docs/doc/820-4836?l=en">Quick Start Guide</a>).  If you are not familiar with what Prelude is, <a href="http://weblogs.java.net/blog/kalali/archive/2008/10/one_pager_revie.html">here</a> is a short write up giving the high level details.  In this article, I&#8217;d like to focus on the third bullet there, "CLI and administration console extensibility."  Specifically, we&#8217;ll look at what it takes to create a plugin that will extend GlassFish v3&#8217;s Administration Console.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>September</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/jsfone-day-two">JSFOne: Day Two</a>
+        <div><div class="paragraph">
+<p>Day two is over, as I sit here on the morning of the third, despite my best intentions.  It was a long day for me, but  a good one, overall.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>August</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/jsfone-looms">JSFOne Looms!</a>
+        <div><div class="paragraph">
+<p><a href="http://www.jsfone.com/">JSFOne</a> is just a week and a half away, so if you haven&#8217;t done so yet, buy those tickets!  <a href="http://www.javaposse.com/">The Java Posse</a> recently plugged the show in the Quick News section in what I think might be the greatest 34 seconds in Java Posse history.  Listen for yourself. ;)</p>
+</div>
+<script type: "text/javascript" src="https://media.dreamhost.com/swfobject.js"></script>
+<div id="player" style="width: 320px; margin: auto">http://www.macromedia.com/go/getflashplayer[Get the Flash Player] to see this player.</div>
+<script type: "text/javascript">
+var so = new SWFObject('https://media.dreamhost.com/mediaplayer.swf','mpl','320','20','8');
+so.addParam('allowscriptaccess','always');
+so.addParam('allowfullscreen','false');
+so.addVariable('height','20');
+so.addVariable('width','320');
+so.addVariable('file','/images/2008/08/JSFOne%20on%20the%20Java%20Posse.mp3');
+so.write('player');
+</script></div>
+    </li>
+    
+</ul>
+
+
+<h2>July</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/maven-and-annotations-not-as-easy-as-it-should-be">Maven and Annotations: Not as Easy as It Should Be</a>
+        <div><div class="paragraph">
+<p>Over the past year or so, I&#8217;ve been slowly migrating&#8201;&#8212;&#8201;somewhat accidentally&#8201;&#8212;&#8201;to Maven.  I had even begun migrating the build environment for Scales from Ant to Maven, but hit a huge roadblock:  annotation processing.  Scales depends heavily on compile-time annotation processing, and the only thing I could find on the web was other people with the same problem.  As I was working on some of my JSFOne examples, I really wanted to use Maven, as the NetBeans support is a lot cleaner with Maven versus an externally maintained Ant build file, so I set to with renewed purpose.  Finally, I seem to have found the right query string, as I appear to have solved my problem.  The solution?  Ant.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>June</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/quercus-on-glassfish-via-the-update-center">Quercus on GlassFish via the Update Center</a>
+        <div><div class="paragraph">
+<p>Jim Driscoll wrote a really helpful <a href="http://weblogs.java.net/blog/driscoll/archive/2008/06/writing_a_littl.html">blog entry</a> regarding the GlassFish Update Center module he wrote for Mojarra.  After reading that, I decided to revisit <a href="/glassfish-php-and-wordpress/">Quercus on GlassFish</a>.  Using Jim&#8217;s incredibly detailed entry, as well as looking at the code in the Mojarra 2.0 SVN repo, I was able to get an Update Center module working that installs and configures Quercus for you, so now all you have to do to get WordPress running, <a href="http://blogs.steeplesoft.com/glassfish-php-and-wordpress/">for example</a>, is install this module, and extract WordPress into your document.  Easy!</p>
+</div>
+<div class="paragraph">
+<p>For those interested, the Update Center url is <a href="http://uc.steeplesoft.com/quercus.xml" class="bare">http://uc.steeplesoft.com/quercus.xml</a>.  To set this up, you&#8217;ll need to start the Update Center ($GF_HOME/updatecenter/bin/updatetool.*), switch to the Preferences tab, click Add, and fill out the form.  Once that&#8217;s done, switch to the "Available Software" tab, click the "Check for Updates" button in the upper right corner, and wait for the process to finish.  You should now see Quercus available under the "Web Technologies" section.</p>
+</div>
+<div class="paragraph">
+<p>For those interested, the source code is in my Mercurial repository <a href="http://hg.steeplesoft.com/quercus_updatecenter">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>Due to some issues in GlassFish v2, automatic uninstallation is a bit complicated.  The module supports it, but you have to get your hands dirty to make it work.  Jim has details on his blog.</p>
+</div>
+<div class="paragraph">
+<p>If you use this, please let me know how it works out for you.  :)</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2008/mojarra-scales-10-rc2-is-out">Mojarra Scales 1.0 RC2 is out</a>
+        <div><div class="paragraph">
+<p>I have just uploaded RC2 for Mojarra Scales 1.0, a JSF component set born of the Mojarra Sandbox.  This release features a number of bug fixes and a handful of new enhancements.  When updating, make sure you grab the latest JSFTemplating snapshot from either its download page or Maven, as there are some bug fixes and features there that Scales needs.  You can download the last jar <a href="http://tinyurl.com/3snlu3">here</a>.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2008/glassfish-php-and-wordpress">GlassFish, PHP and WordPress</a>
+        <div><div class="paragraph">
+<p>With all the hype around JRuby, Jython, Scala, Groovy, etc., an oft-overlooked dynamic language with JVM support is PHP.  Thanks to the hard work of the folks at Caucho Technology, the Quercus project offers a pure Java implementation of the PHP language, sporting support for a lot of the major PHP-based applications.  In this entry, we&#8217;ll look at how to configure GlassFish to provide easy PHP support, and then look at installing WordPress, the popular blogging software (which runs this site) on GlassFish.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2008/where-will-you-be-the-first-weekend-in-september">Where will you be the first weekend in September?</a>
+        <div><div class="paragraph">
+<p>For those of you that like to hear me speak (and, yes, I&#8217;m looking at you, Mom!) I will be at <a href="http://jsfone.com">JSFOne</a>, a conference brought to you by the No Fluff Just Stuff team and dedicated to the JSF ecosystem.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2008/jsf-20-early-access-review-available">JSF 2.0 Early Access Review Available</a>
+        <div><div class="paragraph">
+<p>The JSF 2.0 Expert Group (operating under the auspices of <a href="http://jcp.org/en/jsr/detail?id=314">JSR 314</a>) has released Early Draft Review 1 of the upcoming revision of the spec.  We are soliciting feedback, of course, and the window of opportunity for that runs through July 2.  If you want to have some input on the direction of the specification, now is the time to speak up. :)</p>
+</div>
+<div class="paragraph">
+<p>The major changes in this draft release are baked in Ajax support, and what we&#8217;ve termed "EZComp," which is better described as composite components.  Composite components, which touches on a change to finalized in a later release, namely, the inclusion of Facelets, allows a component developer to create a new component by piecing together several others in a template file.  This functionality is very similar, as best as I can tell as I&#8217;ve never used them, to Facelets' component support, where a snippet of markup is specified in a file and can then be treated as an actual component.  Unlike the Facelets version, though, these composite components are "real" components in that they are backed by a UIComponent.  If you were at JavaOne, this is what Ed demoed in this presentation (with Roger demonstrating the Ajax support).</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s still much work to be done before September when we are schedule to deliver the Proposed Final Draft, but this is a pretty good start.  If you have any interest at all, please review the spec and give us feedback.  We really do want your input, as our goal is to improve upon the JSF experience and solve as many of the real world pain points as we can.  If your favorite pain point isn&#8217;t being addressed, you owe it to yourself to speak up! :)</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>May</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/mojarra-scales-10-release-candidate-1">Mojarra Scales 1.0 Release Candidate 1</a>
+        <div><div class="paragraph">
+<p>Today, I released the first release candidate for Mojarra Scales, the JSF component library I helped create.  Rather than repeat myself, I&#8217;ll just paste the email announcement here:</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2008/javaone-2008-day-4">JavaOne 2008: Day 4</a>
+        <div><div class="paragraph">
+<p>Like every other day at JavaOne, Friday started with a general session, this one led by James Gosling.  Unlike other days, though, today would be a short one.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2008/javaone-2008-day-3">JavaOne 2008: Day 3</a>
+        <div><div class="paragraph">
+<p>My day started today with the Intel general session.  I went in with low expectations for some reason, but came away pretty pleased.  The speaker, Douglas Fisher, Vice President, Software and Solutions Group and General Manager, Systems Software Division of Intel Corporation, talked about how software drives innovation in hardware, which makes possible more interesting things in hardware, which in turn drives more innovation in hardware, and the cycle repeats.  Years ago, an Intel exec whose name escapes me  described this as the software spiral.  He then brought a Sun exec (Jeet Kaul, if I recall correctly) onto the stage to discuss performance gains in the JVM, presumably in the virtualization space.  He shared how from January 2007 to JavaOne 2007, they made a 20% gain in performance, so they set their goal for JavaOne 2008 at 60%.  They announced today a 68% gain, with the demo peaking at 74%, on the exact same hardware and software that was used last year.  The only difference was the JVM.  Very cool.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2008/javaone-2008-day-2">JavaOne 2008: Day 2</a>
+        <div><div class="paragraph">
+<p>Day 2 of JavaOne is effectively over.  As I sit here typing, I have one more event, the hands-on-lab Plug Into GlassFish™ V3 With JavaServer™ Faces and jMaki in about an hour, which should be really good.  It&#8217;s basically a lab showing how to do what Jerome demoed yesterday afternoon in the general session when he added a feature to the GlassFish admin console.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2008/javaone-2008-day-1">JavaOne 2008: Day 1</a>
+        <div><div class="paragraph">
+<p>Good morning.  It&#8217;s time for my JavaOne 2008 Day 1 report (though it&#8217;s actually the morning of the 2nd day :).  Thanks to the graciousness of Sun Microsystems, I&#8217;m here on the Java Blogger program, giving me <em>really</em> amazing access and privileges.  All I have to do is blog about my experience, which I would have done anyway, so over the next few days, I&#8217;ll be filing "reports" on what I&#8217;ve seen and heard.  So, with that introduction out of the way, let&#8217;s recap day 1.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/javaone-on-your-google-calendar">JavaOne on Your Google Calendar</a>
+        <div><div class="paragraph">
+<p>Next week, I&#8217;ll be off to JavaOne.  With everything that&#8217;s going on, I thought it would be nice to have my JavaOne schedule on my Google Calendar, which I could then sync with my phone.  Sadly, it wasn&#8217;t as easy as I thought it would be (though I certainly could be the failure in the process :).  After I imported my schedule into Outlook (used only&#8201;&#8212;&#8201;and grudgingly&#8201;&#8212;&#8201;as iTunes is broken in that it only supports Outlook) and then synced that with my Google Calendar, all of the event start times were adjusted for the time zone differences.  Importing by CSV resulted in cryptic messages about my calendar not being available, so I did what any good geek would do:  I wrote my own solution, creatively named J1Sync.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>March</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/reintroducing-the-jsftemplating-filestreamer">Reintroducing the JSFTemplating FileStreamer</a>
+        <div><div class="paragraph">
+<p>In a <a href="http://blogs.sun.com/paulsen/entry/streaming_content_in_jsf_with">blog entry</a> last year, Ken Paulsen gave a <a href="http://blogs.sun.com/paulsen/entry/streaming_content_in_jsf_with">short introduction</a> to the FileStreamer utility in <a href="https://jsftemplating.dev.java.net/">JSFTemplating</a>.  Since Scales is now using JSFTemplating to make the component authoring process easier, I have been able to use this facility, allowing me to deprecate some custom code.  In the process of making the migration, I&#8217;ve made changes to JSFTemplating that will be of benefit to all.  In this entry, I&#8217;d like to highlight those changes, and show you how you, too, can use this great facility.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>February</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/web-profile-wackiness">Web Profile Wackiness</a>
+        <div><div class="paragraph">
+<p>In a recent <a href="http://weblogs.java.net/blog/robc/archive/2008/02/profiles_in_the_1.html">blog post</a>, Java EE 6 (JSR 316) specification co-lead Roberto Chinnici discussed the two leading proposals for the web profile in the upcoming Java EE 6 specification (For more information about profiles, one can start with <a href="http://www.theserverside.com/blogs/thread.tss?thread_id=48511">this article</a> on TheServerSide.)  The part that caught me by surprise and confuses me greatly is why the inclusion of JavaServer Faces in the web profile would be controversial.  Having spoken with an expert group member, who I will not out :), the argument comes down to this:  "We shouldn&#8217;t force a broken technology, that is not the clear winner on people."  I think that&#8217;s a very interesting statement, in that it precludes doing just about anything in the spec.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>January</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/announcing-mojarra-scales">Announcing Mojarra Scales</a>
+        <div><div class="paragraph">
+<p>Some of you may be wondering what the status is on the RI Sandbox.  With the <a href="/2007/12/05/announcing-project-mojarra/">announcement</a> of <a href="https://mojarra.dev.java.net/">Project Mojarra</a>, we can finally take the wraps off of <a href="https://scales.dev.java.net/">Mojarra Scales</a>, the promotion of the RI/Mojarra Sandbox to its own project.  There are a few differences between the Sandbox of Scales to note, such as package names, namespace, etc.  There has also been a fair amount of refactoring inside the library to simplify the components somewhat (more on that later).  To migrate from the RI Sandbox to Mojarra Scales, you will need to do the following:</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2007</h1>
+
+
+
+<h2>August</h2>
+<ul>
+    
+    <li>
+        <a href="/2007/jugs-offer-more-than-free-pizza">JUGs Offer More Than Free Pizza</a>
+        <div><div class="paragraph">
+<p>As regular readers likely know, I am currently serving as the president of the <a href="http://okcjug.org">Oklahoma City Java Users Group</a>.  One of the things we&#8217;ve really been focusing on is getting the word out about our JUG, hoping to increase not only attendance, but the size of our speaker pool as well.  Since we&#8217;ve really started pushing this effort, I&#8217;ve done a fair amount of thinking about JUGs in general and have come to reinforce an idea I&#8217;ve long held:  good JUGs are more than just a once-a-month meeting.  They offer several very practical benefits to both <a href="#employees">[employees]</a> and <a href="#employers">[employers]</a>.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>July</h2>
+<ul>
+    
+    <li>
+        <a href="/2007/thank-you-sun">Thank you, Sun</a>
+        <div><div class="paragraph">
+<p>I&#8217;m a bit hesitant to post this as I&#8217;m afraid that it may come across as self-congratulatory, which is not my intent at all, but I think Sun deserves an "atta-boy."</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>June</h2>
+<ul>
+    
+    <li>
+        <a href="/2007/another-ri-sandbox-progress-report">Another RI Sandbox Progress Report</a>
+        <div><div class="paragraph">
+<p>With some help from <a href="http://blogs.sun.com/rlubke">Ryan Lubke</a>, a number of issues have been fixed in the RI Sandbox, including:
+* <a href="https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=582">"Standard" Attribute Support</a>
+* <a href="https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=586">Update various CSS files</a>
+* <a href="https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=589">Make the tabs default to something prettier</a></p>
+</div>
+<div class="paragraph">
+<p>and several minor fixes here and there.  Having done that, I&#8217;ve bumped the version (which I have been awful at maintain thus the jump from 0.1 to the seemingly arbitrary 0.7) to 0.8, leaving us with this road map.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>0.9</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Custom icons in the TreeView (<a href="https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=587">587</a>)</p>
+</li>
+<li>
+<p>Slider component (<a href="https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=590">590</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>1.0</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Fix HtmlEditor 404s (<a href="https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=594">594</a>)</p>
+</li>
+<li>
+<p>Possible DataTable component (<a href="https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=591">591</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Post 1.0</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Lazy loading the tree (<a href="https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=588">588</a>)</p>
+</li>
+<li>
+<p>Animations (<a href="https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=585">585</a>)</p>
+</li>
+<li>
+<p>MyFaces support (<a href="https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=564'">564</a> - I may just make these all 1.2-only since MyFaces 1.2 finally appears to be close)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you have any comments, questions, suggestions, etc., please let me know here or in the issue <a href="https://javaserverfaces.dev.java.net/issues/enter_bug.cgi?issue_type" class="bare">https://javaserverfaces.dev.java.net/issues/enter_bug.cgi?issue_type</a>: DEFECT&amp;subcomponent=sandbox[tracker].</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>May</h2>
+<ul>
+    
+    <li>
+        <a href="/2007/virtual-hosting-using-apache-and-glassfish">Virtual Hosting using Apache and GlassFish</a>
+        <div><div class="paragraph">
+<p>While many have found GlassFish to be a great choice for an internal application server, there are others that would like to push it a bit further, and use it in an ASP/ISP envrionment.  Jan Luehe discussed GlassFish&#8217;s virtual hosting features in a recent <a href="http://blogs.sun.com/jluehe/entry/virtual_hosting_features_in_glassfish">blog entry</a>.  What I&#8217;d like to do in this entry is take the information that Jan presented, and walk through setting up a few different virtual hosting environments.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2007/tinymce-support-in-the-sandbox">TinyMCE Support in the Sandbox</a>
+        <div><div class="paragraph">
+<p>I have just committed preliminary support for the <a href="http://tinymce.moxiecode.com/">TinyMCE</a> JavaScript HTML editor.  There are parts that still don&#8217;t work correctly, but it&#8217;s a good start.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2007/jsftemplating-meets-facelets">JSFTemplating Meets Facelets</a>
+        <div><div class="paragraph">
+<p>I could be wrong, but I think it&#8217;s safe to say that most people don&#8217;t know about <a href="https://jsftemplating.dev.java.net">JSFTemplating</a>, which is a pity, as it&#8217;s a pretty nice alternate ViewHandler implementation from Ken Paulsen, GlassFish admin console architect.  One of the coolest features, I think, is its introduction of templating events (e.g., one can attach a beforeEncode event to a component on a page and have a handler method fire before that component is encoded).  The first comment I hear, though, is usually something about template syntax, and it does seem a bit foreign with things like <code>&lt;!if $attribute{in} &amp; ! (#{in} = abc) &gt;</code> and &lt;span class="code"&gt;&#35;include /header.inc&lt;/span&gt;.  That&#8217;s where I come in.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>March</h2>
+<ul>
+    
+    <li>
+        <a href="/2007/unit-testing-ejbs">Unit Testing EJBs</a>
+        <div><div class="paragraph">
+<p>As we&#8217;ve done more and more EJB development, we&#8217;ve had to think pretty hard about how to unit test our beans.  We&#8217;ve tried a couple of different approaches (including <em>not</em> testing, which I don&#8217;t recommend ;), but weren&#8217;t ever just real comfortable with the results.  I&#8217;m pretty happy with the method we&#8217;re using now, and it&#8217;s so simple, I&#8217;m a bit embarrassed that we didn&#8217;t think of it earlier.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2007/glassfish-success-stories">GlassFish Success Stories</a>
+        <div><div class="paragraph">
+<p>Jamey Wood and Shreedhar Ganapathy of <a href="https://glassfish.dev.java.net">GlassFish</a> fame asked me some time ago if I would be interested in filling out a questionnaire describing my <a href="http://www.iec-okc.com">company</a>'s use of GlassFish.  I finally got the questionnaire completed and turned back in, allowing Jamey and Shreedhar to finish up the article, which is now posted <a href="http://blogs.sun.com/stories/entry/international_environmental">here</a>.  We&#8217;ve been using GlassFish in production since, if I recall correctly, March of last year, well before Java EE 5 went "final."  We&#8217;ve been very happy with it, so this piece was a nice way of giving back to a community of developers and users that have helped us a lot over the past year.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>February</h2>
+<ul>
+    
+    <li>
+        <a href="/2007/using-the-woodstock-sortable-table">Using the Woodstock Sortable Table</a>
+        <div><div class="paragraph">
+<p>At long last, the <a href="https://woodstock.dev.java.net">Woodstock component set</a> is finally here.  At IEC, we have been anxiously awaiting its release for quite some time now, as we&#8217;ve been hoping to make use of the sortable data table component it offers, which we have now done.  Having done it, allow me to show off the component a bit, as well as explain what I had to do make things work.  It&#8217;s not hard, necessarily, just different enough to give one pause at first glance.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2007/sandbox-demo-and-nightlies-available">Sandbox Demo and Nightlies Available</a>
+        <div><div class="paragraph">
+<p>Thanks to the generosity of <a href="http://blogs.sun.com/rlubke/">Ryan Lubke</a>, <a href="http://weblogs.java.net/blog/edburns/">Ed Burns</a> and the <a href="http://javaserver.org/">javaserver.org</a> folks, the Sandbox demo application, which can be <a href="http://fisheye5.cenqua.com/browse/javaserverfaces-sources/contrib/sandbox/demo">found</a> in the Sandbox source <a href="http://fisheye5.cenqua.com/browse/javaserverfaces-sources/contrib/sandbox/">tree</a>, is now available <a href="http://javaserver.org/JsfRiSandboxDemo/">online</a>.  There are a couple of known issues with it, but it should give you a good sense of the current state of the components.</p>
+</div>
+<div class="paragraph">
+<p>We also have nightly snapshots of the sandbox source, binaries and demo <a href="https://javaserverfaces.dev.java.net/servlets/ProjectDocumentList?folderID=6512&amp;expandFolder=6512&amp;folderID=0">available</a> on the RI website.  If you find any issues, please file an issue on the &lt;a  href="https://javaserverfaces.dev.java.net/issues/enter_bug.cgi?subcomponent=sandbox&amp;version=current"&gt;tracker&lt;/a&gt;.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>January</h2>
+<ul>
+    
+    <li>
+        <a href="/2007/jsf-ri-sandbox-filedownload-component-changes">JSF RI Sandbox FileDownload Component Changes</a>
+        <div><div class="paragraph">
+<p>Today I checked in a couple of changes to the RI Sandbox file download component that will make the component more flexible, and, therefore, more usable.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2006</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2006/yahoo-ui-and-jsf-update">Yahoo! UI and JSF Update</a>
+        <div><div class="paragraph">
+<p>I&#8217;ve had several people ask for an update on where things stand with my YUI components and their JSF component wrappers, so I figure I should take the time to answer that question.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2006/jsf-component-writing-check-list.ad">JSF Component Writing Check List</a>
+        <div>= JSF Component Writing Check List
+
+I've been doing a fair amount of JSF component writing of late, and, invariably, I miss one or more "minor" details, causing my component to explode in spectacular fashion at runtime.  What follows, then, is a check list for writing JSF components, with notes on the differences between the 1.1 and 1.2 versions of the specification.
+</div>
+    </li>
+    
+    <li>
+        <a href="/2006/download-and-multi-file-upload-jsf-components">Download and Multi-file Upload JSF Components</a>
+        <div><div class="paragraph">
+<p>At work, we have run into two issues several times:  1) We haves app that create PDFs, and we need our JSF apps to send that to the user, and 2) we need to be able to upload multiple files to one of our JSF apps.  The solutions we&#8217;ve used have been less than exciting.  For the first problem, we&#8217;d make the backing bean that coordinates the PDF creation (calling the service layer, basically) session-scoped, then have a hidden iframe on the result page whose source is a JSP that pulls the bean out the session (via Java code!) and sends the PDF to the browser in such a way that forces the user to save the file.  For the upload issue, we&#8217;ve been using <a href="http://jupload.sourceforge.net">JUpload</a>, which works fine, but, since it lives outside the JSF lifecycle, we have to do some interesting things to make it work.  Luckily, my boss gave me time to create better solutions, resulting in the components <code>&lt;fl:download/&gt;</code> and <code>&lt;fl:multiFileUpload/&gt;</code>.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>October</h2>
+<ul>
+    
+    <li>
+        <a href="/2006/review-building-ajax-jsf-components">Review: Building Ajax JSF Components</a>
+        <div><div class="paragraph">
+<p>If you&#8217;re doing web development, you have likely at least heard of Ajax, and, if you&#8217;re not currently using it, you&#8217;ve likely investigated its possible use.  One of the tricky aspects of working with a technology like Ajax is integrating it with various frameworks.  JavaServer Faces, now a standard part of the Java EE stack, is no different.  For both a page and component author, the integration issue can be a big question.  Luckily for those of us in the JSF world, that question has been addressed by Chris Schalk and Ed Burns, in their new book <a href="http://www.amazon.com/JavaServer-Faces-Complete-Reference/dp/0072262400/ref=sr_11_1/104-8011241-4536743?ie=UTF8">JavaServer Faces:  The Complete Reference</a>.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>September</h2>
+<ul>
+    
+    <li>
+        <a href="/2006/two-quick-notes">Two 'Quick' Notes</a>
+        <div><div class="paragraph">
+<p>I thought I&#8217;d take a second to make two quick fairly self-congratulatory announcements:</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2006/a-disappointing-wait">A Disappointing Wait</a>
+        <div><div class="paragraph">
+<p>Several months ago at <a href="http://www.iec-okc.com">work</a>, we evaluated a handful of methods for dependency downloads.  We looked at extending our home grown solution, <a href="http://jayasoft.org/ivy">ivy</a>, <a href="http://maven.apache.org/ant-tasks.html">maven ant tasks</a>, and even the unthinkable:  migrating to <a href="http://maven.apache.org/">maven2</a>.  In the end, we decided to stay with our home grown solution, as we were led to believe that the next version of ant would have transitive dependency management built in.  We concluded that it would be a waste of time to migrate to one solution, just to do it again when the new ant came out, so we waited, and, oh, how disappointed we were.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>August</h2>
+<ul>
+    
+    <li>
+        <a href="/2006/jsf-phaselisteners-and-get-requests-redux">JSF, PhaseListeners, and GET Requests Redux</a>
+        <div><div class="paragraph">
+<p>In an earlier <a href="/2006/04/25/jsf-phaselisteners-and-get-requests">post</a>, I detailed how my company got around JSF&#8217;s dependence on POST requests in our efforts to implement pretty URLs.  While this approach has worked well for us for quite some time, a pretty major flaw in the approach revealed itself to us in the past few days.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>July</h2>
+<ul>
+    
+    <li>
+        <a href="/2006/debugging-jsf-extensions">Debugging jsf-extensions</a>
+        <div><div class="paragraph">
+<p>One of the things that has been frustrating with trying to come up to speed with jsf-extensions is that I just didn&#8217;t know where to look in all the Javascript involved to see what was going on.  Today, I "watched" as Ed Burns walked a fellow extensions learner through debugging his app.  Here&#8217;s what I learned.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2006/ajaxifiying-jsf">Ajaxifiying JSF</a>
+        <div><div class="paragraph">
+<p>In October, I will be presenting Ajax at the &lt;a target="_newwindow" href="http://wiki.okcjug.org"&gt;Oklahoma City Java Users Group&lt;/a&gt;, of which I am a member (and vice president now, by the way, for what that&#8217;s worth).  As I&#8217;ve prepared for that talk, I&#8217;ve thought quite a bit about the web apps I write, which are, for the most part, pretty boring.  I like to think that they&#8217;re functional, but I have to admit that they&#8217;re pretty plain. Ajax, though, along with the Javascript pretties that usually accompany an Ajaxified application, is a good way of fixing that "problem", assuming it&#8217;s done properly.  That line of thinking has affected how I&#8217;ve approached a new app I started at work, but finding a library that works well with JSF (read as, in a JSF-friendly manner) has been a bit of a challenge.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>June</h2>
+<ul>
+    
+    <li>
+        <a href="/2006/the-tyranny-of-choice">The Tyranny of Choice</a>
+        <div><div class="paragraph">
+<p>As I&#8217;ve mentioned <a href="/posts/2006/05/22/a-little-less-spring-in-our-step/">before</a>, my company is trying to decide if we really need to keep using Spring now that we&#8217;re in a "full" JEE environment.  As I&#8217;ve pondered this over the past few days, I&#8217;ve realized (as I figured we would) that the choice is not so simple.  Our desire in this evaluation is to try to make the best decision for our company, but that&#8217;s not so easy with the cacophony of voices out there.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>May</h2>
+<ul>
+    
+    <li>
+        <a href="/2006/yahoo-ui-meets-javaserver-faces">Yahoo! UI Meets JavaServer Faces</a>
+        <div><div class="paragraph">
+<p>In my ongoing efforts to learn the JSF framework as thoroughly as possible, I decided to write a component, but, with the myriad of high quality components available, what was left for me to do? :P At the suggestion of my brother, who has been watching a similar effort underway in the <a href="http://wicket.sourceforge.net/">Wicket</a> space, I&#8217;ve decided to wrap Yahoo&#8217;s <a href="http://developer.yahoo.com/yui">UI library</a>.  The problem I ran into pretty quickly, though, was that the documentation wasn&#8217;t too clear as to what I needed to make it happen (though it&#8217;s quite likely I was having an obtuse moment or three).  There are a plethora of resources that discuss what needs to be done, but all seemed either incomplete or too disjointed (see disclaimer above).  So, to help ameliorate that, let&#8217;s walk through wrapping Yahoo&#8217;s calendar component as a JSF component, step by step.  Before I go much further, though, I must note that I am by no means an expert in this, so it&#8217;s likely that you&#8217;re going to see some less than ideal examples.  So, without further ado&#8230;&#8203;</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2006/a-little-less-spring-in-our-step">A Little Less Spring in Our Step?</a>
+        <div><div class="paragraph">
+<p>Friday I had an interesting discussion with my boss, Mitch.  I have been doing a lot of thinking about Java EE 5 and what it offers, and that has me reevaluating some of our technology decisions.  Most notably, which was the bulk of my discussion with Mitch, is, "Do we really need Spring anymore?"</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2006/soap-to-slsb">SOAP to slsb</a>
+        <div><div class="paragraph">
+<p>As part of our migration to GlassFish, one of my tasks is to migrate all of the web services we&#8217;ve exposed via <a href="http://mule.codehaus.org">Mule</a> to a session bean environment, which won&#8217;t be too hard since we only have two such deployments.  The code changes are really pretty small, but non-obvious (given my nascent EJB3 knowledge).  For those that might be in a similar situation, let&#8217;s take a quick look at what this process entailed.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2006/myeclipse-and-glassfish">MyEclipse and GlassFish</a>
+        <div><div class="paragraph">
+<p>My shop has adopted MyEclipse as the standard development environment.  Our recent adoption of GlassFish, though, makes things a little difficult for MyEclipse (and likely Eclipse in general) as integration with the app server has not yet landed in any GA release that I&#8217;m aware of.  This difficulty, however, is not insurmountable.  Let&#8217;s take a look at how to debug a GlassFish-hosted application using (My)Eclipse.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2006/jira-and-glassfish">JIRA and GlassFish</a>
+        <div><div class="paragraph">
+<p>Officially, <a href="https://glassfish.dev.java.net/">GlassFish</a> is not a supported platform for <a href="http://atlassian.com/software/jira/">JIRA</a>, Atlassian&#8217;s extremly popular issue tracker.  Since we&#8217;re migrating to GlassFish at <a href="http://www.iec-okc.com">work</a>, it&#8217;s pretty important that we get it the two to work together.  As it turns out, it&#8217;s really not that bad at all.  Here&#8217;s what I had to do to get JIRA, <a href="http://www.postgresql.org">PostgreSQL</a>, <a href="http://www.microsoft.com/windowsserver2003/technologies/activedirectory/default.mspx">Active Directory</a> and GlassFish all playing nicely together.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2005</h1>
+
+
+
+<h2>July</h2>
+<ul>
+    
+    <li>
+        <a href="/2005/a-java-based-playground-app">A Java-based 'Playground' App</a>
+        <div><div class="paragraph">
+<p>As I&#8217;ve noted <a href="http://blogs.steeplesoft.com/2005/03/28/to-php-or-not-to-php">earlier</a>, I&#8217;ve been debating whether or not I should continue PHP development and move to only Java.  Part of the process has included writing a web application using some of the newer Java libraries&#8230;&#8203;</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>March</h2>
+<ul>
+    
+    <li>
+        <a href="/2005/to-php-or-not-to-php">To PHP or not to PHP&#8230;&#8203;</a>
+        <div><div class="paragraph">
+<p>After years of PHP development, I find myself trying to decide if I should stick with the language&#8230;&#8203;I have been doing PHP for years; since the PHP3 days. I have found it to be a powerful and flexible language that is easy to code in and deploy. Every web application I have running at home, on this site, or any of the other hand full of sites I maintain or help maintain is written in PHP. I love the language. However, after having professionally written in Java in addition to other languages, including PHP, I am now in a full time, 100% Java position, and, having had the opportunity to dig deeper into the myriad of libraries available in Java, I find myself wondering if I should use only that.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>

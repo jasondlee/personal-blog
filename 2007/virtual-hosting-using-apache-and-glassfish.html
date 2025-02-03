@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : Virtual Hosting using Apache and GlassFish</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            <article class="post">
+    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+        Virtual Hosting using Apache and GlassFish
+    </h1>
+    Friday, May 04, 2007 | <span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2007/virtual-hosting-using-apache-and-glassfish&title=Virtual Hosting using Apache and GlassFish" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Virtual Hosting using Apache and GlassFish&url=https://jasondl.ee/2007/virtual-hosting-using-apache-and-glassfish&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2007/virtual-hosting-using-apache-and-glassfish" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2007/virtual-hosting-using-apache-and-glassfish" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Virtual Hosting using Apache and GlassFish&amp;body=Virtual Hosting using Apache and GlassFish https://jasondl.ee/2007/virtual-hosting-using-apache-and-glassfish" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+
+    <div>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>While many have found GlassFish to be a great choice for an internal application server, there are others that would like to push it a bit further, and use it in an ASP/ISP envrionment.  Jan Luehe discussed GlassFish&#8217;s virtual hosting features in a recent <a href="http://blogs.sun.com/jluehe/entry/virtual_hosting_features_in_glassfish">blog entry</a>.  What I&#8217;d like to do in this entry is take the information that Jan presented, and walk through setting up a few different virtual hosting environments.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="terms-to-know">Terms to Know</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before we go too far, we need to make sure we&#8217;re all using various terms in the same manner.  To summarize Shreedhar Ganapathy&#8217;s excellent <a href="http://blogs.sun.com/shreedhar/entry/understanding_the_glassfish_domain_model">discussion</a>, a <em>domain</em> in GlassFish terms is an "administrative area."  It should not be confused with DNS domains.  A domain will have one or more <em>servers</em> defined.  These servers correlate, roughly, with a <code>ServerName</code> in Apache&#8217;s httpd.conf (and, like a <code>ServerName</code> can have `ServerAlias`es, a server can be given aliases).  For the sake of this discussion, we will not give any attention to clustering or load balancing.</p>
+</div>
+<div class="paragraph">
+<p>Before a vhost environment can be set up, one must ask:  Do the vhosts need to be completely separated from each other?  That is to say, will the production environment need to be configured in such a way that an administrator for one group of servers can not touch another group of servers?  If you intended to have one administrator admin all servers, you can probably get by with one domain.  However, if you need to allow a user to administer his servers without having access to another user&#8217;s servers, then you will need to create additional domains.  We&#8217;ll start with the simple case, and look at multiple servers in one domain.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="one-domain-multiple-servers">One Domain, Multiple Servers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We&#8217;ll start by configuring GlassFish.  We&#8217;ll use two vhosts, vh1 and vh2.  To add a virtual server from the admin console, go to Configuration&#8594;HTTP Service&#8594;Virtual Servers:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/2007/05/virtual_servers_01.thumbnail.png" alt="title: &quot;'Virtual Server screen' link=&quot;/images/2007/05/virtual_servers_01.png&quot;">
+</div>
+</div>
+<div class="paragraph">
+<p>Click add, and fill out the form:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="/images/2007/05/virtual_servers_02.png"><img src="/images/2007/05/virtual_servers_02.thumbnail.png" alt="title: &quot;'Adding a virtual server&quot;"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>I&#8217;ve chosen to use <em>http-listener-1</em> only, as I only care about <a href="http://vh1:8080/" class="bare">http://vh1:8080/</a> being available.  Repeat the process for server <em>vh2</em>.  For those that prefer the command line, the server can be created with this command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre>asadmin create-virtual-server <span style="color: #116329">--user</span> admin <span style="color: #116329">--hosts</span> vh1 <span style="color: #116329">--httplisteners</span> http-listener-1 vh1
+asadmin create-virtual-server <span style="color: #116329">--user</span> admin <span style="color: #116329">--hosts</span> vh2 <span style="color: #116329">--httplisteners</span> http-listener-1 vh2
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>While there are a myriad of options regarding port usage, I like to have Apache handle requests on port 80, and forward requests for my vhosts to the appropriate server behind it, so let&#8217;s take a look at that configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+</pre></td><td class="code"><pre><span style="color: #116329">&lt;VirtualHost</span> <span style="color: #f6f8fa;background-color: #82071e">*:80</span><span style="color: #116329">&gt;</span>
+    ServerName vh1
+    ProxyPass / http://vh1:8080/
+    ProxyPassReverse / http://vh1:8080/
+<span style="color: #116329">&lt;/VirtualHost&gt;</span>
+<span style="color: #116329">&lt;VirtualHost</span> <span style="color: #f6f8fa;background-color: #82071e">*:80</span><span style="color: #116329">&gt;</span>
+    ServerName vh2
+    ProxyPass / http://vh2:8080/
+    ProxyPassReverse / http://vh2:8080/
+<span style="color: #116329">&lt;/VirtualHost&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With that, your virtual hosts should be ready.  To test that things are working correctly, let&#8217;s deploy two applications (which, I&#8217;m afraid, you&#8217;ll have to supply :) ).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/2007/05/app_deployment_01.thumbnail.png" alt="title: &quot;'Deploying an app to a virtual server' link='/images/2007/05/app_deployment_01.png'&quot;">
+</div>
+</div>
+<div class="paragraph">
+<p>Command line users can do:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre>asadmin deploy <span style="color: #116329">--virtualservers</span> vh1 AppA.ear
+asadmin deploy <span style="color: #116329">--virtualservers</span> vh2 AppB.ear
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With these apps deployed, <code><a href="http://vh1/AppA" class="bare">http://vh1/AppA</a></code> should get your app, while <code><a href="http://vh2/AppA" class="bare">http://vh2/AppA</a></code> should get a 404, and vice versa.  If you deploy a third app and do not specify a virtual server:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+</pre></td><td class="code"><pre>asadmin deploy AppC.ear
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>then <code><a href="http://vh1/AppC" class="bare">http://vh1/AppC</a></code> and <code><a href="http://vh2/AppC" class="bare">http://vh2/AppC</a></code> will both work.  Here are some rules to keep in mind:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If, when deploying an application, a virtual server is not specified, then the app is available to all servers in that domain.</p>
+</li>
+<li>
+<p>If an application is deployed to one or more specific virtual servers, then it will not be available to any virtual servers not in that list.</p>
+</li>
+<li>
+<p>Likewise, if an application is deployed to one or more specific virtual servers, then it will not be available to be used as the &lt;strong&gt;Default Web Module&lt;/strong&gt; for any virtual servers not in that list.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="multiple-domains-multiple-servers">Multiple Domains, Multiple Servers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you need to segregate administrative control amongst users, such as in an ASP/ISP environment, then you will need multiple domains.  When you setup the server, the default domain, <em>domain1</em>, is created for you.  Since a domain is an administrative area, one can not use the admin console to create another domain, and must use the <code>asadmin</code> command line tool.  A session might look something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span>asadmin create-domain <span style="color: #116329">--portbase</span> 5000 <span style="color: #116329">--profile</span> developer mydomain
+Please enter the admin user name&gt;admin
+Please enter the admin password&gt;
+Please enter the admin password again&gt;
+Please enter the master password <span style="color: #0550ae">[</span>Enter to accept the default]:&gt;
+Please enter the master password again <span style="color: #0550ae">[</span>Enter to accept the default]:&gt;
+Using port 5048 <span style="color: #cf222e">for </span>Admin.
+Using port 5080 <span style="color: #cf222e">for </span>HTTP Instance.
+Using port 5076 <span style="color: #cf222e">for </span>JMS.
+Using port 5037 <span style="color: #cf222e">for </span>IIOP.
+Using port 5081 <span style="color: #cf222e">for </span>HTTP_SSL.
+Using port 5038 <span style="color: #cf222e">for </span>IIOP_SSL.
+Using port 5039 <span style="color: #cf222e">for </span>IIOP_MUTUALAUTH.
+Using port 5086 <span style="color: #cf222e">for </span>JMX_ADMIN.
+Domain being created with profile:developer, as specified on <span style="color: #953800">command </span>line or environment.
+Security Store used should be: JKS
+Domain mydomain created.
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The documentation has this to say about domains:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>A domain, in addition to being an  administrative  boundary, is also a  fully compliant Java EE Server. This means that you can can deploy your Java EE  Applications to the domain and run them when the domain is  started.  A  domain  provides  all   the necessary environment and services that are essential to run the applications.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>That being so, each domain will have its own set of ports.  Note the use of the <code>portbase</code> option above.  That instructs <code>asadmin</code> to start allocating ports starting at 5000 according to this pattern:
+* Admin port: <code>portbase</code> + 48, HTTP
+* Listener port: <code>portbase ` +  80
+* IIOP  listener  port: `portbase</code> + 37
+* JMX port: <code>portbase</code> + 86</p>
+</div>
+<div class="paragraph">
+<p>We specified the developer profile, as we do not need clustering, high availability, etc., for our purposes here, but please note that option if you do indeed need those capabilities.</p>
+</div>
+<div class="paragraph">
+<p>With our domain created and start (<code>asadmin start-domain mydomain</code>), we can now begin creating virtual servers and deploying applications in the same manner we did above.  Note that, for those using Apache as the front end, the virtual host configuration will need to be adjusted accordingly:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+</pre></td><td class="code"><pre><span style="color: #116329">&lt;VirtualHost</span> <span style="color: #f6f8fa;background-color: #82071e">*:80</span><span style="color: #116329">&gt;</span>
+    ServerName vh3
+    ProxyPass / http://vh3:5080/
+    ProxyPassReverse / http://vh3:5080/
+<span style="color: #116329">&lt;/VirtualHost&gt;</span>
+<span style="color: #116329">&lt;VirtualHost</span> <span style="color: #f6f8fa;background-color: #82071e">*:80</span><span style="color: #116329">&gt;</span>
+    ServerName vh4
+    ProxyPass / http://vh4:5080/
+    ProxyPassReverse / http://vh4:5080/
+<span style="color: #116329">&lt;/VirtualHost&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and that your admin console is listening at <a href="http://localhost:5048/" class="bare">http://localhost:5048/</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>That should get you going!  There are some details that have been glossed over (such as memory usage), but you should now have in your hands a step-by-step guide on creating, configuring, and maintaining virtual servers using GlassFish.  If you have any questions, comments, corrections, etc., please feel free to leave a comment.</p>
+</div>
+</div>
+</div>
+    </div>
+    <footer>
+        <div class="grid">
+            <div class="col tags">
+                
+                <span class="title">tags: </span>
+                
+                <a href="/tag/glassfish/">GlassFish</a>
+                <!--                <a href="https://jasondl.ee/tags/GlassFish.html">GlassFish</a>-->
+                
+                <a href="/tag/java/">Java</a>
+                <!--                <a href="https://jasondl.ee/tags/Java.html">Java</a>-->
+                
+                
+            </div>
+            <div class="col"><span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2007/virtual-hosting-using-apache-and-glassfish&title=Virtual Hosting using Apache and GlassFish" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Virtual Hosting using Apache and GlassFish&url=https://jasondl.ee/2007/virtual-hosting-using-apache-and-glassfish&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2007/virtual-hosting-using-apache-and-glassfish" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2007/virtual-hosting-using-apache-and-glassfish" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Virtual Hosting using Apache and GlassFish&amp;body=Virtual Hosting using Apache and GlassFish https://jasondl.ee/2007/virtual-hosting-using-apache-and-glassfish" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+</div>
+        </div>
+    </footer>
+</article>
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>
