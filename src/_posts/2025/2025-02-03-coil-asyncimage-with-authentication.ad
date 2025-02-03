@@ -1,0 +1,140 @@
+---
+title: "Coil AsyncImage with Authentication"
+date: 2025-02-03
+tags: [ Android, Kotlin Multiplatform, Coil]
+type: post
+author: jdlee
+status: published
+source-highlighter: pygments
+---
+
+I've been working on a side project that includes both a backend (https://quarkus.io[Quarkus]-based, of course) and a mobile app (I'm using
+https://kotlinlang.org/docs/multiplatform.html[Kotlin Multiplatform], but that's a topic for another time). In this project, I need to display an image (think profile
+picture), but the link is secured, meaning I need to authenticate with the server to get it. I couldn't find anything in
+the https://coil-kt.github.io/coil/[Coil] docs explaining directly how to do that, but I was finally able to piece it together, and I'd like to share
+that here in case it helps someone else.
+
+// more
+
+I'm going to forego adding Coil to your project -- there are plenty of examples on doing that -- and jump right to
+the example. To start, we'll show the usage in my composable:
+
+[source,kotlin]
+-----
+@Composable
+fun ProtectedPhoto(photo: Photo, modifier: Modifier) {
+    AsyncImage(
+        model = photo,
+        placeholder = painterResource(Res.drawable.broken_image),
+        contentDescription = "Image Description",
+        modifier = modifier,
+        contentScale = ContentScale.Crop
+    )
+}
+-----
+
+The only thing of note here is the model we're passing to `AsyncImage`. In this case, it's a model object that encapsulates a protected photo in the system. The real trick is telling Coil how to handle models of this type, and that's done via
+ a https://coil-kt.github.io/coil/image_pipeline/#fetchers[`Fetcher`]:
+
+[source,kotlin]
+-----
+import coil3.ImageLoader
+import coil3.decode.DataSource
+import coil3.decode.ImageSource
+import coil3.fetch.FetchResult
+import coil3.fetch.Fetcher
+import coil3.fetch.SourceFetchResult
+import coil3.request.Options
+import okio.Buffer
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
+
+class CustomImageFetcher(
+    private val data: Photo,
+    private val options: Options
+) : Fetcher, KoinComponent {
+
+    private val repository: CustomRepository by inject() // 1
+
+    class Factory : Fetcher.Factory<Photo> {
+        override fun create(
+            data: Photo,
+            options: Options,
+            imageLoader: ImageLoader
+        ): Fetcher {
+            return CustomImageFetcher(data, options)
+        }
+    }
+
+    @OptIn(ExperimentalEncodingApi::class)
+    override suspend fun fetch(): FetchResult {
+        val photo = repository.getPicture(data.id) // 2
+
+        return SourceFetchResult(
+            source = ImageSource(
+                source = Buffer().apply { write(Base64.decode(photo)) },
+                fileSystem = options.fileSystem
+            ),
+            mimeType = "image/jpg",
+            dataSource = DataSource.DISK
+        )
+    }
+}
+-----
+
+Once this class is registered (see below), Coil will know how to handle `AsyncImage` instances with a `Photo` model. When it identifies such a case, it automagically creates the `Fetcher` via the `Fetcher.Factory`.
+
+An important part of the puzzle here is that part of the job of `Fetcher` implementations is that they "translate data (e.g. URL, URI, File, etc.) into either an `ImageSource` or an `Image`." In the scenario here, the images are stored as a Base64-encoded string. For $REASONS, we've opted to decode that into its equivalent binary format in the client (feel free to implement server-side decoding, for example, if that's better for your use case). To do that, we create an Okio `Buffer`, decode the string we've just received [2], and write the bytes to the array backing the `Buffer`. We pass that `Buffer` to the `ImageSource` constructor, and we've fulfilled the `Fetcher` contract.
+
+[NOTE]
+====
+I am using https://insert-koin.io/[Koin] here [1] to fetch my repository where the network code resides. Your app may require or use some other approach, but this works great here if you're looking for a solution.
+====
+
+The last part remaining is telling Coil about our implementation. If you read the https://coil-kt.github.io/coil/image_loaders/[documentation], the Coil team suggests that you register a single `ImageLoader` for your application, so that's what we'll do. In `App.kt`, we find the composable that serves as the entry point for our application (i.e., where the multiplatform part takes over from the Android `Activity` or iOS `UIViewController` that bootstrap the running application):
+
+[source,kotlin]
+-----
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import coil3.ImageLoader
+import coil3.PlatformContext
+import coil3.compose.setSingletonImageLoaderFactory
+import coil3.memory.MemoryCache
+import coil3.request.CachePolicy
+import coil3.request.crossfade
+import coil3.util.DebugLogger
+
+@Composable
+fun App() {
+    MaterialTheme {
+        setSingletonImageLoaderFactory { context ->
+            getAsyncImageLoader(context)
+        }
+        // ...
+    }
+}
+
+fun getAsyncImageLoader(context: PlatformContext) =
+    ImageLoader.Builder(context)
+        .components {
+            add(CustomImageFetcher.Factory())
+        }
+        .memoryCachePolicy(CachePolicy.ENABLED).memoryCache {
+            MemoryCache.Builder()
+                .maxSizePercent(context, 0.3)
+                .strongReferencesEnabled(true).build()
+        }
+        .crossfade(true)
+        .build()
+-----
+
+In `App()`, prior to do any actual UI work, we set the `ImageLoader` factory with a call to `getAsyncImageLoader`. The relevant part is the call to `components(builder: ComponentRegistry.Builder.() -> Unit)` where we pass a lambda that registers our `Fetcher.Factory`. At this point you're all ready to go.
+
+Once last fun nugget, though. Note the call to `memoryCachePolicy`. Coil supports https://coil-kt.github.io/coil/image_loaders/#caching[image caching] of various kinds to help reduce network traffic. By enabling this here, we can save calls from our mobile to our backend. To see that in action, you can set a breakpoint in the client code that makes that actual network call for the image. The first time a specific image is requested, the breakpoint will trip, obviously. If the app requests that image again (e.g., you navigate away and then back), the image is displayed, but the breakpoint does not trip. That's pretty cool, but, of course, you have to be aware of the specifics of your use case (e.g., number and size of the images) and choose a caching strategy (or none) as is appropriate. I'm using that in my project, so I thought I'd toss in an extra at the end. :)
+
+And that's it! This took me a bit of digging, but, in the end, it's a pretty simple and elegant solution. Hopefully this will save someone else some time.
+
+Enjoy!
