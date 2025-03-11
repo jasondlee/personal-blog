@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>One Codebase, Multiple Platforms with Compose Multiplatform</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Red+Hat+Text|PT+Mono|Titillium+Web' rel='stylesheet'>
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-background-image="img/ibm.png" style="color: white; padding-top: 100px;">
+            <!-- This is the first slide -->
+            <h1 style="color: white; font-size: 5vw;">One Codebase, Multiple Platforms</h1>
+            <h1 style="color: white; font-size: 5vw;">with Compose Multiplatform</h1>
+            <span style="font-size: 3vw">
+                <p>Jason Lee</p>
+                <p>Principal Software Engineer</p>
+                <p>Red Hat. For now.</p>
+                <p>https://jasondl.ee - jason@steeplesoft.com</p>
+            </span>
+        </section>
+
+        <section>
+            <!-- This is the second slide, the speaker's info -->
+            <h3>About Me</h3>
+            <ul>
+                <li class="fragment" data-fragment-index="1">Principal Software Engineer at Red Hat</li>
+                <li class="fragment" data-fragment-index="2">Software developer since 1997</li>
+                <li class="fragment" data-fragment-index="3">
+                    Java Champion
+                </li>
+                <li class="fragment" data-fragment-index="5">
+                    President of the <a href="https://okcjug.org">Oklahoma City Java Users Group</a>
+                </li>
+                <li class="fragment" data-fragment-index="6">
+                    Author -
+                    <a href="https://www.packtpub.com/application-development/java-9-programming-blueprints">
+                        Java 9 Programming Blueprints
+                    </a>
+                </li>
+                <li class="fragment" data-fragment-index="7">Blogger | <a
+                    href="https://jasondl.ee">https://jasondl.ee</a></li>
+                <li class="fragment" data-fragment-index="8">Misc: Martial Arts, Bass Guitar, Smoking Meats</li>
+            </ul>
+            <div>
+                <img class="fragment" data-fragment-index="3" src="img/duke_champion.png"
+                     style="height: 150px; vertical-align: bottom;">
+                <img class="fragment" data-fragment-index="5" src="https://okcjug.org/img/logo-vertical.png"
+                     style="height: 150px; vertical-align: bottom;">
+                <img class="fragment" data-fragment-index="6"
+                     src="https://content.packt.com/_/image/original/B05785/cover_image_large.jpg"
+                     style="height: 150px; vertical-align: bottom;"/>
+            </div>
+        </section>
+
+        <section data-background-image="img/seine.jpg" style="position: relative"></section>
+
+        <section data-background-image="img/sophie.jpg" style="position: relative"></section>
+
+        <section>
+            <h3>What we'll cover</h3>
+            <ul>
+                <li>What is Compose Multiplatform</li>
+                <li>Alternatives</li>
+                <li>My (current) application architecture</li>
+                <li>A walk through a demo app</li>
+            </ul>
+        </section>
+        <section>
+            <h3>What is Kotlin Multiplatform?</h3>
+            <div class="align-start">
+                <div class="quote" style="font-size: 2.5vw;">
+                    <span style="font-size:75px;line-height:0.6em;opacity:0.2">&#10077;</span>
+                    <p class="w3-xlarge" style="margin-top:-40px">
+                        Declarative framework for sharing UIs across multiple platforms. Based on Kotlin Multiplatform
+                        and Jetpack Compose. Allows you to develop shared UIs for Android, iOS, desktop, and web.
+                    </p>
+                </div>
+            </div>
+            <div class="align-start fragment" style>
+                <a href="https://developer.android.com/develop/ui/compose/adopt#what-developers-are-saying">
+                    <img style="display: block; margin-left: auto; margin-right: auto;width: 50%;"
+                         src="img/customers.png" alt="customers"/>
+                </a>
+            </div>
+        </section>
+        <section>
+            <h3>Why use Compose Multiplatform</h3>
+            <ul>
+                <li class="fragment">Accelerated UI development
+                    <div class="sub-bullet">Build your user interface once, and use it on all platforms – Android, iOS,
+                        web, and desktop.
+                    </div>
+                </li>
+                <li class="fragment">Android UI and architecture skills for other platforms
+                    <div class="sub-bullet">Use familiar Jetpack Compose APIs to build your apps with user interfaces
+                        that are shared across multiple platforms.
+                    </div>
+                </li>
+                <li class="fragment">An excellent ecosystem
+                    <div class="sub-bullet">Leverage the growing number of official multiplatform Jetpack libraries from
+                        Google.
+                    </div>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3>Why use Compose Multiplatform (cont)</h3>
+            <ul>
+                <li class="fragment">Easy integration with every platform
+                    <div class="sub-bullet">Building on top of Kotlin Multiplatform provides easy access to the full
+                        capabilities of every platform.
+                    </div>
+                </li>
+                <li class="fragment">Component-level reuse
+                    <div class="sub-bullet">Build your UIs with customizable widgets that you can use on all of your
+                        target platforms.
+                    </div>
+                </li>
+                <li class="fragment">Gradual adoption
+                    <div class="sub-bullet">Compose Multiplatform fits right into your existing application. Whether you
+                        want to share just an individual screen or the entire UI between different platforms, Compose
+                        Multiplatform allows you to do so.
+                    </div>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3>Alternatives</h3>
+            <ul>
+                <li>Platform-native libraries</li>
+                <li>Flutter (Dart)</li>
+                <li>React Native (JS)</li>
+                <li>Xamarin (C#)</li>
+                <li>PhoneGap (JS)</li>
+                <li>Appcelerator Titanium (JS)</li>
+            </ul>
+        </section>
+        <section>
+            <h3>My (current) application architecture</h3>
+            <div class="align-start">
+                <div style="font-size:15vw; color: red; float: left;">&#8252;</div>
+                <div style="float: left;">
+                    <ul>
+                        <li class="fragment">Works well for me</li>
+                        <li class="fragment">Easy to reason about</li>
+                        <li class="fragment">Avoids the "Google trap"</li>
+                        <li class="fragment">Can and probably will change</li>
+                        <li class="fragment">May not be the best fit for you and your team</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>My (current) application architecture - The Pieces</h3>
+            <h4>Jetpack Compose</h4>
+            <div class="align-start">
+                <p>Home page: <a href="https://developer.android.com/compose">https://developer.android.com/compose</a>
+                </p>
+                <pre><code>@Composable
+fun MyTopAppBar(onNavIconClick: () -> Unit) {
+    TopAppBar(
+        title = { Text(stringResource(Res.string.app_name)) },
+        navigationIcon = {
+            IconButton(onClick = { onNavIconClick() }) {
+                Icon(imageVector = Icons.Filled.Menu,
+                    contentDescription = "Open Drawer")
+            }
+        }
+    )
+}</code></pre>
+                <pre><code>@Composable
+fun asyncLoad(status: Status,
+              message: @Composable () -> Unit = { Text("An error occurred") },
+              content: @Composable () -> Unit) {
+    when (status) {
+        Status.LOADING -> { LoadingScreen() }
+        Status.SUCCESS -> { content() }
+        Status.ERROR -> { message() }
+    }
+}</code></pre>
+            </div>
+        </section>
+        <section>
+            <h3>My (current) application architecture - The Pieces</h3>
+            <h4>Decompose</h4>
+            <div class="align-start">
+                <p>Home page:
+                    <a href="https://arkivanov.github.io/Decompose/">https://arkivanov.github.io/Decompose/</a>
+                </p>
+                <div class="sub-bullet">
+                    Decompose is a Kotlin Multiplatform library for breaking down your code into lifecycle-aware
+                    business logic components (aka BLoC), with routing functionality and pluggable UI (Compose, Android
+                    Views, SwiftUI, Kotlin/React, etc.).
+                </div>
+                <div style="position: relative; display: inline-block; align-content: center;">
+                    <pre><code>interface RootComponent {
+    val stack: Value&lt;ChildStack&lt;*, Child&gt;&gt;
+
+    sealed interface Child {
+        class Home(val component: HomeComponent) : Child
+        class Occasions(val component: OccasionListComponent) : Child
+        class ViewOccasion(val component: ViewOccasionComponent) : Child
+        class AddEditOccasion(val component: AddEditOccasionComponent) : Child
+        class ViewOccasionRecip(val component: ViewOccasionRecipient) : Child
+    }
+}</code></pre>
+                    <pre style="left: 50%; top: 25%; position:absolute"><code>@Composable
+fun RootContent(
+    component: RootComponent,
+    modifier: Modifier = Modifier
+) {
+    val nav : StackNavigation&lt;NavigationConfig&gt; =
+            koinInject&lt;StackNavigation&lt;NavigationConfig&gt;&gt;()
+
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+</code></pre>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>My (current) application architecture - The Pieces</h3>
+            <h4>Room</h4>
+            <div class="align-start">
+                <p>Home page:
+                    <a href="https://developer.android.com/kotlin/multiplatform/room">https://developer.android.com/kotlin/multiplatform/room</a>
+                </p>
+                <div class="sub-bullet">
+                    The Room persistence library provides an abstraction layer over SQLite to allow for more robust
+                    database access while harnessing the full power of SQLite.
+                </div>
+                <div style="position: relative; display: inline-block; align-content: center; margin: auto; width: 95%">
+                    <pre><code>@Database(
+    entities = [Occasion::class,
+                GiftIdea::class,
+                Recipient::class,
+                OccasionRecipient::class],
+                version = 1
+)
+@TypeConverters(LocalDateConverter::class)
+@ConstructedBy(AppDatabaseConstructor::class)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun occasionDao(): OccasionDao
+    abstract fun recipientDao(): RecipientDao
+    abstract fun giftIdeaDao(): GiftIdeaDao
+}</code></pre>
+                    <pre style="left: 50%; top: -5%;  position:absolute; width: 40%"><code>@Entity
+@Serializable
+data class GiftIdea(
+    @PrimaryKey(autoGenerate = true)
+    var id: Long,
+
+    @ColumnInfo(name = "title")
+    var title: String,
+    // ...</code></pre>
+                    <pre style="left: 50%; top: 60%;  position:absolute; width: 40%"><code>@Dao
+interface GiftIdeaDao {
+    @Query("SELECT * from GiftIdea")
+    suspend fun getAll(): List<GiftIdea>
+
+    @Insert
+    @Transaction
+    suspend fun insert(idea: GiftIdea): Long
+    //...</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>My (current) application architecture - The Pieces</h3>
+            <h4>Koin</h4>
+            <div class="align-start">
+                <p>Home page:
+                    <a href="https://insert-koin.io/">https://insert-koin.io/</a>
+                </p>
+                <div class="sub-bullet">
+                    The pragmatic Kotlin & Kotlin Multiplatform Dependency Injection framework
+                    <pre><code>val appModule = module {
+    single&lt;StackNavigation&lt;NavigationConfig&gt;&gt; { StackNavigation() }
+    single&lt;AppDatabase&gt;(createdAtStart = true) {
+        val builder : RoomDatabase.Builder&lt;AppDatabase&gt; by inject()
+        val database = builder
+            .setDriver(BundledSQLiteDriver())
+            .setQueryCoroutineContext(Dispatchers.IO)
+            .build()
+
+        loadDemoData(database)
+
+        database
+    }
+    single&lt;GiftIdeaDao&gt; { val db : AppDatabase by inject(); db.giftIdeaDao() }
+    single&lt;OccasionDao&gt; { val db : AppDatabase by inject(); db.occasionDao() }
+    single&lt;RecipientDao&gt; { val db : AppDatabase by inject(); db.recipientDao() }
+}</code></pre>
+                    <pre><code>fun initKoin(config: KoinAppDeclaration? = null) {
+    startKoin {
+        modules(appModule, platformModule)
+        config?.invoke(this)
+    }
+}</code></pre>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>My (current) application architecture - The Pieces</h3>
+            <h4>Miscellaneous</h4>
+            <ul>
+                <li>Coil - <a href="https://coil-kt.github.io/coil/">https://coil-kt.github.io/coil/</a>
+                    <div class="sub-bullet">An image loading library for Android and Compose Multiplatform.</div>
+                </li>
+                <li>kotlinx-datetime - <a href="https://github.com/Kotlin/kotlinx-datetime">https://github.com/Kotlin/kotlinx-datetime</a>
+                    <div class="sub-bullet">A multiplatform Kotlin library for working with date and time.</div>
+                </li>
+                <li>KMP Form - <a
+                    href="https://github.com/steeplesoft/kmp-form">https://github.com/steeplesoft/kmp-form</a>
+                    <div class="sub-bullet">Kotlin Multiplatform port of Compose Form</div>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3>The Demo App - Giftbook</h3>
+            <ul>
+                <li>Like "Facebook" but for gift tracking</li>
+                <li class="fragment">Track gift giving per occasion and recipient</li>
+                <li class="fragment">Architectural reference application</li>
+            </ul>
+        </section>
+        <section>
+            <h3>Kotlin Multiplatform Considerations</h3>
+            <ul>
+                <li class="fragment">You're writing Kotlin, but not all JDK APIs are available cross-platform</li>
+                <li class="fragment">Some alternate libraries are available (e.g., kotlinx-datetime)</li>
+                <li class="fragment">Other uses might require platform-specific implementations
+                    <ul>
+                        <li>KMP mechanism is <code>expect/actual</code></li>
+                        <li>In <code>commonMain/</code>, your declare the <code>expect</code></li>
+                        <li>In each supported platform, you code the <code>actual</code></li>
+                        <li>Examples
+                            <ul>
+                                <li>Loggers</li>
+                                <li>Room database creation</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3>Source code</h3>
+            <h4>Let's dive in!</h4>
+        </section>
+        <section>
+            <h3>Decompose Notes</h3>
+            <ul>
+                <li>Views composed (har har) of two parts
+                    <ul>
+                        <li>Component (RootComponent) + Composable (RootContent)</li>
+                        <li>Component is (typically) interface + implementation (think testing)</li>
+                    </ul>
+                </li>
+                <li>Navigation handled in RootContent (think NavHost)
+                    <ul>
+                        <li><code>RootComponent.Child</code> defines child views</li>
+                        <li><code>NavigationConfig.*</code> defines ... navigation</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3>Room Notes</h3>
+            <ul>
+                <li>Objects required:
+                    <ul>
+                        <li><code>RoomDatabase.Builder</code> <-- Requires platform-specific intialization</li>
+                        <li><code>@Database</code></li>
+                        <li><code>@Entity</code></li>
+                        <li><code>@Dao</code></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3>Koin Notes</h3>
+            <ul>
+                <li><code>initKoin</code>
+                    <ul>
+                        <li>Call from Android <code>Application</code></li>
+                        <li>Call from <code>struct iOSApp: App</code></li>
+                    </ul>
+                </li>
+                <li>Define modules
+                    <ul>
+                        <li>Main module in commonMain</li>
+                        <li>Platform-specific in each target</li>
+                    </ul>
+                </li>
+                <li>Injection
+                    <ul>
+                        <li>In a component: <code>val foo: Type by inject()</code></li>
+                        <li>In a composable: <code>val foo: Type by koinInject()</code></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3>Logger Notes</h3>
+            <ul>
+                <li>Different impl per platform</li>
+                <li><code>expect</code> AppLogger
+                    <ul>
+                        <li>Android: <code>actual AppLogger</code> wraps <code>Log.*</code></li>
+                        <li>iOS: <code>actual AppLogger</code> wraps <code>NSLog()</code></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3>KMP Form Notes</h3>
+            <ul>
+                <li>Define a <code>Form</code> object
+                    <ul>
+                        <li>Define <code>FieldState&lt;?&gt;</code> for each field</li>
+                    </ul>
+                </li>
+                <li>In composable, use components in <code>com.steeplesoft.kmpform.fields.*</code></li>
+                <li>Call <code>form.validate()</code> to run validators (Hopefully will be automatic in future)</li>
+            </ul>
+        </section>
+        <section>
+            <h1>Thank You!</h1>
+            <ul>
+                <li><a href="https://www.jetbrains.com/compose-multiplatform/">Compose Multiplatform Documentation</a></li>
+                <li>Library Links
+                    <ul>
+                        <li>Jetpack Compose - <a href="https://developer.android.com/compose">https://developer.android.com/compose</a></li>
+                        <li>Decompose - <a href="https://arkivanov.github.io/Decompose">https://arkivanov.github.io/Decompose</a></li>
+                        <li>Android Room - <a href="https://developer.android.com/kotlin/multiplatform/room">https://developer.android.com/kotlin/multiplatform/room</a></li>
+                        <li>Koin - <a href="https://insert-koin.io/">https://insert-koin.io/</a></li>
+                        <li>KMP Form - <a href="https://github.com/steeplesoft/kmp-form">https://github.com/steeplesoft/kmp-form</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://kmp.jetbrains.com/">KMP Wizard</a></li>
+            </ul>
+            <div>
+                <a href="https://jasondl.ee/presentations/subatomic/">
+                    <img src="img/preso_qr.png" alt="preso qr" style="height: 200px;">
+                </a>
+            </div>
+        </section>
+    </div>
+    <div class="footer">
+        <img src="img/rh200.png" alt="Red Hat logo"/>
+    </div>
+</div>
+
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        hash: true,
+        center: false,
+        width: "100%",
+        height: "100%",
+        backgroundTransition: 'slide',
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+</script>
+</body>
+</html>
