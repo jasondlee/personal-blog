@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : Contract-First REST APIs with RAML</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            <article class="post">
+    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+        Contract-First REST APIs with RAML
+    </h1>
+    Wednesday, October 15, 2014 | <span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2014/contract-first-with-raml&title=Contract-First REST APIs with RAML" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Contract-First REST APIs with RAML&url=https://jasondl.ee/2014/contract-first-with-raml&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2014/contract-first-with-raml" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2014/contract-first-with-raml" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Contract-First REST APIs with RAML&amp;body=Contract-First REST APIs with RAML https://jasondl.ee/2014/contract-first-with-raml" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+
+    <div>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Yesterday, at the <a href="http://okcjug.org">OKC JUG</a>, I presented on the topic of Contract-first REST API development with RAML. This post is a rough blogification of that discussion. For those of you who were at the meeting, the preamble to the source demo (introduction, background, options discussion, etc) have been not been reproduced here.</p>
+</div>
+<div class="paragraph">
+<p><strong>tl;dr</strong>: You can find the demo source <a href="https://bitbucket.org/jdlee/raml-demo">here</a> and play around with it.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>RAML is a specification for describing REST interfaces with the intention of generating servers, clients, and documentation. It&#8217;s a product of the RAML Workgroup. One of the first questions that may pop up for anyone who has been working with REST (especially in the Java space) is, "What about Swagger?"  Mulesoft answers that question:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Mulesoft originally started with Swagger but realised that standard was best suited to documenting an existing API, not for designing an API from scratch. RAML evolved out of the need to support up-front API design in a succint, human-centric language.</p>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="the-root-section">The Root Section</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>That said, let&#8217;s take a look at a sample RAML spec file. We&#8217;ll start with the basics:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="yaml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+</pre></td><td class="code"><pre><span style="color: #6e7781">#%RAML 0.8</span>
+<span style="color: #116329">title</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">JUG</span><span style="color: #0550ae"> </span><span style="color: #0a3069">-</span><span style="color: #0550ae"> </span><span style="color: #0a3069">RAML"</span>
+<span style="color: #116329">version</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">v1</span>
+<span style="color: #116329">baseUri</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">https://localhost:8080/raml/resources</span>
+<span style="color: #116329">protocols</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">[</span> <span style="color: #0550ae">HTTPS</span> <span style="color: #24292f;background-color: #f6f8fa">]</span>
+<span style="color: #116329">mediaType</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">application/json</span>
+<span style="color: #116329">documentation</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+    <span style="color: #24292f;background-color: #f6f8fa">-</span> <span style="color: #116329">title</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Home</span>
+      <span style="color: #116329">content</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">|</span>
+        <span style="color: #0a3069">JUG - Contract-first with RAML</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This "root" section describes some top-level metadata for the API. Of the values here, only <code>title</code> and <code>baseUri</code> are required, and should be self-explanatory. The <code>mediaType</code> value describes the default media type for the resources described in the spec.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="schemas">Schemas</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Typically, when designing a system, I like to think in terms of data models first, as it helps me grasp exactly what I&#8217;ll be working with, so we&#8217;re going to take a look at how we describe models in a RAML document, which happens under the <code>schemas</code> key:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="yaml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+</pre></td><td class="code"><pre><span style="color: #116329">schemas</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+    <span style="color: #24292f;background-color: #f6f8fa">-</span> <span style="color: #116329">author</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">|</span>
+        <span style="color: #0a3069">{   "$schema": "http://json-schema.org/draft-03/schema",</span>
+            <span style="color: #0a3069">"type": "object",</span>
+            <span style="color: #0a3069">"description": "A single author",</span>
+            <span style="color: #0a3069">"properties": {</span>
+                <span style="color: #0a3069">"id": { "type": "integer", "required": true},</span>
+                <span style="color: #0a3069">"name":  { "type": "string", "required": true },</span>
+                <span style="color: #0a3069">"books": {</span>
+                    <span style="color: #0a3069">"type": "array",</span>
+                    <span style="color: #0a3069">"items": {</span>
+                        <span style="color: #0a3069">"$ref":"book"</span>
+                    <span style="color: #0a3069">}</span>
+                <span style="color: #0a3069">}</span>
+            <span style="color: #0a3069">}</span>
+        <span style="color: #0a3069">}</span>
+    <span style="color: #24292f;background-color: #f6f8fa">-</span> <span style="color: #116329">book</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">|</span>
+        <span style="color: #0a3069">{   "$schema": "http://json-schema.org/draft-03/schema",</span>
+            <span style="color: #0a3069">"type": "object",</span>
+            <span style="color: #0a3069">"description": "A single book",</span>
+            <span style="color: #0a3069">"properties": {</span>
+                <span style="color: #0a3069">"id": { "type": "integer", "required": true},</span>
+                <span style="color: #0a3069">"name":  { "type": "string", "required": true },</span>
+                <span style="color: #0a3069">"isbn":  { "type": "string", "required": true },</span>
+                <span style="color: #0a3069">"author_id" : { "type": "integer" }</span>
+            <span style="color: #0a3069">}</span>
+        <span style="color: #0a3069">}</span>
+    <span style="color: #24292f;background-color: #f6f8fa">-</span> <span style="color: #116329">authors</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">|</span>
+        <span style="color: #0a3069">{   "$schema": "http://json-schema.org/draft-03/schema",</span>
+            <span style="color: #0a3069">"type": "object",</span>
+            <span style="color: #0a3069">"description": "a collection of authors",</span>
+            <span style="color: #0a3069">"properties": {</span>
+                <span style="color: #0a3069">"size":  { "type": "integer", "required": true },</span>
+                <span style="color: #0a3069">"authors":  {</span>
+                    <span style="color: #0a3069">"type": "array",</span>
+                    <span style="color: #0a3069">"items": { "$ref": "author" }</span>
+                <span style="color: #0a3069">}</span>
+              <span style="color: #0a3069">}</span>
+        <span style="color: #0a3069">}</span>
+    <span style="color: #24292f;background-color: #f6f8fa">-</span> <span style="color: #116329">books</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">|</span>
+        <span style="color: #0a3069">{   "$schema": "http://json-schema.org/draft-03/schema",</span>
+            <span style="color: #0a3069">"type": "object",</span>
+            <span style="color: #0a3069">"description": "a collection of books",</span>
+            <span style="color: #0a3069">"properties": {</span>
+                <span style="color: #0a3069">"size":  { "type": "integer", "required": true },</span>
+                <span style="color: #0a3069">"books":  {</span>
+                    <span style="color: #0a3069">"type": "array",</span>
+                    <span style="color: #0a3069">"items": { "$ref": "book" }</span>
+                <span style="color: #0a3069">}</span>
+              <span style="color: #0a3069">}</span>
+        <span style="color: #0a3069">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, we have a list of schemas: <code>author</code>, <code>book</code>, <code>authors</code>, and <code>books</code>. The first thing you may notice is that the schema definitions look and awful lot like JSON, and that&#8217;s because they are. Internally, the RAML tools use <a href="http://www.jsonschema2pojo.org/">jsonschema2pojo</a> to generate the Java classes for the models. Looking at the <code>author</code> example, we see that the model will have three properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>id</code>, which will be the primary key</p>
+</li>
+<li>
+<p><code>name</code>, which is the author&#8217;s name</p>
+</li>
+<li>
+<p><code>books</code>, which is an array of <code>book</code> instances.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note the value for the <code>items</code> property in the schema definition. The <code>$ref</code> key tells the schema generator that the array will hold references to <code>book</code> instances.  We&#8217;ll see that type show up in the generated code:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+</pre></td><td class="code"><pre><span style="color: #6e7781">/**
+ * A single author
+ *
+ */</span>
+<span style="color: #8250df">@JsonInclude</span><span style="color: #0550ae">(</span><span style="color: #953800">JsonInclude</span><span style="color: #0550ae">.</span><span style="color: #116329">Include</span><span style="color: #0550ae">.</span><span style="color: #116329">NON_NULL</span><span style="color: #0550ae">)</span>
+<span style="color: #8250df">@Generated</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"org.jsonschema2pojo"</span><span style="color: #0550ae">)</span>
+<span style="color: #8250df">@JsonPropertyOrder</span><span style="color: #0550ae">({</span>
+    <span style="color: #0a3069">"id"</span><span style="color: #0550ae">,</span>
+    <span style="color: #0a3069">"name"</span><span style="color: #0550ae">,</span>
+    <span style="color: #0a3069">"books"</span>
+<span style="color: #0550ae">})</span>
+<span style="color: #cf222e">public</span> <span style="color: #cf222e">class</span> <span style="color: #953800">Author</span> <span style="color: #0550ae">{</span>
+
+    <span style="color: #6e7781">/**
+     *
+     * (Required)
+     *
+     */</span>
+    <span style="color: #8250df">@JsonProperty</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"id"</span><span style="color: #0550ae">)</span>
+    <span style="color: #8250df">@NotNull</span>
+    <span style="color: #cf222e">private</span> <span style="color: #953800">Integer</span> <span style="color: #24292f;background-color: #f6f8fa">id</span><span style="color: #0550ae">;</span>
+    <span style="color: #6e7781">/**
+     *
+     * (Required)
+     *
+     */</span>
+    <span style="color: #8250df">@JsonProperty</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"name"</span><span style="color: #0550ae">)</span>
+    <span style="color: #8250df">@NotNull</span>
+    <span style="color: #cf222e">private</span> <span style="color: #953800">String</span> <span style="color: #24292f;background-color: #f6f8fa">name</span><span style="color: #0550ae">;</span>
+    <span style="color: #8250df">@JsonProperty</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"books"</span><span style="color: #0550ae">)</span>
+    <span style="color: #8250df">@Valid</span>
+    <span style="color: #cf222e">private</span> <span style="color: #953800">List</span><span style="color: #0550ae">&lt;</span><span style="color: #953800">Book</span><span style="color: #0550ae">&gt;</span> <span style="color: #24292f;background-color: #f6f8fa">books</span> <span style="color: #0550ae">=</span> <span style="color: #cf222e">new</span> <span style="color: #953800">ArrayList</span><span style="color: #0550ae">&lt;</span><span style="color: #953800">Book</span><span style="color: #0550ae">&gt;();</span>
+    <span style="color: #8250df">@JsonIgnore</span>
+    <span style="color: #cf222e">private</span> <span style="color: #953800">Map</span><span style="color: #0550ae">&lt;</span><span style="color: #953800">String</span><span style="color: #0550ae">,</span> <span style="color: #953800">Object</span><span style="color: #0550ae">&gt;</span> <span style="color: #24292f;background-color: #f6f8fa">additionalProperties</span> <span style="color: #0550ae">=</span> <span style="color: #cf222e">new</span> <span style="color: #953800">HashMap</span><span style="color: #0550ae">&lt;</span><span style="color: #953800">String</span><span style="color: #0550ae">,</span> <span style="color: #953800">Object</span><span style="color: #0550ae">&gt;();</span>
+
+    <span style="color: #6e7781">/**
+     *
+     * (Required)
+     *
+     * @return
+     *     The id
+     */</span>
+    <span style="color: #8250df">@JsonProperty</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"id"</span><span style="color: #0550ae">)</span>
+    <span style="color: #cf222e">public</span> <span style="color: #953800">Integer</span> <span style="color: #8250df">getId</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">return</span> <span style="color: #24292f;background-color: #f6f8fa">id</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #6e7781">/**
+     *
+     * (Required)
+     *
+     * @param id
+     *     The id
+     */</span>
+    <span style="color: #8250df">@JsonProperty</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"id"</span><span style="color: #0550ae">)</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">setId</span><span style="color: #0550ae">(</span><span style="color: #953800">Integer</span> <span style="color: #24292f;background-color: #f6f8fa">id</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">this</span><span style="color: #0550ae">.</span><span style="color: #116329">id</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">id</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #cf222e">public</span> <span style="color: #953800">Author</span> <span style="color: #8250df">withId</span><span style="color: #0550ae">(</span><span style="color: #953800">Integer</span> <span style="color: #24292f;background-color: #f6f8fa">id</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">this</span><span style="color: #0550ae">.</span><span style="color: #116329">id</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">id</span><span style="color: #0550ae">;</span>
+        <span style="color: #cf222e">return</span> <span style="color: #cf222e">this</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #6e7781">/**
+     *
+     * (Required)
+     *
+     * @return
+     *     The name
+     */</span>
+    <span style="color: #8250df">@JsonProperty</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"name"</span><span style="color: #0550ae">)</span>
+    <span style="color: #cf222e">public</span> <span style="color: #953800">String</span> <span style="color: #8250df">getName</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">return</span> <span style="color: #24292f;background-color: #f6f8fa">name</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #6e7781">/**
+     *
+     * (Required)
+     *
+     * @param name
+     *     The name
+     */</span>
+    <span style="color: #8250df">@JsonProperty</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"name"</span><span style="color: #0550ae">)</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">setName</span><span style="color: #0550ae">(</span><span style="color: #953800">String</span> <span style="color: #24292f;background-color: #f6f8fa">name</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">this</span><span style="color: #0550ae">.</span><span style="color: #116329">name</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">name</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #cf222e">public</span> <span style="color: #953800">Author</span> <span style="color: #8250df">withName</span><span style="color: #0550ae">(</span><span style="color: #953800">String</span> <span style="color: #24292f;background-color: #f6f8fa">name</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">this</span><span style="color: #0550ae">.</span><span style="color: #116329">name</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">name</span><span style="color: #0550ae">;</span>
+        <span style="color: #cf222e">return</span> <span style="color: #cf222e">this</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #6e7781">/**
+     *
+     * @return
+     *     The books
+     */</span>
+    <span style="color: #8250df">@JsonProperty</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"books"</span><span style="color: #0550ae">)</span>
+    <span style="color: #cf222e">public</span> <span style="color: #953800">List</span><span style="color: #0550ae">&lt;</span><span style="color: #953800">Book</span><span style="color: #0550ae">&gt;</span> <span style="color: #8250df">getBooks</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">return</span> <span style="color: #24292f;background-color: #f6f8fa">books</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #6e7781">/**
+     *
+     * @param books
+     *     The books
+     */</span>
+    <span style="color: #8250df">@JsonProperty</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"books"</span><span style="color: #0550ae">)</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">setBooks</span><span style="color: #0550ae">(</span><span style="color: #953800">List</span><span style="color: #0550ae">&lt;</span><span style="color: #953800">Book</span><span style="color: #0550ae">&gt;</span> <span style="color: #24292f;background-color: #f6f8fa">books</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">this</span><span style="color: #0550ae">.</span><span style="color: #116329">books</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">books</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #cf222e">public</span> <span style="color: #953800">Author</span> <span style="color: #8250df">withBooks</span><span style="color: #0550ae">(</span><span style="color: #953800">List</span><span style="color: #0550ae">&lt;</span><span style="color: #953800">Book</span><span style="color: #0550ae">&gt;</span> <span style="color: #24292f;background-color: #f6f8fa">books</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">this</span><span style="color: #0550ae">.</span><span style="color: #116329">books</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">books</span><span style="color: #0550ae">;</span>
+        <span style="color: #cf222e">return</span> <span style="color: #cf222e">this</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #8250df">@JsonAnyGetter</span>
+    <span style="color: #cf222e">public</span> <span style="color: #953800">Map</span><span style="color: #0550ae">&lt;</span><span style="color: #953800">String</span><span style="color: #0550ae">,</span> <span style="color: #953800">Object</span><span style="color: #0550ae">&gt;</span> <span style="color: #8250df">getAdditionalProperties</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">return</span> <span style="color: #cf222e">this</span><span style="color: #0550ae">.</span><span style="color: #116329">additionalProperties</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #8250df">@JsonAnySetter</span>
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">void</span> <span style="color: #8250df">setAdditionalProperty</span><span style="color: #0550ae">(</span><span style="color: #953800">String</span> <span style="color: #24292f;background-color: #f6f8fa">name</span><span style="color: #0550ae">,</span> <span style="color: #953800">Object</span> <span style="color: #24292f;background-color: #f6f8fa">value</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">this</span><span style="color: #0550ae">.</span><span style="color: #116329">additionalProperties</span><span style="color: #0550ae">.</span><span style="color: #116329">put</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">name</span><span style="color: #0550ae">,</span> <span style="color: #24292f;background-color: #f6f8fa">value</span><span style="color: #0550ae">);</span>
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #cf222e">public</span> <span style="color: #953800">Author</span> <span style="color: #8250df">withAdditionalProperty</span><span style="color: #0550ae">(</span><span style="color: #953800">String</span> <span style="color: #24292f;background-color: #f6f8fa">name</span><span style="color: #0550ae">,</span> <span style="color: #953800">Object</span> <span style="color: #24292f;background-color: #f6f8fa">value</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">this</span><span style="color: #0550ae">.</span><span style="color: #116329">additionalProperties</span><span style="color: #0550ae">.</span><span style="color: #116329">put</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">name</span><span style="color: #0550ae">,</span> <span style="color: #24292f;background-color: #f6f8fa">value</span><span style="color: #0550ae">);</span>
+        <span style="color: #cf222e">return</span> <span style="color: #cf222e">this</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are a lot of unexpected (to me) annotations in the generated class, but those are Jackson annotations, as we instructed the Maven plugin (which we&#8217;ll look at below) to use Jackson as the JSON mapper. Notice also that each property has some Javadoc for it. If you want to provide a more helpful description, you can specify that in your schema definition:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="yaml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span style="color: #0a3069">"</span><span style="color: #0a3069">name"</span><span style="color: #f6f8fa;background-color: #82071e">:</span>  <span style="color: #24292f;background-color: #f6f8fa">{</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">type"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">string"</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">required"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0550ae">true</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">description"</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">The</span><span style="color: #0550ae"> </span><span style="color: #0a3069">author's</span><span style="color: #0550ae"> </span><span style="color: #0a3069">full</span><span style="color: #0550ae"> </span><span style="color: #0a3069">name"</span> <span style="color: #24292f;background-color: #f6f8fa">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>which generates</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+</pre></td><td class="code"><pre>    <span style="color: #6e7781">/**
+     * The author's full name
+     * (Required)
+     *
+     * @return
+     *     The name
+     */</span>
+    <span style="color: #8250df">@JsonProperty</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"name"</span><span style="color: #0550ae">)</span>
+    <span style="color: #cf222e">public</span> <span style="color: #953800">String</span> <span style="color: #8250df">getName</span><span style="color: #0550ae">()</span> <span style="color: #0550ae">{</span>
+        <span style="color: #cf222e">return</span> <span style="color: #24292f;background-color: #f6f8fa">name</span><span style="color: #0550ae">;</span>
+    <span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>authors</code> and <code>books</code> schemas deserve a special mention. If you walk through the official RAML tutorial, this is the pattern they use. For the collection resources (those that return all of the <code>author</code> and <code>book</code> instances, for example), they wrap the list in a simple model which exposes two properties: the size of the list, and the list itself. While I can&#8217;t say why they did that, I can say that in my attempts to "fix" that ran into an issue: the POJO mapping feature in Jersey that I used in the demo does not know how to serialize a <code>List</code> (or a <code>Map</code>) as the root object type. Obviously, it can handle a <code>List</code> as a property as the <code>books</code> properties are both mapped as <code>List</code> s. Either I&#8217;m missing something in terms of configuring the feature, or using a <code>List</code> here would require a custom <code>MessageBodyWriter</code> to handle. For the sake of simplicity, I opted to follow the example from the RAML tutorial.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="resources">Resources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that we&#8217;ve defined the data we&#8217;ll be working with, let&#8217;s expose those models via REST resources. To define an endpoint, you start the key name with a <code>/</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="yaml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+</pre></td><td class="code"><pre><span style="color: #116329">/authors</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+    <span style="color: #116329">get</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+        <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Get a list of all the authors in the system</span>
+        <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">200</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                        <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">authors</span>
+    <span style="color: #116329">post</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+        <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Add author</span>
+        <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">author</span>
+        <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">201</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                        <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">author</span>
+    <span style="color: #0a3069">/id/{authorId}</span><span style="color: #f6f8fa;background-color: #82071e">:</span>
+        <span style="color: #116329">uriParameters</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">authorId</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">displayName</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Author ID</span>
+                <span style="color: #116329">type</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">integer</span>
+        <span style="color: #116329">get</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Retrieve a specific author</span>
+            <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">200</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                        <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                            <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">author</span>
+        <span style="color: #116329">post</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Update an author</span>
+            <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">author</span>
+            <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">200</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                        <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                            <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">author</span>
+        <span style="color: #116329">delete</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Delete an author</span>
+            <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">200</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+<span style="color: #116329">/books</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+    <span style="color: #116329">get</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+        <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Get a list of all of the books in the system</span>
+        <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">200</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                        <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">books</span>
+    <span style="color: #116329">post</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+        <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Create a book</span>
+        <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">book</span>
+        <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">201</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                        <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">book</span>
+    <span style="color: #0a3069">/id/{bookId}</span><span style="color: #f6f8fa;background-color: #82071e">:</span>
+        <span style="color: #116329">uriParameters</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">bookId</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Book ID</span>
+                <span style="color: #116329">type</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">integer</span>
+        <span style="color: #116329">get</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Get a book</span>
+            <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">200</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                        <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                            <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">author</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve defined 4 resources here: 2 root-level, and 2 sub-resources. Taking the <code>/books</code> resource as an example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The resource supports the <code>GET</code> method, which can return the HTTP status code 200. The response body will be a <code>books</code> instance encoded as JSON.</p>
+</li>
+<li>
+<p>The resource also supports the <code>POST</code> method. It takes a <code>book</code> instance, encoded as JSON, as the payload. Upon success, it will return a 201 (Created) and the newly created book instance, also encoded as JSON.</p>
+</li>
+<li>
+<p>The resource also has a sub-resource, identified by <code>/id/{bookId}</code>. This subresource will return a specific book, identified by its <code>id</code>. The book&#8217;s ID is specified as a path parameter via a syntax that should be familiar to JAX-RS users. We also describe that parameter, called a <code>uriParameter</code> in the RAML spec, as an <code>integer</code> whose description is "Book ID".</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When this spec is processed, you&#8217;ll get a class that looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+</pre></td><td class="code"><pre><span style="color: #8250df">@Path</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"books"</span><span style="color: #0550ae">)</span>
+<span style="color: #cf222e">public</span> <span style="color: #cf222e">interface</span> <span style="color: #953800">Books</span> <span style="color: #0550ae">{</span>
+
+
+    <span style="color: #6e7781">/**
+     * Get a list of all of the books in the system
+     *
+     */</span>
+    <span style="color: #8250df">@GET</span>
+    <span style="color: #8250df">@Produces</span><span style="color: #0550ae">({</span>
+        <span style="color: #0a3069">"application/json"</span>
+    <span style="color: #0550ae">})</span>
+    <span style="color: #953800">Books</span><span style="color: #0550ae">.</span><span style="color: #116329">GetBooksResponse</span> <span style="color: #8250df">getBooks</span><span style="color: #0550ae">()</span>
+        <span style="color: #cf222e">throws</span> <span style="color: #953800">Exception</span>
+    <span style="color: #0550ae">;</span>
+
+    <span style="color: #6e7781">/**
+     * Create a book
+     *
+     * @param entity
+     *
+     */</span>
+    <span style="color: #8250df">@POST</span>
+    <span style="color: #8250df">@Consumes</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"application/json"</span><span style="color: #0550ae">)</span>
+    <span style="color: #8250df">@Produces</span><span style="color: #0550ae">({</span>
+        <span style="color: #0a3069">"application/json"</span>
+    <span style="color: #0550ae">})</span>
+    <span style="color: #953800">Books</span><span style="color: #0550ae">.</span><span style="color: #116329">PostBooksResponse</span> <span style="color: #8250df">postBooks</span><span style="color: #0550ae">(</span><span style="color: #953800">Book</span> <span style="color: #24292f;background-color: #f6f8fa">entity</span><span style="color: #0550ae">)</span>
+        <span style="color: #cf222e">throws</span> <span style="color: #953800">Exception</span>
+    <span style="color: #0550ae">;</span>
+
+    <span style="color: #6e7781">/**
+     * Get a book
+     *
+     * @param bookId
+     *     Book ID
+     */</span>
+    <span style="color: #8250df">@GET</span>
+    <span style="color: #8250df">@Path</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"id/{bookId}"</span><span style="color: #0550ae">)</span>
+    <span style="color: #8250df">@Produces</span><span style="color: #0550ae">({</span>
+        <span style="color: #0a3069">"application/json"</span>
+    <span style="color: #0550ae">})</span>
+    <span style="color: #953800">Books</span><span style="color: #0550ae">.</span><span style="color: #116329">GetBooksIdByBookIdResponse</span> <span style="color: #8250df">getBooksIdByBookId</span><span style="color: #0550ae">(</span>
+        <span style="color: #8250df">@PathParam</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"bookId"</span><span style="color: #0550ae">)</span>
+        <span style="color: #953800">Long</span> <span style="color: #24292f;background-color: #f6f8fa">bookId</span><span style="color: #0550ae">)</span>
+        <span style="color: #cf222e">throws</span> <span style="color: #953800">Exception</span>
+    <span style="color: #0550ae">;</span>
+
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">class</span> <span style="color: #953800">GetBooksIdByBookIdResponse</span>
+        <span style="color: #cf222e">extends</span> <span style="color: #24292f;background-color: #f6f8fa">com</span><span style="color: #0550ae">.</span><span style="color: #116329">steeplesoft</span><span style="color: #0550ae">.</span><span style="color: #116329">jug</span><span style="color: #0550ae">.</span><span style="color: #116329">raml</span><span style="color: #0550ae">.</span><span style="color: #116329">support</span><span style="color: #0550ae">.</span><span style="color: #116329">ResponseWrapper</span>
+    <span style="color: #0550ae">{</span>
+
+
+        <span style="color: #cf222e">private</span> <span style="color: #8250df">GetBooksIdByBookIdResponse</span><span style="color: #0550ae">(</span><span style="color: #953800">Response</span> <span style="color: #24292f;background-color: #f6f8fa">delegate</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+            <span style="color: #cf222e">super</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">delegate</span><span style="color: #0550ae">);</span>
+        <span style="color: #0550ae">}</span>
+
+        <span style="color: #6e7781">/**
+         *
+         * @param entity
+         *
+         */</span>
+        <span style="color: #cf222e">public</span> <span style="color: #cf222e">static</span> <span style="color: #953800">Books</span><span style="color: #0550ae">.</span><span style="color: #116329">GetBooksIdByBookIdResponse</span> <span style="color: #8250df">jsonOK</span><span style="color: #0550ae">(</span><span style="color: #953800">Author</span> <span style="color: #24292f;background-color: #f6f8fa">entity</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+            <span style="color: #953800">Response</span><span style="color: #0550ae">.</span><span style="color: #116329">ResponseBuilder</span> <span style="color: #24292f;background-color: #f6f8fa">responseBuilder</span> <span style="color: #0550ae">=</span> <span style="color: #953800">Response</span><span style="color: #0550ae">.</span><span style="color: #116329">status</span><span style="color: #0550ae">(</span><span style="color: #0550ae">200</span><span style="color: #0550ae">).</span><span style="color: #116329">header</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"Content-Type"</span><span style="color: #0550ae">,</span> <span style="color: #0a3069">"application/json"</span><span style="color: #0550ae">);</span>
+            <span style="color: #24292f;background-color: #f6f8fa">responseBuilder</span><span style="color: #0550ae">.</span><span style="color: #116329">entity</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">entity</span><span style="color: #0550ae">);</span>
+            <span style="color: #cf222e">return</span> <span style="color: #cf222e">new</span> <span style="color: #953800">Books</span><span style="color: #0550ae">.</span><span style="color: #116329">GetBooksIdByBookIdResponse</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">responseBuilder</span><span style="color: #0550ae">.</span><span style="color: #116329">build</span><span style="color: #0550ae">());</span>
+        <span style="color: #0550ae">}</span>
+
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">class</span> <span style="color: #953800">GetBooksResponse</span>
+        <span style="color: #cf222e">extends</span> <span style="color: #24292f;background-color: #f6f8fa">com</span><span style="color: #0550ae">.</span><span style="color: #116329">steeplesoft</span><span style="color: #0550ae">.</span><span style="color: #116329">jug</span><span style="color: #0550ae">.</span><span style="color: #116329">raml</span><span style="color: #0550ae">.</span><span style="color: #116329">support</span><span style="color: #0550ae">.</span><span style="color: #116329">ResponseWrapper</span>
+    <span style="color: #0550ae">{</span>
+
+
+        <span style="color: #cf222e">private</span> <span style="color: #8250df">GetBooksResponse</span><span style="color: #0550ae">(</span><span style="color: #953800">Response</span> <span style="color: #24292f;background-color: #f6f8fa">delegate</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+            <span style="color: #cf222e">super</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">delegate</span><span style="color: #0550ae">);</span>
+        <span style="color: #0550ae">}</span>
+
+        <span style="color: #6e7781">/**
+         *
+         * @param entity
+         *
+         */</span>
+        <span style="color: #cf222e">public</span> <span style="color: #cf222e">static</span> <span style="color: #953800">Books</span><span style="color: #0550ae">.</span><span style="color: #116329">GetBooksResponse</span> <span style="color: #8250df">jsonOK</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">com</span><span style="color: #0550ae">.</span><span style="color: #116329">steeplesoft</span><span style="color: #0550ae">.</span><span style="color: #116329">jug</span><span style="color: #0550ae">.</span><span style="color: #116329">raml</span><span style="color: #0550ae">.</span><span style="color: #116329">model</span><span style="color: #0550ae">.</span><span style="color: #116329">Books</span> <span style="color: #24292f;background-color: #f6f8fa">entity</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+            <span style="color: #953800">Response</span><span style="color: #0550ae">.</span><span style="color: #116329">ResponseBuilder</span> <span style="color: #24292f;background-color: #f6f8fa">responseBuilder</span> <span style="color: #0550ae">=</span> <span style="color: #953800">Response</span><span style="color: #0550ae">.</span><span style="color: #116329">status</span><span style="color: #0550ae">(</span><span style="color: #0550ae">200</span><span style="color: #0550ae">).</span><span style="color: #116329">header</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"Content-Type"</span><span style="color: #0550ae">,</span> <span style="color: #0a3069">"application/json"</span><span style="color: #0550ae">);</span>
+            <span style="color: #24292f;background-color: #f6f8fa">responseBuilder</span><span style="color: #0550ae">.</span><span style="color: #116329">entity</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">entity</span><span style="color: #0550ae">);</span>
+            <span style="color: #cf222e">return</span> <span style="color: #cf222e">new</span> <span style="color: #953800">Books</span><span style="color: #0550ae">.</span><span style="color: #116329">GetBooksResponse</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">responseBuilder</span><span style="color: #0550ae">.</span><span style="color: #116329">build</span><span style="color: #0550ae">());</span>
+        <span style="color: #0550ae">}</span>
+
+    <span style="color: #0550ae">}</span>
+
+    <span style="color: #cf222e">public</span> <span style="color: #cf222e">class</span> <span style="color: #953800">PostBooksResponse</span>
+        <span style="color: #cf222e">extends</span> <span style="color: #24292f;background-color: #f6f8fa">com</span><span style="color: #0550ae">.</span><span style="color: #116329">steeplesoft</span><span style="color: #0550ae">.</span><span style="color: #116329">jug</span><span style="color: #0550ae">.</span><span style="color: #116329">raml</span><span style="color: #0550ae">.</span><span style="color: #116329">support</span><span style="color: #0550ae">.</span><span style="color: #116329">ResponseWrapper</span>
+    <span style="color: #0550ae">{</span>
+
+
+        <span style="color: #cf222e">private</span> <span style="color: #8250df">PostBooksResponse</span><span style="color: #0550ae">(</span><span style="color: #953800">Response</span> <span style="color: #24292f;background-color: #f6f8fa">delegate</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+            <span style="color: #cf222e">super</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">delegate</span><span style="color: #0550ae">);</span>
+        <span style="color: #0550ae">}</span>
+
+        <span style="color: #6e7781">/**
+         *
+         * @param entity
+         *
+         */</span>
+        <span style="color: #cf222e">public</span> <span style="color: #cf222e">static</span> <span style="color: #953800">Books</span><span style="color: #0550ae">.</span><span style="color: #116329">PostBooksResponse</span> <span style="color: #8250df">jsonCreated</span><span style="color: #0550ae">(</span><span style="color: #953800">Book</span> <span style="color: #24292f;background-color: #f6f8fa">entity</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">{</span>
+            <span style="color: #953800">Response</span><span style="color: #0550ae">.</span><span style="color: #116329">ResponseBuilder</span> <span style="color: #24292f;background-color: #f6f8fa">responseBuilder</span> <span style="color: #0550ae">=</span> <span style="color: #953800">Response</span><span style="color: #0550ae">.</span><span style="color: #116329">status</span><span style="color: #0550ae">(</span><span style="color: #0550ae">201</span><span style="color: #0550ae">).</span><span style="color: #116329">header</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"Content-Type"</span><span style="color: #0550ae">,</span> <span style="color: #0a3069">"application/json"</span><span style="color: #0550ae">);</span>
+            <span style="color: #24292f;background-color: #f6f8fa">responseBuilder</span><span style="color: #0550ae">.</span><span style="color: #116329">entity</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">entity</span><span style="color: #0550ae">);</span>
+            <span style="color: #cf222e">return</span> <span style="color: #cf222e">new</span> <span style="color: #953800">Books</span><span style="color: #0550ae">.</span><span style="color: #116329">PostBooksResponse</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">responseBuilder</span><span style="color: #0550ae">.</span><span style="color: #116329">build</span><span style="color: #0550ae">());</span>
+        <span style="color: #0550ae">}</span>
+
+    <span style="color: #0550ae">}</span>
+
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that this is a Java <code>interface</code>, so we&#8217;re not quite ready to deploy this just yet. The code generator also creates several <code>ResponseWrapper</code> subclasses and uses those as the return types for the Java methods. These classes handle building the <code>Response</code> to hand off to the JAX-RS runtime. This might be a slightly different approach than you may be used to using in your JAX-RS resources, but that&#8217;s the price you pay when have a third party handle code generation. :)</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="resource-types">Resource Types</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you look back at the RAML file, you&#8217;ll see a lot of duplication (e.g., the <code>post</code> fields on the root-level resources are almost identical, with the only difference being the schema type). Fortunately, RAML provides a way to avoid a lot of this duplication via the concept of <code>resourceTypes</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="yaml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+</pre></td><td class="code"><pre><span style="color: #116329">resourceTypes</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+    <span style="color: #24292f;background-color: #f6f8fa">-</span> <span style="color: #116329">collection</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+        <span style="color: #116329">get</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">200</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                        <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                            <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">&lt;&lt;schema&gt;&gt;</span>
+        <span style="color: #116329">post</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">&lt;&lt;schema&gt;&gt;</span>
+            <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">201</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                        <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                            <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">&lt;&lt;schema&gt;&gt;</span>
+    <span style="color: #24292f;background-color: #f6f8fa">-</span> <span style="color: #116329">member</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+        <span style="color: #116329">get</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">200</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                        <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                            <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">&lt;&lt;schema&gt;&gt;</span>
+        <span style="color: #116329">post</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">&lt;&lt;schema&gt;&gt;</span>
+            <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">200</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                    <span style="color: #116329">body</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                        <span style="color: #116329">application/json</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                            <span style="color: #116329">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">&lt;&lt;schema&gt;&gt;</span>
+        <span style="color: #116329">delete</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">responses</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">200</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In looking at our resources, you can see we have two types: one returns a collection of a certain type, and the other returns a specific, single instance of that type. We have, then, collection and member resources, which we&#8217;ve modeled in our RAML spec above.</p>
+</div>
+<div class="paragraph">
+<p>The first type, <code>collection</code>, defines two methods, <code>GET</code> and <code>POST</code>, with the types of expectations and behaviors we described above. Note, though, that the schema definition looks a bit different. The value <code><a href="#schema">[schema]</a></code> declares a variable whose value will be defined when we use the <code>resourceType</code>. The <code>member</code> type does the same thing, mirroring what we did for our subresource above.</p>
+</div>
+<div class="paragraph">
+<p>So how do we do these? It requires one small addition to the resource definition, and allows us to remove quite a bit at the same time. Here is the <code>/books</code> resource, modified to use the appropriate resource types:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="yaml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="code"><pre><span style="color: #116329">/books</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+    <span style="color: #116329">displayName</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">BooksResource</span>
+    <span style="color: #116329">type</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">{</span>
+    	<span style="color: #0550ae">collection</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">{</span>
+    		<span style="color: #0550ae">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0550ae">books</span>
+    <span style="color: #f6f8fa;background-color: #82071e">	</span><span style="color: #24292f;background-color: #f6f8fa">}</span>
+    <span style="color: #24292f;background-color: #f6f8fa">}</span>
+    <span style="color: #116329">get</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+        <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Get a list of all of the books in the system</span>
+    <span style="color: #116329">post</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+        <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Create a book</span>
+    <span style="color: #0a3069">/id/{bookId}</span><span style="color: #f6f8fa;background-color: #82071e">:</span>
+        <span style="color: #116329">type</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">{</span>
+        	<span style="color: #0550ae">member</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">{</span>
+        		<span style="color: #0550ae">schema</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0550ae">book</span>
+        <span style="color: #f6f8fa;background-color: #82071e">	</span><span style="color: #24292f;background-color: #f6f8fa">}</span>
+        <span style="color: #24292f;background-color: #f6f8fa">}</span>
+        <span style="color: #116329">uriParameters</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">bookId</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">displayName</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Book ID</span>
+                <span style="color: #116329">type</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">integer</span>
+        <span style="color: #116329">get</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">Get a book</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that we&#8217;ve added <code>type</code> key to the root resource, as well as the subresource. Taking the first instance, we&#8217;re telling RAML that this resource&#8217;s type is <code>collection</code>, and its <code>schema</code> (which is the variable we declared in the resource type definition) is <code>books</code>. The subresource is <code>member</code> type and uses <code>book</code> as its schema. Any other variables you may wish to define in the resource type would be defined inside the innermost block (where <code>schema</code> is defined).</p>
+</div>
+<div class="paragraph">
+<p>Having made this change, we can regenerate the source and see that we haven&#8217;t change a thing there. We&#8217;ve simply moved some of the boilerplate out of the resource definition, making them much simpler.</p>
+</div>
+<div class="paragraph">
+<p>This concept of resource types is, I think, really significant, as it lets us describe what <em>all</em> resources of this type will look like. In my experience with writing the Java code first, things tend to get out of sync overtime: a number of Java resources are written, then a new requirement is handed to development, requiring, say, certain query parameters to be added to each resource to enable some fancy new feature. The developers then have to change the code for each resource, making sure to change each and every method. While there are other ways to mitigate that some in Java-first approaches, this contract-first approach, coupled with the <code>resourceTypes</code> concept, makes it much easier: the appropriate type is updated as needed, the Java <code>interface</code> s are generated, and the code refuses to compile until the implementation is updated. We catch the changes at compile-time, rather than letting them slip through to QA or, even worse, production to be discovered by accident when someone tries to use the new feature. I think that&#8217;s a pretty handy feature. :)</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="traits">Traits</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s take a look at one more concept in RAML: traits. If you&#8217;re familiar with traits or mixins in languages like Scala, this will be pretty simple. Bascially, you&#8217;re defining some added characteristics you want to expose. For example, let&#8217;s say you want to allow the user to page through a collection (if this were an Amazon API, you certainly wouldn&#8217;t want <em>all</em> of the authors or books in the system). To do that, we&#8217;d describe the trait like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="yaml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+</pre></td><td class="code"><pre><span style="color: #116329">traits</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+    <span style="color: #24292f;background-color: #f6f8fa">-</span> <span style="color: #116329">paged</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+        <span style="color: #116329">queryParameters</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">start</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">displayName</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">start</span>
+                <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">The first page to return</span>
+                <span style="color: #116329">type</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">integer</span>
+            <span style="color: #116329">pages</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">displayName</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">pages</span>
+                <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">The number of pages to return</span>
+                <span style="color: #116329">type</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">integer</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This trait adds two query parameters: <code>start</code> and <code>pages</code>, which related metadata.  To apply the trait, add the <code>is</code> key to the resource or resource type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="yaml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre><span style="color: #116329">resourceTypes</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+    <span style="color: #24292f;background-color: #f6f8fa">-</span> <span style="color: #116329">collection</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+        <span style="color: #116329">get</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">is</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">[</span> <span style="color: #0550ae">paged</span> <span style="color: #24292f;background-color: #f6f8fa">]</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, all resources of type <code>collection</code> will have paging support:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="code"><pre>    <span style="color: #6e7781">/**
+     * Get a list of all the authors in the system
+     *
+     * @param pages
+     *     The number of pages to return
+     * @param start
+     *     The first page to return
+     */</span>
+    <span style="color: #8250df">@GET</span>
+    <span style="color: #8250df">@Produces</span><span style="color: #0550ae">({</span>
+        <span style="color: #0a3069">"application/json"</span>
+    <span style="color: #0550ae">})</span>
+    <span style="color: #953800">AuthorsResource</span><span style="color: #0550ae">.</span><span style="color: #116329">GetAuthorsResponse</span> <span style="color: #8250df">getAuthors</span><span style="color: #0550ae">(</span>
+        <span style="color: #8250df">@QueryParam</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"start"</span><span style="color: #0550ae">)</span>
+        <span style="color: #953800">Long</span> <span style="color: #24292f;background-color: #f6f8fa">start</span><span style="color: #0550ae">,</span>
+        <span style="color: #8250df">@QueryParam</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"pages"</span><span style="color: #0550ae">)</span>
+        <span style="color: #953800">Long</span> <span style="color: #24292f;background-color: #f6f8fa">pages</span><span style="color: #0550ae">)</span>
+        <span style="color: #cf222e">throws</span> <span style="color: #953800">Exception</span>
+    <span style="color: #0550ae">;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A trait can also declare variables:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="yaml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>    <span style="color: #24292f;background-color: #f6f8fa">-</span> <span style="color: #116329">searchable</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+        <span style="color: #116329">queryParameters</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+            <span style="color: #116329">query</span><span style="color: #24292f;background-color: #f6f8fa">:</span>
+                <span style="color: #116329">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">|</span>
+                    <span style="color: #0a3069">JSON array [{"field1","value1","operator1"},{"field2","value2","operator2"},...,{"fieldN","valueN","operatorN"}] &lt;&lt;description&gt;&gt;</span>
+                <span style="color: #116329">example</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">|</span>
+                    <span style="color: #0a3069">&lt;&lt;example&gt;&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>which can be defined using a child object in the <code>is</code> usage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="yaml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>        <span style="color: #116329">is</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">[</span>
+        	<span style="color: #0550ae">searchable</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">{</span>
+        		<span style="color: #0550ae">description</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">with</span><span style="color: #0550ae"> </span><span style="color: #0a3069">valid</span><span style="color: #0550ae"> </span><span style="color: #0a3069">searchable</span><span style="color: #0550ae"> </span><span style="color: #0a3069">fields:</span><span style="color: #0550ae"> </span><span style="color: #0a3069">name"</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+        		<span style="color: #0550ae">example</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">[</span><span style="color: #0a3069">\"</span><span style="color: #0a3069">name</span><span style="color: #0a3069">\"</span><span style="color: #0a3069">,</span><span style="color: #0550ae"> </span><span style="color: #0a3069">\"</span><span style="color: #0a3069">Wheel</span><span style="color: #0550ae"> </span><span style="color: #0a3069">of</span><span style="color: #0550ae"> </span><span style="color: #0a3069">Time</span><span style="color: #0a3069">\"</span><span style="color: #0a3069">]"</span>
+        	<span style="color: #24292f;background-color: #f6f8fa">}</span>
+        <span style="color: #24292f;background-color: #f6f8fa">]</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, we see the value of <code>is</code> is an array, albeit with one value. If you want to apply multiple traits, you&#8217;d simple add more items to this array, separating them by commas:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="yaml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span style="color: #f6f8fa;background-color: #82071e">	</span><span style="color: #116329">is</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">[</span> <span style="color: #0550ae">trait1</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0550ae">trait2</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #24292f;background-color: #f6f8fa">{</span> <span style="color: #0550ae">foo</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #0a3069">"</span><span style="color: #0a3069">bar"</span> <span style="color: #24292f;background-color: #f6f8fa">}</span> <span style="color: #24292f;background-color: #f6f8fa">]</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="documentation">Documentation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Documentation generation, something developers have a love/hate relationship with, is pretty simple to generate from the RAML spec. I prefer to have the documentation generated as part of the build process, but I have not found a Maven (or Gradle) plugin to handle that. I did find, however, a nice command line tool, <code>raml2html</code>, which produces nice, clean output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span>npm i <span style="color: #116329">-g</span> raml2html
+<span style="color: #0550ae">$ </span>raml2html src/main/resources/raml/spec.raml
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can see a sample of the output here:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="https://raw.githubusercontent.com/kevinrenskers/raml2html/master/examples/example.png" alt="example"></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="the-build">The Build</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While not the point of this entry, I do want to show you the relevant portions of my <code>pom.xml</code> to help get you going:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre><span style="color: #116329">&lt;plugin&gt;</span>
+    <span style="color: #116329">&lt;groupId&gt;</span>org.raml.plugins<span style="color: #116329">&lt;/groupId&gt;</span>
+    <span style="color: #116329">&lt;artifactId&gt;</span>raml-jaxrs-maven-plugin<span style="color: #116329">&lt;/artifactId&gt;</span>
+    <span style="color: #116329">&lt;version&gt;</span>1.0-SNAPSHOT<span style="color: #116329">&lt;/version&gt;</span>
+    <span style="color: #116329">&lt;configuration&gt;</span>
+        <span style="color: #116329">&lt;sourceDirectory&gt;</span>${basedir}/src/main/resources/raml<span style="color: #116329">&lt;/sourceDirectory&gt;</span>
+        <span style="color: #116329">&lt;basePackageName&gt;</span>com.steeplesoft.jug.raml<span style="color: #116329">&lt;/basePackageName&gt;</span>
+        <span style="color: #116329">&lt;jaxrsVersion&gt;</span>2.0<span style="color: #116329">&lt;/jaxrsVersion&gt;</span>
+        <span style="color: #116329">&lt;useJsr303Annotations&gt;</span>true<span style="color: #116329">&lt;/useJsr303Annotations&gt;</span>
+        <span style="color: #116329">&lt;jsonMapper&gt;</span>jackson2<span style="color: #116329">&lt;/jsonMapper&gt;</span>
+        <span style="color: #116329">&lt;removeOldOutput&gt;</span>true<span style="color: #116329">&lt;/removeOldOutput&gt;</span>
+    <span style="color: #116329">&lt;/configuration&gt;</span>
+    <span style="color: #116329">&lt;executions&gt;</span>
+        <span style="color: #116329">&lt;execution&gt;</span>
+            <span style="color: #116329">&lt;goals&gt;</span>
+                <span style="color: #116329">&lt;goal&gt;</span>generate<span style="color: #116329">&lt;/goal&gt;</span>
+            <span style="color: #116329">&lt;/goals&gt;</span>
+            <span style="color: #116329">&lt;phase&gt;</span>generate-sources<span style="color: #116329">&lt;/phase&gt;</span>
+        <span style="color: #116329">&lt;/execution&gt;</span>
+    <span style="color: #116329">&lt;/executions&gt;</span>
+<span style="color: #116329">&lt;/plugin&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will output the generated sources in <code>${project.build.directory}/generated-sources/raml-jaxrs</code> and update the project model accordingly, so any IDE with decent <a href="http://netbeans.org">Maven</a> <a href="https://www.jetbrains.com/idea/">support</a> should pick up your changes seamlessly.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As I noted in my presentation, I haven&#8217;t used this in anger yet, but it certainly looks promising. There are certainly some code style issues I either need to solve or get over (e.g., I&#8217;d love to see JPA annotations on the models, and I&#8217;d rather see subresources emitted as classes rather than methods on the parent). Overall, though, I think this is definitely a tool (and an approach) worth keeping an eye on.</p>
+</div>
+<div class="paragraph">
+<p>While clearly still under development (the current version is 0.8), RAML is already showing a good deal of promise for clean, simple, contract-first development. The YAML syntax is concise and readable, and the code generation seems to be</p>
+</div>
+</div>
+</div>
+    </div>
+    <footer>
+        <div class="grid">
+            <div class="col tags">
+                
+                <span class="title">tags: </span>
+                
+                <a href="/tag/rest/">REST</a>
+                <!--                <a href="https://jasondl.ee/tags/REST.html">REST</a>-->
+                
+                <a href="/tag/java-ee/">Java EE</a>
+                <!--                <a href="https://jasondl.ee/tags/Java EE.html">Java EE</a>-->
+                
+                
+            </div>
+            <div class="col"><span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2014/contract-first-with-raml&title=Contract-First REST APIs with RAML" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Contract-First REST APIs with RAML&url=https://jasondl.ee/2014/contract-first-with-raml&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2014/contract-first-with-raml" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2014/contract-first-with-raml" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Contract-First REST APIs with RAML&amp;body=Contract-First REST APIs with RAML https://jasondl.ee/2014/contract-first-with-raml" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+</div>
+        </div>
+    </footer>
+</article>
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>

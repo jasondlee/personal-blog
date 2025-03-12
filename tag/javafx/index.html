@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : JavaFX</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            
+
+<h1>2017</h1>
+
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2017/getting-javafx-listviews-to-honor-container-width">Getting JavaFX ListViews to Honor Container Width</a>
+        <div><div class="paragraph">
+<p>I recently struggled trying to text in a JavaFX ListView to wrap inside the container like
+I asked it to, rather than extend (and disappear) past the boundaries of the container. After
+some discussion on Twitter and a bit of Googling, I found an answer that I thought I&#8217;d share
+here to, perhaps, save someone some time.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>March</h2>
+<ul>
+    
+    <li>
+        <a href="/2017/javafx-frameworks">JavaFX Frameworks</a>
+        <div><div class="paragraph">
+<p>In my work on my <a href="/posts/2016/call-me-crazy-but-im-writing-a-book.html">book</a>, I&#8217;ve spent quite a bit of time
+with JavaFX. In the chapter I just submitted, I wrote the application using the NetBeans RCP, which I think is a
+great piece of software. My only "complaint", I think, is more of a philosophical one more than a technical one,
+and even stating it that way is probably really over-selling it: for the most part, to use the RCP is to use
+Swing. Sure, you can use JavaFX in the application, but it seems you have to hold your mouth just right to get
+two-way data flow working. Possible, but it seems like a bit of work.</p>
+</div>
+<div class="paragraph">
+<p>At any rate, while casting around The Tubes to track down advice on how to solve one problem or another, I ran across
+a couple of more modern application frameworks that look really promising,
+<a href="http://www.drombler.org/drombler-fx/">Drombler FX</a> and <a href="http://www.dolphin-platform.io/">the Dolphin Platform</a>. Both
+look pretty slick, but the former seems to be backed by "only one guy" and might be a bit slow moving, while
+Dolphin is backed by Canoo and, more specifically, <a href="http://www.dolphin-platform.io/#team">Michael Heinrichs, Hendrik Ebbers, Dierk K&#246;nig</a>.</p>
+</div>
+<div class="paragraph">
+<p>Once I finish this book and have more time to play with shiny new things, I need to give both of these a spin.</p>
+</div>
+<div class="paragraph">
+<p>I should probably note, though, that there&#8217;s nothing really wrong with the NetBeans RCP in any real technical sense
+(beyond the 'no software is perfect' notion). I just like shiny things. I did, though, successfully create my RCP
+app and found the experience to be quite nice. If you need a desktop application, you should definitely check out
+the RCP.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2014</h1>
+
+
+
+<h2>June</h2>
+<ul>
+    
+    <li>
+        <a href="/2014/book-review-javafx-8-introduction-by-example">Book Review: JavaFX 8: Introduction by Example</a>
+        <div><div class="paragraph">
+<p><a href="http://carlfx.wordpress.com">Carl Dea</a>, this time with the help of <a href="https://blogs.oracle.com/javajungle">Mark Heckler</a>, <a href="http://harmoniccode.blogspot.com">Gerrit Grunwald</a>, <a href="http://jperedadnr.blogspot.com">José Pereda</a>, and <a href="http://birdasaur.tumblr.com">Sean Phillips</a>, recently <a href="http://www.apress.com/9781430264606">published</a> an updated and greatly expanded introductory work on JavaFX, with both the title and content updated to reflect the updates in the JDK and library.</p>
+</div>
+<div class="paragraph">
+<p><strong>tl;dr</strong>: A solid introduction with a plethora of usable examples. You can purchase it <a href="http://www.apress.com/9781430264606">here.</a></p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2014/livejournal-export">LiveJournal Export</a>
+        <div><div class="paragraph">
+<p>I have a personal LiveJournal blog that I&#8217;d like to migrate to <a href="posts/2012/07/16/a-new-way-to-blog/">Awestruct</a>. Unfortunately, LiveJournal&#8217;s export tool is really limited, allowing the export of only one month at a time. There are tools to work around that, but the only ones I&#8217;ve seen require Windows, which rules me out. In typical geek fashion, then, I wrote my own tool, <a href="https://bitbucket.org/jdlee/ljexport">ljexport</a>, a very quick-and-dirty JavaFX 8 application. All this does is export each month to its own file. Once you have the data, you&#8217;re on your own. :)</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2014/javafx-and-maven">JavaFX and Maven</a>
+        <div><div class="paragraph">
+<p>I&#8217;ve been tinkering with a couple of different JavaFX projects for a while now. Due to other commitments, they&#8217;ve been largely ignored recently, but I made some time this weekend to return to them. Since I last looked at them, Java 8, and, thus, JavaFX 8, have been release, so I decided to see how the tooling in NetBeans has changed to stay apace with the development of the libraries. While there are certainly updates, it seems new projects are still built using Ant. Yuck. :P I knew Adam Bien had a Maven archetype for his <a href="https://github.com/AdamBien/igniter.fx">igniter.fx</a> project, so I took a look to see what that POM does to support JavaFX. As it turns out, it&#8217;s pretty simple. For those interested, I have extracted here the basic POM:</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2013</h1>
+
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2013/javafx-asciidoctor-a-qnd-hack">JavaFX and AsciiDoctor: a Quick and Dirty Hack</a>
+        <div><div class="paragraph">
+<p>You may or may not have noticed (<a href="/posts/2013/04/19/Setting-Up-an-Awestruct-based-Blog">[1</a>], <a href="/posts/2012/07/16/a-new-way-to-blog">[2</a>]), but I&#8217;ve been spending a lot of time with <a href="http://www.methods.co.nz/asciidoc/">AsciiDoc</a> lately. While it might simply be a case of noticing what you&#8217;re thinking about, it seems the tool has been gaining more and more momentum. From <a href="http://asciidoctor.org/">AsciiDoctor</a> to <a href="http://awestruct.org/">Awestruct</a>, to Jason Porter&#8217;s <a href="https://github.com/asciidoctor/asciidoctor-maven-plugin">Maven plugin</a>, it seems to be everywhere. At any rate, in need of a break, I wondered if I could leverage AsciiDoctor&#8217;s Java integration library and JavaFX to make a simple editor. It&#8217;s basic and ugly, but here&#8217;s what I have.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2013/doctorfx">DoctorFX</a>
+        <div><div class="paragraph">
+<p>Earlier today, I <a href="/posts/2013/04/30/javafx-asciidoctor-a-qnd-hack">wrote</a> about a quick and dirty hack I put together to create a very simple editor for AsciiDoc files. While I have no immediate plans to make this a full-featured editor, there&#8217;s a part of me that can&#8217;t help but hack on it. This evening, I added support for loading and saving files. In fact, I&#8217;m using the editor to write this post. :)</p>
+</div>
+<div class="paragraph">
+<p>For those interested in helping (or just need a good laugh :), you can find the code for this oh-so-cleverly-named project <a href="https://bitbucket.org/jdlee/doctorfx">here</a>.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2012</h1>
+
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/java-7-netbeans-mac-os-x-and-a-little-bit-of-javafx-2">Java 7, NetBeans, Mac OS X, and a Little Bit of JavaFX 2</a>
+        <div><div class="paragraph">
+<p>In a recent post showing how to use JavaFX 2 and NetBeans on the Mac, I noted that I have been unable to run NetBeans using Java 7 on my Mac for reasons I had not been able to figure out.  Now, thanks to a pointer from <a href="http://skovatch.wordpress.com/">Scott Kovatch</a>, the technical lead at Oracle for the Mac OS X port of Java, I think I can show you how to do that.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2012/getting-started-with-javafx-on-the-mac">Getting Started with JavaFX on the Mac</a>
+        <div><div class="paragraph">
+<p>image::/images/2012/04/javafx_logo_color_1-300x150.jpg</p>
+</div>
+<div class="paragraph">
+<p>As you may have guessed from my recent <a href="/2012/04/book-review-pro-javafx-2-a-definitive-guide-to-rich-clients-with-java-technology/">book review</a>, I&#8217;ve been tinkering with JavaFX some, as time as permitted.  I&#8217;ve been following the technology fairly closely since Sun announced the project way back in 2008.  When it was announced that JavaFX 2.0 was <em>finally</em> available, albeit in preview form, for the Mac, I was ecstatic.  I ran into issues, though, trying to get it to run in my <a href="http://netbeans.org">IDE</a>, though.  After some guess work and googling, I finally figured it out.  In retrospect, it may be obvious, but if you&#8217;re like me and are missing the obvious, I&#8217;m going to detail the steps I took to get it running on my Mac.  Perhaps it can help someone out.more</p>
+</div>
+<div class="paragraph">
+<p>The first step, of course, is to download the binaries.  You can do that <a href="http://www.oracle.com/technetwork/java/javafx/downloads/index.html">here</a>, sort of.  Since this is still a preview release at the time of this writing, you have click the teeny tiny <a href="http://www.oracle.com/technetwork/java/javafx/downloads/devpreview-1429449.html">link</a> under the header.  Once you&#8217;ve downloaded the distribution, you need to extract it somewhere:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span>unzip javafx_sdk-2_1_0-beta-b19-macosx-universal-27_mar_2012.zip <span style="color: #116329">-d</span> <span style="color: #0550ae">$HOME</span>/local/
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can, of course, put it anywhere you want, but you&#8217;ll need to adjust the following instructions.  The next step is set up NetBeans.  NetBeans has JavaFX support out of the box, assuming your JDK has JavaFX support.  Since the Mac JDK does not yet, we need fix that.  Otherwise, you&#8217;ll see this error:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="/images/2012/04/newprojectbad.png"><img src="/images/2012/04/newprojectbad-300x224.png" alt="newprojectbad 300x224" width="title: "'New Project - Missing JavaFX bins'""></a>
+</div>
+</div>
+<div class="paragraph">
+<p>To fix this, we need to create a Java Platform with JavaFX support (I don&#8217;t know why we can&#8217;t modify the default platform, but we can&#8217;t, so we get to create a new one, which we can set to be the default if we want).  To do that, go to Tools &gt; Java Platforms, where you should see something like this:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="/images/2012/04/javaplatforms-300x185.png"><img src="/images/2012/04/javaplatforms.png" alt="javaplatforms" width="title: "'Java Platforms'""></a>
+</div>
+</div>
+<div class="paragraph">
+<p>To create a new Java Platform, click the (wait for it&#8230;&#8203;!) "Add Platform&#8230;&#8203;" button in the lower left corner.  OS X likes to put things in decidedly (to me) un-Unixy locations, and the JDK is no different. You can find the current JDK under <code>/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents</code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="/images/2012/04/selectjdk.png"><img src="/images/2012/04/selectjdk-300x185.png" alt="selectjdk 300x185" width="title: "'Select JDK Home'""></a>
+</div>
+</div>
+<div class="paragraph">
+<p>We now need to give it a name, so we&#8217;ll call this "JDK 1.6 with JavaFX" and click OK.  But wait, there&#8217;s no JavaFX support! To enable JavaFX support, we have to&#8230;&#8203;um..enable it.  Doing so looks like this:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="/images/2012/04/addjavafxsupport.png"><img src="/images/2012/04/addjavafxsupport-300x185.png" alt="addjavafxsupport 300x185" width="title: "'Enable JavaFX Support'""></a>
+</div>
+</div>
+<div class="paragraph">
+<p>We can now create a new JavaFX project:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="/images/2012/04/newprojectgood.png"><img src="/images/2012/04/newprojectgood.png" alt="newprojectgood" width="title: "'New Project - JavaFX bins found'""></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Your new project is ready to run.</p>
+</div>
+<div class="paragraph">
+<p>The even more adventurous may be wondering how one would do this with Java 7, to which I say, "Good question!" : )  I have mixed luck getting NetBeans and Java 7 to play nice on my Mac.  It&#8217;s almost certainly pilot error, as I&#8217;ve done it before, as has <a href="http://www.adam-bien.com/roller/abien/entry/how_to_run_netbeans_7">Adam Bien</a>, but I haven&#8217;t had a chance to debug things (e.g., the navigation tree under projects has all the tree icons, but no text.  IIRC, the context menus are also text-less. Strange).</p>
+</div>
+<div class="paragraph">
+<p>At any rate, as I noted earlier, in retrospect, this seems pretty easy (if a bit unintuitive) and might be documented somewhere, but I couldn&#8217;t find it.  Either way, it&#8217;s certainly documented now.  I hope it helps. : )</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2012/book-review-pro-javafx-2-a-definitive-guide-to-rich-clients-with-java-technology">Book Review: Pro JavaFX 2: A Definitive Guide to Rich Clients with Java Technology</a>
+        <div><div class="paragraph">
+<p>image::http://www.apress.com/media/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/A/9/A9781430268727-3d_11.png</p>
+</div>
+<div class="paragraph">
+<p>I was privileged to be given a copy of the recently released <a href="http://www.amazon.com/gp/product/1430268727/ref=as_li_ss_tl?ie=UTF8&amp;tag=coupfoai0f-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1430268727">Pro JavaFX 2: A Definitive Guide to Rich Clients with Java Technology</a> <span class="image"><img src="http://www.assoc-amazon.com/e/ir?t=coupfoai0f-20&amp;l=as2&amp;o=1&amp;a=1430268727" alt="ir?t=coupfoai0f 20&amp;l=as2&amp;o=1&amp;a=1430268727"></span> from Apress, authored by <a href="https://twitter.com/<mark>!/JavaFXpert">James</a> <a href="http://www.learnjavafx.typepad.com/weblog/">Weaver</a>, <a href="https://twitter.com/</mark>!/weiqigao">Weiqi</a> <a href="http://www.weiqigao.com/blog/">Gao</a>, <a href="https://twitter.com/<mark>!/steveonjava">Stephen</a> <a href="http://steveonjava.com/">Chin</a>, <a href="https://twitter.com/</mark>!/deanriverson">Dean</a> <a href="http://pleasingsoftware.blogspot.com/">Iverson</a>, <a href="https://twitter.com/#!/johanvos">Johan</a> <a href="http://blogs.lodgon.com/johan">Vos</a>.  This review is a bit overdue, but I hope you find it as helpful as I found the book.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2008</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/javafx-10-release-set-for-december-4">JavaFX 1.0 Release Set for December 4</a>
+        <div><div class="paragraph">
+<p>With the release of JavaFX 1.0 scheduled for this Thursday, December 4, the JavaFX team set up a technical pre-launch call and invited JUG leaders, Java Champions, NetBeans Dream Team members and others to call in and get a sneak peak at what was coming (audio and slides available <a href="http://javafx10-launch-dec08.eventbrite.com/">here</a>).  Josh Marinacci was the engineer on hand to give us the preview.  A couple of things stood out to me that has me pretty excited.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>

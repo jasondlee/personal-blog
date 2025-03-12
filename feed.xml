@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>jasondl.ee</title>
+        <description>Coming Up for Air</description>
+        <link>https://jasondl.ee</link>
+        <atom:link href="https://jasondl.ee/feed.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>A Recap of my night at the Oklahoma City JUG</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;
+&lt;img src=&quot;https://okcjug.org/img/logo-vertical.png&quot; alt=&quot;OKC JUG Logo&quot; height=&quot;200&quot; style=&quot;float: right&quot;/&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Last night, I had the opportunity to present at my local jug, the &lt;a href=&quot;https://okcjug.org&quot;&gt;Oklahoma City Java User Group&lt;/a&gt;. My topic was building applications Kotlin/Compose Multiplatform. For the most part, it was awesome. More on that in a moment.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The &lt;a href=&quot;https://jasondl.ee/presentations/compose-multiplatform/&quot;&gt;presentation&lt;/a&gt; was an introduction to the technologies that I&amp;#8217;ve found helpful in building cross-platform applications. I tried to be clear that what I was presenting is my &lt;em&gt;current&lt;/em&gt; architecture and that things might change, and that I was &lt;em&gt;learning&lt;/em&gt; some of these things as I go. I find it helpful to present on things that I&amp;#8217;m learning, as it helps solidify things in my own mind, and it might be useful for others to travel along with me, so to speak. I won&amp;#8217;t recap here everything in the presentation, so if you&amp;#8217;d like details, you can flip through the &lt;a href=&quot;https://jasondl.ee/presentations/compose-multiplatform/&quot;&gt;slides&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The demo app is one I&amp;#8217;ve called (because I&amp;#8217;m a sucker for puns), &quot;Giftbook&quot;&amp;#8201;&amp;#8212;&amp;#8201;like &quot;Facebook&quot;, but for gifts. The inspiration for the app (which is in part intended to serve as an architectural reference app for my younger son as he builds a mobile app for a high school class, as well as for a project my wife and I are working on together) came from my wife. She typically handles the bulk of our gift shopping, and she uses an app to help keep track of that. The app is great and helpful, but it has shortcomings, and in the course of discussing those, we did what any good geek would do: we decided to build our own. It&amp;#8217;s still a work in progress, but you can follow along (and contribute if you want) over at &lt;a href=&quot;https://github.com/jasondlee/giftbook&quot;&gt;Github&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;I said the meeting was awesome &quot;for the most part&quot; earlier. I had hoped to have a video of the presentation to post the &lt;a href=&quot;https://www.youtube.com/@OklahomaCityJUG&quot;&gt;OKC JUG YouTube channel&lt;/a&gt;, but&amp;#8230;&amp;#8203; there were problems. Since I was presenting, I couldn&amp;#8217;t run the recording device, so I conscripted my beautiful and brilliant wife to do handle that, and she did great, but the forces against us were greater. :) A big part of the problem is OBS. I spent part of the morning yesterday making sure everything was set up and working, but when we got to the venue, OBS had forgotten input devices, microphone levels were messed up, etc., so we had to hastily try to reconfigure things moments before the session started. Neither of us know OBS well, and we mostly got it working, but the audio in the video we ended up actually getting was great, then silent, then really low. Not sure what was going on there.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The coup de grâce for the recording, though, happened when the laptop died. :P What we didn&amp;#8217;t notice was that the power strip was not turned on, so the laptop was running on battery until it wasn&amp;#8217;t. We did manage to record about two-thirds of the presentation before things completely fell over, but the audio is next to useless, making the video a bit of a waste.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;I learned (or had reinforced) a few things, though: I need to learn OBS better (or find a simpler replacement), and I need to conscript more dedicated help. I had a million plates spinning last night, and I wouldn&amp;#8217;t have been able to pull of the meeting if it hadn&amp;#8217;t been for my amazing wife (I&amp;#8217;ve said this directly to her, but I&amp;#8217;ll say it again here: A HUGE thanks for the help. You&amp;#8217;re awesome. :)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Given all of that, there&amp;#8217;s a chance I&amp;#8217;ll make a recording of the presentation from my office so I can have something to upload. I need to tweak the presentation a bit (including replacing that super dumb and boring title, something my wife and older son have been helping me brainstorm), so if I can find some time, I&amp;#8217;ll make those changes and try to put a recording.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Despite the technical woes, I had a great time seeing old friends at the JUG, and even got to meet a few new people, which is always great. Having part of my family there was big bonus, as well.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Wed, 12 Mar 2025 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2025/a-recap-of-my-night-at-the-okcjug</link>
+            <guid isPermaLink="true">https://jasondl.ee/2025/a-recap-of-my-night-at-the-okcjug</guid>
+        </item>
+        
+        <item>
+            <title>Coil AsyncImage with Authentication</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;I&amp;#8217;ve been working on a side project that includes both a backend (&lt;a href=&quot;https://quarkus.io&quot;&gt;Quarkus&lt;/a&gt;-based, of course) and a mobile app (I&amp;#8217;m using
+&lt;a href=&quot;https://kotlinlang.org/docs/multiplatform.html&quot;&gt;Kotlin Multiplatform&lt;/a&gt;, but that&amp;#8217;s a topic for another time). In this project, I need to display an image (think profile
+picture), but the link is secured, meaning I need to authenticate with the server to get it. I couldn&amp;#8217;t find anything in
+the &lt;a href=&quot;https://coil-kt.github.io/coil/&quot;&gt;Coil&lt;/a&gt; docs explaining directly how to do that, but I was finally able to piece it together, and I&amp;#8217;d like to share
+that here in case it helps someone else.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Mon, 03 Feb 2025 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2025/coil-asyncimage-with-authentication</link>
+            <guid isPermaLink="true">https://jasondl.ee/2025/coil-asyncimage-with-authentication</guid>
+        </item>
+        
+        <item>
+            <title>Christmas 2024 - Human and Divine</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;This year was a very light year in blogging for me&amp;#8201;&amp;#8212;&amp;#8201;even by my recent standards&amp;#8201;&amp;#8212;&amp;#8201; for a lot of reasons that probably aren&amp;#8217;t of much interest to others. That said, I want to close the year out as I have for years with a Christmas post. I realize that many of you may not celebrate Christmas, and for others it&amp;#8217;s just another holiday plus lights and gifts and family. I would be remiss, though, if I didn&amp;#8217;t close the year sharing the real, historical meaning of Christmas: the birth of a baby sent to atone for the sins of the world. There&amp;#8217;s a lot of theology there that I won&amp;#8217;t unpack here, but, if you&amp;#8217;d like to hear more&amp;#8201;&amp;#8212;&amp;#8201;or try to convince me that I&amp;#8217;m wrong :)&amp;#8201;&amp;#8212;&amp;#8201;I&amp;#8217;m here for you.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Here&amp;#8217;s a beautiful setting from Evan Wickham of some of that theology. I hope it blesses you as it did me.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Merry Christmas!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;literalblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;Breaking heaven’s silence we heard a human cry
+Light into our darkness the Savior has arrived
+Healing all the broken and teaching us to love
+The Son of heaven’s glory now clothed in flesh and blood
+
+Begotten not created from the Father before time
+Virgin born Messiah both human and divine
+Crucified and risen forever You will reign
+We join with all the church from every age
+Singing worthy is Lamb that was slain&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/4nlifV8IsQs?si=sXcWePRJOMbv6mYx&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Wed, 25 Dec 2024 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2024/christmas-2024-human-and-divine</link>
+            <guid isPermaLink="true">https://jasondl.ee/2024/christmas-2024-human-and-divine</guid>
+        </item>
+        
+        <item>
+            <title>Inter-container Communications with Testcontainers</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;I recently found myself in need of having two different Testcontainers communicate with each other. To someone more familiar with Docker, the solution might have been more obvious, but, alas, I am not that man. :P After asking in the &lt;a href=&quot;https://slack.testcontainers.org/&quot;&gt;Testcontainer Slack&lt;/a&gt;, I got a pointer, so I thought I&amp;#8217;d share it here in case it might help someone else.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Mon, 19 Feb 2024 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2024/inter-container-communications-with-testcontainers</link>
+            <guid isPermaLink="true">https://jasondl.ee/2024/inter-container-communications-with-testcontainers</guid>
+        </item>
+        
+        <item>
+            <title>Christmas 2023 - I Heard the Bells on Christmas Day</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;As 2023 comes to a close, I want to take a slightly different approach to my Christmas greetings. I&amp;#8217;d like to share with you a Christmas carol, and the story behind it.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The poem, written by Henry Wadsworth Longfellow, explores the contrasting despair in his heart against the hope of Christmas. Having lost his wife to a fire, and having his son critically wounded in the Civil War, Longfellow struggled with his faith which spoke of &quot;peace on earth, goodwill to man&quot; while he watched the injustice and violence in the country at war around him. At the end of the poem, written on Christmas day in 1863, he concludes with the confession that, while things seem bleak,“God is not dead, nor doth He sleep; The Wrong shall fail,The Right prevail, With peace on earth, good-will to men.”&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;With wars and violence all over the globe, that statement is still true today. One day two thousand years ago, Jesus became a human, in the form of a tiny infant, as the final step in righting wrongs and prevailing over evil finally and fully. Christmas, then, points to Easter, and should serve as a reminder that, while evil does seem prevalent now, the day is coming when God finally says &quot;Enough!&quot; and declares judgment. My prayer, as it is every Christmas season (and, indeed, every day) is that this year will be the year you see Christmas as more than a chance for time off and getting and receiving gifts, but as the offering of the greatest gift of all: salvation through Jesus Christ.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Merry Christmas!&lt;/p&gt;
+&lt;/div&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/haaes9anfvs?si=P_GPAqwyHAxQEX3u&amp;amp;controls=0&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen&gt;&lt;/iframe&gt;
+            </description>
+            <pubDate>Mon, 25 Dec 2023 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2023/christmas-2023-i-heard-the-bells</link>
+            <guid isPermaLink="true">https://jasondl.ee/2023/christmas-2023-i-heard-the-bells</guid>
+        </item>
+        
+        <item>
+            <title>Quarkus for Frontend Devs</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;A friend of mine is a very good Angular developer. For a project he&amp;#8217;s been asked to help with, though, he finds himself needing to do some backend work. Since that&amp;#8217;s a bit outside his wheelhouse, he asked me for advice. In this post, I&amp;#8217;ll write up what I told him in case it might be of use to someone else.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Fri, 11 Aug 2023 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2023/quarkus-for-frontend-devs</link>
+            <guid isPermaLink="true">https://jasondl.ee/2023/quarkus-for-frontend-devs</guid>
+        </item>
+        
+        <item>
+            <title>Incorporating preview/experimental features in WildFly</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;One of the toughest challenges facing a mature product like WildFly is adding features without breaking existing users. It&amp;#8217;s especially difficult when that project serves as the foundation for a commercial product downstream that requires a higher degree of stability. While WildFly is a wholly independent project, it&amp;#8217;s not completely immune to concerns that EAP may have with regard to API stability, long term support, etc. That has made it difficult at times to change WildFly, though efforts like WildFly Preview have certainly helped.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;With that in mind, I&amp;#8217;d like to draw your attention to a project WildFly/EAP engineer extraordinaire, Paul Ferraro &lt;a href=&quot;https://lists.jboss.org/archives/list/wildfly-dev@lists.jboss.org/thread/4JCTIWREUBBX4DVIJIUAFQ2FWDBN3AXW/&quot;&gt;recently announced&lt;/a&gt; on the &lt;a href=&quot;https://lists.jboss.org/archives/list/wildfly-dev@lists.jboss.org/&quot;&gt;wildfly-dev email list&lt;/a&gt;. You can click through to the &lt;a href=&quot;https://lists.jboss.org/archives/list/wildfly-dev@lists.jboss.org/thread/4JCTIWREUBBX4DVIJIUAFQ2FWDBN3AXW/&quot;&gt;list archive&lt;/a&gt;, or read a more nicely-formatted copy of the email below. Either way, we would greatly value any feedback you might provide.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Fri, 07 Jul 2023 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2023/incorporating-experimental-features-in-wildfly</link>
+            <guid isPermaLink="true">https://jasondl.ee/2023/incorporating-experimental-features-in-wildfly</guid>
+        </item>
+        
+        <item>
+            <title>MyFaces 4 on WildFly</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;For several years now, WildFly has supported the ability to install and use different Jakarta Faces (Faces) implementations, either across every application deployed to the server, or for a specific application only. We supported running either Mojarra and MyFaces, with versions running all the way back to 1.2. With the move to Jakarta EE 10, however, that feature was temporarily broken simply because there was not a 4.0-compliant version of MyFaces available by the time we were ready to ship. That has changed now, though, as has the manner in which we support changing the implementations. In this short post, I&amp;#8217;ll show you how that works starting in WildFly 29.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Wed, 05 Jul 2023 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2023/myfaces-4-on-wildfly</link>
+            <guid isPermaLink="true">https://jasondl.ee/2023/myfaces-4-on-wildfly</guid>
+        </item>
+        
+        <item>
+            <title>WildFly, Micrometer, and OpenTelemetry</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;With the release of &lt;a href=&quot;https://www.wildfly.org/news/2023/04/20/WildFly28-Released/&quot;&gt;WildFly 28&lt;/a&gt;, we&amp;#8217;ve made a few changes to our supported telemetry libraries that are worth noting.  In this post, I&amp;#8217;ll give a quick overview of those changes.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2023/wildfly-micrometer-opentelemetry</link>
+            <guid isPermaLink="true">https://jasondl.ee/2023/wildfly-micrometer-opentelemetry</guid>
+        </item>
+        
+        <item>
+            <title>WildFly, Arquillian, Testcontainers, and Kafka</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Back again with another Testcontainers example. This time, though, the environment is a bit different. We&amp;#8217;ll be looking at a Jakarta EE application using &lt;a href=&quot;https://wildfly.org&quot;&gt;WildFly&lt;/a&gt; and &lt;a href=&quot;https://github.com/eclipse/microprofile-reactive-messaging&quot;&gt;MicroProfile Reactive Messaging&lt;/a&gt; (MP RM), and we&amp;#8217;re going to test it using &lt;a href=&quot;http://arquillian.org/&quot;&gt;Arquillian&lt;/a&gt; and &lt;a href=&quot;https://www.testcontainers.org/&quot;&gt;Testcontainers&lt;/a&gt;. Let&amp;#8217;s get to it. :)&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Wed, 24 Aug 2022 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2022/wildfly-arquillian-testcontainers-and-kafka</link>
+            <guid isPermaLink="true">https://jasondl.ee/2022/wildfly-arquillian-testcontainers-and-kafka</guid>
+        </item>
+        
+        <item>
+            <title>Quarkus Dev Services, jOOQ, Flyway, and Testcontainers: A Full Example</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;I have written a few posts about using Quarkus with &lt;a href=&quot;https://www.testcontainers.org/&quot;&gt;Testcontainers&lt;/a&gt;, &lt;a href=&quot;https://flywaydb.org/&quot;&gt;Flyway&lt;/a&gt;, and &lt;a href=&quot;https://www.jooq.org/&quot;&gt;jOOQ&lt;/a&gt;. Since posting those, I&amp;#8217;ve learned some new tricks that have changed how I integrate the various tools. In this post, I&amp;#8217;d like to share a complete example that shows how use Quarkus, &lt;a href=&quot;https://quarkus.io/guides/dev-services&quot;&gt;Quarkus Dev Services&lt;/a&gt;, &lt;a href=&quot;https://www.testcontainers.org/&quot;&gt;Testcontainers&lt;/a&gt;, and &lt;a href=&quot;https://flywaydb.org/&quot;&gt;Flyway&lt;/a&gt; together for a zero (ish) local config setup.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2022/quarkus-dev-services-jooq-flyway-testcontainers-full-example</link>
+            <guid isPermaLink="true">https://jasondl.ee/2022/quarkus-dev-services-jooq-flyway-testcontainers-full-example</guid>
+        </item>
+        
+        <item>
+            <title>Exporting Arquillian Archives</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;A big part of the testing we do on WildFly involves in-container testing, for which we use &lt;a href=&quot;https://arquillian.org/&quot;&gt;Arquillian&lt;/a&gt;. It&amp;#8217;s a great tool when it works right, but sometimes things don&amp;#8217;t. When that happens, I find it helpful to examine the archives that the tests produce. Fortunately, Arquillian makes that easy &lt;strong&gt;&lt;em&gt;if&lt;/em&gt;&lt;/strong&gt; you know that magic words, and they&amp;#8217;re not easy to find, so I&amp;#8217;m going to fix that here. :P&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Tue, 22 Mar 2022 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2022/exporting-arquillian-archives</link>
+            <guid isPermaLink="true">https://jasondl.ee/2022/exporting-arquillian-archives</guid>
+        </item>
+        
+        <item>
+            <title>Testing with Quarkus, jOOQ, and Testcontainers Redux</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;In a &lt;a href=&quot;/posts/2021/testing-with-quarkus-jooq-testcontainers.html&quot;&gt;recent post&lt;/a&gt;, I showed how one could fairly easily test your Quarkus application against a Testcontainers-managed Postgres database. While that works great, my set up is a little more complex, and I found the solution lacking. In a nutshell, as part of my build, I use Flyway with H2 to create a schema, then jOOQ&amp;#8217;s code generation against H2 to create the needed classes. That all worked well enough until I found some types that didn&amp;#8217;t quite map correctly against newer versions of H2 (a security issue necessitated the update), so I decided I should finally make use of the same database from start to finish. In this post, I&amp;#8217;ll show how I did it.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Sat, 15 Jan 2022 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2022/testing-with-quarkus-jooq-testcontainers-redux</link>
+            <guid isPermaLink="true">https://jasondl.ee/2022/testing-with-quarkus-jooq-testcontainers-redux</guid>
+        </item>
+        
+        <item>
+            <title>Testing with Quarkus, jOOQ, and Testcontainers</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;In a project I&amp;#8217;ve been working on, I&amp;#8217;ve been targeting PostgreSQL, but testing with H2. While that works, I&amp;#8217;m a big fan of having the test environment match production as much as possible. That said, I don&amp;#8217;t like to have external system dependencies for tests, such as requiring having a database installed. That&amp;#8217;s where &lt;a href=&quot;https://testcontainers.org&quot;&gt;Testcontainers&lt;/a&gt; comes in. In this post, I&amp;#8217;ll look at how I integrated Testcontainers into my Quarkus+jOOQ project&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Wed, 29 Dec 2021 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2021/testing-with-quarkus-jooq-testcontainers</link>
+            <guid isPermaLink="true">https://jasondl.ee/2021/testing-with-quarkus-jooq-testcontainers</guid>
+        </item>
+        
+        <item>
+            <title>Merry Christmas, 2021</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;To all my readers, I&amp;#8217;d like to wish a merry Christmas, and a happy new year. In a world seeking hope, my prayer is that each of you
+would find real, lasting hope, in the birth the baby we celebrate today, Jesus Christ, Emmanuel, God with us.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;imageblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;img src=&quot;/images/2021/emmanuel.png&quot; alt=&quot;emmanuel&quot;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;(&lt;a href=&quot;https://twitter.com/billmounce/status/1474469935782846468&quot;&gt;Image source&lt;/a&gt;. Thanks, Dr. Mounce :)&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Sat, 25 Dec 2021 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2021/merry-christmas</link>
+            <guid isPermaLink="true">https://jasondl.ee/2021/merry-christmas</guid>
+        </item>
+        
+        <item>
+            <title>WildFly and Micrometer</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Earlier in the summer, I wrote &lt;a href=&quot;an-update-on-opentelemetry-and-wildfly.ad&quot;&gt;some&lt;/a&gt; about the addition of OpenTelemetry support in WildFly. With the release of &lt;a href=&quot;https://www.wildfly.org/news/2021/10/05/WildFly25-Final-Released/&quot;&gt;WildFly 25&lt;/a&gt;, that support is now official and in the wild. With 25 behind us, we start looking at 26, and my next effort will be to integrate &lt;a href=&quot;https://micrometer.io&quot;&gt;Micrometer metrics&lt;/a&gt; into the server. In this post, we&amp;#8217;ll take a look at what that might mean, as well as presenting a way to take an early look.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Mon, 18 Oct 2021 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2021/wildfly-and-micrometer</link>
+            <guid isPermaLink="true">https://jasondl.ee/2021/wildfly-and-micrometer</guid>
+        </item>
+        
+        <item>
+            <title>A Quarkus Command Line Application</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Most people know Quarkus as a great way to build fast, scalable microservices. What many may not be aware of, however, is that Quarkus can also be used to build command line applications as well. In this post, we&amp;#8217;ll take a look at how we can leverage the Quarkus ecosystem we already know to build a command line utility quickly and easily.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Sun, 10 Oct 2021 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2021/a-quarkus-command-line-app</link>
+            <guid isPermaLink="true">https://jasondl.ee/2021/a-quarkus-command-line-app</guid>
+        </item>
+        
+        <item>
+            <title>An Update on OpenTelemetry and WildFly</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;In a &lt;a href=&quot;opentelemetry-and-jakarta-rest-services.html&quot;&gt;recent post&lt;/a&gt;, I worked through setting up OpenTelemetry support in your Jakarta EE application. Since that time, I&amp;#8217;ve put quite a bit of work into integrating that support, as teased in the post, into WildFly. In this post, I&amp;#8217;d like to provide an update on what that WildFly support currently looks like, and put out a request for feedback.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2021/an-update-on-opentelemetry-and-wildfly</link>
+            <guid isPermaLink="true">https://jasondl.ee/2021/an-update-on-opentelemetry-and-wildfly</guid>
+        </item>
+        
+        <item>
+            <title>OpenTelemetry and Jakarta REST Services</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Knowing what&amp;#8217;s going on in your microservices deployment is extremely important when something goes wrong. In a distributed system, though, it can be difficult to know where things have gone wrong. That&amp;#8217;s where a tracing system such as &lt;a href=&quot;https://opentelemetry.io&quot;&gt;OpenTelemetry&lt;/a&gt; can be immensely valuable. In this post, we&amp;#8217;ll build two simple services, one of which calls the other, and trace the execution from end to end.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Wed, 02 Jun 2021 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2021/opentelemetry-and-jakarta-rest-services</link>
+            <guid isPermaLink="true">https://jasondl.ee/2021/opentelemetry-and-jakarta-rest-services</guid>
+        </item>
+        
+        <item>
+            <title>A Simple Jakarta EE 9.1 REST Project</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Jakarta EE 9.1 was released today, which now lets developers use&amp;#8201;&amp;#8212;&amp;#8201;officially&amp;#8201;&amp;#8212;&amp;#8201;Java 11 with the shiny new Jakarta EE
+namespace introduce in EE 9. So what does a simple Jakarta EE 9.1 REST project look like? I&amp;#8217;m so glad you asked. :)&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2021/a-simple-jakarta-ee-91-rest-project</link>
+            <guid isPermaLink="true">https://jasondl.ee/2021/a-simple-jakarta-ee-91-rest-project</guid>
+        </item>
+        
+        <item>
+            <title>Microprofile Fault Tolerance Retry in Action</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;As part of some of my recent work, I&amp;#8217;ve gotten some exposure to some Microprofile specs I&amp;#8217;ve not had the opportunity or need to use. One of those is &lt;a href=&quot;https://github.com/eclipse/microprofile-fault-tolerance&quot;&gt;Fault Tolerance&lt;/a&gt;. I was curious to see it action, so I&amp;#8217;ve cobbled together this simple example that demonstrates some of that spec&amp;#8217;s features, namely retries and fallback.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Tue, 02 Mar 2021 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2021/microprofile-fault-tolerance-retry-in-action</link>
+            <guid isPermaLink="true">https://jasondl.ee/2021/microprofile-fault-tolerance-retry-in-action</guid>
+        </item>
+        
+        <item>
+            <title>Securing and Testing Quarkus Applications using Keycloak and Wiremock</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Obviously, web apps need to be secured. If you&amp;#8217;re brave (and some might say foolish), you can roll your own security. Unless you have compelling reasons to do so, however, you probably shouldn&amp;#8217;t. Almost as if by design (nyuk nyuk), Quarkus makes it easy to use any OpenID Connect server. One such server is Keycloak, an open source offering also from Red Hat. If your experience is like mine, though, securing endpoints makes testing a touch more complicated. In this post, I&amp;#8217;d like to present and walk through a complete example of a secured Quarkus app, using Keycloak, JUnit and Wiremock.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Wed, 17 Feb 2021 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2021/securing-and-testing-quarkus</link>
+            <guid isPermaLink="true">https://jasondl.ee/2021/securing-and-testing-quarkus</guid>
+        </item>
+        
+        <item>
+            <title>Merry Christmas, 2020</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Merry Christmas! After what has been a tough year, my prayer is that this Christmas season will
+be relaxing and refreshing for us all. To help celebrate the season&amp;#8201;&amp;#8212;&amp;#8201;I hope&amp;#8201;&amp;#8212;&amp;#8201;I&amp;#8217;ve embedded my church&amp;#8217;s Christmas program,
+&lt;em&gt;Christmas Under the Arches&lt;/em&gt;. My prayer is that it encourages you all and helps you focus on the Reason we celebrate. :)&lt;/p&gt;
+&lt;/div&gt;
+&lt;iframe
+    width=&quot;800&quot;
+    height=&quot;450&quot;
+    src=&quot;https://www.youtube.com/embed/bdPkoFf_aHE&quot;
+    frameborder=&quot;0&quot;
+    allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot;
+    allowfullscreen&gt;
+&lt;/iframe&gt;
+            </description>
+            <pubDate>Fri, 25 Dec 2020 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2020/merry-christmas</link>
+            <guid isPermaLink="true">https://jasondl.ee/2020/merry-christmas</guid>
+        </item>
+        
+        <item>
+            <title>Java 15: New and Notable</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;JDK 15 hit General Availability today. While I spend most of my time in Kotlin these days, I do keep a close on Java, as it still has
+a special place in my heart, so I thought I&amp;#8217;d make a quick post highlighting some of its new features. :) There are quite a few changes
+in the release, so I&amp;#8217;ll list all of them, but focus on the ones I think most developers will find more interesting.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Tue, 15 Sep 2020 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2020/java-15-new-and-notable</link>
+            <guid isPermaLink="true">https://jasondl.ee/2020/java-15-new-and-notable</guid>
+        </item>
+        
+        <item>
+            <title>Writing CLIs with Spring Boot and JCommander</title>
+            <description>
+                &lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;I was recently asked to convert a Spring Boot-based &quot;CLI&quot; to a real CLI utility. It was actually just a normal Spring Boot
+application with REST endpoints that we&amp;#8217;d hit with curl. Pretty ugly. After a few frustrating hours, I finally settled on a
+solution that seems to work pretty well for us. It uses Spring Boot, of course, as that&amp;#8217;s our library of choice, plus
+&lt;a href=&quot;https://jcommander.org/&quot;&gt;JCommander&lt;/a&gt; for the argument handling. This is a pared-down example of how the application is
+structured. And because I care about of each you deeply, I&amp;#8217;ll present it in Java AND Kotlin. :)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;For those of you in a hurry, you can get the complete code in my &lt;a href=&quot;https://github.com/jasondlee/spring-cli-demo&quot;&gt;GitHub repo&lt;/a&gt;.
+Everyone else, feel free to read along.&lt;/p&gt;
+&lt;/div&gt;
+            </description>
+            <pubDate>Wed, 15 Jul 2020 00:00:00 +0000</pubDate>
+            <link>https://jasondl.ee/2020/writing-clis-with-spring-boot-and-jcommander</link>
+            <guid isPermaLink="true">https://jasondl.ee/2020/writing-clis-with-spring-boot-and-jcommander</guid>
+        </item>
+        
+    </channel>
+</rss>

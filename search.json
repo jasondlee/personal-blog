@@ -1,0 +1,3762 @@
+[
+  
+    {
+      "title"    : "A Recap of my night at the Oklahoma City JUG",
+      "tags"     : "Android, Kotlin Multiplatform",
+      "url"      : "/2025/a-recap-of-my-night-at-the-okcjug",
+      "date"     : "2025-03-12 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Coil AsyncImage with Authentication",
+      "tags"     : "Android, Kotlin Multiplatform, Coil",
+      "url"      : "/2025/coil-asyncimage-with-authentication",
+      "date"     : "2025-02-03 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Christmas 2024 - Human and Divine",
+      "tags"     : "Personal",
+      "url"      : "/2024/christmas-2024-human-and-divine",
+      "date"     : "2024-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Inter-container Communications with Testcontainers",
+      "tags"     : "Testcontainers",
+      "url"      : "/2024/inter-container-communications-with-testcontainers",
+      "date"     : "2024-02-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Christmas 2023 - I Heard the Bells on Christmas Day",
+      "tags"     : "Personal",
+      "url"      : "/2023/christmas-2023-i-heard-the-bells",
+      "date"     : "2023-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Quarkus for Frontend Devs",
+      "tags"     : "Quarkus, JavaScript, Getting Started",
+      "url"      : "/2023/quarkus-for-frontend-devs",
+      "date"     : "2023-08-11 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Incorporating preview/experimental features in WildFly",
+      "tags"     : "WildFly",
+      "url"      : "/2023/incorporating-experimental-features-in-wildfly",
+      "date"     : "2023-07-07 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "MyFaces 4 on WildFly",
+      "tags"     : "WildFly, Jakarta Faces",
+      "url"      : "/2023/myfaces-4-on-wildfly",
+      "date"     : "2023-07-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "WildFly, Micrometer, and OpenTelemetry",
+      "tags"     : "WildFly, Micrometer, OpenTelemetry",
+      "url"      : "/2023/wildfly-micrometer-opentelemetry",
+      "date"     : "2023-05-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "WildFly, Arquillian, Testcontainers, and Kafka",
+      "tags"     : "Java, WildFly, Kafka, Arquillian, Testcontainers",
+      "url"      : "/2022/wildfly-arquillian-testcontainers-and-kafka",
+      "date"     : "2022-08-24 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Quarkus Dev Services, jOOQ, Flyway, and Testcontainers: A Full Example",
+      "tags"     : "Java, Quarkus, Flyway, Testcontainers",
+      "url"      : "/2022/quarkus-dev-services-jooq-flyway-testcontainers-full-example",
+      "date"     : "2022-04-20 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Exporting Arquillian Archives",
+      "tags"     : "Java, Arquillian",
+      "url"      : "/2022/exporting-arquillian-archives",
+      "date"     : "2022-03-22 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Testing with Quarkus, jOOQ, and Testcontainers Redux",
+      "tags"     : "Java, Quarkus, jOOQ, Testcontainers, Flyway",
+      "url"      : "/2022/testing-with-quarkus-jooq-testcontainers-redux",
+      "date"     : "2022-01-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Testing with Quarkus, jOOQ, and Testcontainers",
+      "tags"     : "Java, Quarkus, jOOQ, Testcontainers",
+      "url"      : "/2021/testing-with-quarkus-jooq-testcontainers",
+      "date"     : "2021-12-29 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas, 2021",
+      "tags"     : "Personal",
+      "url"      : "/2021/merry-christmas",
+      "date"     : "2021-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "WildFly and Micrometer",
+      "tags"     : "Java, WildFly, Micrometer",
+      "url"      : "/2021/wildfly-and-micrometer",
+      "date"     : "2021-10-18 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Quarkus Command Line Application",
+      "tags"     : "Java, Quarkus, CLI",
+      "url"      : "/2021/a-quarkus-command-line-app",
+      "date"     : "2021-10-10 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "An Update on OpenTelemetry and WildFly",
+      "tags"     : "Java, Jakarta EE, WildFly, OpenTelemetry, Microservices",
+      "url"      : "/2021/an-update-on-opentelemetry-and-wildfly",
+      "date"     : "2021-07-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "OpenTelemetry and Jakarta REST Services",
+      "tags"     : "Java, Jakarta EE, WildFly, OpenTelemetry, Microservices",
+      "url"      : "/2021/opentelemetry-and-jakarta-rest-services",
+      "date"     : "2021-06-02 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Simple Jakarta EE 9.1 REST Project",
+      "tags"     : "Java, Jakarta EE, WildFly",
+      "url"      : "/2021/a-simple-jakarta-ee-91-rest-project",
+      "date"     : "2021-05-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Microprofile Fault Tolerance Retry in Action",
+      "tags"     : "Java, Quarkus, MicroProfile, Fault Tolerance, Wiremock",
+      "url"      : "/2021/microprofile-fault-tolerance-retry-in-action",
+      "date"     : "2021-03-02 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Securing and Testing Quarkus Applications using Keycloak and Wiremock",
+      "tags"     : "Java, Quarkus, Keycloak, JUnit, Wiremock",
+      "url"      : "/2021/securing-and-testing-quarkus",
+      "date"     : "2021-02-17 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas, 2020",
+      "tags"     : "Personal",
+      "url"      : "/2020/merry-christmas",
+      "date"     : "2020-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Java 15: New and Notable",
+      "tags"     : "Java",
+      "url"      : "/2020/java-15-new-and-notable",
+      "date"     : "2020-09-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Writing CLIs with Spring Boot and JCommander",
+      "tags"     : "CLI, Spring Boot, JCommander",
+      "url"      : "/2020/writing-clis-with-spring-boot-and-jcommander",
+      "date"     : "2020-07-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Hands-free Flyway and jOOQ",
+      "tags"     : "Maven, Flyway, jOOQ",
+      "url"      : "/2020/hands-free-flyway-and-jooq",
+      "date"     : "2020-05-14 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Building Maps in Kotlin",
+      "tags"     : "Kotlin",
+      "url"      : "/2020/building-maps-in-kotlin",
+      "date"     : "2020-04-08 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Custom Methods in Spring Repositories",
+      "tags"     : "Spring, Kotlin",
+      "url"      : "/2020/custom-methods-in-spring-repositories",
+      "date"     : "2020-02-28 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Restoring a Deleted Git Branch",
+      "tags"     : "Git",
+      "url"      : "/2020/restoring-deleted-git-branch",
+      "date"     : "2020-02-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Best Advice I've Been Given: Check Your Ego",
+      "tags"     : "General",
+      "url"      : "/2020/best-advice",
+      "date"     : "2020-02-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Dear MockK, Repeat After Me",
+      "tags"     : "Kotlin, Mock",
+      "url"      : "/2020/dear-mock-repeat-after-me",
+      "date"     : "2020-01-16 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas, 2019",
+      "tags"     : "Personal",
+      "url"      : "/2019/merry-christmas",
+      "date"     : "2019-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Executable Kotlin Scripts",
+      "tags"     : "Kotlin",
+      "url"      : "/2019/executable-kotlin-scripts",
+      "date"     : "2019-12-23 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Testing Spring Repositories with Flyway",
+      "tags"     : "Testing, SQL, Spring, Flyway",
+      "url"      : "/2019/testing-spring-boot-repositories-with-flyway",
+      "date"     : "2019-12-20 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "When Testing with a Different Database Chokes on Your DDL",
+      "tags"     : "Testing, SQL, H2",
+      "url"      : "/2019/when-test-with-a-different-database-chokes-on-ddl",
+      "date"     : "2019-12-13 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Easily Switching JDKs",
+      "tags"     : "JDK, Bash",
+      "url"      : "/2019/easily-switching-jdks",
+      "date"     : "2019-08-26 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Java to Kotlin Conversion Question. And Answer.",
+      "tags"     : "Kotlin",
+      "url"      : "/2019/java-to-kotlin-conversion-question-and-answer",
+      "date"     : "2019-07-18 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting started with Micronaut: Kotlin, JPA, and JWT",
+      "tags"     : "Kotlin, Micronaut, JPA, JWT",
+      "url"      : "/2019/micronaut-jpa-jwt-kotlin",
+      "date"     : "2019-02-12 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Kotlin+Micronaut and IDEA Don't Get Along Together",
+      "tags"     : "Kotlin, Micronaut, IDEA",
+      "url"      : "/2019/kotlin-micronaut-idea-dont-get-along",
+      "date"     : "2019-01-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas, 2018",
+      "tags"     : "Personal",
+      "url"      : "/2018/merry-christmas",
+      "date"     : "2018-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Possibly Silly Question about Java Visibility",
+      "tags"     : "Java",
+      "url"      : "/2018/a-possible-silly-question-about-java-visibility",
+      "date"     : "2018-12-20 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting Started with Eclipse MicroProfile, Part 8: The Conclusion",
+      "tags"     : "Java EE, MicroProfile",
+      "url"      : "/2018/getting-started-with-eclipse-microprofile-part-8-conclusion",
+      "date"     : "2018-10-24 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting Started with Eclipse MicroProfile, Part 7: Helidon",
+      "tags"     : "Java EE, MicroProfile",
+      "url"      : "/2018/getting-started-with-eclipse-microprofile-part-7-helidon",
+      "date"     : "2018-10-21 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting Started with Eclipse MicroProfile, Part 6: Hammock",
+      "tags"     : "Java EE, MicroProfile",
+      "url"      : "/2018/getting-started-with-eclipse-microprofile-part-6-hammock",
+      "date"     : "2018-10-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting Started with Eclipse MicroProfile, Part 5: TomEE",
+      "tags"     : "Java EE, MicroProfile",
+      "url"      : "/2018/getting-started-with-eclipse-microprofile-part-5-tomee",
+      "date"     : "2018-10-18 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting Started with Eclipse MicroProfile, Part 4: OpenLiberty",
+      "tags"     : "Java EE, MicroProfile",
+      "url"      : "/2018/getting-started-with-eclipse-microprofile-part-4-openliberty",
+      "date"     : "2018-10-17 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting Started with Eclipse MicroProfile, Part 3: Thorntail",
+      "tags"     : "Java EE, MicroProfile",
+      "url"      : "/2018/getting-started-with-eclipse-microprofile-part-3-thorntail",
+      "date"     : "2018-10-16 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting Started with Eclipse MicroProfile, Part 2: Payara Micro",
+      "tags"     : "Java EE, MicroProfile",
+      "url"      : "/2018/getting-started-with-eclipse-microprofile-part-2-payara-micro",
+      "date"     : "2018-10-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting Started with Eclipse MicroProfile, Part 1: the Application",
+      "tags"     : "Java EE, MicroProfile",
+      "url"      : "/2018/getting-started-with-eclipse-microprofile-part-1-the-app",
+      "date"     : "2018-10-14 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting Started with Eclipse MicroProfile, Part 0",
+      "tags"     : "Java EE, MicroProfile",
+      "url"      : "/2018/getting-started-with-eclipse-microprofile-part-0",
+      "date"     : "2018-10-13 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Easy File Copy in Kotlin",
+      "tags"     : "Kotlin",
+      "url"      : "/2018/easy-file-copy-in-kotlin",
+      "date"     : "2018-06-24 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "VirtualBox Shared Folders under Linux",
+      "tags"     : "VirtualBox, Linux",
+      "url"      : "/2018/virtualbox-shared-folders-under-linux",
+      "date"     : "2018-05-29 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Resurrecting Turbo Vision",
+      "tags"     : "TurboVision, Java",
+      "url"      : "/2018/resurrecting-turbo-vision",
+      "date"     : "2018-04-23 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Jerkey: A Kotlin DSL for Jersey",
+      "tags"     : "Kotlin, Jersey, REST",
+      "url"      : "/2018/jerkey-a-kotlin-dsl-for-jersey",
+      "date"     : "2018-04-11 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "String.format()... You May Be Doing It Wrong",
+      "tags"     : "Java",
+      "url"      : "/2018/string-format-you-may-be-doing-it-wrong",
+      "date"     : "2018-03-29 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Roku and Hotel Wifi",
+      "tags"     : "Roku, Linux",
+      "url"      : "/2018/roku-and-hotel-wifi",
+      "date"     : "2018-02-01 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Firefox, Wine, and Linux",
+      "tags"     : "Linux",
+      "url"      : "/2018/firefox-wine-linux",
+      "date"     : "2018-01-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "String.split(), Java 8 style",
+      "tags"     : "Java 8",
+      "url"      : "/2017/string-split-java-8-style",
+      "date"     : "2017-09-27 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Chesterton's Fence and the Software Developer",
+      "tags"     : "General",
+      "url"      : "/2017/chestertons-fence-and-the-software-developer",
+      "date"     : "2017-09-24 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "My Book Has Finally Been Published",
+      "tags"     : "General, Java 9",
+      "url"      : "/2017/my-book-has-finally-been-published",
+      "date"     : "2017-07-31 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting JavaFX ListViews to Honor Container Width",
+      "tags"     : "JavaFX",
+      "url"      : "/2017/getting-javafx-listviews-to-honor-container-width",
+      "date"     : "2017-04-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Compiling for Java 8 and Java 9",
+      "tags"     : "Java 9",
+      "url"      : "/2017/compiling-for-java-8-and-java-9",
+      "date"     : "2017-04-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaFX Frameworks",
+      "tags"     : "JavaFX",
+      "url"      : "/2017/javafx-frameworks",
+      "date"     : "2017-03-12 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Struggling with Swagger Codegen",
+      "tags"     : "JAX-RS, Swagger",
+      "url"      : "/2017/struggling-with-swagger-codegen",
+      "date"     : "2017-01-26 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting Started with Swagger and JAX-RS",
+      "tags"     : "JAX-RS, Swagger",
+      "url"      : "/2017/getting-started-with-swagger-and-jax-rs",
+      "date"     : "2017-01-26 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas, 2016",
+      "tags"     : "Personal",
+      "url"      : "/2016/merry-christmas",
+      "date"     : "2016-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "NetBeans 9 Nightlies",
+      "tags"     : "NetBeans",
+      "url"      : "/2016/netbeans-9-nightlies",
+      "date"     : "2016-11-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Call Me Crazy, But I'm Writing a Book",
+      "tags"     : "Book, Packt",
+      "url"      : "/2016/call-me-crazy-but-im-writing-a-book",
+      "date"     : "2016-10-06 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "mv /dev/oracle/NetBeans /dev/apache/",
+      "tags"     : "NetBeans",
+      "url"      : "/2016/mv-dev-oracle-netbeans-dev-apache",
+      "date"     : "2016-09-14 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Android App Development Quandary",
+      "tags"     : "Android",
+      "url"      : "/2016/android-app-development-quandary",
+      "date"     : "2016-01-11 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas, 2015",
+      "tags"     : "Personal",
+      "url"      : "/2015/merry-christmas",
+      "date"     : "2015-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Kotlin and CDI",
+      "tags"     : "Kotlin, CDI",
+      "url"      : "/2015/kotlin-and-cdi",
+      "date"     : "2015-11-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Kotlin-RS",
+      "tags"     : "Kotlin, JAX-RS",
+      "url"      : "/2015/kotlin-rs",
+      "date"     : "2015-11-03 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Kotlin Faces",
+      "tags"     : "Kotlin, JSF",
+      "url"      : "/2015/kotlin-jsf",
+      "date"     : "2015-10-29 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Bad Horse!",
+      "tags"     : "Misc",
+      "url"      : "/2015/bad_horse",
+      "date"     : "2015-09-28 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Be Careful with Statics",
+      "tags"     : "Java",
+      "url"      : "/2015/be_careful_with_statics",
+      "date"     : "2015-07-16 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "An Introduction to Programming with Minecraft at the Oklahoma City JUG",
+      "tags"     : "Java, JUG, Minecraft",
+      "url"      : "/2015/intro_to_programming_with_minecraft_at_okcjug",
+      "date"     : "2015-06-30 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Running IDEA 14 on Java 8 on the Mac",
+      "tags"     : "Java, Mac",
+      "url"      : "/2015/running_idea_14_on_java8_mac",
+      "date"     : "2015-06-26 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Changing the GlassFish Admin Users's Password Programmatically",
+      "tags"     : "GlassFish, REST, Docker",
+      "url"      : "/2015/changing-gf-admin-passwd-programmatically",
+      "date"     : "2015-05-29 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Custom Maven Packaging Type",
+      "tags"     : "Maven",
+      "url"      : "/2015/custom-maven-packaging-type",
+      "date"     : "2015-04-24 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "From Awestruct to JBake",
+      "tags"     : "General",
+      "url"      : "/2015/from-awestruct-to-jbake",
+      "date"     : "2015-03-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Multitenant PostgreSQL",
+      "tags"     : "database, PostgreSQL, multitenancy",
+      "url"      : "/2015/multitenant-postgresql",
+      "date"     : "2015-02-18 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas",
+      "tags"     : "General, Personal",
+      "url"      : "/2014/merry-christmas",
+      "date"     : "2014-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Book Review: RESTful Java Patterns and Best Practices",
+      "tags"     : "REST, Java EE, Reviews",
+      "url"      : "/2014/book-review-restful-java-patterns-and-best-practices",
+      "date"     : "2014-10-21 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Contract-First REST APIs with RAML",
+      "tags"     : "REST, Java EE",
+      "url"      : "/2014/contract-first-with-raml",
+      "date"     : "2014-10-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "So long, and thanks for all the fish",
+      "tags"     : "General",
+      "url"      : "/2014/so-long-and-thanks-for-all-the-fish",
+      "date"     : "2014-10-03 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Can I Use Dropwizard for This?",
+      "tags"     : "Java EE, JAX-RS, CDI, Weld",
+      "url"      : "/2014/can-i-use-dropwizard-for-this",
+      "date"     : "2014-08-11 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Book Review: JavaFX 8: Introduction by Example",
+      "tags"     : "JavaFX, Reviews",
+      "url"      : "/2014/book-review-javafx-8-introduction-by-example",
+      "date"     : "2014-06-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "LiveJournal Export",
+      "tags"     : "JavaFX",
+      "url"      : "/2014/livejournal-export",
+      "date"     : "2014-06-24 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaFX and Maven",
+      "tags"     : "JavaFX, Maven",
+      "url"      : "/2014/javafx-and-maven",
+      "date"     : "2014-06-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "14 NetBeans Web Development Tips in 7 Minutes",
+      "tags"     : "NetBeans, HTML5",
+      "url"      : "/2014/netbeans-web-development-tips-in-7-minutes",
+      "date"     : "2014-05-29 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "File Uploads with JAX-RS 2",
+      "tags"     : "Java EE, JAX-RS",
+      "url"      : "/2014/file-uploads-with-jax-rs-2",
+      "date"     : "2014-05-01 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Book Review: Java EE and HTML5 Enterprise Application Development",
+      "tags"     : "Java EE, HTML5, Reviews",
+      "url"      : "/2014/book-review-java-ee-and-html5-enterprise-application-development",
+      "date"     : "2014-03-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Book Review: 50 Android Hacks",
+      "tags"     : "Android, Reviews",
+      "url"      : "/2014/book-review-50-android-hacks",
+      "date"     : "2014-03-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Integrating Bitbucket and Jenkins",
+      "tags"     : "Bitbucket, Jenkins, Git, CI",
+      "url"      : "/2014/integrating-bitbucket-and-jenkins",
+      "date"     : "2014-02-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "CLI Libraries Compared",
+      "tags"     : "Java, CLI",
+      "url"      : "/2014/cli-libraries-compared",
+      "date"     : "2014-02-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Android Lifecycles",
+      "tags"     : "Android",
+      "url"      : "/2014/android-lifecycles",
+      "date"     : "2014-01-03 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas",
+      "tags"     : "General, Personal",
+      "url"      : "/2013/merry-christmas",
+      "date"     : "2013-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Import Maven Artifacts to Ceylon Repos",
+      "tags"     : "Ceylon, Maven",
+      "url"      : "/2013/import-maven-artifacts-to-ceylon-repos",
+      "date"     : "2013-11-22 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Ceylon: a First, Quick Take",
+      "tags"     : "Ceylon",
+      "url"      : "/2013/ceylon-a-first-quick-take",
+      "date"     : "2013-11-22 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Book Review: Instant Vert.x",
+      "tags"     : "Reviews",
+      "url"      : "/2013/book-review-instant-vertx",
+      "date"     : "2013-10-16 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Awestruct NetBeans Plugin",
+      "tags"     : "Awestruct, NetBeans",
+      "url"      : "/2013/awestruct-netbeans-plugin",
+      "date"     : "2013-09-30 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Gradle Tip: Running a Single Test",
+      "tags"     : "Gradle, Testing",
+      "url"      : "/2013/gradle-tip-running-a-single-test",
+      "date"     : "2013-09-24 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Gradle Tip: Better Test Debugging",
+      "tags"     : "Gradle, Testing",
+      "url"      : "/2013/gradle-tip-better-test-debugging",
+      "date"     : "2013-09-24 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Book Review: Beginning Java EE 7",
+      "tags"     : "Java EE, Reviews",
+      "url"      : "/2013/book-review-beginning-java-ee-7",
+      "date"     : "2013-09-24 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Gradle + Arquillian + GlassFish Embedded",
+      "tags"     : "GlassFish, Gradle, Arquillian, Testing",
+      "url"      : "/2013/gradle-arquillian-glassfish-embedded",
+      "date"     : "2013-09-13 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Gradle Tip: Seeing Standard Streams During Tests",
+      "tags"     : "Gradle",
+      "url"      : "/2013/gradle-tip-seeing-standard-streams-during-tests",
+      "date"     : "2013-09-10 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Gradle Tip: Attaching a Debugger",
+      "tags"     : "Gradle, Testing",
+      "url"      : "/2013/gradle-tip-attaching-a-debugger",
+      "date"     : "2013-09-10 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Filtering Mail using JavaMail",
+      "tags"     : "JavaMail",
+      "url"      : "/2013/filtering-mail-using-javamail",
+      "date"     : "2013-09-04 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Building \\\"Fat Jars\\\" with Gradle",
+      "tags"     : "Gradle",
+      "url"      : "/2013/building-fat-jars-with-gradle",
+      "date"     : "2013-09-04 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "WebJars and JSF",
+      "tags"     : "JSF",
+      "url"      : "/2013/webjars-and-jsf",
+      "date"     : "2013-08-28 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Gradle, 'provided' scope, and Java EE 7",
+      "tags"     : "Gradle, Java EE",
+      "url"      : "/2013/gradle-provided-scope-and-java-ee-7",
+      "date"     : "2013-08-22 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Quick-start for Scala and Gradle",
+      "tags"     : "Gradle, Scala",
+      "url"      : "/2013/a-quick-start-for-scala-and-gradle",
+      "date"     : "2013-08-22 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Setting Up Droidium for Android Testing",
+      "tags"     : "Android, Droidium",
+      "url"      : "/2013/setting-up-droidium-for-android-testing",
+      "date"     : "2013-07-12 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Simple OAuth2 Client and Server Example: Part II",
+      "tags"     : "Java EE, OAuth2, REST, JAX-RS, Arquillian",
+      "url"      : "/2013/a-simple-oauth2-client-and-server-example-part-ii",
+      "date"     : "2013-07-12 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Simple OAuth2 Client and Server Example: Part I",
+      "tags"     : "Java EE, OAuth2, REST, JAX-RS",
+      "url"      : "/2013/a-simple-oauth2-client-and-server-example-part-i",
+      "date"     : "2013-07-11 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "What&#8217;s the Deal With Containerless Frameworks?",
+      "tags"     : "General",
+      "url"      : "/2013/whats-the-deal-with-containerless-frameworks",
+      "date"     : "2013-07-08 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Backing Up Your Data with Duplicity",
+      "tags"     : "backup",
+      "url"      : "/2013/backing-up-your-data-with-duplicity",
+      "date"     : "2013-06-26 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaFX and AsciiDoctor: a Quick and Dirty Hack",
+      "tags"     : "JavaFX, AsciiDoc",
+      "url"      : "/2013/javafx-asciidoctor-a-qnd-hack",
+      "date"     : "2013-04-30 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Syncing Playlists with Android Devices",
+      "tags"     : "Android, Bash",
+      "url"      : "/2013/syncing-playlists-with-android-devices",
+      "date"     : "2013-04-29 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Setting Up an Awestruct-based Blog",
+      "tags"     : "Awestruct",
+      "url"      : "/2013/Setting-Up-an-Awestruct-based-Blog",
+      "date"     : "2013-04-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Fairwell, Wordpress!",
+      "tags"     : "General",
+      "url"      : "/2013/fairwell-wordpress",
+      "date"     : "2013-04-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Error Reporting for Android Apps",
+      "tags"     : "Android",
+      "url"      : "/2013/error-reporting-for-android-apps",
+      "date"     : "2013-04-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "DoctorFX",
+      "tags"     : "JavaFX, AsciiDoc",
+      "url"      : "/2013/doctorfx",
+      "date"     : "2013-04-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Initializing JAX-RS Sub-resources",
+      "tags"     : "Java, Java EE, JAX-RS, REST",
+      "url"      : "/2013/initializing-jax-rs-sub-resources",
+      "date"     : "2013-04-04 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Writing Bash Scripts with Parameters",
+      "tags"     : "Bash, Linux",
+      "url"      : "/2013/writing-bash-scripts-with-parameters",
+      "date"     : "2013-04-02 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Simulating Swipes in Your Android Tests",
+      "tags"     : "Android, Java",
+      "url"      : "/2013/simulating-swipes-in-your-android-tests",
+      "date"     : "2013-02-13 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Oracle JDK and the Linux Alternatives System",
+      "tags"     : "Java",
+      "url"      : "/2013/oracle-jdk-and-the-linux-alternatives-system",
+      "date"     : "2013-01-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas",
+      "tags"     : "Christmas, Personal",
+      "url"      : "/2012/merry-christmas-4",
+      "date"     : "2012-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Asynchronous JAX-RS",
+      "tags"     : "Java",
+      "url"      : "/2012/asynchronous-jax-rs",
+      "date"     : "2012-12-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Using Server Sent Events and the GlassFish REST Interface",
+      "tags"     : "GlassFish, Java EE, REST",
+      "url"      : "/2012/using-server-sent-events-and-the-glassfish-rest-interface",
+      "date"     : "2012-12-10 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Maven Project Version from the Command Line",
+      "tags"     : "Java",
+      "url"      : "/2012/maven-project-version-from-the-command-line",
+      "date"     : "2012-10-30 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Yum Pseudo-Transactions",
+      "tags"     : "Linux",
+      "url"      : "/2012/yum-pseudo-transactions",
+      "date"     : "2012-09-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Converting Many Images to One PDF",
+      "tags"     : "Java",
+      "url"      : "/2012/converting-many-images-to-one-pdf",
+      "date"     : "2012-09-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Annotation Processing the New Way",
+      "tags"     : "Java",
+      "url"      : "/2012/annotation-processing-the-new-way",
+      "date"     : "2012-07-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A New Way to Blog",
+      "tags"     : "General",
+      "url"      : "/2012/a-new-way-to-blog",
+      "date"     : "2012-07-16 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Writing Pluggable Java EE Applications, The Explanation",
+      "tags"     : "CDI, Java EE, JSF, REST",
+      "url"      : "/2012/writing-pluggable-java-ee-applications-the-explanation",
+      "date"     : "2012-07-10 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Writing Pluggable Java EE Applications",
+      "tags"     : "CDI, Java EE",
+      "url"      : "/2012/writing-pluggable-java-ee-applications",
+      "date"     : "2012-07-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Firefox, Linux, and the Java Plugin",
+      "tags"     : "Firefox, Java, Linux, plugin",
+      "url"      : "/2012/firefox-linux-and-the-java-plugin",
+      "date"     : "2012-06-20 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "From OS X to Linux",
+      "tags"     : "Linux, OS X, Ubuntu, Unity",
+      "url"      : "/2012/from-os-x-to-linux",
+      "date"     : "2012-04-23 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Java 7, NetBeans, Mac OS X, and a Little Bit of JavaFX 2",
+      "tags"     : "Java, JavaFX, Mac, NetBeans",
+      "url"      : "/2012/java-7-netbeans-mac-os-x-and-a-little-bit-of-javafx-2",
+      "date"     : "2012-04-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Getting Started with JavaFX on the Mac",
+      "tags"     : "JavaFX, NetBeans",
+      "url"      : "/2012/getting-started-with-javafx-on-the-mac",
+      "date"     : "2012-04-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Book Review: Pro JavaFX 2: A Definitive Guide to Rich Clients with Java Technology",
+      "tags"     : "Java, JavaFX, Reviews",
+      "url"      : "/2012/book-review-pro-javafx-2-a-definitive-guide-to-rich-clients-with-java-technology",
+      "date"     : "2012-04-03 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish 3.1.2, REST Security, and the Jersey Client",
+      "tags"     : "GlassFish, REST",
+      "url"      : "/2012/glassfish-3-1-2-rest-security-and-the-jersey-client",
+      "date"     : "2012-03-12 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish 3.1.2 and REST Security",
+      "tags"     : "GlassFish, REST",
+      "url"      : "/2012/glassfish-3-1-2-and-rest-security",
+      "date"     : "2012-03-01 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Comparing JVM Web Frameworks - A Critique",
+      "tags"     : "Java, Java EE",
+      "url"      : "/2012/comparing-jvm-web-frameworks-a-critique",
+      "date"     : "2012-02-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "CDI @OKCJUG",
+      "tags"     : "CDI, CDI, Java EE, OKCJUG",
+      "url"      : "/2012/cdi-okcjug",
+      "date"     : "2012-02-14 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Jersey POJOMapping Client/Server Example",
+      "tags"     : "Java EE, JAX-RS, Jersey, REST",
+      "url"      : "/2012/a-jersey-pojomapping-clientserver-example",
+      "date"     : "2012-01-26 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Grabbing Screenshots of Failed Selenium Tests",
+      "tags"     : "Java, Selenium, Testing",
+      "url"      : "/2012/grabbing-screenshots-of-failed-selenium-tests",
+      "date"     : "2012-01-24 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas",
+      "tags"     : "Christmas, Personal",
+      "url"      : "/2011/merry-christmas-3",
+      "date"     : "2011-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Testing Android Applications with Maven, Android-x86 and VirtualBox",
+      "tags"     : "Android, Maven, Testing, VirtualBox",
+      "url"      : "/2011/testing-android-applications-with-maven-android-x86-and-virtualbox",
+      "date"     : "2011-11-22 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Book Review: Real World Java EE Night Hacks - Dissecting the Business Tier",
+      "tags"     : "EJB3, Java EE, JPA, REST, Reviews, Testing",
+      "url"      : "/2011/book-review-real-world-java-ee-night-hacks-dissecting-the-business-tier",
+      "date"     : "2011-11-14 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish REST Client - ComplexExample.java",
+      "tags"     : "GlassFish, REST",
+      "url"      : "/2011/glassfish-rest-client-complexexample-java",
+      "date"     : "2011-10-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Funky Object Initialization",
+      "tags"     : "Java, Tutorials",
+      "url"      : "/2011/funky-object-initialization",
+      "date"     : "2011-10-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish REST Client Goes to the Flying Circus",
+      "tags"     : "GlassFish, Java, Python, REST",
+      "url"      : "/2011/glassfish-rest-client-goes-to-the-flying-circus",
+      "date"     : "2011-10-06 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish REST Interface, a Client-side Perspective",
+      "tags"     : "GlassFish, REST",
+      "url"      : "/2011/glassfish-rest-interface-a-client-side-perspective",
+      "date"     : "2011-10-03 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Quick (and oh so Brief) Look at a Windows 8 Developer Build",
+      "tags"     : "Misc",
+      "url"      : "/2011/a-quick-and-oh-so-brief-look-at-a-windows-8-developer-build",
+      "date"     : "2011-09-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Android at the OKC JUG",
+      "tags"     : "Android, JUG",
+      "url"      : "/2011/android-at-the-okc-jug",
+      "date"     : "2011-09-13 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "My First Android App: Cub Tracker",
+      "tags"     : "Android",
+      "url"      : "/2011/my-first-android-app-cub-tracker",
+      "date"     : "2011-04-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Managing GlassFish JDBC Resources via REST",
+      "tags"     : "GlassFish, REST",
+      "url"      : "/2011/managing-glassfish-jdbc-resources-via-rest",
+      "date"     : "2011-03-10 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Adding Users to a GlassFish Realm via REST",
+      "tags"     : "GlassFish, REST",
+      "url"      : "/2011/adding-users-to-a-glassfish-realm-via-rest",
+      "date"     : "2011-03-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Debugging GlassFish REST Requests",
+      "tags"     : "GlassFish, REST",
+      "url"      : "/2011/debugging-glassfish-rest-requests",
+      "date"     : "2011-03-04 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "RESTful GlassFish Monitoring",
+      "tags"     : "GlassFish, Java, monitoring, REST",
+      "url"      : "/2011/restful-glassfish-monitoring",
+      "date"     : "2011-02-28 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish 3.1 Is Now Available",
+      "tags"     : "GlassFish, Java EE",
+      "url"      : "/2011/glassfish-3-1-is-now-available",
+      "date"     : "2011-02-28 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Java EE&#039;s Buried Treasure: the Application Client Container",
+      "tags"     : "GlassFish, Java, Java EE, Tutorials",
+      "url"      : "/2011/java-ees-buried-treasure-the-application-client-container",
+      "date"     : "2011-02-22 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish 3.1, REST, and Secure Admin",
+      "tags"     : "GlassFish, REST",
+      "url"      : "/2011/glassfish-3-1-rest-and-secure-admin",
+      "date"     : "2011-02-17 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish 3.1, REST, and a Secured Admin User",
+      "tags"     : "GlassFish, REST",
+      "url"      : "/2011/glassfish-3-1-rest-and-a-secured-admin-user",
+      "date"     : "2011-02-17 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Deploying Applications to GlassFish Using curl",
+      "tags"     : "GlassFish, Java, REST",
+      "url"      : "/2011/deploying-applications-to-glassfish-using-curl",
+      "date"     : "2011-02-10 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Running Long-Running Reports with JMS",
+      "tags"     : "GlassFish, JSF, JMS",
+      "url"      : "/2011/running-long-running-reports-with-jms",
+      "date"     : "2011-01-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas, 2010",
+      "tags"     : "Java",
+      "url"      : "/2010/merry-christmas-2010",
+      "date"     : "2010-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish Administration: The REST of the Story Part II - Deploying Apps Using Scala",
+      "tags"     : "administration, GlassFish, REST, Scala",
+      "url"      : "/2010/glassfish-administration-the-rest-of-the-story-part-ii-deploying-apps-using-scala",
+      "date"     : "2010-12-17 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "The Value of the Stack",
+      "tags"     : "GlassFish, Java EE",
+      "url"      : "/2010/the-value-of-the-stack",
+      "date"     : "2010-12-14 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Adding SCM Branch Information to Your Prompt",
+      "tags"     : "Bash, CVS, General, Git, hg, Prompt, SCM, SVN",
+      "url"      : "/2010/adding-scm-branch-information-to-your-prompt",
+      "date"     : "2010-10-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Running a Single JUnit Test",
+      "tags"     : "JUnit, Testing",
+      "url"      : "/2010/running-a-single-junit-test",
+      "date"     : "2010-10-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Interested in Remote Method Calls via JS in JSF?",
+      "tags"     : "JSF",
+      "url"      : "/2010/interested-in-remote-method-calls-via-js-in-jsf",
+      "date"     : "2010-09-21 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Mojarra 1.2_15 Now In Maven Repo",
+      "tags"     : "JSF, Maven, Mojarra",
+      "url"      : "/2010/mojarra-1-2_15-now-in-maven-repo",
+      "date"     : "2010-08-26 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish Administration: The REST of the Story Part I",
+      "tags"     : "administration, GlassFish, Java, json, REST, xml",
+      "url"      : "/2010/glassfish-administration-the-rest-of-the-story",
+      "date"     : "2010-08-20 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Book Review: JSF 2.0 Cookbook",
+      "tags"     : "JSF, Reviews",
+      "url"      : "/2010/book-review-jsf-2-0-cookbook",
+      "date"     : "2010-08-20 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Book Review: JSF 1.2 Components",
+      "tags"     : "Components, Java EE, JSF, Reviews",
+      "url"      : "/2010/book-review-jsf-1-2-components",
+      "date"     : "2010-06-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Putting Facelets in a Jar",
+      "tags"     : "Java",
+      "url"      : "/2010/putting-facelets-in-a-jar",
+      "date"     : "2010-05-04 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish Roadmap",
+      "tags"     : "GlassFish",
+      "url"      : "/2010/glassfish-roadmap",
+      "date"     : "2010-03-26 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Writing Selenium Tests for the GlassFish Admin Console",
+      "tags"     : "GlassFish, Testing, Tutorials",
+      "url"      : "/2010/writing-selenium-tests-for-the-glassfish-admin-console",
+      "date"     : "2010-03-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Run GlassFish V3 As a Non-Root Service on Gentoo Linux",
+      "tags"     : "Gentoo, GlassFish, Linux",
+      "url"      : "/2010/run-glassfish-v3-as-a-non-root-service-on-gentoo-linux",
+      "date"     : "2010-03-04 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "New Components in Mojarra Scales: Part IV – sc:combo",
+      "tags"     : "Components, JSF, Scales",
+      "url"      : "/2010/new-components-in-mojarra-scales-part-iv-sccombo",
+      "date"     : "2010-02-18 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "New Components in Mojarra Scales: Part III – sc:imageZoomer and sc:lightbox",
+      "tags"     : "Components, JSF, Scales",
+      "url"      : "/2010/new-components-in-mojarra-scales-part-iii-scimagezoomer-and-sclightbox",
+      "date"     : "2010-02-18 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Comparison Table of 4 Android Phones",
+      "tags"     : "Android",
+      "url"      : "/2010/a-comparison-table-of-4-android-phones",
+      "date"     : "2010-02-11 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas!",
+      "tags"     : "Personal",
+      "url"      : "/2009/merry-christmas-2",
+      "date"     : "2009-12-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "New Components in Mojarra Scales: Part II – sc:autoComplete",
+      "tags"     : "Components, JSF, Scales",
+      "url"      : "/2009/new-components-in-mojarra-scales-part-ii-scautocomplete",
+      "date"     : "2009-12-22 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish v3 Virtual Conference",
+      "tags"     : "GlassFish, Java, Java EE, JPA, JSF",
+      "url"      : "/2009/glassfish-v3-virtual-conference",
+      "date"     : "2009-12-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "NetBeans 6.8 Is Now Available",
+      "tags"     : "NetBeans",
+      "url"      : "/2009/netbeans-6-8-is-now-available",
+      "date"     : "2009-12-10 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish v3 Is Now Available",
+      "tags"     : "GlassFish",
+      "url"      : "/2009/glassfish-v3-is-now-available",
+      "date"     : "2009-12-10 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "New Components in Mojarra Scales: Part I - sc:dataTable",
+      "tags"     : "Components, JSF, Scales",
+      "url"      : "/2009/new-components-in-mojarra-scales-part-i-sc-datatable",
+      "date"     : "2009-12-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Setting Up a New Web Site on DreamHost",
+      "tags"     : "General",
+      "url"      : "/2009/setting-up-a-new-web-site-on-dreamhost",
+      "date"     : "2009-11-03 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "The Mojarra Scales Demo Has Moved",
+      "tags"     : "Components, Java, JSF, Scales",
+      "url"      : "/2009/the-mojarra-scales-demo-has-moved",
+      "date"     : "2009-11-02 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSF 2, h:dataTable, and Ajax Updates",
+      "tags"     : "ajax, Java, JSF",
+      "url"      : "/2009/jsf-2-hdatatable-and-ajax-updates",
+      "date"     : "2009-10-28 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Mojarra 2.0 hits FCS",
+      "tags"     : "JSF",
+      "url"      : "/2009/mojarra-2-0-hits-fcs",
+      "date"     : "2009-10-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish v3 FishCAT Announced",
+      "tags"     : "GlassFish",
+      "url"      : "/2009/glassfish-v3-fishcat-announced",
+      "date"     : "2009-09-23 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Mojarra Scales 1.3.2 Has Been Released",
+      "tags"     : "Components, JSF, Kenai, Scales",
+      "url"      : "/2009/mojarra-scales-1-3-2-has-been-released",
+      "date"     : "2009-08-27 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "FacesTester 0.3 Has Been Released",
+      "tags"     : "FacesTester, JSF, Testing",
+      "url"      : "/2009/facestester-0-3-has-been-released",
+      "date"     : "2009-07-29 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "I&#039;ve Updated My About Page",
+      "tags"     : "Java",
+      "url"      : "/2009/ive-updated-my-about-page",
+      "date"     : "2009-06-30 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaOne 2009 Day 4",
+      "tags"     : "Java, JavaOne, JavaOne",
+      "url"      : "/2009/javaone-2009-day-4",
+      "date"     : "2009-06-18 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaOne 2009 Day 3",
+      "tags"     : "JavaOne, JavaOne",
+      "url"      : "/2009/javaone-2009-day-3",
+      "date"     : "2009-06-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaOne 2009 Day 2",
+      "tags"     : "JavaOne",
+      "url"      : "/2009/javaone-2009-day-2",
+      "date"     : "2009-06-04 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaOne 2009 Day 1",
+      "tags"     : "JavaOne, JavaOne",
+      "url"      : "/2009/javaone-2009-day-1",
+      "date"     : "2009-06-03 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "CommunityOne 2009",
+      "tags"     : "JavaOne, JavaOne",
+      "url"      : "/2009/communityone-2009",
+      "date"     : "2009-06-02 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaServer Faces 2.0 Is Final!",
+      "tags"     : "JSF, JCP, Mojarra",
+      "url"      : "/2009/javaserver-faces-20-is-final",
+      "date"     : "2009-05-27 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "FacesTester 0.2 Has Been Released",
+      "tags"     : "FacesTester, JSF, Testing",
+      "url"      : "/2009/facestester-02-has-been-released",
+      "date"     : "2009-05-21 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Making Tables Harder Than They Need To Be",
+      "tags"     : "JSF",
+      "url"      : "/2009/making-tables-harder-than-they-need-to-be",
+      "date"     : "2009-05-13 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "UPDATED: Web Beans Webinar",
+      "tags"     : "Aquarium, JSF, Seam, Web Beans",
+      "url"      : "/2009/web-beans-webinar",
+      "date"     : "2009-05-11 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Mojarra Scales 1.3.1 Has Been Released",
+      "tags"     : "Components, Java, JSF, Kenai, Mojarra, Scales",
+      "url"      : "/2009/mojarra-scales-131-has-been-released",
+      "date"     : "2009-04-21 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Book Review: Practical RichFaces",
+      "tags"     : "Components, JSF, Reviews",
+      "url"      : "/2009/book-review-practical-richfaces",
+      "date"     : "2009-04-21 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "FacesTester Can Now Test State Saving",
+      "tags"     : "FacesTester, JSF, Testing",
+      "url"      : "/2009/facestester-can-now-test-state-saving",
+      "date"     : "2009-04-13 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Happy Easter",
+      "tags"     : "Personal",
+      "url"      : "/2009/happy-easter",
+      "date"     : "2009-04-12 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "The Maven Release Plugin Is Pretty Slick",
+      "tags"     : "Maven",
+      "url"      : "/2009/the-maven-release-plugin-is-pretty-slick",
+      "date"     : "2009-04-01 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "My JSFCentral Interview Has Been Published",
+      "tags"     : "JSF, Mojarra, Scales",
+      "url"      : "/2009/my-jsfcentral-interview-has-been-published",
+      "date"     : "2009-04-01 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "FacesTester 0.1 Released",
+      "tags"     : "Java, JSF, Scales, Testing",
+      "url"      : "/2009/facestester-01-released",
+      "date"     : "2009-04-01 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Webinar: From Ajax Push to JSF 2.0: ICEfaces on GlassFish",
+      "tags"     : "Aquarium, Components, GlassFish, JSF, webinar",
+      "url"      : "/2009/webinar-from-ajax-push-to-jsf-20-icefaces-on-glassfish",
+      "date"     : "2009-03-12 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Announcing FacesTester",
+      "tags"     : "JSF, Kenai, Testing",
+      "url"      : "/2009/announcing-facestester",
+      "date"     : "2009-03-03 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Opinions Wanted: v3 GUI Prototype",
+      "tags"     : "GlassFish",
+      "url"      : "/2009/opinions-wanted-v3-gui-prototype",
+      "date"     : "2009-02-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "What&#039;s Happening In the World of Mojarra Scales?",
+      "tags"     : "GlassFish, JSF, Kenai, Mojarra, Scales",
+      "url"      : "/2009/whats-happening-in-the-world-of-mojarra-scales",
+      "date"     : "2009-02-23 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Another NetBeans Update",
+      "tags"     : "Java, NetBeans",
+      "url"      : "/2009/another-netbeans-update",
+      "date"     : "2009-02-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "NetBeans Program Update - Feb 2009",
+      "tags"     : "NetBeans",
+      "url"      : "/2009/netbeans-program-update-feb-2009",
+      "date"     : "2009-02-11 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Leveraging Identity with GlassFish and MySQL",
+      "tags"     : "GlassFish, identity, MySQL",
+      "url"      : "/2009/leveraging-identity-with-glassfish-and-mysql",
+      "date"     : "2009-02-11 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Webinar Covering GlassFish&#8217;s ASadmin Tool",
+      "tags"     : "Aquarium, GlassFish, webinar",
+      "url"      : "/2009/webinar-covering-glassfishs-asadmin-tool",
+      "date"     : "2009-01-22 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Free JCP Membership for JUGs Through the End of February",
+      "tags"     : "JCP, JUG",
+      "url"      : "/2009/free-jcp-membership-for-jugs-through-the-end-of-february",
+      "date"     : "2009-01-21 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Mojarra Scales Gets a Z-Order Update",
+      "tags"     : "Java, JSF, Scales",
+      "url"      : "/2009/mojarra-scales-gets-a-z-order-update",
+      "date"     : "2009-01-16 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Bootstrapping a JSF 2 project",
+      "tags"     : "JSF, Tutorials",
+      "url"      : "/2009/bootstrapping-a-jsf-2-project",
+      "date"     : "2009-01-12 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "My Thoughts on AT&amp;T U-verse",
+      "tags"     : "General",
+      "url"      : "/2009/my-thoughts-on-att-u-verse",
+      "date"     : "2009-01-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSF 2 Gets Declarative Event Handling",
+      "tags"     : "JSF",
+      "url"      : "/2008/jsf-2-gets-declarative-event-handling",
+      "date"     : "2008-12-23 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Changes Are Coming to the GlassFish Admin Console",
+      "tags"     : "GlassFish",
+      "url"      : "/2008/changes-are-coming-to-the-glassfish-admin-console",
+      "date"     : "2008-12-16 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Interested in Servlet 3.0?",
+      "tags"     : "Java EE, JCP, Servlet",
+      "url"      : "/2008/interested-in-servlet-30",
+      "date"     : "2008-12-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A One-Man JSF 2 Blog Storm",
+      "tags"     : "Components, JSF, Tutorials",
+      "url"      : "/2008/a-one-man-jsf-2-blog-storm",
+      "date"     : "2008-12-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaFX 1.0 Release Set for December 4",
+      "tags"     : "Java, JavaFX",
+      "url"      : "/2008/javafx-10-release-set-for-december-4",
+      "date"     : "2008-12-02 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSF 2.0 Public Review is online",
+      "tags"     : "JSF",
+      "url"      : "/2008/jsf-20-public-review-is-online",
+      "date"     : "2008-12-01 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "NetBeans 6.5, Python Support, and Mac OS X",
+      "tags"     : "NetBeans, Python",
+      "url"      : "/2008/netbeans-65-python-support-and-mac-os-x",
+      "date"     : "2008-11-26 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Seam, WebBeans and GlassFish",
+      "tags"     : "EJB3, GlassFish, JSF, Seam",
+      "url"      : "/2008/seam-webbeans-and-glassfish",
+      "date"     : "2008-11-18 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Making Your GlassFish v3 Prelude Administration Console Plugin Pluggable",
+      "tags"     : "GlassFish, Tutorials, v3",
+      "url"      : "/2008/making-your-glassfish-v3-prelude-administration-console-plugin-pluggable",
+      "date"     : "2008-11-06 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "I&#039;ve made the plunge",
+      "tags"     : "General",
+      "url"      : "/2008/ive-made-the-plunge",
+      "date"     : "2008-11-06 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish Day Online",
+      "tags"     : "GlassFish",
+      "url"      : "/2008/glassfish-day-online",
+      "date"     : "2008-11-06 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Extending the GlassFish v3 Prelude Administration Console",
+      "tags"     : "GlassFish, Java, JSFTemplating, Tutorials, v3",
+      "url"      : "/2008/extending-the-glassfish-v3-prelude-administration-console",
+      "date"     : "2008-11-06 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Not So Late Breaking News",
+      "tags"     : "General, GlassFish",
+      "url"      : "/2008/not-so-late-breaking-news",
+      "date"     : "2008-11-03 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "The Means Stultify the End",
+      "tags"     : "General, JSF",
+      "url"      : "/2008/the-means-stultify-the-end",
+      "date"     : "2008-09-12 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSFOne: Day Two",
+      "tags"     : "Java, JSFOne",
+      "url"      : "/2008/jsfone-day-two",
+      "date"     : "2008-09-06 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSFOne: Day One",
+      "tags"     : "JSFOne",
+      "url"      : "/2008/jsfone-day-one",
+      "date"     : "2008-09-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSFOne Looms!",
+      "tags"     : "Java, JSFOne",
+      "url"      : "/2008/jsfone-looms",
+      "date"     : "2008-08-23 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Maven and Annotations: Not as Easy as It Should Be",
+      "tags"     : "Ant, Java, Maven",
+      "url"      : "/2008/maven-and-annotations-not-as-easy-as-it-should-be",
+      "date"     : "2008-07-11 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Quercus on GlassFish via the Update Center",
+      "tags"     : "GlassFish, Java, PHP, quercus, update center",
+      "url"      : "/2008/quercus-on-glassfish-via-the-update-center",
+      "date"     : "2008-06-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Mojarra Scales 1.0 RC2 is out",
+      "tags"     : "Java, JSF, Mojarra, Scales",
+      "url"      : "/2008/mojarra-scales-10-rc2-is-out",
+      "date"     : "2008-06-23 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish, PHP and WordPress",
+      "tags"     : "GlassFish, Java, PHP, quercus",
+      "url"      : "/2008/glassfish-php-and-wordpress",
+      "date"     : "2008-06-18 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Where will you be the first weekend in September?",
+      "tags"     : "Java, JSF, JSFOne",
+      "url"      : "/2008/where-will-you-be-the-first-weekend-in-september",
+      "date"     : "2008-06-17 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSF 2.0 Early Access Review Available",
+      "tags"     : "Java, JSF",
+      "url"      : "/2008/jsf-20-early-access-review-available",
+      "date"     : "2008-06-03 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Mojarra Scales 1.0 Release Candidate 1",
+      "tags"     : "Components, Java, JSF, JSFTemplating, Scales",
+      "url"      : "/2008/mojarra-scales-10-release-candidate-1",
+      "date"     : "2008-05-27 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaOne 2008: Day 4",
+      "tags"     : "Java, JavaOne",
+      "url"      : "/2008/javaone-2008-day-4",
+      "date"     : "2008-05-10 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaOne 2008: Day 3",
+      "tags"     : "Java, JavaOne",
+      "url"      : "/2008/javaone-2008-day-3",
+      "date"     : "2008-05-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaOne 2008: Day 2",
+      "tags"     : "Java, JavaOne",
+      "url"      : "/2008/javaone-2008-day-2",
+      "date"     : "2008-05-08 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaOne 2008: Day 1",
+      "tags"     : "Java, JavaOne",
+      "url"      : "/2008/javaone-2008-day-1",
+      "date"     : "2008-05-07 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JavaOne on Your Google Calendar",
+      "tags"     : "Java, JavaOne",
+      "url"      : "/2008/javaone-on-your-google-calendar",
+      "date"     : "2008-04-29 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Mojarra Gets Groovy",
+      "tags"     : "Groovy, JSF",
+      "url"      : "/2008/mojarra-gets-groovy",
+      "date"     : "2008-04-17 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Reintroducing the JSFTemplating FileStreamer",
+      "tags"     : "Java, JSF, JSFTemplating, Scales",
+      "url"      : "/2008/reintroducing-the-jsftemplating-filestreamer",
+      "date"     : "2008-03-18 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Web Profile Wackiness",
+      "tags"     : "Java, JSF",
+      "url"      : "/2008/web-profile-wackiness",
+      "date"     : "2008-02-28 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A ValueChangeListener Question and Answer",
+      "tags"     : "JSF, Tutorials",
+      "url"      : "/2008/a-valuechangelistener-question-and-answer",
+      "date"     : "2008-02-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Dependency Management with Ant and Ivy",
+      "tags"     : "Ant, Scales",
+      "url"      : "/2008/dependency-management-with-ant-and-ivy",
+      "date"     : "2008-01-17 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSFTemplating and Woodstock: Component Authoring Made Easy",
+      "tags"     : "JSF, JSFTemplating, Scales",
+      "url"      : "/2008/jsftemplating-and-woodstock-component-authoring-made-easy",
+      "date"     : "2008-01-02 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Announcing Mojarra Scales",
+      "tags"     : "Java, JSF, JSFTemplating, Scales",
+      "url"      : "/2008/announcing-mojarra-scales",
+      "date"     : "2008-01-02 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Announcing Project Mojarra",
+      "tags"     : "JSF",
+      "url"      : "/2007/announcing-project-mojarra",
+      "date"     : "2007-12-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Seam+JPA/Hibernate on OC4J Maven 2 Archetype",
+      "tags"     : "JPA, Maven, OC4J, Seam",
+      "url"      : "/2007/seam-jpa-hibernate-oc4j-maven2-archetype",
+      "date"     : "2007-10-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "OC4J Seam Archetype Update",
+      "tags"     : "JPA, Maven, OC4J, Seam",
+      "url"      : "/2007/oc4j-seam-archetype-update",
+      "date"     : "2007-10-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Seam and JPA/Hibernate on OC4J 10.1.3",
+      "tags"     : "EJB3, Hibernate, JSF, JPA, Maven, OC4J, Seam",
+      "url"      : "/2007/seam-and-jpa-hibernate-on-oc4j-1013",
+      "date"     : "2007-10-17 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Rich Web Experience, Day 3",
+      "tags"     : "General",
+      "url"      : "/2007/rich-web-experience-day-3",
+      "date"     : "2007-09-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Rich Web Experience, Day 2",
+      "tags"     : "General",
+      "url"      : "/2007/rich-web-experience-day-2",
+      "date"     : "2007-09-08 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Rich Web Experience, Day 1",
+      "tags"     : "General",
+      "url"      : "/2007/rich-web-experience-day-1",
+      "date"     : "2007-09-07 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JUGs Offer More Than Free Pizza",
+      "tags"     : "General, Java",
+      "url"      : "/2007/jugs-offer-more-than-free-pizza",
+      "date"     : "2007-08-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Thank you, Sun",
+      "tags"     : "GlassFish, Java",
+      "url"      : "/2007/thank-you-sun",
+      "date"     : "2007-07-31 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Comparing the GlassFish and OC4J Admin Consoles",
+      "tags"     : "GlassFish",
+      "url"      : "/2007/comparing-the-glassfish-and-oc4j-admin-consoles",
+      "date"     : "2007-06-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Another RI Sandbox Progress Report",
+      "tags"     : "Java, JSF",
+      "url"      : "/2007/another-ri-sandbox-progress-report",
+      "date"     : "2007-06-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "RI Sandbox Update:  A Blogging Hat Trick",
+      "tags"     : "JSF",
+      "url"      : "/2007/ri-sandbox-update-a-blogging-hat-trick",
+      "date"     : "2007-06-08 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSFTemplating: Announcing beta support for Facelets templates",
+      "tags"     : "JSFTemplating",
+      "url"      : "/2007/jsftemplating-announcing-beta-support-for-facelets-templates",
+      "date"     : "2007-06-07 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Quick Administrative Note",
+      "tags"     : "General",
+      "url"      : "/2007/a-quick-administrative-note",
+      "date"     : "2007-06-07 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Virtual Hosting using Apache and GlassFish",
+      "tags"     : "GlassFish, Java",
+      "url"      : "/2007/virtual-hosting-using-apache-and-glassfish",
+      "date"     : "2007-05-04 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "TinyMCE Support in the Sandbox",
+      "tags"     : "Java, JSF",
+      "url"      : "/2007/tinymce-support-in-the-sandbox",
+      "date"     : "2007-04-16 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSFTemplating Meets Facelets",
+      "tags"     : "Java, JSF",
+      "url"      : "/2007/jsftemplating-meets-facelets",
+      "date"     : "2007-04-04 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Unit Testing EJBs",
+      "tags"     : "EJB3, Java, Testing",
+      "url"      : "/2007/unit-testing-ejbs",
+      "date"     : "2007-03-27 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "GlassFish Success Stories",
+      "tags"     : "Java",
+      "url"      : "/2007/glassfish-success-stories",
+      "date"     : "2007-03-26 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Site Outage",
+      "tags"     : "General",
+      "url"      : "/2007/site-outage",
+      "date"     : "2007-03-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Using the Woodstock Sortable Table",
+      "tags"     : "Java, JSF, Woodstock",
+      "url"      : "/2007/using-the-woodstock-sortable-table",
+      "date"     : "2007-02-27 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Sandbox Demo and Nightlies Available",
+      "tags"     : "Java, JSF",
+      "url"      : "/2007/sandbox-demo-and-nightlies-available",
+      "date"     : "2007-02-23 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSF RI Sandbox FileDownload Component Changes",
+      "tags"     : "Java, JSF",
+      "url"      : "/2007/jsf-ri-sandbox-filedownload-component-changes",
+      "date"     : "2007-01-11 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Merry Christmas!",
+      "tags"     : "General",
+      "url"      : "/2006/merry-christmas",
+      "date"     : "2006-12-26 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Why CakePHP?",
+      "tags"     : "PHP",
+      "url"      : "/2006/why-cakephp",
+      "date"     : "2006-12-15 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Yahoo! UI and JSF Update",
+      "tags"     : "Java, JSF",
+      "url"      : "/2006/yahoo-ui-and-jsf-update",
+      "date"     : "2006-12-14 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSF Component Writing Check List",
+      "tags"     : "Components, Java, JavaServer Faces, Tutorials",
+      "url"      : "/2006/jsf-component-writing-check-list.ad",
+      "date"     : "2006-12-14 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Download and Multi-file Upload JSF Components",
+      "tags"     : "Java, JSF",
+      "url"      : "/2006/download-and-multi-file-upload-jsf-components",
+      "date"     : "2006-12-07 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Using Acegi Security With JSF",
+      "tags"     : "JSF",
+      "url"      : "/2006/using-acegi-security-with-jsf",
+      "date"     : "2006-11-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Review: Building Ajax JSF Components",
+      "tags"     : "Java, JSF",
+      "url"      : "/2006/review-building-ajax-jsf-components",
+      "date"     : "2006-10-12 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Two 'Quick' Notes",
+      "tags"     : "Java",
+      "url"      : "/2006/two-quick-notes",
+      "date"     : "2006-09-18 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Disappointing Wait",
+      "tags"     : "Java",
+      "url"      : "/2006/a-disappointing-wait",
+      "date"     : "2006-09-01 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSF, PhaseListeners, and GET Requests Redux",
+      "tags"     : "Java, JSF",
+      "url"      : "/2006/jsf-phaselisteners-and-get-requests-redux",
+      "date"     : "2006-08-17 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Debugging jsf-extensions",
+      "tags"     : "Java, JSF",
+      "url"      : "/2006/debugging-jsf-extensions",
+      "date"     : "2006-07-28 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Ajaxifiying JSF",
+      "tags"     : "Java, JSF",
+      "url"      : "/2006/ajaxifiying-jsf",
+      "date"     : "2006-07-27 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "The Tyranny of Choice",
+      "tags"     : "Java",
+      "url"      : "/2006/the-tyranny-of-choice",
+      "date"     : "2006-06-08 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "The Front Porch Test",
+      "tags"     : "General",
+      "url"      : "/2006/the-front-porch-test",
+      "date"     : "2006-06-07 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Yahoo! UI Meets JavaServer Faces",
+      "tags"     : "Java, JSF",
+      "url"      : "/2006/yahoo-ui-meets-javaserver-faces",
+      "date"     : "2006-05-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Little Less Spring in Our Step?",
+      "tags"     : "Java",
+      "url"      : "/2006/a-little-less-spring-in-our-step",
+      "date"     : "2006-05-22 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "SOAP to slsb",
+      "tags"     : "Java",
+      "url"      : "/2006/soap-to-slsb",
+      "date"     : "2006-05-09 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "FacesUtil:  A missing, yet important piece",
+      "tags"     : "JSF",
+      "url"      : "/2006/facesutil-a-missing-yet-important-piece",
+      "date"     : "2006-05-08 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "Embedding JSF with Winstone",
+      "tags"     : "JSF",
+      "url"      : "/2006/embedding-jsf-with-winstone",
+      "date"     : "2006-05-08 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSF, PhaseListeners, and GET Requests",
+      "tags"     : "JSF",
+      "url"      : "/2006/jsf-phaselisteners-and-get-requests",
+      "date"     : "2006-04-25 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "MyEclipse and GlassFish",
+      "tags"     : "Java",
+      "url"      : "/2006/myeclipse-and-glassfish",
+      "date"     : "2006-04-21 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "New Blog Site",
+      "tags"     : "",
+      "url"      : "/2006/new-blog-site",
+      "date"     : "2006-04-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JIRA and GlassFish",
+      "tags"     : "Java",
+      "url"      : "/2006/jira-and-glassfish",
+      "date"     : "2006-04-19 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSF and Annotations",
+      "tags"     : "JSF",
+      "url"      : "/2006/jsf-and-annotations",
+      "date"     : "2006-04-14 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSF and File Downloads, Take Two",
+      "tags"     : "JSF",
+      "url"      : "/2006/jsf-and-file-downloads-take-two",
+      "date"     : "2006-04-05 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "JSF and File Downloads",
+      "tags"     : "JSF",
+      "url"      : "/2006/jsf-and-file-downloads",
+      "date"     : "2006-04-04 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "A Java-based 'Playground' App",
+      "tags"     : "Java",
+      "url"      : "/2005/a-java-based-playground-app",
+      "date"     : "2005-07-06 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "There has to be a decent ORM for PHP",
+      "tags"     : "PHP",
+      "url"      : "/2005/there-has-to-be-a-decent-orm-for-php",
+      "date"     : "2005-04-13 00:00:00 +0000"
+    } ,
+  
+    {
+      "title"    : "To PHP or not to PHP&#8230;&#8203;",
+      "tags"     : "Java, PHP",
+      "url"      : "/2005/to-php-or-not-to-php",
+      "date"     : "2005-03-28 00:00:00 +0000"
+    } 
+  
+  ,
+  
+   {
+     
+        "title"    : "About",
+        "tags"     : "",
+        "url"      : "/about.html",
+        "date"     : "2013-11-04"
+     
+   } ,
+  
+   {
+     
+   } ,
+  
+   {
+     
+   } ,
+  
+   {
+     
+        "title"    : "Presentations",
+        "tags"     : "",
+        "url"      : "/presentations/",
+        "date"     : "2018-09-11"
+     
+   } ,
+  
+   {
+     
+        "title"    : "Tags",
+        "tags"     : "",
+        "url"      : "/tag/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+   } ,
+  
+   {
+     
+        "title"    : "Projects",
+        "tags"     : "",
+        "url"      : "/projects.html",
+        "date"     : "2013-11-04"
+     
+   } ,
+  
+   {
+     
+        "title"    : "Asciidoc Feed",
+        "tags"     : "",
+        "url"      : "/redhat.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+   } ,
+  
+   {
+     
+   } ,
+  
+   {
+     
+        "title"    : "Java",
+        "tags"     : "",
+        "url"      : "/tag/java/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "PHP",
+        "tags"     : "",
+        "url"      : "/tag/php/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JSF",
+        "tags"     : "",
+        "url"      : "/tag/jsf/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "General",
+        "tags"     : "",
+        "url"      : "/tag/general/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Components",
+        "tags"     : "",
+        "url"      : "/tag/components/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JavaServer Faces",
+        "tags"     : "",
+        "url"      : "/tag/javaserver-faces/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Tutorials",
+        "tags"     : "",
+        "url"      : "/tag/tutorials/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Woodstock",
+        "tags"     : "",
+        "url"      : "/tag/woodstock/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "EJB3",
+        "tags"     : "",
+        "url"      : "/tag/ejb3/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Testing",
+        "tags"     : "",
+        "url"      : "/tag/testing/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "GlassFish",
+        "tags"     : "",
+        "url"      : "/tag/glassfish/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JSFTemplating",
+        "tags"     : "",
+        "url"      : "/tag/jsftemplating/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Hibernate",
+        "tags"     : "",
+        "url"      : "/tag/hibernate/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JPA",
+        "tags"     : "",
+        "url"      : "/tag/jpa/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Maven",
+        "tags"     : "",
+        "url"      : "/tag/maven/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "OC4J",
+        "tags"     : "",
+        "url"      : "/tag/oc4j/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Seam",
+        "tags"     : "",
+        "url"      : "/tag/seam/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Scales",
+        "tags"     : "",
+        "url"      : "/tag/scales/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Ant",
+        "tags"     : "",
+        "url"      : "/tag/ant/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Groovy",
+        "tags"     : "",
+        "url"      : "/tag/groovy/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JavaOne",
+        "tags"     : "",
+        "url"      : "/tag/javaone/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JSFOne",
+        "tags"     : "",
+        "url"      : "/tag/jsfone/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "quercus",
+        "tags"     : "",
+        "url"      : "/tag/quercus/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Mojarra",
+        "tags"     : "",
+        "url"      : "/tag/mojarra/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "update center",
+        "tags"     : "",
+        "url"      : "/tag/update-center/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "v3",
+        "tags"     : "",
+        "url"      : "/tag/v3/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "NetBeans",
+        "tags"     : "",
+        "url"      : "/tag/netbeans/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Python",
+        "tags"     : "",
+        "url"      : "/tag/python/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JavaFX",
+        "tags"     : "",
+        "url"      : "/tag/javafx/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Java EE",
+        "tags"     : "",
+        "url"      : "/tag/java-ee/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JCP",
+        "tags"     : "",
+        "url"      : "/tag/jcp/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Servlet",
+        "tags"     : "",
+        "url"      : "/tag/servlet/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JUG",
+        "tags"     : "",
+        "url"      : "/tag/jug/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Aquarium",
+        "tags"     : "",
+        "url"      : "/tag/aquarium/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "webinar",
+        "tags"     : "",
+        "url"      : "/tag/webinar/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "identity",
+        "tags"     : "",
+        "url"      : "/tag/identity/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "MySQL",
+        "tags"     : "",
+        "url"      : "/tag/mysql/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Kenai",
+        "tags"     : "",
+        "url"      : "/tag/kenai/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Personal",
+        "tags"     : "",
+        "url"      : "/tag/personal/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "FacesTester",
+        "tags"     : "",
+        "url"      : "/tag/facestester/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Reviews",
+        "tags"     : "",
+        "url"      : "/tag/reviews/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Web Beans",
+        "tags"     : "",
+        "url"      : "/tag/web-beans/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "ajax",
+        "tags"     : "",
+        "url"      : "/tag/ajax/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Android",
+        "tags"     : "",
+        "url"      : "/tag/android/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Gentoo",
+        "tags"     : "",
+        "url"      : "/tag/gentoo/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Linux",
+        "tags"     : "",
+        "url"      : "/tag/linux/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "administration",
+        "tags"     : "",
+        "url"      : "/tag/administration/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "json",
+        "tags"     : "",
+        "url"      : "/tag/json/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "REST",
+        "tags"     : "",
+        "url"      : "/tag/rest/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "xml",
+        "tags"     : "",
+        "url"      : "/tag/xml/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JUnit",
+        "tags"     : "",
+        "url"      : "/tag/junit/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Bash",
+        "tags"     : "",
+        "url"      : "/tag/bash/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "CVS",
+        "tags"     : "",
+        "url"      : "/tag/cvs/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Git",
+        "tags"     : "",
+        "url"      : "/tag/git/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "hg",
+        "tags"     : "",
+        "url"      : "/tag/hg/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Prompt",
+        "tags"     : "",
+        "url"      : "/tag/prompt/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "SCM",
+        "tags"     : "",
+        "url"      : "/tag/scm/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "SVN",
+        "tags"     : "",
+        "url"      : "/tag/svn/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Scala",
+        "tags"     : "",
+        "url"      : "/tag/scala/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JMS",
+        "tags"     : "",
+        "url"      : "/tag/jms/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "monitoring",
+        "tags"     : "",
+        "url"      : "/tag/monitoring/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Misc",
+        "tags"     : "",
+        "url"      : "/tag/misc/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "VirtualBox",
+        "tags"     : "",
+        "url"      : "/tag/virtualbox/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Christmas",
+        "tags"     : "",
+        "url"      : "/tag/christmas/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Selenium",
+        "tags"     : "",
+        "url"      : "/tag/selenium/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JAX-RS",
+        "tags"     : "",
+        "url"      : "/tag/jax-rs/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Jersey",
+        "tags"     : "",
+        "url"      : "/tag/jersey/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "CDI",
+        "tags"     : "",
+        "url"      : "/tag/cdi/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "OKCJUG",
+        "tags"     : "",
+        "url"      : "/tag/okcjug/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Mac",
+        "tags"     : "",
+        "url"      : "/tag/mac/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "OS X",
+        "tags"     : "",
+        "url"      : "/tag/os-x/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Ubuntu",
+        "tags"     : "",
+        "url"      : "/tag/ubuntu/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Unity",
+        "tags"     : "",
+        "url"      : "/tag/unity/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Firefox",
+        "tags"     : "",
+        "url"      : "/tag/firefox/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "plugin",
+        "tags"     : "",
+        "url"      : "/tag/plugin/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "AsciiDoc",
+        "tags"     : "",
+        "url"      : "/tag/asciidoc/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Awestruct",
+        "tags"     : "",
+        "url"      : "/tag/awestruct/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "backup",
+        "tags"     : "",
+        "url"      : "/tag/backup/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "OAuth2",
+        "tags"     : "",
+        "url"      : "/tag/oauth2/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Arquillian",
+        "tags"     : "",
+        "url"      : "/tag/arquillian/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Droidium",
+        "tags"     : "",
+        "url"      : "/tag/droidium/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Gradle",
+        "tags"     : "",
+        "url"      : "/tag/gradle/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JavaMail",
+        "tags"     : "",
+        "url"      : "/tag/javamail/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Ceylon",
+        "tags"     : "",
+        "url"      : "/tag/ceylon/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "CLI",
+        "tags"     : "",
+        "url"      : "/tag/cli/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Bitbucket",
+        "tags"     : "",
+        "url"      : "/tag/bitbucket/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Jenkins",
+        "tags"     : "",
+        "url"      : "/tag/jenkins/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "CI",
+        "tags"     : "",
+        "url"      : "/tag/ci/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "HTML5",
+        "tags"     : "",
+        "url"      : "/tag/html5/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Weld",
+        "tags"     : "",
+        "url"      : "/tag/weld/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "database",
+        "tags"     : "",
+        "url"      : "/tag/database/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "PostgreSQL",
+        "tags"     : "",
+        "url"      : "/tag/postgresql/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "multitenancy",
+        "tags"     : "",
+        "url"      : "/tag/multitenancy/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Docker",
+        "tags"     : "",
+        "url"      : "/tag/docker/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Minecraft",
+        "tags"     : "",
+        "url"      : "/tag/minecraft/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Kotlin",
+        "tags"     : "",
+        "url"      : "/tag/kotlin/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Book",
+        "tags"     : "",
+        "url"      : "/tag/book/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Packt",
+        "tags"     : "",
+        "url"      : "/tag/packt/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Swagger",
+        "tags"     : "",
+        "url"      : "/tag/swagger/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Java 9",
+        "tags"     : "",
+        "url"      : "/tag/java-9/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Java 8",
+        "tags"     : "",
+        "url"      : "/tag/java-8/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Roku",
+        "tags"     : "",
+        "url"      : "/tag/roku/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "TurboVision",
+        "tags"     : "",
+        "url"      : "/tag/turbovision/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "MicroProfile",
+        "tags"     : "",
+        "url"      : "/tag/microprofile/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Micronaut",
+        "tags"     : "",
+        "url"      : "/tag/micronaut/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "IDEA",
+        "tags"     : "",
+        "url"      : "/tag/idea/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JWT",
+        "tags"     : "",
+        "url"      : "/tag/jwt/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JDK",
+        "tags"     : "",
+        "url"      : "/tag/jdk/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "SQL",
+        "tags"     : "",
+        "url"      : "/tag/sql/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "H2",
+        "tags"     : "",
+        "url"      : "/tag/h2/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Spring",
+        "tags"     : "",
+        "url"      : "/tag/spring/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Flyway",
+        "tags"     : "",
+        "url"      : "/tag/flyway/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Mock",
+        "tags"     : "",
+        "url"      : "/tag/mock/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "jOOQ",
+        "tags"     : "",
+        "url"      : "/tag/jooq/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Spring Boot",
+        "tags"     : "",
+        "url"      : "/tag/spring-boot/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JCommander",
+        "tags"     : "",
+        "url"      : "/tag/jcommander/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Quarkus",
+        "tags"     : "",
+        "url"      : "/tag/quarkus/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Keycloak",
+        "tags"     : "",
+        "url"      : "/tag/keycloak/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Wiremock",
+        "tags"     : "",
+        "url"      : "/tag/wiremock/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Fault Tolerance",
+        "tags"     : "",
+        "url"      : "/tag/fault-tolerance/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Jakarta EE",
+        "tags"     : "",
+        "url"      : "/tag/jakarta-ee/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "WildFly",
+        "tags"     : "",
+        "url"      : "/tag/wildfly/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "OpenTelemetry",
+        "tags"     : "",
+        "url"      : "/tag/opentelemetry/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Microservices",
+        "tags"     : "",
+        "url"      : "/tag/microservices/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Micrometer",
+        "tags"     : "",
+        "url"      : "/tag/micrometer/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Testcontainers",
+        "tags"     : "",
+        "url"      : "/tag/testcontainers/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Kafka",
+        "tags"     : "",
+        "url"      : "/tag/kafka/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Jakarta Faces",
+        "tags"     : "",
+        "url"      : "/tag/jakarta-faces/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "JavaScript",
+        "tags"     : "",
+        "url"      : "/tag/javascript/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Getting Started",
+        "tags"     : "",
+        "url"      : "/tag/getting-started/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Kotlin Multiplatform",
+        "tags"     : "",
+        "url"      : "/tag/kotlin-multiplatform/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Coil",
+        "tags"     : "",
+        "url"      : "/tag/coil/",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home",
+        "tags"     : "",
+        "url"      : "/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 2",
+        "tags"     : "",
+        "url"      : "/page/2/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 3",
+        "tags"     : "",
+        "url"      : "/page/3/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 4",
+        "tags"     : "",
+        "url"      : "/page/4/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 5",
+        "tags"     : "",
+        "url"      : "/page/5/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 6",
+        "tags"     : "",
+        "url"      : "/page/6/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 7",
+        "tags"     : "",
+        "url"      : "/page/7/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 8",
+        "tags"     : "",
+        "url"      : "/page/8/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 9",
+        "tags"     : "",
+        "url"      : "/page/9/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 10",
+        "tags"     : "",
+        "url"      : "/page/10/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 11",
+        "tags"     : "",
+        "url"      : "/page/11/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 12",
+        "tags"     : "",
+        "url"      : "/page/12/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 13",
+        "tags"     : "",
+        "url"      : "/page/13/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 14",
+        "tags"     : "",
+        "url"      : "/page/14/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 15",
+        "tags"     : "",
+        "url"      : "/page/15/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 16",
+        "tags"     : "",
+        "url"      : "/page/16/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 17",
+        "tags"     : "",
+        "url"      : "/page/17/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 18",
+        "tags"     : "",
+        "url"      : "/page/18/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 19",
+        "tags"     : "",
+        "url"      : "/page/19/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 20",
+        "tags"     : "",
+        "url"      : "/page/20/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 21",
+        "tags"     : "",
+        "url"      : "/page/21/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 22",
+        "tags"     : "",
+        "url"      : "/page/22/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 23",
+        "tags"     : "",
+        "url"      : "/page/23/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 24",
+        "tags"     : "",
+        "url"      : "/page/24/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 25",
+        "tags"     : "",
+        "url"      : "/page/25/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 26",
+        "tags"     : "",
+        "url"      : "/page/26/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 27",
+        "tags"     : "",
+        "url"      : "/page/27/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 28",
+        "tags"     : "",
+        "url"      : "/page/28/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 29",
+        "tags"     : "",
+        "url"      : "/page/29/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 30",
+        "tags"     : "",
+        "url"      : "/page/30/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 31",
+        "tags"     : "",
+        "url"      : "/page/31/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+        "title"    : "Home - page 32",
+        "tags"     : "",
+        "url"      : "/page/32/index.html",
+        "date"     : ""
+     
+   } ,
+  
+   {
+     
+   } 
+  
+]

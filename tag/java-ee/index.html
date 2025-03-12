@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : Java EE</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            
+
+<h1>2018</h1>
+
+
+
+<h2>October</h2>
+<ul>
+    
+    <li>
+        <a href="/2018/getting-started-with-eclipse-microprofile-part-8-conclusion">Getting Started with Eclipse MicroProfile, Part 8: The Conclusion</a>
+        <div><div class="paragraph">
+<p>Many times, one of the hardest parts of getting started with a particular piece of technology is figuring out how to get
+started. :) In this series, I&#8217;ve used an <em>extremely</em> simple project to show how to do just that with a number of MicroProfile
+implementations. Obviously, a real application will have many more concerns than we dealt with in this application, but
+what this effort gave us is working, runnable, and  testable build for six different MicroProfile implementations. What
+I&#8217;d like to do in this final installment in the series, is give some closing thoughts.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2018/getting-started-with-eclipse-microprofile-part-7-helidon">Getting Started with Eclipse MicroProfile, Part 7: Helidon</a>
+        <div><div class="paragraph">
+<p>Up next in our series comes an offering from, to me, a somewhat surprising source, Oracle, and that offering is
+<a href="https://helidon.io/">Helidon</a>. I first heard about in
+<a href="https://medium.com/oracledevs/helidon-takes-flight-fb7e9e390e9c">September 2018</a>, and while it&#8217;s still pre-1.0, it
+looks extremely promising.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2018/getting-started-with-eclipse-microprofile-part-6-hammock">Getting Started with Eclipse MicroProfile, Part 6: Hammock</a>
+        <div><div class="paragraph">
+<p>This time around, we&#8217;re going to start looking at a slightly different take on MicroProfile implemenations. Whereas
+Payara Micro, Thorntail, OpenLibery, and TomEE are all based on application servers (albeit stripped down versions), our
+implementation in this post, <a href="https://hammock-project.github.io/">Hammock</a>, is based on a CDI container. Rather than start
+what amounts to an app server under which a web is deployed, we&#8217;ll be spinning up a plain ol' CDI container, which will
+look for CDI beans to load/start/etc. That may sound weird, and I may not be describing it clearly, so let&#8217;s just jump in
+to the code and take a look.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2018/getting-started-with-eclipse-microprofile-part-5-tomee">Getting Started with Eclipse MicroProfile, Part 5: TomEE</a>
+        <div><div class="paragraph">
+<p>In this installment of our series, we&#8217;re going to take a look at the last of what I think of as the more traditional,
+app-server-based/-spawned implementations, <a href="http://tomee.apache.org">TomEE</a>. TomEE is a fully Java EE-enabled distribution
+of the venerable workhorse Tomcat, and comes with support for creating MicroProfile applications, so let&#8217;s see what that
+looks like.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2018/getting-started-with-eclipse-microprofile-part-4-openliberty">Getting Started with Eclipse MicroProfile, Part 4: OpenLiberty</a>
+        <div><div class="paragraph">
+<p>Having looked at <a href="/posts/2018/getting-started-with-eclipse-microprofile-part-3-thorntail.html">Thorntail</a> last time,
+we&#8217;ll take a look at <a href="http://openliberty.io">OpenLiberty</a> this time. OpenLiberty is the open source project
+under which, as I understand the state of things, IBM&#8217;s WebSphere Liberty is developed. In this installment, we&#8217;ll
+give its MicroProfile support a quick spin.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2018/getting-started-with-eclipse-microprofile-part-3-thorntail">Getting Started with Eclipse MicroProfile, Part 3: Thorntail</a>
+        <div><div class="paragraph">
+<p>In the last <a href="/posts/2018/getting-started-with-eclipse-microprofile-part-2-payara-micro.html">installment</a>, we talked about
+Payara Micro. In this, we&#8217;re going to look at <a href="https://thorntail.io/">Thorntail</a>. Thorntail, née WildFly Swarm, is based
+on WildFly from Red Hat and is said to be "just enough app-server". Much like Payara Micro, Thorntail exposes a
+battle-tested application server platform, stripped down for microservices usage. Let&#8217;s a take a look at what it takes
+to deploy our application on Thorntail.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2018/getting-started-with-eclipse-microprofile-part-2-payara-micro">Getting Started with Eclipse MicroProfile, Part 2: Payara Micro</a>
+        <div><div class="paragraph">
+<p><a href="http://payara.fish/software/payara-server/payara-micro/">Payara Micro</a> is a MicroProfile implementation from the good folks at Payara, based on Payara Server, which is itself
+based on GlassFish. Whew! If you&#8217;re familiar with either GlassFish or Payara, you should feel right at home with Payara
+Micro.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2018/getting-started-with-eclipse-microprofile-part-1-the-app">Getting Started with Eclipse MicroProfile, Part 1: the Application</a>
+        <div><div class="paragraph">
+<p>To start our investigation, we need an application to work with. Part of the problem with getting started
+applications is making sure that your example is complicated enough to be interesting, but not so complicated that
+the greater message is lost in the details of the app. MicroProfile 2.0 is made up of a number of components:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>MicroProfile Config 1.3</p>
+</li>
+<li>
+<p>MicroProfile Fault Tolerance 1.1</p>
+</li>
+<li>
+<p>MicroProfile Health Check 1.0</p>
+</li>
+<li>
+<p>MicroProfile JWT Authentication 1.1</p>
+</li>
+<li>
+<p>MicroProfile Metrics 1.1</p>
+</li>
+<li>
+<p>MicroProfile OpenAPI 1.0</p>
+</li>
+<li>
+<p>MicroProfile OpenTracing 1.1</p>
+</li>
+<li>
+<p>MicroProfile Rest Client 1.1</p>
+</li>
+<li>
+<p>CDI 2.0</p>
+</li>
+<li>
+<p>Common Annotations 1.3</p>
+</li>
+<li>
+<p>JAX-RS 2.1</p>
+</li>
+<li>
+<p>JSON-B 1.0</p>
+</li>
+<li>
+<p>JSON-P 1.1</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To include <strong>all</strong> of those in this would probably be a bit too much technical weight for a getting started effort, so,
+for this example, I&#8217;ve leaned (probably too far) toward simple. Our application will have a single JAX-RS resource, into
+which is injected a single CDI bean. The point is to have a working REST endpoint, with an inject "service layer", to show
+a MicroProfile in action, allowing us to verify that our basic environment is configured and working correctly. From there
+you are free to load on all the complexity you find you need. That&#8217;s exactly what I&#8217;ll be doing in a separate project. :)</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2018/getting-started-with-eclipse-microprofile-part-0">Getting Started with Eclipse MicroProfile, Part 0</a>
+        <div><div class="paragraph">
+<p><span class="image right"><img src="/images/2018/microprofile_logo.jpg" alt="microprofile logo"></span>
+The <a href="http://microprofile.io">Eclipse MicroProfile</a> is a community-driven profile initially developed by Red Hat, IBM,
+TomiTribe, Payara and the London Java Community (LJC).
+<a href="https://microprofile.io/2016/06/29/announcing-java-ee-microprofile/">Launched in 2016</a>, it was intended to sit alongside
+Java EE&#8217;s Web and Full profiles, offering Java EE developers a smaller, lighter set of standards with which they could
+build microservices. Today, MicroProfile lives as an Eclipse project, and is being supported and actively developed by
+its creators as well as many more, including both corporations and individuals, giving us an embarassment of riches, if
+you will, when it comes to implementations.</p>
+</div>
+<div class="paragraph">
+<p>By my count, there are at least 6 implementations from which to choose,
+leading to the question: Which one do I choose? While there are many aspects that factor in to such a decision, it is not
+my intent here to answer those questions. Rather, what I&#8217;d like to do is provided some small "getting started" projects
+to help you kick off your own investigation. With that in mind, here are the implementations (in no particular order)
+that we&#8217;re going to look at:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://payara.fish/software/payara-server/payara-micro/">Payara Micro</a></p>
+</li>
+<li>
+<p><a href="https://thorntail.io/">Thorntail</a></p>
+</li>
+<li>
+<p><a href="https://openliberty.io/">OpenLiberty</a></p>
+</li>
+<li>
+<p><a href="http://tomee.apache.org/apache-tomee.html">Apache TomEE</a></p>
+</li>
+<li>
+<p><a href="https://hammock-project.github.io/">Hammock</a></p>
+</li>
+<li>
+<p><a href="https://helidon.io/">Helidon</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In <a href="/posts/2018/getting-started-with-eclipse-microprofile-part-1-the-app.html">Part 1</a>, we&#8217;ll cover the (admittedly absurdly basic) application, and in subsequent parts, we&#8217;ll see what it takes
+to deploy that application using each of these MicroProfile implementations.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2014</h1>
+
+
+
+<h2>October</h2>
+<ul>
+    
+    <li>
+        <a href="/2014/book-review-restful-java-patterns-and-best-practices">Book Review: RESTful Java Patterns and Best Practices</a>
+        <div><div class="paragraph">
+<p>I recently received a copy of <a href="https://www.packtpub.com/web-development/restful-java-patterns-and-best-practices">RESTful Java Patterns and Best Practices</a>, by Bhakti Mehta for review. Here are my thoughts on the book.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2014/contract-first-with-raml">Contract-First REST APIs with RAML</a>
+        <div><div class="paragraph">
+<p>Yesterday, at the <a href="http://okcjug.org">OKC JUG</a>, I presented on the topic of Contract-first REST API development with RAML. This post is a rough blogification of that discussion. For those of you who were at the meeting, the preamble to the source demo (introduction, background, options discussion, etc) have been not been reproduced here.</p>
+</div>
+<div class="paragraph">
+<p><strong>tl;dr</strong>: You can find the demo source <a href="https://bitbucket.org/jdlee/raml-demo">here</a> and play around with it.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>August</h2>
+<ul>
+    
+    <li>
+        <a href="/2014/can-i-use-dropwizard-for-this">Can I Use Dropwizard for This?</a>
+        <div><div class="paragraph">
+<p>I&#8217;ve been toying with using DropWizard as my&#8230;&#8203; deployment platform for a personal project, but I need/want JAX-RS 2 and CDI, which is a problem for the the stable DW. There is a branch that is migrating to JAX-RS 2 (and Jersey 2.9), and it sort of works, but trying a simple injection is causing a failure I can&#8217;t quite figure out:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Caused by: A MultiException has 1 exceptions.  They are:
+1. org.glassfish.hk2.api.UnsatisfiedDependencyException: There was no object available for injection at Injectee(requiredType=SayHelloService,parent=HelloWorldResource,qualifiers={}),position=-1,optional=false,self=false,unqualified=null,288169102)
+
+    at org.jvnet.hk2.internal.ThreeThirtyResolver.resolve(ThreeThirtyResolver.java:74)
+    at org.jvnet.hk2.internal.Utilities.justInject(Utilities.java:838)
+    at org.jvnet.hk2.internal.ServiceLocatorImpl.inject(ServiceLocatorImpl.java:890)
+    at org.jvnet.hk2.internal.ServiceLocatorImpl.inject(ServiceLocatorImpl.java:880)
+    at org.glassfish.jersey.server.ApplicationHandler.initialize(ApplicationHandler.java:517)
+    at org.glassfish.jersey.server.ApplicationHandler.access$500(ApplicationHandler.java:163)
+    at org.glassfish.jersey.server.ApplicationHandler$3.run(ApplicationHandler.java:323)
+    at org.glassfish.jersey.internal.Errors$2.call(Errors.java:289)
+    at org.glassfish.jersey.internal.Errors$2.call(Errors.java:286)
+    at org.glassfish.jersey.internal.Errors.process(Errors.java:315)
+    at org.glassfish.jersey.internal.Errors.process(Errors.java:297)
+    at org.glassfish.jersey.internal.Errors.processWithException(Errors.java:286)
+    at org.glassfish.jersey.server.ApplicationHandler.&lt;init&gt;(ApplicationHandler.java:320)
+    at org.glassfish.jersey.server.ApplicationHandler.&lt;init&gt;(ApplicationHandler.java:285)
+    at org.glassfish.jersey.servlet.WebComponent.&lt;init&gt;(WebComponent.java:310)
+    at org.glassfish.jersey.servlet.ServletContainer.init(ServletContainer.java:170)
+    at org.glassfish.jersey.servlet.ServletContainer.init(ServletContainer.java:358)
+    at javax.servlet.GenericServlet.init(GenericServlet.java:244)
+    at org.eclipse.jetty.servlet.ServletHolder.initServlet(ServletHolder.java:540)
+    ... 36 more
+Caused by: org.glassfish.hk2.api.UnsatisfiedDependencyException: There was no object available for injection at Injectee(requiredType=SayHelloService,parent=HelloWorldResource,qualifiers={}),position=-1,optional=false,self=false,unqualified=null,288169102)
+    ... 55 more</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If I create the Weld runtime and request the beans specifically, I get to good objects (instances of both A and B, with B having an injected instance of A), but once I tell DW to fire things, the app dies:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="java"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+</pre></td><td class="code"><pre>        <span style="color: #953800">Weld</span> <span style="color: #24292f;background-color: #f6f8fa">weld</span> <span style="color: #0550ae">=</span> <span style="color: #cf222e">new</span> <span style="color: #953800">Weld</span><span style="color: #0550ae">();</span>
+        <span style="color: #953800">WeldContainer</span> <span style="color: #24292f;background-color: #f6f8fa">container</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">weld</span><span style="color: #0550ae">.</span><span style="color: #116329">initialize</span><span style="color: #0550ae">();</span>
+        <span style="color: #24292f;background-color: #f6f8fa">container</span><span style="color: #0550ae">.</span><span style="color: #116329">instance</span><span style="color: #0550ae">().</span><span style="color: #116329">select</span><span style="color: #0550ae">(</span><span style="color: #953800">SayHelloService</span><span style="color: #0550ae">.</span><span style="color: #116329">class</span><span style="color: #0550ae">).</span><span style="color: #116329">get</span><span style="color: #0550ae">();</span>
+        <span style="color: #953800">SayHelloService</span> <span style="color: #24292f;background-color: #f6f8fa">service</span> <span style="color: #0550ae">=</span> <span style="color: #953800">WeldContext</span><span style="color: #0550ae">.</span><span style="color: #116329">INSTANCE</span><span style="color: #0550ae">.</span><span style="color: #116329">getBean</span><span style="color: #0550ae">(</span><span style="color: #953800">SayHelloService</span><span style="color: #0550ae">.</span><span style="color: #116329">class</span><span style="color: #0550ae">);</span>
+        <span style="color: #cf222e">final</span> <span style="color: #953800">HelloWorldResource</span> <span style="color: #24292f;background-color: #f6f8fa">resource</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">container</span><span style="color: #0550ae">.</span><span style="color: #116329">instance</span><span style="color: #0550ae">().</span><span style="color: #116329">select</span><span style="color: #0550ae">(</span><span style="color: #953800">HelloWorldResource</span><span style="color: #0550ae">.</span><span style="color: #116329">class</span><span style="color: #0550ae">).</span><span style="color: #116329">get</span><span style="color: #0550ae">();</span>
+        <span style="color: #24292f;background-color: #f6f8fa">resource</span><span style="color: #0550ae">.</span><span style="color: #116329">setTemplate</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">configuration</span><span style="color: #0550ae">.</span><span style="color: #116329">getTemplate</span><span style="color: #0550ae">());</span>
+        <span style="color: #24292f;background-color: #f6f8fa">resource</span><span style="color: #0550ae">.</span><span style="color: #116329">setDefaultName</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">configuration</span><span style="color: #0550ae">.</span><span style="color: #116329">getDefaultName</span><span style="color: #0550ae">());</span>
+
+        <span style="color: #cf222e">final</span> <span style="color: #953800">TemplateHealthCheck</span> <span style="color: #24292f;background-color: #f6f8fa">healthCheck</span>
+                <span style="color: #0550ae">=</span> <span style="color: #cf222e">new</span> <span style="color: #953800">TemplateHealthCheck</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">configuration</span><span style="color: #0550ae">.</span><span style="color: #116329">getTemplate</span><span style="color: #0550ae">());</span>
+        <span style="color: #24292f;background-color: #f6f8fa">environment</span><span style="color: #0550ae">.</span><span style="color: #116329">healthChecks</span><span style="color: #0550ae">().</span><span style="color: #116329">register</span><span style="color: #0550ae">(</span><span style="color: #0a3069">"template"</span><span style="color: #0550ae">,</span> <span style="color: #24292f;background-color: #f6f8fa">healthCheck</span><span style="color: #0550ae">);</span>
+        <span style="color: #24292f;background-color: #f6f8fa">environment</span><span style="color: #0550ae">.</span><span style="color: #116329">jersey</span><span style="color: #0550ae">().</span><span style="color: #116329">register</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">resource</span><span style="color: #0550ae">);</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It seems, then, my deployment environment will be, at least for now, a Java EE app server. They&#8217;re small enough these days that it really shouldn&#8217;t matter. I was just curious to see if DW might be viable for me, and it appears that the answer is "not yet".</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll check back later.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>May</h2>
+<ul>
+    
+    <li>
+        <a href="/2014/file-uploads-with-jax-rs-2">File Uploads with JAX-RS 2</a>
+        <div><div class="paragraph">
+<p>If you search for how to upload a file to a JAX-RS 2 endpoint, most suggestions will point you to implementation-specific approaches. While that works, it defeats one of the purposes of a spec: portability. There are some posts out there that will point you in the right direction, though. What I&#8217;ll do here, then, is present a clear, portable solution to the problem.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>March</h2>
+<ul>
+    
+    <li>
+        <a href="/2014/book-review-java-ee-and-html5-enterprise-application-development">Book Review: Java EE and HTML5 Enterprise Application Development</a>
+        <div><div class="paragraph">
+<p>I was recently sent a copy of <a href="http://www.amazon.com/gp/product/0071823093/ref=as_li_ss_tl?ie=UTF8&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0071823093&amp;linkCode=as2&amp;tag=coupfoai0f-20"><em>Java EE and HTML5 Enterprise Application Development</em></a>
+by <a href="https://twitter.com/peppertech">John Brock</a>, <a href="https://twitter.com/arungupta">Arun Gupta</a>, and <a href="https://twitter.com/GeertjanW">Geertjan Wielenga</a>. This is my review of the book.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2013</h1>
+
+
+
+<h2>September</h2>
+<ul>
+    
+    <li>
+        <a href="/2013/book-review-beginning-java-ee-7">Book Review: Beginning Java EE 7</a>
+        <div><div class="paragraph">
+<p>Java Champion and JUG leader <a href="https://twitter.com/agoncal">Antonio Goncalves</a> recently released his third book on Java EE, <a href="http://www.amazon.com/gp/product/143024626X/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=143024626X&amp;linkCode=as2&amp;tag=antgonblo-20">Beginning Java EE 7</a>. Just from the title and the table of contents, it&#8217;s clear that Antonio set a very ambitious goal for this book, and I think he delivered what he promised.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>August</h2>
+<ul>
+    
+    <li>
+        <a href="/2013/gradle-provided-scope-and-java-ee-7">Gradle, 'provided' scope, and Java EE 7</a>
+        <div><div class="paragraph">
+<p>Maven has a dependency scope, <code>provided</code>, that indicates that the dependency should not be in the archive. Gradle does not
+provide such a scope out of the box, but it&#8217;s easy enough to add. The following Gradle build demonstrates a very bare-bones
+Java EE 7 web application setup:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="groovy"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="code"><pre><span style="color: #24292f;background-color: #f6f8fa">apply</span> <span style="color: #0550ae">plugin:</span> <span style="color: #0a3069">'war'</span>
+
+<span style="color: #24292f;background-color: #f6f8fa">repositories</span> <span style="color: #0550ae">{</span>
+    <span style="color: #24292f;background-color: #f6f8fa">mavenCentral</span><span style="color: #0550ae">()</span>
+    <span style="color: #24292f;background-color: #f6f8fa">mavenLocal</span><span style="color: #0550ae">()</span>
+<span style="color: #0550ae">}</span>
+
+<span style="color: #24292f;background-color: #f6f8fa">configurations</span> <span style="color: #0550ae">{</span>
+    <span style="color: #24292f;background-color: #f6f8fa">provided</span>
+<span style="color: #0550ae">}</span>
+<span style="color: #24292f;background-color: #f6f8fa">sourceSets</span> <span style="color: #0550ae">{</span>
+    <span style="color: #24292f;background-color: #f6f8fa">main</span> <span style="color: #0550ae">{</span> <span style="color: #24292f;background-color: #f6f8fa">compileClasspath</span> <span style="color: #0550ae">+=</span> <span style="color: #24292f;background-color: #f6f8fa">configurations</span><span style="color: #0550ae">.</span><span style="color: #116329">provided</span> <span style="color: #0550ae">}</span>
+<span style="color: #0550ae">}</span>
+
+<span style="color: #24292f;background-color: #f6f8fa">dependencies</span> <span style="color: #0550ae">{</span>
+    <span style="color: #24292f;background-color: #f6f8fa">provided</span> <span style="color: #0a3069">'javax:javaee-api:7.0'</span>
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>July</h2>
+<ul>
+    
+    <li>
+        <a href="/2013/a-simple-oauth2-client-and-server-example-part-ii">A Simple OAuth2 Client and Server Example: Part II</a>
+        <div><div class="paragraph">
+<p>In the last <a href="/posts/2013/07/11/a-simple-oauth2-client-and-server-example-part-i/">post</a>, we took a look at the server side of our OAuth2 system. In this post, we&#8217;ll take a quick look at the unit tests that will act as <em>TheUser</em>.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2013/a-simple-oauth2-client-and-server-example-part-i">A Simple OAuth2 Client and Server Example: Part I</a>
+        <div><div class="paragraph">
+<p>When implementing web site security, OAuth2 almost always comes up. We&#8217;ve had requests to implement OAuth2 in the GlassFish REST interface, and, it turns out, I have a similar need on a personal project. Looking at the spec, though, OAuth2 can be pretty daunting. Fortunately, you don&#8217;t need to understand it all, and Apache has a project, Oltu (nee Amber) that handles most of the implementation.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2013/initializing-jax-rs-sub-resources">Initializing JAX-RS Sub-resources</a>
+        <div><div class="paragraph">
+<p>This morning, I was reading through the <a href="http://download.oracle.com/otndocs/jcp/jaxrs-2_0-pfd-spec/index.html">Proposed Final Draft for JAX-RS 2.0 specification</a>, when I found a little nugget that could have saved me some work, specificially in initializing subresources.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2012</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/using-server-sent-events-and-the-glassfish-rest-interface">Using Server Sent Events and the GlassFish REST Interface</a>
+        <div><div class="paragraph">
+<p>Wikipedia defines Server-Sent Events as "a technology for providing push notifications from a server to a browser client in the form of DOM events. The Server-Sent Events EventSource API is now being standardized as part of HTML5 by the W3C."  It&#8217;s a great alternative to polling the server for updates.  Long story short, thanks to the work of the <a href="http://jersey.java.net">Jersey</a> team, we have "easy" access to this in GlassFish, and we&#8217;ve added support for it to our RESTful administration interface.  Let&#8217;s take a look at a quick sample.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>July</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/writing-pluggable-java-ee-applications-the-explanation">Writing Pluggable Java EE Applications, The Explanation</a>
+        <div><div class="paragraph">
+<p>I recently posted the slides and the source code from the presentation I gave at <a href="http://jaxconf.com/2012">JAXConf San Francisco</a>. While that&#8217;s helpful for those who were in my session, it&#8217;s probably less so for those who weren&#8217;t.  What I&#8217;ll do in this post, then, is discuss the slides and code in detail, skipping over the introductory slides, and getting right to the heart of the matter.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2012/writing-pluggable-java-ee-applications">Writing Pluggable Java EE Applications</a>
+        <div><div class="imageblock">
+<div class="content">
+<img src="/images/2012/07/jaxlogo.gif" alt="jaxlogo">
+</div>
+</div>
+<div class="paragraph">
+<p>I just finished giving my session at JAXConf San Francisco 2012, "Writing Plugged-In Java EE Apps". I think it went pretty well, though I guess I&#8217;ll find out how it really went when the reviews come in. :)  Either way, I had a great time.  As promised, <a href="/images/2012/07/pluggable-javaee.tar.gz">here</a> is a tar ball that includes the code we looked at during the session, as well as the accompanying slides.  Hopefully I&#8217;ll be able to get this code put in a proper public repository (such as java.net or GitHub, or both) soon.  For now, feel free to play with the code. Fix bugs. Extend it. Whatever comes to mind. :)  If you make changes or use it in something, I&#8217;d love to hear about it.  Thanks to all who attended!</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>February</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/comparing-jvm-web-frameworks-a-critique">Comparing JVM Web Frameworks - A Critique</a>
+        <div><div class="paragraph">
+<p>Recently, Matt Raible again presented his <a href="http://www.slideshare.net/mraible/comparing-jvm-web-frameworks-jfokus-2012">Comparing JVM Web Frameworks</a>, this time at JFokus 2012.  The intent of the presentation, as best as I can gather from half a world away, is to prevent some of the major JVM-based web frameworks, showing the various strengths and weaknesses, which will allow the audience to choose a framework more easily.  While the goal is laudable, I&#8217;m just not sure how well executed the attempt was.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2012/cdi-okcjug">CDI @OKCJUG</a>
+        <div><div class="paragraph">
+<p>I had the opportunity today to present an introduction to CDI at the <a href="http://okcjug.org">Oklahoma City Java Users Group</a>.  It was a smaller crowd, but they had great questions nonetheless.  After a rough start in a workspace that wasn&#8217;t quite as clean as it should have been, I think the went fairly well. <em>I</em> had a good time at least. : )</p>
+</div>
+<div class="paragraph">
+<p>Thanks to all those that came out and asked questions during and after.  If you&#8217;d like to play with the code (WARNING: for those of that weren&#8217;t there, these examples are 100% creativity free :), you can download the project <a href="/images/2012/02/okcjug_cdi_demo.tar.gz">here</a>.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>January</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/a-jersey-pojomapping-clientserver-example">A Jersey POJOMapping Client/Server Example</a>
+        <div><div class="paragraph">
+<p>JAX-RS is the specification that describes how to build RESTful interfaces in a Java EE environment.  Jersey is the reference implementation of that spec, and, like many implementations, offers features above and beyond what spec does.  One feature that I&#8217;ve been working with recently is the POJOMapping feature, which makes writing services and clients much easier, as well as typesafe.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2011</h1>
+
+
+
+<h2>November</h2>
+<ul>
+    
+    <li>
+        <a href="/2011/book-review-real-world-java-ee-night-hacks-dissecting-the-business-tier">Book Review: Real World Java EE Night Hacks - Dissecting the Business Tier</a>
+        <div><div class="imageblock">
+<div class="content">
+<img src="/images/2011/11/nighthacks.jpg" alt="title: &quot;'Real World Java EE Night Hacks&#8212;&#8203;Dissecting the Business Tier'&quot;">
+</div>
+</div>
+<div class="paragraph">
+<p>Last week, a great <a href="http://www.adam-bien.com/roller/abien/entry/building_plug_in_with_java">post</a> by <a href="http://www.adam-bien.com/roller/abien/">Adam</a> <a href="https://twitter.com/#!/AdamBien">Bien</a> brought his latest book, <em>Real World Java EE Night Hacks - Dissecting the Business Tier</em>, to mind.  I have since gotten myself a copy and thought I&#8217;d share my thoughts here.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>February</h2>
+<ul>
+    
+    <li>
+        <a href="/2011/glassfish-3-1-is-now-available">GlassFish 3.1 Is Now Available</a>
+        <div><div class="paragraph">
+<p>image::http://glassfish.java.net/image/sparky_3.1_orange.gif[style="float: right; padding: 0px 0px 10px 10px;"] For those that may not have noticed, today the GlassFish team officially released version 3.1.  This new release brings in a myriad of features, the most significant of which is probably clustering and high availability.  <a href="http://blogs.sun.com/theaquarium/entry/glassfish_3_1_is_here">The Aquarium</a> is the best place to find links to blogs, screencasts etc. from various GlassFish engineers (though Markus Eisele has a nice run down of the new features <a href="http://blog.eisele.net/2011/02/glassfish-31-arrived-yes-sir-we-do.html">here</a> as well).  The Aquarium&#8217;s list is pretty extensive, so certainly check it out, but I&#8217;d like to highlight a few that I found interesting from teammates of mine:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://blogs.sun.com/nazrul/entry/glassfish_3_1">GlassFish 3.1 Overview</a></p>
+</li>
+<li>
+<p><a href="http://blogs.sun.com/anilam/entry/glassfish_3_1_new_features1">GlassFish 3.1: New Features in Admin Console</a></p>
+</li>
+<li>
+<p><a href="http://blogs.sun.com/anilam/entry/glassfish_3_1_from_installation">GlassFish 3.1: From Installation to Running Application in a Cluster</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>People often ask what the difference is between the free GlassFish and the commercially-supported version.  The answer really is "not much" in terms of the core server itself (pretty much just branding changes).  The commercial version, though, has some nice value-add features, such as the <a href="http://blogs.sun.com/jenblog/entry/performance_tuner_in_oracle_glassfish">Performance Tuner</a>, amongst others.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;m really, really pleased with how GlassFish 3.1 has turned out.  We still (and will always) have more work to do, but this is a solid release that finally fills in some enterprise holes that v3 didn&#8217;t have time to fill.  Download it, install it, kick the tires a bit, and tell us what you what <a href="http://java.net/jira/browse/GLASSFISH">you think</a>.  In the meantime, we&#8217;re going to go ahead and get started on 3.2.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2011/java-ees-buried-treasure-the-application-client-container">Java EE&#039;s Buried Treasure: the Application Client Container</a>
+        <div><div class="paragraph">
+<p>From time to time, I&#8217;m asked about accessing various EE artifacts (EJBs, etc) from a standalone client.  Almost invariably, the user is having trouble getting the environment setup, grabbing an InitialContext, etc.  Also almost invariably, my answer to them is "use the application client container", which is as far as I can take them.  The topic of application client container, or ACC, came up again recently when I was asked on Twitter about an issue with ACC and GlassFish in a clustered environment. While this user (hi, Markus! : ) <a href="http://blog.eisele.net/2011/02/clustering-stateful-session-beans-with.html">figured out his issue</a> before I could be of much help, I took this opportunity finally to learn exactly what the ACC is and how to use it.  Thanks to Oracle&#8217;s Tim Quinn for his patient and tireless help, here&#8217;s what I learned&#8230;&#8203;</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2010</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2010/the-value-of-the-stack">The Value of the Stack</a>
+        <div><div class="paragraph">
+<p>This morning on twitter, I saw an <a href="http://twitter.com/#!/johanvos/status/14692015212068865">announcement</a> that <a href="http://mollom.com/">Mollom</a> has a new backend, one based on <a href="http://glassfish.org">GlassFish</a>.  I have to be honest.  I don&#8217;t know much of anything about Mollom beyond this, nor do I know anything about their previous backend other than it was Java-based.  The blog <a href="http://buytaert.net/mollom-gets-a-new-backend">post</a>, though, immediately made me think of dynamic languages.</p>
+</div>
+<div class="paragraph">
+<p>These days, it&#8217;s hot to be dynamic, whether it&#8217;s <a href="http://www.ruby-lang.org/en/">Ruby</a>, <a href="http://python.org">Python</a>, <a href="http://groovy.codehaus.org/">Groovy</a>, or something else.  There&#8217;s no denying that they have some very compelling features.  One of the quotes in the blog post, though, really stood out to me:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>With our move to GlassFish, we&#8217;ll have to worry a lot less about memory management, REST handling, XML parsing, database connection pooling, and all the other ancillary things that make big systems work. That frees us up to focus on the domain-specific problems&#8201;&#8212;&#8201;the actual moving parts of Mollom itself&#8201;&#8212;&#8201;and will help both support our growth and allow us to implement new features and improve the old ones.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>As I&#8217;ve noted, their former architecture was Java-based, but the same idea applies to the typical deployment of projects based on dynamic languages.  While readily admitting I&#8217;ve done precious little with dynalang projects in the enterprise, from what I&#8217;ve read and have heard people discuss, it seems the most common deployment scenario is, for example, Apache httpd with mod_foo installed.  There might even be a cluster of these httpd instances (or some other web server that a language or framework suggests) behind a load balancer or two, and that seems to work for a lot of people.  While effective, though, it seems that such a configuration leaves a lot of grunt infrastructure work up to the development or production support team.</p>
+</div>
+<div class="paragraph">
+<p>Enter the Java EE stack.  As the Mollom engineer noted, using an application server like GlassFish gives the developer and support teams quite a bit of infrastructure for free.  In addition to what he listed, a full EE stack can also give you clustering/high-availability, monitoring, server management, etc. (Note: GlassFish v2 support all of these.  GlassFish v3 does not support clustering, but GlassFish 3.1, which is just about ready to ship, will).  Many of the "ancillary things that make big systems work" are provided for you.  It&#8217;s not free, of course.  The system demands are typically higher, and those "ancillary things" have to be configured, tuned and monitored, but they don&#8217;t have to be developed, which makes the systems that run on them a fair bit simpler.</p>
+</div>
+<div class="paragraph">
+<p>It is possible, of course, to get the best of both worlds.  Some dynamic languages, like <a href="http://groovy.codehaus.org/">Groovy</a>, already run on the JVM, while projects like <a href="http://jruby.org/">JRuby</a> and <a href="http://jython.org/">Jython</a> allow running those languages in a Java EE container, all while still reaping the benefits that dynamic languages offer.  For shops that using those languages, or would like to, this is a very compelling option.</p>
+</div>
+<div class="paragraph">
+<p>Dynamic languages do offer a lot that we Java developers would love to use, but users of those dynamic languages would be well-served to take a good look at the Java EE stack and see if perhaps Java can add value to their deployment.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>June</h2>
+<ul>
+    
+    <li>
+        <a href="/2010/book-review-jsf-1-2-components">Book Review: JSF 1.2 Components</a>
+        <div><div class="paragraph">
+<p>Some time ago, I was given a copy of <em><a href="http://www.amazon.com/gp/product/1847197620/ref=s9_simh_gw_p14_i1?pf_rd_m=ATVPDKIKX0DER&amp;pf_rd_s=center-2&amp;pf_rd_r=1SRVBK771EN6ACN3W6GN&amp;pf_rd_t=101&amp;pf_rd_p=470938631&amp;pf_rd_i=507846">JSF 1.2 Components</a></em> by <a href="http://www.jsfsummit.com/conference/speaker/ian_hlavats">Ian Hlavats</a> and asked if I&#8217;d write a review for it.  It&#8217;s long overdue, but here are my thoughts on this book.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2009</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2009/glassfish-v3-virtual-conference">GlassFish v3 Virtual Conference</a>
+        <div><div class="paragraph">
+<p>This is a little late notice, but we at Sun are holding a "virtual conference" covering GlassFish v3, Java EE 6, etc.  You can find details <a href="http://www.sun.com/events/javaee6glassfishv3/virtualconference/?cid=928443r2">here</a>.  It starts in 30 minutes (10:00 CST, 8:00 PST). :)</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2008</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/interested-in-servlet-30">Interested in Servlet 3.0?</a>
+        <div><div class="paragraph">
+<p>If so, you might be interested in the latest webinar from The Aquarium covering Java EE 6 and Servlet 3.0.  Spec leads Roberto Chinnici and Rajiv Mordani will be leading the next session covering these two topics.  Eduardo has the <a href="http://blogs.sun.com/theaquarium/entry/dec_18th_webinar_javaee_6">details</a>.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>

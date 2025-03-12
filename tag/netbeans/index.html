@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : NetBeans</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            
+
+<h1>2016</h1>
+
+
+
+<h2>November</h2>
+<ul>
+    
+    <li>
+        <a href="/2016/netbeans-9-nightlies">NetBeans 9 Nightlies</a>
+        <div><div class="paragraph">
+<p>Perhaps I&#8217;m a bit of a glutton for punishment, but I have an odd addiction to nightly
+builds. In working on this <a href="call-me-crazy-but-im-writing-a-book.html">book</a>, I need
+to use NetBeans 9, which, of course, is not out yet. They are, however, publishing
+nightly builds. Being a command line guy at heart, I&#8217;d prefer not to have to go to the
+<a href="http://bits.netbeans.org/netbeans/trunk/nightly/latest/">download page</a> every time, so I
+did what any good geek would do: I wrote a script. It&#8217;s not pretty, and it&#8217;s not very
+fault tolerant, but it seems to work well enough. If you&#8217;re a fellow addict, here you
+go:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+</pre></td><td class="code"><pre><span style="color: #6e7781">#!/bin/bash</span>
+
+<span style="color: #0550ae">VERS</span><span style="color: #0550ae">=</span><span style="color: #0550ae">`</span>curl <span style="color: #116329">-s</span> http://bits.netbeans.org/netbeans/trunk/nightly/latest/js/build_info.js | <span style="color: #953800">grep </span>BOUNCER_PRODUCT_PREFIX | <span style="color: #953800">cut</span> <span style="color: #116329">-f</span> 2 <span style="color: #116329">-d</span> <span style="color: #0a3069">\"</span><span style="color: #0550ae">`</span>
+<span style="color: #0550ae">FILE</span><span style="color: #0550ae">=</span><span style="color: #0550ae">$VERS</span><span style="color: #116329">-javase</span>.zip
+
+<span style="color: #953800">cd</span> ~/Downloads
+<span style="color: #cf222e">if</span> <span style="color: #0550ae">[</span> <span style="color: #0550ae">!</span> <span style="color: #116329">-e</span> <span style="color: #0550ae">$FILE</span> <span style="color: #0550ae">]</span> <span style="color: #24292f;background-color: #f6f8fa">;</span> <span style="color: #cf222e">then
+    </span>wget http://bits.netbeans.org/netbeans/trunk/nightly/latest/zip/<span style="color: #0550ae">$FILE</span>
+    <span style="color: #cf222e">if</span> <span style="color: #0550ae">[</span> <span style="color: #116329">-e</span> <span style="color: #0550ae">$FILE</span> <span style="color: #0550ae">]</span> <span style="color: #24292f;background-color: #f6f8fa">;</span> <span style="color: #cf222e">then
+        </span><span style="color: #953800">rm</span> <span style="color: #116329">-rf</span> netbeans
+        unzip <span style="color: #0550ae">$FILE</span>
+    <span style="color: #cf222e">fi
+fi</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>September</h2>
+<ul>
+    
+    <li>
+        <a href="/2016/mv-dev-oracle-netbeans-dev-apache">mv /dev/oracle/NetBeans /dev/apache/</a>
+        <div><div class="paragraph">
+<p>Yesterday, the NetBeans team <a href="https://twitter.com/netbeans/status/775689829728280577">announced</a> plans to move NetBeans from Oracle to
+Apache. This move was met by a mix of skepticism and optimism. I&#8217;ve ranged between the two myself, to be honest, but I&#8217;ve landed on
+optimsim.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2014</h1>
+
+
+
+<h2>May</h2>
+<ul>
+    
+    <li>
+        <a href="/2014/netbeans-web-development-tips-in-7-minutes">14 NetBeans Web Development Tips in 7 Minutes</a>
+        <div><div class="paragraph">
+<p>Recently, Geertjan Wielenga, Principal Product Manager in the Oracle Developer Tools group, posted a video on his <a href="https://blogs.oracle.com/geertjan/entry/youtube_14_netbeans_web_development">blog</a> showing "14 NetBeans Web Development Tips in 7 Minutes", which showed off several nice tips for the IDE (#1 and #5 are my favorites). If you&#8217;re like me, sometimes you don&#8217;t have (or don&#8217;t want to make) time to watch a video, so I thought I&#8217;d make a table of contents for the video, with links to relevant portion of it for those that would like to read the list and watch only the parts that interest them.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2013</h1>
+
+
+
+<h2>September</h2>
+<ul>
+    
+    <li>
+        <a href="/2013/awestruct-netbeans-plugin">Awestruct NetBeans Plugin</a>
+        <div><div class="paragraph">
+<p>Several weeks ago, I posted blurb about a JavaFX project I had cobbled together, <a href="/posts/2013/04/30/doctorfx">DoctorFX</a>.
+It is an effort to build a semi-graphical editor for <a href="http://www.methods.co.nz/asciidoc/">Asciidoc</a>, but it is, currently,
+very basic. I had some spare time last week, so I decided to add some features to it. As I thought about what needed to
+be added and what that would require, I thought that, perhaps, an architectural change was warranted. With some time and
+an itch, I pulled out the sledge hammer and out came a NetBeans plugin. This plugin though, does more than Asciidoc: it
+offers full(-ish) support for the <a href="http://awestruct.org/">Awestruct</a> framework.</p>
+</div>
+<div class="paragraph">
+<p>There are a lot of features I&#8217;d like to add still, but, currently it supports only basic project loading and editing.
+It technically has code to preview Asciidoc files, though I&#8217;m having issues getting the rendered page from displaying.
+(In case you want to take a crack at it, that code is <a href="https://bitbucket.org/jdlee/awestruct-netbeans-plugin/src/0cc633ca5447377c8ce9e316208699f25e5a248b/src/com/steeplesoft/awestruct/netbeans/filetype/asciidoc/AsciidocVisualElementPanel.java?at=master">here</a>.)
+I&#8217;d also like to add preview support for Slim and Haml, but that may have to wait a bit.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;d like to lend a hand to the effort, you can find the current source on <a href="https://bitbucket.org/jdlee/awestruct-netbeans-plugin">Bitbucket</a>.</p>
+</div>
+<div class="paragraph">
+<p>This is, of course, a bit heavier than DoctorFX, but most of my work with Asciidoc is, currently, in the context
+of Awestruct, so this fits my needs better, and it was fun dipping my toes into the NetBeans Platform API. :)</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2012</h1>
+
+
+
+<h2>April</h2>
+<ul>
+    
+    <li>
+        <a href="/2012/java-7-netbeans-mac-os-x-and-a-little-bit-of-javafx-2">Java 7, NetBeans, Mac OS X, and a Little Bit of JavaFX 2</a>
+        <div><div class="paragraph">
+<p>In a recent post showing how to use JavaFX 2 and NetBeans on the Mac, I noted that I have been unable to run NetBeans using Java 7 on my Mac for reasons I had not been able to figure out.  Now, thanks to a pointer from <a href="http://skovatch.wordpress.com/">Scott Kovatch</a>, the technical lead at Oracle for the Mac OS X port of Java, I think I can show you how to do that.</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2012/getting-started-with-javafx-on-the-mac">Getting Started with JavaFX on the Mac</a>
+        <div><div class="paragraph">
+<p>image::/images/2012/04/javafx_logo_color_1-300x150.jpg</p>
+</div>
+<div class="paragraph">
+<p>As you may have guessed from my recent <a href="/2012/04/book-review-pro-javafx-2-a-definitive-guide-to-rich-clients-with-java-technology/">book review</a>, I&#8217;ve been tinkering with JavaFX some, as time as permitted.  I&#8217;ve been following the technology fairly closely since Sun announced the project way back in 2008.  When it was announced that JavaFX 2.0 was <em>finally</em> available, albeit in preview form, for the Mac, I was ecstatic.  I ran into issues, though, trying to get it to run in my <a href="http://netbeans.org">IDE</a>, though.  After some guess work and googling, I finally figured it out.  In retrospect, it may be obvious, but if you&#8217;re like me and are missing the obvious, I&#8217;m going to detail the steps I took to get it running on my Mac.  Perhaps it can help someone out.more</p>
+</div>
+<div class="paragraph">
+<p>The first step, of course, is to download the binaries.  You can do that <a href="http://www.oracle.com/technetwork/java/javafx/downloads/index.html">here</a>, sort of.  Since this is still a preview release at the time of this writing, you have click the teeny tiny <a href="http://www.oracle.com/technetwork/java/javafx/downloads/devpreview-1429449.html">link</a> under the header.  Once you&#8217;ve downloaded the distribution, you need to extract it somewhere:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span style="color: #0550ae">$ </span>unzip javafx_sdk-2_1_0-beta-b19-macosx-universal-27_mar_2012.zip <span style="color: #116329">-d</span> <span style="color: #0550ae">$HOME</span>/local/
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can, of course, put it anywhere you want, but you&#8217;ll need to adjust the following instructions.  The next step is set up NetBeans.  NetBeans has JavaFX support out of the box, assuming your JDK has JavaFX support.  Since the Mac JDK does not yet, we need fix that.  Otherwise, you&#8217;ll see this error:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="/images/2012/04/newprojectbad.png"><img src="/images/2012/04/newprojectbad-300x224.png" alt="newprojectbad 300x224" width="title: "'New Project - Missing JavaFX bins'""></a>
+</div>
+</div>
+<div class="paragraph">
+<p>To fix this, we need to create a Java Platform with JavaFX support (I don&#8217;t know why we can&#8217;t modify the default platform, but we can&#8217;t, so we get to create a new one, which we can set to be the default if we want).  To do that, go to Tools &gt; Java Platforms, where you should see something like this:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="/images/2012/04/javaplatforms-300x185.png"><img src="/images/2012/04/javaplatforms.png" alt="javaplatforms" width="title: "'Java Platforms'""></a>
+</div>
+</div>
+<div class="paragraph">
+<p>To create a new Java Platform, click the (wait for it&#8230;&#8203;!) "Add Platform&#8230;&#8203;" button in the lower left corner.  OS X likes to put things in decidedly (to me) un-Unixy locations, and the JDK is no different. You can find the current JDK under <code>/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents</code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="/images/2012/04/selectjdk.png"><img src="/images/2012/04/selectjdk-300x185.png" alt="selectjdk 300x185" width="title: "'Select JDK Home'""></a>
+</div>
+</div>
+<div class="paragraph">
+<p>We now need to give it a name, so we&#8217;ll call this "JDK 1.6 with JavaFX" and click OK.  But wait, there&#8217;s no JavaFX support! To enable JavaFX support, we have to&#8230;&#8203;um..enable it.  Doing so looks like this:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="/images/2012/04/addjavafxsupport.png"><img src="/images/2012/04/addjavafxsupport-300x185.png" alt="addjavafxsupport 300x185" width="title: "'Enable JavaFX Support'""></a>
+</div>
+</div>
+<div class="paragraph">
+<p>We can now create a new JavaFX project:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="/images/2012/04/newprojectgood.png"><img src="/images/2012/04/newprojectgood.png" alt="newprojectgood" width="title: "'New Project - JavaFX bins found'""></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Your new project is ready to run.</p>
+</div>
+<div class="paragraph">
+<p>The even more adventurous may be wondering how one would do this with Java 7, to which I say, "Good question!" : )  I have mixed luck getting NetBeans and Java 7 to play nice on my Mac.  It&#8217;s almost certainly pilot error, as I&#8217;ve done it before, as has <a href="http://www.adam-bien.com/roller/abien/entry/how_to_run_netbeans_7">Adam Bien</a>, but I haven&#8217;t had a chance to debug things (e.g., the navigation tree under projects has all the tree icons, but no text.  IIRC, the context menus are also text-less. Strange).</p>
+</div>
+<div class="paragraph">
+<p>At any rate, as I noted earlier, in retrospect, this seems pretty easy (if a bit unintuitive) and might be documented somewhere, but I couldn&#8217;t find it.  Either way, it&#8217;s certainly documented now.  I hope it helps. : )</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2009</h1>
+
+
+
+<h2>December</h2>
+<ul>
+    
+    <li>
+        <a href="/2009/netbeans-6-8-is-now-available">NetBeans 6.8 Is Now Available</a>
+        <div><div class="paragraph">
+<p>While we&#8217;re making product announcements, I might as well mention that NetBeans 6.8 is available today as well.  I really think NetBeans is the best Free &lt;del&gt;Java&lt;/del&gt; multi-language IDE on the market.  It&#8217;s by no means perfect, but I like it a lot.<sup>1</sup>  Quoting from the release:</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+<h2>February</h2>
+<ul>
+    
+    <li>
+        <a href="/2009/another-netbeans-update">Another NetBeans Update</a>
+        <div><div class="paragraph">
+<p>Since the announcement in the recent layoffs at Sun on how the NetBeans team was affected, there&#8217;s been much concern over the health of the project.  I&#8217;m not on the NetBeans team (I&#8217;m just a big Finkel fan! ;) so I can&#8217;t say for certain what&#8217;s going on, but it seems to me that Sun is still committed to the platform.  Evidence of that comes in the form of an email I got today about the upcoming 6.7 release.  Here is the email:</p>
+</div></div>
+    </li>
+    
+    <li>
+        <a href="/2009/netbeans-program-update-feb-2009">NetBeans Program Update - Feb 2009</a>
+        <div><div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Are you a NetBeans user?  Are you wondering what&#8217;s going to happen to your IDE of choice given the recent Sun restructuring?  The NetBeans Dream Team Call with Matt Thompson the new Sun NetBeans Director, which starts at 10:00am CST <strong>today</strong> (I just learned about it too) should answer some of your questions.  Here are the details:</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="netbeans-program-update-feb-2009">NetBeans Program Update - Feb 2009</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>with Matt Thompson (the new NetBeans Director + Developer Cloud Tools Engineering)
+SLIDES ARE <a href="https://java-champions.dev.java.net/pdfs/nbroadahead.pdf">HERE</a>
+WED Feb 11th at 0800am Pacific; 11am US East Coast; 5 pm Europe
+US Toll Free Dial-in Number: <strong>866-803-2141</strong>
+CALL ID: 5121251
+Participant Code: GO Here: <strong><a href="http://nbdt-feb09.eventbrite.com/" class="bare">http://nbdt-feb09.eventbrite.com/</a></strong>
+We will be recording this call for later playback on this event page.
+Tentative AGENDA:
+* Intros and NetBeans team changes + Sun&#8217;s Cloud Initiative – Matt Thompson (15 minutes)
+* Discuss future topics about upcoming NetBeans Technical Calls&#8201;&#8212;&#8201;What does the dreamteam want to talk about first&#8230;&#8203;open mic vote if necessary w/Matt&#8230;&#8203; (15min)
+* Open Communication Q &amp; A What is on your Mind?? – All (30 minutes)</p>
+</div>
+</div>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+<h1>2008</h1>
+
+
+
+<h2>November</h2>
+<ul>
+    
+    <li>
+        <a href="/2008/netbeans-65-python-support-and-mac-os-x">NetBeans 6.5, Python Support, and Mac OS X</a>
+        <div><div class="paragraph">
+<p>The NetBeans team recently released version 6.5 of the NetBeans IDE, which I really, really like.  They also released an Early Access peek at the Python support coming for NetBeans.  Unfortunately, it&#8217;s not straightforward to get Python and Java EE support in the same installation.  The Python EA release is a complete NetBeans installation, i.e., you can&#8217;t just add the modules to an existing NetBeans installation.</p>
+</div>
+<div class="paragraph">
+<p>Fortunately, there is a pretty easy solution to this: if you already have an existing 6.5 installation, you can simply run the Python EA installer, which will detect the existing 6.5 install and update it to add Python support.  Unfortunately, the installer has a bug on OS X, which breaks this functionality.  The end result is that your existing installation is replaced, which is likely not what you want.  The good news is that there is a workaround, albeit ugly and manual, to get us Mac users running while they fix the installer issue.  Here are the steps I followed to add Python support to NetBeans 6.5 on the Mac (big thanks to the NetBeans Users list for the tips that led to this solution):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Make sure NetBeans is not running</p>
+</li>
+<li>
+<p>Download python cluster separately from <a href="http://download.netbeans.org/netbeans/6.5/python/ea/zip.html" class="bare">http://download.netbeans.org/netbeans/6.5/python/ea/zip.html</a> (search for netbeans-6.5-200811131701-python.zip&#8201;&#8212;&#8201;or whatever the latest is&#8201;&#8212;&#8201;in the second list "Module Clusters")</p>
+</li>
+<li>
+<p>Put contents of the python1 directory in the zip in $HOME/.netbeans/6.5</p>
+</li>
+<li>
+<p>Delete directory $HOME/.netbeans/6.5/var/cache</p>
+</li>
+<li>
+<p>Add "python1" to /Applications/NetBeans/NetBeans 6.5.app/Contents/Resources/NetBeans/etc/netbeans.clusters</p>
+</li>
+<li>
+<p>Start NetBeans</p>
+</li>
+<li>
+<p>Profit? :)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You should now be able to create a new Python project.  The installer bug should be fixed in the next release (my guess is that it&#8217;s already fixed in the NB hg repo), but these "easy" steps should get you going in the interim.</p>
+</div></div>
+    </li>
+    
+</ul>
+
+
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>

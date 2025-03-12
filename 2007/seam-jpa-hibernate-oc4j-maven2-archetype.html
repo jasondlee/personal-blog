@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : A Seam+JPA/Hibernate on OC4J Maven 2 Archetype</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            <article class="post">
+    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+        A Seam+JPA/Hibernate on OC4J Maven 2 Archetype
+    </h1>
+    Thursday, October 25, 2007 | <span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2007/seam-jpa-hibernate-oc4j-maven2-archetype&title=A Seam+JPA/Hibernate on OC4J Maven 2 Archetype" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=A Seam+JPA/Hibernate on OC4J Maven 2 Archetype&url=https://jasondl.ee/2007/seam-jpa-hibernate-oc4j-maven2-archetype&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2007/seam-jpa-hibernate-oc4j-maven2-archetype" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2007/seam-jpa-hibernate-oc4j-maven2-archetype" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=A Seam+JPA/Hibernate on OC4J Maven 2 Archetype&amp;body=A Seam+JPA/Hibernate on OC4J Maven 2 Archetype https://jasondl.ee/2007/seam-jpa-hibernate-oc4j-maven2-archetype" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+
+    <div>
+        <div class="paragraph">
+<p>As a follow-up to my <a href="/2007/10/17/seam-and-jpa-hibernate-on-oc4j-1013/">entry</a> on getting a Seam and JPA/Hibernate application running on OC4J, I now have an alpha release of a Maven 2 archetype available for use and testing, with heavy emphasis on testing.</p>
+</div>
+<div class="paragraph">
+<p>Using the archetype is pretty simple (assuming you know how to use Maven 2 archetypes in general):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="bash"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>mvn archetype:create <span style="color: #116329">-DarchetypeGroupId</span><span style="color: #0550ae">=</span>com.steeplesoft.maven.archetypes
+    <span style="color: #116329">-DarchetypeArtifactId</span><span style="color: #0550ae">=</span>seam-jpa-oc4j <span style="color: #116329">-DarchetypeVersion</span><span style="color: #0550ae">=</span>1.0-alpha
+    <span style="color: #116329">-DremoteRepositories</span><span style="color: #0550ae">=</span>http://repo.steeplesoft.com/maven2
+    <span style="color: #116329">-DgroupId</span><span style="color: #0550ae">=</span>com.foo
+    <span style="color: #116329">-DartifactId</span><span style="color: #0550ae">=</span>myApp
+    <span style="color: #116329">-Dversion</span><span style="color: #0550ae">=</span>1.0
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What this gets you is a multi-module project, such as what was described in the aforementioned article, with (hopefully) working examples of a JPA entity bean, a HSQL-based PersistenceUnit, and a simple JSF (Facelets), all wired together via Seam.  Chances are good that you&#8217;ll want to change the package name and structure to match your project and organization&#8217;s needs, but, if you&#8217;re like me, having these examples to copy and paste will help when creating a new project. :)</p>
+</div>
+<div class="paragraph">
+<p><a id="redeploy"></a> This is by no means perfect.  Given my newness to Maven, the archetype itself could probably use some help, &lt;strike&gt;but there&#8217;s something more serious to consider at the moment involving OC4J.  If you create the project as described above, deploy the resulting EAR file and hit the web context, you should see that the application works fine.  If you try to redeploy the application, you&#8217;ll see an error message like this in the web console (formatted for readability)&lt;/strike&gt;(this is been <a href="/2007/10/25/oc4j-seam-archetype-update/">fixed</a>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="linenums"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre>Operation failed with error: java.lang.IllegalStateException:
+    ClassLoader "myapp.web.myapp-web-1.0:0.0.0"
+    (from in /oc4j/j2ee/home/applications/myapp/myapp-web-1.0/):
+    This loader has been closed and should not be in use.
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The server console will show something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="linenums"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+</pre></td><td class="code"><pre>oracle.oc4j.admin.internal.DeployerException: java.lang.IllegalStateException: ClassLoader "myapp.web.myapp-web-1.0:0.0.0" (from &lt;web-module&gt; in /oc4j/j2ee/home/applications/myapp/myapp-web-1.0/): This loader has been closed and should not be in use.
+      at org.hibernate.ejb.Ejb3Configuration.configure(Ejb3Configuration.java:258)
+      at org.hibernate.ejb.HibernatePersistence.createEntityManagerFactory(HibernatePersistence.java:120)
+      at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:59)
+      at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:48)
+      at org.jboss.seam.persistence.EntityManagerFactory.createEntityManagerFactory(EntityManagerFactory.java:81)
+      at org.jboss.seam.persistence.EntityManagerFactory.startup(EntityManagerFactory.java:50)
+      at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+      at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+      at java.lang.reflect.Method.invoke(Method.java:585)
+      at org.jboss.seam.util.Reflections.invoke(Reflections.java:21)
+      at org.jboss.seam.util.Reflections.invokeAndWrap(Reflections.java:125)
+      at org.jboss.seam.Component.callComponentMethod(Component.java:2095)
+      at org.jboss.seam.Component.callCreateMethod(Component.java:2010)
+      at org.jboss.seam.Component.newInstance(Component.java:1981)
+      at org.jboss.seam.contexts.Contexts.startup(Contexts.java:304)
+      at org.jboss.seam.contexts.Contexts.startup(Contexts.java:278)
+      at org.jboss.seam.contexts.ServletLifecycle.endInitialization(ServletLifecycle.java:95)
+      at org.jboss.seam.init.Initialization.init(Initialization.java:554)
+      at org.jboss.seam.servlet.SeamListener.contextInitialized(SeamListener.java:34)
+      at com.evermind.server.http.HttpApplication.initDynamic(HttpApplication.java:1130)
+      at com.evermind.server.http.HttpApplication.&lt;init&gt;(HttpApplication.java:738)
+      at com.evermind.server.ApplicationStateRunning.getHttpApplication(ApplicationStateRunning.java:414)
+      at com.evermind.server.Application.getHttpApplication(Application.java:545)
+      at com.evermind.server.http.HttpSite$HttpApplicationRunTimeReference.createHttpApplicationFromReference(HttpSite.java:1990)
+      at com.evermind.server.http.HttpSite$HttpApplicationRunTimeReference.&lt;init&gt;(HttpSite.java:1909)
+      at com.evermind.server.http.HttpSite.addHttpApplication(HttpSite.java:1606)
+      at oracle.oc4j.admin.internal.WebApplicationBinder.bindWebApp(WebApplicationBinder.java:238)
+      at oracle.oc4j.admin.internal.WebApplicationBinder.bindWebApp(WebApplicationBinder.java:99)
+      at oracle.oc4j.admin.internal.ApplicationDeployer.bindWebApp(ApplicationDeployer.java:547)
+      at oracle.oc4j.admin.internal.ApplicationDeployer.doDeploy(ApplicationDeployer.java:202)
+      at oracle.oc4j.admin.internal.DeployerBase.execute(DeployerBase.java:93)
+      at oracle.oc4j.admin.jmx.server.mbeans.deploy.OC4JDeployerRunnable.doRun(OC4JDeployerRunnable.java:52)
+      at oracle.oc4j.admin.jmx.server.mbeans.deploy.DeployerRunnable.run(DeployerRunnable.java:81)
+      at com.evermind.util.ReleasableResourcePooledExecutor$MyWorker.run(ReleasableResourcePooledExecutor.java:298)
+      at java.lang.Thread.run(Thread.java:595)
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The only way I&#8217;ve found to fix that is to restart the app server, which is, of course, extremely ugly.  Making this work on OC4J has been extremely trying, and this is just one more example of the pain I&#8217;ve put myself through.  Since the contract dictates this container, though, I have little choice. :)  At any rate, I&#8217;m going to try to work around this by creating one or more shared libraries on the app server and see what that gets me.  I&#8217;ll report back what I find.</p>
+</div>
+<div class="paragraph">
+<p>In the meantime, you can find the archetype in my (new) Maven <a href="http://repo.steeplesoft.com/maven2">repo</a> (when the DNS finally propagates), or in its (experimental) <a href="http://www.selenic.com/mercurial/wiki/">Mercurial</a> <a href="http://hg.steeplesoft.com/seam-oc4j-archetype/">repository</a>.</p>
+</div>
+    </div>
+    <footer>
+        <div class="grid">
+            <div class="col tags">
+                
+                <span class="title">tags: </span>
+                
+                <a href="/tag/jpa/">JPA</a>
+                <!--                <a href="https://jasondl.ee/tags/JPA.html">JPA</a>-->
+                
+                <a href="/tag/maven/">Maven</a>
+                <!--                <a href="https://jasondl.ee/tags/Maven.html">Maven</a>-->
+                
+                <a href="/tag/oc4j/">OC4J</a>
+                <!--                <a href="https://jasondl.ee/tags/OC4J.html">OC4J</a>-->
+                
+                <a href="/tag/seam/">Seam</a>
+                <!--                <a href="https://jasondl.ee/tags/Seam.html">Seam</a>-->
+                
+                
+            </div>
+            <div class="col"><span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2007/seam-jpa-hibernate-oc4j-maven2-archetype&title=A Seam+JPA/Hibernate on OC4J Maven 2 Archetype" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=A Seam+JPA/Hibernate on OC4J Maven 2 Archetype&url=https://jasondl.ee/2007/seam-jpa-hibernate-oc4j-maven2-archetype&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2007/seam-jpa-hibernate-oc4j-maven2-archetype" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2007/seam-jpa-hibernate-oc4j-maven2-archetype" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=A Seam+JPA/Hibernate on OC4J Maven 2 Archetype&amp;body=A Seam+JPA/Hibernate on OC4J Maven 2 Archetype https://jasondl.ee/2007/seam-jpa-hibernate-oc4j-maven2-archetype" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+</div>
+        </div>
+    </footer>
+</article>
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>

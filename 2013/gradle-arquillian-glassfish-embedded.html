@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : Gradle + Arquillian + GlassFish Embedded</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            <article class="post">
+    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+        Gradle + Arquillian + GlassFish Embedded
+    </h1>
+    Friday, September 13, 2013 | <span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2013/gradle-arquillian-glassfish-embedded&title=Gradle + Arquillian + GlassFish Embedded" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Gradle + Arquillian + GlassFish Embedded&url=https://jasondl.ee/2013/gradle-arquillian-glassfish-embedded&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2013/gradle-arquillian-glassfish-embedded" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2013/gradle-arquillian-glassfish-embedded" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Gradle + Arquillian + GlassFish Embedded&amp;body=Gradle + Arquillian + GlassFish Embedded https://jasondl.ee/2013/gradle-arquillian-glassfish-embedded" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+
+    <div>
+        <div class="paragraph">
+<p>I&#8217;ve recently been migrating all of my personal projects to Gradle. Since I use Arquillian, that means migrating that part of the build as well. However, being still fairly new to Gradle, how to handle that integration wasn&#8217;t immediately obvious. Thanks to <a href="https://twitter.com/bmuschko">Benjamin Muschko</a> and <a href="https://twitter.com/aslakknutsen">Aslak Knutsen</a>, I&#8217;ve finally gotten a working setup.</p>
+</div>
+<div class="paragraph">
+<p>While there <em>is</em> a <a href="https://github.com/aslakknutsen/arquillian-gradle-plugin">Gradle plugin</a>, as I understand things, it only supports the container lifecycle. All of the test deployment, etc. is work yet to be done. Fortunately, you don&#8217;t need the plugin if you don&#8217;t mind a little more work in your build.  Here is my current build file, which only supports GlassFish Embedded and JBoss AS 7 Managed (paritally) at the moment:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="groovy"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+</pre></td><td class="code"><pre><span style="color: #24292f;background-color: #f6f8fa">apply</span> <span style="color: #0550ae">plugin:</span> <span style="color: #0a3069">'war'</span>
+<span style="color: #24292f;background-color: #f6f8fa">apply</span> <span style="color: #0550ae">plugin:</span> <span style="color: #0a3069">'idea'</span>
+
+<span style="color: #24292f;background-color: #f6f8fa">version</span> <span style="color: #0550ae">=</span> <span style="color: #0a3069">'1.0-SNAPSHOT'</span>
+
+<span style="color: #24292f;background-color: #f6f8fa">ext</span><span style="color: #0550ae">.</span><span style="color: #116329">libraryVersions</span> <span style="color: #0550ae">=</span> <span style="color: #0550ae">[</span>
+    <span style="color: #0550ae">arquillian:</span> <span style="color: #0a3069">'1.1.1.Final'</span><span style="color: #0550ae">,</span>
+    <span style="color: #0550ae">arquillian_glassfish:</span> <span style="color: #0a3069">'1.0.0.CR4'</span><span style="color: #0550ae">,</span>
+    <span style="color: #0550ae">glassfish:</span> <span style="color: #0a3069">'4.0'</span><span style="color: #0550ae">,</span>
+    <span style="color: #0550ae">hamcrest:</span> <span style="color: #0a3069">'1.2'</span><span style="color: #0550ae">,</span>
+    <span style="color: #0550ae">javaee:</span> <span style="color: #0a3069">'7.0'</span><span style="color: #0550ae">,</span>
+    <span style="color: #0550ae">jbossAS7:</span> <span style="color: #0a3069">'7.1.1.Final'</span><span style="color: #0550ae">,</span>
+    <span style="color: #0550ae">jbossJavaeeSpec:</span> <span style="color: #0a3069">'1.0.0.Final'</span><span style="color: #0550ae">,</span>
+    <span style="color: #0550ae">junit:</span> <span style="color: #0a3069">'4.11'</span><span style="color: #0550ae">,</span>
+    <span style="color: #0550ae">postgresql:</span> <span style="color: #0a3069">'9.2-1003-jdbc4'</span><span style="color: #0550ae">,</span>
+    <span style="color: #0550ae">shrinkwrapDesc:</span> <span style="color: #0a3069">'2.0.0-alpha-3'</span>
+<span style="color: #0550ae">]</span>
+
+<span style="color: #24292f;background-color: #f6f8fa">repositories</span> <span style="color: #0550ae">{</span>
+    <span style="color: #24292f;background-color: #f6f8fa">mavenCentral</span><span style="color: #0550ae">()</span>
+    <span style="color: #24292f;background-color: #f6f8fa">mavenLocal</span><span style="color: #0550ae">()</span>
+    <span style="color: #24292f;background-color: #f6f8fa">mavenRepo</span> <span style="color: #0550ae">url:</span> <span style="color: #0a3069">'http://repository.jboss.org/nexus/content/groups/public'</span>
+    <span style="color: #24292f;background-color: #f6f8fa">mavenRepo</span> <span style="color: #0550ae">url:</span> <span style="color: #0a3069">'http://repository.jboss.org/nexus/content/repositories/deprecated'</span>
+<span style="color: #0550ae">}</span>
+
+<span style="color: #24292f;background-color: #f6f8fa">configurations</span> <span style="color: #0550ae">{</span>
+    <span style="color: #24292f;background-color: #f6f8fa">provided</span>
+    <span style="color: #24292f;background-color: #f6f8fa">integrationTestCompile</span><span style="color: #0550ae">.</span><span style="color: #116329">extendsFrom</span> <span style="color: #24292f;background-color: #f6f8fa">testCompile</span>
+    <span style="color: #24292f;background-color: #f6f8fa">integrationTestRuntime</span><span style="color: #0550ae">.</span><span style="color: #116329">extendsFrom</span> <span style="color: #24292f;background-color: #f6f8fa">testRuntime</span>
+
+    <span style="color: #6e7781">// [1]</span>
+    <span style="color: #24292f;background-color: #f6f8fa">jbossAS7ManagedTestRuntime</span> <span style="color: #0550ae">{</span> <span style="color: #24292f;background-color: #f6f8fa">extendsFrom</span> <span style="color: #24292f;background-color: #f6f8fa">integrationTestRuntime</span><span style="color: #0550ae">,</span> <span style="color: #24292f;background-color: #f6f8fa">provided</span> <span style="color: #0550ae">}</span>
+    <span style="color: #24292f;background-color: #f6f8fa">glassfishEmbeddedTestRuntime</span> <span style="color: #0550ae">{</span> <span style="color: #24292f;background-color: #f6f8fa">extendsFrom</span> <span style="color: #24292f;background-color: #f6f8fa">integrationTestRuntime</span> <span style="color: #0550ae">}</span>
+<span style="color: #0550ae">}</span>
+
+<span style="color: #24292f;background-color: #f6f8fa">sourceSets</span> <span style="color: #0550ae">{</span>
+    <span style="color: #24292f;background-color: #f6f8fa">main</span> <span style="color: #0550ae">{</span>
+        <span style="color: #24292f;background-color: #f6f8fa">compileClasspath</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">configurations</span><span style="color: #0550ae">.</span><span style="color: #116329">compile</span> <span style="color: #0550ae">+</span> <span style="color: #24292f;background-color: #f6f8fa">configurations</span><span style="color: #0550ae">.</span><span style="color: #116329">provided</span>
+    <span style="color: #0550ae">}</span>
+    <span style="color: #24292f;background-color: #f6f8fa">integrationTest</span> <span style="color: #0550ae">{</span> <span style="color: #6e7781">// [2]</span>
+        <span style="color: #24292f;background-color: #f6f8fa">java</span> <span style="color: #0550ae">{</span>
+            <span style="color: #24292f;background-color: #f6f8fa">srcDir</span> <span style="color: #0a3069">'src/integrationTest/java'</span>
+        <span style="color: #0550ae">}</span>
+        <span style="color: #24292f;background-color: #f6f8fa">resources</span> <span style="color: #0550ae">{</span>
+            <span style="color: #24292f;background-color: #f6f8fa">srcDir</span> <span style="color: #0a3069">'src/integrationTest/resources'</span>
+        <span style="color: #0550ae">}</span>
+        <span style="color: #24292f;background-color: #f6f8fa">compileClasspath</span> <span style="color: #0550ae">+=</span> <span style="color: #24292f;background-color: #f6f8fa">main</span><span style="color: #0550ae">.</span><span style="color: #116329">output</span> <span style="color: #0550ae">+</span> <span style="color: #24292f;background-color: #f6f8fa">configurations</span><span style="color: #0550ae">.</span><span style="color: #116329">provided</span>
+        <span style="color: #24292f;background-color: #f6f8fa">runtimeClasspath</span> <span style="color: #0550ae">+=</span> <span style="color: #24292f;background-color: #f6f8fa">main</span><span style="color: #0550ae">.</span><span style="color: #116329">output</span> <span style="color: #0550ae">+</span> <span style="color: #24292f;background-color: #f6f8fa">configurations</span><span style="color: #0550ae">.</span><span style="color: #116329">provided</span>
+    <span style="color: #0550ae">}</span>
+<span style="color: #0550ae">}</span>
+
+<span style="color: #24292f;background-color: #f6f8fa">dependencies</span> <span style="color: #0550ae">{</span>
+    <span style="color: #24292f;background-color: #f6f8fa">provided</span> <span style="color: #0a3069">"javax:javaee-api:$libraryVersions.javaee"</span>
+
+    <span style="color: #24292f;background-color: #f6f8fa">testCompile</span> <span style="color: #0a3069">"junit:junit:$libraryVersions.junit"</span>
+    <span style="color: #24292f;background-color: #f6f8fa">testCompile</span> <span style="color: #0a3069">"org.hamcrest:hamcrest-core:$libraryVersions.hamcrest"</span>
+
+    <span style="color: #6e7781">// [3]</span>
+    <span style="color: #24292f;background-color: #f6f8fa">integrationTestCompile</span> <span style="color: #0a3069">"org.jboss.arquillian.junit:arquillian-junit-container:$libraryVersions.arquillian"</span>
+    <span style="color: #24292f;background-color: #f6f8fa">integrationTestCompile</span> <span style="color: #0a3069">"org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-api-javaee:$libraryVersions.shrinkwrapDesc"</span>
+
+    <span style="color: #24292f;background-color: #f6f8fa">integrationTestRuntime</span> <span style="color: #0a3069">"org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-impl-javaee:$libraryVersions.shrinkwrapDesc"</span>
+
+    <span style="color: #24292f;background-color: #f6f8fa">glassfishEmbeddedTestRuntime</span> <span style="color: #0a3069">"org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:$libraryVersions.arquillian_glassfish"</span>
+    <span style="color: #24292f;background-color: #f6f8fa">glassfishEmbeddedTestRuntime</span> <span style="color: #0a3069">"org.glassfish.main.extras:glassfish-embedded-all:$libraryVersions.glassfish"</span>
+    <span style="color: #24292f;background-color: #f6f8fa">glassfishEmbeddedTestRuntime</span> <span style="color: #0a3069">"org.postgresql:postgresql:$libraryVersions.postgresql"</span>
+
+    <span style="color: #24292f;background-color: #f6f8fa">jbossAS7ManagedTestRuntime</span> <span style="color: #0a3069">"org.jboss.as:jboss-as-arquillian-container-managed:$libraryVersions.jbossAS7"</span>
+    <span style="color: #24292f;background-color: #f6f8fa">jbossAS7ManagedTestRuntime</span> <span style="color: #0a3069">"org.jboss.spec:jboss-javaee-6.0:$libraryVersions.jbossJavaeeSpec"</span>
+<span style="color: #0550ae">}</span>
+
+<span style="color: #6e7781">// [4]</span>
+<span style="color: #24292f;background-color: #f6f8fa">task</span> <span style="color: #8250df">glassfishEmbeddedTest</span><span style="color: #0550ae">(</span><span style="color: #0550ae">type:</span> <span style="color: #24292f;background-color: #f6f8fa">Test</span><span style="color: #0550ae">)</span>
+<span style="color: #24292f;background-color: #f6f8fa">task</span> <span style="color: #8250df">jbossAS7ManagedTest</span><span style="color: #0550ae">(</span><span style="color: #0550ae">type:</span> <span style="color: #24292f;background-color: #f6f8fa">Test</span><span style="color: #0550ae">)</span>
+
+<span style="color: #24292f;background-color: #f6f8fa">tasks</span><span style="color: #0550ae">.</span><span style="color: #116329">withType</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">Test</span><span style="color: #0550ae">).</span><span style="color: #116329">matching</span><span style="color: #0550ae">({</span> <span style="color: #24292f;background-color: #f6f8fa">t</span><span style="color: #0550ae">-&gt;</span> <span style="color: #24292f;background-color: #f6f8fa">t</span><span style="color: #0550ae">.</span><span style="color: #116329">name</span><span style="color: #0550ae">.</span><span style="color: #116329">endsWith</span><span style="color: #0550ae">(</span><span style="color: #0a3069">'Test'</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">}</span> <span style="color: #cf222e">as</span> <span style="color: #24292f;background-color: #f6f8fa">Spec</span><span style="color: #0550ae">).</span><span style="color: #116329">each</span> <span style="color: #0550ae">{</span> <span style="color: #24292f;background-color: #f6f8fa">t</span> <span style="color: #0550ae">-&gt;</span>
+    <span style="color: #24292f;background-color: #f6f8fa">t</span><span style="color: #0550ae">.</span><span style="color: #116329">testClassesDir</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">project</span><span style="color: #0550ae">.</span><span style="color: #116329">sourceSets</span><span style="color: #0550ae">.</span><span style="color: #116329">integrationTest</span><span style="color: #0550ae">.</span><span style="color: #116329">output</span><span style="color: #0550ae">.</span><span style="color: #116329">classesDir</span>
+    <span style="color: #24292f;background-color: #f6f8fa">t</span><span style="color: #0550ae">.</span><span style="color: #116329">classpath</span> <span style="color: #0550ae">=</span> <span style="color: #24292f;background-color: #f6f8fa">project</span><span style="color: #0550ae">.</span><span style="color: #116329">configurations</span><span style="color: #0550ae">.</span><span style="color: #116329">getByName</span><span style="color: #0550ae">(</span><span style="color: #24292f;background-color: #f6f8fa">t</span><span style="color: #0550ae">.</span><span style="color: #116329">name</span> <span style="color: #0550ae">+</span> <span style="color: #0a3069">'Runtime'</span><span style="color: #0550ae">)</span> <span style="color: #0550ae">+</span>
+        <span style="color: #24292f;background-color: #f6f8fa">project</span><span style="color: #0550ae">.</span><span style="color: #116329">sourceSets</span><span style="color: #0550ae">.</span><span style="color: #116329">main</span><span style="color: #0550ae">.</span><span style="color: #116329">output</span> <span style="color: #0550ae">+</span>
+        <span style="color: #24292f;background-color: #f6f8fa">project</span><span style="color: #0550ae">.</span><span style="color: #116329">sourceSets</span><span style="color: #0550ae">.</span><span style="color: #116329">integrationTest</span><span style="color: #0550ae">.</span><span style="color: #116329">output</span>
+<span style="color: #0550ae">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There&#8217;s quite a bit going on here&#8201;&#8212;&#8201;and I&#8217;ll be honest here&#8201;&#8212;&#8201;I understand about half of it. :) I will do my best, though, to explain what I think is going on.</p>
+</div>
+<div class="paragraph">
+<p>We start at <code>[1]</code> by declaring a few new configurations, one for a generic integrat test, one for GlassFish Embedded, and the other for JBoss AS 7 Managed. The first new configuration we&#8217;ll use for defining dependencies shared across the containers, specifically, the Arquillian dependencies. With the last two, we extend   <code>integrationTestRuntime</code> to pick up those dependencies and to which we&#8217;ll add container-specific dependencies later.</p>
+</div>
+<div class="paragraph">
+<p>I wanted to keep my Arquillian-based integration tests separate from any conventional unit tests I may write, so I put them all in a new directory, <code>src/integrationTest</code>. At <code>[2]</code>, I tell Gradle about his new directory with a custom <code>SourceSet</code>, <code>integrationTest</code>. We have to add the output from the <code>main</code> configuration to this one, so that it picks up our application classes.</p>
+</div>
+<div class="paragraph">
+<p>Next, at <code>[3]</code>, we declare the dependencies for the integration tests. The first three entries, as I noted, declare the dependencies each of the containers we&#8217;ll use will share. Next, we declare the container-specific dependencies. The project from which I pulled this build uses a Postgresql database. While I should probably use something in-memory (which I&#8217;ll eventually do), at the moment, I&#8217;m using a local pgsql install, so I need to declare the dependency on the Postgresql JDBC driver.  The JBoss dependencies are fairly straightforward.</p>
+</div>
+<div class="paragraph">
+<p>Finally, at <code>[4]</code>, we declare two new tasks, one for each supported container. Immediately after that, we loop over each task of type <code>Test</code> and configure them. This could be done in the task declaration, of course, but this approach, of which I can&#8217;t claim authorship, allows us to code it once for all test tasks.</p>
+</div>
+<div class="paragraph">
+<p>The rest of the project is a fairly straightforward Arquillian setup. For the curious, I&#8217;ll share a couple more files in case it helps anyone out. The first is my <code>arquillian.xml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/integrationTest/resources/arquillian.xml</div>
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre><span style="color: #6e7781">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span style="color: #116329">&lt;arquillian</span> <span style="color: #116329">xmlns=</span><span style="color: #0a3069">"http://jboss.org/schema/arquillian"</span>
+            <span style="color: #116329">xmlns:xsi=</span><span style="color: #0a3069">"http://www.w3.org/2001/XMLSchema-instance"</span>
+            <span style="color: #116329">xsi:schemaLocation=</span><span style="color: #0a3069">"http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd"</span><span style="color: #116329">&gt;</span>
+    <span style="color: #116329">&lt;engine&gt;</span>
+         <span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"deploymentExportPath"</span><span style="color: #116329">&gt;</span>build/libs<span style="color: #116329">&lt;/property&gt;</span>
+    <span style="color: #116329">&lt;/engine&gt;</span>
+    <span style="color: #116329">&lt;container</span> <span style="color: #116329">qualifier=</span><span style="color: #0a3069">"glassfish-embedded"</span> <span style="color: #116329">default=</span><span style="color: #0a3069">"true"</span><span style="color: #116329">&gt;</span>
+         <span style="color: #116329">&lt;configuration&gt;</span>
+             <span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"resourcesXml"</span><span style="color: #116329">&gt;</span>
+                src/integrationTest/resources/glassfish-resources.xml
+            <span style="color: #116329">&lt;/property&gt;</span>
+         <span style="color: #116329">&lt;/configuration&gt;</span>
+    <span style="color: #116329">&lt;/container&gt;</span>
+
+    <span style="color: #116329">&lt;container</span> <span style="color: #116329">qualifier=</span><span style="color: #0a3069">"jbossas-managed-7"</span><span style="color: #116329">&gt;</span>
+        <span style="color: #116329">&lt;configuration&gt;</span>
+            <span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"jbossHome"</span><span style="color: #116329">&gt;</span>jboss7<span style="color: #116329">&lt;/property&gt;</span>
+        <span style="color: #116329">&lt;/configuration&gt;</span>
+    <span style="color: #116329">&lt;/container&gt;</span>
+<span style="color: #116329">&lt;/arquillian&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">src/integrationTest/resources/glassfish-resources.xml</div>
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="code"><pre><span style="color: #6e7781">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span style="color: #6e7781">&lt;!DOCTYPE resources PUBLIC
+    "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN"
+    "http://glassfish.org/dtds/glassfish-resources_1_5.dtd"&gt;</span>
+<span style="color: #116329">&lt;resources&gt;</span>
+    <span style="color: #116329">&lt;jdbc-connection-pool</span>
+            <span style="color: #116329">datasource-classname=</span><span style="color: #0a3069">"org.postgresql.xa.PGXADataSource"</span>
+            <span style="color: #f6f8fa;background-color: #82071e">res-type:</span> <span style="color: #f6f8fa;background-color: #82071e">"javax.sql.XADataSource"</span>
+            <span style="color: #116329">name=</span><span style="color: #0a3069">"FrenchPressPool"</span><span style="color: #116329">&gt;</span>
+        <span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"user"</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"frenchpress"</span><span style="color: #116329">&gt;&lt;/property&gt;</span>
+        <span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"password"</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"fp"</span><span style="color: #116329">&gt;&lt;/property&gt;</span>
+        <span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"databaseName"</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"frenchpress"</span><span style="color: #116329">&gt;&lt;/property&gt;</span>
+        <span style="color: #116329">&lt;property</span> <span style="color: #116329">name=</span><span style="color: #0a3069">"serverName"</span> <span style="color: #116329">value=</span><span style="color: #0a3069">"localhost"</span><span style="color: #116329">&gt;&lt;/property&gt;</span>
+    <span style="color: #116329">&lt;/jdbc-connection-pool&gt;</span>
+    <span style="color: #116329">&lt;jdbc-resource</span> <span style="color: #116329">pool-name=</span><span style="color: #0a3069">"FrenchPressPool"</span> <span style="color: #116329">jndi-name=</span><span style="color: #0a3069">"jdbc/frenchpress"</span><span style="color: #116329">/&gt;</span>
+<span style="color: #116329">&lt;/resources&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can find the entire app in my <a href="https://bitbucket.org/jdlee/frenchpress">BitBucket repo</a>. If you have any questions, suggestions, improvements, etc. in either this Gradle build or the app itself, I&#8217;ll happily take pull requests. :)</p>
+</div>
+    </div>
+    <footer>
+        <div class="grid">
+            <div class="col tags">
+                
+                <span class="title">tags: </span>
+                
+                <a href="/tag/glassfish/">GlassFish</a>
+                <!--                <a href="https://jasondl.ee/tags/GlassFish.html">GlassFish</a>-->
+                
+                <a href="/tag/gradle/">Gradle</a>
+                <!--                <a href="https://jasondl.ee/tags/Gradle.html">Gradle</a>-->
+                
+                <a href="/tag/arquillian/">Arquillian</a>
+                <!--                <a href="https://jasondl.ee/tags/Arquillian.html">Arquillian</a>-->
+                
+                <a href="/tag/testing/">Testing</a>
+                <!--                <a href="https://jasondl.ee/tags/Testing.html">Testing</a>-->
+                
+                
+            </div>
+            <div class="col"><span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2013/gradle-arquillian-glassfish-embedded&title=Gradle + Arquillian + GlassFish Embedded" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Gradle + Arquillian + GlassFish Embedded&url=https://jasondl.ee/2013/gradle-arquillian-glassfish-embedded&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2013/gradle-arquillian-glassfish-embedded" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2013/gradle-arquillian-glassfish-embedded" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Gradle + Arquillian + GlassFish Embedded&amp;body=Gradle + Arquillian + GlassFish Embedded https://jasondl.ee/2013/gradle-arquillian-glassfish-embedded" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+</div>
+        </div>
+    </footer>
+</article>
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>

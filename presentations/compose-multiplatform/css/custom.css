@@ -1,0 +1,64 @@
+.reveal .footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    font-size: 0.5em;
+    background-color: var(--r-link-color);
+}
+
+.footer img {
+    max-height: 40px;
+    padding-left: 20px
+}
+
+.reveal pre {
+    width: 100%;
+}
+
+li code {
+    background-color: lightgray;
+}
+
+.reveal pre code {
+    min-width: 100%;
+    max-height: none;
+}
+
+.reveal a {
+    color: var(--r-link-color);
+}
+
+.reveal .controls button {
+    color: white;
+}
+
+.reveal ul {
+    display: block;
+    padding-left: 5pc;
+}
+
+:root {
+    --r-link-color: #cd0000;
+    --r-link-color-dark: #990000;
+    --r-link-color-hover: #990000;
+}
+
+.align-start {
+    text-align: start;
+    padding: 0 1em 0 1em;
+}
+
+.quote {
+    font-style: italic;
+}
+
+.sub-bullet {
+    /*margin: 0;*/
+    font-size: 75%;
+    font-style: italic;
+}
+
+code {
+    border: 1px white solid;
+}

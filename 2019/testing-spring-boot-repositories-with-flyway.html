@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coming Up for Air : Testing Spring Repositories with Flyway</title>
+
+    <script src="/assets/js/simple-jekyll-search.min.js" type="text/javascript"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-3GQK1YDRQM');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+
+    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+</head>
+<body>
+<div class="grid">
+    <div class="col blogname">
+        <span>
+            <a href="https://jasondl.ee">Coming Up for Air</a>
+        </span>
+    </div>
+</div>
+<div class="grid main">
+    <div class="col-9">
+        <div id="content">
+            <article class="post">
+    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+        Testing Spring Repositories with Flyway
+    </h1>
+    Friday, December 20, 2019 | <span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2019/testing-spring-boot-repositories-with-flyway&title=Testing Spring Repositories with Flyway" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Testing Spring Repositories with Flyway&url=https://jasondl.ee/2019/testing-spring-boot-repositories-with-flyway&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2019/testing-spring-boot-repositories-with-flyway" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2019/testing-spring-boot-repositories-with-flyway" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Testing Spring Repositories with Flyway&amp;body=Testing Spring Repositories with Flyway https://jasondl.ee/2019/testing-spring-boot-repositories-with-flyway" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+
+    <div>
+        <div class="paragraph">
+<p>With my recent job change, I&#8217;ve gotten a chance to use <a href="https://spring.io/projects/spring-boot">Spring Boot</a>
+in anger a bit. It&#8217;s been fun, and I&#8217;ve learned a fair bit about the current state of Spring (I still love you,
+<a href="https://jakarta.ee/">Jakarta EE</a>!). One of my tasks involved adding a query method to a repository, and I wanted to
+make sure the query worked before I pushed it upstream. To do that confidently, of course, required a unit test.
+In this post, I&#8217;ll show how remarkably simple it is to test Spring Repositories using Flyway to set up schemas and
+test data.</p>
+</div>
+<div class="paragraph">
+<p>To start off the demo, I created a simple Spring Boot project using
+<a href="https://start.spring.io/#!type" class="bare">https://start.spring.io/#!type</a>: maven-project&amp;language=kotlin&amp;platformVersion=2.2.2.RELEASE&amp;packaging=jar&amp;jvmVersion=1.8&amp;groupId=com.steeplesoft&amp;artifactId=spring-boot-repository-test-demo&amp;name=spring-boot-repository-test-demo&amp;description=Demo%20project%20for%20Spring%20Boot&amp;packageName=com.steeplesoft.spring-boot-repository-test-demo&amp;dependencies=data-jpa,flyway,h2,postgresql[Spring Intializr].</p>
+</div>
+<div class="paragraph">
+<p>Opening that in my IDE, I needed to configure the database connection, which I did in <code>src/main/resources/application.properties</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="properties"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span style="color: #0550ae">spring.datasource.url</span><span style="color: #24292f;background-color: #f6f8fa">=</span><span style="color: #0a3069">jdbc:postgresql://foo:5432/bar</span>
+<span style="color: #0550ae">spring.datasource.username</span><span style="color: #24292f;background-color: #f6f8fa">=</span><span style="color: #0a3069">spring</span>
+<span style="color: #0550ae">spring.datasource.password</span><span style="color: #24292f;background-color: #f6f8fa">=</span><span style="color: #0a3069">password</span>
+<span style="color: #0550ae">spring.jpa.properties.hibernate.dialect</span> <span style="color: #24292f;background-color: #f6f8fa">=</span> <span style="color: #0a3069">org.hibernate.dialect.PostgreSQLDialect</span>
+<span style="color: #0550ae">spring.jpa.hibernate.ddl-auto</span> <span style="color: #24292f;background-color: #f6f8fa">=</span> <span style="color: #0a3069">validate</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case, the production configuration isn&#8217;t as interesting as the test config (since this demo doesn&#8217;t really do much
+in "production"). The test config is in <code>src/test/resources/application.properties</code>:`</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="properties"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span style="color: #0550ae">spring.datasource.driver-class-name</span><span style="color: #24292f;background-color: #f6f8fa">=</span><span style="color: #0a3069">org.h2.Driver</span>
+<span style="color: #0550ae">spring.datasource.url</span><span style="color: #24292f;background-color: #f6f8fa">=</span><span style="color: #0a3069">jdbc:h2:mem:db;DB_CLOSE_DELAY=-1</span>
+<span style="color: #0550ae">spring.datasource.username</span><span style="color: #24292f;background-color: #f6f8fa">=</span><span style="color: #0a3069">sa</span>
+<span style="color: #0550ae">spring.datasource.password</span><span style="color: #24292f;background-color: #f6f8fa">=</span><span style="color: #0a3069">sa</span>
+<span style="color: #0550ae">spring.jpa.properties.hibernate.dialect</span> <span style="color: #24292f;background-color: #f6f8fa">=</span> <span style="color: #0a3069">org.hibernate.dialect.H2Dialect</span>
+<span style="color: #0550ae">spring.jpa.hibernate.ddl-auto</span> <span style="color: #24292f;background-color: #f6f8fa">=</span> <span style="color: #0a3069">none</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In production, we&#8217;re using Postgres, but in test, we&#8217;re using H2. Pretty simple.</p>
+</div>
+<div class="paragraph">
+<p>To set up Flyway, all you really need to do is add it to the classpath:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="xml"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span style="color: #116329">&lt;dependency&gt;</span>
+    <span style="color: #116329">&lt;groupId&gt;</span>org.flywaydb<span style="color: #116329">&lt;/groupId&gt;</span>
+    <span style="color: #116329">&lt;artifactId&gt;</span>flyway-core<span style="color: #116329">&lt;/artifactId&gt;</span>
+    <span style="color: #116329">&lt;version&gt;</span>6.0.8<span style="color: #116329">&lt;/version&gt;</span>
+<span style="color: #116329">&lt;/dependency&gt;</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With that dependency in place, when the tests are run (or the application started), Flyway will automatically look for
+migration scripts on the classpath under <code>db/migration</code>. If you have no scripts, you will see a failure like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>...
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.flywaydb.core.Flyway]: Factory method 'flyway' threw exception; nested exception is org.springframework.boot.autoconfigure.flyway.FlywayMigrationScriptMissingException: Cannot find migration scripts in: [classpath:db/migration] (please add migration scripts or check your Flyway configuration)
+        at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185) ~[spring-beans-5.2.2.RELEASE.jar:5.2.2.RELEASE]
+        at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:651) ~[spring-beans-5.2.2.RELEASE.jar:5.2.2.RELEASE]
+        ... 99 common frames omitted
+Caused by: org.springframework.boot.autoconfigure.flyway.FlywayMigrationScriptMissingException: Cannot find migration scripts in: [classpath:db/migration] (please add migration scripts or check your Flyway configuration)
+        at org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration$FlywayConfiguration.checkLocationExists(FlywayAutoConfiguration.java:166) ~[spring-boot-autoconfigure-2.2.2.RELEASE.jar:2.2.2.RELEASE]
+...
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For our demo, we&#8217;ll create one migrate, <code>src/main/resources/db/migration/V000__schema.sql</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="sql"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span style="color: #cf222e">CREATE</span> <span style="color: #cf222e">TABLE</span> <span style="color: #24292f;background-color: #f6f8fa">book</span> <span style="color: #24292f;background-color: #f6f8fa">(</span>
+    <span style="color: #24292f;background-color: #f6f8fa">id</span> <span style="color: #24292f;background-color: #f6f8fa">number</span> <span style="color: #cf222e">primary</span> <span style="color: #cf222e">key</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+    <span style="color: #24292f;background-color: #f6f8fa">title</span> <span style="color: #24292f;background-color: #f6f8fa">varchar2</span><span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #0550ae">255</span><span style="color: #24292f;background-color: #f6f8fa">),</span>
+    <span style="color: #24292f;background-color: #f6f8fa">author</span> <span style="color: #24292f;background-color: #f6f8fa">varchar2</span><span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #0550ae">255</span><span style="color: #24292f;background-color: #f6f8fa">),</span>
+    <span style="color: #24292f;background-color: #f6f8fa">description</span> <span style="color: #953800">text</span><span style="color: #24292f;background-color: #f6f8fa">,</span>
+    <span style="color: #24292f;background-color: #f6f8fa">publish_date</span> <span style="color: #953800">date</span>
+<span style="color: #24292f;background-color: #f6f8fa">);</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When we run the test now, our schema is automatically created for us in H2, so we&#8217;re ready to "test":</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="kotlin"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+</pre></td><td class="code"><pre><span style="color: #8250df">@ExtendWith</span><span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #953800">SpringExtension</span><span style="color: #0550ae">::</span><span style="color: #cf222e">class</span><span style="color: #24292f;background-color: #f6f8fa">)</span>
+<span style="color: #8250df">@DataJpaTest</span>
+<span style="color: #cf222e">class</span> <span style="color: #953800">BookRepositoryTest</span> <span style="color: #24292f;background-color: #f6f8fa">{</span>
+    <span style="color: #8250df">@Autowired</span>
+    <span style="color: #cf222e">private</span> <span style="color: #cf222e">lateinit</span> <span style="color: #cf222e">var</span> <span style="color: #0550ae">repository</span><span style="color: #24292f;background-color: #f6f8fa">:</span> <span style="color: #953800">BookRepository</span>
+
+    <span style="color: #8250df">@Test</span>
+    <span style="color: #cf222e">fun</span> <span style="color: #8250df">dataWasLoaded</span><span style="color: #24292f;background-color: #f6f8fa">()</span> <span style="color: #24292f;background-color: #f6f8fa">{</span>
+        <span style="color: #cf222e">val</span> <span style="color: #0550ae">books</span> <span style="color: #24292f;background-color: #f6f8fa">=</span> <span style="color: #24292f;background-color: #f6f8fa">repository</span><span style="color: #24292f;background-color: #f6f8fa">.</span><span style="color: #8250df">findAll</span><span style="color: #24292f;background-color: #f6f8fa">()</span>
+        <span style="color: #8250df">assertThat</span><span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #24292f;background-color: #f6f8fa">books</span><span style="color: #24292f;background-color: #f6f8fa">).</span><span style="color: #8250df">hasSize</span><span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #0550ae">3</span><span style="color: #24292f;background-color: #f6f8fa">)</span>
+
+    <span style="color: #24292f;background-color: #f6f8fa">}</span>
+<span style="color: #24292f;background-color: #f6f8fa">}</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that we&#8217;re running under JUnit 5, so we use <code>@ExtendWith(SpringExtension::class)</code>. If you&#8217;re using JUnit 4, then you&#8217;ll need to
+use <code>@RunWith(SpringRunner::class)</code>. Either way, we annotate the class with <code>@DataJpaTest</code> to tell Spring what we&#8217;re testing, and we
+autowire in our <code>Repository</code> and test as normal.</p>
+</div>
+<div class="paragraph">
+<p>The first time we run this overly simple test, it will fail, as there&#8217;s no data in the database. To fix that, we can use a Flyway
+migrate to load our data. To make the example a bit more interesting, we&#8217;ll add it in a non-standard, as I found myself in that
+situation. The migrate (<code>src/test/resources/testdata/V999__testdata.sql</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code data-lang="sql"><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="code"><pre><span style="color: #cf222e">INSERT</span> <span style="color: #cf222e">INTO</span> <span style="color: #24292f;background-color: #f6f8fa">book</span> <span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #24292f;background-color: #f6f8fa">id</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #24292f;background-color: #f6f8fa">title</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #24292f;background-color: #f6f8fa">author</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #24292f;background-color: #f6f8fa">publish_date</span><span style="color: #24292f;background-color: #f6f8fa">)</span> <span style="color: #cf222e">VALUES</span> <span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #0550ae">1</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">'The Fellowship of the Ring'</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">'Tolkien, J.R.R.'</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">'1952-07-29'</span><span style="color: #24292f;background-color: #f6f8fa">);</span>
+<span style="color: #cf222e">INSERT</span> <span style="color: #cf222e">INTO</span> <span style="color: #24292f;background-color: #f6f8fa">book</span> <span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #24292f;background-color: #f6f8fa">id</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #24292f;background-color: #f6f8fa">title</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #24292f;background-color: #f6f8fa">author</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #24292f;background-color: #f6f8fa">publish_date</span><span style="color: #24292f;background-color: #f6f8fa">)</span> <span style="color: #cf222e">VALUES</span> <span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #0550ae">2</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">'The Two Towers'</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">'Tolkien, J.R.R.'</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">'1954-11-11'</span><span style="color: #24292f;background-color: #f6f8fa">);</span>
+<span style="color: #cf222e">INSERT</span> <span style="color: #cf222e">INTO</span> <span style="color: #24292f;background-color: #f6f8fa">book</span> <span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #24292f;background-color: #f6f8fa">id</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #24292f;background-color: #f6f8fa">title</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #24292f;background-color: #f6f8fa">author</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #24292f;background-color: #f6f8fa">publish_date</span><span style="color: #24292f;background-color: #f6f8fa">)</span> <span style="color: #cf222e">VALUES</span> <span style="color: #24292f;background-color: #f6f8fa">(</span><span style="color: #0550ae">3</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">'The Return of the King'</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">'Tolkien, J.R.R.'</span><span style="color: #24292f;background-color: #f6f8fa">,</span> <span style="color: #0a3069">'1955-10-20'</span><span style="color: #24292f;background-color: #f6f8fa">);</span>
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we make no changes, Flyway won&#8217;t be able to find the file, so we have to update <code>test/src/resource/application.properties</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight" style="color: #24292f;background-color: #f6f8fa"><code><table class="linenotable"><tbody><tr><td class="linenos gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre>...
+spring.flyway.locations=classpath:db/migration/,filesystem:../flyway/sql,classpath:testdata/
+</pre></td></tr></tbody></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The value is a comma-delimited (don&#8217;t ask me why) of paths to search. Note that we have to prefix each with the type, either
+<code>classpath</code> or <code>filesystem</code>. In my real world case that drove this line of investigation, our migrates were actually outside
+of the module&#8217;s source directory (as part of a larger multi-module build), so I needed to specifiy a <code>filesystem</code> path, which,
+it turns out, is relative to the project directory when run like this. We also have to take care to add the default path,
+<code>classpath:db/migration</code>, or we&#8217;ll break thing. Finally, we add our somewhat arbitrary new path, and we&#8217;re ready to run our
+test again, which turn green.</p>
+</div>
+<div class="paragraph">
+<p>As it turns out, then, testing with Flyway is amazingly simple. Flyway&#8217;s also a great way to manage schema changes in your
+production application. If you&#8217;re not using Flyway (or testing your Spring Repositories), I hope this will be the
+encouragement&#8201;&#8212;&#8201;and information&#8201;&#8212;&#8201;you need to get started.</p>
+</div>
+    </div>
+    <footer>
+        <div class="grid">
+            <div class="col tags">
+                
+                <span class="title">tags: </span>
+                
+                <a href="/tag/testing/">Testing</a>
+                <!--                <a href="https://jasondl.ee/tags/Testing.html">Testing</a>-->
+                
+                <a href="/tag/sql/">SQL</a>
+                <!--                <a href="https://jasondl.ee/tags/SQL.html">SQL</a>-->
+                
+                <a href="/tag/spring/">Spring</a>
+                <!--                <a href="https://jasondl.ee/tags/Spring.html">Spring</a>-->
+                
+                <a href="/tag/flyway/">Flyway</a>
+                <!--                <a href="https://jasondl.ee/tags/Flyway.html">Flyway</a>-->
+                
+                
+            </div>
+            <div class="col"><span class="share-page" style="">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasondl.ee/2019/testing-spring-boot-repositories-with-flyway&title=Testing Spring Repositories with Flyway" rel="nofollow" target="_blank" title="Share on LinkedIn">
+      <i class="fa fa-linkedin-square"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Testing Spring Repositories with Flyway&url=https://jasondl.ee/2019/testing-spring-boot-repositories-with-flyway&via=jasondlee&related=jasondlee" rel="nofollow" target="_blank" title="Share on Twitter">
+      <i class="fa fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://jasondl.ee/2019/testing-spring-boot-repositories-with-flyway" rel="nofollow" target="_blank" title="Share on Facebook">
+      <i class="fa fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="https://www.reddit.com/submit?url=https://jasondl.ee/2019/testing-spring-boot-repositories-with-flyway" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+      <i class="fa fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Testing Spring Repositories with Flyway&amp;body=Testing Spring Repositories with Flyway https://jasondl.ee/2019/testing-spring-boot-repositories-with-flyway" title="Share via Email" >
+      <i class="fa fa-envelope"></i>
+  </a>
+</span>
+</div>
+        </div>
+    </footer>
+</article>
+
+        </div>
+    </div>
+    <div class="col-3 widget">
+        <div>
+            <h3>Search</h3>
+            <!-- HTML elements for search -->
+            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+            <ul id="results-container"></ul>
+
+            <script>
+                var sjs = SimpleJekyllSearch({
+                    searchInput: document.getElementById('search-input'),
+                    resultsContainer: document.getElementById('results-container'),
+                    json: '/search.json',
+                    limit: 50
+                })
+            </script>
+        </div>
+        <div>
+            <h3>Quotes</h3>
+            <p id="quote">Sample quote</p>
+            <p id="source">Quote source</p>
+        </div>
+        <div>
+            <h3>About</h3>
+            <p><img src="/images/profile-pic.jpg" style="float:right; object-fit: scale-down; padding-bottom: 1em;"/>My name is Jason Lee. I am a software developer living in the middle of Oklahoma. I’ve been a professional developer since 1997,
+using a variety of languages, including Java, Javascript, PHP, Python, Delphi, and even a bit of C#. I currently work for Red Hat
+on the WildFly/EAP team, where, among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+Jakarta Faces, and Bean Validation. (Full resume <a href="resume">here</a>.
+LinkedIn <a href="https://www.linkedin.com/in/jasondlee">profile</a>)</p>
+
+<p>I am the president of the Oklahoma City JUG, and an occasional speaker at the JUG and a variety of technical conferences.</p>
+
+<p>On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety of martial arts. I’m also
+married to a beautiful woman, and have two boys, who, thankfully, look like their mother.</p>
+
+        </div>
+        <div>
+            <h3>My Links</h3>
+            <ul>
+                
+                <li>
+                    <a href="/presentations" title="Presentations">
+                        Presentations
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/assets/resume.pdf" title="Resume/CV">
+                        Resume/CV
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://linkedin.com/in/jasondlee" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://twitter.com/jasondlee" title="Twitter">
+                        Twitter
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://mastodon.cloud/@jasondlee" title="Mastodon">
+                        Mastodon
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/tag" title="Tags">
+                        Tags
+                    </a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <div class="grid">
+                        <div class="col-8" style="text-weight: bold; font-size: large">
+                            <div>Java 9 Programming Blueprints:</div>
+                            <div>
+                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                            </div>
+                            <div>
+                                <a title="My Java 9 book at Packt"
+                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                                   style="padding-left: 10px">Packt</a>
+                            </div>
+                        </div>
+                            <div class="col-4">
+                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                            </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <a href="https://jaxenter.com/tips-for-writing-pluggable-java-ee-applications-105281.html" title="This article discusses ways to use Java EE specs to implement a simple, yet powerful plugin system with a minimum of thrid party libraries.">
+                        Tips for Writing Pluggable Java EE Applications
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.oracle.com/technetwork/articles/javaee/jsf-templating-137822.html" title="An article Ken Paulsen and I wrote detailing easy JSF component creation">
+                        JSFTemplating and Woodstock: Component Authoring Made Easy
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://jsfcentral.com/articles/lee-03-09.html" title="Jason Lee in depth: Mojarra and Scales">
+                        Jason Lee in depth: Mojarra and Scales
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20090301060746/http://www.theserverside.com/news/thread.tss?thread_id=49343" title="My JavaOne 2008 Wrap Up">
+                        Jason Lee: Postmortem for JavaOne 2008
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://web.archive.org/web/20130621192312/https://blogs.oracle.com/stories/entry/international_environmental" title="The GlassFish Adoption Story from my time at IEC">
+                        International Environmental: A Cooling Company Which Prefers Hot Software
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="http://www.jsfcentral.com/articles/trenches_7.html" title="This details the project that spawned a couple of the Mojarra Scales components">
+                        IEC donates custom JSF component to Mojarra Scales
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <p>&#169; Copyright Jason Lee, 2005-2023. All rights reserved.</p>
+    </div>
+</div>
+<!--
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-1091049-6', 'auto');
+    ga('send', 'pageview');
+</script>
+-->
+<script src="/assets/js/quotes.js" type="text/javascript"></script>
+<script src="/assets/js/local.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script type="text/javascript" src="/assets/js/copy.js"></script>
+</body>
+</html>
