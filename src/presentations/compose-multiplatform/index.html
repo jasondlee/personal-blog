@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>One Codebase, Multiple Platforms with Compose Multiplatform</title>
+    <title>One Codebase to Rule Them All</title>
 
     <link rel="stylesheet" href="dist/reset.css">
     <link rel="stylesheet" href="dist/reveal.css">
@@ -19,48 +19,56 @@
 <body>
 <div class="reveal">
     <div class="slides">
-        <section data-background-image="img/ibm.png" style="color: white; padding-top: 100px;">
-            <!-- This is the first slide -->
-            <h1 style="color: white; font-size: 5vw;">One Codebase, Multiple Platforms</h1>
-            <h1 style="color: white; font-size: 5vw;">with Compose Multiplatform</h1>
-            <span style="font-size: 3vw">
-                <p>Jason Lee</p>
-                <p>Principal Software Engineer</p>
-                <p>Red Hat. For now.</p>
-                <p>https://jasondl.ee - jason@steeplesoft.com</p>
-            </span>
+        <section data-background-image="img/onering.png" style="color: white; height: 100%">
+            <div style="background-color: rgba(0,0,0,0.5); color: white; height: 100%;">
+                <!-- This is the first slide -->
+                <h1 style="color: white; font-size: 5vw;">One Codebase to Rule Them All</h1>
+                <h4 style="color: white;">Harnessing Kotlin Multiplatform to wrangle cross-platform complexity</h4>
+                <div style="position: absolute; bottom: 0px; left: 0; right: 0; font-size: 3vw">
+                    <p>Jason Lee - Principal Software Engineer, Red Hat (for now :)</p>
+                    <p>https://jasondl.ee - jason@steeplesoft.com</p>
+                </div>
+            </div>
         </section>
 
-        <section>
-            <!-- This is the second slide, the speaker's info -->
-            <h3>About Me</h3>
-            <ul>
-                <li class="fragment" data-fragment-index="1">Principal Software Engineer at Red Hat</li>
-                <li class="fragment" data-fragment-index="2">Software developer since 1997</li>
-                <li class="fragment" data-fragment-index="3">
-                    Java Champion
-                </li>
-                <li class="fragment" data-fragment-index="5">
-                    President of the <a href="https://okcjug.org">Oklahoma City Java Users Group</a>
-                </li>
-                <li class="fragment" data-fragment-index="6">
-                    Author -
-                    <a href="https://www.packtpub.com/application-development/java-9-programming-blueprints">
-                        Java 9 Programming Blueprints
-                    </a>
-                </li>
-                <li class="fragment" data-fragment-index="7">Blogger | <a
-                    href="https://jasondl.ee">https://jasondl.ee</a></li>
-                <li class="fragment" data-fragment-index="8">Misc: Martial Arts, Bass Guitar, Smoking Meats</li>
-            </ul>
-            <div>
-                <img class="fragment" data-fragment-index="3" src="img/duke_champion.png"
-                     style="height: 150px; vertical-align: bottom;">
-                <img class="fragment" data-fragment-index="5" src="https://okcjug.org/img/logo-vertical.png"
-                     style="height: 150px; vertical-align: bottom;">
-                <img class="fragment" data-fragment-index="6"
-                     src="https://content.packt.com/_/image/original/B05785/cover_image_large.jpg"
-                     style="height: 150px; vertical-align: bottom;"/>
+        <section data-background-image="img/rhfade.png" style="height: 100%">
+            <div style="background-color: rgba(255,255,255,0.35); height: 90%">
+                <div style="color: black; opacity: 100%">
+                    <h3>About Me</h3>
+                    <ul>
+                        <li class="fragment" data-fragment-index="1">Principal Software Engineer at Red Hat</li>
+                        <li class="fragment" data-fragment-index="2">Software developer since 1997</li>
+                        <li class="fragment" data-fragment-index="3">
+                            Java Champion
+                        </li>
+                        <li class="fragment" data-fragment-index="5">
+                            President of the <a href="https://okcjug.org" style="color: black; text-decoration: underline;">Oklahoma City Java Users Group</a>
+                        </li>
+                        <li class="fragment" data-fragment-index="6">
+                            Author -
+                            <a href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                               style="color: black; text-decoration: underline;">
+                                Java 9 Programming Blueprints
+                            </a>
+                        </li>
+                        <li class="fragment" data-fragment-index="7">Blogger -
+                            <a href="https://jasondl.ee"
+                            style="color: black; text-decoration: underline;">
+                                https://jasondl.ee
+                            </a>
+                        </li>
+                        <li class="fragment" data-fragment-index="8">Misc: Martial Arts, Bass Guitar, Smoking Meats</li>
+                    </ul>
+                    <div style="position: absolute; bottom: 0px; left: 0; right: 0">
+                        <img class="fragment" data-fragment-index="3" src="img/duke_champion.png"
+                             style="height: 150px; vertical-align: bottom;">
+                        <img class="fragment" data-fragment-index="5" src="https://okcjug.org/img/logo-vertical.png"
+                             style="height: 150px; vertical-align: bottom;">
+                        <img class="fragment" data-fragment-index="6"
+                             src="https://content.packt.com/_/image/original/B05785/cover_image_large.jpg"
+                             style="height: 150px; vertical-align: bottom;"/>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -83,8 +91,22 @@
                 <div class="quote" style="font-size: 2.5vw;">
                     <span style="font-size:75px;line-height:0.6em;opacity:0.2">&#10077;</span>
                     <p class="w3-xlarge" style="margin-top:-40px">
-                        Declarative framework for sharing UIs across multiple platforms. Based on Kotlin Multiplatform
-                        and Jetpack Compose. Allows you to develop shared UIs for Android, iOS, desktop, and web.
+                        Kotlin Multiplatform is a technology that allows you to create applications for various platforms
+                        and efficiently reuse code across them while retaining the benefits of native programming. Your
+                        applications will run on iOS, Android, macOS, Windows, Linux, and more.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>What is Compose Multiplatform?</h3>
+            <div class="align-start">
+                <div class="quote" style="font-size: 2.5vw;">
+                    <span style="font-size:75px;line-height:0.6em;opacity:0.2">&#10077;</span>
+                    <p class="w3-xlarge" style="margin-top:-40px">
+                        Compose Multiplatform, a declarative UI framework by JetBrains, allows you to develop shared UIs
+                        for Android, iOS, desktop, and web. Integrate Compose Multiplatform into your Kotlin Multiplatform
+                        projects to deliver your apps and features faster without having to maintain multiple UI implementations.
                     </p>
                 </div>
             </div>
@@ -163,11 +185,60 @@
             </div>
         </section>
         <section>
-            <h3>My (current) application architecture - The Pieces</h3>
+            <h3>Kotlin Multiplatform Considerations</h3>
+            <ul>
+                <li class="fragment">You're writing Kotlin, but not all JDK APIs are available cross-platform</li>
+                <li class="fragment">Some alternate libraries are available (e.g., kotlinx-datetime)</li>
+                <li class="fragment">Other uses might require platform-specific implementations
+                    <ul>
+                        <li>KMP mechanism is <code>expect/actual</code></li>
+                        <li>In <code>commonMain/</code>, your declare the <code>expect</code></li>
+                        <li>In each supported platform, you code the <code>actual</code></li>
+                        <li>Examples
+                            <ul>
+                                <li>Loggers</li>
+                                <li>Room database creation</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>My (current) application architecture</h3>
+            <ul>
+                <li class="fragment"><a href="https://developer.android.com/compose">Jetpack Compose</a></li>
+                <li class="fragment"><a href="https://arkivanov.github.io/Decompose/">Decompose</a>
+                    <div class="sub-bullet">
+                        Decompose is a Kotlin Multiplatform library for breaking down your code into lifecycle-aware
+                        business logic components (aka BLoC), with routing functionality and pluggable UI (Compose, Android
+                        Views, SwiftUI, Kotlin/React, etc.).
+                    </div>                </li>
+                <li class="fragment"><a href="https://insert-koin.io/">Koin</a>
+                    <div class="sub-bullet">
+                        The pragmatic Kotlin & Kotlin Multiplatform Dependency Injection framework
+                    </div>
+                </li>
+                <li class="fragment"><a href="https://developer.android.com/kotlin/multiplatform/room">Room</a>
+                    <div class="sub-bullet">
+                        The Room persistence library provides an abstraction layer over SQLite to allow for more robust
+                        database access while harnessing the full power of SQLite.
+                    </div>
+                </li>
+                <li class="fragment"><a href="https://coil-kt.github.io/coil/">Coil</a>
+                    <div class="sub-bullet">An image loading library for Android and Compose Multiplatform.</div>
+                </li>
+                <li class="fragment"><a href="https://github.com/steeplesoft/kmp-form">KMP Form</a>
+                    <div class="sub-bullet">Kotlin Multiplatform fork of Compose Form, an easy-to-use and customizable
+                        solution for building forms in Android Jetpack Compose.</div>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3>My (current) application architecture - Code Samples</h3>
             <h4>Jetpack Compose</h4>
             <div class="align-start">
-                <p>Home page: <a href="https://developer.android.com/compose">https://developer.android.com/compose</a>
-                </p>
                 <pre><code>@Composable
 fun MyTopAppBar(onNavIconClick: () -> Unit) {
     TopAppBar(
@@ -193,17 +264,9 @@ fun asyncLoad(status: Status,
             </div>
         </section>
         <section>
-            <h3>My (current) application architecture - The Pieces</h3>
+            <h3>My (current) application architecture - Code Samples</h3>
             <h4>Decompose</h4>
             <div class="align-start">
-                <p>Home page:
-                    <a href="https://arkivanov.github.io/Decompose/">https://arkivanov.github.io/Decompose/</a>
-                </p>
-                <div class="sub-bullet">
-                    Decompose is a Kotlin Multiplatform library for breaking down your code into lifecycle-aware
-                    business logic components (aka BLoC), with routing functionality and pluggable UI (Compose, Android
-                    Views, SwiftUI, Kotlin/React, etc.).
-                </div>
                 <div style="position: relative; display: inline-block; align-content: center;">
                     <pre><code>interface RootComponent {
     val stack: Value&lt;ChildStack&lt;*, Child&gt;&gt;
@@ -216,7 +279,7 @@ fun asyncLoad(status: Status,
         class ViewOccasionRecip(val component: ViewOccasionRecipient) : Child
     }
 }</code></pre>
-                    <pre style="left: 50%; top: 25%; position:absolute"><code>@Composable
+                    <pre style="left: 35%; top: 55%; position:absolute"><code>@Composable
 fun RootContent(
     component: RootComponent,
     modifier: Modifier = Modifier
@@ -233,16 +296,34 @@ fun RootContent(
             </div>
         </section>
         <section>
-            <h3>My (current) application architecture - The Pieces</h3>
+            <h3>My (current) application architecture - Code Samples</h3>
+            <h4>Koin</h4>
+            <div class="align-start">
+                <pre><code>val appModule = module {
+    single&lt;StackNavigation&lt;NavigationConfig&gt;&gt; { StackNavigation() }
+    single&lt;AppDatabase&gt;(createdAtStart = true) {
+        val builder : RoomDatabase.Builder&lt;AppDatabase&gt; by inject()
+        builder
+            .setDriver(BundledSQLiteDriver())
+            .setQueryCoroutineContext(Dispatchers.IO)
+            .build()
+    }
+    single&lt;GiftIdeaDao&gt; { val db : AppDatabase by inject(); db.giftIdeaDao() }
+    single&lt;OccasionDao&gt; { val db : AppDatabase by inject(); db.occasionDao() }
+    single&lt;RecipientDao&gt; { val db : AppDatabase by inject(); db.recipientDao() }
+}</code></pre>
+            <pre><code>fun initKoin(config: KoinAppDeclaration? = null) {
+    startKoin {
+        modules(appModule, platformModule)
+        config?.invoke(this)
+    }
+}</code></pre>
+            </div>
+        </section>
+        <section>
+            <h3>My (current) application architecture - Code Samples</h3>
             <h4>Room</h4>
             <div class="align-start">
-                <p>Home page:
-                    <a href="https://developer.android.com/kotlin/multiplatform/room">https://developer.android.com/kotlin/multiplatform/room</a>
-                </p>
-                <div class="sub-bullet">
-                    The Room persistence library provides an abstraction layer over SQLite to allow for more robust
-                    database access while harnessing the full power of SQLite.
-                </div>
                 <div style="position: relative; display: inline-block; align-content: center; margin: auto; width: 95%">
                     <pre><code>@Database(
     entities = [Occasion::class,
@@ -281,57 +362,6 @@ interface GiftIdeaDao {
         </section>
 
         <section>
-            <h3>My (current) application architecture - The Pieces</h3>
-            <h4>Koin</h4>
-            <div class="align-start">
-                <p>Home page:
-                    <a href="https://insert-koin.io/">https://insert-koin.io/</a>
-                </p>
-                <div class="sub-bullet">
-                    The pragmatic Kotlin & Kotlin Multiplatform Dependency Injection framework
-                    <pre><code>val appModule = module {
-    single&lt;StackNavigation&lt;NavigationConfig&gt;&gt; { StackNavigation() }
-    single&lt;AppDatabase&gt;(createdAtStart = true) {
-        val builder : RoomDatabase.Builder&lt;AppDatabase&gt; by inject()
-        val database = builder
-            .setDriver(BundledSQLiteDriver())
-            .setQueryCoroutineContext(Dispatchers.IO)
-            .build()
-
-        loadDemoData(database)
-
-        database
-    }
-    single&lt;GiftIdeaDao&gt; { val db : AppDatabase by inject(); db.giftIdeaDao() }
-    single&lt;OccasionDao&gt; { val db : AppDatabase by inject(); db.occasionDao() }
-    single&lt;RecipientDao&gt; { val db : AppDatabase by inject(); db.recipientDao() }
-}</code></pre>
-                    <pre><code>fun initKoin(config: KoinAppDeclaration? = null) {
-    startKoin {
-        modules(appModule, platformModule)
-        config?.invoke(this)
-    }
-}</code></pre>
-                </div>
-            </div>
-        </section>
-        <section>
-            <h3>My (current) application architecture - The Pieces</h3>
-            <h4>Miscellaneous</h4>
-            <ul>
-                <li>Coil - <a href="https://coil-kt.github.io/coil/">https://coil-kt.github.io/coil/</a>
-                    <div class="sub-bullet">An image loading library for Android and Compose Multiplatform.</div>
-                </li>
-                <li>kotlinx-datetime - <a href="https://github.com/Kotlin/kotlinx-datetime">https://github.com/Kotlin/kotlinx-datetime</a>
-                    <div class="sub-bullet">A multiplatform Kotlin library for working with date and time.</div>
-                </li>
-                <li>KMP Form - <a
-                    href="https://github.com/steeplesoft/kmp-form">https://github.com/steeplesoft/kmp-form</a>
-                    <div class="sub-bullet">Kotlin Multiplatform port of Compose Form</div>
-                </li>
-            </ul>
-        </section>
-        <section>
             <h3>The Demo App - Giftbook</h3>
             <ul>
                 <li>Like "Facebook" but for gift tracking</li>
@@ -340,28 +370,10 @@ interface GiftIdeaDao {
             </ul>
         </section>
         <section>
-            <h3>Kotlin Multiplatform Considerations</h3>
-            <ul>
-                <li class="fragment">You're writing Kotlin, but not all JDK APIs are available cross-platform</li>
-                <li class="fragment">Some alternate libraries are available (e.g., kotlinx-datetime)</li>
-                <li class="fragment">Other uses might require platform-specific implementations
-                    <ul>
-                        <li>KMP mechanism is <code>expect/actual</code></li>
-                        <li>In <code>commonMain/</code>, your declare the <code>expect</code></li>
-                        <li>In each supported platform, you code the <code>actual</code></li>
-                        <li>Examples
-                            <ul>
-                                <li>Loggers</li>
-                                <li>Room database creation</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </section>
-        <section>
             <h3>Source code</h3>
             <h4>Let's dive in!</h4>
+            <span style="font-style: italic">NB: The following slides are intended for those reading the slides and not attending a presentation or
+            watching a recording.</span>
         </section>
         <section>
             <h3>Decompose Notes</h3>
@@ -443,20 +455,11 @@ interface GiftIdeaDao {
         <section>
             <h1>Thank You!</h1>
             <ul>
-                <li><a href="https://kmp.jetbrains.com/">KMP Wizard</a></li>
-                <li><a href="https://github.com/jasondlee/giftbook/">Giftbook Demo App</a></li>
-                <!--<li>Library Links
-                    <ul>
-                        <li>Jetpack Compose - <a href="https://developer.android.com/compose">https://developer.android.com/compose</a></li>
-                        <li>Decompose - <a href="https://arkivanov.github.io/Decompose">https://arkivanov.github.io/Decompose</a></li>
-                        <li>Android Room - <a href="https://developer.android.com/kotlin/multiplatform/room">https://developer.android.com/kotlin/multiplatform/room</a></li>
-                        <li>Koin - <a href="https://insert-koin.io/">https://insert-koin.io/</a></li>
-                        <li>KMP Form - <a href="https://github.com/steeplesoft/kmp-form">https://github.com/steeplesoft/kmp-form</a></li>
-                    </ul>
-                </li>-->
+                <li><a href="https://kmp.jetbrains.com/">KMP Wizard</a> - https://kmp.jetbrains.com/</li>
+                <li><a href="https://github.com/jasondlee/giftbook/">Giftbook Demo App</a> - https://github.com/jasondlee/giftbook/</li>
             </ul>
             <div>
-                <a href="https://jasondl.ee/presentations/subatomic/">
+                <a href="https://jasondl.ee/presentations/compose-multiplatform/">
                     <img src="img/preso_qr.png" alt="preso qr" style="height: 300px;">
                 </a>
             </div>
