@@ -1,0 +1,29 @@
+---
+title: "A Recap of my night at the Oklahoma City JUG"
+date: 2025-3-12
+tags: [ Android, Kotlin Multiplatform]
+type: post
+author: jdlee
+status: published
+source-highlighter: pygments
+---
+
++++
+<img src="https://okcjug.org/img/logo-vertical.png" alt="OKC JUG Logo" height="200" style="float: right"/>
++++
+
+Last night, I had the opportunity to present at my local jug, the https://okcjug.org[Oklahoma City Java User Group]. My topic was building applications Kotlin/Compose Multiplatform. For the most part, it was awesome. More on that in a moment.
+
+The https://jasondl.ee/presentations/compose-multiplatform/[presentation] was an introduction to the technologies that I've found helpful in building cross-platform applications. I tried to be clear that what I was presenting is my _current_ architecture and that things might change, and that I was _learning_ some of these things as I go. I find it helpful to present on things that I'm learning, as it helps solidify things in my own mind, and it might be useful for others to travel along with me, so to speak. I won't recap here everything in the presentation, so if you'd like details, you can flip through the https://jasondl.ee/presentations/compose-multiplatform/[slides].
+
+The demo app is one I've called (because I'm a sucker for puns), "Giftbook" -- like "Facebook", but for gifts. The inspiration for the app (which is in part intended to serve as an architectural reference app for my younger son as he builds a mobile app for a high school class, as well as for a project my wife and I are working on together) came from my wife. She typically handles the bulk of our gift shopping, and she uses an app to help keep track of that. The app is great and helpful, but it has shortcomings, and in the course of discussing those, we did what any good geek would do: we decided to build our own. It's still a work in progress, but you can follow along (and contribute if you want) over at https://github.com/jasondlee/giftbook[Github].
+
+I said the meeting was awesome "for the most part" earlier. I had hoped to have a video of the presentation to post the https://www.youtube.com/@OklahomaCityJUG[OKC JUG YouTube channel], but... there were problems. Since I was presenting, I couldn't run the recording device, so I conscripted my beautiful and brilliant wife to do handle that, and she did great, but the forces against us were greater. :) A big part of the problem is OBS. I spent part of the morning yesterday making sure everything was set up and working, but when we got to the venue, OBS had forgotten input devices, microphone levels were messed up, etc., so we had to hastily try to reconfigure things moments before the session started. Neither of us know OBS well, and we mostly got it working, but the audio in the video we ended up actually getting was great, then silent, then really low. Not sure what was going on there.
+
+The coup de grâce for the recording, though, happened when the laptop died. :P What we didn't notice was that the power strip was not turned on, so the laptop was running on battery until it wasn't. We did manage to record about two-thirds of the presentation before things completely fell over, but the audio is next to useless, making the video a bit of a waste.
+
+I learned (or had reinforced) a few things, though: I need to learn OBS better (or find a simpler replacement), and I need to conscript more dedicated help. I had a million plates spinning last night, and I wouldn't have been able to pull of the meeting if it hadn't been for my amazing wife (I've said this directly to her, but I'll say it again here: A HUGE thanks for the help. You're awesome. :)
+
+Given all of that, there's a chance I'll make a recording of the presentation from my office so I can have something to upload. I need to tweak the presentation a bit (including replacing that super dumb and boring title, something my wife and older son have been helping me brainstorm), so if I can find some time, I'll make those changes and try to put a recording.
+
+Despite the technical woes, I had a great time seeing old friends at the JUG, and even got to meet a few new people, which is always great. Having part of my family there was big bonus, as well.
