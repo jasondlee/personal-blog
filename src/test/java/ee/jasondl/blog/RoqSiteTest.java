@@ -1,4 +1,4 @@
-package io.guihub.jberet.site;
+package ee.jasondl.blog;
 
 import io.quarkiverse.roq.testing.RoqAndRoll;
 import io.quarkus.test.junit.QuarkusTest;
