@@ -1,5 +1,6 @@
 ---
 title: "A Recap of my night at the Oklahoma City JUG"
+aliases: [a-recap-of-my-night-at-the-okcjug]
 date: 2025-03-12
 tags: [ Android, Kotlin Multiplatform]
 type: post
