@@ -18,7 +18,7 @@ This example markup:
 [source,html,linenums]
 -----
 <h3>Normal editor</h3>
-<risb:htmlEditor rows="10" cols="85"  value="#\\{testBean.editorValue}"/>
+<risb:htmlEditor rows="10" cols="85"  value="#\{testBean.editorValue}"/>
 <h3>Simplified editor</h3>
 <risb:htmlEditor rows="10" cols="85" value="#\{testBean.editorValue}" themeStyle="simplified"/>
 <h3>Full editor</h3>
@@ -29,6 +29,6 @@ gets you this:
 
 image:/images/2007/04/htmleditorscreenshot.thumbnail.png[title: "'HtmlEditor Screenshot', link="/images/2007/04/htmleditorscreenshot.png"]
 
-Hopefully, I'll get full support for the editor, but I can't make promises on how quickly that will happen, this being mostly a lunch-time project.
+Hopefully, I'll get full support for the editor, but I can't make promises on how quickly that will happen, this being mostly a lunchtime project.
 
 If you'd like to influence the direction this component goes, now's the time to speak up! :)
