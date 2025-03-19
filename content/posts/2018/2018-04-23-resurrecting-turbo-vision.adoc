@@ -1,0 +1,107 @@
+---
+title: "Resurrecting Turbo Vision"
+date: 2018-04-23
+tags: [TurboVision, Java]
+type: post
+author: Jason Lee
+status: published
+---
+
+If you wrote software on a DOS system in the 80s or 90s, you probably used one of the Borland
+products, Turbo Pascal or Turbo C++, with that beautiful, beautiful blue, mouse-enabled
+text-based user interface (TUI, if you will). Those IDEs were powered by a library called
+Turbo Vision (TV), which Borland documented and published for others to use. I loved it. While
+we all live in a GUI world and there are lots of libraries for building GUIS, I have for
+years now been dying to be able to use TV again, if for no other reason than hard core
+nostalgia. The problem being that I have used C++ in about 2 decades, and, to be honest, I'm 
+not sure I'm too excited about writing even toy apps in the language. Dead end, right? Not so fast.
+
+Enter, stage left: SWIG. SWIG, the Simplified Wrapper and Interface Generator, is a tool for
+building wrappers for libraries written in, say, C or C++, for languages such as Python, PHP, and...
+Java. While it may not be the best option, it's an option, and I've been tinkering with
+it off and on for many, many moons now with the C++ version of the library open source by Borland
+long ago, before they were sold off and the Borland brand quietly disappeared. Tonight, I made 
+*great* progress on it.
+
+// more
+
+First, for those not familiar with Turbo Vision and don't want to google, here's a screen shot
+from one of the examples:
+
+image:/images/2018/tv_demo.png[Turbo Vision Demo, center]
+
+As you can see, it has a menu bar, a status line, and a desktop. It's not demo'd here, but you
+can also create new windows, such as text editor windows for an IDE like Turbo Pascal and Turbo C++.
+The menu items in the menu bar and status line support keyboard activation (like we see in Windows) by 
+pressing Alt plus the highlighted letter. You can also click on the item with your mouse. 
+
+Now having seen what the C++ demo looks like, let's jump ahead a bit and look at the Java code.
+I won't go into the SWIG interface file just yet, though I hope to write about that in detail at some
+point in the future. I'll admit I do like to post rough sketches of things I'm working on (take my 
+Jerkey post, for example) in the open source spirit of "release early, release often". This code, though,
+is seriously ugly and will likely see some major changes as I learn more about the tool throughout 
+the project. At any rate, just assume that I have an interface file that works well enough for now, 
+and here's the Java code using the native library:
+
+[source,java]
+-----
+public class TurboVisionDemo extends TApplication {
+    public TurboVisionDemo() {
+        super();
+    }
+
+    @Override
+    public TStatusLine initStatusLine(TRect r) {
+        r.getA().setY(r.getB().getY() - 1);
+        return new TStatusLine(r, new TStatusDef(0, 0xFFFF)
+                .addItem(new TStatusItem("~Alt-X~ Exit", tvisionJNI.kbAltX_get(), tvisionJNI.cmQuit_get()))
+                .addItem(new TStatusItem("~Alt-F3~ Close Dude", tvisionJNI.kbAltF3_get(), tvisionJNI.cmClose_get())));
+    }
+
+    @Override
+    public TMenuBar initMenuBar(TRect r) {
+        r.getB().setY(r.getA().getY() + 1);
+
+        TSubMenu sub1 = new TSubMenu("~F~ile", kbAltF_get());
+        sub1.addItem(new TMenuItem("~O~pen", 200, kbF3_get(), hcNoContext_get(), "F3"))
+                .addItem(new TMenuItem("~N~ew", 201, kbF4_get(), hcNoContext_get(), "F4"))
+                .addItem(newLine())
+                .addItem(new TMenuItem("E~x~it", cmQuit_get(), cmQuit_get(), hcNoContext_get(), "Alt-X"));
+
+        TSubMenu sub2 = new TSubMenu("~W~indow", kbAltW_get());
+        sub2.addItem(new TMenuItem("~N~ext", cmNext_get(), kbF6_get(), hcNoContext_get(), "F6"))
+                .addItem(new TMenuItem("~Z~oom", cmZoom_get(), kbF5_get(), hcNoContext_get(), "F5"));
+
+        TMenuBar menuBar = new TMenuBar(r, sub1.addSubMenu(sub2));
+        return menuBar;
+    }
+
+    public static void main(String argv[]) {
+        TurboVisionDemo app = new TurboVisionDemo();
+        app.run();
+    }
+}
+-----
+
+This program doesn't do much, but it _does_ recreate the menu and status bars from the
+demo that ships with the library. Here's a screen shot of the app running:
+
+image:/images/2018/tv_java_demo.png[Turbo Vision Demo, center]
+
+Looks familiar, doesn't it? I could have made things a bit easier for myself and just linked to
+the same image, but I didn't because that didn't seem honest. :) There is, though, one difference
+between the two images. Look at that status bar and you should see an extra menu item
+there, "Close Dude" (Don't ask. I was probably tired one night :). Proof that I haven't 
+faked things. :P
+
+As cool as that is (at least, I think it's cool ;), it still doesn't do much, and there's 
+much more to the library to wrap. Sometimes, the wrapping also comes with some changes to the 
+C++ library itself to make it more easily consumed by, in my case, Java, and making those
+changes requires reaching back to my C++ days, and I'm finding those tools very rusty. I am,
+though, having a good time with it, and if all goes as planned, I hope to be able to use the 
+same interface file and produce bindings for, say Python. When all is said and done, though,
+this may never be serious tool, but I'm having a good time learning while I wrap it, and the 
+trip down memory lane is has been fun as well.
+
+If you'd _really_ like to the ugly state this thing is in at the moment, you can find the
+sources on https://bitbucket.org/jdlee/turbovision[Bitbucket]. Just... be kind. :)

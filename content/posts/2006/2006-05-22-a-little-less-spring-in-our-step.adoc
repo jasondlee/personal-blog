@@ -1,0 +1,24 @@
+---
+title: "A Little Less Spring in Our Step?"
+date: 2006-05-22
+tags: [Java]
+type: post
+status: published
+---
+= A Little Less Spring in Our Step?
+Jason Lee
+2006-05-22
+
+
+Friday I had an interesting discussion with my boss, Mitch.  I have been doing a lot of thinking about Java EE 5 and what it offers, and that has me reevaluating some of our technology decisions.  Most notably, which was the bulk of my discussion with Mitch, is, "Do we really need Spring anymore?"
+// more
+
+Currently, the way we use Spring is simply as a way to wire together classes and get us a `HibernateTemplate`.  While that is what it was designed to do, in part, our usage is admittledly likely very basic.  It is that realization, though,  that made me wonder if we need Spring at all.  As I've noted, we've committed to using GlassFish as our application server, which gives us a full JEE stack, something Spring was designed to obivate.  We're also a JSF shop, so we get a pretty decent dependency injection mechanism for free.  Given JSF's IoC/DI, and JEE 5's resource injection, I think we can get the benefits of Spring from the EE environment.
+
+For example, a typical app for us has a JSF-managed bean to back one or views.  Through `faces-config.xml`, we create a `ServiceLocator` class that creates the Spring `ApplicationContext` and exposes one or more methods to retrieve our "service" objects from the Spring Context.  We wire that into each JSF-managed bean, so we can then push all DI off on to our Spring configuration.  In `applicationContext.xml`, we create beans for various business method functionalities as well as our DAO layer, wiring everything together as appropriate.
+
+Enter JEE 5, stage left.  One of the features I'm looking forward to using in EE 5 is the Java Persistence API.  JPA will give us a container-/provider-agnostic way of mapping our domain objects to database tables.  As we migrate to using JPA in lieu of Hibernate, the `HibernateTemplate` becomes less and less useful.  Furthermore, since an EE 5 container can inject the Entity Manager resource, we don't need Spring to manage our Hibernate `SessionFactory` anymore, so we can remove both of those objects (as well as many of their dependencies) from the Spring config.
+
+The way I see it, we can also handle our service objects differently in at least a couple of different ways.  My first though was that we could have JSF manage those beans for us.  We could configure them in the `faces-config.xml` (or split them out into a separate file and add that to the JSF config in `web.xml`) and just wire them into the backing beans as appropriate.  While that will work, we still have to manage that mapping manually, which is a bit of a bore sometimes.  An alternate approach (which I'll confess I've not thought through fully) is to annotate and deploy our service beans as session beans, stateful or stateless as appropriate, and use the EE 5 container's resource injection mechanism to inject the beans into the backing beans at run-time.  That would simplify our XML, as well as decreasing the complexity of our backing beans, even if just slightly.
+
+So, with the injection of Entity Managers for DAOs, and sessions beans for our service layers, where does that leave Spring?  We don't need it in the DAO layer anymore, nor do we need it to tie our view and service layers together anymore.  Does that make it completely useless to us?  Not necessarily, as we occasionally have to use JDBC, and the `JDBCTemplate` is really nice.  But, for the bulk of the heavy lifting, that puts Spring in the same position I was in junior high sports:  on the side watching and wishing.  We haven't made the decision to pull the plug on Spring yet, but it has been placed on our "do we really need this technology list."  Time will tell if my hunch is correct and if we can put Spring out to pasture.  It's not that we hate you Spring, but EJB3 is not EJB2.  Not by a long shot.

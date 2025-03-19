@@ -1,0 +1,14 @@
+---
+title: "Mojarra 2.0 hits FCS"
+date: 2009-10-19
+tags: [JSF]
+type: post
+status: published
+---
+= Mojarra 2.0 hits FCS
+Jason Lee
+2009-10-19
+
+Ryan Lubke http://blogs.sun.com/rlubke/entry/mojarra_2_0_0_is[announced today] the availability of the first production-ready JSF 2 implementation with the release of Mojarra 2.0.  You can download the binaries directly from https://javaserverfaces.dev.java.net/[java.net], or, use the information Ryan posted for https://javaserverfaces.dev.java.net/maven2.html[specifying a dependency] in your Maven pom file.
+
+Congrats to (the rest of) the Expert Group and, of course, the Mojarra development team (http://blogs.sun.com/rlubke[Ryan], http://weblogs.java.net/blog/driscoll[Jim], http://weblogs.java.net/blog/edburns[Ed] and http://weblogs.java.net/blog/rogerk[Roger]).

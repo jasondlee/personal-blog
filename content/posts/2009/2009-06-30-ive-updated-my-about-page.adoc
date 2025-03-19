@@ -1,0 +1,12 @@
+---
+title: "I&#039;ve Updated My About Page"
+date: 2009-06-30
+tags: [Java]
+type: post
+status: published
+---
+= I&#039;ve Updated My About Page
+Jason Lee
+2009-06-30
+
+I should note here, for those that don't follow me on http://www.twitter.com/jasondlee[Twitter], that I have updated and expanded my link:about[About] page, for those that are interested in that sort of thing.  A word of warning: There's some personal stuff in there! :)

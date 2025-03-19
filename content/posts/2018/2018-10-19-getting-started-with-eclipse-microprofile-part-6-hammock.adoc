@@ -1,0 +1,145 @@
+---
+title: "Getting Started with Eclipse MicroProfile, Part 6: Hammock"
+date: 2018-10-19
+tags: [Java EE, MicroProfile]
+type: post
+author: Jason Lee
+status: published
+---
+
+This time around, we're going to start looking at a slightly different take on MicroProfile implemenations. Whereas
+Payara Micro, Thorntail, OpenLibery, and TomEE are all based on application servers (albeit stripped down versions), our
+implementation in this post, https://hammock-project.github.io/[Hammock], is based on a CDI container. Rather than start
+what amounts to an app server under which a web is deployed, we'll be spinning up a plain ol' CDI container, which will
+look for CDI beans to load/start/etc. That may sound weird, and I may not be describing it clearly, so let's just jump in
+to the code and take a look.
+
+// more
+
+https://hammock-project.github.io/[Hammock], as I noted above, is a CDI-based MicroServices framework. I should note that, as best
+as I can tell, while it supports MicroProfile features, I'm not entirely sure which version (seems to be 1.2), and it
+seems that Hammock is not a certified MicroProfile implementation (i.e., it doesn't seem to have passed the TCKs, but
+I'm more than happy to be proven wrong). All that said, it seems to be a great (and FAST) deployment option.
+
+As usual, we'll start with our POM:
+
+[source,xml]
+-----
+<packaging>jar</packaging>
+
+<properties>
+    <version.hammock>2.1</version.hammock>
+</properties>
+
+<dependencies>
+    <dependency>
+        <groupId>ws.ament.hammock</groupId>
+        <artifactId>dist-microprofile</artifactId>
+        <version>2.1</version>
+    </dependency>
+    <dependency>
+        <groupId>$\{project.groupId}</groupId>
+        <artifactId>common</artifactId>
+        <version>$\{project.version}</version>
+    </dependency>
+</dependencies>
+-----
+
+The eagle-eyed among us may notice something peculiar: our packaging is `jar`. In large part, this doesn't really affect
+how the app is built, but it's an interesting difference. We include *one* dependency to pull in Hammock's MicroProfile
+distribution, and we're off the to races. Almost. Like other demos, most of the heavy lifting is done with a
+build plugin:
+
+[source,xml]
+-----
+<plugin>
+    <groupId>com.github.chrisdchristo</groupId>
+    <artifactId>capsule-maven-plugin</artifactId>
+    <executions>
+        <execution>
+            <goals>
+                <goal>build</goal>
+            </goals>
+            <configuration>
+                <appClass>ws.ament.hammock.Bootstrap</appClass>
+                <type>fat</type>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+-----
+
+Here, at the suggestion of the https://hammock-project.github.io/guides/gettingstarted.html[Hammock documentation],
+we're using the Capsule Maven plugin to build a fat jar, specifying `ws.ament.hammock.Bootstrap` as our application's
+entry point. This class takes care of starting the CDI container (as well as integrating with JAX-RS runtimes, etc.) and
+leaves us with a running service ready to answer calls:
+
+[source,bash]
+-----
+# mvn install
+...
+# java -jar target/hammock-1.0-SNAPSHOT-capsule.jar
+...
+17:53:07.928 [main] INFO  ws.ament.hammock.HammockRuntime - Starting webserver on http://jdlee:8080
+...
+# curl http://localhost:8080
+Hello, world
+# curl http://localhost:8080/?name=Hammock
+Hello, Hammock
+-----
+
+Beautiful, no?
+
+Testing here is a bit different as well. I was unable to find any sort of Arquillian support for Hammock,
+but that doesn't mean it's not testable:
+
+[source,java]
+-----
+public class HammockTest {
+    private static Bootstrapper bootstrapper;
+    @BeforeClass
+    public static void setup() {
+        bootstrapper = ServiceLoader.load(Bootstrapper.class).iterator().next();
+        bootstrapper.start();
+    }
+
+    @AfterClass
+    public static void shutdown() {
+        if (bootstrapper != null) {
+            bootstrapper.stop();
+        }
+    }
+
+    @Test
+    public void shouldSayWorld() throws URISyntaxException, IOException {
+        requestAndTest(new URI("http://localhost:8080"), "Hello, world");
+
+    }
+
+    @Test
+    public void shouldSayHammock() throws URISyntaxException, IOException {
+        requestAndTest(new URIBuilder(new URI("http://localhost:8080"))
+                        .setParameter("name", "Hammock")
+                        .build(),
+                "Hello, Hammock");
+    }
+
+    private void requestAndTest(URI uri, String s) throws IOException {
+        try (CloseableHttpResponse response = HttpClients.createMinimal().execute(new HttpGet(uri))) {
+            Assertions.assertThat(EntityUtils.toString(response.getEntity()))
+                    .isEqualTo(s);
+        }
+    }
+}
+-----
+
+In our `@BeforeClass` and `@AfterClass` methods, we simply start and stop the server programmatically. The tests look
+exactly like the ones we've seen prior.
+
+And that's all there is to it. I should note that I have not pressed Hammock very hard, so I don't know how it will differ
+with things like JPA, DataSources/ConnectionPools, etc. that other implementations may offer out of the box. Granted, those
+things aren't MicroProfile APIs, so if your app uses them, it's on you to make sure they're available at runtime. It may be,
+then, that your application requires a bit more configuration and dependency management with Hammock than it would with, say,
+Payara Micro. I just don't know enough to give any guidance on that. Maybe John Ament can chime in. :)
+
+That's all for now. Next time, we'll look at a new entry from Oracle, of all places, https://helidon.io/[Helidon].

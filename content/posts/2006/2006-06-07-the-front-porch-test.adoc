@@ -1,0 +1,18 @@
+---
+title: "The Front Porch Test"
+date: 2006-06-07
+tags: [General]
+type: post
+status: published
+---
+= The Front Porch Test
+Jason Lee
+2006-06-07
+
+Everyone knows that one of the most important things a software project is a good name, but coming up with a good name is not easy.  To help with the process, we apply what my boss, Mitch, refers to as the front porch test, which is actually a rule of thumb from the pet world.  It goes like this:  
+
+_____
+When picking a name for a dog, imagine yourself standing on the front porch yelling the dog's name out into the neighborhood.  If you think you'd feel like an idiot yelling that name, then choose something else.
+_____
+
+Replace "dog" with "program" and you should get the idea.

@@ -1,0 +1,18 @@
+---
+title: "JSFTemplating: Announcing beta support for Facelets templates"
+date: 2007-06-07
+tags: [JSFTemplating]
+type: post
+status: published
+---
+= JSFTemplating: Announcing beta support for Facelets templates
+Jason Lee
+2007-06-07
+
+The https://jsftemplating.dev.java.net/[JSFTemplating] team is proud to announce that a new, Facelets-compatible format has been added to JSFTemplating and has reached the beta stage.  Not all of the Facelets components are currently supported; those that are currently supported are `ui:component`, `ui:decorate`, `ui:include`, `ui:define`, and `ui:remove`, with the addition of a new `ui:event`, which brings the power of JSFTemplating's events to this new Facelets format.  In addition other JSFTemplating features are also available to Facelets pages, such as "pageSession" (i.e. `#\{pageSession.variable}`) and ability to reference relative information like `$this\{componentId}`.
+
+Please remember that this _is_ beta software, but should be stable enough to support the basic Facelets functionality (note that we do not yet have support for Facelets tag handlers, etc).  Should you find a bug in this new format, please file an issue against it on the issue https://jsftemplating.dev.java.net/issues/enter_bug.cgi?issue_type: DEFECT&amp;subcomponent=Facelets+Format[tracker].
+
+If you would like to see a demo of the functionality, we have deployed an http://www.jsftemplating.org/FaceletsDemo/[application] that shows the exact same templates as processed by Facelets itself as well as JSFTemplating, thus showing how well the implementations match up.  As the implementation matures, this application will be updated to show the current state.
+
+If you have questions or comments, please join the discussion on the https://jsftemplating.dev.java.net/servlets/ProjectMailingListList[dev mailing list].  You might also be able to catch one of the developers on irc.freenode.net in #jsftemplating.

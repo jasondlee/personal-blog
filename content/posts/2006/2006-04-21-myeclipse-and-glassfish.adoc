@@ -1,0 +1,27 @@
+---
+title: "MyEclipse and GlassFish"
+date: 2006-04-21
+tags: [Java]
+type: post
+status: published
+---
+= MyEclipse and GlassFish
+Jason Lee
+2006-04-21
+
+My shop has adopted MyEclipse as the standard development environment.  Our recent adoption of GlassFish, though, makes things a little difficult for MyEclipse (and likely Eclipse in general) as integration with the app server has not yet landed in any GA release that I'm aware of.  This difficulty, however, is not insurmountable.  Let's take a look at how to debug a GlassFish-hosted application using (My)Eclipse.
+// more
+
+Obviously, to start, you'll need MyEclipse and GlassFish installed.  Their respective web sites cover that, so I won't here.  The only change you'll need to make to GlassFish is to enable debugging.  To do that, log on the http://localhost:4848[admin console], and navigate to Application Server->JVM Settings->General.  On this page, you'll first need to make sure that the Enabled checkbox on the Debug line is checked.  In the next field, Debug Options, make a note of the value for the "address=" portion.  That will be the port that we give to MyEclipse.  Click Save to commit your changes, and let's move on to MyEclipse.
+
+As things stand now, MyEclipse does not have a connector for GlassFish.  It does, however have one for SJSAS 8.1, which is close enough for our needs.  We'll start by configuring that.  Open the preferences dialog (Window->Preferences), and expand the MyEclipse branch on the left of the dialog.  You should now see an "Application Servers" branch.  Expand that and find and select "Sun Java Application Server Edition 8.1."  On this tab fill out the information it asks for, making sure to select Enabled at the top.  Before clicking OK, select JDK under "Sun Java Application Server Edition 8.1" on the left.  Make sure a JDK and not a JRE is selected, then click OK.
+
+Now, you'll need to create a "Remote Java Application" for each application you want to debug.  To do this, go to Run->Debug... In the dialog that appears, select "Remote Java Application" on the left, and click New.  In the Name field, enter the name of the application, then select the project by clicking on the Browse... button.  The only other change you'll need to make is to change the port under Connection Properties to what you noted from the GlassFish configuration, which is most likely 9009.  Switch to the Common tab, and check Debug in the "Display in favorites menu" box.  Hit apply, then close the window.
+
+You will now need to tell MyEclipse to deploy the application to GlassFish.  To do this, right click the project and select MyEclipse->Add and Remove Project Deployments... Make sure the desired project is selected in the drop down, then click Add.  Under Server, select Sun Java Application Server  8.1 / 8.2, select Packaged Archive, and click Finish.  MyEclipse will then build and deploy the WAR file to GlassFish.  Once that finishes, click OK.
+
+You are now ready to debug your application by clicking the down arrow by the bug in the tool bar at the top and selecting the application you just configured.  MyEclipse will attach to your local GlassFish application, and stop execution at any breakpoint you may have set.  Switch to your favorite browser &lt;subliminal&gt;http://getfirefox.com[Firefox]&lt;/subliminal&gt; and point it http://localhost:8080/foo[], where foo is the desired context root.
+
+The only "big" issue I've found so is that it appears that you have to manually redeploy your app when you make changes.  This doesn't appear to be required when deploying as an exploded archive, but I've had bad luck with that under GlassFish for reasons I haven't taken the time to track down.
+
+So there you have it.  The process isn't perfect, but it should at least get you going until MyEclipse finishes the promised GlassFish connector currently in the works.

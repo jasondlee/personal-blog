@@ -1,0 +1,472 @@
+---
+title: "Seam and JPA/Hibernate on OC4J 10.1.3"
+date: 2007-10-17
+tags: [EJB3, Hibernate, JSF, JPA, Maven, OC4J, Seam]
+type: post
+status: published
+---
+= Seam and JPA/Hibernate on OC4J 10.1.3
+Jason Lee
+2007-10-17
+
+On a recent project, the architecture we settled on included JavaServer Faces (no surprise, there, I guess:), JBoss Seam and JPA.  The production environment is Oracle's OC4J, so the stack we chose has to deploy (easily) to that container.  While I did get it working, it wasn't easy, nor was it easily reproducible.  Now that the pressures of deadlines have passed, I took the time to track down what exactly needs to be done to make the application deploy and run on OC4J.  In retrospect, it doesn't look that hard, but, knowing the pain I went through to make it work, I thought I'd share what you need to know if you're in a similar situation.
+// more
+
+Quick Links
+-----------
+* link:#parent[Parent POM]
+* link:#ejb[EJB POM]
+* link:#webapp[Web App POM]
+* link:#ear[Ear POM]
+* link:#jpa[JPA Configuration]
+* link:#orion[OC4J Application File]
+
+While I was at it, I thought I'd reconstruct my build environment using Maven 2.  Doing so will eventually allow me to create an archetype with which I can bootstrap new projects.  With that in mind, I created a multi-module Maven project with an "EJB" module, a web module, and an EAR module.  The "EJB" module isn't a "real" EJB module, in that it doesn't have any EJBs in right.  The business/service layer classes it does have use Seam annotations to expose the functionality to the web tier.  The web module contains the web-related Faces-managed beans (think backing beans), and the ear module simply packages everything in an EE5-compliant ear file for deployment.  Here are the Maven POM files:
+
+[[parent"]]
+/pom.xml:
+[source,xml,linenums]
+-----
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.steeplesoft</groupId>
+    <artifactId>refImpl</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <name>refImpl</name>
+    <url>http://maven.apache.org</url>
+    <repositories>
+        <repository>
+            <id>java.net</id>
+            <url>http://download.java.net/maven/1</url>
+            <layout>legacy</layout>
+        </repository>
+        <repository>
+            <id>jboss-snapshot</id>
+            <name>The JBoss maven repo</name>
+            <url>http://snapshots.jboss.org/maven2</url>
+        </repository>
+    </repositories>
+    <parent>
+        <groupId>org.jboss.seam</groupId>
+        <artifactId>parent</artifactId>
+        <version>2.0.0.CR2</version>
+    </parent>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.4</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <modules>
+        <module>ejb</module>
+        <module>web</module>
+        <module>ear</module>
+    </modules>
+    <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+-----
+
+[[ejb]]
+ejb/pom.xml:
+[source,xml,linenums]
+-----
+<project>
+    <parent>
+        <groupId>com.steeplesoft</groupId>
+        <artifactId>refImpl</artifactId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.steeplesoft.refImpl</groupId>
+    <artifactId>ejb</artifactId>
+    <name>ejb</name>
+    <version>1.0</version>
+    <packaging>ejb</packaging>
+    <url>http://maven.apache.org</url>
+    <build>
+        <finalName>myproj-ejb</finalName>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>1.2_05</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>1.2_05</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.seam</groupId>
+            <artifactId>jboss-seam</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.faces</groupId>
+                    <artifactId>jsf-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.faces</groupId>
+                    <artifactId>jsf-impl</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.seam</groupId>
+            <artifactId>jboss-el</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.el</groupId>
+                    <artifactId>el-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.1</version>      
+            <scope>test</scope>   
+        </dependency>   
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.3.1.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.3.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search</artifactId>
+            <version>3.0.0.GA</version>
+            <scope>runtime</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>jboss</groupId>
+            <artifactId>jboss-archive-browsing</artifactId>
+            <version>5.0.0alpha-200607201-119</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+</project>
+-----
+
+[[webapp]]
+web/pom.xml:
+[source,xml,linenums]
+-----
+<project>
+    <parent>
+        <groupId>com.steeplesoft</groupId>
+        <artifactId>refImpl</artifactId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.steeplesoft.refImpl</groupId>
+    <artifactId>web</artifactId>
+    <name>web</name>
+    <version>1.0</version>
+    <packaging>war</packaging>
+    <url>http://maven.apache.org</url>
+    <build>
+        <finalName>myproj-web</finalName>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.steeplesoft.refImpl</groupId>
+            <artifactId>ejb</artifactId>
+            <version>1.0</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>jsr250-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>8.2-504.jdbc3</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.seam</groupId>
+            <artifactId>jboss-seam</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.faces</groupId>
+                    <artifactId>jsf-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.faces</groupId>
+                    <artifactId>jsf-impl</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.seam</groupId>
+            <artifactId>jboss-el</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.seam</groupId>
+            <artifactId>jboss-seam-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.framework</groupId>
+            <artifactId>richfaces-impl</artifactId>
+            <version>3.1.1-GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.framework</groupId>
+            <artifactId>richfaces-api</artifactId>
+            <version>3.1.1-GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.ui</groupId>
+            <artifactId>richfaces-ui</artifactId>
+            <version>3.1.1-GA</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>sandbox</artifactId>
+            <version>0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>3.0.0.GA</version>
+            <scope>runtime</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.ws</groupId>
+            <artifactId>jaxws-api</artifactId>
+            <version>2.1</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.facelets</groupId>
+            <artifactId>jsf-facelets</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>1.2_05</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>1.2_05</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
+            <version>1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1-jboss</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>el-impl</groupId>
+            <artifactId>el-impl</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+</project>
+-----
+
+[[ear]]
+ear/pom.xml:
+[source,xml,linenums]
+-----
+<project>
+    <parent>
+        <groupId>com.steeplesoft</groupId>
+        <artifactId>refImpl</artifactId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.steeplesoft.refImpl</groupId>
+    <artifactId>ear</artifactId>
+    <name>ear</name>
+    <version>1.0</version>
+    <packaging>ear</packaging>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+        <dependency>
+            <groupId>com.steeplesoft.refImpl</groupId>
+            <artifactId>web</artifactId>
+            <version>1.0</version>
+            <scope>runtime</scope>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>myproj</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <modules>
+                        <webModule>
+                            <groupId>com.steeplesoft.refImpl</groupId>
+                            <artifactId>web</artifactId>
+                            <contextRoot>myproj</contextRoot>
+                        </webModule>
+                    </modules>
+                    <resourceDir></resourceDir>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+-----
+
+It should be noted that this is my first real project with Maven.  There are likely things done in these POMs that don't make sense.  Feel free to correct me, but please be kind. :)
+
+Note that I'm using Hibernate, and not Toplink Essentials, even though I'm deploying to an Oracle application server.  I tried to use TLE -- I really did -- but I just couldn't get it work reliably.  Hibernate did, so it won.
+
+Probably the biggest issue was figuring out what Seam and Hibernate need.  I started with seam-gen and create a <i>really</i> basic Seam app.  I ripped out all of the "extraneous" things, like security, drools, persistence, etc., and deployed the app to GlassFish to make sure it worked.  Once I got it working there, I deployed to OC4J, looked to see which class was missing, and added it to the POM.  Lather.  Rinse. Repeat.  
+
+[[jpa]]
+The persistence configuration is pretty basic, but I did have to make one change (that I'm not sure I like) to make DB access not blow up:
+
+[source,xml,linenums]
+-----
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="em">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<non-jta-data-source>jdbc/SeamTest</non-jta-data-source>
+		<!-- ... -->
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.OC4JTransactionManagerLookup"/>
+		</properties>
+	</persistence-unit>
+</persistence>
+-----
+
+[[orion]]
+There is one extra configuration step you will need if you are planning on using the JSF 1.2 reference implementation (which the Seam developers recommend, and I wholeheartedly do as well ;).  Oracle ships its own XML parser -- an artifact that, I'm guessing, predates the inclusion of such a library in the JDK.  Ordinarily, this likely would not be a problem, except that, starting with 1.2_05, the JSF RI depends on JAXP 1.3; OC4J supports only http://www.oracle.com/technology/tech/java/oc4j/10131/OracleAS-NF-10131.pdf[JAXP 1.2].  Since I'm dpeloying to a JDK 5 environment, I don't need to bundle the library with my app, but I do need to tell OC4J not to use its own parser.  This is done with orion-application.xml, which I placed in `ear/src/main/application/META-INF`:
+
+[source,xml,linenums]
+-----
+<orion-application 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="http://xmlns.oracle.com/oracleas/schema/orion-application-10_0.xsd" 
+    deployment-version="10.1.3.1.0" default-data-source="jdbc/OracleDS" component-classification="external"
+    schema-major-version="10" schema-minor-version="0" >
+    <imported-shared-libraries>
+        <remove-inherited name="oracle.toplink"/>
+        <remove-inherited name="oracle.persistence"/>
+        <remove-inherited name="oracle.xml"/>
+        <remove-inherited name="oracle.xml.security"/>
+    </imported-shared-libraries>
+</orion-application>
+-----
+
+This file tells OC4J not to import into my application its Toplink, persistence, XML, and XML security libraries.  The other three libraries may not need to be listed, but they were added at one point in my experimentation and do not appear to be hurting anything, so I have left them in.
+
+Debu Panda http://debupanda.blogspot.com/2007/01/using-hibernate-as-pluggable-ejb-3-jpa.html[shows] how to use Hibernate as a pluggable EJB3 JPA provider by configuring Hibernate as a shared library and importing that library into your application via orion-application.xml, but I'm not a real big fan of that approach, as it requires a change to the server, and it has been my experience that administrators are loathe to do things like that.  Using the POMs and dependencies above, Hibernate is bundled with the application and works as the JPA provider without server alterations, so that's a much more palatable approach in my books.  Debu's way <i>does</i> work, though, if you prefer that.  If you choose to go that route, make sure you mark the Hibernate library in your POM as being provided:
+
+[source,xml,linenums]
+-----
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-entitymanager</artifactId>
+    <version>3.3.1.GA</version>
+    <scope>provided</scope>
+</dependency>
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-annotations</artifactId>
+    <version>3.3.0.GA</version>
+    <scope>provided</scope>
+</dependency>
+-----
+
+That should be all there is to it (assuming I did not forget to copy something).  If you have any issues with any of this, or, perhaps, some cleanups that can be made, I'd certainly love to hear your feedback.
+
+Enjoy!

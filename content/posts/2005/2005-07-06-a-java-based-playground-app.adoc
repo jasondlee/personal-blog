@@ -1,0 +1,21 @@
+---
+title: "A Java-based 'Playground' App"
+date: 2005-07-06
+tags: [Java]
+type: post
+status: published
+---
+= A Java-based 'Playground' App
+Jason Lee
+2005-07-06
+
+As I've noted http://blogs.steeplesoft.com/2005/03/28/to-php-or-not-to-php[earlier], I've been debating whether or not I should continue PHP development and move to only Java.  Part of the process has included writing a web application using some of the newer Java libraries...
+// more
+
+What I needed was something simple to help me try out some of the newer (at least to me) Java libraries.  What I came up with is a wish list application.  There is no telling how many times my wife and I saw a movie, book, CD, etc. that we thought that we would like to get but didn't have the "mad money" to do so at the time, then forgot about by the time we had the cash for a frivolous purchase (or rental).  I kept telling myself that I needed a way to track that, so, finally, Wish List was born.  It's a simple app.  It lists items that are on the wish list.  If one authenticates, items and types can be added and edited.  It currently supports only one wish list, a restrication that may or may not change in the future.  Source for this application can be found http://svn.steeplesoft.com/java/WishList/trunk[here].
+
+Bear in mind that this is a learning project, so it is likely overengineered and quite possibly poorly implemented.  At any rate, the techonologies used in this app are http://www.hibernate.org/[Hibernate], http://springframework.org/[Spring], and http://java.sun.com/j2ee/javaserverfaces/[JavaServer Faces].  While I've used Hibernate before, I've taken this opportunity to use it as heavily as I can (given the simple schema) to get a better handle on foreign key handling and the like.  Spring and JSF are both new to me, and, so far, I'm in love.  I'll not going into details why here (you can read their respective web sites for that), but they really make web development easier.  Very cool technologies.  I've also used the DAO and Service patterns (I _may_ have just made up those pattern names :) to help abstract things a bit.
+
+So where does that leave things?  Right now, things aren't looking too good for PHP.  PHP is a great language and allows you to build things extremely quickly, but the lack of a VM makes certain programming practices impractical for a large application.  Java, on the other hand, does not have that limitation, but the code, build, test cycle is longer than that for PHP, though that's not something I'm completely averse to.  The main problem with switching to all Java development is a practical one:  I have a good deal of PHP code that would have to be rewritten, or I'd have to find a hoster that supports both and doesn't cost a fortune.
+
+So... No decision yet, but if I found a good hoster, that might change things.  Time will tell.  At any rate.. Download the code and take a look at it.  It's not in any real shape for deployment, as the database has to be created manually and a default user (MD5 password and all) would have to be manually added, but you can at least browse the code.  If I get time, I'll add some code to initialize the environment as best I can.

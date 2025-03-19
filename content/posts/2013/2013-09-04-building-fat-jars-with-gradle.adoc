@@ -1,0 +1,30 @@
+---
+title: "Building \"Fat Jars\" with Gradle"
+date: 2013-09-04
+tags: [Gradle]
+type: post
+status: published
+---
+= Building \"Fat Jars\" with Gradle
+Jason Lee
+2013-09-04
+
+
+Sometimes, such as when building command line Java apps, it would be nice to bundle all of the app's dependencies in a single jar so that the user need not collect and manage these.  With Gradle, that can be easily accomplished with the following lines:
+
+.build.gradle
+[source,groovy,linenums]
+-----
+jar {
+    from {
+        configurations.compile.collect { 
+            it.isDirectory() ? it : zipTree(it) 
+        }
+        configurations.runtime.collect { 
+            it.isDirectory() ? it : zipTree(it) 
+        }
+    }
+}
+-----
+
+When you run `gradle assemble`, you should find your now very hefty jar in `build/libs`.

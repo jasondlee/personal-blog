@@ -1,0 +1,19 @@
+---
+title: "The Mojarra Scales Demo Has Moved"
+date: 2009-11-02
+tags: [Components, Java, JSF, Scales]
+type: post
+status: published
+---
+= The Mojarra Scales Demo Has Moved
+Jason Lee
+2009-11-02
+
+
+With the recent migration of http://kenai.com/projects/scales/pages/Home[Mojarra Scales] to https://javaserverfaces.dev.java.net[JSF 2], the old location of the Mojarra Scales demo was no longer adequate (upgrading that server posed some issues).  For that reason, I have moved the demo to a http://demo.steeplesoft.com/mojarra-scales-demo/index.jsf[new home].  This server should be more up-to-date (both in terms of the application as well as the application server -- which is http://glassfish.org[GlassFish v3], of course -- that runs it).  When accessing the application, please keep in mind that it's on an old server that's running on an AT&T U-verse line, and the download times will reflect that. :)
+
+I'd also like to not that this showcases a couple of new components at the moment.  I've begun an implementation of the http://developer.yahoo.com/yui/datatable/[YUI data table widget].  At the time of this posting, basic table functions work, including client-side sorting.  More complex functionality, such as Ajax updates, are in the offing.  
+
+Another new component, which the demo uses extensively, is the excellent http://alexgorbatchev.com/wiki/SyntaxHighlighter[SyntaxHighligher] script from Alex Gorbatchev.  The demo uses this new component to show the page source for each demo, finally allowing you to see a given component in action, as well seeing the page markup that makes those components.  The demo is still in flux, so some things aren't quite "perfect" yet.  For example, Safari really hates the markup the demo produces, which is a bug in the demo application itself.  Hopefully, that will soon be fixed.  For now, Safari users will need to use another http://getfirefox.org[browser].
+
+As I've noted, Scales has been migrated to JSF 2.  While most components are working as expected, there are likely some minor issues to work out.  If you run into any of these issues, or if you'd like to see extra functionality in any of the components, please feel free to file an issue on the Scales http://kenai.com/jira/browse/SCALES[issue tracker] on the Kenai project site.

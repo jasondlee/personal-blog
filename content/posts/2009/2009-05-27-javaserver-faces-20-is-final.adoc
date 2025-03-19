@@ -1,0 +1,12 @@
+---
+title: "JavaServer Faces 2.0 Is Final!"
+date: 2009-05-27
+tags: [JSF, JCP, Mojarra]
+type: post
+status: published
+---
+= JavaServer Faces 2.0 Is Final!
+Jason Lee
+2009-05-27
+
+See the Executive Committee for SE/EE vote http://jcp.org/en/jsr/results?id=4939[here].  Download Mojarra, the reference implementation, https://javaserverfaces.dev.java.net/servlets/ProjectDocumentList?folderID=11414[here].

@@ -1,0 +1,20 @@
+---
+layout: default
+title: Tags
+---
+
+{% assign tags = "" | split: ","  %}
+{% for tag in site.tags %}
+{% assign t = tag | first %}
+{% assign tags = tags | push: t %}
+{% endfor %}
+{% assign tags = tags | sort_natural %}
+
+<ul>
+    {% for tag in tags %}
+    <li>
+        {% assign t = tag | downcase | replace: " ", "-" %}
+        <a href="/tag/{{t}}">{{ tag }}</a> - {{ site.tags[tag] | size }} Posts
+    </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,24 @@
+---
+title: "Book Review: Practical RichFaces"
+date: 2009-04-21
+tags: [Components, JSF, Reviews]
+author: Jason Lee
+type: post
+status: published
+---
+= Book Review: Practical RichFaces
+
+One of the great strengths and successes, I think, of the JavaServer Faces specification is the proliferation of third party components.  One of the older and better known component sets is RichFaces, which started out under a company called Exadel and is now part of JBoss.  For many, RichFaces is the first add-on component set for a new JSF project, and with good reason.  I recently had the opportunity to serve as a technical reviewer on Max Katz's _http://apress.com/book/view/1430210559[Practical RichFaces]_ from Apress.  Read on for my review of the book.
+// more
+
+image::http://apress.com/resource/bookcover/9781430210559?size=medium[alt="Practical RichFaces by Max Katz" align="left" style="width: 175px; padding: 10px;"]
+
+First off, let me cut to the chase for those of you that just want the bottom line.  I really liked this book.  I think Max did a great job of covering the material in a very approachable manner.  One might argue that all of this information is already available online, but I think Max did a great job of coalescing all of that information into one very readable book.  Personally, as convenient as online resources are, I still prefer reading printed pages when I'm really trying to understand something.  I think this is one of those books that's worth the money to purchase, as it has all one needs to get a good handle on the library.
+
+The book is basically in three sections.  After a short and not-too-in-depth introduction to JSF, the sections cover Ajax, the UI components, and skinning.  I like that he starts off with the Ajax4Jsf (or a4j) components.  In my mind, a4j is still _the_ Ajax component set for JSF.  While there are other JSF solutions, a4j established itself early as a solid and reliable Ajax framework for JSF, and has, I think, aged really well.  Starting with, if I recall correctly, the 3.x line of RichFaces, a4j is part of the RichFaces library.  That doesn't mean you _have_ to use the RichFaces UI components in your app, but they're there if you need them.  At any rate, Max walks through each of the a4j components, explaining what they do and how to use them, as well covering some of the more <a title: "Is that the right word? :)">esoteric</a> attributes such as `ajaxSingle` and `process`.   In chapter 4, he covers some more advanced topics like controlling traffic with queues and Ajaxy user input validation.  This section alone may be worth the price of the book."
+
+The next section deals with the visual components offered by RichFaces.  Among the myriads of JSF component sets, RichFaces is one of the most complete sets on the market.  In addition to the excellent Ajax support, RichFaces offers everything from in-place edits (`rich:inplaceInput`) to panels (`rich:panel`) to pick lists (`rich:pickList`) to trees (`rich:tree`).  In this section of the book, which spans six chapters, Max covers each of the components, giving clear, simple examples of how to use each.  With screen shots and sample code, you should have all you need to get up to speed on each of these components.
+
+The final section of the book covers the skinning support in RichFaces.  In addition to the ten built-in skins and three add on skins, RichFaces exposes a means for creating your own.  While he doesn't show each and every CSS class and HTML DOM ID a skin author would need to know, he does show where to find those in the official documentation, and covers the basics needed for starting and wiring in a custom skin.  For a component set as complex and comprehensive as RichFaces, to have such careful attention given to changing the look and feel is quite a nice feature.  This section should give you a good push in the right direction for taking advantage of that capability.
+
+As I noted at the beginning, I really liked this book.  I think it was well and clearly written.  The material was covered in an easily consumable manner, managing to avoid the tendency to get buried in technical details that may not be immediately relevant (such as an in-depth discussion of the JSF lifecycle that plagues so many JSF resources).  Whether you want a good resource for the excellent Ajax4Jsf library or a solid reference on the visual RichFaces components, I think you'd be well served by picking up a copy of this book.

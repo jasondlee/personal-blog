@@ -1,0 +1,159 @@
+---
+title: "JSF, PhaseListeners, and GET Requests"
+date: 2006-04-25
+tags: [JSF]
+type: post
+status: published
+---
+= JSF, PhaseListeners, and GET Requests
+Jason Lee
+2006-04-25
+
+*UPDATE:*  For a missing piece of code, please see this link:/2006/05/08/facesutil-a-missing-yet-important-piece[entry].
+
+In one of our applications at work, we needed to be able to deep link to certain pages to allow external applications to get at specific pieces of data, product and order information to be specific.  Since JSF 1.x does not support HTTP GET requests, this poses a problem.  In order to get (no pun intended) information to the backing bean for processing, the data would have to be POSTed.  This obviously makes bookmarking the resulting page useless.  Our initial solution was to write a servlet filter which would get a reference to the current FacesContext, then get a reference to the appropriate JSF managed bean, and pump data into it.  This actually worked rather well, but, at Ed Burns' suggestion, I decided to reimplement this a JSF PhaseListener (many thanks to Ryan Lubke for his help!).  A PhaseListener is "an interface implemented by objects that wish to be notified at the beginning and ending of processing for each standard phase of the request processing lifecycle."
+// more
+
+At any rate, what I was able to do is register a PhaseListener to execute on the RESTORE VIEW phase (for a GET request, the only two phases that run are the RESTORE VIEW and RENDER RESPONSE phases).  In a nut shell, what the beforePhase() method does is this:
+* Get the Request URI and break it into parts.  The URI is expected to be in the format /Context/application/parm1/parm2/parm3/...
+* The "application" is extracted from the URI, and the rest is passed off to the appropriate handler
+* Inside the handler, a reference to the managed bean for the "application" is retrieved from the FacesContext
+* As appropriate for each handler, data is pulled from the URI and injected, via setters, into the managed bean
+* The ViewRoot is set for the appropriate output page.  If this is not done, the server will return a 404, as /Context/application does not exist on the filesystem.
+* The method returns, as does beforePhase(), and the lifecycle is completed.
+
+What comes out the other end is the expected pages, just as if someone had filled out a form and clicked submit.  It's really quite nifty.   Of course, all of that is pretty tough to follow with out some code, so here we go.  First, let's register the PhaseListener:
+
+[source,xml,linenums]
+-----
+<lifecycle>
+    <phase-listener>
+        com.iecokc.gopher.view.util.PrettyUrlPhaseListener
+    </phase-listener>
+</lifecycle>
+-----
+
+Next, let's look at the PhaseListener itself:
+
+[source,java,linenums]
+-----
+public class PrettyUrlPhaseListener implements PhaseListener {
+    private static final Log logger =
+        LogFactory.getLog(PrettyUrlPhaseListener.class);
+    FacesContext context =  null;
+    public PhaseId getPhaseId() {
+        return PhaseId.RESTORE_VIEW;
+    }
+    public void beforePhase(PhaseEvent e) {
+        PhaseId phase = e.getPhaseId();
+        if (phase == PhaseId.RESTORE_VIEW) {
+            try {
+                context = FacesContext.getCurrentInstance();
+                HttpServletRequest request = (HttpServletRequest)
+                    context.getExternalContext().getRequest();
+                String uri = request.getRequestURI();
+                if (uri != null) {
+                    // Split the URI by / to get its  component parts
+                    String[] parts = uri.split("\\/");
+                    String application = parts[2];
+                    // This PhaseListener knows about two "applications",
+                    // product lookup, and the cleverly titled, Dude
+                    // Where's My Order
+                    if ("product".equals(application)) {
+                        handleProductLookups(parts);
+                    } else if ("dwmo".equals(application)) {
+                        handleDudeWheresMyOrder(parts);
+                    }
+                }
+            } catch (Exception ex) {
+                logger.error(ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
+    }
+    protected void handleProductLookups(String parts[]) {
+        String partNumber = "";
+        // If there aren't enough parts to complete the request, redirect
+        // to the product home page
+        if (parts.length != 5) {
+            // There's no way to determine what this should be
+            // programmitcally, so we'll hardcode the value here (and in
+            // handleDudeWheresMyOrder()).
+            // Be careful to note that we say .jsp and not .jsf, or you'll
+            // get a nasty recursion error.
+            UIViewRoot view = context.getApplication().getViewHandler().
+                createView(context,"/productViewHome.jsp");
+            context.setViewRoot(view);
+        } else {
+            try {
+                partNumber = URLDecoder.decode(parts[3],
+                    Charset.defaultCharset().displayName());
+                String tab = parts[4];
+                UIViewRoot view = context.getApplication().
+                    getViewHandler().
+                    createView(context,"/productViewResults.jsp");
+                context.setViewRoot(view);
+                ProductViewBean bean = (ProductViewBean)
+                    FacesUtils.getManagedBean("pvForm");
+                if (tab != null) {
+                    bean.setTab(tab);
+                }
+                if (partNumber != null) {
+                    bean.setPartNumber(partNumber);
+                }
+            } catch (UnsupportedEncodingException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+    protected void handleDudeWheresMyOrder(String parts[]) {
+        if (parts.length != 5) {
+            UIViewRoot view = context.getApplication().
+                getViewHandler().createView(context,"/dwmoHome.jsp");
+            context.setViewRoot(view);
+        } else {
+            String orderNumber = "";
+            try {
+                orderNumber = URLDecoder.decode(parts[3],
+                    Charset.defaultCharset().displayName());
+                String tab = parts[4];
+                UIViewRoot view = context.getApplication().
+                    getViewHandler().
+                    createView(context,"/dwmoResults.jsp");
+                context.setViewRoot(view);
+                DudeWheresMyOrderBean bean = (DudeWheresMyOrderBean)
+                    FacesUtils.getManagedBean("dwmoForm");
+                if (tab != null) {
+                    bean.setTab(tab);
+                }
+                if (orderNumber != null) {
+                    bean.setOrderNumber(orderNumber);
+                }
+            } catch (UnsupportedEncodingException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+    public void afterPhase(PhaseEvent e) {
+        // We don't care about this
+    }
+}
+-----
+
+There's one more step.  Currently, our application is only configured to map *.jsf to the FacesServlet, so we'll need to add a couple more mappings to make our "virtual" URLs work.  This goes in web.xml:
+
+[source,xml,linenums]
+-----
+<servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>/product/*</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>/dwmo/*</url-pattern>
+</servlet-mapping>
+-----
+
+If you had the rest of our code, you should now be able to deploy the web page and point your browser at `/Context/product/ABC123/tab` and learn all about one of our products. :) Since you don't have the rest of the app, you obviously can't do that, but hopefully I've provided enough information for you to implement a similar solution.
+
+As always, any comments and enhancements are much appreciated.

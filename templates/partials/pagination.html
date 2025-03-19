@@ -1,0 +1,49 @@
+{@io.quarkiverse.roq.frontmatter.runtime.model.NormalPage page}
+
+{#if page.paginator}
+<div class="grid">
+    <div class="col-6">
+        {#if page.paginator.isFirst}
+        <div class="previous">&larr; First</div>
+        {#else}
+        <div class="previous">
+            {#if page.paginator.prev}
+            <a href="{page.paginator.previous}">&larr; Newer Posts</a>
+            {#else}
+            &larr; Newer Posts
+            {/if}
+        </div>
+        {/if}
+    </div>
+
+    {!
+    {% if paginator.page_trail %}
+    {% for trail in paginator.page_trail %}
+    <div {% if page.url == trail.path %}class="selected"{% endif %}>
+        <a href="{{ trail.path | prepend: site.baseurl | replace: '//', '/' }}" title="{{trail.title}}">{{ trail.num }}</a>
+    </div>
+    {% endfor %}
+    {% endif %}
+    !}
+
+    <div class="col-6" style="text-align: right;">
+        {#if page.paginator.next }
+        <div class="next">
+            {#if page.paginator.next}
+            <a href="{page.paginator.next}">Older Posts &rarr;</a>
+            {#else}
+            Older Posts &rarr;
+            {/if}
+        </div>
+        {#else}
+        <div class="next">Last &rarr;</div>
+        {/if}
+    </div>
+    {!
+    <div class="previous">
+        <a href="{{ paginator.last_page_path | prepend: site.baseurl | replace: '//', '/' }}">Last</a>
+    </div>
+    {/if}
+    !}
+</div>
+{/if}

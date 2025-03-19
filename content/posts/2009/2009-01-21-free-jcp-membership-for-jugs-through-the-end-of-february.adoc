@@ -1,0 +1,28 @@
+---
+title: "Free JCP Membership for JUGs Through the End of February"
+date: 2009-01-21
+tags: [JCP, JUG]
+type: post
+status: published
+---
+= Free JCP Membership for JUGs Through the End of February
+Jason Lee
+2009-01-21
+
+
+If you are a member of a JUG (or happen to run one) and would like to be able to join the Java Community Process (JCP), you now have two options.  For US-based JUGs, you can affiliate yourself with the new umbrella JUG-USA.  According to Van Riper of the Silicon Valley JUG and the coordinator of the JUG-USA effort, all you need to do to be affiliated with JUG-USA is promise to link back to the http://tr.im/jugusa[JUG-USA Map] and let him know.  As an affiliated JUG, you have access to the JCP, including JSR submission as well as Expert Group membership, through JUG-USA.  If, however, you'd like to have your JUG become a member directly, which is currently the only option (that I know of) for non-US JUGs, you can follow these directions (thanks, again, to Van Riper):
+
+_____
+If you want to do this, it is actually quite easy to do and the process is fairly well documented here for organizations joining the JCP: http://jcp.org/en/participation/membership2[]
+
+You simply follow the 6 steps listed on the page above. Since JUGs are being given special treatment with organization membership fees waived, two of these steps are a bit fuzzy. I had a chance to talk to Patrick Curran at the recent JCP Birthday Party to clear up the fuzziness though. So, follow the 6 steps with these two clarifications:
+
+A. You can skip step 4. You should not initial *any* of the listed "Process Cost Sharing" choices on page 3 of the agreement. There is none that apply to our special situation.
+B. For step 6, you do need to fill out *both* sections on page 11 of the agreement. Even though your JUG membership cost will be zero, Patrick indicated that they will need the "Accounts Payable Contact Person" section filled in. However, that person won't be receiving a bill or the bill will have an invoice amount of zero.
+
+Once you have completed the agreement, you follow the instructions on this page to either FAX it or mail it to the JCP Management Office for processing: http://jcp.org/en/participation/membership_submit[]
+
+That is all there is to it. As a point of reference, my individual membership agreement was processed in just two days time after faxing it in. It is possible that organization memberships will take longer to process than that. If you do not get confirmation back within a week, I would contact the JCP Management Office to check on your membership processing.
+_____
+
+http://okcjug.org[The Oklahoma City Java Users Group, Inc.] will be utilizing both methods. :)

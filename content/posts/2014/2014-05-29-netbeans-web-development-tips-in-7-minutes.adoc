@@ -1,0 +1,38 @@
+---
+title: "14 NetBeans Web Development Tips in 7 Minutes"
+date: 2014-05-29
+tags: [NetBeans, HTML5]
+type: post
+status: published
+---
+= 14 NetBeans Web Development Tips in 7 Minutes
+Jason Lee
+2014-05-29
+
+
+Recently, Geertjan Wielenga, Principal Product Manager in the Oracle Developer Tools group, posted a video on his https://blogs.oracle.com/geertjan/entry/youtube_14_netbeans_web_development[blog] showing "14 NetBeans Web Development Tips in 7 Minutes", which showed off several nice tips for the IDE (#1 and #5 are my favorites). If you're like me, sometimes you don't have (or don't want to make) time to watch a video, so I thought I'd make a table of contents for the video, with links to relevant portion of it for those that would like to read the list and watch only the parts that interest them. 
+
+// more
+
+[cols="1,15,3", options="header", width="75%"]
+|===
+| | Tip | Video Link
+|1|You can quickly drag and drop resources from the Projects window into HTML files|https://www.youtube.com/watch?v=JaqAi3r0k1Y[watch]
+|2|You can use predefined code templates to generate chunks of HTML. Press TAB to expand the template|http://youtu.be/JaqAi3r0k1Y?t=26s[watch]
+| |which can be easily configured and you can create new ones.|http://youtu.be/JaqAi3r0k1Y?t=54s[watch]
+|3|"scr" expands to "script", which has a hidden feature: code completion when you press Ctrl-Space.|http://youtu.be/JaqAi3r0k1Y?t=1m30s[watch]
+|4|Hold down the CTRL key and the selected references is a hyperlink that can be clicked to open the file.|http://youtu.be/JaqAi3r0k1Y?t=1m46s[watch]
+|5|Select the content of a tag and press CTRL-R, if you want to change both sides of the tag at once.|http://youtu.be/JaqAi3r0k1Y?t=2m06s[watch]
+|6|Ctrl-Shift-Up/Down and Alt-Shift-Up/Down copy/move lines up and down.|http://youtu.be/JaqAi3r0k1Y?t=2m28s[watch]
+|7|Splitting a document window is easy...|http://youtu.be/JaqAi3r0k1Y?t=3m10s[watch]
+| |...and you can also drag a document to split the editor area.|http://youtu.be/JaqAi3r0k1Y?t=3m35s[watch]
+|8|Use the Options window to configure the editors for all the languages you use.|http://youtu.be/JaqAi3r0k1Y?t=4m06s[watch]
+|9|You can change the tab position, e.g, make all the tabs in the editor be displayed in the bottom of the editor.|http://youtu.be/JaqAi3r0k1Y?t=5m09s[watch]
+|10|The Terminal Window can be very useful. No need to switch of NetBeans to the command line anymore.|http://youtu.be/JaqAi3r0k1Y?t=5m36s[watch]
+|11|Each HTML5 project integrates with the standard HTML5 technologies, e.g., SASS, Cordova, Karma, etc.|http://youtu.be/JaqAi3r0k1Y?t=6m26s[watch]
+|12|Block selection lets you change code across multiple lines.|http://youtu.be/JaqAi3r0k1Y?t=6m45s[watch]
+|13|Press Ctrl-Shift-Enter to create a "notepad look and feel", i.e., a very simplified version of the IDE, without toolbars, etc.|http://youtu.be/JaqAi3r0k1Y?t=7m06s[watch]
+|14|Want to see the spaces and tabs? That can be done too.|http://youtu.be/JaqAi3r0k1Y?t=7m36s[watch]
+|===
+
+If you have time, of course, watch the whole thing. If you'd just like to see the list of tips, there you have it. :)

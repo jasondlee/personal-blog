@@ -1,0 +1,19 @@
+---
+title: "Thank you, Sun"
+date: 2007-07-31
+tags: [GlassFish, Java]
+type: post
+status: published
+---
+= Thank you, Sun
+Jason Lee
+2007-07-31
+
+I'm a bit hesitant to post this as I'm afraid that it may come across as self-congratulatory, which is not my intent at all, but I think Sun deserves an "atta-boy."
+// more
+
+Recently, Sun sought to reward various contributors who they felt have been a boon to GlassFish.  On two different occasions, I have been blessed to be recipient of Sun's largess.  At JavaOne 2007, which I was unable to attend, I was selected as one of the (first?) http://blogs.sun.com/theaquarium/entry/not_your_usual_ipod_contest[GlassFish Champions], and awarded an http://blogs.sun.com/theaquarium/resource/GlassFishChampionIpod-Large.jpg[engraved iPod Nano] (which I'm enjoying now :).  Most recently, I was selected as the http://blogs.sun.com/theaquarium/entry/glassfish_v2_tv_contest_winner[winner] of GlassFish's http://java.sun.com/javaee/community/campaigns/gftv-052007/welcome.jsp[Fish for a TV] competition.  I'm extremely flattered by both honors, and I can't thank Sun enough for wanting to reward its community members (and me in particular).  I think it speaks volumes about Sun's seriousness about Open Source.
+
+At any rate, I don't want to dwell too much on me on this blog, but I felt that Sun deserved the press.  By the way, here's a picture of the TV, which we are enjoying immensely. :)
+
+image::/images/2007/07/myboysandabigtv.jpg[]

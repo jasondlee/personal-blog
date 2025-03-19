@@ -1,0 +1,21 @@
+---
+title: "Book Review: JSF 2.0 Cookbook"
+date: 2010-08-20
+tags: [JSF, Reviews]
+author: Jason Lee
+type: post
+status: published
+---
+= Book Review: JSF 2.0 Cookbook
+
+image::https://www.packtpub.com/sites/default/files/imagecache/productview/9522.jpg
+
+Packt Publishing recently released a book titled _https://www.packtpub.com/jsf-2-0-cookbook/book[JSF 2.0 Cookbook]_, by Anghel Leonard.  When I first heard about this book, I was really anxious to get my hands on it.  I really like the cookbook concept, so I was excited to see a work in that vein published for JSF.  Packt recently sent me a copy to review, so, having read most of the book, here are my thoughts.
+
+First off, I'll be upfront:  I have not read the whole book, but I don't think that's a problem.  Cookbooks aren't meant to be read cover to cover, necessarily.  While you can certainly do that, these types of books are intended to be a reference.  When you have an issue, you look in the table of contents to find the "recipe" that covers your issue, and jump to that page.  That's what I did with this book, mostly.  I looked up the recipes for issues I most often have trouble with.  I did, though, read almost all of the custom component chapter, as that's area that holds a lot of interest for me.  I'll give that one special attention in a moment.
+
+Each recipe, follows the same basic pattern.  It starts with a basic summary of the problem, then goes in to "Getting ready," "How to do it...," "How it works..." and "See also."  There are minor deviations along the way, but that's the basic gist.  In the _Getting Ready_ section, the author details how the recipe was created (NetBeans 6.8, Mojarra 2.x, and GlassFish v3, showing the author has *great* tastes : ), so new users can get a sense of what might help work through the recipe. The _How to do it_ section is pretty detailed, with LOTS of source code.  Much of the markup is still using JSP, which is a shame since JSP is all but formally deprecated with JSF 2.0 (Facelets being the de facto standard), but you shouldn't have any major issues applying what you see to a Facelets page.  The _How it works_ section that follows does a great job of explaining...err... how it works, which I think is really important.  How to do something is rarely enough.  If you understand _why_ to do something and _how_ that something works, you'll be better equipped in the future for similar, but slightly different issues.  This section does a good job of that.
+
+The only area of the book I want to comment on specifically is Chapter 5, _Custom Components_.  Of all the areas in JSF, component authoring has always been a favorite of mine.  I am far from being a leading expert, but I'm pretty comfortable with it and really enjoy it.  Chapter 5, then, was one of the first things I turned to.  The author does a great job of giving a variety of examples using validators, ajax, etc.  A big glaring flaw for me, though, was the discussion of the JSF lifecycle, a very important topic for component authors.  In the graphic on page 130, encoding is shown as happening in the *Apply Request Values Phase*, and decoding is shown as happening in the *Render Response Phase*.  Unless I'm sorely mistaken, that's exactly backwards.  Despite that error, the chapter itself is extremely helpful.  I would advise, though, that if you are looking to learn component development, to try http://www.amazon.com/JavaServer-Faces-2-0-Complete-Reference/dp/0071625097/ref=sr_1_2?ie=UTF8&s=books&qid=1282337841&sr=8-2[JavaServer Faces 2.0: The Complete Reference] by Ed Burns, and Chris Schalk, or http://www.amazon.com/Core-JavaServer-Faces-David-Geary/dp/0137012896/ref=pd_sim_b_3[Core JSF] by David Geary and Cay Horstmann.  That's not to belittle this book in anyway.  The Geary/Hortsmann and Burns/Schalk books are meant for different purposes. _JSF 2.0 Cookbook_ has a slightly different purpose, which is complementary to the first two, and which it does well, I think.
+
+Overall, I think this is a really good book.  Though not perfect, it provides a lot of value to the JSF developer.  From beginner to expert, I think there is enough in this book to help just about everyone out of a jam from time to time.

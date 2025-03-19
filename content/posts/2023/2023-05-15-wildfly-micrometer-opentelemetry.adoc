@@ -1,0 +1,58 @@
+---
+title: "WildFly, Micrometer, and OpenTelemetry"
+date: 2023-05-15
+tags: [WildFly,Micrometer,OpenTelemetry]
+type: post
+author: jdlee
+status: published
+source-highlighter: highlight.js
+---
+
+With the release of https://www.wildfly.org/news/2023/04/20/WildFly28-Released/[WildFly 28], we've made a few changes to our supported telemetry libraries that are worth noting.  In this post, I'll give a quick overview of those changes.
+
+// more
+
+Perhaps the more pressing/disruptive is that we've removed support for MicroProfile OpenTracing and MicroProfile Metrics. MP OT itself has been deprecated/replaced by the working group with MicroProfile Telemetry. MP Metrics, though, continues to evolve in ways to which Red Hat https://groups.google.com/g/microprofile/c/k85_2po0jh4/m/Iyh-VcYVAQAJ[objects], so support for that specification has been removed completely.
+
+The more interesting changes are the addition (or modification) of two other libraries: Micrometer and OpenTelemetry (both of which I've written about before link:/tag/micrometer[here] and link:/tag/opentelemetry[here]). Both of these new subsystems are disabled by default (to avoid any unwanted potential performance impacts), so I'll show how to enable them:
+
+.Micrometer
+[source,bash]
+-----
+$ jboss-cli.sh -c <<EOF
+    if (outcome != success) of /extension=org.wildfly.extension.micrometer:read-resource
+        /extension=org.wildfly.extension.micrometer:add
+    end-if
+
+    if (outcome != success) of /subsystem=micrometer:read-resource
+        /subsystem=micrometer:add(endpoint="http://localhost:4318/v1/metrics")
+        reload
+    end-if
+EOF
+-----
+
+.OpenTelemetry
+[source,options="nowrap"]
+-----
+$ jboss-cli.sh -c <<EOF
+    if (outcome != success) of /extension=org.wildfly.extension.opentelemetry:read-resource
+        /extension=org.wildfly.extension.opentelemetry:add()
+    end-if
+
+    if (outcome != success) of /subsystem=opentelemetry:read-resource
+        /subsystem=opentelemetry:add()
+        reload
+    end-if
+EOF
+-----
+
+Both of these scripts will safely add both the extension and then the subsystem only if needed, and reload the server (if needed).  Once the server is up, you're ready to deploy your application using either or both of these libraries.
+
+One related technology worth noting is MicroProfile Telemetry. This new spec, which replaced MicroProfile OpenTracing, is enabled by default in the various MicroProfile configurations shipped with WildFly, so all you need to do is start the server with one of thse configurations: `standalone.sh -c standalone-microprofile.xml`.
+
+[IMPORTANT]
+====
+A very important note, though, is that enabling MicroProfile Telemetry (either by default or explicitly) changes the default behavior of the OpenTelemetry subsystem. The MP Telemetry spec dictates that the OpenTelemetry functionality be https://download.eclipse.org/microprofile/microprofile-telemetry-1.0/tracing/microprofile-telemetry-tracing-spec-1.0.html#_tracing_enablement[disabled unless explicitly enabled]. To address that, make sure you add `otel.sdk.disabled=false` to one of your MicroProfile Config sources.
+====
+
+If you want more information on getting started with Micrometer and/or OpenTelemetry with WildFly, keep an eye on the https://github.com/wildfly/quickstart[WildFly Quickstarts] for updates.

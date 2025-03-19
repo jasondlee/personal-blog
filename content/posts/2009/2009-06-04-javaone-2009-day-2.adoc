@@ -1,0 +1,35 @@
+---
+title: "JavaOne 2009 Day 2"
+date: 2009-06-04
+tags: [JavaOne]
+author: Jason Lee
+type: post
+status: published
+---
+= JavaOne 2009 Day 2
+
+JavaOne 2009 Day 2 has come and gone, so here I sit on day 3 typing my recap.  I never promised a punctual report! :)
+// more
+
+My day started with a talk by Max Katz on using JavaFX and Seam in an app.  It was an impressive talk.  The Exadel folks have done a lot of hard work in getting the two technologies working together.
+
+Next up was a talk by Vivek Pandey and Jacob Kessler on scripting on GlassFish.  They covered JRuby and Jython deployment on GlassFish, describing not only the how, but the why (Java EE features such as clustering, access to Java classes, etc).  Both the presenters were enthusiastic and knowledgeable, I thought.  Very good presentation.
+
+After lunch, I hung out some in the java.net Community Corner, working on lunch and Tuesday's recap. :)  I got to meet Felipe Gaucho, a name well-known to subscribers of the JUG Leaders mailing list, which was pretty cool.  Sun JUG liaison Aaron Houston hooked me up with a pretty cool treat for my JUG back home (hint: It comes on a USB thumb drive.  You'll have to come to July's meeting to see what it is : ).
+
+With the blog finally posted and networking finished, I dashed off to my team mates' hands on lab, Building OSGi Plug-Ins for the GlassFish&#8482; v3 Application Server.  Since this lab covers what I do in my day job, there was much in it for me, but I went for moral support and to see if could help if things unexpectedly went south.  As it turns out, things went well, over all, with the attendees successfully accomplishing the exercises in the lab.  One attendee even went beyond the lab exercise and extended the Twitter console plugin to allow posting to Twitter, which was cool to see.
+
+Leaving the lab, I went back to the pavilion to see what was happening in the JBoss and Sun booths, and bumped into my (twin) brother.  As luck would have it, we were wearing the exact same shirt, which was the source of some chuckles.  I was talked into heading over to the Java EE Ancillary Event, I think it was called, which was a party for those interested in Java EE 6 technologies.  It was really well attended, with lots of mingling and talking, and some game playing.  In opposite corners we had two Wiis setup, so attendees could play Wii Sports or Rock Band.  My brother got to play Marc Hadley, the co-spec lead of JSR 311, JAX-RS.  Marc, BTW, won. :)
+
+|=====
+| image:https://s3.amazonaws.com/twitpic/photos/full/10989109.jpg?AWSAccessKeyId=0ZRYP5X5F6FSMBCCSE82&Expires=1244141742&Signature=8GRGR6c8SaEwHTDffE%2F%2F0pI0%2FS0%3D[title: "Listening to Dan Allen talk about Seam at the JBoss booth."]
+| image:http://s3.amazonaws.com/twitpic/photos/full/11020490.jpg?AWSAccessKeyId=0ZRYP5X5F6FSMBCCSE82&Expires=1244141743&Signature=xTyVFKqdct6%2FGmtiVTLcmyu7ywY%3D[title: "Ajax4Jsf author Alexander Smirnov talks about JSF 2 and RichFaces"]
+| image:http://s3.amazonaws.com/twitpic/photos/large/11034297.jpg?AWSAccessKeyId=0ZRYP5X5F6FSMBCCSE82&Expires=1244141625&Signature=xg8FIO52jKE%2F3P0ZMJtdG1kPYJE%3D[title: "Good turn out at the EE6 party" alt="Good turn out at the EE6 party"]
+| image:http://s3.amazonaws.com/twitpic/photos/full/11033350.jpg?AWSAccessKeyId=0ZRYP5X5F6FSMBCCSE82&Expires=1244141763&Signature=cDU95F4RlxpFWbuWvBFu%2BRhmo%2FY%3D[title="Marc Hadley and Justin Lee play the Wii while Rajiv Mordani watches"]
+|=====
+
+After the party, I went to the JavaServer&#8482; Faces Platform and Ajax BOF, led by Roger Kitain (JSR 314 co-spec lead, Sun Microsystems), Alexander Smirnov (RichFaces, Exadel/JBoss), Andy Schwartz (ADF Faces, Oracle) and Ted Goddard (ICEfaces).  They discussed what we've done in JSF 2 with regard to Ajax, as well as touching on what some of the component frameworks are doing in the Ajax space.  It was a good, informative, well-attended session, with lots of questions.  That's a good sign.
+
+Immediately following in the same room, Ryan Lubke and Jim Driscoll, the Mojarra implementation team from Sun Microsystems, led the BOF Writing a JavaServer&#8482; Faces 2.0 Component That Uses Ajax: It's Easy! (Really, It's Easy!).  It was a good talk that showed in detail how JSF 2's composite component feature has greatly simplified JSF component development.  They also showed how simple it was to add Ajax support using JSF 2's new Ajax features.  Very, very cool.
+
+Sadly, I had to duck out early, and headed back to my hotel.  It was a long day, and my body is still on central time, so I was grinding to a halt.  Thursday is the last full day, so I had better make the best of it!

@@ -1,0 +1,150 @@
+---
+title: "Annotation Processing the New Way"
+date: 2012-07-25
+tags: [Java]
+type: post
+status: published
+---
+= Annotation Processing the New Way
+Jason Lee
+2012-07-25
+
+
+I recently ran into an issue with our dependency injection system: it won't return a list of interfaces, only implementations. That system, for what it's worth, is http://hk2.java.net[HK2], but http://docs.oracle.com/javaee/6/tutorial/doc/giwhl.html[CDI] has the same "problem". Since the rest of the system worked using these interfaces, I really wanted to solve the discoverability issue rather than redesigning that part of the system. After considering and playing with a Maven plugin, I opted to use the http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/package-frame.html[javax.annotation.processing] API. Let's take a quick look.
+
+// more
+
+The first step, of course, is to create the annotation. We'll use this very simple one:
+
+[source,java,linenums]
+-----
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface MyAnnotation {
+    String parent();
+}
+-----
+
+Nothing special there. The next step is to create the `Processor` class:
+
+[source,java,linenums]
+-----
+@SupportedAnnotationTypes("com.foo.MyAnnotation")
+public class MyAnnotationProcessor extends AbstractProcessor {
+    @Override
+    public boolean process(Set<? extends TypeElement> elements, RoundEnvironment env) {
+        Messager messager = processingEnv.getMessager();
+        try {
+            Map<String, List<String>> classes = new HashMap<String, List<String>>();
+
+            for (TypeElement te : elements) {
+                for (Element e : env.getElementsAnnotatedWith(te)) {
+                    final String parent = e.getAnnotation(MyAnnotation.class).parent();
+                    List<String> list = classes.get(parent);
+                    if (list == null) {
+                        list = new ArrayList<String>();
+                        classes.put(parent, list);
+                    }
+                    list.add(e.toString());
+                }
+            }
+
+            if (!classes.isEmpty()) {
+                final Filer filer = processingEnv.getFiler();
+                FileObject fo = filer.createResource(StandardLocation.CLASS_OUTPUT,
+                    "", "META-INF/com.foo.MyAnnotation");
+
+                BufferedWriter bw = new BufferedWriter(fo.openWriter());
+                // ...
+                bw.close();
+            }
+        } catch (IOException ex) {
+            messager.printMessage(Kind.ERROR, ex.getLocalizedMessage());
+        }
+
+        return true;
+    }
+}
+-----
+
+I trimmed as much of the logic as I could to clarify, I hope, the details of the processor.  The class extends `AbstractProcessor`.  It is also annotated with `@SupportedAnnotationTypes`, which is a multi-valued annotation telling the system which annotations we care about. In our case, it's just one.
+
+In the `process()` method, we iterate over the `elements` which is, as best as I can tell, a `Set` of the annotations we just told the system we care about. Taking that, we ask the system (via `env.getElementsAnnotatedWith()`) for the elements that have that annotation.  From here, we can get the annotation instance and process it (`e.getAnnotation(MyAnnotation.class)`).  You may need to do some type checking (e.g., is this annotation only on a `String`?).  In this example, we're going to store it in a `List`, which is then stored in a `Map`, keyed by the value of `parent`.
+
+Once we've processed all the elements, we're ready to create our metadata file.  To do that, we instruct the `Filer`, obtained from the `ProcessingEnvironment` we get from `AbstractProcessor`, to create a resource.  We tell it to use `StandardLocation.CLASS_OUTPUT` as the output directory (or `Location` in the parlance of the API), and to name it `META-INF/com.foo.MyAnnotation`.
+
+Once that's done, the final step is to add this jar as a compile-time dependency to any project that uses the annotation (and which needs the metadata generated):
+
+[source,xml,linenums]
+-----
+<dependency>
+    <groupId>com.foo</groupId>
+    <artifactId>annotation-processor</artifactId>
+    <version>1.0</version>
+    <scope>compile</scope>
+</dependency>
+-----
+
+And that's it. When your build tool (Maven, Gradle, or... _shudder_ Ant :) compiles the classes in the project, it will create the metadata file.  If you're using Maven, you can verify by viewing `target/class/META-INF/com.foo.MyAnnotation`.
+
+== Update: Reading the data ==
+
+The other side of this reading the data to finish locating the interfaces.  Here is the code I'm currently using:
+
+[source, java,linenums]
+-----
+// This Map<List> holds MyAnnotation data keyed by parent().  Since there may be more than one
+// MyAnnotation pointing to a given parent, we store the name of the actual MyAnnotation-annotated
+// interfaces in a List.
+private static final Map<String, List<String>> myAnnotations = new HashMap<String, List<String>>();
+private static void loadMyAnnotationMetadata(Class similarClass) {
+    try {
+        Enumeration<URL> urls = similarClass.getClassLoader().getResources("META-INF/com.foo.MyAnnotation");
+        while (urls.hasMoreElements()) {
+            URL url = urls.nextElement();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            while (reader.ready()) {
+                final String line = reader.readLine();
+                if (line.charAt(0) != '#') {
+                    if (!line.contains(":")) {
+                        Logger.getLogger(MyAnnotationUtil.class.getName()).log(Level.INFO,
+                            "Incorrectly formatted entry in \{0}: \{1}",
+                            new String[] {"META-INF/com.foo.MyAnnotation", line}); // TODO: i18n
+                    }
+                    String[] entry = line.split(":");
+                    String base = entry[0];
+                    String ext = entry[1];
+                    List<String> list = myAnnotations.get(base);
+                    if (list == null) {
+                        list = new ArrayList<String>();
+                        myAnnotations.put(base, list);
+                    }
+                    list.add(ext);
+                }
+            }
+        }
+    } catch (IOException ex) {
+        Logger.getLogger(MyAnnotationsUtil.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+-----
+
+This code reads any metadata files found in the running system and builds a `Map<String,List>` to hold the data.  Elsewhere in the system, I iterate over these `Lists` and load the classes (`Class.forName()`) to integrate the interfaces into the system:
+
+[source,java,linenums]
+-----
+List<String> list = myAnnotations.get(parent));
+if (list != null) {
+    for (String className : list) {
+        try {
+            Class<?> c = Class.forName(className, true, similarClass.getClassLoader());
+            exts.add(c);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MyAnnoationUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
+-----
+
+That should cover it. There's much, much more that can be done in your processor, which you can read about in the http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/package-frame.html[javadocs], but this should get you going.

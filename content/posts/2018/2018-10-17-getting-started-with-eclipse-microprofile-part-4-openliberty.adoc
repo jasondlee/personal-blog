@@ -1,0 +1,306 @@
+---
+title: "Getting Started with Eclipse MicroProfile, Part 4: OpenLiberty"
+date: 2018-10-17
+tags: [Java EE, MicroProfile]
+type: post
+author: Jason Lee
+status: published
+---
+
+Having looked at <</posts/2018/getting-started-with-eclipse-microprofile-part-3-thorntail.ad#,Thorntail>> last time,
+we'll take a look at http://openliberty.io[OpenLiberty] this time. OpenLiberty is the open source project
+under which, as I understand the state of things, IBM's WebSphere Liberty is developed. In this installment, we'll
+give its MicroProfile support a quick spin.
+
+// more
+
+We start by setting up our POM:
+
+[source,xml]
+-----
+<packaging>war</packaging>
+
+<properties>
+    <app.name>openliberty</app.name>
+    <testServerHttpPort>8080</testServerHttpPort>
+    <testServerHttpsPort>8443</testServerHttpsPort>
+
+    <warContext>/</warContext>
+    <package.file>$\{project.build.directory}/$\{app.name}.zip</package.file>
+    <packaging.type>minify,runnable</packaging.type>
+
+    <version.openliberty>18.0.0.3</version.openliberty>
+    <version.openlibertyplugin>2.2</version.openlibertyplugin>
+</properties>
+
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>io.openliberty.features</groupId>
+            <artifactId>features-bom</artifactId>
+            <version>$\{version.openliberty}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+
+<dependencies>
+    <dependency>
+        <groupId>$\{project.groupId}</groupId>
+        <artifactId>common</artifactId>
+        <version>$\{project.version}</version>
+    </dependency>
+</dependencies>
+-----
+
+Notice that we have no direct dependencies on OpenLiberty at this point. We simply build a war with one dependency, our
+common code. The real work, it seems, comes in the build:
+
+[source,xml]
+-----
+<plugin>
+    <groupId>net.wasdev.wlp.maven.plugins</groupId>
+    <artifactId>liberty-maven-plugin</artifactId>
+    <version>$\{version.openlibertyplugin}</version>
+    <configuration>
+        <assemblyArtifact>
+            <groupId>io.openliberty</groupId>
+            <artifactId>openliberty-runtime</artifactId>
+            <version>$\{version.openliberty}</version>
+            <type>zip</type>
+        </assemblyArtifact>
+        <configFile>src/main/liberty/config/server.xml</configFile>
+        <packageFile>$\{package.file}</packageFile>
+        <include>$\{packaging.type}</include>
+        <bootstrapProperties>
+            <default.http.port>$\{testServerHttpPort}</default.http.port>
+            <default.https.port>$\{testServerHttpsPort}</default.https.port>
+            <app.context.root>$\{warContext}</app.context.root>
+        </bootstrapProperties>
+    </configuration>
+    <executions>
+        <execution>
+            <id>install-liberty</id>
+            <phase>process-test-resources</phase>
+            <goals>
+                <goal>install-server</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>install-app</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+                <goal>install-apps</goal>
+            </goals>
+            <configuration>
+                <looseApplication>true</looseApplication>
+                <stripVersion>true</stripVersion>
+                <installAppPackages>project</installAppPackages>
+            </configuration>
+        </execution>
+        <execution>
+            <id>package-app</id>
+            <phase>package</phase>
+            <goals>
+                <goal>package-server</goal>
+            </goals>
+            <configuration>
+                <outputDirectory>target/wlp-package</outputDirectory>
+            </configuration>
+        </execution>
+        <execution>
+            <id>package-server</id>
+            <phase>package</phase>
+            <goals>
+                <goal>package-server</goal>
+            </goals>
+            <configuration>
+                <outputDirectory>target/wlp-package</outputDirectory>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+-----
+
+There is a *lot* going on there, but, as best as I can tell, we're using the OpenLiberty Maven plugin to extract the
+OpenLiberty server, add our app to it, then package it back up. It works, but it takes a lot of work to get there. :)
+
+Before we can build, though, we do need to create one file to configure the OpenLiberty instance. That lives at
+`src/main/liberty/config/server.xml`:
+
+[source,xml]
+-----
+<server description="Sample MicroProfile server">
+    <featureManager>
+        <feature>microProfile-2.0</feature>
+    </featureManager>
+
+    <applicationManager autoExpand="true"/>
+
+    <httpEndpoint host="*"
+                  httpPort="$\{default.http.port}"
+                  httpsPort="$\{default.https.port}"
+                  id="defaultHttpEndpoint"/>
+
+    <webApplication
+            location="openliberty.war"
+            contextRoot="$\{app.context.root}"/>
+</server>
+-----
+
+This tells OpenLiberty that we want to enable MicroProfile 2.0, what ports we want to listen on, what application to deploy, and its context root.
+
+Once that's done, we can run our app:
+
+[source,bash]
+-----
+# mvn install
+...
+# java -jar target/openliberty.jar
+...
+[AUDIT   ] CWWKT0016I: Web application available (default_host): http://jdlee:8080/
+...
+# curl http://localhost:8080
+Hello, world
+# curl http://localhost:8080/?name=OpenLiberty
+Hello, OpenLiberty
+-----
+
+Just as expected. Before closing out this installment, though, a word on testing.
+
+With the last two implementations, I was able to provide an http://arquillian.org[Arquillian]-based set of tests. Technically,
+I think OpenLiberty can be tested with Arquillian, but I was unable to make it work. Obviously, if this were a production
+project, I'd figure it out, but I took the easy way out here. :) However, in the OpenLiberty docs, they had some extra
+`execution` configurations for the plugin that starts and stops the server for integration tests, so I went with that.
+During the build, then, the server is started, the tests (which are just HTTP client calls to the server) run, and the
+server is shutdown. Not as nice as Arquillian, but it works in a pinch.
+
+Let's start with Maven config:
+
+[source,xml]
+-----
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <configuration>
+        <skipTests>true</skipTests>
+    </configuration>
+</plugin>
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-failsafe-plugin</artifactId>
+    <executions>
+        <execution>
+            <id>integration-tests</id>
+            <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+            </goals>
+            <configuration>
+                <includes>
+                    <include>**/*.java</include>
+                </includes>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+<plugin>
+    <groupId>net.wasdev.wlp.maven.plugins</groupId>
+    <artifactId>liberty-maven-plugin</artifactId>
+    <version>$\{version.openlibertyplugin}</version>
+...
+    <executions>
+...
+        <execution>
+            <id>start-server</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+                <goal>test-start-server</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>stop-server</id>
+            <phase>post-integration-test</phase>
+            <goals>
+                <goal>test-stop-server</goal>
+            </goals>
+        </execution>
+...
+    </executions>
+</plugin>
+-----
+
+We start by configuring the `surefire` plugin to _not_ run during the test phase, then configure the `failsafe` plugin to
+run during the `integration-test` phase. Finally, we set up executions for the `liberty-maven-plugin` to start and stop
+the server in the `pre-integration-test` and `post-integration-test` phases. There are likely a myriad of ways to handle
+that, so feel free to pick your favorite. This should get you going, though.
+
+Our test, then, is pretty simple:
+
+[source,java]
+-----
+public class OpenLibertyTest {
+    public static final String URL = "http://localhost:8080/";
+
+    @Test
+    public void shouldSayWorld() throws URISyntaxException, IOException {
+        requestAndTest(new URI(URL), "Hello, world");
+
+    }
+
+    @Test
+    public void shouldSayOpenLiberty() throws URISyntaxException, IOException {
+        requestAndTest(new URIBuilder(new URI(URL))
+                        .setParameter("name", "OpenLiberty")
+                        .build(),
+                "Hello, OpenLiberty");
+    }
+
+    private void requestAndTest(URI uri, String s) throws IOException {
+        System.out.println("Connecting to " + uri.toString());
+        try (CloseableHttpResponse response = HttpClients.createMinimal().execute(new HttpGet(uri))) {
+            Assertions.assertThat(EntityUtils.toString(response.getEntity()))
+                    .isEqualTo(s);
+        }
+    }
+}
+-----
+
+And we can see that test run by issuing this:
+
+[source,bash]
+-----
+# mvn install
+...
+[INFO] --- maven-failsafe-plugin:2.22.1:integration-test (integration-tests) @ openliberty ---
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.steeplesoft.microprofile.openliberty.test.OpenLibertyTest
+Connecting to http://localhost:8080/?name=OpenLiberty
+Connecting to http://localhost:8080/
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.726 s - in com.steeplesoft.microprofile.openliberty.test.OpenLibertyTest
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO]
+[INFO] --- liberty-maven-plugin:2.2:test-stop-server (stop-server) @ openliberty ---
+...
+-----
+
+Like I said. It's not the most elegant, but it should get you going, and with that, we're done! In the next installment,
+well see what it takes to get MicroProfile and Apache TomEE up and running.
+
+You can find the source for the whole project https://bitbucket.org/jdlee/microprofile-demo/[here], and for this part
+https://bitbucket.org/jdlee/microprofile-demo/src/master/openliberty[here].
+
+== UPDATE
+Twitter user https://twitter.com/gcharters[gcharters] contacted me to
+https://twitter.com/gcharters/status/1053214740862898176[tell me] about a parent POM that OpenLiberty users can use to
+avoid some of the boilerplate above. You can find that POM
+https://search.maven.org/artifact/net.wasdev.wlp.maven.parent/liberty-maven-app-parent/2.6.1/pom[here] and cut the size
+of your POM significantly. Enjoy!

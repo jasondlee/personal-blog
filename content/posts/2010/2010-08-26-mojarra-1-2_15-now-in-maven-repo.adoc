@@ -1,0 +1,14 @@
+---
+title: "Mojarra 1.2_15 Now In Maven Repo"
+date: 2010-08-26
+tags: [JSF, Maven, Mojarra]
+type: post
+status: published
+---
+= Mojarra 1.2_15 Now In Maven Repo
+Jason Lee
+2010-08-26
+
+Way back in July, Ed Burns http://weblogs.java.net/blog/edburns/archive/2010/07/20/mojarra-1215-released[released and announced] Mojarra 1.2_15, which is mostly a backport of performance fixes from the 2.0 branch.  Given http://blogs.sun.com/rlubke/entry/grizzly_2_0_now_has[recent changes] on the Mojarra team^1^, there was some confusion and difficulty getting the jars published to the http://download.java.net/maven/1[java.net Maven repository].  I'm happy to report, though, that we've gotten those kinks worked out, and that this new release of the 1.2 branch of Mojarra is http://download.java.net/maven/1/javax.faces/jars/[now available] for your Mavenized pleasure.  Note that this is the Maven 1 repository, and it's not in central.  Those are separate issues on which we're still working.
+
+^1^ Many, many thanks to you, Ryan, for all of your hard work over the years, and best of luck in your new position. :)

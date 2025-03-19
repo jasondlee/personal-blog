@@ -1,0 +1,122 @@
+---
+title: Testing with Quarkus, jOOQ, and Testcontainers
+date: 2021-12-29
+tags: [Java, Quarkus, jOOQ, Testcontainers]
+type: post
+author: jdlee
+status: published
+source-highlighter: prettify
+---
+
+In a project I've been working on, I've been targeting PostgreSQL, but testing with H2. While that works, I'm a big fan of having the test environment match production as much as possible. That said, I don't like to have external system dependencies for tests, such as requiring having a database installed. That's where https://testcontainers.org[Testcontainers] comes in. In this post, I'll look at how I integrated Testcontainers into my Quarkus+jOOQ project
+
+// more
+
+To set the stage, I should describe how my project is set up as far as data access goes. I'm using https://jooq.org[jOOQ], rather than, say, JPA or Panache. I manage the central jOOQ object, `DSLContext`, via CDI, and `@Inject` that as needed. The `@Produces` method looks something like this:
+
+[source,kotlin]
+-----
+@RequestScoped
+class DslContextProvider {
+    @Inject
+    lateinit var dataSource: DataSource
+
+    @Produces
+    @RequestScoped
+    fun getDslContext(): DSLContext {
+        val configuration = DefaultConfiguration()
+            .set(dataSource)
+            .set(SQLDialect.POSTGRES)
+            .set(
+                Settings()
+                    .withExecuteLogging(true)
+                    .withRenderCatalog(false)
+                    .withRenderSchema(false)
+                    .withRenderQuotedNames(RenderQuotedNames.NEVER)
+                    .withRenderNameCase(RenderNameCase.LOWER_IF_UNQUOTED)
+            )
+
+        return DSL.using(configuration)
+    }
+}
+-----
+
+The `DataSource` is managed via Quarkus' built-in support, so I just have to configure it:
+
+[source]
+-----
+quarkus.datasource.db-kind=$\{DB_TYPE:postgresql}
+quarkus.datasource.jdbc.url=$\{DB_URL:jdbc:postgresql://$\{DB_HOST:localhost}:5432/myDb}
+quarkus.datasource.username=$\{DB_USER:someUser}
+quarkus.datasource.password=$\{DB_PASS:somePassword}
+-----
+
+This works great until I start testing. The problem as I saw it is this: Testcontainers can easily start a PostgreSQL instance, but the default port exposed is randomized so as to avoid collisions with what might already be running on the host. What I need, then, is a way to point my `DataSource` to a server on an unknown-at-build-time port. So what to do? There are likely a number of options, but the route I chose was to create my `DataSource` manually, at run time:
+
+[source,kotlin]
+-----
+@Alternative
+@ApplicationScoped
+@Priority(1)
+/**
+ * This class handles the creation and start of the Docker-based pgsql database, as well as
+ * @Producing a DataSource to be injected into DslContextProvider, allowing jOOQ to talk to
+ * our container-based DB.
+ */
+class DynamicDataSourceProvider {
+    @Produces
+    fun produceContainerDatasource(): DataSource {
+        if (!started) {
+            started = true
+            startContainer()
+            createDataSource()
+
+            Flyway.configure()
+                .dataSource(dataSource)
+                .load()
+                .migrate()
+        }
+
+        return dataSource
+    }
+
+    private fun createDataSource() {
+        dataSource = PGSimpleDataSource()
+        dataSource.serverNames = arrayOf("localhost")
+        dataSource.portNumbers = intArrayOf(postgres.getMappedPort(5432))
+        dataSource.user = DB_NAME
+        dataSource.password = DB_NAME
+        dataSource.databaseName = DB_NAME
+    }
+
+    private fun startContainer() {
+            postgres = PostgreSQLContainer(PostgreSQLContainer.IMAGE)
+                .withUsername(DB_NAME)
+                .withPassword(DB_NAME)
+                .withDatabaseName(DB_NAME)
+                .withExposedPorts(5432)
+                .withReuse(true)
+            postgres.start()
+    }
+
+    companion object {
+        const val DB_NAME = "testdb"
+        private var started = false
+        private lateinit var dataSource : PGSimpleDataSource
+        private lateinit var postgres : PostgreSQLContainer<*>
+    }
+}
+-----
+
+I start by creating a new `@ApplicationScoped` bean, annotated with `@Alternative` to tell CDI I'm overriding another bean. I then add the `@Produces` method that will do the work. I have three requirements: start the container, create the
+`DataSource`, and run my Flyway migrations, and those are handled in order by `produceContainerDatasource()`.
+
+In `startContainer()`, we see the Testcontainer usage where the database instance is started. We hardcode the database name, user name, and password, as they really don't matter. This is a throw-away database, so security is not a concern.
+
+In `createDataSource`, we create an instance of PostgreSQL's `PGSimpleDataSource`, and configure it to match the container, pulling the randomized port from the container.
+
+Finally, back in `produceContainerDatasource()`, we programmatically migrate the database to set up our schema and test data.
+
+I also chose to wrap the whole process inside the `if (started)` block. While not strictly necessary, it seems to speed things up just a little bit. Rather than Testcontainers having to decide whether or not to create or reuse the container, we just create it once and store the reference in a static variable. If you find that distasteful, you can store the reference in an instance variable and let Testcontainers figure things out.
+
+NOTE: I'm not a Testcontainers expert, and while I'm pretty comfortable with Quarkus, there's always something more to learn, so please take this (and everything you read from me ;) as something freely shared as I learn the technology. There very well my be a better way to do this. If you find one, I'd love to hear about it so I can learn some more. If you find this works well enough for you, then use it in good health. :)

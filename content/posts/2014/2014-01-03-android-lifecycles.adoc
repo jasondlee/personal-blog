@@ -1,0 +1,60 @@
+---
+title: "Android Lifecycles"
+date: 2014-01-03
+tags: [Android]
+type: post
+status: published
+---
+= Android Lifecycles
+Jason Lee
+2014-01-03
+
+
+I've been getting a number of bug reports from my app http://cubtracker.com[Cub Tracker] that had me stumped. I was getting NullPointerExceptions where I shouldn't be. After some digging, I think I finally found the culprit: device rotation. While rotating the device does, indeed, trigger the error, it goes deeper than that. My problem is that the app doesn't correctly save the state of the view, which becomes problematic when, for example, the device is rotated. In trying to fix that, I discovered I don't understand the Android lifecycle as well as I should, so I set out to fix that.
+
+// more
+
+First off, for those that may not realize it, when an Android device is rotated, the current Activity is destroyed and recreated. This is done, at least in part, in case the Activity wants to use a different layout for the new screen dimensions. This is clearly documented for anyone interested in read the https://developer.android.com/guide/topics/resources/runtime-changes.html[documentation]. Ahem.
+
+At any rate, I cranked out a very simple app that logs when certain lifecycle events happen:
+
+.Android Lifecycles
+[cols="3", options="header"]
+[grid="rows"]
+|====
+|User Action
+|Lifecycle Event
+|Bundle?
+
+|App Start | onCreate | No
+| | onStart | -
+| | onPostCreate | No
+| | onResume | -
+| | onPostResume | -
+
+| Home | onSaveInstanceState | Yes
+| | onPause | -
+| | onStop | -
+
+| App Restart | onRestart | -
+| | onStart | -
+| | onResume | -
+| | onPostResume | -
+
+| Rotate Screen | onSaveInstanceState | Yes
+| | onPause | -
+| | onStop | -
+| | onDestroy | -
+| | onCreate | Yes
+| | onStart | -
+| | onRestoreInstanceState | Yes
+| | onPostCreate | yes
+| | onResume | -
+| | onPostResume | -
+
+| Back/App Shutdown | onPause | -
+| | onStop | -
+| | onDestroy | -
+|====
+
+Something that surprises me is that when the user presses home, the state is saved in `onSaveInstanceState`, but when the app is restarted, `onRestoreInstanceState` is not called, nor is any other lifecycle method that takes a `Bundle` as far as I can tell. Maybe that's the way it's supposed to be, or maybe I'm missing something. In the meantime, though, it seems that I need to implement `onSaveInstanceState` and `onRestoreInstanceState` in each of my activities (as well as any Fragments, as they follow a similar lifecycle). That should cover the majority of my state-related NPEs, which is an improvement. I'll have to keep digging to figure out state handling in the Home/Restart scenario.

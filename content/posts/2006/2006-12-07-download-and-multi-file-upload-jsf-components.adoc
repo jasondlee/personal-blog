@@ -1,0 +1,110 @@
+---
+title: "Download and Multi-file Upload JSF Components"
+date: 2006-12-07
+tags: [Java, JSF]
+type: post
+status: published
+---
+= Download and Multi-file Upload JSF Components
+Jason Lee
+2006-12-07
+
+At work, we have run into two issues several times:  1) We haves app that create PDFs, and we need our JSF apps to send that to the user, and 2) we need to be able to upload multiple files to one of our JSF apps.  The solutions we've used have been less than exciting.  For the first problem, we'd make the backing bean that coordinates the PDF creation (calling the service layer, basically) session-scoped, then have a hidden iframe on the result page whose source is a JSP that pulls the bean out the session (via Java code!) and sends the PDF to the browser in such a way that forces the user to save the file.  For the upload issue, we've been using http://jupload.sourceforge.net[JUpload], which works fine, but, since it lives outside the JSF lifecycle, we have to do some interesting things to make it work.  Luckily, my boss gave me time to create better solutions, resulting in the components `<fl:download/>` and `<fl:multiFileUpload/>`.
+// more
+
+File Downloads
+---------------
+This component is really rather simple.  Currently, it has these options:
+
+* data
+* mimeType
+* fileName
+* method
+* text
+* iframe
+* height
+* width
+
+A few of these attributes need a little explanation:
+
+* The `data` attribute is an EL expression that resolves to the content of the file to be downloaded.  This data can be returned as a `byte[]`, `InputStream`, or a `ByteArrayOutputStream`.
+* The mime type needs to be specified as there is no easy way of determining the correct type short of guessing based on the file extension, adding a third party dependency, or writing a bunch of painful code myself.  None of those are very appealing.
+* The `method` is how the file is to be rendered: 'inline' (i.e., embedded in the page), or 'download' (i.e., force a Save As dialog).
+* `text` is the text of the link tag for the download method.
+* `iframe` is a boolean determining whether or not to use an iframe when embedding the file.
+
+Usage is pretty simple:
+
+[source,java,linenums]
+-----
+<fl:download method="download" mimeType="application/pdf"
+    data="#\{testBean.pdf}" fileName="test.pdf" text="Get PDF"/>
+<fl:download method="inline" mimeType="application/pdf"
+    data="#\{testBean.pdf}" width="500px" height="250px" />
+-----
+
+which renders to this:
+
+image::/images/2006/12/download.screenshot.gif[title: "Download Component Screenshot"]
+
+Multi-file Uploads
+------------------
+The second component is a bit trickier.  Since HTML won't allow more than one file selected per file input element, another method must be employed.  Following JUpload's lead, I implemented this part of the component in an applet.  The applet allows the user to select a number of files and, when he's ready, to submit them all in one batch.  This component is a bit more complex, so we'll spend more time on it, and we'll start with the component parameters:
+
+* type - The manner in which to render the applet: 'full' or 'button' (see below for details)
+* fileHolder - The object into which uploaded files will be placed
+* destinationUrl - The URL to which to navigate after an upload (see below)
+* fileFilter - A string listing the extensions to allow, as well as a filter description (i.e., "Image Files|jpg,png,gif")
+* maxFileSize - The maximum size per file in bytes
+* startDir - The directory in which to start looking for files
+* buttonText - The text on the button if `type` is set to 'button'
+* height - The height of the rendered applet
+* width - The width of the rendered applet
+
+Some of those attributes needs some explaining:
+
+* The `fileHolder` is an object that implements the `com.iecokc.faces.components.upload.multifile.FileHolder` interface defined by the component.  This class will be fetched by the component via the `ValueExpression` given in the tag.  As each file is uploaded, `FileHolder.addFile()` is called, storing the file, in effect, in the backing bean (as it has a reference to the same object).
+The component provides an implementation of this interface, `FileHolderImpl`, which simply takes the `InputStream` for the file, and stores it in a `Map`, indexed by filename.  It is possible to write an implementation of the interface that reads each file in and writes it to a database, JCR repository, etc., depending on your application's needs.
+
+* Once all of the files have been processed, the component retrieves the `destinationUrl`, which, if a `ValueExpression` is used, gives the backing bean the chance to analyze the set of uploaded files and pick an appropriate destination URL based on application-specific needs.  UNC paths are acceptable.
+* Care must be taken when using the `startDir` attribute, as file systems paths are far from portable.  For in-house applications, such as the one for which this component was developed, one can probably safely use this parameter.
+* In the extension part of the `fileFilter` string, only the extensions are need:  no masks, periods, etc.</ul>
+Here are a couple of sample usages.
+
+Full Mode:
+
+[source,java,linenums]
+-----
+<fl:multiFileUpload maxFileSize="10240"
+    fileHolder="#\{testBean.fileHolder}"
+    destinationUrl="#\{testBean.destination}"
+    width="750px" height="250px" type: "full"
+    fileFilter="Images|jpg,png,gif"/>
+-----
+
+which renders like this:
+
+image::/images/2006/12/upload.full.screenshot.gif[title: "Full Upload Example Screenshot"]
+
+Button Mode:
+
+[source,java,linenums]
+-----
+<fl:multiFileUpload maxFileSize="10240"
+    fileHolder="#\{testBean.fileHolder}"
+    destinationUrl="#\{testBean.destination}"
+    width="175px" height="25px" type: "button"
+    buttonText="Custom Text!"/>
+-----
+
+which renders like this:
+
+image::/images/2006/12/upload.button.screenshot.gif[title: "Button Upload Example Screenshot"]
+
+What's Next?
+------------
+These components are extremely young (I "finished" the download component Monday and the upload component today), so the APIs and implementation need some more scrutiny by someone other than the guy who wrote them.  That means, of course, that things may change, but I hope it won't be anything major.  Personally, they seem to solve effectively the problem which spawned them, so I see nothing that needs changing, but others likely will, so we'll have to wait and see how all of that shakes out.
+
+Enough already?  Where can I get them?
+--------------------------------------
+That's a very good question.  As I noted, these were components developed for my company, but my boss has graciously given me permission to release them (in fact, he approached me about it).  That leaves the question then, of exactly where/to whom to release them.  I am currently in the middle of discussions on where these and my link:/2006/05/25/yahoo-ui-meets-javaserver-faces/[YUI] components will live. They'll either be rolled in to the newly opened https://javaserverfaces.dev.java.net/[JSF RI] sandbox, or added to Ed Burns' https://jsf-extensions.dev.java.net/nonav/mvn/[JSF-extensions] project, and I'm having trouble deciding.  I'll make a post here when a decision has been reached.

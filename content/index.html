@@ -1,0 +1,37 @@
+---
+layout: default
+title: Home
+paginate: posts
+---
+{#include partials/pagination.html/}
+
+{#for post in site.collections.posts.paginated(page.paginator)}
+<article class="post">
+    <div class="grid">
+        <div class="col-fixed" style="padding-top: 0.4rem; width: 100px;">
+            <div class="entry-date">
+                <div class="date-box updated">
+                    <div class="date">{post.date.format("d")}</div> {!  | date: "%d" !}
+                    <div class="month-year">{post.date.format("MMM YYYY")}</div> {!  | date: "%b %Y" !}
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h1 class="title">
+                <a href="{post.url.absolute}">{post.title}</a>
+            </h1>
+            <div class="col">
+                {!#include share-page.html /!}
+            </div>
+        </div>
+    </div>
+    {post.rawContent.excerpt.convert.raw}
+    <div class="read-more small">
+        <a href="{post.url.absolute}">Read More &rsaquo;</a>
+    </div>
+</article>
+{/for}
+<div style="border-top: 2px solid #47586d;"></div>
+
+{#include partials/pagination.html/}
+

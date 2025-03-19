@@ -1,0 +1,345 @@
+---
+title: "Incorporating preview/experimental features in WildFly"
+date: 2023-07-07
+tags: [WildFly]
+type: post
+author: jdlee
+status: published
+source-highlighter: highlight.js
+---
+
+One of the toughest challenges facing a mature product like WildFly is adding features without breaking existing users. It's especially difficult when that project serves as the foundation for a commercial product downstream that requires a higher degree of stability. While WildFly is a wholly independent project, it's not completely immune to concerns that EAP may have with regard to API stability, long term support, etc. That has made it difficult at times to change WildFly, though efforts like WildFly Preview have certainly helped.
+
+With that in mind, I'd like to draw your attention to a project WildFly/EAP engineer extraordinaire, Paul Ferraro https://lists.jboss.org/archives/list/wildfly-dev@lists.jboss.org/thread/4JCTIWREUBBX4DVIJIUAFQ2FWDBN3AXW/[recently announced] on the https://lists.jboss.org/archives/list/wildfly-dev@lists.jboss.org/[wildfly-dev email list]. You can click through to the https://lists.jboss.org/archives/list/wildfly-dev@lists.jboss.org/thread/4JCTIWREUBBX4DVIJIUAFQ2FWDBN3AXW/[list archive], or read a more nicely-formatted copy of the email below. Either way, we would greatly value any feedback you might provide.
+
+// more
+
+[NOTE]
+This is Paul's email (and, thus, none of my work and all credit to him) copied, pasted, and slightly reformatted here for convenience.
+
+''''
+
+++++
+<div style="margin-left: 2rem">
+++++
+We have long wanted the ability to easily give users opt-in access to less-than-stable features within WildFly. To this end, WildFly currently includes a preview feature pack that facilitates the delivery of preview features to WildFly users. This gives us the ability to include new or alternate versions of modules not included in our default feature pack. However, this mechanism is not well utilized, as evident by the large number of feature proposals sitting the pull request queue, largely because the vast majority of "features" do not naturally arrive via a new module (or different version of an existing module), but rather via changes to existing modules usually residing within the WildFly codebase. For the purpose of this proposal, I am mostly concerned with "features" as defined as new runtime behavior enabled via configuration within a new or existing subsystem.
+
+Usually, development of a new feature not only involves the feature code itself, which may be bundled with the wildfly codebase, or via an external component; but also changes to the management model of the corresponding subsystem otherwise required to enable the feature.  This might be a new subsystem, but more typically, a new resource within an existing subsystem, or a new attribute of an existing resource, etc.
+
+Rather than only being able to control the set of available features via controlling the modules of a given feature pack, it would be more useful, I think, to allow existing modules to enable features by filtering a subsystem's management model, thus exposing/restricting the configuration needed to enable feature's runtime behavior.
+
+Several months ago, I created https://issues.redhat.com/browse/WFCORE-6221[] which proposes to formalize the concept of a "feature stream" within the WildFly kernel.
+
+We currently only support the inclusion of stable, well-tested features, which generally requires a new subsystem management model version.  Let's call this the STABLE feature stream, where a "feature stream" is a set of features with specific stability guarantees, e.g. STABLE, PREVIEW, EXPERIMENTAL, etc.
+
+By associating incoming features with a non-STABLE "feature stream", e.g. PREVIEW, EXPERIMENTAL, we can more quickly include new features into WildFly, allowing users access to them via a simple opt-in mechanism.  This way we can more quickly evolve WildFly while still retaining the same testing standards required for a feature to be deemed STABLE.
+
+While we can complicate things later, let's assume for now that feature streams are a nested hierarchy. i.e.
+
+- a server configured with the STABLE feature stream will only contain STABLE features, not PREVIEW nor EXPERIMENTAL features
+- a server configured with the PREVIEW feature stream will contain STABLE and PREVIEW features, but not EXPERIMENTAL features.
+- a server configured with the EXPERIMENTAL feature stream will contain all features.
+
+WFCORE-6221 proposes that the features exposed by a given subsystem are defined, not just by its management model, but also the feature stream of the server. To achieve this, WFCORE-6221 proposes the following changes to WildFly core:
+
+- Add the ability to start WildFly with a specific "feature stream"
+  * This takes inspiration from JEP 12, which introduced "preview features" to OpenJDK (https://openjdk.org/jeps/12[])
+  * e.g. +
+            ./standalone.sh --feature-stream=experimental +
+            ./domain.sh --feature-stream=experimental
+- Add the ability to manipulate management model registration based on the "feature stream" of the server
+- Add support for "feature stream"-specific subsystem XML namespaces
+
+A WildFly server instance is assigned a "feature stream" at startup, either via the command line (for the standalone use case), or via its host controller (for the managed domain use case).  By default, a server will use the STABLE feature stream.
+
+Let's look at a few different use cases, and explore how each might be handled.  Forgive me in advance if all of my examples are clustering-related... :)
+
+In general, I will show 2 approaches: one using programmatic filtering, and the other using auto-filtering. I expect most users would use the auto-filtering approach.
+
+== Introducing an experimental feature enabled via a new subsystem
+e.g. https://issues.redhat.com/browse/WFLY-14953[]
+
+The module containing the extension for an experimental subsystem needs to be made available within the target feature pack. However, an experimental subsystem simply skips registration if the current feature stream does not support EXPERIMENTAL features. e.g.
+
+[source,java]
+-----
+public class FooExtension implements Extension {
+    @Override
+    public void initialize(ExtensionContext context) {
+        if (context.enables(FeatureStream.EXPERIMENTAL)) {
+            SubsystemRegistration subsystem = context.registerSubsystem("foo",
+                FooSubsystemModel.VERSION_1_0.getVersion());
+            // ...
+        }
+    }
+    // ...
+}
+-----
+
+To promote this feature to the PREVIEW stream, we simply change our logic accordingly:
+
+Promotion to the STABLE stream can remove the condition entirely, since `context.enables(FeatureStream.STABLE)` always return true. However, promotion to STABLE will likely involve incrementing the management model version, so existing processes for stable features will apply.
+
+Alternatively, if the subsystem is self-contained within its own extension (as opposed to an existing extension), we can simply associate the extension with a specific feature stream. e.g.
+
+[source,java]
+-----
+public class FooExtension implements Extension {
+    // ...
+    @Override
+    public FeatureStream getFeatureStream() {
+        return FeatureStream.EXPERIMENTAL;
+    }
+}
+-----
+
+When the server loads the extension, it will automatically skip initialization of any extensions not enabled by the current feature stream of the server.
+
+== Introducing an experimental feature enabled via a new resource of an existing subsystem
+e.g. https://issues.redhat.com/browse/WFLY-16345[]
+
+Similar to the above, we need to skip registration of the experimental resource definition if the current feature stream does not support EXPERIMENTAL features. If the experimental resource is never registered, it never installs the services required to enable the experimental feature. e.g.
+
+[source,java]
+-----
+@Override
+public void registerChildren(ManagementResourceRegistration parent) {
+    if (parent.enables(FeatureStream.EXPERIMENTAL)) {
+        parent.registerSubModel(new FooResourceDefinition(...));
+    }
+}
+-----
+
+Alternatively, we can simply associate the ResourceDefinition with a specific feature stream. e.g.
+
+[source,java]
+-----
+class FooResourceDefinition extends SimpleResourceDefinition {
+    // ...
+    @Override
+    public FeatureStream getFeatureStream() {
+        return FeatureStream.EXPERIMENTAL;
+    }
+}
+-----
+
+When registering this resource via `ManagementResourceRegistration.registerSubModel(new FooResourceDefinition(...))`, the server will omit registration if the feature stream associated with the `ResourceDefinition` is not enabled by the server. N.B. Care must be taken when using this approach, as the `registerSubModel(...)` method will return null if registration was skipped.
+
+== Introducing an experimental feature enabled via a new attribute of an existing subsystem resource
+https://issues.redhat.com/browse/WFLY-18000[]
+
+Similar to the above, we need to skip registration of the experimental attribute if the current feature stream does not support EXPERIMENTAL features.e.g.
+
+[source,java]
+-----
+class FooResourceDefinition extends SimpleResourceDefinition {
+
+    static final AttributeDefinition BAR = ...; // Our new attribute that enables the new experimental feature
+    // ...
+    @Override
+    public void registerAttributes(ManagementResourceRegistration registration) {
+        if (registration.enables(FeatureStream.EXPERIMENTAL)) {
+            registration.registerReadWriteAttribute(BAR, null, new ReloadRequiredWriteAttributeHandler(FOO);
+        }
+    }
+}
+-----
+
+Unfortunately, the current registration mechanism available in wildfly-core, which registers the `OperationDefinition` parameters of the add operation parameters independently from resource attributes (via different `ResourceDefinition.registerXXX(...) `methods), makes this awkward.  Additionally, resource add operation handlers and write-attribute operation handlers are constructed with a separately defined set of parameters (rather than using the parameters of the corresponding `OperationDefinition`).
+For this reason, I submitted https://issues.redhat.com/browse/WFCORE-6407[] (WIP https://github.com/wildfly/wildfly-core/pull/5563[]) which eliminates the need to construct add resource operation handlers or write-attribute operation handlers using a set of attributes.
+
+Until that change is in place, most resource definitions for most subsystems (i.e. those not using the registration mechanics from wildfly-clustering-common) will require separate logic to exclude the EXPERIMENTAL attributes from its add operation handler independently from the resource's attributes.  Consequently, until WFCORE-6407 is complete, add operation parameter handling will be very awkward: e.g.
+
+[source,java]
+-----
+class FooResourceDefinition extends SimpleResourceDefinition {
+static final AttributeDefinition ATTRIBUTE = //... an existing attribute
+
+    // Our new experimental attribute
+    static final AttributeDefinition BAR = new SimpleAttributeDefinitionBuilder("bar", ModelType.STRING);
+
+    // N.B. FeatureStream.complete(...) is a convenience method that returns a full map of feature-per stream
+    // e.g. will auto-map FeatureStream.PREVIEW to the FeatureStream.STABLE value
+    // In this way, the addition of a new feature stream will not affect existing usage
+    static final Map<FeatureStream, Collection<AttributeDefinition>> ATTRIBUTES = FeatureStream.complete(Map.of(FeatureStream.STABLE, List.of(ATTRIBUTE), FeatureStream.EXPERIMENTAL, List.of(List.of(ATTRIBUTE, BAR)));
+    // ...
+    public FooResourceDefinition(ManagementResourceRegistration parent) {
+        super(new Parameters(PATH, DESCRIPTION_RESOLVER).setAddHandler(new ReloadRequiredAddStepHandler(ATTRIBUTES.get(parent.getFeatureStream()))));
+    }
+    // ...
+}
+-----
+
+W.R.T. runtime, if the experimental attribute is never registered, it will not be allowed within our resource's add operation, and thus will always resolve to its default value.
+
+Alternatively, once WFCORE-6407 is complete, we can associate an `AttributeDefinition` with a `FeatureStream` and perform the conditional registration automatically. e.g.
+
+[source,java]
+-----
+static final AttributeDefinition BAR = new SimpleAttributeDefinitionBuilder("bar", ModelType.STRING)
+    .setRequired(false)
+    .setValidator(new EnumValidator<>(EnumSet.allOf(Baz.class))
+    .setFeatureStream(FeatureStream.EXPERIMENTAL)
+    .build();
+-----
+
+The attribute registration methods of `ManagementResourceRegistration` will omit registration of an attribute its associated feature stream is not enabled by the server.
+
+Similarly, the `OperationDefinition` of the add operation of the containing `ResourceDefinition` will omit this attribute from its allowed parameters if the feature stream associated with the `AttributeDefinition` is not enabled by the server.
+
+== Introducing an experimental feature enabled via a new value of an existing subsystem resource attribute.
+e.g. https://issues.redhat.com/browse/WFLY-13904[]
+
+Typically, this would involve adding a new value to an existing enum. Here we need to conditionally register a `ParameterValidator` specific to the current `FeatureStream`.
+
+As with the previous example, selecting the appropriate validator for a given "feature stream" is also awkward due to the way that resource attributes vs resource add operation parameters are handled. With the existing limitations, a "feature stream"-specific validator can be registered using logic such as:
+e.g.
+Using our `AttributeDefinition` `BAR` from the above example, which specifies a value enumerated by the enum `Baz`.
+Our experimental feature involves a newly added `QUX` value to our `Baz` enum.
+
+[source,java]
+-----
+static final Map<FeatureStream, Set<Baz>> BAZ_VALUES = FeatureStream.complete(Map.of(FeatureStream.STABLE,
+    Enum.complementOf(EnumSet.of(Baz.QUX)), FeatureStream.EXPERIMENTAL, EnumSet.allOf(FeatureStream.class)));
+-----
+
+During attribute registration, we specify the validator specific to the current stream. e.g.
+
+[source,java]
+-----
+@Override
+public void registerAttributes(ManagementResourceRegistration registration) {
+    ParameterValidator bazValidator = new EnumValidator<>(BAZ_VALUES.get(registration.getFeatureStream()));
+    // Copy attribute and apply correct validator
+    AttributeDefinition attribute = SimpleAttributeDefinitionBuilder.create(BAR).setValidator(bazValidator).build();
+    registration.registerReadWriteAttribute(attribute, null, new ReloadRequiredWriteAttributeHandler(attribute));
+}
+-----
+
+Not so pleasant...
+
+Due to the same limitation of the current registration mechanics as described previously, a similar hack will be needed to ensure that the `AttributeDefinition` provided to the constructor of the add `OperationStepHandler` has the correct validator applied.  Again, this limitation will be addressed via WFCORE-6407.
+
+Alternatively, with some minor changes to the `ParameterValidator` interface, and once WFCORE-6407 is complete, we can associate a `ParameterValidator` with an `AttributeDefinition` per feature stream and perform the selection automatically wherever necessary, e.g. via the base `OperationStepHandler` implementations.  I have not completely thought this through, but my current thinking is something like: e.g.
+
+[source,java]
+-----
+static final AttributeDefinition BAR = new SimpleAttributeDefinitionBuilder("bar", ModelType.STRING)
+    .setRequired(false)
+    .setValidator(new FeatureStreamValidator(Map.of(FeatureStream.STABLE, new EnumValidator<>(Enum.complementOf(EnumSet.of(Baz.QUX))), FeatureStream.EXPERIMENTAL, new EnumValidator<>(Enum.allOf(Baz.class)))))
+    .build();
+-----
+
+... where `FeatureStreamValidator` is a composite `ParameterValidator` implementation that delegates to a specific `ParameterValidator` depending on the feature-stream of the server.
+
+
+== Subsystem XML parsing
+
+Just as the feature stream is a new dimension to a subsystem's management model version - so too is the feature stream an optional dimension of a subsystem configuration XML namespace.
+
+Say the current version of an existing subsystem uses the XML namespace `urn:wildfly:foo:2.1`. Implementing a new experimental feature would involve a new XML namespace `urn:wildfly:foo:experimental:2.1`. If/when this feature is promoted to STABLE, we would need to increment the schema version itself, e.g. `urn:wildfly:foo:2.2`. If instead, a new stable feature is added, and the experimental feature remains experimental, we would increment the version for both the stable and experimental schemas. e.g. `urn:wildfly:foo:2.2`, `urn:wildfly:foo:experimental:2.2`.
+
+W.R.T. XML parsing, filtering attributes/resource by stream must be done inline with existing filtering by version.
+e.g. Consider the following set of subsystem namespaces:
+
+[source,java]
+-----
+public enum FooSubsystemSchema implements PersistentSubsystemSchema<FooSubsystemSchema> {
+        VERSION_1_0(1),
+        VERSION_2_0(2),
+        VERSION_2_0_EXPERIMENTAL(2, FeatureStream.EXPERIMENTAL), // We added a new experimental attribute
+    ;
+
+    private final VersionedNamespace<IntVersion, ExperimentalSubsystemSchema> namespace;
+
+    ExperimentalSubsystemSchema(int major) {
+        this(major, FeatureStream.DEFAULT);
+    }
+
+    ExperimentalSubsystemSchema(int major, FeatureStream stream) {
+        this.namespace = SubsystemSchema.createSubsystemURN(FooSubsystemResourceDefinition.SUBSYSTEM_NAME, new IntVersion(major), stream);
+    }
+
+    @Override
+    public VersionedNamespace<IntVersion, ExperimentalSubsystemSchema> getNamespace() {
+        return this.namespace;
+    }
+
+    @Override
+    public PersistentResourceXMLDescription getXMLDescription() {
+        PersistentResourceXMLBuilder builder = builder(FooSubsystemResourceDefinition.PATH, this.namespace);
+        if (this.namespace.since(VERSION_2_0)) {
+            // BAR is new since version 2.0, but only for specific feature streams
+            builder.addAttributes(FooSubsystemResourceDefinition.ATTRIBUTES.stream().filter(this::enables));
+        } else {
+            // BAR does not exist prior to version 2.0
+            builder.addAttributes(FooSubsystemResourceDefinition.ATTRIBUTES.stream().filter(Predicates.not(BAR)));
+        }
+        return builder.build();
+    }
+}
+-----
+
+Registering subsystem parsers should generally look the same as it does now, since the server can skip registration of schemas associated with a feature stream not supported by the server.
+e.g.
+
+[source,java]
+-----
+@Override
+public void initializeParsers(ExtensionParsingContext context) {
+    // This will skip registration of FooSubsystemSchema.VERSION_2_0_EXPERIMENTAL
+    // if the server does not support it
+    context.setSubsystemXmlMappings(FooSubsystemResourceDefinition.SUBSYSTEM_NAME,
+        EnumSet.allOf(FooSubsystemSchema.class));
+}
+-----
+
+Subsystem extensions will also need to register the appropriate writer based on the feature stream of the server.
+
+[source,java]
+-----
+// The "current" schema will depend on the feature stream of the server
+static final Map<FeatureStream, FooSubsystemSchema> CURRENT_SCHEMAS = FeatureStream.complete(
+        Map.of(FeatureStream.STABLE, VERSION_2_0, FeatureStream.EXPERIMENTAL, VERSION_2_0_EXPERIMENTAL));
+
+@Override
+public void initialize(ExtensionContext context) {
+    SubsystemRegistration subsystem = context.registerSubsystem(
+            FooSubsystemResourceDefinition.SUBSYSTEM_NAME,
+            FooSubsystemModel.VERSION_2_0.getVersion());
+    // ...
+    subsystem.registerXMLElementWriter(
+            new PersistentResourceXMLDescriptionWriter(
+                    CURRENT_SCHEMAS.get(context.getFeatureStream())));
+}
+-----
+
+== Misc concerns
+
+- Subsystem model transformers for mixed-domains
+* I anticipate that we would restrict the use of mixed-domains to the STABLE feature stream.  That means that only STABLE features need to be concerned with subsystem model transformations.
+- Experimental/preview wildfly kernel features
+* The above mechanisms should work for any features configured by a `ResourceDefinition`/`AttributeDefinition`, even if they have no corresponding subsystem
+* Anything else would need to conditionally enable based on the feature stream of the controller
+
+That's about all I have for now.
+
+Again, I think this approach should cover the bulk of feature development use cases in WildFly.
+Let me know if anything was particularly unclear, confusing, or requires elaboration; or if there are any major use cases that I have missed.
+
+STATUS:
+I have a pull request open for WFCORE-6221 [1] that implements most of the above.  It is still a work in progress - and needs to be rebased on my WFCORE-6407 branch (once that is complete).
+
+Please browse my topic branch [2], and leave any comments on the PR [3].  A good place to start is the integration tests [4], which validates this against a sample subsystem demonstrating several of the above use cases.
+
+For any design-related discussion, either reply to this thread or to the WFCORE-6221 jira itself.
+
+Paul Ferraro
+
+[1] https://issues.redhat.com/browse/WFCORE-6221[] +
+[2] https://github.com/pferraro/wildfly-core/tree/[] +
+[3] https://github.com/wildfly/wildfly-core/pull/5413[] +
+[4] https://github.com/pferraro/wildfly-core/tree/WFCORE-6221/subsystem-test/tests/src/test/java/org/jboss/as/subsystem/test/experimental[] +
+++++
+</div>
+++++

@@ -1,0 +1,112 @@
+---
+title: "Kotlin and CDI"
+date: 2015-11-05
+tags: [Kotlin, CDI]
+type: post
+status: published
+---
+
+If you've been following my blog, you've probably noticed that I've been spending a
+lot of time with Kotlin of late. (For the curious, I really like it so far, but I haven't
+done just a whole lot with it.) I've experimented with writing simple JSF and JAX-RS apps
+in it, largely to see if I can make it work. With those hurdles cleared, I'm trying something
+a bit more ambitious: a complete (if basic) Java EE application, written completely in Kotlin. Because
+I'm a sucker for a bad joke, I've dubbed the project _KotlinEE_. I'm not quite ready to
+walk through that application yet, but I what I would like to discuss now is an issue I ran into
+trying to get CDI working with Kotlin.
+
+// more
+
+In theory, it should be pretty straightforward:
+
+[source,java]
+-----
+@ApplicationScoped
+class DatabaseService  {
+
+    @PersistenceContext(unitName = "em")
+    private lateinit var em : EntityManager
+
+    init {
+        println("Starting DatabaseService...")
+    }
+
+    fun getEntityManager() : EntityManager {
+        println("***** From the server: $\{em.delegate.javaClass.name}")
+        return em
+    }
+}
+-----
+
+Yes, that's a really boring service, and, yes, I'm doing something dumb in exposing
+the `EntityManager` that way, but I'm just experimenting at the moment: can I expose a
+Kotlin class as a CDI bean and do something with it in my Arquillian test? The short answer
+is yes, but there's a big-ish caveat.
+
+By default, Kotlin defines all classes as public and final. Public, since most classes are
+public anyway and one of Kotlin's goals is pragmatism, and final because it forces the
+library developer to think about which methods should be overridable, and prevents unintentional or undesirable
+overriding where it wasn't planned for. This poses a problem for CDI (or at least Weld, the
+CDI implementation that GlassFish and Payara Server use): since these classes and methods are
+final, the CDI implementation can't make proxies for them. My first attempt at working around
+this limitation (which is a JVM-level issue, for what it's worth), was to mark everything as
+`open`:
+
+[source,java]
+-----
+@ApplicationScoped
+open class DatabaseServiceImpl  {
+
+    @PersistenceContext(unitName = "em")
+    private lateinit var em : EntityManager
+
+    init {
+        println("Starting DatabaseService...")
+    }
+
+    open fun getEntityManager() : EntityManager {
+        println("***** From the server: $\{em.delegate.javaClass.name}")
+        return em
+    }
+}
+-----
+
+That works, but it's kind of ugly. If you have a large bean ("Split it up!", some will likely
+shout, but that's not always possible, right? :), this can become very cumbersome very quickly,
+but it also negates Kotlin's final-by-default protections. Another way, which I think is cleaner,
+is to define an `interface`, implement that on your bean, and use the `interface` as the
+injected type, rather than the class:
+
+[source,java]
+-----
+interface DatabaseService {
+    fun getEntityManager() : EntityManager
+}
+
+@ApplicationScoped
+class DatabaseServiceImpl : DatabaseService {
+
+    @PersistenceContext(unitName = "em")
+    private lateinit var em : EntityManager
+
+    init {
+        println("Starting DatabaseService...")
+    }
+
+    override fun getEntityManager() : EntityManager {
+        println("***** From the server: $\{em.delegate.javaClass.name}")
+        return em
+    }
+}
+
+class MyOtherClass {
+    @Inject
+    lateinit var service : DatabaseService
+}
+-----
+
+Now I have a nice `interface` to provide the usual level of abstraction, and Weld/CDI
+can make the proxies needed to expose this class as a CDI bean.
+
+What does the rest of the application configuration look like? You'll have to wait
+a bit longer for that. :) Stay tuned...
