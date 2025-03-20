@@ -15,7 +15,7 @@ One of the nicest enhancements to the JSF specification that 2.0 brought was the
 Once you have DWR http://directwebremoting.org/dwr/server/annotations.html[configured to work] (warning: those docs might be slightly out of date, if memory serves me), you have to tell DWR what to expose.  I prefer the annotation-based approach (condensing, here, the DWR documentation, with some modifications):
 
 [source,java,linenums]
------
+----
 @ManagedBean
 @SessionScoped
 @RemoteProxy
@@ -29,26 +29,26 @@ public class RemoteFunctions {
         return "Life, the universe, and everything"
     }
 }
------
+----
 
 For a class like this, DWR will expose `RemoteFunctions.calculateFoo()`, but will not expose `RemoteFunctions.calculateBar()`.  With DWR, you must explicitly mark a method as remoteable (is that a word? : ) or you won't have access to it.
 
 On the client side, you would put something like this on your page:
 
 [source,html,linenums]
------
+----
 <script type: "text/javascript" src="[WEBAPP]/dwr/interface/RemoteFunctions.js"/>
 <script type: "text/javascript" src="[WEBAPP]/dwr/engine.js"/>
------
+----
 
 With those two declarations, you would then be able to call the JSF Managed Bean via:
 
 [source,js,linenums]
------
-RemoteFuctions.calculateFoo(function(str) { 
+----
+RemoteFuctions.calculateFoo(function(str) {
     alert(str);
 });
------
+----
 
 While this isn't a very exciting example, it should highlight the type of interaction DWR enables.  It offers a great deal more flexibility with things like RBAC and Object conversion (i.e., DTOs).
 

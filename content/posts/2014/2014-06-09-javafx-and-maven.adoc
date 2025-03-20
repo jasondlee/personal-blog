@@ -15,7 +15,7 @@ I've been tinkering with a couple of different JavaFX projects for a while now. 
 // more
 
 [source,xml,linenums]
------
+----
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -96,7 +96,7 @@ I've been tinkering with a couple of different JavaFX projects for a while now. 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>
------
+----
 
 The interesting parts are the two plugins, `maven-dependency-plugin` and `exec-maven-plugin`. The first takes all of the non-system-scoped dependencies, and extracts the jars into `$\{project.build.directory}/classes`. This makes the dependencies available to the application without having to manage a bunch of jars, which is helpful when distributing the app. Speaking of which, the next plugin, `exec-maven-plugin`, packages the application as a JAR using the `javafxpackager` tool in `JAVA_HOME` (make sure you change `MAIN_CLASS` ;). Once you package the app, it can be run with a simple `java -jar target/ARTIFACT_NAME-app.jar`.
 

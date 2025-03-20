@@ -18,7 +18,7 @@ Here's the script:
 
 .mvnimport.sh
 [source,bash,linenums]
------
+----
 #!/bin/bash
 
 FILE=deps
@@ -116,16 +116,16 @@ if [ $# -lt 3 ] ; then
 fi
 
 processArtifact $1 $2 $3
------
+----
 
 To import a Maven artifact, all you have to do is specify the group ID, artifact, and version:
 
 [source,bash,linenums]
------
+----
 $ mvnimport.sh com.google.guava guava 14.0.1
 Processing com.google.guava:guava:14.0.1
 Processing com.google.code.findbugs:jsr305:1.3.9
------
+----
 
 It will import the artifact, record its immediate dependencies, then recursively process each dependency. If a module for the given coordinates has been found, the script currently skips it.
 

@@ -14,7 +14,7 @@ I'd mention it in case there's a beginner wondering, or more senior developers, 
 as myself and my team mate, that just have it wrong. :)
 
 // more
-The official https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html[Java docs] 
+The official https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html[Java docs]
 provide a nice chart, which I've reproduced here:
 
 [%header]
@@ -26,14 +26,14 @@ provide a nice chart, which I've reproduced here:
 |private|Y|N|N|N
 |===
 
-What we knew was that `protected` members were visible to subclasses. What we 
-expected, though, was they would not be visible to _any other_ classes. What we 
-found accidentally when writing tests, and what the table clearly indicates, is 
+What we knew was that `protected` members were visible to subclasses. What we
+expected, though, was they would not be visible to _any other_ classes. What we
+found accidentally when writing tests, and what the table clearly indicates, is
 that the method is visible to classes _in the same package_. To demonstrate, I
 cobbled together a simple project:
 
 [source,java]
------
+----
 package com.steeplesoft.visibilitytest;
 
 public class Class1 {
@@ -43,10 +43,10 @@ public class Class1 {
 
     private void privateMethod() { }
 }
------
+----
 
 [source,java]
------
+----
 package com.steeplesoft.visibilitytest;
 
 public class Class2 {
@@ -64,10 +64,10 @@ public class Class2 {
 
     private void privateMethod() { }
 }
------
+----
 
 [source,java]
------
+----
 package com.steeplesoft.visibilitytest.sub;
 
 import com.steeplesoft.visibilitytest.Class1;
@@ -91,12 +91,12 @@ public class Class3 {
         class2.thirdInstance(); // Error - not visible
     }
 }
------
+----
 
 As expected (for those sharper than I, it seems), Class2 can see `Class1.publicMethod` and `Class1.protectedMethod`,
-but not `Class1.privateMethod`. `Class3`, however, can only see `Class2.publicMethod`, 
+but not `Class1.privateMethod`. `Class3`, however, can only see `Class2.publicMethod`,
 but not the other two. It can also only see the `publicInstance` field, but neither
 `protectedInstance` nor `privateInstance`.
 
-Moral of the story: if you're trying to hide methods from other classes, `protected` 
+Moral of the story: if you're trying to hide methods from other classes, `protected`
 may not be the answer your looking for.

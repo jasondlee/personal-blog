@@ -16,9 +16,9 @@ As you may have guessed from my recent link:/2012/04/book-review-pro-javafx-2-a-
 The first step, of course, is to download the binaries.  You can do that http://www.oracle.com/technetwork/java/javafx/downloads/index.html[here], sort of.  Since this is still a preview release at the time of this writing, you have click the teeny tiny http://www.oracle.com/technetwork/java/javafx/downloads/devpreview-1429449.html[link] under the header.  Once you've downloaded the distribution, you need to extract it somewhere:
 
 [source,bash,linenums]
------
+----
 $ unzip javafx_sdk-2_1_0-beta-b19-macosx-universal-27_mar_2012.zip -d $HOME/local/
------
+----
 You can, of course, put it anywhere you want, but you'll need to adjust the following instructions.  The next step is set up NetBeans.  NetBeans has JavaFX support out of the box, assuming your JDK has JavaFX support.  Since the Mac JDK does not yet, we need fix that.  Otherwise, you'll see this error:
 
 image::/images/2012/04/newprojectbad-300x224.png[link="/images/2012/04/newprojectbad.png" title: "'New Project - Missing JavaFX bins'"]
@@ -41,6 +41,6 @@ image::/images/2012/04/newprojectgood.png[link="/images/2012/04/newprojectgood.p
 
 Your new project is ready to run.
 
-The even more adventurous may be wondering how one would do this with Java 7, to which I say, "Good question!" : )  I have mixed luck getting NetBeans and Java 7 to play nice on my Mac.  It's almost certainly pilot error, as I've done it before, as has http://www.adam-bien.com/roller/abien/entry/how_to_run_netbeans_7[Adam Bien], but I haven't had a chance to debug things (e.g., the navigation tree under projects has all the tree icons, but no text.  IIRC, the context menus are also text-less. Strange). 
+The even more adventurous may be wondering how one would do this with Java 7, to which I say, "Good question!" : )  I have mixed luck getting NetBeans and Java 7 to play nice on my Mac.  It's almost certainly pilot error, as I've done it before, as has http://www.adam-bien.com/roller/abien/entry/how_to_run_netbeans_7[Adam Bien], but I haven't had a chance to debug things (e.g., the navigation tree under projects has all the tree icons, but no text.  IIRC, the context menus are also text-less. Strange).
 
 At any rate, as I noted earlier, in retrospect, this seems pretty easy (if a bit unintuitive) and might be documented somewhere, but I couldn't find it.  Either way, it's certainly documented now.  I hope it helps. : )

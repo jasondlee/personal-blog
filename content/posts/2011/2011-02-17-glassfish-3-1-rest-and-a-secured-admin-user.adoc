@@ -15,7 +15,7 @@ In my last post on using the GlassFish REST interface, a commenter asked about h
 Let's start with a very simple class that deploys an application to the server:
 
 [source,java,linenums]
------
+----
 public class AuthExample {
     protected Client client;
     public AuthExample() {
@@ -25,12 +25,12 @@ public class AuthExample {
     public boolean deployApp(String fileName) throws URISyntaxException {
         FormDataMultiPart form = new FormDataMultiPart();
         form.getBodyParts().add(new FileDataBodyPart("id", new File(fileName)));
-        form.field("name", fileName.substring(0, fileName.indexOf(".")), 
+        form.field("name", fileName.substring(0, fileName.indexOf(".")),
             MediaType.TEXT_PLAIN_TYPE);
-        form.field("contextroot", fileName.substring(0, fileName.indexOf(".")), 
+        form.field("contextroot", fileName.substring(0, fileName.indexOf(".")),
             MediaType.TEXT_PLAIN_TYPE);
         form.field("force", "true", MediaType.TEXT_PLAIN_TYPE);
-        ClientResponse response = 
+        ClientResponse response =
             client.resource("http://localhost:4848/management/domain/applications/application/")
                 .type(MediaType.MULTIPART_FORM_DATA)
                 .accept(MediaType.APPLICATION_JSON)
@@ -51,29 +51,29 @@ public class AuthExample {
         }
     }
 }
------
+----
 
 If you execute this, passing a WAR as the first and only parameter, you should see "Success" printed to the screen.  Now that we've verified this works, let's secure the server:
 
 [source,bash,linenums]
------
+----
 $ asadmin change-admin-password
-Enter admin user name [default: admin]> 
-Enter admin passwordthe > 
-Enter new admin password> 
-Enter new admin password again> 
+Enter admin user name [default: admin]>
+Enter admin passwordthe >
+Enter new admin password>
+Enter new admin password again>
 Command change-admin-password executed successfully.
------
+----
 
 If you rerun the class now, you should see "Failure" printed to the screen, which is what we'd expect to see.  To fix this, let's change the constructor for our test app:
 
 [source,java,linenums]
------
+----
 public AuthExample() {
     client = Client.create();
     client.addFilter(new HTTPBasicAuthFilter("admin", "admin"));
 }
------
+----
 
 Change the password, of course, to what you entered, and rerun the app.  You should now see "Success".
 
@@ -82,10 +82,10 @@ Pretty simple.  Ultimately, this has more to do with the Jersey Client than with
 For the Maven people in the audience, here's the POM I used to build this:
 
 [source,xml,linenums]
------
+----
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.steeplesoft</groupId>
@@ -146,13 +146,13 @@ For the Maven people in the audience, here's the POM I used to build this:
         </profile>
     </profiles>
 </project>
------
+----
 
 I executed the project with this command line:
 
 [source,bash,linenums]
------
+----
 mvn -Prun -Dexec.args="test.war" package
------
+----
 
 Enjoy!

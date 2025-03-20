@@ -29,7 +29,7 @@ all we need to do is copy the existing classes in techpavan's upstream project: 
 classes require some dependencies we haven't declared yet, so let's add those now:
 
 [source,xml]
------
+----
 <dependency>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-lang3</artifactId>
@@ -45,41 +45,41 @@ classes require some dependencies we haven't declared yet, so let's add those no
     <artifactId>maven-artifact</artifactId>
     <version>3.8.2</version>
 </dependency>
------
+----
 
 The first class we need to update is `CleanM2`. This class will be the entry point into our utility. Since the upstream
 project is based on JCommander, our first step is to remove the related imports. We also need to annotate the class so
 Picocli knows we're defining a new command in this class:
 
 [source,java]
------
+----
 @CommandLine.Command
 public class CleanM2 implements Runnable {
 // ...
------
+----
 
 We've also added an `implements Runnable`, as Picocli requires that each command be `Runnable`. The next step is to
 modify the class' `public void main`, making it implement the `run()` method from the interface:
 
 [source]
------
+----
 -    public static void main(String[] args) {
 +    @Override
 +    public void run() {
------
+----
 
 We now have our Picocli command, but it could use some parameters, which are defined currently in `ArgData`. Like `CleanM2`,
 this class heavily uses JCommander APIs. Fortunately, the APIs are pretty similar, so it's mostly a matter of changing the
 imports
 
 [source]
------
+----
 -    @Parameter(names = {"--path", "-p"}, description = "Path to m2 directory, if using a custom path.")
 -    private String m2Path;
 +    @CommandLine.Option(names = {"--path", "-p"},
 +            description = "Path to m2 directory, if using a custom path.")
 +    protected String m2Path;
------
+----
 
 and then updating the annotations on the parameters. You can actually update them all at once with a simple search and replace: `@Parameter` -> `@CommandLine.Option`.
 
@@ -88,10 +88,10 @@ have `CleanM2` extend `ArgData`. I chose to go with the second option to reduce 
 project:
 
 [source,java]
------
+----
 @CommandLine.Command
 public class CleanM2 extends ArgData implements Runnable {
------
+----
 
 `CleanM2` will still have quite a few compilation errors related to the parameter properties. I won't go over those here,
 as they're pretty simple to update (you can also "cheat" by looking at the https://github.com/jasondlee/mvn-repo-cleaner/tree/1.0.0[GitHub repo for this project].) I've also taken the opportunity to remove all of the
@@ -101,7 +101,7 @@ if that's your preference.
 With those changes done, we're ready to build and run this:
 
 [source,bash]
------
+----
 $ mvn clean package
 ...
 $ ls -alh target/
@@ -115,15 +115,15 @@ drwxrwxr-x  1 jdlee jdlee  42 Oct 10 20:44 maven-status
 -rw-rw-r--  1 jdlee jdlee 16K Oct 10 20:44 mvn-repo-cleaner-1.0.0-SNAPSHOT.jar
 drwxrwxr-x  1 jdlee jdlee 112 Oct 10 20:44 quarkus-app
 -rw-rw-r--  1 jdlee jdlee 117 Oct 10 20:44 quarkus-artifact.properties
------
+----
 
 As things stand out of the box, to run our command, you would do something like this:
 
 [source,bash]
------
+----
 $ java -jar target/quarkus-app/quarkus-run.jar --help
 ...
------
+----
 
 While that works, shipping that is not ideal. We can fix that by changing how Quarkus packages the app. The default for
 Quarkus is the "fast jar" format, which we see above in `target/quarkus-app`. What we'd like is a fat/uber jar, where
@@ -131,14 +131,14 @@ our utility and all of its dependencies are in one archive. To do that with Quar
 using `src/main/resources/application.properties`:
 
 [source,java]
------
+----
 quarkus.package.type=uber-jar
------
+----
 
 Now, if we rebuild:
 
 [source,bash]
------
+----
 $ mvn clean package
 ...
 $ ls -alh target/
@@ -152,15 +152,15 @@ drwxrwxr-x  1 jdlee jdlee   42 Oct 10 20:53 maven-status
 -rw-rw-r--  1 jdlee jdlee  16K Oct 10 20:53 mvn-repo-cleaner-1.0.0-SNAPSHOT.jar.original
 -rw-rw-r--  1 jdlee jdlee 4.0M Oct 10 20:53 mvn-repo-cleaner-1.0.0-SNAPSHOT-runner.jar
 -rw-rw-r--  1 jdlee jdlee  122 Oct 10 20:53 quarkus-artifact.properties
------
+----
 
 We now have a 4M archive, `mvn-repo-cleaner-1.0.0-SNAPSHOT-runner.jar`, which we can run with:
 
 [source,bash]
------
+----
 $ java -jar target/mvn-repo-cleaner-1.0.0-SNAPSHOT-runner.jar --help
 ...
------
+----
 
 That gives us a single file to ship around to users' machines, which is definitely an improvement. It still requires
 a JVM, though. While that's not necessarily an issue for _this_ command, which is clearly targeted at developers, your
@@ -169,7 +169,7 @@ Quarkus makes super easy, barely an inconvenience. To do so, though, we will nee
 https://sdkman.io[sdkman!].
 
 [source]
------
+----
 $ sdk install java 21.2.0.r16-grl
 $ sdk use java 21.2.0.r16-grl
 $ gu install native-image
@@ -211,12 +211,12 @@ drwxrwxr-x  1 jdlee jdlee  206 Oct 10 21:04 mvn-repo-cleaner-1.0.0-SNAPSHOT-nati
 -rw-rw-r--  1 jdlee jdlee 4.0M Oct 10 20:56 mvn-repo-cleaner-1.0.0-SNAPSHOT-runner.jar
 drwxrwxr-x  1 jdlee jdlee  112 Oct 10 21:04 quarkus-app
 -rw-rw-r--  1 jdlee jdlee  293 Oct 10 21:04 quarkus-artifact.properties
------
+----
 
 That gives us a 34M file, `mvn-repo-cleaner-1.0.0-SNAPSHOT-runner`, with an amazing startup:
 
 [source]
------
+----
 $ time java -jar target/mvn-repo-cleaner-1.0.0-SNAPSHOT-runner.jar --help
 ...
 real    0m0.787s
@@ -227,7 +227,7 @@ $ time ./target/mvn-repo-cleaner-1.0.0-SNAPSHOT-runner --help
 real    0m0.034s
 user    0m0.020s
 sys     0m0.015s
------
+----
 
 From 787 thousandths of a second to 34 thousandths of a second. That's pretty impressive!
 

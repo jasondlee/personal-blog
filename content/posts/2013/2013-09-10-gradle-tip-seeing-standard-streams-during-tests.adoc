@@ -14,20 +14,20 @@ I'm not a real big fan of using standard out as a debugging strategy (I prefer a
 
 .build.gradle
 [source,groovy,linenums]
------
+----
 test {
     testLogging.showStandardStreams = true
 }
------
+----
 
 If you'd like to make this change globally, that's also easy:
 
 .$HOME/.gradle/init.gradle
 [source,groovy,linenums]
------
+----
 allprojects {
     tasks.withType(Test) {
         testLogging.showStandardStreams = true
     }
 }
------
+----

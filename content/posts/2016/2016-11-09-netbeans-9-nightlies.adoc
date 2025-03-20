@@ -16,7 +16,7 @@ fault tolerant, but it seems to work well enough. If you're a fellow addict, her
 go:
 
 [source, bash]
------
+----
 #!/bin/bash
 
 VERS=`curl -s http://bits.netbeans.org/netbeans/trunk/nightly/latest/js/build_info.js | grep BOUNCER_PRODUCT_PREFIX | cut -f 2 -d \"`
@@ -30,4 +30,4 @@ if [ ! -e $FILE ] ; then
         unzip $FILE
     fi
 fi
------
+----

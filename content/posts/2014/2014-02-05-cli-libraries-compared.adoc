@@ -40,7 +40,7 @@ base class (which implements `Runnable`) and each command extends this class. Le
 in our scenario:
 
 [source,java,linenums]
------
+----
 public class AirlineGlassFish {
     public static void main(String[] args) {
         CliBuilder<Runnable> builder = Cli.<Runnable>builder("glassfish")
@@ -109,7 +109,7 @@ public class AirlineGlassFish {
         }
     }
 }
------
+----
 
 Looking first at `GlassFishCommand`, we have a base class that exposes some options that will be shared
 amongst the various GlassFish-related commands, name `host` and `port`. Using the `Option` annotation,
@@ -128,10 +128,10 @@ patter, we specify the description, default command, and list of command classes
 parser, parse the args, and run the command. A sample invocation might look like this:
 
 [source,bash,linenums]
------
+----
 $ java -jar target/airline-demo-1.0-SNAPSHOT.jar deploy /path/to/myapp.war
 The application has been deployed.
------
+----
 
 === Crest
 
@@ -139,7 +139,7 @@ Command implmentation in crest is a bit different. Crest uses methods annotated
 with `@Command` rather than classes:
 
 [source,java,linenums]
------
+----
 public class CrestGlassFish {
 
     public static void main(String... args) throws Exception {
@@ -188,7 +188,7 @@ public class CrestGlassFish {
             .path("/management").path("domain");
     }
 }
------
+----
 
 Let's look at `hello()` first. Note that the method name is not the same as the command name.
 It can be, of course, but crest (as does Airline) allows the developer to override the command name.
@@ -212,7 +212,7 @@ To make these easy to run, I borrowed the use the Maven shader plugin from the c
 make an executable "uberjar":
 
 [source, xml,linenums]
------
+----
 <build>
     <defaultGoal>install</defaultGoal>
     <plugins>
@@ -245,7 +245,7 @@ make an executable "uberjar":
         </plugin>
     </plugins>
 </build>
------
+----
 
 The `mainClass` will vary, of course, based on which library you're using and how it's configured.
 For both Airlift and the first crest configuration, the `mainClass` will be the one where you

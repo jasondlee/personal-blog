@@ -16,7 +16,7 @@ Over the past year or so, I've been slowly migrating -- somewhat accidentally --
 One of the vaunted features of Maven is the ability to embed Ant scripts in your POM file.  My first thought when I ran into the problem above was exploiting that capability, but those attempts were thwarted by one of Maven's biggest weaknesses:  poor documentation.  As I noted, though, I finally found a web page that had something close to what I needed that I was able to work out the rest.  Since my JSFOne examples have the same compilation requirements as does Scales, I was able to pull the annotation processing tasks from the Scales build, giving me this:
 
 [source,xml,linenums]
------
+----
 <plugin>
   <groupId>org.apache.maven.plugins</groupId>
   <artifactId>maven-antrun-plugin</artifactId>
@@ -68,7 +68,7 @@ One of the vaunted features of Maven is the ability to embed Ant scripts in your
     </dependency>
   </dependencies>
 </plugin>
------
+----
 
 It's not really pretty, but we _are_ talking about a Maven POM. ;)  As I'm sure you've surmised by now, I'm not a Maven expert, but here is my understanding of things.  We're telling Maven to run these tasks when the `generate-sources` phase is run (if you can find documentation on what the Maven lifecycle is, I'd love to see it).  The tasks run are, I think, pretty self-explanatory (their purpose is outside the scope of this post either way ; ).  Note, though, that we can run as many arbitrary Ant tasks as we want.
 
@@ -77,7 +77,7 @@ One feature that I like a lot is the `sourceRoot` entry.  With that line, we're 
 One remaining problem was that this creates some directories and files that Maven doesn't delete when the `clean` goal is run.  To fix that, we add this XML snippet to the plugin description above:
 
 [source,xml,linenums]
------
+----
 <execution>
   <id>clean_generated</id>
   <phase>clean</phase>
@@ -90,7 +90,7 @@ One remaining problem was that this creates some directories and files that Mave
     </tasks>
   </configuration>
 </execution>
------
+----
 
 With that, we can now issue a `mvn clean` and get rid of the `generate` directory that apt creates.  Snazzy.
 

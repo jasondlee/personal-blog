@@ -20,7 +20,7 @@ I'm going to forego adding Coil to your project -- there are plenty of examples 
 the example. To start, we'll show the usage in my composable:
 
 [source,kotlin]
------
+----
 @Composable
 fun ProtectedPhoto(photo: Photo, modifier: Modifier) {
     AsyncImage(
@@ -31,13 +31,13 @@ fun ProtectedPhoto(photo: Photo, modifier: Modifier) {
         contentScale = ContentScale.Crop
     )
 }
------
+----
 
 The only thing of note here is the model we're passing to `AsyncImage`. In this case, it's a model object that encapsulates a protected photo in the system. The real trick is telling Coil how to handle models of this type, and that's done via
  a https://coil-kt.github.io/coil/image_pipeline/#fetchers[`Fetcher`]:
 
 [source,kotlin]
------
+----
 import coil3.ImageLoader
 import coil3.decode.DataSource
 import coil3.decode.ImageSource
@@ -82,7 +82,7 @@ class CustomImageFetcher(
         )
     }
 }
------
+----
 
 Once this class is registered (see below), Coil will know how to handle `AsyncImage` instances with a `Photo` model. When it identifies such a case, it automagically creates the `Fetcher` via the `Fetcher.Factory`.
 
@@ -96,7 +96,7 @@ I am using https://insert-koin.io/[Koin] here [1] to fetch my repository where t
 The last part remaining is telling Coil about our implementation. If you read the https://coil-kt.github.io/coil/image_loaders/[documentation], the Coil team suggests that you register a single `ImageLoader` for your application, so that's what we'll do. In `App.kt`, we find the composable that serves as the entry point for our application (i.e., where the multiplatform part takes over from the Android `Activity` or iOS `UIViewController` that bootstrap the running application):
 
 [source,kotlin]
------
+----
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import coil3.ImageLoader
@@ -129,7 +129,7 @@ fun getAsyncImageLoader(context: PlatformContext) =
         }
         .crossfade(true)
         .build()
------
+----
 
 In `App()`, prior to do any actual UI work, we set the `ImageLoader` factory with a call to `getAsyncImageLoader`. The relevant part is the call to `components(builder: ComponentRegistry.Builder.() -> Unit)` where we pass a lambda that registers our `Fetcher.Factory`. At this point you're all ready to go.
 

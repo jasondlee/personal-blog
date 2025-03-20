@@ -28,7 +28,7 @@ ____
 And, just in case the paste disappears, here are its contents:
 
 [source,java]
------
+----
 java:
 tts = new ALTextToSpeech(session);
         frontTactilSubscriptionId = 0;
@@ -61,7 +61,7 @@ tts = ALTextToSpeech(session)
             tts.say("ouch!")
         }
     }
------
+----
 
 To understand _why_ the Kotlin code looks the way it does, it's important to understand a bit about the Java code. Without
 knowing anything about the method `memory.subscribeToEvent`, it seems clear that it takes a `String` (perhaps an event name?),
@@ -75,7 +75,7 @@ lambdas are actually implemented internally, if I recall correctly, as instances
 This code, then, could be written like this:
 
 [source,java]
------
+----
 frontTactilSubscriptionId = memory.subscribeToEvent(
     "FrontTactilTouched",
     (Float arg0) -> {
@@ -83,7 +83,7 @@ frontTactilSubscriptionId = memory.subscribeToEvent(
             tts.say("ouch!");
         }
     });
------
+----
 
 If memory serves, the compiler is smart enough to know that the method takes an `EventCallback`, and sees that the lambda requires a single
 `Float`, which happens to match the single abstract method of the interface, so this lambda-ized version of the code is
@@ -95,7 +95,7 @@ parameter to a method is a lambda, the compiler will allow you to specify that _
 This code, then:
 
 [source,kotlin]
------
+----
 frontTactilSubscriptionId = memory.subscribeToEvent(
         "FrontTactilTouched",
         { arg0 ->
@@ -105,19 +105,19 @@ frontTactilSubscriptionId = memory.subscribeToEvent(
         }
     )
 }
------
+----
 
 is functionally equivalent to this:
 
 [source,kotlin]
------
+----
 frontTactilSubscriptionId = memory.subscribeToEvent("FrontTactilTouched") { arg0 ->
         // 1 means the sensor has been pressed
         if (arg0 > 0) {
             tts.say("ouch!")
         }
 }
------
+----
 
 And there you go. That's my take on what's going with that conversion. I hope you find that helpful. And accurate. :) If I
 missed something, hit the comments below and let's talk.

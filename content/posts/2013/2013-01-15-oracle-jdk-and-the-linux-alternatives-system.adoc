@@ -10,7 +10,7 @@ Jason Lee
 2013-01-15
 
 
-For both work and fun, I run Linux.  I'm also a Java guy, which poses some interesting challenges, as most Linux distributions have a long, sad tale regarding shipping Java.  Things are a bit better, I guess, with OpenJDK, but I've always liked running the "real thing", which historically meant the Sun JDK, and now Oracle's JDK (Note: current employment has no bearing on that choice ; ).  If I were running an RPM-based distribution, I would be http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html[set].  At the moment, though, I'm running http://www.linuxmint.com/[Linux Mint], so I get to use the tarball.  
+For both work and fun, I run Linux.  I'm also a Java guy, which poses some interesting challenges, as most Linux distributions have a long, sad tale regarding shipping Java.  Things are a bit better, I guess, with OpenJDK, but I've always liked running the "real thing", which historically meant the Sun JDK, and now Oracle's JDK (Note: current employment has no bearing on that choice ; ).  If I were running an RPM-based distribution, I would be http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html[set].  At the moment, though, I'm running http://www.linuxmint.com/[Linux Mint], so I get to use the tarball.
 
 Most of the time that works fine, but for reasons I don't remember, OpenJDK was installed on my system, and now everything is using that (which is at Update 7, and not the recently released and more secure Update 11 that I want).  I'd rather not monkey with changing PATH and all that, so I turned to the Linux alternatives system to handle things.  Sadly, it wasn't quite that easy, as alternatives needs to know about your alternatives, so before I could change things, I had to educate it, which turned out be easier than I feared.  With Java 7 Update 11 installed in `/opt/java/jdk1.7.0_11` and symlinked from `/opt/java/latest`, I had to do two things.
 
@@ -19,7 +19,7 @@ Most of the time that works fine, but for reasons I don't remember, OpenJDK was 
 First, it seems the actual update script, `update-java-alternatives`, needs a `.jinfo` file in `/usr/lib/jvm`.  Mine looks like this:
 
 [source,shell,linenums]
------
+----
 name=java-7-latest
 alias=java-1.7-latest
 priority=10
@@ -65,12 +65,12 @@ jdk wsgen /opt/java/latest/bin/wsgen
 jdk wsimport /opt/java/latest/bin/wsimport
 jdk xjc /opt/java/latest/bin/xjc
 plugin mozilla-javaplugin.so /opt/java/latest/jre/lib/amd64/libnpjp2.so
------
+----
 
 Next, I needed to "install" my alternatives option.  The script I used to do that looks like this:
 
 [source,shell,linenums]
------
+----
 update-alternatives --install /usr/bin/java java /opt/java/latest/jre/bin/java 10
 update-alternatives --install /usr/bin/keytool keytool /opt/java/latest/jre/bin/keytool 10
 update-alternatives --install /usr/bin/pack200 pack200 /opt/java/latest/jre/bin/pack200 10
@@ -111,16 +111,16 @@ update-alternatives --install /usr/bin/wsgen wsgen /opt/java/latest/bin/wsgen 10
 update-alternatives --install /usr/bin/wsimport wsimport /opt/java/latest/bin/wsimport 10
 update-alternatives --install /usr/bin/xjc xjc /opt/java/latest/bin/xjc 10
 update-alternatives --install /usr/lib/mozilla/plugins/mozilla-javaplugin.so mozilla-javaplugin.so  /opt/java/latest/jre/lib/amd64/libnpjp2.so 10
------
+----
 
 Once that ran (Hint: i put that in a text file, which I ran via `sudo bash foo`), I was able to issue `sudo update-java-alternatives -s java-1.7-latest` and test my change:
 
 [source,shell,linenums]
------
+----
 java -version
 java version "1.7.0_11"
 Java(TM) SE Runtime Environment (build 1.7.0_11-b21)
 Java HotSpot(TM) 64-Bit Server VM (build 23.6-b04, mixed mode)
------
+----
 
 Voila! Now all I need to do to update Java is install a new version and update the symlink.  That was probably a lot more work than adding a PATH entry to point to my new JAVA_HOME, but it was also a lot more fun. :) I also have no idea, to be honest, if this is the "best" approach, or if everything I did is correct (especially the plugin part), but it works for now, and that was my goal. If I come across a more correct approach, I'll likely revisit this. In the meantime, I can finally run the JDK I want, and that's all I care about at the moment. :)

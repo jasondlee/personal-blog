@@ -38,24 +38,24 @@ There's a lot to that, but all you _really_ need to understand from the client's
 First up, let's prepare the server:
 
 [source, bash,linenums]
------
+----
 $ asadmin enable-secure-admin
 $ asadmin stop-domain
 $ asadmin start-domain
------
+----
 
 Unless you installed a signed certificate, if you run the example from my last post, you should now see a giant stack trace with `sun.security.validator.ValidatorException: PKIX path building failed` toward the end. There are at least two ways to handle this. The first, and perhaps the best, is simply to import the server's certificate. One way to do this is via http://blogs.sun.com/andreas/resource/InstallCert.java[this utility] (written by a Sun engineer whose name I can't find):
 
 [source, bash,linenums]
------
+----
 $ javac InstallCert.java
 $ java InstallCert localhost
------
+----
 
 Another approach, albeit riskier, is to accept all certificates. You can achieve that with this code:
 
 [source,java,linenums]
------
+----
 public static void disableCertificateValidation() {
     // Create a trust manager that does not validate certificate chains
     TrustManager[] trustAllCerts = new TrustManager[]{
@@ -85,12 +85,12 @@ try {
 } catch (Exception e) {
     }
 }
------
+----
 
 Note that this will affect all HTTPS connections in the JVM, so use it with caution. Once a call to that method has been added to the class' constructor, we can then change the GlassFish url to use HTTPS:
 
 [source,java,linenums]
------
+----
 public class SslExample {
     private Client client;
     public SslExample() throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
@@ -131,12 +131,12 @@ public class SslExample {
     public boolean deployApp(String fileName) throws URISyntaxException {
         FormDataMultiPart form = new FormDataMultiPart();
         form.getBodyParts().add(new FileDataBodyPart("id", new File(fileName)));
-        form.field("name", fileName.substring(0, fileName.indexOf(".")), 
+        form.field("name", fileName.substring(0, fileName.indexOf(".")),
             MediaType.TEXT_PLAIN_TYPE);
-        form.field("contextroot", fileName.substring(0, fileName.indexOf(".")), 
+        form.field("contextroot", fileName.substring(0, fileName.indexOf(".")),
             MediaType.TEXT_PLAIN_TYPE);
         form.field("force", "true", MediaType.TEXT_PLAIN_TYPE);
-        ClientResponse response = 
+        ClientResponse response =
             client.resource("https://localhost:4848/management/domain/applications/application/")
                 .type(MediaType.MULTIPART_FORM_DATA)
                 .accept(MediaType.APPLICATION_JSON)
@@ -157,6 +157,6 @@ public class SslExample {
         }
     }
 }
------
+----
 
 There _are_ likely cleaner, safer ways of going about this, but this will certainly get you going.

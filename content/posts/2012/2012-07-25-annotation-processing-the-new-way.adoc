@@ -17,19 +17,19 @@ I recently ran into an issue with our dependency injection system: it won't retu
 The first step, of course, is to create the annotation. We'll use this very simple one:
 
 [source,java,linenums]
------
+----
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface MyAnnotation {
     String parent();
 }
------
+----
 
 Nothing special there. The next step is to create the `Processor` class:
 
 [source,java,linenums]
------
+----
 @SupportedAnnotationTypes("com.foo.MyAnnotation")
 public class MyAnnotationProcessor extends AbstractProcessor {
     @Override
@@ -66,7 +66,7 @@ public class MyAnnotationProcessor extends AbstractProcessor {
         return true;
     }
 }
------
+----
 
 I trimmed as much of the logic as I could to clarify, I hope, the details of the processor.  The class extends `AbstractProcessor`.  It is also annotated with `@SupportedAnnotationTypes`, which is a multi-valued annotation telling the system which annotations we care about. In our case, it's just one.
 
@@ -77,14 +77,14 @@ Once we've processed all the elements, we're ready to create our metadata file. 
 Once that's done, the final step is to add this jar as a compile-time dependency to any project that uses the annotation (and which needs the metadata generated):
 
 [source,xml,linenums]
------
+----
 <dependency>
     <groupId>com.foo</groupId>
     <artifactId>annotation-processor</artifactId>
     <version>1.0</version>
     <scope>compile</scope>
 </dependency>
------
+----
 
 And that's it. When your build tool (Maven, Gradle, or... _shudder_ Ant :) compiles the classes in the project, it will create the metadata file.  If you're using Maven, you can verify by viewing `target/class/META-INF/com.foo.MyAnnotation`.
 
@@ -93,7 +93,7 @@ And that's it. When your build tool (Maven, Gradle, or... _shudder_ Ant :) compi
 The other side of this reading the data to finish locating the interfaces.  Here is the code I'm currently using:
 
 [source, java,linenums]
------
+----
 // This Map<List> holds MyAnnotation data keyed by parent().  Since there may be more than one
 // MyAnnotation pointing to a given parent, we store the name of the actual MyAnnotation-annotated
 // interfaces in a List.
@@ -128,12 +128,12 @@ private static void loadMyAnnotationMetadata(Class similarClass) {
         Logger.getLogger(MyAnnotationsUtil.class.getName()).log(Level.SEVERE, null, ex);
     }
 }
------
+----
 
 This code reads any metadata files found in the running system and builds a `Map<String,List>` to hold the data.  Elsewhere in the system, I iterate over these `Lists` and load the classes (`Class.forName()`) to integrate the interfaces into the system:
 
 [source,java,linenums]
------
+----
 List<String> list = myAnnotations.get(parent));
 if (list != null) {
     for (String className : list) {
@@ -145,6 +145,6 @@ if (list != null) {
         }
     }
 }
------
+----
 
 That should cover it. There's much, much more that can be done in your processor, which you can read about in the http://docs.oracle.com/javase/6/docs/api/javax/annotation/processing/package-frame.html[javadocs], but this should get you going.

@@ -1,4 +1,4 @@
-var quotes = [
+const quotes = [
     {quote:'As Christian fathers, our goal is not to raise perfect children, but our goal is to bring up disciples of the Lord Jesus Christ.',source:'Hance Dilbeck'},
     {quote:'Therefore, since we have so great a cloud of witnesses surrounding us, let us also lay aside every encumbrance, and the sin which so easily entangles us, and let us run with endurance the race that is set before us, fixing our eyes on Jesus, the author and perfecter of faith, who for the joy set before Him endured the cross, despising the shame, and has sat down at the right hand of the throne of God.',source:'Hebrews 12:1-2'},
     {quote:'Any country that accepts abortion, is not teaching its people to love, but to use any violence to get what it wants.',source:'Mother Teresa'},

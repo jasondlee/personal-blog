@@ -11,7 +11,7 @@ number of parts that that I needed split apart and process. Prior to Java 8, imp
 that might looked something like this:
 
 [source, java]
------
+----
 for (String part : string.split("\\n")) {
     if (!myList.contains(part)) {
         if (!part.isEmpty()) {
@@ -19,36 +19,36 @@ for (String part : string.split("\\n")) {
         }
     }
 }
------
+----
 
 While that works and seems to be pretty efficient, I felt it could use a stream
 makeover, as I find the stream operations to be clearer and more concise. What I
 ended up with was something like this:
 
 [source,java]
------
+----
 Pattern.compile("\\n")
     .splitAsStream(string)
     .filter(s -> !myList.contains(s))
     .forEach( s -> myList.add(s));
------
+----
 
 I could also have used `Arrays.stream()` rather than `Pattern`:
 
 [source,java]
------
+----
 Arrays.stream(string.split("\\" + DELIMITER))
     .filter(s -> !myList.contains(s))
     .filter(s -> !s.isEmpty())
     .forEach(s -> myList.add(s));
------
+----
 
-I haven't done any profiling to see if `Pattern.compile()` has any non-negligible 
+I haven't done any profiling to see if `Pattern.compile()` has any non-negligible
 performance impact versus `String.split()` (and I probably won't, but you can easily
 "cache" the compiled pattern in an instance or static variable if needed :), but I will
-point out this difference: when using `split()`, streamed or not, we may get a blank 
-value in some situations, so we need to check for that (notice the calls to 
-`String.isEmpty()` in both of those implementations). With the `Pattern`-based 
+point out this difference: when using `split()`, streamed or not, we may get a blank
+value in some situations, so we need to check for that (notice the calls to
+`String.isEmpty()` in both of those implementations). With the `Pattern`-based
 implementation, we don't have that problem.
 
 At any rate, there you have it: you can convert `String.split()` to a stream-based

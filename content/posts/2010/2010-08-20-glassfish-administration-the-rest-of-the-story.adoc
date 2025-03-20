@@ -23,14 +23,14 @@ The Request
 The request payload is typically what you would see with an HTML form submission.  For example, this curl example sets the port for `http-listener-1`, which is the listener that serves your applications:
 
 [source,bash,linenums]
------
+----
 curl -H "__debug: true" -H "Accept: application/json" -X POST -d "port=8675" http://localhost:4848/management/domain/configs/config/server-config/network-config/network-listeners/network-listener/http-listener-1
------
+----
 
 which will return this document (edited for brevity):
 
 [source,js,linenums]
------
+----
 {
    "message":"\"http:\/\/localhost:4848\/...\/http-listener-1\" updated successfully.",
    "exit_code":"SUCCESS",
@@ -39,7 +39,7 @@ which will return this document (edited for brevity):
    "extraProperties":{
    }
 }
------
+----
 
 There are places where the payload is a bit more complex of necessity (such as properties), but I'll cover those in another post.
 
@@ -53,7 +53,7 @@ JSON
 ---
 
 [source,js,linenums]
------
+----
 {
     "command": "Domain",
     "exit_code": "SUCCESS",
@@ -93,13 +93,13 @@ JSON
         }
     }
 }
------
+----
 
 XML
 ---
 
 [source,xml,linenums]
------
+----
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <map>
     <entry key='extraProperties'>
@@ -156,7 +156,7 @@ XML
     <entry key='exit_code' value='SUCCESS'/>
     <entry key='command' value='Domain'/>
 </map>
------
+----
 
 HTML
 ---

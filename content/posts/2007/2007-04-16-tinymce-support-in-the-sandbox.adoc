@@ -16,14 +16,14 @@ I have just committed preliminary support for the http://tinymce.moxiecode.com/[
 This example markup:
 
 [source,html,linenums]
------
+----
 <h3>Normal editor</h3>
 <risb:htmlEditor rows="10" cols="85"  value="#\{testBean.editorValue}"/>
 <h3>Simplified editor</h3>
 <risb:htmlEditor rows="10" cols="85" value="#\{testBean.editorValue}" themeStyle="simplified"/>
 <h3>Full editor</h3>
 <risb:htmlEditor rows="10" cols="85" value="#\{testBean.editorValue}" themeStyle="full"/>
------
+----
 
 gets you this:
 

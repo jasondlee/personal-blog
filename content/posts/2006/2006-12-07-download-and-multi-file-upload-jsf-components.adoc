@@ -36,12 +36,12 @@ A few of these attributes need a little explanation:
 Usage is pretty simple:
 
 [source,java,linenums]
------
+----
 <fl:download method="download" mimeType="application/pdf"
     data="#\{testBean.pdf}" fileName="test.pdf" text="Get PDF"/>
 <fl:download method="inline" mimeType="application/pdf"
     data="#\{testBean.pdf}" width="500px" height="250px" />
------
+----
 
 which renders to this:
 
@@ -74,13 +74,13 @@ Here are a couple of sample usages.
 Full Mode:
 
 [source,java,linenums]
------
+----
 <fl:multiFileUpload maxFileSize="10240"
     fileHolder="#\{testBean.fileHolder}"
     destinationUrl="#\{testBean.destination}"
     width="750px" height="250px" type: "full"
     fileFilter="Images|jpg,png,gif"/>
------
+----
 
 which renders like this:
 
@@ -89,13 +89,13 @@ image::/images/2006/12/upload.full.screenshot.gif[title: "Full Upload Example Sc
 Button Mode:
 
 [source,java,linenums]
------
+----
 <fl:multiFileUpload maxFileSize="10240"
     fileHolder="#\{testBean.fileHolder}"
     destinationUrl="#\{testBean.destination}"
     width="175px" height="25px" type: "button"
     buttonText="Custom Text!"/>
------
+----
 
 which renders like this:
 

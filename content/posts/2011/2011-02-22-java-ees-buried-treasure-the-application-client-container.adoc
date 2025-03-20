@@ -42,24 +42,24 @@ Finally, click finish and NetBeans will create your project for you.
 With our project ready, let's create a really simple EJB.  We'll do that in the new EnterpriseApplication-ejb project (for what it's worth, I modified my project to find its source under `src/main/java` to make Mavenization simpler later).  Let's start with an interface (yes, I know EJB 3.1 has interface-less EJBs, but the ACC doesn't seem to like that, and I still think programming to interfaces is a good idea):
 
 [source,java,linenums]
------
+----
 @Remote
 public interface Dummy {
     String sayHello(String name);
 }
------
+----
 
 And here's the implementation:
 
 [source,java,linenums]
------
+----
 public class DummyBean implements Dummy {
     @Override
     public String sayHello(String name) {
         return "Hello, " + name;
     }
 }
------
+----
 
 And that's our app. You can have NetBeans build and deploy it if you'd like, but you won't see much.  To fix that, let's write a simple Swing app to exercise this impressive EJB.
 
@@ -75,7 +75,7 @@ image::/images/2011/02/newappclient3-300x174.png[class='aligncenter', title: "'N
 Our app client will look something like this:
 
 [source,java,linenums]
------
+----
 public class Main  extends javax.swing.JFrame {
     @EJB
     private static Dummy dummy;
@@ -122,7 +122,7 @@ public class Main  extends javax.swing.JFrame {
     protected javax.swing.JLabel label;
     // End of variables declaration
 }
------
+----
 
 We're now ready to run our application. In the Projects browser on the left, right click `EnterpriseApplication` and click `Run`. After a few seconds, you should see a window that looks like this:
 
@@ -134,23 +134,23 @@ Beautiful! 8-)
 Obviously, you won't deploy this to production with NetBeans, so let's a take a quick look at deployment and execution via the command line.  If you want to deploy the app and immediately download the client stubs, you can do this:
 
 [source,bash,linenums]
------
+----
 asadmin deploy --retrieve localdir/ --force dist/EnterpriseApplication.ear
------
+----
 
 This will deploy the app and download the client stubs to `localdir` in the current directory.  If you don't need the client stubs at the time of deployment (say, you've deployed to the server from your machine, then need to download on a client machine), you can issue this command:
 
 [source,bash,linenums]
------
+----
 asadmin get-client-stubs --appname EnterpriseApplication localdir
------
+----
 
 To run the client, issue this command:
 
 [source,bash,linenums]
------
+----
 appclient -jar localdir/EnterpriseApplicationClient.jar
------
+----
 
 The problem with that approach is that it requires a pretty heavy configuration: grab some GlassFish client jars, configure XML, and on and on.  That's just too much.  Fortunately, GlassFish makes this really simple (remember when I said GlassFish was an excellent server? : ).  With the application deployed, point your browser at http://localhost:8080/EnterpriseApplication/ApplicationClient[http://localhost:8080/EnterpriseApplication/ApplicationClient] and wait for it.  GlassFish gives you Java Web Start for your application client for free.  No extra steps needed.  If this is the first time you've run the Application Client via JWS on this machine, it will take a few minutes to download the required libraries, but subsequent runs should be much quicker starting up.  How fancy is that?
 
@@ -158,7 +158,7 @@ The problem with that approach is that it requires a pretty heavy configuration:
 For those that have been waiting patiently, here's how to accomplish the same thing via Maven.  Let's start with a parent POM:
 
 [source,xml,linenums]
------
+----
 <project
         xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd'
         xmlns='http://maven.apache.org/POM/4.0.0'
@@ -205,12 +205,12 @@ For those that have been waiting patiently, here's how to accomplish the same th
         </plugins>
     </build>
 </project>
------
+----
 
 The EJB POM is very simple:
 
 [source,xml,linenums]
------
+----
 <project
         xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd'
         xmlns='http://maven.apache.org/POM/4.0.0'
@@ -226,12 +226,12 @@ The EJB POM is very simple:
     <packaging>jar</packaging>
     <name>Enterprise Application - ejb</name>
 </project>
------
+----
 
 As is the app client jar:
 
 [source,xml,linenums]
------
+----
 <project
         xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd'
         xmlns='http://maven.apache.org/POM/4.0.0'
@@ -276,14 +276,14 @@ As is the app client jar:
         </plugins>
     </build>
 </project>
------
+----
 
 Note that we add a dependency on our EJB module, as well as the `swing-layout` artifacts.  We also need to configure the Maven JAR plugin to tell it the name of our Main class.  I also have `application-client.xml` and `beans.xml` in `src/main/resources/META-INF`.
 
 Lastly, we have the POM for the ear module:
 
 [source,xml,linenums]
------
+----
 <project
         xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd'
         xmlns='http://maven.apache.org/POM/4.0.0'
@@ -336,7 +336,7 @@ Lastly, we have the POM for the ear module:
         </plugins>
     </build>
 </project>
------
+----
 
 The configuration for the EAR plugin took me a while to figure out, and there's a good chance I'm not doing it quite right, but it works. :)
 

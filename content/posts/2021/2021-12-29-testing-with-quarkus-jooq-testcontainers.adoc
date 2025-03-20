@@ -15,7 +15,7 @@ In a project I've been working on, I've been targeting PostgreSQL, but testing w
 To set the stage, I should describe how my project is set up as far as data access goes. I'm using https://jooq.org[jOOQ], rather than, say, JPA or Panache. I manage the central jOOQ object, `DSLContext`, via CDI, and `@Inject` that as needed. The `@Produces` method looks something like this:
 
 [source,kotlin]
------
+----
 @RequestScoped
 class DslContextProvider {
     @Inject
@@ -39,22 +39,22 @@ class DslContextProvider {
         return DSL.using(configuration)
     }
 }
------
+----
 
 The `DataSource` is managed via Quarkus' built-in support, so I just have to configure it:
 
 [source]
------
+----
 quarkus.datasource.db-kind=$\{DB_TYPE:postgresql}
 quarkus.datasource.jdbc.url=$\{DB_URL:jdbc:postgresql://$\{DB_HOST:localhost}:5432/myDb}
 quarkus.datasource.username=$\{DB_USER:someUser}
 quarkus.datasource.password=$\{DB_PASS:somePassword}
------
+----
 
 This works great until I start testing. The problem as I saw it is this: Testcontainers can easily start a PostgreSQL instance, but the default port exposed is randomized so as to avoid collisions with what might already be running on the host. What I need, then, is a way to point my `DataSource` to a server on an unknown-at-build-time port. So what to do? There are likely a number of options, but the route I chose was to create my `DataSource` manually, at run time:
 
 [source,kotlin]
------
+----
 @Alternative
 @ApplicationScoped
 @Priority(1)
@@ -106,7 +106,7 @@ class DynamicDataSourceProvider {
         private lateinit var postgres : PostgreSQLContainer<*>
     }
 }
------
+----
 
 I start by creating a new `@ApplicationScoped` bean, annotated with `@Alternative` to tell CDI I'm overriding another bean. I then add the `@Produces` method that will do the work. I have three requirements: start the container, create the
 `DataSource`, and run my Flyway migrations, and those are handled in order by `produceContainerDatasource()`.

@@ -38,7 +38,7 @@ Quick instructions for the impatient
 [[domain]]
 Creating the domain
 ---
-The first step, of course, is to log on to the DreamHost http://panel.dreamhost.com[control panel].  In the navigation tree on the left, you should see a "Domains" section.  If it is not expanded, clicking on it will do so.  Next, click on "https://panel.dreamhost.com/index.cgi?tree=domain.manage&[Manage Domains]."  This will show you a list of your domain(s), with a "Add New Domain / Sub-Domain" button at the top.  Click this. 
+The first step, of course, is to log on to the DreamHost http://panel.dreamhost.com[control panel].  In the navigation tree on the left, you should see a "Domains" section.  If it is not expanded, clicking on it will do so.  Next, click on "https://panel.dreamhost.com/index.cgi?tree=domain.manage&[Manage Domains]."  This will show you a list of your domain(s), with a "Add New Domain / Sub-Domain" button at the top.  Click this.
 
 At this point, things start to get really subjective.  This is how I like to set things up.  You are, of course free to change things as you see fit.  In the "Domain to host" field, enter the fully qualified domain name (e.g., mysite.example.com).  For "Do you want the www in your URL?", my answer depends on the site I'm creating.  In this example, I'm creating a sub-domain, so I select "Remove WWW."  For new domains, I typically select "Leave it alone."
 
@@ -47,12 +47,12 @@ Next up, "Run this domain under the user" will depend, again, on how you plan on
 For the web directory, I group all my domains (and their sub-domains) into a directory named after the domain.  That means, for example, that for example.com, mysite.example.com, and beta.example.com, the directory structure would look like this:
 
 [source,linenums]
------
+----
 $HOME/example.com/
                | beta/
                | mysite/
                | www/
------
+----
 
 Hopefully that makes sense.  What I like about that is that it leaves my home directory a little cleaner.  Should I ever let a domain lapse, I can delete one directory and things are basically cleaned up.
 

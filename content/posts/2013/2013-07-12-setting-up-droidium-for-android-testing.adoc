@@ -14,7 +14,7 @@ Many know Arquillian as a great integration, functional, acceptance testing plat
 Rather than use Ant as the Android SDK currently does, we're going to build this test app using Maven. My POM currently looks something like this:
 
 [source,xml,linenums]
------
+----
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -129,14 +129,14 @@ Rather than use Ant as the Android SDK currently does, we're going to build this
         </testResources>
     </build>
 </project>
------
+----
 
 There's much of interest here, and, to be honest, I copied it mostly wholesale from https://github.com/arquillian/arquillian-droidium/blob/master/tests/arquillian-droidium-native-test-01/pom.xml[here], which is pretty much the story for the other items we'll look at. :P
 
 Next up, `arquillian.xml`:
 
 [source,xml,linenums]
------
+----
 <?xml version="1.0"?>
 <arquillian xmlns="http://jboss.org/schema/arquillian"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -163,14 +163,14 @@ Next up, `arquillian.xml`:
         <property name="remoteAddress">http://localhost:8080/wd/hub</property>
     </extension>
 </arquillian>
------
+----
 
 This file is also copy and paste from the repo, with no changes made. A word of warning, though. If you look at the Droidium test project, you will see two .apks checked in: selendroid-server-0.4.2.apk, and selendroid-test-app-0.4.2.apk. The first is for the Selendroid project, which Droidium is built around. The second is the application we intend to test. I'm always bothered by libraries (jars, apks, etc) checked into source control, so I thought I'd be clever and have the build download that APK from Maven Central. Long story short, it doesn't work as expected. The APK in Central and that found in the Droidium repo are not the same thing, so just paly along and check in this file (or script its download at build time :).
 
 Next up, the test case:
 
 [source,java,linenums]
------
+----
 @RunWith(Arquillian.class)
 @RunAsClient
 public class CubTrackerTest {
@@ -194,7 +194,7 @@ public class CubTrackerTest {
         }
     }
 }
------
+----
 
 The `@Deployment` method is pretty simple; we just point to the APK of the app to test. Whereas the Droidium test checked that into source control, in my context, the file is built as part of the larger process, so I provide a relative path to the APK.  Finally, in my test, all I have it doing here is clicking on the "Add Scout" menu.  Interestingly, rather than specify the text of the menu, I look up the widget at runtime via its ID. As you should know, though, Android IDs are numeric, but I'm passing a string, so it seems that Selendroid is smart enough to take `"menu_add_scout"` and find `R.id.menu_add_scout` (which is probably just simple reflection, but still. That's pretty cool. :). The _Add Scout_ activity should show, the test waits 5 seconds so I can see that it actually did something, and then everything shuts down: the test, the emulator. Everything.  I can manually start and stop the emulator if I want, in which case Droidium doesn't shut it down, but, just like Arquillian can start and stop your app server instance for you, it can do the same for your Android emulator.  And that's pretty cool too.
 

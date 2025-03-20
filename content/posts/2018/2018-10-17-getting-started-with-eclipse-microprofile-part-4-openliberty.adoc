@@ -17,7 +17,7 @@ give its MicroProfile support a quick spin.
 We start by setting up our POM:
 
 [source,xml]
------
+----
 <packaging>war</packaging>
 
 <properties>
@@ -52,13 +52,13 @@ We start by setting up our POM:
         <version>$\{project.version}</version>
     </dependency>
 </dependencies>
------
+----
 
 Notice that we have no direct dependencies on OpenLiberty at this point. We simply build a war with one dependency, our
 common code. The real work, it seems, comes in the build:
 
 [source,xml]
------
+----
 <plugin>
     <groupId>net.wasdev.wlp.maven.plugins</groupId>
     <artifactId>liberty-maven-plugin</artifactId>
@@ -121,7 +121,7 @@ common code. The real work, it seems, comes in the build:
         </execution>
     </executions>
 </plugin>
------
+----
 
 There is a *lot* going on there, but, as best as I can tell, we're using the OpenLiberty Maven plugin to extract the
 OpenLiberty server, add our app to it, then package it back up. It works, but it takes a lot of work to get there. :)
@@ -130,7 +130,7 @@ Before we can build, though, we do need to create one file to configure the Open
 `src/main/liberty/config/server.xml`:
 
 [source,xml]
------
+----
 <server description="Sample MicroProfile server">
     <featureManager>
         <feature>microProfile-2.0</feature>
@@ -147,14 +147,14 @@ Before we can build, though, we do need to create one file to configure the Open
             location="openliberty.war"
             contextRoot="$\{app.context.root}"/>
 </server>
------
+----
 
 This tells OpenLiberty that we want to enable MicroProfile 2.0, what ports we want to listen on, what application to deploy, and its context root.
 
 Once that's done, we can run our app:
 
 [source,bash]
------
+----
 # mvn install
 ...
 # java -jar target/openliberty.jar
@@ -165,7 +165,7 @@ Once that's done, we can run our app:
 Hello, world
 # curl http://localhost:8080/?name=OpenLiberty
 Hello, OpenLiberty
------
+----
 
 Just as expected. Before closing out this installment, though, a word on testing.
 
@@ -179,7 +179,7 @@ server is shutdown. Not as nice as Arquillian, but it works in a pinch.
 Let's start with Maven config:
 
 [source,xml]
------
+----
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-surefire-plugin</artifactId>
@@ -229,7 +229,7 @@ Let's start with Maven config:
 ...
     </executions>
 </plugin>
------
+----
 
 We start by configuring the `surefire` plugin to _not_ run during the test phase, then configure the `failsafe` plugin to
 run during the `integration-test` phase. Finally, we set up executions for the `liberty-maven-plugin` to start and stop
@@ -239,7 +239,7 @@ that, so feel free to pick your favorite. This should get you going, though.
 Our test, then, is pretty simple:
 
 [source,java]
------
+----
 public class OpenLibertyTest {
     public static final String URL = "http://localhost:8080/";
 
@@ -265,12 +265,12 @@ public class OpenLibertyTest {
         }
     }
 }
------
+----
 
 And we can see that test run by issuing this:
 
 [source,bash]
------
+----
 # mvn install
 ...
 [INFO] --- maven-failsafe-plugin:2.22.1:integration-test (integration-tests) @ openliberty ---
@@ -290,7 +290,7 @@ Connecting to http://localhost:8080/
 [INFO]
 [INFO] --- liberty-maven-plugin:2.2:test-stop-server (stop-server) @ openliberty ---
 ...
------
+----
 
 Like I said. It's not the most elegant, but it should get you going, and with that, we're done! In the next installment,
 well see what it takes to get MicroProfile and Apache TomEE up and running.

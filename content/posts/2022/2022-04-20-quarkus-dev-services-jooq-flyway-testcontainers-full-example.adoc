@@ -29,7 +29,7 @@ Let's start with the Maven setup. I won't show the entire pom here. For that, pl
 We'll start by setting up `dependencyManagement` to make handling Quarkus dependencies easier:
 
 [source,xml]
------
+----
 <properties>
     <version.build-helper>3.2.0</version.build-helper>
     <version.compiler-plugin>3.8.1</version.compiler-plugin>
@@ -54,12 +54,12 @@ We'll start by setting up `dependencyManagement` to make handling Quarkus depend
         </dependency>
     </dependencies>
 </dependencyManagement>
------
+----
 
 Next, let's add the dependencies for the various tools we'll be using:
 
 [source,xml]
------
+----
 <dependencies>
     <!-- Quarkus -->
     <dependency>
@@ -121,7 +121,7 @@ Next, let's add the dependencies for the various tools we'll be using:
     </dependency>
     <!-- RestAssured -->
 </dependencies>
------
+----
 
 There will be more changes, but we'll add those in the following sections.
 
@@ -129,7 +129,7 @@ There will be more changes, but we'll add those in the following sections.
 https://flywaydb.org/[Flyway], as you may already know, is a tool that we can use to manage database changes more easily. What we will do then, is set up our project to use https://flywaydb.org/[Flyway] to manage our database for both production and test usage. We'll start by setting up the input files. We'll put those in `src/main/resources/db/migration` (as required by the `quarkus-flyway` extension), starting with the base schema file, `V0001_schema.sql`:
 
 [source,sql]
------
+----
 CREATE TABLE authors
 (
     id         INT PRIMARY KEY,
@@ -145,14 +145,14 @@ CREATE TABLE books
     published_year INT,
     author_id      INT NULL REFERENCES authors (id)
 );
------
+----
 
 When https://flywaydb.org/[Flyway] runs, it will check the database to see if this file has already been processed. It does so by checking a metadata table it creates for just this purpose. If the database is persistent (as it would be in production), this file will be skipped. We'll see, though, that our database will be ephemeral, so it will always be run. That, though, is simply a 'feature' of this demo. :)
 
 I also like to have a file that loads dummy data so that I have something to test with, as well as to work with in dev mode while I'm working on the application (which I move/remove when getting ready for production, of course). To do that, I use a https://flywaydb.org/documentation/concepts/migrations#repeatable-migrations[repeatable migration]. Our example here is `src/main/resources/db/migration/R__dummy_data.sql`:
 
 [source,sql]
------
+----
 DELETE FROM books;
 DELETE FROM authors;
 INSERT INTO authors (id, last_name, first_name)
@@ -168,16 +168,16 @@ VALUES
        (2, 'The Hobbit: or There and Back Again', 'The bedtime story for his children famously begun on the blank page of an exam script that tells the tale of Bilbo Baggins and the dwarves in their quest to take back the Lonely Mountain from Smaug the dragon.', 1937, 1),
 -- ...
 ;
------
+----
 
 It is our responsibility to make sure that repeatable migrations can, indeed, be repeated, so we delete everything from our two example tables. That's overkill for our demo, but I find it a good general practice.
 
 Now we need to wire https://flywaydb.org/[Flyway] into our application. Fortunately, Quarkus has built-in support for this, so we simply need to add a property to enable it. We add this in `src/main/resources/application.properties`:
 
 [source,properties]
------
+----
 quarkus.flyway.migrate-at-start=true
------
+----
 
 Quarkus will use the defined datasource for running https://flywaydb.org/[Flyway], which we'll configure now.
 
@@ -188,14 +188,14 @@ Quoting from the https://quarkus.io/guides/dev-services[documentation], "Quarkus
 So to enable https://quarkus.io/guides/dev-services[Dev Services], we need to _not_ configure a datasource, but we still need a datasource in production. Fortunately, Quarkus has us covered there as well. We can qualify our configuration properties for various modes. That leads us to a configuration that might look like this:
 
 [source,properties]
------
+----
 quarkus.datasource.db-kind=postgresql
 quarkus.datasource.devservices.port=54321
 
 %prod.quarkus.datasource.jdbc.url=$\{DATABASE_URL:jdbc:postgresql://localhost:5432/fullexample}
 %prod.quarkus.datasource.username=$\{DATABASE_USER:steeplesoft}
 %prod.quarkus.datasource.password=$\{DATABASE_PASS:steeplesoft}
------
+----
 
 We need to tell Quarkus what kind of database we want, so we set `quarkus.datasource.db-kind`. We also don't want to conflict with any possibly running PostgreSQL instance on a given machine, so we set the port to something less likely to conflict. It would be nice to be able to randomize this, but I'm not sure how. If you do, hit me up on https://twitter.com/jasondlee[Twitter]. :)
 
@@ -204,7 +204,7 @@ The second set of properties are prefixed with `%prod`. When running in dev or t
 The magic here is somewhat implicit. When we start the app with `mvn quarkus:dev`, since we have the `quarkus-agroal` extension included in our build, Quarkus will start up a PostgreSQL instance, as well as setting up a `DataSource`, ready for injection. Or use with https://flywaydb.org/[Flyway]. When we start the server in dev mode, we should see entries like the following from standard out:
 
 [source]
------
+----
 [io.qua.dat.dep.dev.DevServicesDatasourceProcessor] (build-30) Dev Services for the default datasource (postgresql) started.
 [org.fly.cor.int.lic.VersionPrinter] (Quarkus Main Thread) Flyway Community Edition 8.5.8 by Redgate
 [org.fly.cor.int.lic.VersionPrinter] (Quarkus Main Thread) See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.8
@@ -215,7 +215,7 @@ The magic here is somewhat implicit. When we start the app with `mvn quarkus:dev
 [org.fly.cor.int.com.DbMigrate] (Quarkus Main Thread) Migrating schema "public" to version "0001 - schema"
 [org.fly.cor.int.com.DbMigrate] (Quarkus Main Thread) Migrating schema "public" with repeatable migration "dummy data"
 [org.fly.cor.int.com.DbMigrate] (Quarkus Main Thread) Successfully applied 2 migrations to schema "public", now at version v0001 (execution time 00:00.091s)
------
+----
 
 Of course, the app doesn't do anything yet, as we haven't created any REST endpoints, but it does run, and we do have a database, which is pretty cool. Let's take a look now at how we can integrate https://www.jooq.org/[jOOQ] so we can more easily access this database.
 
@@ -225,7 +225,7 @@ https://www.jooq.org/[jOOQ], among other things, will allow us to write type-saf
 Let's define some properties, and the profile for the code gen:
 
 [source,xml]
------
+----
 <properties>
     <jooq.outputdir>src/main/jooq</jooq.outputdir>
 </properties>
@@ -340,7 +340,7 @@ Let's define some properties, and the profile for the code gen:
         </build>
     </profile>
 </profiles>
------
+----
 
 If you want more details on what all's going on here, take a moment to (re)visit my post detailing it link:/posts/2021/testing-with-quarkus-jooq-testcontainers-redux.ad[here]. In short, though:
 
@@ -351,7 +351,7 @@ If you want more details on what all's going on here, take a moment to (re)visit
 There is one more step: telling Maven where to find the generated classes so we can use them. To do that, we'll use the `build-helper-maven-plugin`:
 
 [source,xml]
------
+----
 <plugins>
     <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -372,16 +372,16 @@ There is one more step: telling Maven where to find the generated classes so we 
         </executions>
     </plugin>
 </plugins>
------
+----
 
 Now Maven, as well as any IDE that bases its project information on the Maven POM, will be able to see these classes. We can `git add src/main/jooq` to add these to git, and, when there are changes to the schema, we simply execute something like this:
 
 [source,bash]
------
+----
 $ rm -rf src/main/jooq
 $ mvn generate-sources
 $ git add src/main/jooq
------
+----
 
 That's probably a bit heavy-handed, but it should work. :) If you have a more elegant solution, again, find me on https://twitter.com/jasondlee[Twitter]. :)
 
@@ -391,7 +391,7 @@ We now have a database instance started for us, we have the schema being created
 First, we need the `DSLContext`, so let's create a CDI Producer:
 
 [source,java]
------
+----
 public final class DslContextProducer {
     @Inject
     protected DataSource dataSource;
@@ -419,7 +419,7 @@ public final class DslContextProducer {
                         .withRenderNameCase(RenderNameCase.LOWER_IF_UNQUOTED)
                 );
     }}
------
+----
 
 This is a pretty simple CDI producer:
 
@@ -430,7 +430,7 @@ This is a pretty simple CDI producer:
 The REST endpoint could look like this:
 
 [source,java]
------
+----
 import static com.steeplesoft.fullexample.jooq.tables.Authors.AUTHORS;
 
 import java.util.List;
@@ -452,7 +452,7 @@ public class AuthorsResource {
                 .fetchInto(AuthorDTO.class);
     }
 }
------
+----
 
 Note that it's generally not a good idea to access the database in the REST layer, but I've done so here to keep things simple, and the usage of https://www.jooq.org/[jOOQ] here is very simple as well, so I won't spend too much time on it.
 
@@ -464,7 +464,7 @@ In a link:/posts/2021/testing-with-quarkus-jooq-testcontainers.ad[previous post]
 Way back up the page a bit, we saw how the `quarkus-agroal` extension will create a containerized database instance for when run in dev and _test_ mode. As it turns out, we're running in test mode here, so Quarkus will create and start the database for us and create the `DataSource` for us. This is injected normally as it was above, with no changes to the classes under test. All we have to do, then, is write the test.
 
 [source,java]
------
+----
 import static io.restassured.RestAssured.when;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
@@ -483,12 +483,12 @@ public class AuthorsResourceTest {
                 .statusCode(200);
     }
 }
------
+----
 
 This is, admittedly, kind of a dumb test, but it does demonstrate the use the Quarkus test framework, which handles starting and stopping the server for us, allowing us to easily write unit tests against it. The test is full `@Inject`-able as well. If we wanted to inject the `DataSource` or the `DSLContext`, we would simply add the injection point like we would in production code:
 
 [source,java]
------
+----
 @Inject
 DSLContext context;
 
@@ -496,14 +496,14 @@ DSLContext context;
 public void testContextInjection() {
     Assertions.assertNotNull(context);
 }
------
+----
 
 Note that it does take a while for the tests to start running. That's because https://quarkus.io/guides/dev-services[Dev Services] is spinning up the database instance, which is not a cheap operation. The start of our application is quite quick, however, once the DB is ready.
 
 It's also worth noting that, in our tests, we're not actually interacting with https://www.testcontainers.org/[Testcontainers] directly. Quarkus is doing that on our behalf. If you edit the logging configuration to allow it, you'll see output like this:
 
 [source]
------
+----
 [INFO] -------------------------------------------------------
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
@@ -511,7 +511,7 @@ It's also worth noting that, in our tests, we're not actually interacting with h
 [org.jbo.threads] (main) JBoss Threads version 3.4.2.Final
 [org.tes.doc.DockerClientProviderStrategy] (build-30) Loaded org.testcontainers.dockerclient.UnixSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
 [com.git.doc.zer.sha.org.apa.hc.cli.htt.imp.cla.HttpRequestRetryExec] (ducttape-0) Recoverable I/O exception (java.io.IOException) caught when processing request to {}->unix://localhost:2375
------
+----
 
 The only place we use https://www.testcontainers.org/[Testcontainers] directly is in our https://flywaydb.org/[Flyway]/codegen configuration above, but it's still there, and it's still awesome. :)
 

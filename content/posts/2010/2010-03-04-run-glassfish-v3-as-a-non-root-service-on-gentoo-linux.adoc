@@ -18,7 +18,7 @@ To make things a bit easier, go read Byron's non-root user entry (changing the i
 As the root user (or a user with appropriate privileges), create the file `/etc/init.d/glassfish` and paste the following script into it:
 
 [source,bash,linenums]
------
+----
 #!/sbin/runscript
 depend() {
         need net
@@ -42,23 +42,23 @@ restart() {
         fi
         svc_start
 }
------
+----
 
 I actually use a couple of scripts, as you might see there, to help manage my GlassFish instance, as I run this on my "dev" box.  Those two scripts are `/usr/local/bin/gf_start`:
 
 [source,bash,linenums]
------
+----
 #!/bin/bash
 su -c '/opt/glassfish/server/bin/asadmin start-domain' glassfish
------
+----
 
 and `/usr/local/bin/gf_stop`:
 
 [source,bash,linenums]
------
+----
 #!/bin/bash
 su -c '/opt/glassfish/server/bin/asadmin stop-domain' glassfish
------
+----
 
 Once those files are in place (and paths are updated), test the script (`/etc/init.d.glassfish start`) to make sure everything is working as expected.  Once you're happy with it, you can register the service to start at system boot by issuing the command `rc-update add glassfish default`.  The next time your system starts, GlasssFish will be patiently waiting for you on port 8080.
 

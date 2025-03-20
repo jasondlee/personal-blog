@@ -15,7 +15,7 @@ If you've been following my series on using the GlassFish REST interface, you've
 To configure the REST interface, we can use the REST interface, in particular http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config[]
 
 [source,bash,linenums]
------
+----
 $ curl -X OPTIONS http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config
 {
     "command": "_set-rest-admin-config",
@@ -71,7 +71,7 @@ $ curl -X OPTIONS http://localhost:4848/management/domain/configs/config/server-
         }
     ]}
 }
------
+----
 
 Here's what each of those options mean:
 
@@ -86,13 +86,13 @@ Here's what each of those options mean:
 For technical, implementation-specific reasons (which I won't go into here), the first attempt to manipulate the REST configuration must be done via http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config[http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config].  Once that's done, the `rest-config` element will show up under `server-config` as expected.  For example, to enable pretty-printing, for example, we can issue these requests:
 
 [source,bash,linenums]
------
+----
 $ curl -s -S -H "Accept: application/json" -X POST http://localhost:4848/management/domain/configs/config/server-config/_set-rest-admin-config
 $ curl -s -S -H "Accept: application/json" -X POST -d indentLevel=4 http://localhost:4848/management/domain/configs/config/server-config/rest-config
 {
     "message": "\"http:\/\/localhost:4848\/management\/domain\/configs\/config\/server-config\/rest-config\" updated successfully.",
     "exit_code": "SUCCESS"
 }
------
+----
 
 And that's all there is to it.  Debugging your REST client issues should now be much simpler.

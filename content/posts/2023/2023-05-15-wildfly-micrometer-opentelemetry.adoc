@@ -18,7 +18,7 @@ The more interesting changes are the addition (or modification) of two other lib
 
 .Micrometer
 [source,bash]
------
+----
 $ jboss-cli.sh -c <<EOF
     if (outcome != success) of /extension=org.wildfly.extension.micrometer:read-resource
         /extension=org.wildfly.extension.micrometer:add
@@ -29,11 +29,11 @@ $ jboss-cli.sh -c <<EOF
         reload
     end-if
 EOF
------
+----
 
 .OpenTelemetry
 [source,options="nowrap"]
------
+----
 $ jboss-cli.sh -c <<EOF
     if (outcome != success) of /extension=org.wildfly.extension.opentelemetry:read-resource
         /extension=org.wildfly.extension.opentelemetry:add()
@@ -44,7 +44,7 @@ $ jboss-cli.sh -c <<EOF
         reload
     end-if
 EOF
------
+----
 
 Both of these scripts will safely add both the extension and then the subsystem only if needed, and reload the server (if needed).  Once the server is up, you're ready to deploy your application using either or both of these libraries.
 

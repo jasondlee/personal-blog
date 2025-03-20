@@ -17,7 +17,7 @@ In this fairly contrived scenario, we're going to create one cluster, `c1`, with
 Enough with that, then, let's get to the code.  Hopefully, if you've been following along, this should be pretty straightforward and easy to read.
 
 [source,java,linenums]
------
+----
 public class ClusterDemo {
     RestClient rc = new RestClient();
     Domain domain = new Domain(rc);
@@ -49,7 +49,7 @@ public class ClusterDemo {
     private void createStandaloneInstances() {
         deleteInstance("in1");
         deleteInstance("in2");
-        RestResponse rr = domain.createInstance("localhost-domain1", "in1", 
+        RestResponse rr = domain.createInstance("localhost-domain1", "in1",
             new HashMap<String, Object>() {{
                 put("portbase", "12000");
             }});
@@ -137,7 +137,7 @@ public class ClusterDemo {
         cd.run();
     }
 }
------
+----
 
 There's not much to say about the code beyond what I said in the intro.  I should note, though, that I removed some error checking to try to make this a bit shorter.  Typically, after each REST call, I would have `assert (rr.isSuccess());` just to make sure.  In production code, you would need something similar (though, obviously, more robust).
 

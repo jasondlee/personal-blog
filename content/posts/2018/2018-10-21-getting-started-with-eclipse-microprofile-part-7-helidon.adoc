@@ -18,7 +18,7 @@ Like Hammock, Helidon projects are `jar` projects, so we need to set the package
 the Helidon dependencies:
 
 [source,xml]
------
+----
 <packaging>jar</packaging>
 
 <properties>
@@ -40,12 +40,12 @@ the Helidon dependencies:
         </dependency>
     </dependencies>
 </dependencyManagement>
------
+----
 
 Our dependencies, then are very short:
 
 [source,xml]
------
+----
 <dependencies>
     <dependency>
         <groupId>$\{project.groupId}</groupId>
@@ -57,7 +57,7 @@ Our dependencies, then are very short:
         <artifactId>helidon-microprofile-1.2</artifactId>
     </dependency>
 </dependencies>
------
+----
 
 There are a number of dependencies pulled in transitively, but that's fine. We only have to manage the one. Unless I've
 missed something, you do need to code an entry point. It's an extremely small class that doesn't do anything special, so
@@ -65,13 +65,13 @@ I hope I've either overlooked something, or it's something that will be fixed as
 it is:
 
 [source,java]
------
+----
 public final class Main {
     public static void main(final String[] args) throws IOException {
         Server.create().start();
     }
 }
------
+----
 
 It seems like a waste of time, but, as best as I can tell, it's required at the moment. :) With that in place, we're
 almost ready to run it. We can, of course, run directly from the IDE, but to run from the command line, we need a
@@ -79,7 +79,7 @@ Maven plugin. Or two. The official docs show the `maven-jar-plugin`, but I've al
 we saw from Hammock:
 
 [source,xml]
------
+----
 <build>
     <plugins>
         <plugin>
@@ -134,16 +134,16 @@ we saw from Hammock:
         </plugin>
     </plugins>
 </build>
------
+----
 
 The `maven-dependency-plugin` copies all of the projects runtime dependencies to the configured directory, and the
 `maven-jar-plugin` builds a jar, specifying where to find the dependencies (in the `lib` directory next to the jar) and
 the main class to run. Using this plugin, we would run the project like this:
 
 [source,bash]
------
+----
 $ java -jar target/helidon-1.0-SNAPSHOT.jar
------
+----
 
 The `libs` directory MUST be in `target` or you will get a `java.lang.NoClassDefFoundError` and the project will fail
 to start. If you move the jar, you must move `lib` as well.
@@ -151,9 +151,9 @@ to start. If you move the jar, you must move `lib` as well.
 With the `maven-capsule-plugin`, it's all self-contained:
 
 [source,bash]
------
+----
 $ java -jar target/helidon-1.0-SNAPSHOT-capsule.jar`
------
+----
 
 If you move the jar, like, say, when you deploy your application, all you need is the jar. I like this approach better,
 and many thanks to John Ament for introducing me to the plugin. :)
@@ -162,7 +162,7 @@ Testing, like Hammock, is also a bit different. There doesn't appear to be Arqui
 test much like we did Hammock:
 
 [source,java]
------
+----
 public class HelidonTest {
     private static Server server;
 
@@ -200,7 +200,7 @@ public class HelidonTest {
         }
     }
 }
------
+----
 
 And Bob's your uncle! For more information, head over to the https://helidon.io[Helidon site] for their getting started docs,
 which seem quite thorough and complete for such a young project.

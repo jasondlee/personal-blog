@@ -23,7 +23,7 @@ Perhaps the first question one should ask is, "How do I load the plugin data?" A
 Perhaps the simplest, safest approach is simply to repackage the application.  This is exactly what it sounds like: you take the original application archive, and .war, for example, and add the plugin jars. This avoids some of the potential problems we'll see in other approaches, as well as pushing the heavy lifting on to your container.  You can do this through some sort of Ant- or Maven-based system, or a simple shell script:
 
 [source,shell,linenums]
------
+----
 #!/bin/bash
 
 DIST=$1
@@ -44,7 +44,7 @@ jar cf ../$BASE-repackaged.war *
 
 cd ..
 rm -rf work
------
+----
 
 The upside to this is that you maintain access to all of the technologies provided by your container: EJB, JMS, etc.  The downside is that deployment/upgrade takes a bit more work, and means that if you forget to run this process, you've suddenly lost all of your plugins. Not a major thing, but certainly _a_ thing. :)
 
@@ -54,7 +54,7 @@ From a technical perspective, this is my favorite approach, simply because of th
 In the source tarball, you'll find a project called _Plummer_.  Plummer, so called because it provides some of the _plumbing_ for the plugin system. before we dive into what Plummer provides, we should note that the plugin approach we'll look at is based very heavily on CDI, a new specification in Java EE 6. What we need to do in this part of plugin equation is to provide these plugin classes to the CDI runtime.  In Plummer, this happens in the PluginLoader class:
 
 [source,java,linenums]
------
+----
 public class PluginLoader implements Extension {
     protected static final String SERVICES_NAME = "com.steeplesoft.plummer.finders";
     private static final Logger logger = Logger.getLogger(PluginLoader.class.getName());
@@ -76,7 +76,7 @@ public class PluginLoader implements Extension {
     }
     // ...
 }
------
+----
 
 Here we see CDI show up for the first time.  What have here is a CDI portable extension (for more information, see the http://docs.jboss.org/weld/reference/latest/en-US/html/extend.html[CDI RI (Weld) documentation]).  We also see another CDI concept that we'll revisit in the next section, Events. Since we're a portable extension, the class is loaded by the runtime very early in the process.  In this case, our `Extension` _observes_ the `BeforeBeanDiscovery` event, as you can see in the aptly-named method. This method asks the system for a list of the `PluginFinder` instances configured in the system (I got a little over-excited and added in the ability to have more than one, _Just In Case_). It then asks each `PluginFinder` for a list of the Classes it found.  For each class, it creates an `AnnotatedType`, which it then adds to the `BeforeBeanDiscovery` class. When this method exits, the CDI runtime will, eventually, scan our plugin classes for CDI annotations, and, voila! our plugins are registered with the system.
 
@@ -103,17 +103,17 @@ For a plugin to add content to the view, it will have to provide what we on the 
 Having defined the terms, then, how might one implement this?  First off, let's take a look at `ViewFragment.java` in the `plummer-api` module:
 
 [source,java,linenums]
------
+----
 public @interface ViewFragment {
     String type();
     String parent() default "";
 }
------
+----
 
 This simple interface defines `type` and `parent` properties. A plugin author would use it like this:
 
 [source,java,linenums]
------
+----
 public class SamplePlugin implements Plugin {
     @ViewFragment(type: "foo")
     public static String sample1 = "sample1.xhtml";
@@ -123,12 +123,12 @@ public class SamplePlugin implements Plugin {
         return 500;
     }
 }
------
+----
 
 There are several things to note here. First, let's look at the annotation.  Here, we are defining a `ViewFragment` of type _foo_. It is attached to a `public static final String`, whose value is _sample.xhtml_.  When the system processes this annotation, it will store the value _sample.xhtml_ in a `Map`, keyed by the value _foo_. When the view asks for view fragments of type _foo_, this piece of markup will be included. That file, by the way, is a simple JSF 2 Facelets file:
 
 [source,xml,linenums]
------
+----
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -139,22 +139,22 @@ There are several things to note here. First, let's look at the annotation.  Her
     <h1>Plugin Fragment</h1>
     This text comes from a fragment. Shiny!
 </ui:fragment>
------
+----
 
 Very simple. The question that should come to mind now is, "How does the system find this annotation, and then how do I tell the system to insert this into my view?" The answer to the first half of that question is the `Plugin` interface. Those interested in the nitty gritty can read the code (`PluginService.java` in `plummer-kernel`), but for those not _that_ curious, CDI again saves the day. In a nutshell, we ask CDI for all the beans that implement `Plugin`, scan them for fields annotated with `ViewFragment`, and store the metadata.  On the view side, we use the `pl:viewFragment` custom component that Plummer offers:
 
 [source,xml,linenums]
------
+----
 <pl:viewFragment type: "foo"/>
------
+----
 
 The system does the rest.  What you put in your view fragments is completely up to you.  We've put everything from simple markup to `h:form`s with no known issues. One note with regard to resources: since the resources are stored in JARs and not in the application's document root, you will need to use JSF 2's resource mechanism to reference images, javascript, CSS, etc:
 
 [source,xml,linenums]
------
+----
 <h:graphicImage value="#\{resource['myImage.JPG']}" height="200"
     title: "Here's a picture of something really cool!"/>"
------
+----
 
 You can see a complete example of this in `plummer-sample2`.
 
@@ -169,7 +169,7 @@ CDI events is, conceptually, just a simple pub/sub system. One part of the syste
 So what does this look like in practice?  To demonstrate that in a meaningful way, we need a sample application, so we'll write a _very_ simple blogging system. If you've ever interacted with a blog, either as an author or a reader, you've likely seen the option by which a user can subscribe and get notifications of new posts. Let's implement that.  First up, we'll need a way to create blog entries.  You can find this `BlogBean.java` in the webapp, but here are the interesting parts:
 
 [source,java,linenums]
------
+----
 // ...
 @Inject
 private Event<BlogPostedEvent> blogPostedEvents;
@@ -181,12 +181,12 @@ public String addEntry() {
     return null;
 }
 // ...
------
+----
 
 For the sake of brevity here (too late, right?), you can find the view in `examples/webapp/src/main/webapp/blog.xhtml`.  First, notice the `@Inject`. Here, we're asking CDI to inject an `Event` that takes a `BlogPostEvent` payload. We use this in `addEntry()`, when we call `blogPostedEvents.fire(new BlogPostedEvent(entry))`. The code, simple as it is, should be pretty self-explanatory: we're firing an event of type `BlogPostedEvent`, which looks like this:
 
 [source,java,linenums]
------
+----
 public class BlogPostedEvent {
     private String blogEntry;
 
@@ -198,53 +198,53 @@ public class BlogPostedEvent {
         return blogEntry;
     }
 }
------
+----
 
 In this example, our payload is very simple. In a real world, this could be much more complex if your application's needs warrant. Responding to this event is just as simple as firing it:
 
 [source,java,linenums]
------
+----
 public void sendEmail(@Observes BlogPostedEvent event) {
     emailService.sendEmail(event.getBlogEntry());
 }
------
+----
 
 That's really all there is to it.  By using CDI events, we are able to _push_ data into our plugins in a loosely coupled manner.  Again, in a real world application, the data push and the processing required to handle will likely be more complex, but the means of pushing it will not be. CDI for the win!
 
 Perhaps you need to allow a plugin to process data in the system. For example, in our system we want allow plugins to translate the blog entry into another language. To do so, we first need to define the interface by which the plugin will be called:
 
 [source,java,linenums]
------
+----
 public interface BlogEntryProcessor extends Serializable {
     String getName();
     String process(String text);
 }
------
+----
 
 From our blogging system, we can get a list of all of the `BlogEntryProcessor` instances, if any, with this CDI injection:
 
 [source,java,linenums]
------
+----
 @Inject @Translator
 Instance<BlogEntryProcessor> translators;
------
+----
 
 This gives us an `Instance` instance that contains any `BlogEntryProcessor`s defined in the system. We'll come back to `@Translator` in a bit.  Next, we can provide a way for the user to pick a language with this code:
 
 [source,xml,linenums]
------
+----
 <h:form>
     <h:selectOneMenu value="#\{blogBean.translator}" converter="#\{translatorConvertor}">
         <f:ajax render=":entries" event="change" execute="@form"/>
         <f:selectItems value="#\{blogBean.translators}" var="t" itemLabel="#\{t.name}" />
     </h:selectOneMenu>
 </h:form>
------
+----
 
 and
 
 [source,java,linenums]
------
+----
 public List<BlogEntryProcessor> getTranslators() {
     List<BlogEntryProcessor> list = new ArrayList<BlogEntryProcessor>();
     for (BlogEntryProcessor t : translators) {
@@ -252,38 +252,38 @@ public List<BlogEntryProcessor> getTranslators() {
     }
     return list;
 }
------
+----
 
 This lets us change the language, but how do we get a default? Let's define a `Qualifier`:
 
 [source,java,linenums]
------
+----
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target(\{ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 public @interface English { }
------
+----
 
 This simple class lets us differentiate at injection time:
 
 [source,java,linenums]
------
+----
 @Inject
 @English
 private BlogEntryProcessor translator;
------
+----
 
 Instead of injecting `Instance<BlogEntryProcessor>`, we're injecting a single..um...instance. Since there might be more than `BlogEntryProcessor` on the system, we have to _qualify_ which one we mean:
 
 [source,java,linenums]
------
+----
 @English
 @Singleton
 @Translator
 public class EnglishTranslator implements BlogEntryProcessor {
     // ...
 }
------
+----
 
 `EnglishTranslator` `is-a` `BlogEntryProcessor`, and it has been marked as `@English`, which means this instance, which is also a singleton, will satisfy the injection above.  We could have annotated this with `@Default`, both here and at the injection point, but the creation of a custom `@Qualifier` is a good exercise. :)
 
@@ -292,14 +292,14 @@ But what's up with that `@Translator`? That's another `@Qualifier`, which must b
 One common type of plugin in systems like Wordpress allows a user to wrap certain text in a tag. This entry, for example, uses the `code` tag to get syntax highlighting. In our system, we'll implement a tag that creates links to Google Maps. For example:
 
 [source,html,linenums]
------
+----
 Disneyland can be found at [map]1313 North Harbor Boulevard, Anaheim, CA[/map].
------
+----
 
 How is this implemented? Just like the translators:
 
 [source,java,linenums]
------
+----
 @Tag
 public class GoogleMapsProcessor implements BlogEntryProcessor {
 
@@ -318,12 +318,12 @@ public class GoogleMapsProcessor implements BlogEntryProcessor {
         return result;
     }
 }
------
+----
 
 This looks _just_ like the translators, right? The only difference is the `@Tag` qualifier, whose source you can see in the bundle.  In `BlogBean`, we access it _and_ the translators in `getEntries()`:
 
 [source,java,linenums]
------
+----
 @Inject
 @Tag
 Instance<BlogEntryProcessor> tags;
@@ -339,7 +339,7 @@ public List<String> getEntries() {
     }
     return list;
 }
------
+----
 
 You can build and deploy the system to see this in action.   Very simple, but very effective.
 
@@ -349,7 +349,7 @@ We've seen how to expose functionality to plugins loaded in the system, but what
 One of the ways one might configure a JAX-RS application is to provide a custom `Application` class, one which extends `javax.ws.rs.core.Application`. Plummer provides such an `Application`, so all Plummer users need do is configure it in the web application:
 
 [source,xml,linenums]
------
+----
 <servlet>
     <servlet-name>Jersey Web Application</servlet-name>
     <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
@@ -358,14 +358,14 @@ One of the ways one might configure a JAX-RS application is to provide a custom 
         <param-value>com.steeplesoft.plummer.kernel.rest.RestApplication</param-value>
     </init-param>
 </servlet>
------
+----
 
 Oddly, note that the `Application` class is standardized, but the REST servlet is not (unlike, for example, JSF's `FacesServlet`), so if you're not using http://jersey.java.net[Jersey] like we are here, then you'll need to use the `Servlet` appropriate for your JAX-RS implementation.
 
 So how does `RestApplication` work? It uses CDI, but since it's not handled by the CDI runtime, we can't rely on injection.  Instead, we'll perform a manual look up of the `BeanManager`, a class provided by CDI's excellent portable extension mechanism.  We then query the `BeanManager` for our desired classes. But how do we identify our REST resources?  Remember the `Plugin` marker interface? Plummer defines another marker, `RestResource`, to mark the JAX-RS resources we want to load, which are typical JAX-RS resources with the exception of this extra interface:
 
 [source,java,linenums]
------
+----
 @Path("myurl")
 public class PluginRestResource implements RestResource {
     @GET
@@ -373,7 +373,7 @@ public class PluginRestResource implements RestResource {
         return "You sent " + text;
     }
 }
------
+----
 
 When the REST application is initialized, this class is loaded and exposed at `/myurl` as you would expect.
 

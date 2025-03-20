@@ -15,7 +15,7 @@ did it, but it's hilarious. :)
 // more
 
 [source]
------
+----
 $ traceroute -m 255 bad.horse
 traceroute to bad.horse (162.252.205.157), 255 hops max, 52 byte packets
  1  172.23.195.1 (172.23.195.1)  1.863 ms  1.193 ms  8.432 ms
@@ -59,4 +59,4 @@ traceroute to bad.horse (162.252.205.157), 255 hops max, 52 byte packets
 39  there-s.no.recourse (162.252.205.155)  181.482 ms  181.329 ms  179.026 ms
 40  it-s.hi-ho.silver (162.252.205.156)  186.695 ms  186.395 ms  185.716 ms
 41  signed.bad.horse (162.252.205.157)  199.462 ms  186.534 ms  186.546 m
------
+----

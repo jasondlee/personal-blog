@@ -16,7 +16,7 @@ Java EE 7 web application setup:
 
 .build.gradle
 [source,groovy,linenums]
------
+----
 apply plugin: 'war'
 
 repositories {
@@ -34,4 +34,4 @@ sourceSets {
 dependencies {
     provided 'javax:javaee-api:7.0'
 }
------
+----

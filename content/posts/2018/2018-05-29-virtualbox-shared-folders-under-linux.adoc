@@ -11,7 +11,7 @@ My work machine runs Windows (go ahead and laugh. I'll wait). While I've been ab
 and get a moderately acceptable setup, there are times when I'd really like to use Linux for something,
 so I spin up a virtual machine with VirtualBox. While that works, I don't really like having source code --
 especially with changes in flight -- on the VM, as it makes it a bit more dangerous/difficlt to destroy the
-VM should I need the disk space (which happens more often than I'd like). I set out, then to get shared 
+VM should I need the disk space (which happens more often than I'd like). I set out, then to get shared
 folders working so I can keep the source on my host machine, and just do the work in the VM. Unfortunately,
 it doesn't seem to be as simple as adding a shared folder to the VirtualBox config. This post, then, will
 detail the steps I took to make things work for me.
@@ -27,28 +27,28 @@ From the VirtualBox Manager window, we need to select the VM we want to modify, 
 
 image:/images/2018/shared_folders1.png[Shared Folders tab, center]
 
-From here, we need to click the Add a folder button on the right, and specify the host directory (`Folder Path`) and 
+From here, we need to click the Add a folder button on the right, and specify the host directory (`Folder Path`) and
 the... device name (`Folder Name`) by which the folder is exposed to the guest:
 
 image:/images/2018/shared_folders2.png[Adding the host's src directory, center]
 
 Once we've configured that, we can boot the VM if it's not already running. From a command prompt, we need to make
 some system changes. The most important thing is to verify that the VirtualBox guest additions are installed. Like
-setting up the VM, this is well documented elsewhere, so I'll leave that as an exercise for the reader, but I will 
+setting up the VM, this is well documented elsewhere, so I'll leave that as an exercise for the reader, but I will
 offer these simple commands that installed the GA for me on my Fedora VM:
 
 [source,bash]
------
-$ dnf install kernel-headers kernel-devel elfutils-libelf-devel gcc dkms make bzip2 perl 
+----
+$ dnf install kernel-headers kernel-devel elfutils-libelf-devel gcc dkms make bzip2 perl
 $ bash /run/media/jdlee/VBox_GAs_*/VBoxLinuxAdditions.run
------
+----
 
 One way to verify that the Guest Additions are properly installed is to load the kernel module:
 
 [source,bash]
------
+----
 # modprobe vboxsf
------
+----
 
 The command should complete without error. If it does not, you may need to revisit the Guest Additions installation.
 
@@ -56,21 +56,21 @@ That done, it seems that for a user to access the shared folder, the account nee
 so we need to add the user to the group:
 
 [source,bash]
------
+----
 # groups jdlee
 jdlee : jdlee wheel
 # usermod -a G vboxsf jdlee
 # groups jdlee
 jdlee : jdlee wheel vboxsf
------
+----
 
 In my case, I want to mount the host directory as the `src` directory in my account's home directory, so I added this
 to `/etc/fstab`:
 
 [source,bash]
------
+----
 HOST_SRC /home/jdlee/src        vboxsf  defaults,uid=jdlee,gid=jdlee 0 0
------
+----
 
 I can then mount the shard folder via `mount -a`. If you get a message about a protocol error, verify that the device name/label
 given in column 1 in the `fstab` entry matches the `Folder Name` given in the VirtualBox configuration.

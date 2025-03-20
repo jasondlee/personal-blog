@@ -11,21 +11,21 @@ status: published
 Over the years, I've found myself processing a set of data and storing it in a `Map`, say, something like `Map<Long, List<String>>` (think something like a list of `Room` objects, keyed by a building id). I have found myself writing it something like this (in non-idiomatic Kotlin):
 
 [source,kotlin]
------
+----
 val foo = map.get(key)
 if (foo == null) {
     foo = MutableList<String>()
     map.put(key, foo)
 }
 foo.add(bar)
------
+----
 
 Fortunately, the Kotlin standard library has a better way:
 
 [source,kotlin]
------
+----
 map.getOrPut(key) { mutableListOf() }
     .add(bar)
------
+----
 
 If `key` is not found, the lambda is run, adding the result to `Map` and return to use the value, new or otherwise, to which we add `bar`. Much more concise. :) Generally speaking, any time you can let the language/compiler do the work for you, you're going to be better off.

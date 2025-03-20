@@ -9,9 +9,9 @@ status: published
 I recently came across an interesting piece of code at work:
 
 [source,java]
------
+----
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
------
+----
 
 What struck me as odd was the `private` qualifier and that the fact that `SimpleDateFormat` is not thread-safe. Is the `private` some
 odd attempt to work around concurrency issues, or was thread safety just overlooked? That led me to this question: Is a `private static`
@@ -23,44 +23,44 @@ write a test just to make sure.
 Let's start with a class:
 
 [source,java]
------
+----
 public class SomeClass {
     private static int number;
-    
+
     public SomeClass(int number) {
         this.number = number;
     }
-    
+
     public int getNumber() {
         return number;
     }
 }
------
+----
 
 and here's our simple test:
 
 [source,java]
------
+----
 public class StaticTest {
     public static void main(String[] args) {
         SomeClass a = new SomeClass(1);
         SomeClass b = new SomeClass(2);
-        
+
         System.out.println("a.number = " + a.getNumber());
         System.out.println("b.number = " + b.getNumber());
     }
-    
+
 }
------
+----
 
 As expected, here's the output:
 
 [source]
------
+----
 a.number = 2
 b.number = 2
------
+----
 
-If you've been around the block a few times, this probably doesn't come as a surprise. If you're newer, though, or haven't ever 
+If you've been around the block a few times, this probably doesn't come as a surprise. If you're newer, though, or haven't ever
 had to give it thought, you might be mildly surprised. Either way, the bottom line is this: scope qualifiers don't modify the behavior
 of a static, so if the type is not thread-safe, you'll need a better (read as: correct) way to handle the concurrency concerns.

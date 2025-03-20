@@ -63,7 +63,7 @@ e.g. https://issues.redhat.com/browse/WFLY-14953[]
 The module containing the extension for an experimental subsystem needs to be made available within the target feature pack. However, an experimental subsystem simply skips registration if the current feature stream does not support EXPERIMENTAL features. e.g.
 
 [source,java]
------
+----
 public class FooExtension implements Extension {
     @Override
     public void initialize(ExtensionContext context) {
@@ -75,7 +75,7 @@ public class FooExtension implements Extension {
     }
     // ...
 }
------
+----
 
 To promote this feature to the PREVIEW stream, we simply change our logic accordingly:
 
@@ -84,7 +84,7 @@ Promotion to the STABLE stream can remove the condition entirely, since `context
 Alternatively, if the subsystem is self-contained within its own extension (as opposed to an existing extension), we can simply associate the extension with a specific feature stream. e.g.
 
 [source,java]
------
+----
 public class FooExtension implements Extension {
     // ...
     @Override
@@ -92,7 +92,7 @@ public class FooExtension implements Extension {
         return FeatureStream.EXPERIMENTAL;
     }
 }
------
+----
 
 When the server loads the extension, it will automatically skip initialization of any extensions not enabled by the current feature stream of the server.
 
@@ -102,19 +102,19 @@ e.g. https://issues.redhat.com/browse/WFLY-16345[]
 Similar to the above, we need to skip registration of the experimental resource definition if the current feature stream does not support EXPERIMENTAL features. If the experimental resource is never registered, it never installs the services required to enable the experimental feature. e.g.
 
 [source,java]
------
+----
 @Override
 public void registerChildren(ManagementResourceRegistration parent) {
     if (parent.enables(FeatureStream.EXPERIMENTAL)) {
         parent.registerSubModel(new FooResourceDefinition(...));
     }
 }
------
+----
 
 Alternatively, we can simply associate the ResourceDefinition with a specific feature stream. e.g.
 
 [source,java]
------
+----
 class FooResourceDefinition extends SimpleResourceDefinition {
     // ...
     @Override
@@ -122,7 +122,7 @@ class FooResourceDefinition extends SimpleResourceDefinition {
         return FeatureStream.EXPERIMENTAL;
     }
 }
------
+----
 
 When registering this resource via `ManagementResourceRegistration.registerSubModel(new FooResourceDefinition(...))`, the server will omit registration if the feature stream associated with the `ResourceDefinition` is not enabled by the server. N.B. Care must be taken when using this approach, as the `registerSubModel(...)` method will return null if registration was skipped.
 
@@ -132,7 +132,7 @@ https://issues.redhat.com/browse/WFLY-18000[]
 Similar to the above, we need to skip registration of the experimental attribute if the current feature stream does not support EXPERIMENTAL features.e.g.
 
 [source,java]
------
+----
 class FooResourceDefinition extends SimpleResourceDefinition {
 
     static final AttributeDefinition BAR = ...; // Our new attribute that enables the new experimental feature
@@ -144,7 +144,7 @@ class FooResourceDefinition extends SimpleResourceDefinition {
         }
     }
 }
------
+----
 
 Unfortunately, the current registration mechanism available in wildfly-core, which registers the `OperationDefinition` parameters of the add operation parameters independently from resource attributes (via different `ResourceDefinition.registerXXX(...) `methods), makes this awkward.  Additionally, resource add operation handlers and write-attribute operation handlers are constructed with a separately defined set of parameters (rather than using the parameters of the corresponding `OperationDefinition`).
 For this reason, I submitted https://issues.redhat.com/browse/WFCORE-6407[] (WIP https://github.com/wildfly/wildfly-core/pull/5563[]) which eliminates the need to construct add resource operation handlers or write-attribute operation handlers using a set of attributes.
@@ -152,7 +152,7 @@ For this reason, I submitted https://issues.redhat.com/browse/WFCORE-6407[] (WIP
 Until that change is in place, most resource definitions for most subsystems (i.e. those not using the registration mechanics from wildfly-clustering-common) will require separate logic to exclude the EXPERIMENTAL attributes from its add operation handler independently from the resource's attributes.  Consequently, until WFCORE-6407 is complete, add operation parameter handling will be very awkward: e.g.
 
 [source,java]
------
+----
 class FooResourceDefinition extends SimpleResourceDefinition {
 static final AttributeDefinition ATTRIBUTE = //... an existing attribute
 
@@ -169,20 +169,20 @@ static final AttributeDefinition ATTRIBUTE = //... an existing attribute
     }
     // ...
 }
------
+----
 
 W.R.T. runtime, if the experimental attribute is never registered, it will not be allowed within our resource's add operation, and thus will always resolve to its default value.
 
 Alternatively, once WFCORE-6407 is complete, we can associate an `AttributeDefinition` with a `FeatureStream` and perform the conditional registration automatically. e.g.
 
 [source,java]
------
+----
 static final AttributeDefinition BAR = new SimpleAttributeDefinitionBuilder("bar", ModelType.STRING)
     .setRequired(false)
     .setValidator(new EnumValidator<>(EnumSet.allOf(Baz.class))
     .setFeatureStream(FeatureStream.EXPERIMENTAL)
     .build();
------
+----
 
 The attribute registration methods of `ManagementResourceRegistration` will omit registration of an attribute its associated feature stream is not enabled by the server.
 
@@ -199,15 +199,15 @@ Using our `AttributeDefinition` `BAR` from the above example, which specifies a 
 Our experimental feature involves a newly added `QUX` value to our `Baz` enum.
 
 [source,java]
------
+----
 static final Map<FeatureStream, Set<Baz>> BAZ_VALUES = FeatureStream.complete(Map.of(FeatureStream.STABLE,
     Enum.complementOf(EnumSet.of(Baz.QUX)), FeatureStream.EXPERIMENTAL, EnumSet.allOf(FeatureStream.class)));
------
+----
 
 During attribute registration, we specify the validator specific to the current stream. e.g.
 
 [source,java]
------
+----
 @Override
 public void registerAttributes(ManagementResourceRegistration registration) {
     ParameterValidator bazValidator = new EnumValidator<>(BAZ_VALUES.get(registration.getFeatureStream()));
@@ -215,7 +215,7 @@ public void registerAttributes(ManagementResourceRegistration registration) {
     AttributeDefinition attribute = SimpleAttributeDefinitionBuilder.create(BAR).setValidator(bazValidator).build();
     registration.registerReadWriteAttribute(attribute, null, new ReloadRequiredWriteAttributeHandler(attribute));
 }
------
+----
 
 Not so pleasant...
 
@@ -224,12 +224,12 @@ Due to the same limitation of the current registration mechanics as described pr
 Alternatively, with some minor changes to the `ParameterValidator` interface, and once WFCORE-6407 is complete, we can associate a `ParameterValidator` with an `AttributeDefinition` per feature stream and perform the selection automatically wherever necessary, e.g. via the base `OperationStepHandler` implementations.  I have not completely thought this through, but my current thinking is something like: e.g.
 
 [source,java]
------
+----
 static final AttributeDefinition BAR = new SimpleAttributeDefinitionBuilder("bar", ModelType.STRING)
     .setRequired(false)
     .setValidator(new FeatureStreamValidator(Map.of(FeatureStream.STABLE, new EnumValidator<>(Enum.complementOf(EnumSet.of(Baz.QUX))), FeatureStream.EXPERIMENTAL, new EnumValidator<>(Enum.allOf(Baz.class)))))
     .build();
------
+----
 
 ... where `FeatureStreamValidator` is a composite `ParameterValidator` implementation that delegates to a specific `ParameterValidator` depending on the feature-stream of the server.
 
@@ -244,7 +244,7 @@ W.R.T. XML parsing, filtering attributes/resource by stream must be done inline 
 e.g. Consider the following set of subsystem namespaces:
 
 [source,java]
------
+----
 public enum FooSubsystemSchema implements PersistentSubsystemSchema<FooSubsystemSchema> {
         VERSION_1_0(1),
         VERSION_2_0(2),
@@ -279,13 +279,13 @@ public enum FooSubsystemSchema implements PersistentSubsystemSchema<FooSubsystem
         return builder.build();
     }
 }
------
+----
 
 Registering subsystem parsers should generally look the same as it does now, since the server can skip registration of schemas associated with a feature stream not supported by the server.
 e.g.
 
 [source,java]
------
+----
 @Override
 public void initializeParsers(ExtensionParsingContext context) {
     // This will skip registration of FooSubsystemSchema.VERSION_2_0_EXPERIMENTAL
@@ -293,12 +293,12 @@ public void initializeParsers(ExtensionParsingContext context) {
     context.setSubsystemXmlMappings(FooSubsystemResourceDefinition.SUBSYSTEM_NAME,
         EnumSet.allOf(FooSubsystemSchema.class));
 }
------
+----
 
 Subsystem extensions will also need to register the appropriate writer based on the feature stream of the server.
 
 [source,java]
------
+----
 // The "current" schema will depend on the feature stream of the server
 static final Map<FeatureStream, FooSubsystemSchema> CURRENT_SCHEMAS = FeatureStream.complete(
         Map.of(FeatureStream.STABLE, VERSION_2_0, FeatureStream.EXPERIMENTAL, VERSION_2_0_EXPERIMENTAL));
@@ -313,7 +313,7 @@ public void initialize(ExtensionContext context) {
             new PersistentResourceXMLDescriptionWriter(
                     CURRENT_SCHEMAS.get(context.getFeatureStream())));
 }
------
+----
 
 == Misc concerns
 

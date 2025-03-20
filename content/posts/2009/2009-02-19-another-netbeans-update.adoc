@@ -12,7 +12,7 @@ Since the announcement in the recent layoffs at Sun on how the NetBeans team was
 // more
 
 [quote]
------
+----
 For those of you who have been following the NetBeans release train, you may be puzzled by the version number switch in our upcoming milestone release, from NetBeans 7.0 to NetBeans 6.7.
 
 To get innovation and quality improvements out to the community faster, and to have the NetBeans IDE be better aligned with the release schedules of other technologies that it supports, we have decided to concentrate on a series of smaller releases rather than the traditional two big releases per year.
@@ -30,7 +30,7 @@ And why are we skipping a version between 6.5 and 6.7? Well, there are negative 
 NetBeans 6.7 is scheduled for release in June 2009. The main features are Maven and http://kenai.com/[Kenai] integration, and there are many smaller features that you can read about on the http://wiki.netbeans.org/NewAndNoteWorthy[New and Noteworthy] page. Java EE 6 support is planned for a future release. *NetBeans 6.7 Milestone 2 is due out next week*. We encourage you to download the release when it becomes available and to give us your feedback.
 
 Thank you for your continued support of the NetBeans IDE.
------
+----
 
 == The NetBeans Team
 
@@ -51,7 +51,7 @@ On a more serious note, here are some of the highlights (for me) of the major ch
 ** Marking returns
 ** Go to type for class members - improved
 ** SQL code completion in the PHP editor
-** Marking occurrences improved 
+** Marking occurrences improved
 * JavaScript - Support for JavaScript 1.7 (More information)
 
 Lots of neat stuff, but the one I'm most excited about is that first one: importing plugins.  That I had to re-install all of my plugins.  Since I don't have to do that anymore, I think I'm going to go grab M1, even though M2 is coming out tomorrow.  I love the bleeding edge... :)

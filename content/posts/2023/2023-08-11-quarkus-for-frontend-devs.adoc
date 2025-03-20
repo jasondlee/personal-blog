@@ -68,7 +68,7 @@ My advice for my friend was to follow the Quarkus guides, which are numerous and
 From the docs:
 
 [source,java]
------
+----
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -83,14 +83,14 @@ public class GreetingResource {
         return "Hello from RESTEasy Reactive";
     }
 }
------
+----
 
 === Dependency Injection
 
 Java, much like Angular, supports dependency injection (or inversion of control). The most common DI framework, at least in my corner of the world, is CDI. Again, while much can said about the many advanced features of CDI, a https://quarkus.io/guides/getting-started#using-injection[simple example] should suffice to get one started.
 
 [source,java]
------
+----
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -105,14 +105,14 @@ public class GreetingResource {
 
     // ...
 }
------
+----
 
 === Data Access
 
 For a frontend developer, database access may be a foreign concept, so my advice here is to go as simple as you can until/unless you need something more. Quarkus again offers a nice tool, https://quarkus.io/guides/hibernate-orm-panache[Panache]. Panache builds on top of JPA, providing a number of common database operations without any existing code. For example (taken from the docs), here is an entity using the Active Record pattern:
 
 [source,java]
------
+----
 import java.time.LocalDate;
 import java.util.List;
 import jakarta.persistence.Entity;
@@ -136,14 +136,14 @@ public class Person extends PanacheEntity {
         delete("name", "Stef");
     }
 }
------
+----
 
 This defines an entity, `Person` which inherits operations such as `find`, `list`, and `delete`.
 
 Some people may not like having such operations defined in the entity, so Panache also supports the repository pattern:
 
 [source,java]
------
+----
 @Entity
 public class Person {
     @Id @GeneratedValue private Long id;
@@ -166,7 +166,7 @@ public class PersonRepository implements PanacheRepository<Person> {
        delete("name", "Stef");
   }
 }
------
+----
 
 The same methods available via the Active Record pattern above are now exposed on the `PersonRepository` class. Which you use is personal preference, but for someone getting started with Java persistence, either approach offers a very easy starting point.
 

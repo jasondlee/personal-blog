@@ -14,7 +14,7 @@ A reader brought to my attention that I have never posted the code to FacesUtil,
 
 FacesUtil.java
 [source,java,linenums]
------
+----
 import javax.faces.FactoryFinder;
 import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
@@ -26,12 +26,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 /**
  * Utility class for JavaServer Faces.
- * 
+ *
  */
 public class FacesUtil {
     /**
      * Get servlet context.
-     * 
+     *
      * @return the servlet context
      */
     public static ServletContext getServletContext() {
@@ -40,7 +40,7 @@ public class FacesUtil {
     }
     /**
      * Get managed bean based on the bean name.
-     * 
+     *
      * @param beanName
      *            the bean name
      * @return the managed bean associated with the bean name
@@ -52,7 +52,7 @@ public class FacesUtil {
     }
     /**
      * Remove the managed bean based on the bean name.
-     * 
+     *
      * @param beanName
      *            the bean name of the managed bean to be removed
      */
@@ -62,7 +62,7 @@ public class FacesUtil {
     }
     /**
      * Store the managed bean inside the session scope.
-     * 
+     *
      * @param beanName
      *            the name of the managed bean to be stored
      * @param managedBean
@@ -75,7 +75,7 @@ public class FacesUtil {
     }
     /**
      * Get parameter value from request scope.
-     * 
+     *
      * @param name
      *            the name of the parameter
      * @return the parameter value
@@ -86,7 +86,7 @@ public class FacesUtil {
     }
     /**
      * Add information message.
-     * 
+     *
      * @param msg
      *            the information message
      */
@@ -95,7 +95,7 @@ public class FacesUtil {
     }
     /**
      * Add information message to a sepcific client.
-     * 
+     *
      * @param clientId
      *            the client id
      * @param msg
@@ -107,7 +107,7 @@ public class FacesUtil {
     }
     /**
      * Add error message.
-     * 
+     *
      * @param msg
      *            the error message
      */
@@ -116,7 +116,7 @@ public class FacesUtil {
     }
     /**
      * Add error message to a sepcific client.
-     * 
+     *
      * @param clientId
      *            the client id
      * @param msg
@@ -128,7 +128,7 @@ public class FacesUtil {
     }
     /**
      * Add warning message.
-     * 
+     *
      * @param msg
      *            the warning message
      */
@@ -137,7 +137,7 @@ public class FacesUtil {
     }
     /**
      * Add warning message to a sepcific client.
-     * 
+     *
      * @param clientId
      *            the client id
      * @param msg
@@ -149,7 +149,7 @@ public class FacesUtil {
     }
     /**
      * Evaluate the integer value of a JSF expression.
-     * 
+     *
      * @param el
      *            the JSF expression
      * @return the integer value associated with the JSF expression
@@ -189,5 +189,5 @@ public class FacesUtil {
         return "#{" + value + "}";
     }
 }
------
+----
 

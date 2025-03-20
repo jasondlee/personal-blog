@@ -15,18 +15,18 @@ A user on the GlassFish forums recently asked how to create users in bulk.  The 
 The REST endpoint of interest is  link: http://localhost:4848/management/domain/configs/config/server-config/security-service/auth-realm/file/create-user[http://localhost:4848/management/domain/configs/config/server-config/security-service/auth-realm/file/create-user], and here's a sample bash shell script to exercise it:
 
 [source,bash,linenums]
------
+----
 #!/bin/bash
 for USER in user1 user2 user3 user4 user5 user6 user7 user8 user9 user10 ; do
     curl -X POST -H 'Accept: application/json' \
         -d id=$USER -d AS_ADMIN_USERPASSWORD=$USER http://localhost:4848/management/domain/configs/config/server-config/security-service/auth-realm/file/create-user
 done
------
+----
 
 Want to see what users exist in the realm?
 
 [source,bash,linenums]
------
+----
 $ curl -H 'Accept: application/json' http://localhost:4848/management/domain/configs/config/server-config/security-service/auth-realm/file/list-users
 {
     "command": "list-file-users AdminCommand",
@@ -54,20 +54,20 @@ $ curl -H 'Accept: application/json' http://localhost:4848/management/domain/con
 // ...
     ]
 }
------
+----
 
 Minor update
 ------------
 I forgot that the poster asked about deleting users.  Here's how you do that:
 
 [source,bash,linenums]
------
+----
 $ curl -H 'Accept: application/json' -X DELETE -d id=user1 $mgmt/configs/config/server-config/security-service/auth-realm/file/delete-user
 {
     "command": "delete-file-user AdminCommand",
     "exit_code": "SUCCESS"
 }
------
+----
 
 It's important to note that only `FileRealm`-based realms support user management in this manner.  For other realm types, like `LdapRealm` and `JdbcRealm`, for example, the system administrator will need to use tools that are appropriate for the type of realm in question.
 

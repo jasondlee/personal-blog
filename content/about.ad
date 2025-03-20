@@ -1,8 +1,0 @@
----
-title: About
-author: Jason Lee
-date: 2013-11-04
-type: page
----
-
-{% include about.html %}

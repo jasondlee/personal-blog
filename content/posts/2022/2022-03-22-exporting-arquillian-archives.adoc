@@ -16,18 +16,18 @@ There are actually (at least) two ways to it, programmatic (thanks to James Perk
 
 .Programmatic
 [source,java]
------
+----
 war.as(ZipExporter.class)
     .exportTo(new File("target/deployments", war.getName()), true);
------
+----
 
 .Declarative
 [source,xml]
------
+----
 <engine>
     <property name="deploymentExportPath">target/deployments</property>
 </engine>
------
+----
 
 Now, when you run your tests, you'll find something like `+++target/deployments/_DEFAULT___DEFAULT__my-test-archive.war+++` (the name will vary, of course, based on your test's configuration).
 

@@ -13,7 +13,7 @@ In my experience, a pretty common bug with custom components is improper state s
 
 Before we start, let's take a quick look at a very simple component to see what things might look like:
 [source,java,linenums]
------
+----
 public class TestComponent extends UIOutput {
     public static final String COMPONENT_FAMILY = "com.steeplesoft.jsf.facestester.TestComponent";
     public static final String COMPONENT_TYPE = COMPONENT_FAMILY;
@@ -58,24 +58,24 @@ public class TestComponent extends UIOutput {
         return _state;
     }
 }
------
+----
 
 This is `TestComponent`, taken from the FacesTester test suite.  Note that we declare two properties, the cleverly named `property1` and `property2`, with the appropriate getters and setters.  The `saveState()` and `restoreState()` methods are what are of interest at the moment.  In `saveState`, we create a new `Object[]` whose length is the number of properties plus one.  In the zeroth element, we put the output of `saveState()` from our component's parent, with the remaining entries going to our properties.  In `restoreState`, we pull these `Object`s out of the array, and set them on the properties, casting as appropriate.
 
-Conceptually, this code is pretty simple, especially in this simple case.  Imaging, though, a more complex component that has, say, 20 properties.  The methods quickly grow, making it much easier for errors to creep in.  For example, in our 20 property component, we decide to add a new property, `property21`.  We add the declaration to the top of the class, and instruct our IDE to generate our getters and setters, then move quickly to updating the `Renderer` to use this new property.  In our excitement, though, we forgot to update the state saving methods.  At first, this oversight is unnoticeable.  When the newly update component is added to a page, everything renders as expected, and everyone's happy.  However, a user adds this component to a form and discovers that when the form is submitted and the page is restored, the component no longer renders correctly.  
+Conceptually, this code is pretty simple, especially in this simple case.  Imaging, though, a more complex component that has, say, 20 properties.  The methods quickly grow, making it much easier for errors to creep in.  For example, in our 20 property component, we decide to add a new property, `property21`.  We add the declaration to the top of the class, and instruct our IDE to generate our getters and setters, then move quickly to updating the `Renderer` to use this new property.  In our excitement, though, we forgot to update the state saving methods.  At first, this oversight is unnoticeable.  When the newly update component is added to a page, everything renders as expected, and everyone's happy.  However, a user adds this component to a form and discovers that when the form is submitted and the page is restored, the component no longer renders correctly.
 
-To one who has never been bitten by this bug, the cause is subtle and elusive, but, in this case, the cause is broken state saving.  On the first request, JSF builds the component tree, and populates the components with the values provided in the page markup.  As the page is rendered to the client, JSF creates the saved state object for the UIViewRoot, which includes our component, and saves that either on the server or the client.  When the form is POSTed to the server, the UIComponent tree state is restored from the saved state, and this is where the error occurs.  Since the component didn't save the state of this new property, there's nothing to restore during the RESTORE_VIEW phase, so the property is set to its default value, which is not what the page author expected, so things don't function or render as expected. 
+To one who has never been bitten by this bug, the cause is subtle and elusive, but, in this case, the cause is broken state saving.  On the first request, JSF builds the component tree, and populates the components with the values provided in the page markup.  As the page is rendered to the client, JSF creates the saved state object for the UIViewRoot, which includes our component, and saves that either on the server or the client.  When the form is POSTed to the server, the UIComponent tree state is restored from the saved state, and this is where the error occurs.  Since the component didn't save the state of this new property, there's nothing to restore during the RESTORE_VIEW phase, so the property is set to its default value, which is not what the page author expected, so things don't function or render as expected.
 
 So how does one catch this class of error?  With `FacesTester.testStateSaving()`:
 
 [source,java,linenums]
------
+----
 @Test
 public void validateTestComponentStateSaving() {
     FacesTester facesTester = new FacesTester();
     facesTester.testStateSaving(TestComponent.COMPONENT_TYPE);
 }
------
+----
 
 When this method is called, FacesTester creates an instance (`origComp`) of the component type and  queries it, trying to identify all of the properties based on the existence of getter/setter pairs.  Once a list of properties has been identified, it passes dummy data to each setter, and then calls `origComp.saveState()`.  Next, it creates a new instance (`newComp`) of the component, and calls `restoreState()` on it, passing `origComp`'s saved state.  With the state restored, it then iterates over the identified getters, calling each getter on both components, and compares the returned values.  If the values do no match, and `AssertionError` is thrown indicating that the property was not correctly handled in the state saving code.
 

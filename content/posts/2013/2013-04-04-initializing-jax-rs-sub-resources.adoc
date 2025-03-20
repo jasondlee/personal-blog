@@ -17,7 +17,7 @@ This morning, I was reading through the http://download.oracle.com/otndocs/jcp/j
 This is kind of sad to admit (though, surely -- hopefully -- I'm not alone in this :), but I have been initializing subresource manually. For example:
 
 [source,java,linenums]
------
+----
 public <T> T getSubResource(Class<T> clazz) {
     try {
         T resource = clazz.newInstance();
@@ -31,12 +31,12 @@ public <T> T getSubResource(Class<T> clazz) {
         throw new WebApplicationException(ex, Status.INTERNAL_SERVER_ERROR);
     }
 }
------
+----
 
 While this works, the problems should be pretty obvious: it's extremely inflexible.  Fortunately, the JAX-RS Expert Group, who has clearly thought about this more than I, has a better solution: `ResourceContext`. Take this example, pulled from the spec:
 
 [source,java,linenums]
------
+----
 @Path("widgets")
 public class WidgetsResource {
     @Context
@@ -57,7 +57,7 @@ public class WidgetResource {
     @GET
     public Widget getDetails() {...}
 }
------
+----
 
 Notice the method `WidgetsResource.findWidget()`. The parent resource, `WidgetsResource`, has an instance of `ResourceContext` injected, which is then used to initialize the subresource instantiated in `findWidget()`. The benefit of this approach over the approach above is that _everthing_ is injected, regardless of what I'm expecting to find.
 

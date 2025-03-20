@@ -18,7 +18,7 @@ somewhat stripped down version, of Payara Server. Once the server instance has s
 as a web application. In your build file (and we'll be using Maven), you must declare that you are building a war file:
 
 [source,xml]
------
+----
 <project xmlns="http://maven.apache.org/POM/4.0.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 3
@@ -35,13 +35,13 @@ as a web application. In your build file (and we'll be using Maven), you must de
 
     <name>payara-micro</name>
     <!-- ... -->
------
+----
 
 Next, we need to declare the dependencies for Payara Micro, but we also need to declare a dependency on our common
 module, as that's where the actual application lives. The Payara Micro module here has no real application data in. :)
 
 [source,xml]
------
+----
 <dependencies>
     <dependency>
         <groupId>org.eclipse.microprofile</groupId>
@@ -64,14 +64,14 @@ module, as that's where the actual application lives. The Payara Micro module he
         <version>$\{project.version}</version>
     </dependency>
 </dependency>
------
+----
 
 Next, we can add the Payara Micro Maven Plugin to build, which will allow us to start and stop the server using Maven. We
 will also add some configuration for the Maven Dependency Plugin to copy the Payara Micro jar to the build output directory
 so that we can start and stop the server from the commandline:
 
 [source,xml]
------
+----
 <build>
     <plugins>
             <plugin>
@@ -95,12 +95,12 @@ so that we can start and stop the server from the commandline:
             </plugin>
     </plugins>
 </build>
------
+----
 
 This will configure the plugin for both the bundle and start goals. That lets us create an uberjar:
 
 [source,bash]
------
+----
 $ mvn payara-micro:bundle
 ...
 $ java -jar tart/payara-micro-microbundle.jar
@@ -121,23 +121,23 @@ GET     /openapi/
 GET     /openapi/application.wadl
 
 [2018-10-15T08:47:25.789-0500] [] [INFO] [] [PayaraMicro] [tid: _ThreadID=1 _ThreadName=main] [timeMillis: 1539611245789] [levelValue: 800] Payara Micro  5.183 #badassmicrofish (build 380) ready in 16,311 (ms)
------
+----
 
 And we can manually test our app:
 
 [source,bash]
------
+----
 # curl http://localhost:8080
 Hello, world
 # curl http://localhost:8080/?name=Payara+Micro
 Hello, Payara Micro
------
+----
 
 I said we can test manually, but we can also write automated tests using http://arquillian.org/[Arquillian]. We start by
 adding the dependencies for our tests:
 
 [source,xml]
------
+----
 <dependencyManagement>
     <dependencies>
         <dependency>
@@ -197,13 +197,13 @@ adding the dependencies for our tests:
             <scope>test</scope>
         </dependency>
 </dependencies>
------
+----
 
 Let's start with a simple test. This test will run in-container, and will demonstrate that the injection is working, and...
 that the methods can return Strings. :P
 
 [source,java]
------
+----
 @RunWith(Arquillian.class)
 public class InjectionTest {
     @Inject
@@ -235,7 +235,7 @@ public class InjectionTest {
     }
 
 }
------
+----
 
 That's all there is to it. For using Payara Micro as an Arquillian container, there is no need, at least in the most basic
 of usages, for `arquillian.xml`.
@@ -246,7 +246,7 @@ doesn't seem sufficient (I can, of course, be way off base -- I'm not an expert 
 are the changes to my POM that I needed to make things work:
 
 [source,xml]
------
+----
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-dependency-plugin</artifactId>
@@ -280,7 +280,7 @@ are the changes to my POM that I needed to make things work:
         </environmentVariables>
     </configuration>
 </plugin>
------
+----
 
 It also seemed that I needed to run the tests from the command-line first to make sure the JAR file was in place, as it
 _seems_ that IDEA does not run the usual Maven lifecycle prior to running the tests. Again, I'm no expert, so if someone
@@ -289,7 +289,7 @@ who is can clear up the confusion, I would greatly appreciate it.
 Finally, one last test, which will exercise our REST endpoint end-to-end:
 
 [source,java]
------
+----
 @RunWith(Arquillian.class)
 @RunAsClient
 public class HelloWorldResourceTest {
@@ -321,7 +321,7 @@ public class HelloWorldResourceTest {
         }
     }
 }
------
+----
 
 We tell JUnit to run the test with `Arquillian`, and that we want to run the tests on the client. Ordinarily, Arquillian
 magically wraps up your tests, ships them to the server, and runs them there. For this test, we don't want that, thus

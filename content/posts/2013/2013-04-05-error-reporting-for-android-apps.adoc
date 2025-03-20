@@ -16,11 +16,11 @@ As every Android developer knows, application crashes are reported back to Googl
 If you look at the http://acra.ch[ACRA home page], the quick start suggests a code snippet like this:
 
 [source,java,linenums]
------
+----
 import org.acra.*;
 import org.acra.annotation.*;
 
-@ReportsCrashes(formKey = "dGVacG0ydVHnaNHjRjVTUTEtb3FPWGc6MQ") 
+@ReportsCrashes(formKey = "dGVacG0ydVHnaNHjRjVTUTEtb3FPWGc6MQ")
 public class MyApplication extends Application {
   @Override
   public void onCreate() {
@@ -29,7 +29,7 @@ public class MyApplication extends Application {
     ACRA.init(this);
   }
 }
------
+----
 
 In a nutshell, this configuration will tell ACRA to report all crashes to a Google Docs form. While helpful, I've found this less than optimal, as the spreadsheet the form feeds gets very hard to read.  Then, there's this, also from the ACRA home page:
 
@@ -41,15 +41,15 @@ _____
 So my advice is to skip it. :)  What I've done in Cub Tracker is to configure an `HttpPostSender` instance:
 
 [source,java,linenums]
------
+----
 ACRA.init(this);
 ACRA.getErrorReporter().setReportSender(new HttpPostSender(ERROR_REPORTING_URL, null));
------
+----
 
 Now, rather than posting to a Google Form, it POSTS to my custom web service, which looks like this (please excuse the ugly PHP :) :
 
 [source,php,linenums]
------
+----
 <?php
 $message .= "PHONE_MODEL = " . $_POST["PHONE_MODEL"] . "\n";
 $message .= "ANDROID_VERSION = " . $_POST["ANDROID_VERSION"] . "\n";
@@ -62,12 +62,12 @@ $message .= "STACK_TRACE:\n" . $_POST["STACK_TRACE"] . "\n";
 mail('me@foo.com', 'Cub Tracker Error Report', $message);
 
 ?>
------
+----
 
 That results in an email like this:
 
 [source,linenums]
------
+----
 PHONE_MODEL = Galaxy Nexus
 ANDROID_VERSION = 4.2.2
 PRODUCT = mysid
@@ -79,6 +79,6 @@ java.lang.IllegalStateException: Couldn't read row 0, col 0 from CursorWindow.  
 	at android.database.CursorWindow.getLong(CursorWindow.java:507)
 	at android.database.AbstractWindowedCursor.getLong(AbstractWindowedCursor.java:75)
 ...
------
+----
 
 That nicely demonstrates the flexibility of ACRA, as well as one the most frustrating and elusive bugs in my app, but, hopefully, my pain can help you with your app. :)

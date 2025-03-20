@@ -20,9 +20,9 @@ project creation to be the most useful, with the rest being less so. Your mileag
 let's bootstrap the project:
 
 [source,bash]
------
+----
 $ mn create-app -l kotlin -b maven --features=hibernate-jpa,security-jwt,jdbc-hikari,http-server jugdemo
------
+----
 
 Once the script finishes, we're ready to open the project in the IDE of your choice, so let's do that now and make
 some build changes. These are mostly to update versions, but also to make some changes to the dependencies, especially
@@ -30,7 +30,7 @@ around testing.
 
 [source,xml]
 .pom.xml
------
+----
 <properties>
     <exec.mainClass>com.steeplesoft.micronaut.Application</exec.mainClass>
     <junit.jupiter.version>5.4.0-RC2</junit.jupiter.version>
@@ -40,13 +40,13 @@ around testing.
     <maven.compiler.target>1.8</maven.compiler.target>
     <micronaut.version>1.0.4</micronaut.version>
 </properties>
------
+----
 
 Replace all of the test dependencies with this block:
 
 [source,xml]
 .pom.xml
------
+----
 <dependency>
     <groupId>io.micronaut</groupId>
     <artifactId>micronaut-inject-java</artifactId>
@@ -82,14 +82,14 @@ Replace all of the test dependencies with this block:
     <version>1.0.1</version>
     <scope>test</scope>
 </dependency>
------
+----
 
 == The Controller
 With our build setup, let's create our first controller, `AuthorController`:
 
 [source,kotlin]
 .AuthorContoller.kt
------
+----
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
@@ -103,7 +103,7 @@ class AuthorController {
         return HttpResponse.ok("author")
     }
 }
------
+----
 
 This is a super dumb controller, but should work fine for our purposes. What do we do next? Write a test, of course.
 
@@ -115,7 +115,7 @@ how cool and easy it is to do:
 
 [source,kotlin]
 .AuthorControllerTest
------
+----
 import io.micronaut.context.ApplicationContext
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpRequest
@@ -142,7 +142,7 @@ class AuthorControllerTest {
                 client.toBlocking().exchange(request, String::class.java).body())
     }
 }
------
+----
 
 There is likely a better of way doing this, but, as best I can tell, this is a decent port of the Java test to Kotlin. If
 there's a better way, you know where to find the comments section. :)
@@ -168,7 +168,7 @@ To set up JPA, we need to configure it in `application.yml`:
 
 [source,yaml]
 .application.yml
------
+----
 datasources:
   default:
     url: jdbc:h2:mem:jugdemo_database
@@ -184,7 +184,7 @@ jpa:
         hbm2ddl:
           auto: update
         show_sql: true
------
+----
 
 We start by defining a datasource. Since we want this demo to be easy to setup and use, we're going to use an in-memory
 H2 database, so we define the url, driver class, and the login credentials. Next, we need to configure JPA, so we tell the
@@ -196,7 +196,7 @@ going to deal with JPA in the context of authentication:
 
 [source,kotlin]
 .User.kt
------
+----
 import io.micronaut.security.authentication.providers.UserState
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -213,7 +213,7 @@ data class User(@Id
                 var id: Long? = null,
                 val email : String? = null,
                 val pass : String? = null)
------
+----
 
 That's probably a bit overwhelming, so I'll give some time to read through that. Ready? Excellent. As you can see, it's
 a simple Kotlin data class with three properties. We've annotated `id` so Hibernate/JPA will properly generate the
@@ -223,7 +223,7 @@ Our very simple data access service looks like this:
 
 [source,kotlin]
 .UserService.kt
------
+----
 import io.micronaut.aop.Around
 import io.micronaut.spring.tx.annotation.Transactional
 import javax.inject.Singleton
@@ -244,7 +244,7 @@ class UserService(@PersistenceContext val entityManager: EntityManager) {
         }
     }
 }
------
+----
 
 If you're familiar with JPA, nothing here should be too unusual. We use `@Singleton` to signal to Micronaut that this is
 a managed class (you'll have to forgive the Jakarta EE-isms peeking through. I just barely avoided calling it a managed
@@ -265,7 +265,7 @@ cool, and Micronaut makes them super to use.
 Let's start by updating the application config:
 
 [source,yaml]
------
+----
 micronaut:
   application:
     name: jugdemo
@@ -283,7 +283,7 @@ micronaut:
           secret:
             generator:
               secret: "$\{JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"
------
+----
 
 We've enabled security, enabled the `/login` endpoint, turned on oauth, and set the secret for signing the JWT (and,
 seriously, change that key. Please? :). At this point, we have options. We can go the super simple route and simply
@@ -294,7 +294,7 @@ I've used both approaches in my experimentation, and the latter approach seems t
 
 [source,kotlin]
 .DemoAuthenticationProvider.kt
------
+----
 import com.steeplesoft.micronaut.UserService
 import io.micronaut.security.authentication.AuthenticationFailed
 import io.micronaut.security.authentication.AuthenticationProvider
@@ -318,7 +318,7 @@ class DemoAuthenticationProvider(private val userService: UserService,
         })
     }
 }
------
+----
 
 The interface has a single method, `authenticate`, to which is passed a `AuthenticationRequest<*, *>`. Unfortunately, it
 doesn't appear we can specify actual types on that, so we're stuck, it seems, with the ugly casts in the method body. I
@@ -329,7 +329,7 @@ you want:
 
 [source,kotlin]
 .DemoPasswordEncoder.kt
------
+----
 import io.micronaut.security.authentication.providers.PasswordEncoder
 import java.security.MessageDigest
 import javax.inject.Singleton
@@ -346,7 +346,7 @@ class DemoPasswordEncoder : PasswordEncoder {
         return String(md.digest((rawPassword?:"").toByteArray()))
     }
 }
------
+----
 
 In our `AuthenticationProvider` provider, we look up the user by email address and compare the encoded passwords. If they
 match, we return a `UserDetails` instance. If they don't, we return an `AuthenticationFailed` instance. Either response
@@ -356,7 +356,7 @@ If you run your tests now, you should get an authentication failure. Let's add a
 
 [source,kotlin]
 .AuthorControllerTest.kt
------
+----
     @Test
     fun testIndex() {
         val request = HttpRequest
@@ -378,7 +378,7 @@ If you run your tests now, you should get an authentication failure. Let's add a
         val USERNAME = "jugdemo@steeplesoft.com"
         val PASSWORD = "password"
     }
------
+----
 
 Note the addition of the `login()` function. We want to POST the user credentials (modeled by `UsernamePasswordCredentials`)
 to the `/login` endpoint. Upon a successful response, we can pull the JWT from the response body. _Super_ simple. In our
@@ -393,7 +393,7 @@ to create test users in production, so we won't. :)
 
 [source,kotlin]
 .ApplicationTestListener.kt
------
+----
 import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.runtime.server.event.ServerStartupEvent
 import javax.inject.Singleton
@@ -406,14 +406,14 @@ class ApplicationTestListener(private val userService : UserService) : Applicati
         }
     }
 }
------
+----
 
 When the application starts, this code runs. It checks to see if the user exists. If it does not, it's added. Before running
 our tests, we need to make one more change to the system: `UserService.addUser`:
 
 [source,kotlin]
 .UserService.kt
------
+----
 import com.steeplesoft.micronaut.security.DemoPasswordEncoder
 import io.micronaut.aop.Around
 import io.micronaut.spring.tx.annotation.Transactional
@@ -431,7 +431,7 @@ class UserService(@PersistenceContext val entityManager: EntityManager,
         return user
     }
 }
------
+----
 
 We've added the `DemoPasswordEncoder` to our constructor injection, then, in `addUser`, we (naively) create a new
 `User` instance, encoding the password, then persisting it. If you run your tests now, you should once again be green, and

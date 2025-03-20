@@ -15,31 +15,31 @@ As a follow-up to my link:/2007/10/17/seam-and-jpa-hibernate-on-oc4j-1013/[entry
 Using the archetype is pretty simple (assuming you know how to use Maven 2 archetypes in general):
 
 [source,bash,linenums]
------
-mvn archetype:create -DarchetypeGroupId=com.steeplesoft.maven.archetypes 
-    -DarchetypeArtifactId=seam-jpa-oc4j -DarchetypeVersion=1.0-alpha 
-    -DremoteRepositories=http://repo.steeplesoft.com/maven2 
-    -DgroupId=com.foo 
-    -DartifactId=myApp 
+----
+mvn archetype:create -DarchetypeGroupId=com.steeplesoft.maven.archetypes
+    -DarchetypeArtifactId=seam-jpa-oc4j -DarchetypeVersion=1.0-alpha
+    -DremoteRepositories=http://repo.steeplesoft.com/maven2
+    -DgroupId=com.foo
+    -DartifactId=myApp
     -Dversion=1.0
------
+----
 
 What this gets you is a multi-module project, such as what was described in the aforementioned article, with (hopefully) working examples of a JPA entity bean, a HSQL-based PersistenceUnit, and a simple JSF (Facelets), all wired together via Seam.  Chances are good that you'll want to change the package name and structure to match your project and organization's needs, but, if you're like me, having these examples to copy and paste will help when creating a new project. :)
 
 [[redeploy]] This is by no means perfect.  Given my newness to Maven, the archetype itself could probably use some help, <strike>but there's something more serious to consider at the moment involving OC4J.  If you create the project as described above, deploy the resulting EAR file and hit the web context, you should see that the application works fine.  If you try to redeploy the application, you'll see an error message like this in the web console (formatted for readability)</strike>(this is been link:/2007/10/25/oc4j-seam-archetype-update/[fixed]):
 
 [source,linenums]
------
-Operation failed with error: java.lang.IllegalStateException: 
-    ClassLoader "myapp.web.myapp-web-1.0:0.0.0" 
-    (from in /oc4j/j2ee/home/applications/myapp/myapp-web-1.0/): 
-    This loader has been closed and should not be in use. 
------
+----
+Operation failed with error: java.lang.IllegalStateException:
+    ClassLoader "myapp.web.myapp-web-1.0:0.0.0"
+    (from in /oc4j/j2ee/home/applications/myapp/myapp-web-1.0/):
+    This loader has been closed and should not be in use.
+----
 
 The server console will show something like this:
 
 [source,linenums]
------
+----
 oracle.oc4j.admin.internal.DeployerException: java.lang.IllegalStateException: ClassLoader "myapp.web.myapp-web-1.0:0.0.0" (from <web-module> in /oc4j/j2ee/home/applications/myapp/myapp-web-1.0/): This loader has been closed and should not be in use.
       at org.hibernate.ejb.Ejb3Configuration.configure(Ejb3Configuration.java:258)
       at org.hibernate.ejb.HibernatePersistence.createEntityManagerFactory(HibernatePersistence.java:120)
@@ -77,7 +77,7 @@ oracle.oc4j.admin.internal.DeployerException: java.lang.IllegalStateException: C
       at oracle.oc4j.admin.jmx.server.mbeans.deploy.DeployerRunnable.run(DeployerRunnable.java:81)
       at com.evermind.util.ReleasableResourcePooledExecutor$MyWorker.run(ReleasableResourcePooledExecutor.java:298)
       at java.lang.Thread.run(Thread.java:595)
------
+----
 
 The only way I've found to fix that is to restart the app server, which is, of course, extremely ugly.  Making this work on OC4J has been extremely trying, and this is just one more example of the pain I've put myself through.  Since the contract dictates this container, though, I have little choice. :)  At any rate, I'm going to try to work around this by creating one or more shared libraries on the app server and see what that gets me.  I'll report back what I find.
 

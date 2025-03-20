@@ -20,12 +20,12 @@ Some of you may be wondering what the status is on the RI Sandbox.  With the lin
   .. Facelets: xmlns:sc="http://java.sun.com/mojarra/scales"
 . Add the static resource PhaseListener:
 [source,xml,linenums]
------
+----
 <lifecycle>
     <phase-listener>
         com.sun.mojarra.scales.util.StaticResourcePhaseListener
     </phase-listener>
 </lifecycle>
------
+----
 
 That should be all there is too it (though if I've missed a step, please let me know).

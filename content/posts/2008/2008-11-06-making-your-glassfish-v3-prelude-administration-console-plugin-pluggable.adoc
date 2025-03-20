@@ -17,7 +17,7 @@ As we saw in the last article, the GlassFish v3 Prelude Administration Console o
 Now we have a new integration type defined, but how does one consume the integration points that are of this new type?  To include any integration points defined for a given type, the GlassFish v3 Prelude Administration Console provides a few JSFTemplating Handlers (for more information on what a handler is, please see the previous article and/or the JSFTemplating documentation).  To include all integration points for a given type, your markup might look like this:
 
 [source,xml,linenums]
------
+----
 <sun:propertySheet>
     <sun:propertySheetSection id="propSheetSection">
          <!afterCreate
@@ -32,12 +32,12 @@ Now we have a new integration type defined, but how does one consume the integra
         />
     </event>
 </sun:propertySheet>
------
+----
 
 In some cases, you may want only one integration point, with the deciding factor being the priority (see below).  The GlassFish v3 Prelude Administration Console does for its `:masthead` integration type used in the theming support.  Such a use might look like this:
 
 [source,xml,linenums]
------
+----
 <sun:form id="propertyForm">
     <!afterCreate
         getClientId(component="$this\{component}" clientId=>$attribute\{formId})
@@ -45,6 +45,6 @@ In some cases, you may want only one integration point, with the deciding factor
         includeFirstIntegrationPoint(type: "org.glassfish.admingui:masthead" root="#\{component}");
     />
 </sun:form>
------
+----
 
 That's all there is to it.  With this code in place in <i>your</i> plugin and the integration type published where others can find it, your plugin can be easily extended by anyone.  The possibilities in extending GlassFish v3 Prelude Administration Console -- as well as _its_ extensions -- are limited only by our imagination.

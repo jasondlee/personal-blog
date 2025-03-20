@@ -13,7 +13,7 @@ At http://www.iec-okc.com[IEC], we have an application used to report inventory 
 
 // more
 
-. Display the page 
+. Display the page
 . User selects a batch and clicks the button
 . JSF calls the specified action on the backing
 . The backing bean creates the spreadsheet, then navigates to success.jsp, a plain ol' JSP
@@ -36,7 +36,7 @@ At this point, the servlet works the same as the JSP:
 This works, but is a pretty ugly hack.  In fact, check out the code:
 
 [source,java,linenums]
------
+----
 public class ExcelServlet extends HttpServlet {
     /**
      * If you examine FacesContext, you'll find that the setFacesContextAsCurrentInstance method is protected.
@@ -91,6 +91,6 @@ public class ExcelServlet extends HttpServlet {
         return facesContext;
     }
 }
------
+----
 
 This code doesn't yet have the parameter fetching, but you can see how unattractive it is. Hopefully, Ed will have a nicer fix for me.  Until then, I may have to put this monstrosity in production.

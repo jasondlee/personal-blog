@@ -15,7 +15,7 @@ One of my long-standing complaints with Ant is that project dependency managemen
 Using Ivy requires, at least in the way I'm using it, two new files, ivy.xml, which defines my dependencies, and ivysettings.xml, which configures my custom resolvers.  The usage from my Ant build file is actually pretty simple, so we'll start there:
 
 [source,xml,linenums]
------
+----
 <target name="-download-ivy" unless="skip.download">
     <!-- download Ivy from web site so that it can be
         used even without any special installation -->
@@ -38,15 +38,15 @@ Using Ivy requires, at least in the way I'm using it, two new files, ivy.xml, wh
     <ivy:retrieve pattern="lib/[conf]/[artifact]-[revision].[ext]" />
     <!-- edited for brevity -->
 </target>
------
+----
 
 You will also need to define these properties somewhere:
 
 [source,linenums]
------
+----
 ivy.install.version=2.0.0-beta1
 ivy.jar.file=$\{lib.build.dir}/ivy.jar
------
+----
 
 But what's going on here?  The `-download-ivy` target, simply downloads the Ivy jar and installs it in the target directory, lib/build in Scales' case.  Next, `-install-ivy` tells Ant how to find the Ivy tasks.  Finally, in the `update` target, we tell Ivy where to find the settings (which we'll look at in a moment), and then we tell Ivy to download the dependencies.
 
@@ -55,7 +55,7 @@ But what's that `pattern` all about?  This, I think, is a pretty interesting asp
 The `ivy.xml` for Scales looks like this at the moment:
 
 [source,xml,linenums]
------
+----
 <ivy-module version="1.0">
     <info organisation="org" module="standalone" revision="working"/>
     <configurations defaultconfmapping="runtime->*">
@@ -87,7 +87,7 @@ The `ivy.xml` for Scales looks like this at the moment:
         <dependency org="yui" name="yui" rev="2.4.1" conf="javascript->*"/>
     </dependencies>
 </ivy-module>
------
+----
 
 Let's take that one section at a time.  The first element we see is `info`, and I'll be honest here:  I'm really not sure what that's for at the moment.  I think it may be related to publishing (or installing, in Maven parlance) project-specific artifacts to a repository somewhere, but don't quote me on that.  The next section is where we define "configurations," which seem to be roughly analagous to Maven's scope's, but completely configurable and arbitrary.  I have defined five configurations:
 
@@ -104,7 +104,7 @@ Next in the file is the list of dependencies, which is pretty straightforward.  
 Next up is `ivysettings.xml`:
 
 [source,xml,linenums]
------
+----
 <ivysettings>
     <settings defaultResolver="chained"/>
     <property name="java.net.maven.pattern" value="[organisation]/jars/[module]-[revision].[ext]"/>
@@ -120,7 +120,7 @@ Next up is `ivysettings.xml`:
         </chain>
     </resolvers>
 </ivysettings>
------
+----
 
 One of the great things about Ivy 2 is that is configured to look at Maven repos by default.  For Scales, though, I need some artifacts from the java.net http://download.java.net/maven/1[Maven repository].  To enable that, I have to define a custom resolver, which we see in the `resolvers/chain` elements.  The `chain` resolver instructs Ivy to try one resolver after another to find the current artifact, with the `returnFirst` attribute telling Ivy to bail out as soon as a resolver that locates the artifact.  Inside the chain, I instruct Ivy to use the http://www.ibiblio.org/maven2/[ibiblio repository] first.  I then configure both the http://download.java.net/maven/1[Maven 1] and http://download.java.net/maven/2[Maven 2] java.net repositories.  To do that, I configure additional instances of the ibilio resolver, but I change the root URL for the repository.  In the case of the Maven 1 repository, I describe the `pattern` needed to find the artifact, as well as telling the resolver that the repository is not Maven 2 compatible.  Finally, I create a URL repository, called "sourceforge," which I will use to resolve my YUI dependency.
 

@@ -31,15 +31,15 @@ image::/images/2007/05/virtual_servers_02.thumbnail.png[title: "'Adding a virtua
 I've chosen to use _http-listener-1_ only, as I only care about http://vh1:8080/ being available.  Repeat the process for server _vh2_.  For those that prefer the command line, the server can be created with this command:
 
 [source,bash,linenums]
------
+----
 asadmin create-virtual-server --user admin --hosts vh1 --httplisteners http-listener-1 vh1
 asadmin create-virtual-server --user admin --hosts vh2 --httplisteners http-listener-1 vh2
------
+----
 
 While there are a myriad of options regarding port usage, I like to have Apache handle requests on port 80, and forward requests for my vhosts to the appropriate server behind it, so let's take a look at that configuration:
 
 [source,xml,linenums]
------
+----
 <VirtualHost *:80>
     ServerName vh1
     ProxyPass / http://vh1:8080/
@@ -50,7 +50,7 @@ While there are a myriad of options regarding port usage, I like to have Apache 
     ProxyPass / http://vh2:8080/
     ProxyPassReverse / http://vh2:8080/
 </VirtualHost>
------
+----
 
 With that, your virtual hosts should be ready.  To test that things are working correctly, let's deploy two applications (which, I'm afraid, you'll have to supply :) ).
 
@@ -59,17 +59,17 @@ image::/images/2007/05/app_deployment_01.thumbnail.png[title: "'Deploying an app
 Command line users can do:
 
 [source,bash,linenums]
------
+----
 asadmin deploy --virtualservers vh1 AppA.ear
 asadmin deploy --virtualservers vh2 AppB.ear
------
+----
 
 With these apps deployed, `http://vh1/AppA` should get your app, while `http://vh2/AppA` should get a 404, and vice versa.  If you deploy a third app and do not specify a virtual server:
 
 [source,bash,linenums]
------
+----
 asadmin deploy AppC.ear
------
+----
 
 then `http://vh1/AppC` and `http://vh2/AppC` will both work.  Here are some rules to keep in mind:
 
@@ -82,7 +82,7 @@ Multiple Domains, Multiple Servers
 If you need to segregate administrative control amongst users, such as in an ASP/ISP environment, then you will need multiple domains.  When you setup the server, the default domain, _domain1_, is created for you.  Since a domain is an administrative area, one can not use the admin console to create another domain, and must use the `asadmin` command line tool.  A session might look something like this:
 
 [source,bash,linenums]
------
+----
 $ asadmin create-domain --portbase 5000 --profile developer mydomain
 Please enter the admin user name>admin
 Please enter the admin password>
@@ -100,7 +100,7 @@ Using port 5086 for JMX_ADMIN.
 Domain being created with profile:developer, as specified on command line or environment.
 Security Store used should be: JKS
 Domain mydomain created.
------
+----
 
 The documentation has this to say about domains:
 
@@ -119,7 +119,7 @@ We specified the developer profile, as we do not need clustering, high availabil
 With our domain created and start (`asadmin start-domain mydomain`), we can now begin creating virtual servers and deploying applications in the same manner we did above.  Note that, for those using Apache as the front end, the virtual host configuration will need to be adjusted accordingly:
 
 [source,xml,linenums]
------
+----
 <VirtualHost *:80>
     ServerName vh3
     ProxyPass / http://vh3:5080/
@@ -130,7 +130,7 @@ With our domain created and start (`asadmin start-domain mydomain`), we can now 
     ProxyPass / http://vh4:5080/
     ProxyPassReverse / http://vh4:5080/
 </VirtualHost>
------
+----
 
 and that your admin console is listening at http://localhost:5048/[].
 

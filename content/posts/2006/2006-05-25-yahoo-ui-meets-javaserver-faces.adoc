@@ -15,7 +15,7 @@ In my ongoing efforts to learn the JSF framework as thoroughly as possible, I de
 When starting any project, it's good idea to try to get a complete picture of what you're going to need.  In my efforts to wrap YAHOO.widget.Calendar, I found that I need to create following files:
 
 [source,linenums]
------
+----
 src/main/
 	com/steeplesoft/jsf/components/yui/calendar
 		CalendarRenderer.java
@@ -24,16 +24,16 @@ src/main/
 	META-INF
 		faces-config.xml
 		yuisf.tld
------
+----
 
 There are other files in my project, but these are the pertinent ones for now.  With which file you start when writing components is probably largely a matter of personal taste, but we'll start looking at things with `yuisf.tld`, as that will define how our tag looks to the outside world, giving us a good idea of what we'll need to do in the rest of the files.  Here's what the TLD looks like:
 
 [source,xml,linenums]
------
+----
 <?xml version="1.0" encoding="UTF-8"?>
-<taglib xmlns="http://java.sun.com/xml/ns/javaee" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd" 
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 	version="2.1">
 	<tlib-version>0.1</tlib-version>
 	<jsp-version>1.2</jsp-version>
@@ -41,7 +41,7 @@ There are other files in my project, but these are the pertinent ones for now.  
 	<uri>http://steeplesoft.com/yuisf</uri>
 	<display-name>YahooUIJsfTags</display-name>
 	<description>
-		Yahoo! User Interface JSF Tags This tag library contains tags which wrap 
+		Yahoo! User Interface JSF Tags This tag library contains tags which wrap
 		several of the Yahoo! UI components.
 	</description>
 	<tag>
@@ -59,14 +59,14 @@ There are other files in my project, but these are the pertinent ones for now.  
 		</attribute>
 	</tag>
 </taglib>
------
+----
 
 Most of this should be fairly self-explanatory, so we'll skip down to the `tag` element.  The first thing we do is give the tag a name, `calendar` (surprise, surprise), which will be the name used in your JSP templates.  Next, we define the class that will implement this tag, `com.steeplesoft.jsf.components.yui.calendar.CalendarTag`.  Skipping a bit more, we see one `attribute` element.  This is where we define what attributes a user can set on our tag.  For this tag, we declare a `textField` attribute, which is required.
 
 `CalendarTag` implements our tag.  Since we don't need any JSF 1.2-specific features, and we want the tag to be available to a wider audience, we'll target 1.1, which means that our class will need to extend `UIComponentTag`.  Let's take a look at that class now:
 
 [source,java,linenums]
------
+----
 package com.steeplesoft.jsf.components.yui.calendar;
 import javax.faces.component.UIComponent;
 import javax.faces.el.ValueBinding;
@@ -86,10 +86,10 @@ public class CalendarTag extends UIComponentTag {
 		try {
 			calendar=(UICalendar)component;
 		} catch (ClassCastException cce) {
-			throw new IllegalStateException("Component " + 
-					component.toString() + 
+			throw new IllegalStateException("Component " +
+					component.toString() +
 					" not expected type.  Expected: UICalendar.  Perhaps you're missing a tag?");
-		}	
+		}
 		if (textField != null) {
 			if (isValueReference(textField)) {
 				ValueBinding vb = Util.getValueBinding(textField);
@@ -106,20 +106,20 @@ public class CalendarTag extends UIComponentTag {
 		this.textField = textField;
 	}
 }
------
+----
 
 There are three methods that we need to override:  `getComponentType()`, `getRendererType()`, and `setProperties(UIComponent component)`.  In our implementation of the first two methods, we simply return a public static String from UICalendar, which we'll see in a moment.  These values will be used to help tie the component in just a moment.  The third method is <a title: "quoth the Ryan Lubke">where the magic happens</a>.  Since we want the component to be value binding aware, we set the textField attribute to `rtexprvalue=false` in yuisf.tld, and check to see if the value passed is a literal or value binding expression, and handle it appropriately.  Is that overkill for this field? Most likely. ;)  Note also, that we have accessors for each attribute exposed in the TLD."
 
 `UICalendar` is the actual component.  For no particularly compelling reason, I've chosen to extend `javax.faces.component.UIPanel`.  Let's take a look:
 
 [source,java,linenums]
------
+----
 package com.steeplesoft.jsf.components.yui.calendar;
 import javax.faces.component.UIPanel;
 public class UICalendar extends UIPanel {
-	public static final String COMPONENT_TYPE = 
+	public static final String COMPONENT_TYPE =
 			"com.steeplesoft.jsf.components.yui.calendar.Calendar";
-	public static final String RENDERER_TYPE = 
+	public static final String RENDERER_TYPE =
 			"com.steeplesoft.jsf.components.yui.calendar.Calendar";
 	protected String textField;
 	public String getTextField() {
@@ -135,14 +135,14 @@ public class UICalendar extends UIPanel {
 		return "YuiCalendar";
 	}
 }
------
+----
 
 This class doesn't do much of anything of interest, but it's important for a couple of reasons.  Via the constuctor and `getFamily`, more pieces are put in place to tie all of our files together to make our new component.  We also defined a property and accessors for our `textField` attribute, which will make working with the component in Java code a bit nicer.  Note also that `public static Strings` defined at the top.  We've already seen these referenced once in our tag class, and we'll see in a moment the final place these values are referenced.
 
 All of this work is for naught if JSF doesn't know how to render the component.  We'll do that now, via CalendarRenderer:
 
 [source,java,linenums]
------
+----
 package com.steeplesoft.jsf.components.yui.calendar;
 import java.io.IOException;
 import java.net.URL;
@@ -192,12 +192,12 @@ public class CalendarRenderer extends Renderer {
 		writer.write(sxTemplate);
 	}
 }
------
+----
 
 This class is the most interesting of all that we've done thus far, as this is where the user interface magic happens.  It is via the renderer that the component is turned from Java source, TLDs, and view templating mark up into a real live HTML (in our case) widget.  For those not familiar with the http://developer.yahoo.com/yui/calendar/[calendar] component, here is what we want our output to look like:
 
 [source,html,linenums]
------
+----
 <input id="j_id_id15:test" type: "text" name="j_id_id15:test" readonly="readonly" />
 <script type: "text/javascript" src="resource.jsf?r=/META-INF/yahoo.js"></script>
 <script type: "text/javascript" src="resource.jsf?r=/META-INF/dom.js"></script>
@@ -205,7 +205,7 @@ This class is the most interesting of all that we've done thus far, as this is w
 <script type: "text/javascript" src="resource.jsf?r=/META-INF/calendar/calendar.js"></script>
 <script type: "text/javascript" src="resource.jsf?r=/META-INF/js-utils.js"></script>
 <link type: "text/css" rel="stylesheet" href="resource.jsf?r=/META-INF/calendar/calendar.css" />
-<img id="img_j_id_id18" alt="calendar" src="resource.jsf?r=/META-INF/calendar/calendar_icon.gif" 
+<img id="img_j_id_id18" alt="calendar" src="resource.jsf?r=/META-INF/calendar/calendar_icon.gif"
 	onclick="show(this,'j_id_id18')" />
 <div id="j_id_id18" style="visibility: hidden; display: inline;" /></div>
 <script type: "text/javascript">
@@ -225,28 +225,28 @@ This class is the most interesting of all that we've done thus far, as this is w
 	elem.style.position = 'absolute';
 	j_id_id18_cal.render();
 </script>
------
+----
 
 Wow!  That's some pretty ugly markup, but what you get out of that generated mess is, in my opinion, worth it, and the user will never see that (unless he's crazy enough to view the page source).  That mark up, by the way, is generated by this template snippet:
 
 [source,html,linenums]
------
+----
 <h:inputText id="test" readonly="true"/>
 <yuisf:calendar textField="test"/>
------
+----
 
 Let's break things down a little bit.   Since this tag does not support any children tags (plus the fact that it seemed like a good idea), we do all of our work in `encodeEnd()`.  After a little error checking, we get a reference to the `ResponseWriter` used to output our HTML.  The next several blocks of code handle sending the Yahoo! Javascript files to the browser (the mechanics of which are beyond the scope of this article, but feel free to browse the source).  Care is taken to prevent sending the file more than once in the event that more than one calendar is on the page.  The actual markup output occurs in `writeCalendarMarkUp()`.  I'll not muddy the waters by explaining exactly how it works, but suffice it to say that a template is loaded from the class path and markers in the template are replaced with values from the tag (big tip of the hat to Ed, whose code I shamelessly stole).
 
 The final piece to tieing this together is faces-config.xml:
 
 [source,xml,linenums]
------
+----
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE faces-config PUBLIC
   "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
   "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
 <faces-config>
-  <component>                                                                                
+  <component>
     <description>
       Yahoo! UI Calendar
     </description>
@@ -255,7 +255,7 @@ The final piece to tieing this together is faces-config.xml:
     <component-class>com.steeplesoft.jsf.components.yui.calendar.UICalendar</component-class>
     <component-extension>
       <renderer-type>CalendarRenderer</renderer-type>
-    </component-extension>                                                                                
+    </component-extension>
   </component>
   <render-kit>
     <description>
@@ -265,11 +265,11 @@ The final piece to tieing this together is faces-config.xml:
       <component-family>YuiCalendar</component-family>
       <renderer-type>com.steeplesoft.jsf.components.yui.calendar.Calendar</renderer-type>
       <renderer-class>com.steeplesoft.jsf.components.yui.calendar.CalendarRenderer</renderer-class>
-    </renderer>    
+    </renderer>
   </render-kit>
 </faces-config>
------
- 
+----
+
 Here we define both a component and a render kit.  Note that `component-type` is the same as `UICalendar.COMPONENT_TYPE`, and `component-class` is our `UICalendar` class.  For the render kit, `component-family` is what `UICalendar.getFamily()` returns (if you had a group of components that used the same renderer, each class would return the same string for its family).  The `renderer-type` is that same as `UICalendar.RENDERER_TYPE`, and, of course, `renderer-class` points to our `Renderer` child.
 
 With all of that done, we need to package our new component.  In the component jar, you'll obviously need the compiled Java classes, but you'll also need the `META-INF` directory in the root of your jar (which is why I chose to put it in the root of my source directory).  You are now ready to put the resulting jar (and it's dependencies) in your web application and start using the component.  Simple, eh? :)

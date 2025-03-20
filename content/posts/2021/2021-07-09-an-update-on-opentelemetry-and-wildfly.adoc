@@ -39,7 +39,7 @@ Along with that runtime functionality, you can configure how OpenTelemetry behav
 From a WildFly configuration perspective, the configuration looks like this:
 
 [code,xml]
------
+----
 <subsystem xmlns="urn:wildfly:opentelemetry:1.0"
    exporter="jaeger"
    endpoint="http://localhost:14250"
@@ -49,7 +49,7 @@ From a WildFly configuration perspective, the configuration looks like this:
    max-export-batch-size="512"
    export-timeout="30000"
    />
------
+----
 
 As it stands now, it seems to work really well. In designing and implementing what I have so far, I've discussed things internally with other Red Hat engineers in the observability space, as well as with some in the https://cloud-native.slack.com/archives/C014L2KCTE3[CNCF Slack channel], but more input would be extremely helpful.
 

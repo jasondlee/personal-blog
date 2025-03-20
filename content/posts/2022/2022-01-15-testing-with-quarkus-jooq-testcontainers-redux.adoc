@@ -15,7 +15,7 @@ In a link:/posts/2021/testing-with-quarkus-jooq-testcontainers.html[recent post]
 Technically, one could easily make use of Testcontainer's JDBC URL approach for starting the container. I could simply specify, say, `jdbc:tc:postgresql:14:///testdb` and let the container be started and ended automatically, and indeed that works. Sort of. If I specify that as `flyway.url`, the container is started and the migrations are run. If I then pass that to jOOQ's codegen, the container is started and... nothing is generated, as the schema went away when the container shut down after the flyway step. I can, of course, make sure that the container stays running, but that leaves the problem of my tests starting _another_ container and running migrations again. I want a single instance against which migrations are run, code is generated, and tests are run. To do that, we need to start the container manually, and to do _that_, we turn to `groovy-maven-plugin`:
 
 [source,xml]
------
+----
 <plugin>
     <groupId>org.codehaus.gmaven</groupId>
     <artifactId>groovy-maven-plugin</artifactId>
@@ -47,7 +47,7 @@ Technically, one could easily make use of Testcontainer's JDBC URL approach for 
         </dependency>
     </dependencies>
 </plugin>
------
+----
 
 The script is pretty simple:
 
@@ -60,7 +60,7 @@ Note that we place this first in the order for `generate-sources` lifecycle phas
 Next we want to set up the migration step, which is pretty straightforward:
 
 [source,xml]
------
+----
 <plugin>
     <groupId>org.flywaydb</groupId>
     <artifactId>flyway-maven-plugin</artifactId>
@@ -86,14 +86,14 @@ Next we want to set up the migration step, which is pretty straightforward:
         </locations>
     </configuration>
 </plugin>
------
+----
 
 Since we're using project properties, the url, username, and password do not need to be explicitly configured. All we need to do is provide the correct dependencies for the plugin and tell it where to find the migration scripts.
 
 Finally, we get to the code generation:
 
 [source,xml]
------
+----
 <plugin>
     <groupId>org.jooq</groupId>
     <artifactId>jooq-codegen-maven</artifactId>
@@ -134,7 +134,7 @@ Finally, we get to the code generation:
         </dependency>
     </dependencies>
 </plugin>
------
+----
 
 For those familiar with this process, this is pretty typical:
 
@@ -145,7 +145,7 @@ For those familiar with this process, this is pretty typical:
 There are two more plugins we need to configure: we need to add our generated code to the build, and we need to configure the test run, via Surefire, so that it knows where the database is. First, let's compile the generated source:
 
 [source,xml]
------
+----
 <plugin>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>build-helper-maven-plugin</artifactId>
@@ -164,12 +164,12 @@ There are two more plugins we need to configure: we need to add our generated co
         </execution>
     </executions>
 </plugin>
------
+----
 
 and configure the test:
 
 [source,xml]
------
+----
 <plugin>
     <artifactId>maven-surefire-plugin</artifactId>
     <version>$\{version.surefire-plugin}</version>
@@ -179,7 +179,7 @@ and configure the test:
         </systemProperties>
     </configuration>
 </plugin>
------
+----
 
 Here we simply set `quarkus.datasource.jdbc.url` to the computed value of `flyway.url`, which is the standard Quarkus property, so it will be picked up automatically.
 

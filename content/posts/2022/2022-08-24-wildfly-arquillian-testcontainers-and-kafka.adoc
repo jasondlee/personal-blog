@@ -20,7 +20,7 @@ While you can see the entire application in the https://github.com/jasondlee/wil
 
 .MyResource.java
 [source, java]
------
+----
 @Path("/")
 @RequestScoped
 public class MyResource {
@@ -33,13 +33,13 @@ public class MyResource {
                 .build();
     }
 }
------
+----
 
 This just takes a `MyModel` instance, passes it to the service, the passing along to the client what the service returns.
 
 .MyService.java
 [source,java]
------
+----
 @RequestScoped
 public class MyService {
 
@@ -53,13 +53,13 @@ public class MyService {
         return model;
     }
 }
------
+----
 
 In the service, we `@Inject` a MicroProfile Reactive Messaging `Emitter`, which is annotated with the name of the channel to which `MyModel` instances will be emitted. With that in hand, we send the model, and return the value. The real magic, if you can call it that, is in `MessageService`:
 
 .MessageService.java
 [source,java]
------
+----
 @Dependent
 public class MessageService {
     @Incoming("model")
@@ -77,7 +77,7 @@ public class MessageService {
         return KafkaMetadataUtil.writeOutgoingKafkaMetadata(m, md);
     }
 }
------
+----
 
 Things to note:
 
@@ -88,7 +88,7 @@ Now we need to set up the MP RM wiring for Kafka, which we do via MicroProfile C
 
 .META-INF/microprofile-config.properties
 [source,properties]
------
+----
 mp.messaging.connector.smallrye-kafka.bootstrap.servers=localhost:9092
 mp.messaging.connector.smallrye-kafka.group.id="watkdemo"
 
@@ -96,12 +96,12 @@ mp.messaging.outgoing.model-event.connector=smallrye-kafka
 mp.messaging.outgoing.model-event.topic=ModelEvent
 mp.messaging.outgoing.model-event.key.serializer=org.apache.kafka.common.serialization.StringSerializer
 mp.messaging.outgoing.model-event.value.serializer=org.apache.kafka.common.serialization.StringSerializer
------
+----
 
 In theory, once you start up Kafka and WildFly (as described in the https://github.com/jasondlee/wildfly-arquillian-testcontainers-kafka-demo/blob/master/README.md[README]), you should be able to deploy and test the application:
 
 [source, bash]
------
+----
 $ mvn package wildfly:deploy
 $ http -v POST :8080/wildfly-arq-testcontainers-kafka-1.0-SNAPSHOT \
     foo=blah bar=49152
@@ -132,7 +132,7 @@ Date: Tue, 23 Aug 2022 21:54:02 GMT
     "id": "f76acba6-08fd-4ff1-a357-c9d23d471154"
 }
 
------
+----
 
 Voilà! Now how do we test it?
 
@@ -142,7 +142,7 @@ I've skipped looking at the Maven POM so far, as it's pretty run-of-the-mill for
 
 .pom.xml
 [source, xml]
------
+----
 <properties>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
@@ -157,7 +157,7 @@ I've skipped looking at the Maven POM so far, as it's pretty run-of-the-mill for
 
     <wildfly.dir>$\{project.basedir}/target/wildfly-$\{version.wildfly}</wildfly.dir>
 </properties>
------
+----
 
 The interesting portion here is the version definitions. Feel free use Java 17 or later if you like. :)
 
@@ -166,7 +166,7 @@ The interesting portion here is the version definitions. Feel free use Java 17 o
 First step, let's set up our integration tests in a `profile`. This allows us to have normal unit testing as part of the build and save the integration tests for CI or an explicit manual run for faster feedback and build loops:
 
 [source,xml]
------
+----
 <profiles>
     <profile>
         <!-- An optional Arquillian testing profile that executes tests in your JBoss EAP instance.
@@ -202,7 +202,7 @@ First step, let's set up our integration tests in a `profile`. This allows us to
         </build>
     </profile>
 </profiles>
------
+----
 
 Here we're simply configuring the `maven-failsafe-plugin`, and setting the default goal to `verify` should this profile be activated (via `-Parq-managed` on the Maven command line).
 
@@ -214,7 +214,7 @@ To configure Arquillian, we need an `arquillian.xml` config file:
 
 .src/test/resources/arquillian.xml
 [source, xml]
------
+----
 <?xml version="1.0" encoding="UTF-8"?>
 <arquillian xmlns="http://jboss.org/schema/arquillian"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -231,7 +231,7 @@ To configure Arquillian, we need an `arquillian.xml` config file:
         </configuration>
     </container>
 </arquillian>
------
+----
 
 I'm a big fan of holding on the deployment archives that are created for Arquillian testing, so we configure that in the `engine` section.
 
@@ -241,7 +241,7 @@ In order to test on WildFly, we'll need a WildFly instance. Arquillian supports 
 First, we'll define a version in the `pluginManagement` section of the build. Declaring this in the main build allows us to use it deploy the application, as well as to provision a test server.
 
 [source, xml]
------
+----
 <build>
     <pluginManagement>
         <plugins>
@@ -253,13 +253,13 @@ First, we'll define a version in the `pluginManagement` section of the build. De
         </plugins>
     </pluginManagement>
 </build>
------
+----
 
 Next, in our `arq-managed` profile, we configure a use of the plugin to provision our server:
 
 .pom.xml
 [source, xml]
------
+----
 <plugin>
     <groupId>org.wildfly.plugins</groupId>
     <artifactId>wildfly-maven-plugin</artifactId>
@@ -291,7 +291,7 @@ Next, in our `arq-managed` profile, we configure a use of the plugin to provisio
         <provisioning-dir>$\{wildfly.dir}</provisioning-dir>
     </configuration>
 </plugin>
------
+----
 
 When the plugin executes, it will build a server based on version `$\{version.wildfly}`, and add support for only JAX-RS and MicroProfile Reactive Messaging with Kafka support (and any needed dependencies). This gives us a thinner, smaller server to work with.
 
@@ -310,7 +310,7 @@ We're going to use https://testcontainers.org[Testcontainers] to manage our Kafk
 
 .pom.xml
 [source,xml]
------
+----
 <plugin>
     <groupId>org.codehaus.gmaven</groupId>
     <artifactId>groovy-maven-plugin</artifactId>
@@ -340,7 +340,7 @@ We're going to use https://testcontainers.org[Testcontainers] to manage our Kafk
         </dependency>
     </dependencies>
 </plugin>
------
+----
 
 There's nothing particularly interesting here if you're familiar with Testcontainers, but here's a summary
 
@@ -360,7 +360,7 @@ Here's (most of) the test class:
 
 .MyServiceIT.java
 [source, java]
------
+----
 @RunWith(Arquillian.class)
 public class MyServiceIT {
 
@@ -401,7 +401,7 @@ public class MyServiceIT {
         assertTrue("Message not found in stream", found);
     }
 }
------
+----
 
 I don't want to spend too much time on Arquillian specifics, so we'll move fast here:
 
@@ -421,7 +421,7 @@ I'm not a Kafka expert, so please be kind. :) If you know a better way to do thi
 To send the request, we have this method, using Java 11's `HttpClient`:
 
 [source,java]
------
+----
 private void sendRestRequest() throws Exception {
     HttpRequest request = HttpRequest.newBuilder(url.toURI())
             .header("Accept", MediaType.APPLICATION_JSON)
@@ -432,12 +432,12 @@ private void sendRestRequest() throws Exception {
     HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
     assertEquals(response.statusCode(), 200);
 }
------
+----
 
 We should have all the pieces in place, so let's run the test. You should see something like this:
 
 [source,bash]
------
+----
 $ mvn -Parq-managed verify
 ...
 [INFO] Checking the system...
@@ -473,7 +473,7 @@ Aug 24, 2022 12:49:20 PM org.jboss.as.arquillian.container.CommonManagedDeployab
 12:49:26,871 INFO  [org.apache.kafka.clients.producer.KafkaProducer] (smallrye-kafka-producer-thread-0) [Producer clientId=kafka-producer-model-event] Closing the Kafka producer with timeoutMillis = 10000 ms.
 ...
 [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.426 s - in com.steeplesoft.watkdemo.MyServiceIT
------
+----
 
 In that brief log excerpt, we can see
 

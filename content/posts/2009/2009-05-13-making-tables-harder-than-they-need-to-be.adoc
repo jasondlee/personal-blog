@@ -15,7 +15,7 @@ I know you're not supposed to do this, but sometimes it's just easier.  Sometime
 Typically, my form may look something like this:
 
 [source,html,linenums]
------
+----
 <table>
 <tr>
     <td>#\{msg.label1}</td>
@@ -27,22 +27,22 @@ Typically, my form may look something like this:
 </tr>
 // ad naseum
 </table>
------
+----
 
 JSF, though, has a nicer approach, which David used in his article: `h:panelGrid`.  This component will take each child component and put it in a table.  The number of columns in the table is controlled by the `columns` attribute (of course, there is http://java.sun.com/javaee/javaserverfaces/1.2/docs/tlddocs/h/panelGrid.html[more] to this component than just this option).  My table, then would look like this:
 
 [source,xml,linenums]
------
+----
 <h:panelGrid columns="2">
     #\{msg.label1} <h:inputText value="#\{myBean.field1}"/>
     #\{msg.label2} <h:inputText value="#\{myBean.field2}"/>
 </h:panelGrid>
------
+----
 
 The component then handles the creation of the table, rows, and cells automagically for me.  Following David's example, I put the label and input field on the same row, as that helps me visualize the resulting table better, but it's not necessary.  If you need more than one component in a cell, you simply wrap those in a `h:panelGroup`:
 
 [source,xml,linenums]
------
+----
 <h:panelGrid columns="2">
     #\{msg.label1}
     <h:panelGroup>
@@ -57,6 +57,6 @@ The component then handles the creation of the table, rows, and cells automagica
         #\{msg.helpText2}
     </h:panelGroup>
 </h:panelGrid>
------
+----
 
 Fancy!  Now I need to give some thought to a component that will help layout forms The Right Way!

@@ -15,7 +15,7 @@ A question that often comes up in when looking through JSF <a target="blank" hre
 The first step, of course, is to download Acegi, and integrate with the web application.  Once the jars have been installed in `WEB-INF/lib`, `web.xml` needs to be edited:
 
 [source,xml,linenums]
------
+----
 <context-param>
 	<param-name>contextConfigLocation</param-name>
 	<param-value>/WEB-INF/applicationContext-acegi.xml,</param-value>
@@ -48,12 +48,12 @@ The first step, of course, is to download Acegi, and integrate with the web appl
 	<dispatcher>FORWARD</dispatcher>
 	<dispatcher>REQUEST</dispatcher>
 </filter-mapping>
------
+----
 
 That's the easy part.  The Acegi configuration, applicationContext-acegi.xml in this example, is where the difficulty comes in:
 
 [source,xml,linenums]
------
+----
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
@@ -169,7 +169,7 @@ That's the easy part.  The Acegi configuration, applicationContext-acegi.xml in 
     </bean>
     <bean id="roleVoter" class="org.acegisecurity.vote.RoleVoter" />
 </beans>
------
+----
 
 I'm not Acegi expert, and I make no claims to understand what all is going on here, but I have included the whole config file as I found it difficult (at the time, at least) to find a complete example that uses the Acegi 1.x package and class names.  I must also note that I've done my best to back out IEC-specific changes, so there may still remain same changes that need to be made to get this to work in a "clean" environment (read as:  this should work, but it may not.  If you have to make changes, please let me know and I'll fix my example).
 
@@ -178,7 +178,7 @@ Once Acegi is setup and configured, we can start protecting resources.  The conf
 Here's an example from an app we have in poroduction.  In this particular snippet, if the user has the correct permissions, we allow him to approve a request or resubmit the order:
 
 [source,xml,linenums]
------
+----
 <acegijsf:authorize ifAllGranted="ROLE_OrderManager]
     <h:form id="requestForm" rendered="#\{dwmoForm.isRequest == true}"
         style="display: inline">
@@ -189,7 +189,7 @@ Here's an example from an app we have in poroduction.  In this particular snippe
         value="Resubmit Order" onclick="return resubmitOrder();"
         style="display: inline; margin: 0px; padding: 0px;"/>
 </acegijsf:authorize>
------
+----
 
 And that's all there is to it.  Once you get it setup, it's really not too difficult to work with.
 

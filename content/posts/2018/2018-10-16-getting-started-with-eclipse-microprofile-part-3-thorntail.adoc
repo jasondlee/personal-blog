@@ -22,7 +22,7 @@ To get started, we need to create a new project, and add a few odds and ends to 
 required changes seem to be much smaller and simpler than those required by Payara Micro:
 
 [source,xml]
------
+----
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -94,7 +94,7 @@ required changes seem to be much smaller and simpler than those required by Paya
         </plugins>
     </build>
 </project>
------
+----
 
 I decided to include the entire POM, as it's really rather small. We import the BOM in `dependencyManagement`, add one
 `dependency` to pull in Thorntail, one for our application, and one (*ONE*!) for the Arquillian tests. Likewise, we have
@@ -113,7 +113,7 @@ I could probably define those in another module and import them, but it's not th
 When I run `mvn install`, I see the following in the `target` directory:
 
 [source,bash]
------
+----
 #ll -h target/
  total 104M
  drwxr-xr-x 1 jdlee jdlee    0 Oct 15 13:31 generated-test-sources
@@ -126,28 +126,28 @@ When I run `mvn install`, I see the following in the `target` directory:
  -rw-r--r-- 1 jdlee jdlee  27M Oct 15 13:32 thorntail-1.0-SNAPSHOT.war.original
  -rw-r--r-- 1 jdlee jdlee 1.9K Oct 15 13:32 thorntail-1.0-SNAPSHOT-classes.jar
  -rw-r--r-- 1 jdlee jdlee  74M Oct 15 13:32 thorntail-1.0-SNAPSHOT-thorntail.jar
------
+----
 
 And I can start my application using the `-thorntail.jar` uberjar:
 
 [source,bash]
------
+----
 # java -jar target/thorntail-1.0-SNAPSHOT-thorntail.jar
 ...
 2018-10-15 13:37:15,328 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 6) WFLYUT0021: Registered web context: '/' for server 'default-server'
 2018-10-15 13:37:15,364 INFO  [org.jboss.as.server] (main) WFLYSRV0010: Deployed "thorntail-1.0-SNAPSHOT.war" (runtime-name : "thorntail-1.0-SNAPSHOT.war")
 2018-10-15 13:37:15,371 INFO  [org.wildfly.swarm] (main) THORN99999: Thorntail is Ready
------
+----
 
 Manual testing works just the same as it did with Payara Micro:
 
 [source,bash]
------
+----
 # curl http://localhost:8080
 Hello, world
 # curl http://localhost:8080/?name=Thorntail
 Hello, Thorntail
------
+----
 
 With that, we've finished another simple MicroProfile deployment with zero changes to our application, and no container-specific
 code, but we'll circle back to that idea when we wrap up the series.

@@ -34,7 +34,7 @@ There is one more piece that awestruct provides that JBake does: deployment.  Fo
 control/hide behind a profile:
 
 [source,xml]
------
+----
     <profiles>
         <profile>
             <id>deploy</id>
@@ -87,7 +87,7 @@ control/hide behind a profile:
             </build>
         </profile>
     </profiles>
------
+----
 
 It was a bit more work than I'd anticipated, but, in the end, I think it's been worth it. The only change in the site itself
 is the feed link has change from feed.atom to link:/feed.xml[feed.xml].  If you happen to see other

@@ -14,37 +14,37 @@ In previous posts, I've shown various ways to manage a GlassFish 3.1 server via 
 
 If you're familiar with the management interface, you should be immediately comfortable with the monitoring interface.  To access it, you use http://localhost:4848/monitoring/domain[http://localhost:4848/monitoring/domain].  Just like the management interface, you can request HTML, XML, or JSON.  The simplest way to change the return type is to append an extension of the desired type.
 [source,bash,linenums]
------
+----
 $ curl http://localhost:4848/monitoring/domain.html
 $ curl http://localhost:4848/monitoring/domain.xml
 $ curl http://localhost:4848/monitoring/domain.json
------
+----
 
-Similarly, you can use the `Accept` header as well: 
+Similarly, you can use the `Accept` header as well:
 
 [source,bash,linenums]
------
+----
 $ curl -H "Accept: text/html" http://localhost:4848/monitoring/domain
 $ curl -H "Accept: application/xml" http://localhost:4848/monitoring/domain
 $ curl -H "Accept: application/json" http://localhost:4848/monitoring/domain
------
+----
 
-There's a good chance that at this point, many of you are getting a response that looks like this (in JSON): 
+There's a good chance that at this point, many of you are getting a response that looks like this (in JSON):
 [source,js,linenums]
------
+----
 {
     "message": "",
     "command": "Monitoring Data",
     "exit_code": "SUCCESS"
 }
------
+----
 
 I'll admit that's not a very helpful message, but the issue here is that while monitoring is turned on by default, the monitoring levels are set to `OFF` by default.  You can change that a few different ways.  Perhaps the two easiest are via the command-line (you can use `asadmin set`, but we'll not look at that here):
 
 [source,bash,linenums]
------
+----
 ...
------
+----
 
 or via the Admin Console:
 
@@ -55,7 +55,7 @@ Select the modules you're interested in (if you're just experimenting, it might 
 Now that we know _how_ to get the data, what _kind_ of data can get?  Fortunately, the system will help you with that:
 
 [source,bash,linenums]
------
+----
 $ curl -H "Accept: application/json" http://localhost:4848/monitoring/domain
 {
     "message": "",
@@ -66,12 +66,12 @@ $ curl -H "Accept: application/json" http://localhost:4848/monitoring/domain
         "childResources": {"server": "http:\/\/localhost:4848\/monitoring\/domain\/server"}
     }
 }
------
+----
 
 If you just installed GlassFish 3.1, you'll see the above.  If, however, you have a more complex setup (cluster, standalone instances, etc.), you might see something like this (two clustered instances, one standalone instance,  and the DAS):
 
 [source,bash,linenums]
------
+----
 $ curl -H "Accept: application/json" http://localhost:4848/monitoring/domain
 {
     "message": "",
@@ -87,14 +87,14 @@ $ curl -H "Accept: application/json" http://localhost:4848/monitoring/domain
         }
     }
 }
------
+----
 
 If you do have extra instances like this, you will need to set the monitoring levels as desired in the appropriate configuration.
 
 The `server` instance (also known as the DAS), has these child elements:
 
 [source,bash,linenums]
------
+----
 $ curl -H "Accept: application/json" http://localhost:4848/monitoring/domain/server
 {
     "message": "",
@@ -119,14 +119,14 @@ $ curl -H "Accept: application/json" http://localhost:4848/monitoring/domain/ser
         }
     }
 }
------
+----
 
 Note that we can see the server start time (displayed in Unix time. This server was started on Sun Feb 27 2011 14:16:19 GMT-0600 (CST)) and how long the server has been up (2639132 milliseconds, or about 44 minutes).  Notice under `childResources` the various classes of additional information.  The easiest way to examine those is to point your browser at http://localhost:4848/monitoring/domain/server[].  Go ahead and poke around. You can't hurt anything. : )
 
 While I won't take the time to examine the tree exhaustively, for those that can't examine a running GlassFish instance right now, let's take a look at the information on memory the server gives us:
 
 [source,bash,linenums]
------
+----
 $ curl -H "Accept: application/json" http://localhost:4848/monitoring/domain/server/jvm/memory
 {
     "message": "",
@@ -210,7 +210,7 @@ $ curl -H "Accept: application/json" http://localhost:4848/monitoring/domain/ser
         "childResources": {}
     }
 }
------
+----
 
 In English, this shows us:
 

@@ -23,7 +23,7 @@ _*A quick note on navigating in the emulator*_:  To go back, you press ESC.  To 
 
 So now, one way or another, you have your VM setup, but how do you integrate that with your tests?  While Maven's XML doesn't make it easy, judicious as of antrun saves the day.  Here's a sample POM:
 [source,xml,linenums]
------
+----
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -130,7 +130,7 @@ So now, one way or another, you have your VM setup, but how do you integrate tha
         </plugins>
     </build>
 </project>
------
+----
 
 Scroll down to about line 40 or so.  Here, there's an antrun execution block that starts the VirtualBox VM.  In my case, it's called "Android", so you'll want to change that as appropriate.  Ideally, that would be a property so that you can target different VMs for different Android versions.  I'll leave that as an exercise for the reader. : )  First up, we kill the adb server.  This might be overkill (no pun intended. Honest! : ), but I've had issues where adb was certain it was already connected to the device in situations where I run the tests over and over.  Next, we start the VM, and then we wait for it to listen on port 5555.  The startvm command finishes pretty quickly, but that doesn't mean we're ready to deploy our test app yet, so wait.  Finally, we tell adb to connect to our VM.  From there, it's the standard Maven Android Plugin.After our tests are done, we tell VirtualBox to shut down our VM.
 

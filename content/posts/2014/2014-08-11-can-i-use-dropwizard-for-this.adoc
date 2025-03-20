@@ -15,7 +15,7 @@ Jason Lee
 
 I've been toying with using DropWizard as my... deployment platform for a personal project, but I need/want JAX-RS 2 and CDI, which is a problem for the the stable DW. There is a branch that is migrating to JAX-RS 2 (and Jersey 2.9), and it sort of works, but trying a simple injection is causing a failure I can't quite figure out:
 
------
+----
 Caused by: A MultiException has 1 exceptions.  They are:
 1. org.glassfish.hk2.api.UnsatisfiedDependencyException: There was no object available for injection at Injectee(requiredType=SayHelloService,parent=HelloWorldResource,qualifiers={}),position=-1,optional=false,self=false,unqualified=null,288169102)
 
@@ -41,12 +41,12 @@ Caused by: A MultiException has 1 exceptions.  They are:
     ... 36 more
 Caused by: org.glassfish.hk2.api.UnsatisfiedDependencyException: There was no object available for injection at Injectee(requiredType=SayHelloService,parent=HelloWorldResource,qualifiers={}),position=-1,optional=false,self=false,unqualified=null,288169102)
     ... 55 more
------
+----
 
 If I create the Weld runtime and request the beans specifically, I get to good objects (instances of both A and B, with B having an injected instance of A), but once I tell DW to fire things, the app dies:
 
 [source,java,linenums]
------
+----
         Weld weld = new Weld();
         WeldContainer container = weld.initialize();
         container.instance().select(SayHelloService.class).get();
@@ -59,7 +59,7 @@ If I create the Weld runtime and request the beans specifically, I get to good o
                 = new TemplateHealthCheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);
         environment.jersey().register(resource);
------
+----
 
 It seems, then, my deployment environment will be, at least for now, a Java EE app server. They're small enough these days that it really shouldn't matter. I was just curious to see if DW might be viable for me, and it appears that the answer is "not yet".
 

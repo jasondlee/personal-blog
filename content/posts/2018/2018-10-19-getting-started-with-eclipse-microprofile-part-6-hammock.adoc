@@ -24,7 +24,7 @@ I'm more than happy to be proven wrong). All that said, it seems to be a great (
 As usual, we'll start with our POM:
 
 [source,xml]
------
+----
 <packaging>jar</packaging>
 
 <properties>
@@ -43,7 +43,7 @@ As usual, we'll start with our POM:
         <version>$\{project.version}</version>
     </dependency>
 </dependencies>
------
+----
 
 The eagle-eyed among us may notice something peculiar: our packaging is `jar`. In large part, this doesn't really affect
 how the app is built, but it's an interesting difference. We include *one* dependency to pull in Hammock's MicroProfile
@@ -51,7 +51,7 @@ distribution, and we're off the to races. Almost. Like other demos, most of the 
 build plugin:
 
 [source,xml]
------
+----
 <plugin>
     <groupId>com.github.chrisdchristo</groupId>
     <artifactId>capsule-maven-plugin</artifactId>
@@ -67,7 +67,7 @@ build plugin:
         </execution>
     </executions>
 </plugin>
------
+----
 
 Here, at the suggestion of the https://hammock-project.github.io/guides/gettingstarted.html[Hammock documentation],
 we're using the Capsule Maven plugin to build a fat jar, specifying `ws.ament.hammock.Bootstrap` as our application's
@@ -75,7 +75,7 @@ entry point. This class takes care of starting the CDI container (as well as int
 leaves us with a running service ready to answer calls:
 
 [source,bash]
------
+----
 # mvn install
 ...
 # java -jar target/hammock-1.0-SNAPSHOT-capsule.jar
@@ -86,7 +86,7 @@ leaves us with a running service ready to answer calls:
 Hello, world
 # curl http://localhost:8080/?name=Hammock
 Hello, Hammock
------
+----
 
 Beautiful, no?
 
@@ -94,7 +94,7 @@ Testing here is a bit different as well. I was unable to find any sort of Arquil
 but that doesn't mean it's not testable:
 
 [source,java]
------
+----
 public class HammockTest {
     private static Bootstrapper bootstrapper;
     @BeforeClass
@@ -131,7 +131,7 @@ public class HammockTest {
         }
     }
 }
------
+----
 
 In our `@BeforeClass` and `@AfterClass` methods, we simply start and stop the server programmatically. The tests look
 exactly like the ones we've seen prior.

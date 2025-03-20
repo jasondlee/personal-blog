@@ -23,7 +23,7 @@ Kotlin syntax. Also being from JetBrains, IDE support is first rate. :) Before w
 the actual Kotlin, let's get some minor details out of the way.  First, the pom.xml:
 
 [source,xml]
------
+----
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -133,14 +133,14 @@ the actual Kotlin, let's get some minor details out of the way.  First, the pom.
         </plugins>
     </build>
 </project>
------
+----
 
 Pretty standard with the exception of the `kotlin-maven-plugin` and Kotlin runtime
 configuration and related repository entries. You'll need one for the plugin,
 and another for runtime libs. Next, the Facelets page:
 
 [source,xhtml]
------
+----
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -158,19 +158,19 @@ and another for runtime libs. Next, the Facelets page:
         </h:form>
     </h:body>
 </html>
------
+----
 
 Nothing unusual there. And now, the moment we've all been waiting for: The Kotlin-based
 managed bean:
 
 [source,java]
------
+----
 @Named
 @SessionScoped
 class MyBean : Serializable {
     var text = "My Text"
 }
------
+----
 
 That's it. It's a really dumb bean, but here's an explanation:
 

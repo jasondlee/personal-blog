@@ -23,7 +23,7 @@ in a project whose `packaging` is either `pom` or `maven-plugin` (others may be 
 At any rate, here is the `components.xml` which accomplishes my goal (no pun intended ;) for the http://docs.ingenieux.com.br/project/jbake/[JBake Maven plugin]:
 
 [source,xml]
------
+----
 <component-set>
     <components>
         <component>
@@ -64,7 +64,7 @@ At any rate, here is the `components.xml` which accomplishes my goal (no pun int
         </component>
     </components>
 </component-set>
------
+----
 <1> `role-hint` defines the new packaging type
 <2> We're overriding the `default` and `site` lifecycles, providing goals only for the relevant phases.
 <3> Note how the desired goal is specified.
@@ -76,7 +76,7 @@ site is generated in `target/$\{project.artifactId}` (by default).
 The plugin build does, though, need one tweak:
 
 [source,xml]
------
+----
     <build>
         <resources>
             <resource>
@@ -85,7 +85,7 @@ The plugin build does, though, need one tweak:
             </resource>
         </resources>
     </build>
------
+----
 
 This allows us to update the project metadata without having to edit `components.xml`. Bump the version?
 Change the `artifactId`? No problem, thanks to resource filtering.
@@ -95,7 +95,7 @@ https://bitbucket.org/jdlee/steeplesoft-blog/src/609502f0610a86236b33b9bfcf7fbc7
 this:
 
 [source,xml]
------
+----
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -112,7 +112,7 @@ this:
                 <version>0.0.10-SNAPSHOT</version>
                 <extensions>true</extensions> <2>
 <!-- ... -->
------
+----
 
 Note that we've changed the packaging type now to `jbake` `(1)`, and we've add the plugin to the build
 with `extensions` set to true `(2)`. This is very important, as I understand it, as it instructs Maven to load the plugin

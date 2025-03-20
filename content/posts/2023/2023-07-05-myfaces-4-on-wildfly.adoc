@@ -24,19 +24,19 @@ I have no hard data on this, but I would imagine the many, if not most, WildFly 
 It is possible, however, to build your very own stripped-down server using the same tool we do: https://docs.wildfly.org/galleon/[Galleon]. Again, I won't dive too deep here, but to build a server that exposes Jakarta REST endpoints, but doesn't include, say, EJB, you could execute something like this:
 
 [source,bash]
------
+----
 $ galleon.sh install wildfly:current \
     --dir=my-wildfly-server \
     --layers=jaxrs-server
 $ my-wildfly-server/bin/standalone.sh
------
+----
 
 Pretty cool, but why is this important? Well, prior to WildFly 29, in order to install a given feature pack, you _had_ to provision your server using Galleon. Perhaps not a very big deal, but if you have an existing server, then discover a feature pack you'd like to try, you had to provision a new server, migrate configs, etc. Not a lot of fun, though I could be overstating that. Regardless, as of 29, you can now install a given feature pack into an exising WildFly installation. To demonstrate that, we'll install MyFaces support into an existing provisioning of WildFly 29.
 
 To demo this, we'll use the just released https://github.com/wildfly/wildfly/releases/download/29.0.0.Beta1/wildfly-29.0.0.Beta1.zip[WildFly 29 Beta]:
 
 [source,bash]
------
+----
 $ wget https://github.com/wildfly/wildfly/releases/download/29.0.0.Beta1/wildfly-29.0.0.Beta1.zip
 $ unzip wildfly-29.0.0.Beta1.zip
 $ galleon.sh install org.wildfly:wildfly-myfaces-feature-pack:1.0.0-SNAPSHOT \
@@ -46,13 +46,13 @@ $ galleon.sh install org.wildfly:wildfly-myfaces-feature-pack:1.0.0-SNAPSHOT \
 $ grep myfaces wildfly-29.0.0.Beta1/standalone/configuration/standalone.xml
         <subsystem xmlns="urn:jboss:domain:jsf:1.1" default-jsf-impl-slot="myfaces"/>
 $ wildfly-29.0.0.Beta1/bin/standalone.sh
------
+----
 
 We can now deploy any Jakarta Faces application, and you should see something like this:
 
 [source]
------
+----
 [org.apache.myfaces.webapp.FacesInitializerImpl] (ServerService Thread Pool -- 84) MyFaces Core has started, it took [218] ms.
------
+----
 
 And there you have it. A quick introduction to a couple of new changes coming WildFly soon, and a very brief introduction to a very powerful related tool. If you're a MyFaces user, please try out the feature pack and let us know if you have any issues with the integration!

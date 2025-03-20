@@ -20,7 +20,7 @@ trying to get CDI working with Kotlin.
 In theory, it should be pretty straightforward:
 
 [source,java]
------
+----
 @ApplicationScoped
 class DatabaseService  {
 
@@ -36,7 +36,7 @@ class DatabaseService  {
         return em
     }
 }
------
+----
 
 Yes, that's a really boring service, and, yes, I'm doing something dumb in exposing
 the `EntityManager` that way, but I'm just experimenting at the moment: can I expose a
@@ -53,7 +53,7 @@ this limitation (which is a JVM-level issue, for what it's worth), was to mark e
 `open`:
 
 [source,java]
------
+----
 @ApplicationScoped
 open class DatabaseServiceImpl  {
 
@@ -69,7 +69,7 @@ open class DatabaseServiceImpl  {
         return em
     }
 }
------
+----
 
 That works, but it's kind of ugly. If you have a large bean ("Split it up!", some will likely
 shout, but that's not always possible, right? :), this can become very cumbersome very quickly,
@@ -78,7 +78,7 @@ is to define an `interface`, implement that on your bean, and use the `interface
 injected type, rather than the class:
 
 [source,java]
------
+----
 interface DatabaseService {
     fun getEntityManager() : EntityManager
 }
@@ -103,7 +103,7 @@ class MyOtherClass {
     @Inject
     lateinit var service : DatabaseService
 }
------
+----
 
 Now I have a nice `interface` to provide the usual level of abstraction, and Weld/CDI
 can make the proxies needed to expose this class as a CDI bean.

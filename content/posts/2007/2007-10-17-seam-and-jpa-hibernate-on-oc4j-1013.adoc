@@ -26,9 +26,9 @@ While I was at it, I thought I'd reconstruct my build environment using Maven 2.
 [[parent"]]
 /pom.xml:
 [source,xml,linenums]
------
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+----
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.steeplesoft</groupId>
@@ -81,12 +81,12 @@ While I was at it, I thought I'd reconstruct my build environment using Maven 2.
         </plugins>
     </build>
 </project>
------
+----
 
 [[ejb]]
 ejb/pom.xml:
 [source,xml,linenums]
------
+----
 <project>
     <parent>
         <groupId>com.steeplesoft</groupId>
@@ -147,9 +147,9 @@ ejb/pom.xml:
         <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>1.8.0.1</version>      
-            <scope>test</scope>   
-        </dependency>   
+            <version>1.8.0.1</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
@@ -185,12 +185,12 @@ ejb/pom.xml:
         </dependency>
     </dependencies>
 </project>
------
+----
 
 [[webapp]]
 web/pom.xml:
 [source,xml,linenums]
------
+----
 <project>
     <parent>
         <groupId>com.steeplesoft</groupId>
@@ -351,12 +351,12 @@ web/pom.xml:
         </dependency>
     </dependencies>
 </project>
------
+----
 
 [[ear]]
 ear/pom.xml:
 [source,xml,linenums]
------
+----
 <project>
     <parent>
         <groupId>com.steeplesoft</groupId>
@@ -399,19 +399,19 @@ ear/pom.xml:
         </plugins>
     </build>
 </project>
------
+----
 
 It should be noted that this is my first real project with Maven.  There are likely things done in these POMs that don't make sense.  Feel free to correct me, but please be kind. :)
 
 Note that I'm using Hibernate, and not Toplink Essentials, even though I'm deploying to an Oracle application server.  I tried to use TLE -- I really did -- but I just couldn't get it work reliably.  Hibernate did, so it won.
 
-Probably the biggest issue was figuring out what Seam and Hibernate need.  I started with seam-gen and create a <i>really</i> basic Seam app.  I ripped out all of the "extraneous" things, like security, drools, persistence, etc., and deployed the app to GlassFish to make sure it worked.  Once I got it working there, I deployed to OC4J, looked to see which class was missing, and added it to the POM.  Lather.  Rinse. Repeat.  
+Probably the biggest issue was figuring out what Seam and Hibernate need.  I started with seam-gen and create a <i>really</i> basic Seam app.  I ripped out all of the "extraneous" things, like security, drools, persistence, etc., and deployed the app to GlassFish to make sure it worked.  Once I got it working there, I deployed to OC4J, looked to see which class was missing, and added it to the POM.  Lather.  Rinse. Repeat.
 
 [[jpa]]
 The persistence configuration is pretty basic, but I did have to make one change (that I'm not sure I like) to make DB access not blow up:
 
 [source,xml,linenums]
------
+----
 <persistence version="1.0"
 	xmlns="http://java.sun.com/xml/ns/persistence"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -426,16 +426,16 @@ The persistence configuration is pretty basic, but I did have to make one change
 		</properties>
 	</persistence-unit>
 </persistence>
------
+----
 
 [[orion]]
 There is one extra configuration step you will need if you are planning on using the JSF 1.2 reference implementation (which the Seam developers recommend, and I wholeheartedly do as well ;).  Oracle ships its own XML parser -- an artifact that, I'm guessing, predates the inclusion of such a library in the JDK.  Ordinarily, this likely would not be a problem, except that, starting with 1.2_05, the JSF RI depends on JAXP 1.3; OC4J supports only http://www.oracle.com/technology/tech/java/oc4j/10131/OracleAS-NF-10131.pdf[JAXP 1.2].  Since I'm dpeloying to a JDK 5 environment, I don't need to bundle the library with my app, but I do need to tell OC4J not to use its own parser.  This is done with orion-application.xml, which I placed in `ear/src/main/application/META-INF`:
 
 [source,xml,linenums]
------
-<orion-application 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:noNamespaceSchemaLocation="http://xmlns.oracle.com/oracleas/schema/orion-application-10_0.xsd" 
+----
+<orion-application
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://xmlns.oracle.com/oracleas/schema/orion-application-10_0.xsd"
     deployment-version="10.1.3.1.0" default-data-source="jdbc/OracleDS" component-classification="external"
     schema-major-version="10" schema-minor-version="0" >
     <imported-shared-libraries>
@@ -445,14 +445,14 @@ There is one extra configuration step you will need if you are planning on using
         <remove-inherited name="oracle.xml.security"/>
     </imported-shared-libraries>
 </orion-application>
------
+----
 
 This file tells OC4J not to import into my application its Toplink, persistence, XML, and XML security libraries.  The other three libraries may not need to be listed, but they were added at one point in my experimentation and do not appear to be hurting anything, so I have left them in.
 
 Debu Panda http://debupanda.blogspot.com/2007/01/using-hibernate-as-pluggable-ejb-3-jpa.html[shows] how to use Hibernate as a pluggable EJB3 JPA provider by configuring Hibernate as a shared library and importing that library into your application via orion-application.xml, but I'm not a real big fan of that approach, as it requires a change to the server, and it has been my experience that administrators are loathe to do things like that.  Using the POMs and dependencies above, Hibernate is bundled with the application and works as the JPA provider without server alterations, so that's a much more palatable approach in my books.  Debu's way <i>does</i> work, though, if you prefer that.  If you choose to go that route, make sure you mark the Hibernate library in your POM as being provided:
 
 [source,xml,linenums]
------
+----
 <dependency>
     <groupId>org.hibernate</groupId>
     <artifactId>hibernate-entitymanager</artifactId>
@@ -465,7 +465,7 @@ Debu Panda http://debupanda.blogspot.com/2007/01/using-hibernate-as-pluggable-ej
     <version>3.3.0.GA</version>
     <scope>provided</scope>
 </dependency>
------
+----
 
 That should be all there is to it (assuming I did not forget to copy something).  If you have any issues with any of this, or, perhaps, some cleanups that can be made, I'd certainly love to hear your feedback.
 

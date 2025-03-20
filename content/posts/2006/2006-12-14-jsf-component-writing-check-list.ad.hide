@@ -25,10 +25,10 @@ I've been doing a fair amount of JSF component writing of late, and, invariably,
 <li>Define the following properties, changing the the package `com.foo` to your package, and the component name, `Foo` to the name of your component:</li>
 </ul>
 [source,java,linenums]
------
+----
 public static final String COMPONENT_TYPE = "com.foo.Foo";
 public static final String RENDERER_TYPE = "com.foo.FooRenderer";
------
+----
 
 <ul>
 <li>Define `public String getFamily () { return COMPONENT_TYPE; }`
@@ -37,7 +37,7 @@ public static final String RENDERER_TYPE = "com.foo.FooRenderer";
 </ul>
 For 1.1:
 [source,java,linenums]
------
+----
     protected String bar;
     public String getBar() {
         if (null != this.bar) {
@@ -46,11 +46,11 @@ For 1.1:
         ValueBinding _vb = getValueBinding("bar");
         return (_vb != null) ? (bar) _vb.getValue(getFacesContext()) : null;
     }
------
+----
 
 For 1.2:
 [source,java,linenums]
------
+----
     protected String bar;
     public String getBar() {
         if (null != this.bar) {
@@ -59,13 +59,13 @@ For 1.2:
         ValueExpression _ve = getValueExpression("bar");
         return (_ve != null) ? (String) _ve.getValue(getFacesContext().getELContext()) : null;
     }
------
+----
 
 <ul>
 <li>Write the state saving and restoring code:</li>
 </ul>
 [source,java,linenums]
------
+----
     private Object[] _state = null;
     public void restoreState(FacesContext _context, Object _state) {
         this._state = (Object[]) _state;
@@ -80,7 +80,7 @@ For 1.2:
         _state[1] = bar;
         return _state;
     }
------
+----
 
 <a name="renderer"></a><h3>Write the `Renderer` Class</h3>
 <ul>
@@ -96,7 +96,7 @@ For 1.1
 <li>Define the following methods (where `Foo` is your component class):</li>
 </ul>
 [source,java,linenums]
------
+----
     protected String bar;
     public String getRendererType() {
         return Foo.RENDERER_TYPE;
@@ -107,7 +107,7 @@ For 1.1
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
         if (!(component instanceof Foo)) {
-            throw new IllegalStateException("Component " + component.toString() + 
+            throw new IllegalStateException("Component " + component.toString() +
                 " not expected type.  Expected: com.foo.Foo.  Perhaps you're missing a tag?");
         }
         Foo foo = (Foo)component;
@@ -120,7 +120,7 @@ For 1.1
             }
         }
     }
------
+----
 
 For 1.2
 <ul>
@@ -129,7 +129,7 @@ For 1.2
 <li>Define these methods (where Foo is your component class):</li>
 </ul>
 [source,java,linenums]
------
+----
     protected ValueExpression bar;
     public String getComponentType() {
         return Foo.COMPONENT_TYPE;
@@ -146,19 +146,19 @@ For 1.2
         try {
             foo = (Foo) component;
         } catch (ClassCastException cce) {
-            throw new IllegalStateException("Component " + component.toString() + 
+            throw new IllegalStateException("Component " + component.toString() +
                 " not expected type.  Expected: com.foo.Foo.  Perhaps you're missing a tag?");
         }
         if (bar != null) {
             foo.setValueExpression("bar", bar);
         }
     }
------
+----
 </li>
 <a name="tld"></a><h3>Write the Tag Library Description (.tld)</h3>
 For 1.1:
 [source,xml,linenums]
------
+----
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
 <taglib>

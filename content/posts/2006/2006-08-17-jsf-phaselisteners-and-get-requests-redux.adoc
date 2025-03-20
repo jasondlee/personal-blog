@@ -29,7 +29,7 @@ He added, "So your [pretty URL PhaseListener] adds your custom ViewRoot to the C
 That's no good.  His suggested fix is to extend HttpServletRequestWrapper, override getPathInfo(), and set that on the ServletContext.  That may sound scary, but it's actually not too bad.  First, let's look at the HttpServletRequestWrapper:
 
 [source,java,linenums]
------
+----
 class PrettyUrlRequestWrapper extends HttpServletRequestWrapper {
 	private String template;
 	@Override
@@ -43,25 +43,25 @@ class PrettyUrlRequestWrapper extends HttpServletRequestWrapper {
 		this.template = template;
 	}
 }
------
+----
 
 I added this as a private class in the same source file as the PrettyUrlPhaseListener.  I then altered the PL to do, for example:
 
 [source,java,linenums]
------
+----
 PrettyUrlRequestWrapper wrapper = new PrettyUrlRequestWrapper(request);
 wrapper.setTemplateName("/product-view-" + tab + suffix);
 context.getExternalContext().setRequest(wrapper);
------
+----
 
-instead of 
+instead of
 [source,java,linenums]
------
+----
 UIViewRoot view = context.getApplication().getViewHandler()
     .createView(context,"/product-view-" + tab + suffix);
 context.setViewRoot(view);
------
+----
 
-where `suffix` is `context.getExternalContext(). getInitParameter ("javax.faces.DEFAULT_SUFFIX");` and `tab` is an application-specific parameter (the "tab" to display in the view).  The end result of all of this is that I can hit the URI `/Gopher/product/FXY02/details` and the PhaseListener (using logic in the other post and not displayed here) sets the state on the backing bean and "tricks" JSF into displaying "product-view-details.xhtml" _and_ allows `<h:commandButton />` to function as expected. 
+where `suffix` is `context.getExternalContext(). getInitParameter ("javax.faces.DEFAULT_SUFFIX");` and `tab` is an application-specific parameter (the "tab" to display in the view).  The end result of all of this is that I can hit the URI `/Gopher/product/FXY02/details` and the PhaseListener (using logic in the other post and not displayed here) sets the state on the backing bean and "tricks" JSF into displaying "product-view-details.xhtml" _and_ allows `<h:commandButton />` to function as expected.
 
 To clarify the problem, Ryan also noted (via IRC, so please forgive the odd syntax), "First request to prettyURL -> RestoreViewPhase (UIViewRoot already exists) -> RenderResponse.  Click the button to initiate a post-back.  The [pretty URL PhaseListener] detects the URL, and creates a new view which means the view won't be restored properly from the initial request.  So, you can go the wrapper approach (which I think is good as the URL is normallized during the processing) or you could try determining of the request is a postback and if it is, not creating the view."  Since I have the wrapper approach, I think I'll stick with that.  I think it's much cleaner than the old way anyway.

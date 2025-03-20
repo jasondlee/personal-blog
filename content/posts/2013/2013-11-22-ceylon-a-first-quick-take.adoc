@@ -21,12 +21,12 @@ Mixin inheritance looks pretty interesting. While I'm no Scala expert, it strike
 The Ceylon docs describe an intersection type as: _An expression is assignable to an intersection type, written X&Y, if it is assignable to both X and Y._ They give this example:
 
 [source,ceylon,linenums]
------
+----
 Iterable<String>&Correspondence<Integer,String> strings =
         ["hello", "world"];
 String? str = strings.get(0);  //call get() of Correspondence
 Integer size = strings.size;  //call size of Iterable
------
+----
 
 There are more resources available on the topic (like http://ceylon-lang.org/blog/2013/11/17/intersections-and-variance/[this one]), which I'll definitely need to read, because it's just not clicking at the moment. :)
 
@@ -39,11 +39,11 @@ In Ceylon, they claim, it's impossible to get NPEs at runtime. While I'm always 
 In Java, when dealing with subclasses, we use `if (... instanceof ...)`, then cast. In Ceylon, it's done in one step:
 
 [source,ceylon,linenums]
------
+----
 if (is Foo bar) {
     bar.someFooMethod();
 }
------
+----
 
 It's nice that the cast is not necessary, since, as the docs point out, it's clear we intended to interact with `bar` as an instance of `Foo`. I think the `is \{type} \{variable}` syntax reads oddly, but I'm sure it's something I'd get used to.
 
@@ -52,12 +52,12 @@ It's nice that the cast is not necessary, since, as the docs point out, it's cle
 I'll confess right up front: there's a good chance that I don't understand enumerated subtypes correctly. The docs seems to say that enumerated types are not subclassable (and I might be making up words now :). For example:
 
 [source,ceylon,linenums]
------
+----
 abstract class Point()
         of Polar | Cartesian {
     // ...
 }
------
+----
 
 The docs then say, 'Now the compiler won't let us declare additional subclasses of `Point`, and so the union type `Polar|Cartesian` is exactly the same type as `Point`.' Are enumerated subtypes necessary? Probably not. Either way, this doesn't seem like something you'd in a public API, but I could be wrong. I'll have to read http://ceylon-lang.org/blog/2012/01/25/enumerated-types/[some more] on it.
 
@@ -70,10 +70,10 @@ Ceylon also supports named argument method invocation. My initial reaction to it
 Ceylon has built-in support for tuples, "a linked list which captures the static type of each individual element in the list". Tuples seem to have no built-in length limit, and they can handle more than one type (otherwise it would be a `List<T>`, right? :) You can also 'spread' a tuple, meaning you can specify that the contents of a tuple be used to satisfy method parameters:
 
 [source,ceylon,linenums]
------
+----
 [String,Float] args = ["%5.2f", 1.0];
 print(format(*args));
------
+----
 
 In this example, a tuple of `String` and `Float` is declared, then, prefixing the variable name with a `*`, the elements in the tuple are spread across the parameters for format (which are `String, Float...`).  Really cool.
 
@@ -84,10 +84,10 @@ In Ceylon, "[t]he case of the first character of an identifier is significant. T
 One of my big pet peeves (and it's _always_ with someone else's code ;) is the omission of braces around code blocks:
 
 [source,java,linenums]
------
+----
 if (condition)
     return;
------
+----
 
 That's just asking for bugs if you ask me. Fortunately, the Ceylon team agrees with me: the language requires braces for all control structures. The code snippet above, while valid Java, will fail to compile in a Ceylon program. Hip. Hip. Hooray. :)
 

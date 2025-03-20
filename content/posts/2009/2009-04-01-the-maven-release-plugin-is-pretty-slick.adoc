@@ -27,7 +27,7 @@ Once that was done, I was able to update my development working copy, which got 
 To make it work, though, you need to make sure your parent POM has these two entries:
 
 [source,xml,linenums]
------
+----
 <distributionManagement>
     <repository>
         <id>java.net-m2-repository</id>
@@ -43,12 +43,12 @@ To make it work, though, you need to make sure your parent POM has these two ent
         scm:hg:https://kenai.com/hg/facestester~mercurial
     </developerConnection>
 </scm>
------
+----
 
 Of course, your Maven repository and SCM URLs will be different. ;)  I also needed to tell the SCM how to login to Mercurial.  I did that by adding this to `$HOME/.m2/settings.xml`:
 
 [source,xml,linenums]
------
+----
 <servers>
     <server>
         <id>kenai.com</id>
@@ -56,6 +56,6 @@ Of course, your Maven repository and SCM URLs will be different. ;)  I also need
         <password>...</password>
     </server>
 </servers>
------
+----
 
 I didn't actually try it without the password element there, which I will do next time I use the plugin.  I'm not comfortable with putting my password in cleartext there, which is compounded by the fact that the plugin then echoes that password to the console as it runs.  Other than that, I was really pleased with the process.  Maven, when properly understood, is a much, much better tool than Ant. :)

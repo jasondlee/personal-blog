@@ -8,18 +8,18 @@ status: published
 ---
 
 Copying files in Java is, I think, header than it seems it should be. Typically, I see that
-done with, say, a `ByteArrayInputStream` and a `ByteArrayOutputStream` . Thanks to Kotlin's 
-https://kotlinlang.org/docs/reference/extensions.html[extension function] capabilities, this 
+done with, say, a `ByteArrayInputStream` and a `ByteArrayOutputStream` . Thanks to Kotlin's
+https://kotlinlang.org/docs/reference/extensions.html[extension function] capabilities, this
 operation is a one-liner:
 
 [source,kotlin]
------
+----
 File("/path/to/destination").writeBytes(File("/path/to/source").readBytes())
------
+----
 
 That could even be an extension function itself:
 
 [source,kotlin]
------
+----
 fun File.copyFile(dest: File): Unit = dest.writeBytes(this.readBytes())
------
+----

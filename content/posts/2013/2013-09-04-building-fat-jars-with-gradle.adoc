@@ -14,17 +14,17 @@ Sometimes, such as when building command line Java apps, it would be nice to bun
 
 .build.gradle
 [source,groovy,linenums]
------
+----
 jar {
     from {
-        configurations.compile.collect { 
-            it.isDirectory() ? it : zipTree(it) 
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
         }
-        configurations.runtime.collect { 
-            it.isDirectory() ? it : zipTree(it) 
+        configurations.runtime.collect {
+            it.isDirectory() ? it : zipTree(it)
         }
     }
 }
------
+----
 
 When you run `gradle assemble`, you should find your now very hefty jar in `build/libs`.

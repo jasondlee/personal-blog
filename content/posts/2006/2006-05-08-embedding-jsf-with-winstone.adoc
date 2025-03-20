@@ -16,7 +16,7 @@ First, let's take a look at the web app itself.  To convert the application to a
 
 index.html:
 [source,html,linenums]
------
+----
 <html>
     <head>
         <META HTTP-EQUIV=Refresh CONTENT="0; URL=greeting.jsf">
@@ -24,14 +24,14 @@ index.html:
     <body>
     </body>
 </html>
------
+----
 
 Pretty simple and boring.  Let's now take a look at our template file (for a fuller introduction to using Facelets, please see Rick Hightower's excellent http://www-128.ibm.com/developerworks/java/library/j-facelets/index.html[article], as well as Jim Hazen's http://www.jroller.com/page/CptnKirk?entry=getting_started_with_facelets_part[Getting Started] article):
 
 layout.xhtml:
 
 [source,html,linenums]
------
+----
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -51,14 +51,14 @@ layout.xhtml:
     </div>
 </body>
 </html>
------
+----
 
 Nothing real exciting there either.  Next we have greeting.xhtml and response.xhtml.
 
 greeting.xhtml:
 
 [source,html,linenums]
------
+----
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -80,12 +80,12 @@ greeting.xhtml:
     </ui:define>
 </ui:composition>
 </html>
------
+----
 
 response.xhtml:
 
 [source,html,linenums]
------
+----
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -102,14 +102,14 @@ response.xhtml:
     </ui:define>
 </ui:composition>
 </html>
------
+----
 
 Having fixed up our views to work using Facelets, let's now see exactly how we do the embedding.  That magic is done in the following class.
 
 WinstoneServer.java:
 
 [source,java,linenums]
------
+----
 package embed;
 import java.net.URL;
 import java.util.HashMap;
@@ -137,7 +137,7 @@ public class WinstoneServer {
         server.startup();
     }
 }
------
+----
 
 That code is taken pretty much verbatim from the Winstone http://winstone.sourceforge.net/#embedding[documentation].  I split it out into methods on the class to make it prettier, but that's about it.  It's an extremely simple process.  Of course, there are many more options available, all of which are documented on Winstone's site.  My goal here isn't to be a Winstone tutorial, so we'll just use the minimum configuration, which is where to find the web root.
 
@@ -148,7 +148,7 @@ Now, the UserNumberBean class, the Faces-managed bean that is the actual heart o
 UserNumberBean.java:
 
 [source,java,linenums]
------
+----
 package guessNumber;
 import java.util.Random;
 import javax.faces.component.UIComponent;
@@ -266,14 +266,14 @@ public class UserNumberBean {
         }
     }
 }
------
+----
 
 The web.xml and faces-config.xml files used to wire the web application together are pretty standard, but I'll include them here for your perusal:
 
 web.xml:
 
 [source,xml,linenums]
------
+----
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE web-app PUBLIC
   "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
@@ -343,12 +343,12 @@ web.xml:
         </auth-constraint>
     </security-constraint>
 </web-app>
------
+----
 
 faces-config.xml:
 
 [source,xml,linenums]
------
+----
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE faces-config PUBLIC
   "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
@@ -398,7 +398,7 @@ faces-config.xml:
         </managed-property>
     </managed-bean>
 </faces-config>
------
+----
 
 The archive attached to this blog does not have the dependencies included for size and (possible) legal restrictions, so here's a list of what my workspace has:
 

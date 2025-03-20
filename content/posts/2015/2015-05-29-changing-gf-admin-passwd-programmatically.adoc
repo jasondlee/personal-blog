@@ -7,11 +7,11 @@ status: published
 ---
 
 Recently, in the #glassfish channel on Freenode, a user was having trouble configuring GlassFish in a Docker environment. He was scripting the configuration
-of the server, but was having trouble setting the admin user's password, since the `change-admin-password` command takes input from `stdin`. 
+of the server, but was having trouble setting the admin user's password, since the `change-admin-password` command takes input from `stdin`.
 Fortunately, there's REST API for that. This `curl` command will do what the user needs to do without any need for additional input:
 
 [source,bash]
------
+----
 curl  -X POST \
     -H 'X-Requested-By: YeaGlassFish' \
     -H "Accept: application/json" \
@@ -19,11 +19,11 @@ curl  -X POST \
     -d AS_ADMIN_PASWORD=password \
     -d AS_ADMIN_NEWPASSWORD=password2 \
     http://localhost:4848/management/domain/change-admin-password
------
+----
 
 Once the password is set, this same command can be used to change the password, but `--user admin:$PASSWORD` must be added to authenticate
 the request.
 
-I should note that I don't think this is an officially supported way to execute asadmin commands. It works, but it may change, or it may go away. 
-I would say that Oracle may not support doing this either, but they don't offer _any_ support, so there's no harm there. :) Also note that 
+I should note that I don't think this is an officially supported way to execute asadmin commands. It works, but it may change, or it may go away.
+I would say that Oracle may not support doing this either, but they don't offer _any_ support, so there's no harm there. :) Also note that
 `AS_ADMIN_PASWORD` has a typo in it that may be fixed in future releases of the server. Caveat emptor! :)

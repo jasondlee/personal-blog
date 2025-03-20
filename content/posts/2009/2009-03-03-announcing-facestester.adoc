@@ -16,7 +16,7 @@ Unit testing a JSF application can be tricky, and there are a lot of different o
 As exciting as that may sound (I don't know about you, but in my head, it's REALLY exciting : ), don't get carried away yet.  I started this project in a very low-key fashion several weeks ago, and poked at it in my scant free time.  Last week, though, I got a call from my good friend http://www.rodcoffin.com/[Rod Coffin], who had some unrelated JSF questions.  In the course of the conversation, testing came up, and I mentioned this pet project of mine.  Rod, a huge proponent of testing in general, immediately bit on the idea and volunteered to help.  Since that conversation, we have gotten the project to the state where we can instantiate the `FacesServlet` and request a page from our application.  We can then request a specific component and perform various tests on it.  Since we're leveraging the real, live FacesServlet, we get all the JSF goodness, including EL support, for free.  Here's an example (contrived, dumb, simple, etc) test:
 
 [source,xml,linenums]
------
+----
 <h:form id="form">
     <h:outputLabel id="stateLabel" value="State"></h:outputText>
     <h:outputText id="elTest" value="#\{4+5}"></h:outputText>
@@ -24,12 +24,12 @@ As exciting as that may sound (I don't know about you, but in my head, it's REAL
         value="RenderedTest">
     </h:outputText>
 </h:form>
------
+----
 
 Given that page definition, we can then test it like this:
 
 [source,java,linenums]
------
+----
 public class WhenNavigatingToPage {
     private FacesTester tester;
     @Before
@@ -57,6 +57,6 @@ public class WhenNavigatingToPage {
         assertEquals(component.isRendered(), false);
     }
 }
------
+----
 
 As cool as that is, that's about the extent of the API at the moment, but Rod and I are very excited about what we might be able to offer with this.  The next big step for me is to get form submission working, and Rod is going to look at writing more tests and letting those drive the capabilities of FacesTester, as well writing some unit tests around bootstrapping the environment from different web.xml files.  There's a lot to be done still, so if you're interested, head over to the project http://kenai.com/projects/facestester[home page] on http://kenai.com[kenai.com] and join the fun!

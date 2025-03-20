@@ -37,7 +37,7 @@ I may be covering far too basic a level, but I want to make sure I don't leave t
 beginning: the JAX-RS `Application`:
 
 [source, java]
------
+----
 @ApplicationScoped
 @ApplicationPath("/")
 public class MicroProfileApplication extends Application {
@@ -48,7 +48,7 @@ public class MicroProfileApplication extends Application {
         return Collections.unmodifiableSet(set);
     }
 }
------
+----
 
 As you may know, when a JAX-RS-enabled container starts, by default it scans the classpath looking for instances of
 `Application` (there are, of course, other deployment options). Here, we define the application, using `@ApplicationPath`
@@ -60,7 +60,7 @@ have `@ApplicationScoped` on this class as well. I'll discuss that more later.
 Next, we need a JAX-RS resource, so we create this:
 
 [source,java]
------
+----
 @RequestScoped
 @Path("/")
 @Produces(MediaType.TEXT_PLAIN)
@@ -73,7 +73,7 @@ public class HelloWorldResource {
         return service.sayHello(name);
     }
 }
------
+----
 
 Again, the `@Path` annotation should be enough, but we also provide `@RequestScoped` to satisfy the CDI containers. As
 any good REST service should, in my opinion, we delegate the work to a service that we inject using `@Inject`. In our
@@ -82,14 +82,14 @@ doesn't specify a value), pass that to the service, the return the response. Not
 more interesting? No. No it will not:
 
 [source,java]
------
+----
 @RequestScoped
 public class HelloWorldService {
     public String sayHello(String name) {
         return "Hello, " + name;
     }
 }
------
+----
 
 Not a single thing of interest here is there?
 
@@ -101,7 +101,7 @@ Finally, let's take a look at a portion of the POM file. For this module to comp
 entries:
 
 [source,xml]
------
+----
 <properties>
     <version.javaee>8.0</version.javaee>
 </properties>
@@ -111,7 +111,7 @@ entries:
     <version>$\{version.javaee}</version>
     <scope>provided</scope>
 </dependency>
------
+----
 
 As I noted in the introduction, our main interest is in how to deploy this using one of several MicroProfile
 implementations, so the application is intensely underwhelming. In

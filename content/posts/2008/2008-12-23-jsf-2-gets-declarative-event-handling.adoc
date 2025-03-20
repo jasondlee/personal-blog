@@ -15,28 +15,28 @@ If you've been following the evolution of the JSF 2 spec closely, you have proba
 This change really has two parts:  a new `f:event` tag, and a new @NamedEvent annotation.  Let's start our discussion by looking at the tag.   The syntax for the tag is really quite simple.  You just add the tag to any component you desire, provide values for the tags only two attributes, and you're done.  For example (from the Mojarra systests):
 
 [source,xml,linenums]
------
+----
 <h:outputText id="beforeRenderTest1" >
     <f:event type="beforeRender" action="#\{eventTagBean.beforeEncode}" />
 </h:outputText>
------
+----
 
 In this simple example, we see that we an outputText component, `beforeRenderTest1`, with no value.  We also have the child `f:event` tag.  The first parameter, `type`, tells the tag which event type to which to subscribe.  The second attribute, `action`, specifies the method on a managed bean that will be called when the event requested is fired for the component in question.  In plain English, when JSF broadcasts the BeforeRenderEvent for the component `beforeRenderTest1`, EventTagBean.beforeEncode() will be called.  So what does that method look like?  The specification states that the action must match this signature:
 
 [source,java,linenums]
------
+----
 public void methodName(ComponentSystemEvent event);
------
+----
 
 Note that we are only dealing with `ComponentSystemEvent`, a child of `SystemEvent` not `SystemEvent`s directly.  Why?  Well, `ComponentSystemEvent` is the base class for `SystemEvent`s that are attached to a specific component instance, which is `HtmlOutputText` in our example.   That method might look like this:
 
 [source,java,linenums]
------
+----
 public void beforeEncode(ComponentSystemEvent event) {
     UIOutput output = (UIOutput)event.getComponent();
     output.setValue("The '" + event.getClass().getName() + "' event fired!");
 }
------
+----
 
 Your method would, I hope, do something more interesting, but we can see here how we handle the event.  We pull the UIComponent from the event object, optionally cast it to what we're expecting (probably using a healthy dose of instanceof), and perform some actions on the component, but you might not even need the component.  Maybe you just need to fire off some sort of backend logic/process when a component is rendered, for example.  I'm not sure why, off hand, but you could, and this new tag makes that possible.
 
@@ -63,12 +63,12 @@ For the spec classes, the only events registered for use with `f:event` are Befo
 Armed with that knowledge, we could easily rewrite our markup below as
 
 [source,xml,linenums]
------
+----
 <h:outputText id="beforeRenderTest1" >
     <f:event type: "javax.faces.event.beforeRender"
         action="#\{eventTagBean.beforeEncode}" />
 </h:outputText>
------
+----
 
 Which you use is up to you.
 

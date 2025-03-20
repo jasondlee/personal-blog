@@ -25,18 +25,18 @@ At any rate, what I was able to do is register a PhaseListener to execute on the
 What comes out the other end is the expected pages, just as if someone had filled out a form and clicked submit.  It's really quite nifty.   Of course, all of that is pretty tough to follow with out some code, so here we go.  First, let's register the PhaseListener:
 
 [source,xml,linenums]
------
+----
 <lifecycle>
     <phase-listener>
         com.iecokc.gopher.view.util.PrettyUrlPhaseListener
     </phase-listener>
 </lifecycle>
------
+----
 
 Next, let's look at the PhaseListener itself:
 
 [source,java,linenums]
------
+----
 public class PrettyUrlPhaseListener implements PhaseListener {
     private static final Log logger =
         LogFactory.getLog(PrettyUrlPhaseListener.class);
@@ -138,12 +138,12 @@ public class PrettyUrlPhaseListener implements PhaseListener {
         // We don't care about this
     }
 }
------
+----
 
 There's one more step.  Currently, our application is only configured to map *.jsf to the FacesServlet, so we'll need to add a couple more mappings to make our "virtual" URLs work.  This goes in web.xml:
 
 [source,xml,linenums]
------
+----
 <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>/product/*</url-pattern>
@@ -152,7 +152,7 @@ There's one more step.  Currently, our application is only configured to map *.j
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>/dwmo/*</url-pattern>
 </servlet-mapping>
------
+----
 
 If you had the rest of our code, you should now be able to deploy the web page and point your browser at `/Context/product/ABC123/tab` and learn all about one of our products. :) Since you don't have the rest of the app, you obviously can't do that, but hopefully I've provided enough information for you to implement a similar solution.
 

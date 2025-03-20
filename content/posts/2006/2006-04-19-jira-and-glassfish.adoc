@@ -17,16 +17,16 @@ The first step, of course, is to download the JIRA distribution (For our purpose
 For the database, you'll need to modify entityengine.xml, which you will want to copy from `webapp/WEB-INF/classes` to `edit-webapp/WEB-INF/classes`.  We'll need to make two changes in this file:  the transaction factory, and the data source.  For the transaction factory, we need to locate the element, and edit it to look like this:
 
 [source,xml,linenums]
------
+----
 <transaction-factory class="org.ofbiz.core.entity.transaction.JNDIFactory">
     <user-transaction-jndi jndi-server-name="default" jndi-name="UserTransaction"/>
     <transaction-manager-jndi jndi-server-name="default" jndi-name="UserTransaction"/>
 </transaction-factory>
------
+----
 
 For the curious, that change is just the removal of `java:comp/` from the JNDI name.  For the data source, find the  element toward the end of the file.  This is what ours looks like:
 [source,xml,linenums]
------
+----
 <datasource name="defaultDS" field-type-name="postgres72"
 	helper-class="org.ofbiz.core.entity.GenericHelperDAO"
 	check-on-start="true"
@@ -38,16 +38,16 @@ For the curious, that change is just the removal of `java:comp/` from the JNDI n
 	check-indices-on-start="true">
 	<jndi-jdbc jndi-server-name="default" jndi-name="jdbc/Jira"/>
 </datasource>
------
+----
 
 Of course, you need to make sure that the datasource `jdbc/Jira` is configured in GlassFish.  If you need help with that, http://blogs.sun.com/roller/page/GlassFish_PostgreSQL?entry=introducing_support_for_postgresql_in[this] blog entry should be helpful. For Active Directory integration, copy osuser.xml from `webapp/WEB-INF/classes` to `edit-webapp/WEB-INF/classes`.  Since this file is smaller, I'll show it in its entirety:
 
 [source,xml,linenums]
------
+----
 <opensymphony-user>
-	<authenticator 
+	<authenticator
 		class="com.opensymphony.user.authenticator.SmartAuthenticator"/>
-	<provider 
+	<provider
 		class="com.opensymphony.user.provider.ldap.LDAPCredentialsProvider">
 		<property name="java.naming.factory.initial">
 			com.sun.jndi.ldap.LdapCtxFactory
@@ -71,19 +71,19 @@ Of course, you need to make sure that the datasource `jdbc/Jira` is configured i
 			true
 		</property>
 	</provider>
-	<provider 
+	<provider
 		class="com.atlassian.core.ofbiz.osuser.CoreOFBizCredentialsProvider">
 		<property name="exclusive-access">true</property>
 	</provider>
-	<provider 
+	<provider
 		class="com.opensymphony.user.provider.ofbiz.OFBizProfileProvider">
 		<property name="exclusive-access">true</property>
 	</provider>
-	<provider 
+	<provider
 		class="com.opensymphony.user.provider.ofbiz.OFBizAccessProvider">
 		<property name="exclusive-access">true</property>
 	</provider>
 </opensymphony-user>
------
+----
 
 Once those files have been created, from the root of the JIRA work directory, issue the command "build ear".  Technically, you have a choice between WAR and EAR deployment.  I chose EAR, as it saves me one step (changing the context root) at deployment.  It will most likely take a few minutes for that task to complete.  Once it has, log on to the GlassFish http://localhost:4848[admin app], navigate to Applications->Enterprise Applications, click deploy, then click Browse to find your EAR, which will be in the directory dist-generic in your JIRA working directory.  Select the ear, click OK, click Next, change the app name if you'd like, then click Finish.  This process, too, will likely take a few minutes, but, once it's done, you're ready to point your browser at your http://localhost:8080/jira[new JIRA installation] and begin configuring it. It's that easy! ;)

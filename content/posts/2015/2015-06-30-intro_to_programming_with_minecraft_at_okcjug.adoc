@@ -79,19 +79,19 @@ dependencies, it probably won't be very fast. :)
 With those downloaded and installed, extract the zip file (using the tool of your choice) in a directory. Mac and Linux users can do this:
 
 [source,bash]
------
+----
 $ cd
 $ mkdir MinecraftMods
 $ cd MinecraftMods
 $ unzip $PATH_TO_ZIP/forge-1.8-11.14.1.1341-src.zip
------
+----
 
 Wherever you've extracted the archive, you will need to open a shell (or command prompt) and run this command in that directory:
 
 [source,bash]
------
+----
 $ ./gradlew setupDecompWorkspace --refresh-dependencies
------
+----
 
 (Windows users can leave off the leading ./)
 

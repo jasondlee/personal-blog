@@ -26,7 +26,7 @@ To install it, you have two options: 1) Install link:\{archive-link}[this archiv
 As a small demo, take this Jakarta REST resource:
 
 [source,java]
------
+----
 @RequestScoped
 @Path("/")
 public class MetricResource {
@@ -51,7 +51,7 @@ public class MetricResource {
         return counter.count();
     }
 }
------
+----
 
 This sample creates two meters, a `Counter` and `Timer`, and makes some pretty trivial updates. We can see this when we
 request metrics from the server. As noted above, this support is still under active discussion at the time of this writing,
@@ -60,7 +60,7 @@ the Micrometer metrics on a new management endpoint http://localhost:9990/microm
 metrics show up:
 
 [source,bash]
------
+----
 $ http :9990/micrometer | grep demo
 # HELP demo_counter_total
 # TYPE demo_counter_total counter
@@ -72,12 +72,12 @@ demo_timer_seconds_sum 0.952373899
 # HELP demo_timer_seconds_max
 # TYPE demo_timer_seconds_max gauge
 demo_timer_seconds_max 0.952373899
------
+----
 
 There are, of course, a number of other metrics. When the Micrometer subsystem is loaded, we automatically register a number of meters to capture JVM and system data as well, similar to what one would expect from WildFly Metrics or MicroProfile Metrics. For example:
 
 [source]
------
+----
 # HELP datasources_pool_total_get_time The total time spent obtaining physical connections
 # TYPE datasources_pool_total_get_time gauge
 datasources_pool_total_get_time\{app="wildfly",deployment="",name="ExampleDS",subdeployment="",type="data-source",} 0.0
@@ -102,7 +102,7 @@ infinispan_success_ratio\{app="wildfly",deployment="",name="http-remoting-connec
 # TYPE jvm_buffer_count_buffers gauge
 jvm_buffer_count_buffers\{id="mapped",} 0.0
 jvm_buffer_count_buffers\{id="direct",} 90.0
------
+----
 
 There are many more, of course, but you get the point, and this being Micrometer, what we see represented here is
 Prometheus-compatible output ready for consumption by your tool of choice.

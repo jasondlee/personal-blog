@@ -29,7 +29,7 @@ correctly, please let me know. :)
 Without further ado:
 
 [source, bash]
------
+----
 #!/bin/bash
 #
 # Provides a function that allows you to choose a JDK.  Just set the environment
@@ -135,24 +135,24 @@ pickjdk()
 
     hash -r
 }
------
+----
 
 To use this, add the following to your Bash profile:
 
 [source,bash]
------
+----
 source /path/to/pickjdk.sh
------
+----
 
 Restart your shell (or source the file directly), and you can do this:
 
 [source,bash]
------
+----
 $ pickjdk
  1) java-11-openjdk-amd64 < CURRENT
  2) oracle-java8-jdk-amd64
  3) None
 Choose one of the above [1-3]:
------
+----
 
 Make your selection, and you're all set. It's awesome.

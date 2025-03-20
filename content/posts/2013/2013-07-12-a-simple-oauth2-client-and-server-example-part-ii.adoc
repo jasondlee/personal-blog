@@ -17,7 +17,7 @@ In the last link:/posts/2013/07/11/a-simple-oauth2-client-and-server-example-par
 Let's get right to the code:
 
 [source,java,linenums]
------
+----
 @RunAsClient
 public class AuthTest extends Arquillian {
 
@@ -31,11 +31,11 @@ public class AuthTest extends Arquillian {
                 .addPackages(true, "com.steeplesoft.oauth2")
                 .addAsWebInfResource(
                     new FileAsset(
-                        new File("src/main/webapp/WEB-INF/beans.xml")), 
+                        new File("src/main/webapp/WEB-INF/beans.xml")),
                             "beans.xml")
                 .addAsWebInfResource(
                     new FileAsset(
-                        new File("src/main/webapp/WEB-INF/web.xml")), 
+                        new File("src/main/webapp/WEB-INF/web.xml")),
                             "web.xml")
                 .addAsLibraries(Maven.resolver()
                     .loadPomFromFile("pom.xml")
@@ -50,13 +50,13 @@ public class AuthTest extends Arquillian {
     public void authorizationRequest() {
         try {
             Response response = makeAuthCodeRequest();
-            Assert.assertEquals(Status.OK.getStatusCode(), 
+            Assert.assertEquals(Status.OK.getStatusCode(),
                 response.getStatus());
 
             String authCode = getAuthCode(response);
             Assert.assertNotNull(authCode);
-        } catch (OAuthSystemException | 
-                URISyntaxException | 
+        } catch (OAuthSystemException |
+                URISyntaxException |
                 JSONException ex) {
             Logger.getLogger(AuthTest.class.getName())
                 .log(Level.SEVERE, null, ex);
@@ -67,18 +67,18 @@ public class AuthTest extends Arquillian {
     public void authCodeTokenRequest() throws OAuthSystemException {
         try {
             Response response = makeAuthCodeRequest();
-            Assert.assertEquals(Status.OK.getStatusCode(), 
+            Assert.assertEquals(Status.OK.getStatusCode(),
                 response.getStatus());
 
             String authCode = getAuthCode(response);
             Assert.assertNotNull(authCode);
-            OAuthAccessTokenResponse oauthResponse = 
+            OAuthAccessTokenResponse oauthResponse =
                 makeTokenRequestWithAuthCode(authCode);
             assertNotNull(oauthResponse.getAccessToken());
             assertNotNull(oauthResponse.getExpiresIn());
-        } catch (OAuthSystemException | 
-                URISyntaxException | 
-                JSONException | 
+        } catch (OAuthSystemException |
+                URISyntaxException |
+                JSONException |
                 OAuthProblemException ex) {
             Logger.getLogger(AuthTest.class.getName())
                 .log(Level.SEVERE, null, ex);
@@ -97,13 +97,13 @@ public class AuthTest extends Arquillian {
                     .setPassword(Common.PASSWORD)
                     .buildBodyMessage();
 
-            OAuthClient oAuthClient = 
+            OAuthClient oAuthClient =
                 new OAuthClient(new URLConnectionClient());
-            OAuthAccessTokenResponse oauthResponse = 
+            OAuthAccessTokenResponse oauthResponse =
                 oAuthClient.accessToken(request);
             assertNotNull(oauthResponse.getAccessToken());
             assertNotNull(oauthResponse.getExpiresIn());
-        } catch (OAuthSystemException | 
+        } catch (OAuthSystemException |
                 OAuthProblemException ex ) {
             Logger.getLogger(AuthTest.class.getName())
                 .log(Level.SEVERE, null, ex);
@@ -114,34 +114,34 @@ public class AuthTest extends Arquillian {
     public void endToEndWithAuthCode() {
         try {
             Response response = makeAuthCodeRequest();
-            Assert.assertEquals(Status.OK.getStatusCode(), 
+            Assert.assertEquals(Status.OK.getStatusCode(),
                 response.getStatus());
 
             String authCode = getAuthCode(response);
             Assert.assertNotNull(authCode);
-            
-            OAuthAccessTokenResponse oauthResponse = 
+
+            OAuthAccessTokenResponse oauthResponse =
                 makeTokenRequestWithAuthCode(authCode);
             String accessToken = oauthResponse.getAccessToken();
-            
+
             URL restUrl = new URL(url.toString() + "api/resource");
             WebTarget target = client.target(restUrl.toURI());
             String entity = target.request(MediaType.TEXT_HTML)
-                    .header(Common.HEADER_AUTHORIZATION, "Bearer " + 
+                    .header(Common.HEADER_AUTHORIZATION, "Bearer " +
                         accessToken)
                     .get(String.class);
             System.out.println("Response = " + entity);
-        } catch (MalformedURLException | 
-                URISyntaxException | 
-                OAuthProblemException | 
-                OAuthSystemException | 
+        } catch (MalformedURLException |
+                URISyntaxException |
+                OAuthProblemException |
+                OAuthSystemException |
                 JSONException ex) {
             Logger.getLogger(AuthTest.class.getName())
                 .log(Level.SEVERE, null, ex);
         }
     }
 
-    void testValidTokenResponse(HttpURLConnection httpURLConnection) 
+    void testValidTokenResponse(HttpURLConnection httpURLConnection)
             throws Exception {
         InputStream inputStream;
         if (httpURLConnection.getResponseCode() == 400) {
@@ -153,7 +153,7 @@ public class AuthTest extends Arquillian {
         assert (Common.ACCESS_TOKEN_VALID.equals(responseBody));
     }
 
-    private Response makeAuthCodeRequest() throws OAuthSystemException, 
+    private Response makeAuthCodeRequest() throws OAuthSystemException,
             URISyntaxException {
         OAuthClientRequest request = OAuthClientRequest
                 .authorizationLocation(url.toString() + "api/authz")
@@ -178,8 +178,8 @@ public class AuthTest extends Arquillian {
         return authCode;
     }
 
-    private OAuthAccessTokenResponse 
-            makeTokenRequestWithAuthCode(String authCode) 
+    private OAuthAccessTokenResponse
+            makeTokenRequestWithAuthCode(String authCode)
         throws OAuthProblemException, OAuthSystemException {
         OAuthClientRequest request = OAuthClientRequest
                 .tokenLocation(url.toString() + "api/token")
@@ -189,14 +189,14 @@ public class AuthTest extends Arquillian {
                 .setCode(authCode)
                 .setRedirectURI(url.toString() + "api/redirect")
                 .buildBodyMessage();
-        OAuthClient oAuthClient = 
+        OAuthClient oAuthClient =
             new OAuthClient(new URLConnectionClient());
-        OAuthAccessTokenResponse oauthResponse = 
+        OAuthAccessTokenResponse oauthResponse =
             oAuthClient.accessToken(request);
         return oauthResponse;
     }
 }
------
+----
 
 The first thing you should notice is that we're using TestNG and Arquillian. I won't go into the details on the Arquillian set up here, other than to note that we need our test to `@RunAsClient`, and to point out the `@Deployment` method that builds our test archive for us.
 

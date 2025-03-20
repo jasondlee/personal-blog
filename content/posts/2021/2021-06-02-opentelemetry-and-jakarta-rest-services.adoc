@@ -17,7 +17,7 @@ We'll start by setting up the project, and we'll do so by creating a multimodule
 
 .pom.xml
 [source,xml]
------
+----
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -87,7 +87,7 @@ We'll start by setting up the project, and we'll do so by creating a multimodule
         </dependency>
     </dependencies>
 </project>
------
+----
 
 By setting up the parent POM this way, we'll make the three submodules much simpler. Since the two services are largely identical, we'll only look at one of those POMs.
 
@@ -95,7 +95,7 @@ By setting up the parent POM this way, we'll make the three submodules much simp
 
 .service1/pom.xml
 [source.xml]
------
+----
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -118,14 +118,14 @@ By setting up the parent POM this way, we'll make the three submodules much simp
         </dependency>
     </dependencies>
 </project>
------
+----
 
 There's really not much to this beyond a dependency on another module from our project, which we'll look at shortly. First, our
 REST endpoint:
 
 .RestEndpoint1.java
 [source,java]
------
+----
 @Path("/endpoint1")
 public class RestEndpoint1 {
     @Inject
@@ -173,7 +173,7 @@ public class RestEndpoint1 {
     }
     // ...
 }
------
+----
 
 This is a pretty boring, if somewhat contrived, REST endpoint. The interesting part is the injection of the OpenTelemetry `Tracer` instance, and the creation of the spans in the REST method itself. From the https://opentelemetry.io/docs/concepts/data-sources/[OpenTelemetrey docs], we learn that
 
@@ -185,13 +185,13 @@ _____
 In the midst of our "work", then, we create a span to track the process. This will help help us mark the beginning and end of unit of work. As we monitor the system, we can compute statistics on, for example, the average time a given span takes. Should it start deviating wildly, we may have found our issue's culprit. The use of a span may look something like this, generically speaking:
 
 [source,java]
------
+----
 Span span = tracer.spanBuilder("Doing some work")
     .startSpan();
 span.makeCurrent();
 // Do some work
 span.end();
------
+----
 
 When creating the span, we want to give it a meaningful name so we can find it more easily when we look at the logs.
 
@@ -207,7 +207,7 @@ The producer methods are fairly standard CDI producers. For `OpenTelemetry`, we 
 
 .OpenTelemetryProducer.java
 [source,java]
------
+----
 @ApplicationScoped
 public class OpenTelemetryProducer {
     @javax.annotation.Resource(lookup="java:app/AppName")
@@ -246,7 +246,7 @@ public class OpenTelemetryProducer {
                 .buildAndRegisterGlobal();
     }
 }
------
+----
 
 In this application-scoped bean, we have a producer method that... produces the `OpenTelemetry` instance, using the double-check idiom (you can read more about that https://www.oracle.com/technical-resources/articles/javase/bloch-effective-08-qa.html[here], if you're curious, and, yes, using it might be overkill, but better safe, eh? :) In the `localBuild()` method (so named to differentiate from the `GlobalOpenTelemetry.get()` approach), we define an exporter, which will export our trace information to an external system, Jaeger, for aggregation and study, and a `Tracer` provider, which lets us configure our `Tracer`. In this case, we want to use the Jakarta EE application name, injected into `applicationName` to set the service name (and we add a random attribute just to demonstrate where that might show up).
 
@@ -254,7 +254,7 @@ For the `Tracer`, we have something similar:
 
 .TracerProvider.java
 [source,java]
------
+----
 @ApplicationScoped
 public class TracerProducer {
     @Inject
@@ -276,7 +276,7 @@ public class TracerProducer {
         return localRef;
     }
 }
------
+----
 
 The only new thing of note here is simply the OpenTelemetry API call to get the `Tracer` instance.
 
@@ -284,7 +284,7 @@ Finally, let's look at our request/response filter:
 
 .OpenTelemetryFilter.java
 [source,java]
------
+----
 @ApplicationScoped
 public class OpenTelemetryFilter implements ContainerRequestFilter, ContainerResponseFilter {
     @Inject
@@ -336,7 +336,7 @@ public class OpenTelemetryFilter implements ContainerRequestFilter, ContainerRes
         }
     }
 }
------
+----
 
 There's quite a bit going on here:
 
@@ -354,7 +354,7 @@ Back in Service 1, we make a call to Service 2 in the method `sendRequest()`. We
 
 .RestEndpoint1.java
 [source,java]
------
+----
 private String sendRequest() {
     TextMapSetter<HttpRequest.Builder> setter =
             (requestBuilder, key, value) -> {
@@ -380,16 +380,16 @@ private String sendRequest() {
         throw new RuntimeException(e);
     }
 }
------
+----
 
 Similar to reading the context from an incoming request, we create an instance of `TextMapSetter<T>` that will write the context propagation header to the outgoing request. We start building the request, using Java 11's HTTP client, hardcoding Service 2's API because we can. :)
 
 In the middle, there, we ask `OpenTelemetry` to inject itself into the request:
 
 [source,java]
------
+----
 otel.getPropagators().getTextMapPropagator().inject(Context.current(), builder, setter);
------
+----
 
 This line of code adds a header that our request filter above will then extract to set up the trace context in service 2. Once the context headers are injected, we finish the request to service 2, and let the request to service 1 complete as well.
 
@@ -398,7 +398,7 @@ This line of code adds a header that our request filter above will then extract 
 Now that we've instrumented our application, how do we view the telemetry data? For that, we're going to use Jaeger, and since this post is already long enough and a production setup of Jaeger is out of scope, we'll go super simple. Download the Jaeger all-in-one distribution from https://www.jaegertracing.io/download/#binaries[here] and run it in one terminal, then start, say, WildFly in another, and deploy our apps in still another:
 
 [source,bash]
------
+----
 $ jaeger-all-in-one --collector.zipkin.host-port=:9411
 // Another terminal
 $ bin/standalone.sh
@@ -415,7 +415,7 @@ Content-Type: application/octet-stream
 Date: Wed, 02 Jun 2021 21:44:11 GMT
 
 Hello World, from service 1! Service 2 happened to say 'Service 2 did something!'
------
+----
 
 While this proves our services work (for some value of 'work'), where are the traces? For that, point your browser at the http://localhost:16686/search[Jaeger UI]. Once the page loads, select `service1-1.0-SNAPSHOT` from the `Service` dropdown, then click `Find Traces`. You should see results that look something like this:
 

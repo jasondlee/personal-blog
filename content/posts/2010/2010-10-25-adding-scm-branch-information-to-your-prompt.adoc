@@ -14,7 +14,7 @@ Today, a coworker sent me a link to an old http://hocuspokus.net/2009/07/add-git
 
 // more
 [source,bash,linenums]
------
+----
 parse_git_branch () {
     git name-rev HEAD 2> /dev/null | sed 's#HEAD\ \(.*\)# (git::\1)#'
 }
@@ -56,6 +56,6 @@ RED_BOLD="\[\033[01;31m\]"
 BLUE="\[\033[01;34m\]"
 GREEN="\[\033[0;32m\]"
 export PS1="$BLACK[ \u@$RED\h $GREEN\w$RED_BOLD\$(get_branch_information)$BLACK ] "
------
+----
 
 I should note that there seems to be a slight performance hit due to all of this, but I can't tell if it's all these new checks or if my machine is just already working too hard.  Either way, it's nowhere near significant enough to make me care. :)

@@ -27,7 +27,7 @@ So what's happened since then?  A fair amount:
 * In 1.2-SNAPSHOT, Scales now uses YUI 2.7.0.  This gets us a number of bug fixes, the most notable of which concerns the vertical carousel demo.  I added a couple of simple CSS tweaks, which now allows the vertical carousel to render and function as expected.
 * As part of the GF console redesign, I implemented a wrapper for the YUI Layout Manager component, giving rise to two new Scales components, `sc:layout` and `sc:layoutUnit`.  Their usage looks like this:
 [source,xml,linenums]
------
+----
 <sc:layout fullPage="true">
     <sc:layoutUnit position="top" height="75" gutter="5px" resize="true" collapse="true" maxHeight="100" minHeight="50">
         <span style="font-size: large; font-weight: bold">
@@ -49,7 +49,7 @@ So what's happened since then?  A fair amount:
         <!-- snip! -->
     </sc:layoutUnit>
 </sc:layout>
------
+----
 
 You can see how that renders on the http://www.jsftemplating.org/mojarra-scales-demo/facelets/layoutDemo.xhtml[demo site].
 

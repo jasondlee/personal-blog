@@ -15,7 +15,7 @@ I was asked this morning about creating JDBC resources via REST. As with link:/2
 To create a JDBC resource, you need two different objects, a `JDBC Connection Pool` and a `JDBC Resource`.  The endpoints for these two objects are http://localhost:4848/management/domain/resources/jdbc-connection-pool[] and http://localhost:4848/management/domain/resources/jdbc-resource[].  Let's start by creating the connection pool.  There are many parameters available (which you can see via OPTIONS), but we'll only deal with a small subset here:
 
 [source,bash,linenums]
------
+----
 $ curl -X POST -H 'Accept: application/json' \
     -d driverClassname=org.postgresql.Driver \
     -d resType=java.sql.Driver \
@@ -25,12 +25,12 @@ $ curl -X POST -H 'Accept: application/json' \
     "message": "\"http:\/\/localhost:4848\/management\/domain\/resources\/jdbc-connection-pool\/ExamplePool\" created successfully.",
     "exit_code": "SUCCESS"
 }
------
+----
 
 This connection pool will, of course, need to know where to connect, and how to log in.  To do that, we need to set some properties on the connection pool. Setting properties, though, is a bit different.  Properties in GlassFish's `domain.xml` aren't simple name/value pairs.  Each property has a name, a value, and a description.  To support that, the `property` endpoint takes an object which, expressed in JSON, is a list of objects: `[{'name':'propertyName','value':'propertyValue','description':'optionalPropertyDescription'}]`.  In our case, the command will look like this:
 
 [source,bash,linenums]
------
+----
 $ curl -X POST -H 'Accept: application/json' \
     -H 'Content-Type: application/json' -d "[{'name':'user','value':'test'},{'name':'password','value':'test'},{'name':'databaseName','value':'test'},{'name':'serverName','value':'localhost'},{'name':'url','value':'jdbc:postgresql://localhost/test/'}]" \
     http://localhost:4848/management/domain/resources/jdbc-connection-pool/ExamplePool/property
@@ -39,12 +39,12 @@ $ curl -X POST -H 'Accept: application/json' \
     "command": "Property",
     "exit_code": "SUCCESS"
 }
------
+----
 
 We can now view this connection pool like this:
 
 [source,bash,linenums]
------
+----
 $ curl -H 'Accept: application/json' \
     http://localhost:4848/management/domain/resources/jdbc-connection-pool/ExamplePool
 {
@@ -69,12 +69,12 @@ $ curl -H 'Accept: application/json' \
         "childResources": {"property": "http:\/\/localhost:4848\/management\/domain\/resources\/jdbc-connection-pool\/ExamplePool\/property"}
     }
 }
------
+----
 
 Now that we have a connection pool, let's create the JDBC Resource:
 
 [source,bash,linenums]
------
+----
 $ curl -X POST -H 'Accept: application/json' \
     -d id=jdbc/test \
     -d poolName=ExamplePool \
@@ -83,24 +83,24 @@ $ curl -X POST -H 'Accept: application/json' \
     "message": "\"http:\/\/localhost:4848\/management\/domain\/resources\/jdbc-resource\/jdbc\/test\" created successfully.",
     "exit_code": "SUCCESS"
 }
------
+----
 
 Your connection pool and resource are now ready to use.  As an added bonus, let's ping our new connection pool to make sure it works:
 
 [source,bash,linenums]
------
+----
 $ curl -H 'Accept: application/json' \
     http://localhost:4848/management/domain/resources/ping-connection-pool?id=ExamplePool
 {
     "command": "ping-connection-pool AdminCommand",
     "exit_code": "SUCCESS"
 }
------
+----
 
 Deleting the pool and the resource are both very simple. Note that the JNDI name (`jdbc/test`) must be properly encoded (`jdbc%2Ftest`):
 
 [source,bash,linenums]
------
+----
 $ curl -X DELETE -H 'Accept: application/json' \
     http://localhost:4848/management/domain/resources/jdbc-resource/jdbc%2Ftest
 {
@@ -113,6 +113,6 @@ $ curl -X DELETE -H 'Accept: application/json' \
     "message": "\"http:\/\/localhost:4848\/management\/domain\/resources\/jdbc-connection-pool\/ExamplePool\" deleted successfully.",
     "exit_code": "SUCCESS"
 }
------
+----
 
 There you have it.  If you have any questions, or have some examples you'd like to see, feel free to ask. : )

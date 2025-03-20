@@ -19,22 +19,22 @@ Remember those fancy videos at JavaOne 2008 with 200 videos playing at once at a
 One of the things that has me most excited, though, is the improved Java applet support.  Granted, some of this comes as part of Java 6 Update 10, but, combined, I think we might finally see client Java getting some respect.  Look at this example code Josh shared.  This will launch a JavaFX-based applet from any browser, if I understood him correctly:
 
 [source,js,linenums]
------
-<script src='http://dl.javafx.com/dtfx.js'/> 
-<script> 
-javafx( 
-    { 
-        archive: "MyApp.jar", 
-        width: 500, height: 300, 
-        code: "myapp.Main", 
-        draggable: true, 
-        name: "appl" 
-    } , { 
-        doStuff: "true"` 
-    } 
-); 
+----
+<script src='http://dl.javafx.com/dtfx.js'/>
+<script>
+javafx(
+    {
+        archive: "MyApp.jar",
+        width: 500, height: 300,
+        code: "myapp.Main",
+        draggable: true,
+        name: "appl"
+    } , {
+        doStuff: "true"`
+    }
+);
 </script>
------
+----
 
 If I heard him right, that bit of Javascript from dl.javafx.com handles all the dirty work for browser-specific options, version checking, etc.  If you don't want (or can't support) your clients' browsers hitting the internet every time the applet loads, Josh indicated that the file could be downloaded and cached locally (and who's going to know if you do, right? ; )  With Update 10, Java Web Start and Applet launching became much more interoperable, so you can now launch your applet using JNLP code.  All it takes is one additional line in your .jnlp file (again, assuming I understood him correctly.  Are you catch the theme here? : )
 
@@ -45,26 +45,26 @@ image::/images/2008/12/javafxdoc-300x233.png[link="/images/2008/12/javafxdoc.png
 He also covered, of course, the draggable applet feature of Update 10, which is really, really cool.  Perhaps as exciting is the new Javascript/Java integration the update offers.  Suppose you have this code running in an applet on the page:
 
 [source,java,linenums]
------
-public function doSearch():String { 
-    return "I searched, honest!"; 
-} 
------
+----
+public function doSearch():String {
+    return "I searched, honest!";
+}
+----
 
 If you want to call `doSearch` from your Javascript code, you would do this:
 
 [source,js,linenums]
------
-<script> 
-function doSearch() { 
-    var appl = document.getElementById("appl"); 
-    appl.script.doSearch(); 
-} 
+----
+<script>
+function doSearch() {
+    var appl = document.getElementById("appl");
+    appl.script.doSearch();
+}
 </script>
------
+----
 
 Slick.
 
-He finished up covering the supported platforms, the roadmap, changes from the preview release, etc.  It was nice to see JavaFX Mobile, which should be final in February of next year, getting some attention too.  For obvious reasons, it seems the language has gotten all the attention, and I've not heard anyone in the JavaFX camp mention mobile until today, though it's possible that I just wasn't listening closely enough.  At any rate, JavaFX looks like it will be a great development platform.  Time will tell if it can take the lead against Flex, Sliverlight, etc., but I, for one, am pretty excited about it.  
+He finished up covering the supported platforms, the roadmap, changes from the preview release, etc.  It was nice to see JavaFX Mobile, which should be final in February of next year, getting some attention too.  For obvious reasons, it seems the language has gotten all the attention, and I've not heard anyone in the JavaFX camp mention mobile until today, though it's possible that I just wasn't listening closely enough.  At any rate, JavaFX looks like it will be a great development platform.  Time will tell if it can take the lead against Flex, Sliverlight, etc., but I, for one, am pretty excited about it.
 
 If you're interested, there's more information in the slides and MP3.  Go give it a listen.

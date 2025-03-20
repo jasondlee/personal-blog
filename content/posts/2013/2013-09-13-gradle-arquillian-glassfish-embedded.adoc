@@ -16,7 +16,7 @@ While there _is_ a https://github.com/aslakknutsen/arquillian-gradle-plugin[Grad
 
 .build.gradle
 [source,groovy,linenums]
------
+----
 apply plugin: 'war'
 apply plugin: 'idea'
 
@@ -98,7 +98,7 @@ tasks.withType(Test).matching({ t-> t.name.endsWith('Test') } as Spec).each { t 
         project.sourceSets.main.output +
         project.sourceSets.integrationTest.output
 }
------
+----
 
 There's quite a bit going on here -- and I'll be honest here -- I understand about half of it. :) I will do my best, though, to explain what I think is going on.
 
@@ -114,7 +114,7 @@ The rest of the project is a fairly straightforward Arquillian setup. For the cu
 
 .src/integrationTest/resources/arquillian.xml
 [source,xml,linenums]
------
+----
 <?xml version="1.0" encoding="UTF-8"?>
 <arquillian xmlns="http://jboss.org/schema/arquillian"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -136,19 +136,19 @@ The rest of the project is a fairly straightforward Arquillian setup. For the cu
         </configuration>
     </container>
 </arquillian>
------
+----
 
 .src/integrationTest/resources/glassfish-resources.xml
 [source,xml,linenums]
------
+----
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE resources PUBLIC 
-    "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" 
+<!DOCTYPE resources PUBLIC
+    "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN"
     "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
 <resources>
-    <jdbc-connection-pool 
-            datasource-classname="org.postgresql.xa.PGXADataSource" 
-            res-type: "javax.sql.XADataSource" 
+    <jdbc-connection-pool
+            datasource-classname="org.postgresql.xa.PGXADataSource"
+            res-type: "javax.sql.XADataSource"
             name="FrenchPressPool">
         <property name="user" value="frenchpress"></property>
         <property name="password" value="fp"></property>
@@ -157,6 +157,6 @@ The rest of the project is a fairly straightforward Arquillian setup. For the cu
     </jdbc-connection-pool>
     <jdbc-resource pool-name="FrenchPressPool" jndi-name="jdbc/frenchpress"/>
 </resources>
------
+----
 
 You can find the entire app in my https://bitbucket.org/jdlee/frenchpress[BitBucket repo]. If you have any questions, suggestions, improvements, etc. in either this Gradle build or the app itself, I'll happily take pull requests. :)

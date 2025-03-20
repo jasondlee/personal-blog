@@ -32,7 +32,7 @@ execute the build using the external tool before running or debugging your test.
 For example, I created a brand new (demo) application, then added a controller:
 
 [source,bash]
------
+----
 $ mn create-app -l kotlin -b maven --features=junit demo
 |Generating Kotlin project...
 ...................................
@@ -41,19 +41,19 @@ $ cd demo
 $ mn create-controller Author
 |Rendered template Controller.kt to destination src\main\kotlin\demo\AuthorController.kt
 |Rendered template ControllerTest.java to destination src\test\java\demo\AuthorControllerTest.java
------
+----
 
 From IDEA, if I Run AuthorControllerTest, the test will fail with a very unhelpful message:
 
 [source]
------
+----
 C:\java\jdk8\bin\java.exe ...
 13:15:35.686 [main] INFO  i.m.context.env.DefaultEnvironment - Established active environments: [test]
 13:15:35.700 [main] INFO  i.m.context.env.DefaultEnvironment - Established active environments: [test]
 
 io.micronaut.http.client.exceptions.HttpClientResponseException: Page Not Found
 
------
+----
 
 The trick is to change how IDEA builds the project before starting the test. With the AuthorControllerTest configuration
 created for us by virtue of having just tried to run the test, we just need to edit that configuration and change the

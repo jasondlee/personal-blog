@@ -14,7 +14,7 @@ Recently, I had to add support for asynchronous REST calls to the GlassFish REST
 
 // more
 
-For the second post in a row, I have scare quotes in my teaser.  For the second post in a row, let me explain why. :)  In terms of JAX-RS, "asynchronous" really has two different...meanings, depending on the context in which it's used.  There's server-side, and there's client-side, and they're not quite the same thing.  
+For the second post in a row, I have scare quotes in my teaser.  For the second post in a row, let me explain why. :)  In terms of JAX-RS, "asynchronous" really has two different...meanings, depending on the context in which it's used.  There's server-side, and there's client-side, and they're not quite the same thing.
 
 Let me quote from a conversation I had with the Jersey team:
 
@@ -29,21 +29,21 @@ Makes sense? Let's dive in and clear things, with a look at server-side first:
 To start, let's look at an "asynchronous" REST resource:
 
 [source, java,linenums]
------
-    @POST   
+----
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.TEXT_PLAIN)
     public void async(final String text,
             @Suspended final AsyncResponse ar) {
         getExecutorService().submit(new Runnable() {
             @Override
-            public void run() { 
+            public void run() {
 		String result = doSomethingReallySlow(text);
             	ar.resume(result);
-            }       
-        });     
+            }
+        });
     }
------
+----
 
 *UPDATE #1: Please see Gerard's comments below about performance regarding the ExecutorService*
 
@@ -55,15 +55,15 @@ Despite what it may sound like, server-side asynchrony does _not_ mean (at least
 *****
 After talking to the Jersey team, they suggested this:
 [source, java,linenums]
------
-    @POST   
+----
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.TEXT_PLAIN)
     @ManagedAsync
     public void async(final String text, @Suspended final AsyncResponse ar) {
 	ar.resume(doSomethingReallySlow(text));
     }
------
+----
 That's much smaller and simpler than the example above. The only caveat is that `@ManagedAsync` is a Jersey-specific feature, so this code is not portable to other JAX-RS implementations.  If you're OK with that, then feel free. If not, I'd suggest implementing `getExecutorService()` with something production-ready.
 *****
 
@@ -74,13 +74,13 @@ That was pretty easy.  What about client-side? Is that more like what we usually
 The short answer is, "Yes". :)  Like what we saw on the server-side, though, there's not on-the-wire difference here, and the asynchronous nature is really a...trick of the JAX-RS Client API.  Let's see some code, then I'll explain:
 
 [source,java,linenums]
------
+----
     public void asyncRestClient() throws JSONException, InterruptedException {
         getClient()
                 .target(restUrl)
                 .request(MediaType.APPLICATION_JSON)
                 .async()
-                .post(Entity.entity("Here is some text", MediaType.TEXT_PLAIN), 
+                .post(Entity.entity("Here is some text", MediaType.TEXT_PLAIN),
 			new InvocationCallback<Response>() {
             @Override
             public void completed(Response response) {
@@ -93,7 +93,7 @@ The short answer is, "Yes". :)  Like what we saw on the server-side, though, the
             }
         });
     }
------
+----
 
 In this simple example, we have a couple of changes to how we use the JAX-RS Client API.  First, we make a call to `async()`, and, second, we pass an instance of `InvocationCallback` to `post()`.  What happens here, then, is the Client creates a background thread to handle the request. This thread sends the request, then blocks, waiting for the response.  Once the response is received, it calls `completed()` on our `InvocationCallback` object.  At that point, we read the entity off the `Response`, and pass it along to a business method for processing.  If an error occurs, the Client will call `failure()`, at which point we would handle the error in a manner appropriate for our context.
 

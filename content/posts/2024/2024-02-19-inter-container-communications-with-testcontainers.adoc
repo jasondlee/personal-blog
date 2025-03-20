@@ -17,32 +17,32 @@ To be specific, I needed to have the OpenTelemetry Collector pushing trace data 
 With the `Network` defined, I just need to configure each container. In this scenario, I need to set up the Jaeger container with both the `Network` as well as a network alias, or host name, by which the Otel Collector can address it. For example:
 
 [%linenums,java,highlight=2]
------
+----
 new JaegerContainer()
     .withNetwork(Network.SHARED) // <---- This
     .withNetworkAliases("jaeger");
------
+----
 
 (See below for the full class)
 
 Now, for the collector:
 
 [source,java,highlight=2]
------
+----
 new OpenTelemetryCollectorContainer()
     .withNetwork(Network.SHARED) // <---- This
     .withCopyToContainer(MountableFile.forClasspathResource(
         "org/wildfly/test/integration/observability/container/otel-collector-config.yaml"),
             OpenTelemetryCollectorContainer.OTEL_COLLECTOR_CONFIG_YAML)
     .withCommand("--config " + OpenTelemetryCollectorContainer.OTEL_COLLECTOR_CONFIG_YAML);
------
+----
 
 (Full class also below)
 
 The config file is a classpath resource, the looks something like this:
 
 [source,yaml]
------
+----
 ...
 exporters:
   otlp:
@@ -50,7 +50,7 @@ exporters:
     tls:
       insecure: true
 ...
------
+----
 
 Notice in the `otlp` exporter, I simply refer to the other container by the configured hostname, and the Docker network figures everthing else out. Note also that I don't have to use the mapped port from the Testcontainer, as connection will use the exposed port configured (4317) _inside_ the Docker network, so there's no chance of conflicts with the host machine.
 
@@ -62,7 +62,7 @@ Hope that helps!
 
 == JaegerContainer.java
 [source,java]
------
+----
 import java.util.List;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -151,12 +151,12 @@ class JaegerContainer extends BaseContainer<JaegerContainer> {
         }
     }
 }
------
+----
 
 ---
 == OpenTelemetryCollectorContainer.java
 [source,java]
------
+----
 import java.util.Collections;
 import java.util.List;
 
@@ -239,4 +239,4 @@ public class OpenTelemetryCollectorContainer extends BaseContainer<OpenTelemetry
         return (jaegerContainer != null ? jaegerContainer.getTraces(serviceName) : Collections.emptyList());
     }
 }
------
+----

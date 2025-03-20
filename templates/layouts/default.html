@@ -1,132 +1,77 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Coming Up for Air {#if page.title}: {page.title}{/if}</title>
-
-    <script src="/js/simple-jekyll-search.min.js" type="text/javascript"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-
-        gtag('config', 'G-3GQK1YDRQM');
-    </script>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
-
-    <link rel="alternate" type="application/rss+xml" title="jasondl.ee RSS feed" href="/feed.xml">
-
-    <link rel="stylesheet" href="/css/main.css" />
-
-    <!-- Web Fonts -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
-    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
-
-    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
-    <link rel="author" href="/images/profile-pic.jpg"/>
-</head>
-<body>
-<div class="grid">
-    <div class="col blogname">
-        <span>
-            <a href="{site.url.absolute}">Coming Up for Air</a>
-        </span>
+---
+layout: base
+---
+<div class="col-9">
+    <div id="content">
+        {#insert /}
     </div>
 </div>
-<div class="grid main">
-    <div class="col-9">
-        <div id="content">
-            {#insert /}
-        </div>
-    </div>
-    <div class="col-3 widget">
-        <div>
-            <h3>Search</h3>
-            <!-- HTML elements for search -->
-            <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
-            <ul id="results-container"></ul>
-
-            <script>
-                var sjs = SimpleJekyllSearch({
-                    searchInput: document.getElementById('search-input'),
-                    resultsContainer: document.getElementById('results-container'),
-                    json: '/search.json',
-                    limit: 50
-                })
-            </script>
-        </div>
-        <div>
-            <h3>Quotes</h3>
-            <p id="quote">Sample quote</p>
-            <p id="source">Quote source</p>
-        </div>
-        <div>
-            <h3>About</h3>
-            {#include partials/about.html /}
-        </div>
-        <div>
-            <h3>My Links</h3>
-            <ul>
-                {#for item in cdi:links.list}
-                <li>
-                    <a href="{item.link}" title="{item.title}">
-                        {item.title}
-                    </a>
-                </li>
-                {/for}
-            </ul>
-
-        </div>
-        <div>
-            <h3>Publications</h3>
-            <ul>
-                <li>
-                    <div class="grid">
-                        <div class="col-8" style="text-weight: bold; font-size: large">
-                            <div>Java 9 Programming Blueprints:</div>
-                            <div>
-                                <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
-                            </div>
-                            <div>
-                                <a title="My Java 9 book at Packt"
-                                   href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
-                                   style="padding-left: 10px">Packt</a>
-                            </div>
-                        </div>
-                            <div class="col-4">
-                                <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
-                            </div>
-                    </div>
-                </li>
-                {#for publication in cdi:publications.list}
-                <li>
-                    <a href="{publication.link}" title="{publication.title}">
-                        {publication.text}
-                    </a>
-                </li>
-                {/for}
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="footer">
+<div class="col-3 widget">
     <div>
-        <p>&#169; Copyright Jason Lee, 2005-2025. All rights reserved.</p>
+        <h3>Search</h3>
+        <!-- HTML elements for search -->
+        <input type="text" id="search-input" placeholder="Search blog posts.." style="width: 98%"/>
+        <ul id="results-container"></ul>
+
+        <script>
+            const sjs = SimpleJekyllSearch({
+                searchInput: document.getElementById('search-input'),
+                resultsContainer: document.getElementById('results-container'),
+                json: '/search.json',
+                limit: 50
+            })
+        </script>
+    </div>
+    <div>
+        <h3>Quotes</h3>
+        <p id="quote">Sample quote</p>
+        <p id="source">Quote source</p>
+    </div>
+    <div>
+        <h3>About</h3>
+        {#include partials/about.html /}
+    </div>
+    <div>
+        <h3>My Links</h3>
+        <ul>
+            {#for item in cdi:links.list}
+            <li>
+                <a href="{item.link}" title="{item.title}">
+                    {item.title}
+                </a>
+            </li>
+            {/for}
+        </ul>
+
+    </div>
+    <div>
+        <h3>Publications</h3>
+        <ul>
+            <li>
+                <div class="grid">
+                    <div class="col-8" style="text-weight: bold; font-size: large">
+                        <div>Java 9 Programming Blueprints:</div>
+                        <div>
+                            <a title="My Java 9 book at Amazon" href="https://amzn.to/2FD2XAo" style="padding-left: 10px">Amazon</a>
+                        </div>
+                        <div>
+                            <a title="My Java 9 book at Packt"
+                               href="https://www.packtpub.com/application-development/java-9-programming-blueprints"
+                               style="padding-left: 10px">Packt</a>
+                        </div>
+                    </div>
+                        <div class="col-4">
+                            <a href="https://amzn.to/2FD2XAo"><img src="/images/2017/j9pb.png" width="100"/></a>
+                        </div>
+                </div>
+            </li>
+            {#for publication in cdi:publications.list}
+            <li>
+                <a href="{publication.link}" title="{publication.title}">
+                    {publication.text}
+                </a>
+            </li>
+            {/for}
+        </ul>
     </div>
 </div>
-<script src="/js/quotes.js" type="text/javascript"></script>
-<script src="/js/local.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
-<script type="text/javascript" src="/js/copy.js"></script>
-</body>
-</html>

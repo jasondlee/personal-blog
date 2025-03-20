@@ -14,11 +14,11 @@ For those interested, here's a quick and simple project to get you started using
 
 .build.gradle
 [source,groovy,linenums]
------
+----
 apply plugin: 'scala'
 
 repositories{
-    mavenCentral() 
+    mavenCentral()
     mavenLocal()
 }
 
@@ -33,22 +33,22 @@ task run(type: JavaExec, dependsOn: classes) {
     classpath sourceSets.main.runtimeClasspath
     classpath configurations.runtime
 }
------
+----
 
 
 .src/main/scala/Main.scala
 [source,scala,linenums]
------
+----
 object Main extends App {
   println("Hello, world")
 }
------
+----
 
 You can run the app using the custom task `run`:
 
 
 [source,bash,linenums]
------
+----
 $ gradle run
 :compileJava
 :compileScala
@@ -60,7 +60,7 @@ Hello, world
 BUILD SUCCESSFUL
 
 Total time: 9.79 secs
------
+----
 
 
 Remember to add `--daemon` for faster startup times for your Gradle builds.

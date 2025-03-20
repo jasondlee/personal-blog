@@ -21,7 +21,7 @@ application model, then run it through this API and let Jersey do the heavy lift
 primarily, a didactic project. I'll spare you the details of how the DSL is built and skip straight to the "finished" project:
 
 [source,kotlin]
------
+----
 application {
     produces = "application/json"
     consumes = "application/json"
@@ -46,7 +46,7 @@ application {
         }
     }
 }.build()
------
+----
 
 While there's a good chance I'll modify the structure of the DSL as I continue to work on the presentation, this
 represents a working DSL. Once I call `build()`, I can then access the REST application via a browser or curl.
@@ -55,9 +55,9 @@ A few things to call out. Notice the `handler` property. With that, I can specif
 that will actually handle the request. Where Jersey allows me to define a method like this:
 
 [source,java]
------
+----
 public Response listItems(@QueryParam("someParam") Integer someParam) { ... }
------
+----
 
 I have yet to be able to figure out how to dispatch to a Kotlin method with an arbitrary number of parameters. One
 might think of the spread operator, but requires the receiving method specify a `varargs` parameter, which I've tried to
@@ -70,7 +70,7 @@ One of the more interesting parts, I think, is the creation of the resources for
 in that is the demonstration of Kotlin's Java interop, going both directions:
 
 [source,java]
------
+----
 class JerkeyResourceConfig(val application: Application) : ResourceConfig() {
     init {
         val resourceBuilder = Resource.builder()
@@ -97,7 +97,7 @@ class JerkeyResourceConfig(val application: Application) : ResourceConfig() {
         registerResources(resourceBuilder.build())
     }
 }
------
+----
 
 We iterate over the `resource` instances from the DSL, creating subresources of the
 base resource defined by the `application` element in the DSL.
@@ -105,7 +105,7 @@ base resource defined by the `application` element in the DSL.
 My DSL code consumes that here:
 
 [source,kotlin]
------
+----
 fun build() {
     val rc = JerkeyResourceConfig(this)
 
@@ -114,25 +114,25 @@ fun build() {
     readLine()
     server.stop(0)
 }
------
+----
 
 Put all of that together with this handler method:
 
 [source,kotlin]
------
+----
 fun listItems(context : CallContext) : Response {
     val id : Int = context.params["param"] as Int
     return Response.ok().entity("items $id").build()
 }
------
+----
 
 and we get this from the command-line:
 
 [source,bash]
------
+----
 $  curl -Ssk http://localhost:8080/items?param=1024
 items 1024
------
+----
 
 It's not very flashy, but for one evening's hacking, it's not too shabby. :) If you'd like
 to follow along, you can find the (meager) sources https://bitbucket.org/jdlee/jerkey/src/master/[here].

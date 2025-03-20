@@ -17,7 +17,7 @@ If you follow me on http://twitter.com/jasondlee[Twitter], you may have seen tha
 Before I get to the script, I'll admit that when it comes to maintaining the RPM database, my skills are sorely lacking. Beyond installing and uninstalling, I can't do much. :)  This script, then, may not be optimal, but it was a fun, quick effort, so *lay off*! :P  That said,
 
 [source,bash,linenums]
------
+----
 #!/bin/bash
 
 APP_NAME=`basename $0`
@@ -33,7 +33,7 @@ function usage() {
 
 function list_txns() {
     ls $TXN_DIR | sed -e 's/\.txn$//'
-    exit 0 
+    exit 0
 }
 
 while getopts hilr:t:y opt
@@ -79,14 +79,14 @@ else
         rm "$TXN_FILE"
     fi
 fi
------
+----
 
 This script takes a parameters. With `-t`, the user can specify the name of the "transaction" that will be recorded. If this option is not specified, the name of the first package is used. Transactions can be "rolled back" using `-r`, which takes the name of the transacation to roll back, and transactions can be listed with `-l`.
 
 For example:
 
 [source,bash,linenums]
------
+----
 $ tx_yum cinnamon
 <lots of deleted output>
 $ tx_yum -l
@@ -95,6 +95,6 @@ $ tx_yum -r cinnamon
 Rolling back transaction cinnamon
 $ tx_yum -l
 $
------
+----
 
 That's all there is to it.  While I'm sure there are flaws and inefficiencies, it seems to work pretty well. If you have an improvement, feel free to hit the comments below.  Either way, I hope you find it as helpful as I have so far. Now to find those orphaned RPMs... :)

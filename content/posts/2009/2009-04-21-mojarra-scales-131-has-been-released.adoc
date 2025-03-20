@@ -17,13 +17,13 @@ Much has changed over the past few weeks.  We started using Scales in the GlassF
 In case I haven't mentioned this (it's really late here, and I honestly don't remember : ), Scales is http://download.java.net/maven/2/com/sun/mojarra/mojarra-scales/[now available] via the java.net Maven 2 repository.  The dependency element looks like this:
 
 [source,xml,linenums]
------
+----
 <dependency>
     <groupId>com.sun.mojarra</groupId>
     <artifactId>mojarra-scales</artifactId>
     <version>1.3.1</version>
 </dependency>
------
+----
 
 Furthermore, all http://kenai.com/projects/scales/pages/Home[documentation] and http://kenai.com/jira/browse/SCALES[issue tracking] are now done on Kenai.com (which, I must say, has been really nice so far).
 

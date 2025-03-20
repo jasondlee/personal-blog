@@ -15,7 +15,7 @@ The migration of Mojarra Scales to JSF 2, adding new components has become much 
 The JSF spec details a data table, but it's nothing fancy.  It doesn't offer pagination or sorting, for example.  For simple applications, this may be sufficient, but for more complex or dynamic applications, it can be pretty plain and boring.  The YAHOO! User Interface library provides a very nice table, which supports sorting, pagination, ajax updates, row and cell selecting, etc.  In keeping with Scales' original intent, it is this Javascript that Scales wraps and provides as a JSF component.  For those familiar with the standard `h:dataTable`, the usage should look very familiar.  From the Scales demo, we find something like this:
 
 [source,xml,linenums]
------
+----
 <sc:dataTable id='people' pagination='true' rowsPerPage='#\{tableBean.rowsPerPage}' rowsPerPageTemplate='4 8 16 32' value='#\{tableBean.peopleList}' var='person' width='50%'>
     <sc:column resizeable='true' sortable='true' width='200'>
         <f:facet name='header'>First Name</f:facet>
@@ -30,12 +30,12 @@ The JSF spec details a data table, but it's nothing fancy.  It doesn't offer pag
         #\{person.position}
     </sc:column>
 </sc:dataTable>
------
+----
 
 In short, we specify a table with three columns, all of which are sortable and resizeable, and will be paginated.  Like the standard data table, the value passed to the component can be a JSF `DataModel`, a `List`, or an `Array`.  Internally, the Scales dataTable will wrap the value in a `Paginator` object that handles the heavy lifting.  Just to show that there's no magic in the managed bean, here's the full bean (can you tell what television show I like to watch? : ) :
 
 [source,java,linenums]
------
+----
 @ManagedBean
 @SessionScoped
 public class TableBean {
@@ -77,7 +77,7 @@ public class TableBean {
         return list;
     }
 }
------
+----
 
 When the component is rendered, you will see something like this:
 

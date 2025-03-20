@@ -1,27 +1,31 @@
 ---
-layout: default
+layout: base
 link: /:year/:slug
 ---
-<article class="post">
-    <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
-        {page.title}
-    </h1>
-    {page.date.format("EEEE, MMM d, YYYY")} | {#include partials/share-page.html /}
-    <div>
-        {#insert /}
-    </div>
-    <footer>
-        <div class="grid">
-            <div class="col tags">
-                {#if page.data.tags and page.data.tags.size > 0}
-                <span class="title">tags: </span>
-                {#for tag in page.data.tags }
-                {! <a href="/{site.tag_page_dir}/{tag | slugify: 'pretty'}/">{tag}</a> !}
-                <!--                <a href="{{site.url}}/tags/{{tag}}.html">{{tag}}</a>-->
-                {/for}
-                {/if}
+<div class="col-11" style="margin: auto; left: 0; right: 0;">
+    <div id="content">
+        <article class="post">
+            <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+                {page.title}
+            </h1>
+            {page.date.format("EEEE, MMM d, YYYY")} | {#include partials/share-page.html /}
+            <div>
+                {#insert /}
             </div>
-            <div class="col">{#include partials/share-page.html /}</div>
-        </div>
-    </footer>
-</article>
+            <footer>
+                <div class="grid">
+                    <div class="col tags">
+                        {#if page.data.tags and page.data.tags.size > 0}
+                        <span class="title">tags: </span>
+                        {#for tag in page.data.tags }
+                        {! <a href="/{site.tag_page_dir}/{tag | slugify: 'pretty'}/">{tag}</a> !}
+                        <!--                <a href="{{site.url}}/tags/{{tag}}.html">{{tag}}</a>-->
+                        {/for}
+                        {/if}
+                    </div>
+                    <div class="col">{#include partials/share-page.html /}</div>
+                </div>
+            </footer>
+        </article>
+    </div>
+</div>

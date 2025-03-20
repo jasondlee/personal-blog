@@ -30,13 +30,13 @@ While that is, I think, a pretty nice set of features, we have more work planned
 If you're a JSF developer, we'd love for you try this out and tell us what works, what doesn't, and what you'd like to see.  The project is hosted on http://kenai.com/projects/facestester[kenai.com], where we have forums and, most importantly, an http://kenai.com/jira/browse/FACESTESTER[issue tracker].   You can download the jar file directly from the http://kenai.com/projects/facestester/downloads[Kenai project site], or, if you're a Maven user, the jar is available from the http://download.java.net/maven/2/[java.net Maven 2 repository]:
 
 [source,xml,linenums]
------
+----
 <dependency>
     <groupId>com.steeplesoft.jsf</groupId>
     <artifactId>facestester</artifactId>
     <version>0.1</version>
     <scope>test</scope>
 </dependency>
------
+----
 
 Any and all feedback is welcome!

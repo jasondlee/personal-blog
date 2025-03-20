@@ -17,7 +17,7 @@ I recently had the need to convert several scanned images into one multi-page PD
 For starters, let's take a look at the very small, simple Python script:
 
 [source,python,linenums]
------
+----
 #!/usr/bin/python
 
 import os,sys, PythonMagick
@@ -42,7 +42,7 @@ else:
     merged_file = open(final_name, mode='wb')
     merged.write(merged_file)
     merged_file.close()
------
+----
 There's not a lot to it, thanks in large part to http://wiki.python.org/moin/ImageMagick[PythonMagick] and http://pybrary.net/pyPdf/[pyPDF]. This script takes at least two parameters: the final name of the PDF, and at least on image file.  The bulk of the work flow is this:
 
 * Create a `PdfFileWriter` object. This handles the heavy lifting in actually writing the PDF

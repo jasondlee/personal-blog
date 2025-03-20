@@ -17,7 +17,7 @@ This should come as no surprise at this point, but setting up a TomEE-based proj
 adding these dependencies to our web project:
 
 [source,xml]
------
+----
 <properties>
     <tomee.version>7.1.0</tomee.version>
 </properties>
@@ -42,14 +42,14 @@ adding these dependencies to our web project:
         <scope>test</scope>
     </dependency>
 </dependencies>
------
+----
 
 Notice that the only compile/runtime dependency is our shared code. The rest is for testing.
 
 We'll need a plugin to bundle our application:
 
 [source,xml]
------
+----
 <build>
     <plugins>
         <plugin>
@@ -73,13 +73,13 @@ We'll need a plugin to bundle our application:
         </plugin>
     </plugins>
 </build>
------
+----
 
 The `exec` goal will build our uberjar, and we set the `context` to `ROOT` so that our application is deployed on the
 root context.
 
 [source,bash]
------
+----
 # mvn install
 ...
 # java -jar target/tomee-1.0-SNAPSHOT-exec.jar
@@ -88,7 +88,7 @@ root context.
 Hello, world
 # curl http://localhost:8080/?name=TomEE
 Hello, TomEE
------
+----
 
 We already have our Arquillian dependencies added, and there are no additional configuration files needed for this very
 basic case, so we can run our tests via `mvn test` as we've seen many times already.
