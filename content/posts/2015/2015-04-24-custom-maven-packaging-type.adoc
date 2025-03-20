@@ -28,17 +28,17 @@ At any rate, here is the `components.xml` which accomplishes my goal (no pun int
     <components>
         <component>
             <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
-            <role-hint>jbake</role-hint> <1>
+            <role-hint>jbake</role-hint> [1]
             <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
             <configuration>
                 <lifecycles>
                     <lifecycle>
-                        <id>default</id> <2>
+                        <id>default</id> [2]
                         <phases>
                             <generate-resources></generate-resources>
                             <process-resources></process-resources>
                             <compile>
-                                $\{project.groupId}:$\{project.artifactId}:$\{project.version}:generate <3>
+                                $\{project.groupId}:$\{project.artifactId}:$\{project.version}:generate [3]
                             </compile>
                             <process-test-resources></process-test-resources>
                             <test-compile></test-compile>
@@ -49,7 +49,7 @@ At any rate, here is the `components.xml` which accomplishes my goal (no pun int
                         </phases>
                     </lifecycle>
                     <lifecycle>
-                        <id>site</id> <2>
+                        <id>site</id> [2]
                         <phases>
                             <pre-site></pre-site>
                             <site>
@@ -65,9 +65,9 @@ At any rate, here is the `components.xml` which accomplishes my goal (no pun int
     </components>
 </component-set>
 ----
-<1> `role-hint` defines the new packaging type
-<2> We're overriding the `default` and `site` lifecycles, providing goals only for the relevant phases.
-<3> Note how the desired goal is specified.
+[1] `role-hint` defines the new packaging type
+[2] We're overriding the `default` and `site` lifecycles, providing goals only for the relevant phases.
+[3] Note how the desired goal is specified.
 
 On the plugin side, that's literally all there is to it. When the target project is configured correctly,
 all the user must do to generate the site is issue a simple `mvn`, `mvn compile`, or `mvn site`, and the
@@ -104,13 +104,13 @@ this:
     <artifactId>steeplesoft-blog</artifactId>
     <name>Steeplesoft Blog</name>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jbake</packaging> <1>
+    <packaging>jbake</packaging> [1]
 <!-- ... -->
             <plugin>
                 <groupId>br.com.ingenieux</groupId>
                 <artifactId>jbake-maven-plugin</artifactId>
                 <version>0.0.10-SNAPSHOT</version>
-                <extensions>true</extensions> <2>
+                <extensions>true</extensions> [2]
 <!-- ... -->
 ----
 
