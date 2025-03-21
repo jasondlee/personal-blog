@@ -1,0 +1,273 @@
+---
+title: "This Blog Now Roqs. I mean... it always has, of course, but now it REALLY does"
+link: /2025/this-blog-now-roqs
+date: 2025-03-20
+tags: [ Roq ]
+type: post
+author: jdlee
+status: published
+---
+
+Years ago, I started this blog on Wordpress, then moved to awestruct, then to JBake, then to Jekyll. I've not done that because I like to change things (though I must admit I've enjoyed doing it each time ;), but because I'm looking for something that best suits my needs. I need to be able to post source code. It would be nice to be able to change theming -- especially for source code -- globally and easily. A static site would be nice for both performance and security. And as icing on the cake, being able to extend the build tool would be amazing. By chance in the past week or so, I was introduced to a new a tool, https://iamroq.com[Roq], which is built in Java, and based on Quarkus. A whole lot of boxes were suddenly checked. Now, less than two weeks later, I've https://jasondl.ee/[converted] https://okcjug.org/[three] https://jberet.org/[sites], including this one. In this post, I'll walk you through building your own static site that... Roqs. :P
+
+Roq, of course, has its own https://iamroq.com/docs/getting-started/[documentation], which helped me immensely. However, as all docs go, there were some use cases that weren't covered as thoroughly as I needed (or I'm slower than I like to think), so I thought I'd add my own voice, as they say, and maybe it will help you (and maybe help beef up the official docs. Andy, Roq's author, has been super helpful and eager for feedback).
+
+// more
+
+== Getting Started
+
+[NOTE]
+====
+I've been using Roq in anger for less than a week, so I've much left to learn. What I'm sharing here is what I've learned and how I've gotten things to work for me. I can't guarantee that it's correct, but it does seem to work. Caveat emptor. :)
+====
+
+The easiest way to start is with the Quarkus CLI tool (I'll leave it as an exercise for the reader on how to https://quarkus.io/guides/cli-tooling[install that]). With that tool installed, it's as simple as this:
+
+[source,bash]
+----
+$ quarkus create app my-blog -x=io.quarkiverse.roq:quarkus-roq
+...
+$ cd my-blog
+$ quarkus dev
+----
+
+And your http://localhost:8080[site] is ready to go. As an added bonus, you get Quarkus' live reload for free, so there's no need to restart or rebuild. In fact, if you wait just a second or two, you'll see your updates appear in your browser.
+
+== The layout/theme
+
+In converting the three sites that I have, the hardest part for me (poor, simple backend engineer that I am) was the theme. Luckily, I had existing sources for the sites I was converting, so it was a matter of copying the Jekyll/Liquid sources and migrating them to the https://quarkus.io/guides/qute[Qute syntax]. This seems like a good time to mention that Roq uses Qute as its templating language. If you've used Liquid, Thyme, Freemarker, etc, you should feel right at home with Qute. If and when you need help, you can take a look at the https://quarkus.io/guides/qute-reference[Qute reference]. It seems pretty through.
+
+I took my Liquid sources, then, and put them where Roq wants them: `templates/layouts`. Themes are HTML-based, which should be no surprise, but you can still use -- indeed must use -- Qute markup in. For example, your main layout could be as simple as this:
+
+[source,html]
+----
+<html>
+    <body>
+        #\{insert /}
+    </body>
+</html>
+----
+
+That tag marks the point at which each rendered page will inserted into your template. Templates can also extend other templates:
+
+[source,html]
+----
+---
+layout: base
+---
+<html>
+    <body>
+        #\{insert /}
+    </body>
+</html>
+----
+
+== Blog Posts
+
+Blog posts are pretty simple. As a post, they make up a Roq collection, over which you can iterate. First, a post, in, say `content/post/2025/2025-03-20-blog-post-demp.adoc`:
+
+[source,asciidoc]
+----
+---
+title: Blog post demo
+description: Blog post description
+layout: default
+date: 2052-03-20
+author: jlee
+---
+
+This is a blog post!
+----
+
+And to create your site's index, in `content/index.html` (yes, you can use Markdown, but would you? :) :
+
+[source,html]
+----
+---
+layout: default
+title: Home
+paginate: posts
+---
+\{#include partials/pagination.html/}
+
+<ul>
+    \{#for post in site.collections.posts.paginated(page.paginator)}
+    <li><a href=\{post.url}</li>
+    \{/for}
+</ul>
+----
+
+You'll obviously want something more appealing, but that'll get the job done.
+
+== Embedding Source Code
+
+Again, the official docs, plus the Roq blog, cover this, but I'm going to try to condense this here. First up, we need to make sure the dependencies are available:
+
+[source,xml]
+----
+<dependency>
+    <groupId>org.mvnpm</groupId>
+    <artifactId>highlight.js</artifactId>
+    <version>11.11.1</version>
+    <scope>provided</scope>
+</dependency>
+----
+
+Using the transitively-incluced `io.quarkiverse.web-bundler:quarkus-web-bundler`, Highlight.js is made available to your site. It does take a bit of extra wiring, though, to put the resources in your template.
+
+First, in `src/main/resources/web/app`, create `main.js`:
+
+[source,js]
+----
+import hljs from 'highlight.js';
+import 'highlight.js/scss/agate.scss';
+
+hljs.highlightAll();
+----
+
+The `scss` import is where you'll select your theme. You can see them all in action https://highlightjs.org/examples[here].
+
+Finally, in your template, add this to your `<head>` section:
+
+[source]
+----
+\{#bundle /}
+----
+
+== Site Data
+
+While your site may be static, it will likely have _some_ data associated with it. For example, you have a list of authors or speakers, a site menu, or just generic site data such as an associated X or Github account. To support this, Roq offers data support in `data/foo.yml`. The filename, of course, will hopefully have a meaningful, and it will be the means by which you access the data in your page. For example, if you have `data/info.yml`:
+
+[source,yaml]
+----
+x_username: jasondlee
+github_username: jasondlee
+----
+
+in a page or post, you can reference it this way:
+
+[source,asciidoc]
+----
+You can find me on https://x.com/\{cdi:info.x_username}[X] or https://github.com/\{cdi:info.github_username}[Github]
+----
+
+Via the markup `\{cdi:info}`, you get a `JsonObject` you can query, which works fine, but what if you have more complex data, like a collection of https://github.com/okcjug/site/blob/master/data/speakers.yml[speakers] (if I may be so bold as to "steal" an example from my https://okcjug.org[local JUG])?
+
+[source,yaml]
+----
+- id: jason-lee
+  name: Jason Lee
+  image: speakers/jason-lee.jpg
+  bio: >
+    Jason Lee is a software developer living in the middle of Oklahoma. He has been a professional developer since 1997,
+    using a variety of languages, including Java, Kotlin, Javascript, PHP, Python, Delphi, and even a bit of C#. He
+    currently works for Red Hat on the WildFly/EAP team, where, among other things, he maintains integrations for some
+    MicroProfile specs, OpenTelemetry, Micrometer, Jakarta Faces, and Bean Validation.
+    (<a href="https://jasondl.ee/resume">Resume</a>, <a href="https://www.linkedin.com/in/jasondlee">LinkedIn</a>)
+    He is the president of the Oklahoma City JUG, an occasional speaker there, as well as at a variety of technical
+    conferences, and a <a href="https://amzn.to/2FD2XAo">book author</a>.
+    <p/>
+    On the personal side, he is active in his church, and enjoys bass guitar, running, fishing, and a variety of martial
+    arts. He is also married to a beautiful woman, and has two boys, who, thankfully, look like their mother.
+----
+
+Dealing with a single entry as a `JsonObject` can be tedious, and dealing with the whole collection is much, much worse. Fortunately, Roq allows us to create typesafe means of access. For this example, we would create `src/main/java/com/foo/Speakers.java`:
+
+[source,java]
+----
+import java.util.List;
+import io.quarkiverse.roq.data.runtime.annotations.DataMapping;
+
+@DataMapping(value = "speakers", parentArray = true)
+public record Speakers(List<Speaker> list) {
+
+    public record Speaker(String id, String name, String bio, String image) {}
+
+    public Speaker get(String id) {
+        return list.stream().filter(s -> s.id.equals(id)).findFirst()
+            .orElse(new Speaker("", "No speaker", "No Speaker", "logo-notext.png"));
+    }
+}
+----
+
+Now, lets say we have a post about an event that has a speaker:
+
+[source,asciidoc]
+----
+---
+title: "2025 March Meeting"
+date: 2025-02-18
+layout: post
+status: published
+author: jdlee
+location: starspace
+speaker: jason-lee
+---
+----
+
+and we'd like to look up information about this amazing and engaging speaker:
+
+[source,html]
+----
+\{#let id = post.data("speaker").or("")}
+\{#let speaker = cdi:speakers.get(id) }
+<div class="row" style="padding: 0 0 1em 0">
+    <div class="col">
+        <a class="post-link" href="\{post.url}" title="\{post.title}" data-toggle="tooltip">
+            \{post.title}
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <b>\{post.data('when')}</b>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        \{#if speaker}
+        <img src="/img/\{speaker.image}" class="speaker-img"/>
+        \{/if}
+    </div>
+</div>
+\{/let}
+\{/let}
+----
+
+First, we can extract the speaker key from the post by `\{#let id = post.data("speaker").or("")}`. Then, using the `get()` method we defined on our `Speakers` class, we can get a `Speaker`: `\{#let speaker = cdi:speakers.get(id) }`. Now, in our template, we can use references like `\{speaker.image}` or `\{speaker.bio}`.
+
+An important note, variables defined/assigned in a `\{#let}` directive only exist until the closing `\{/let}`. They're not defined from the first left until the end of the page, so be aware of that. See https://quarkus.io/guides/qute-reference#let_section[here] for more details. You can also make more than one assignment in the `\{#let}` block, but I chose not too. Knowing a bit more now, I may revisit that. We'll see how the mood strikes. :)
+
+== Template Extensions
+
+Another really cool feature is the ability to define template extension functions. If you're familiar with Kotlin extension functions, you should feel right at home with this. Basically, you create a class annotated with `@TemplateExtension`, then add `public static` methods to it. The first parameter specifies the type of variable the method can be applied to. For example, for this blog, I mark the "read more" section using `// more`, so I have a template function that looks like this:
+
+[source,java]
+----
+public static String excerpt(String text) {
+    int index = text.indexOf("// more");
+    return (index == -1) ? text : text.substring(0, index);
+}
+----
+
+Then in my `index.html`, I can do this: `{post.rawContent.excerpt.convert.raw}` There's actually quite a bit going on there, so let me break it down:
+
+* `post.rawContent` gets me access to the page source
+* `.excerpt` gives me the subset of the source I want
+* `.convert` is another template function that converts the raw page source from Asciidoc to HTML
+* `.raw` instructs Qute _not_ to escape the HTML markup this expression returns. Without this, there would be a lot of encoded HTML shown and not properly rendered.
+
+Is there a smarter, better way to do it? Perhaps, but, again: I'm learing and this is working for now. :)
+
+== Miscellaneous
+
+There's so much more I could cover in detail, this is already longer than I'd planned, but there's
+
+* SEO: `\{#seo page site /}`
+* RSS feeds: `\{#include fm/rss.html}`
+* Sitemaps: `\{#include fm/sitemap.xml}`
+* Easy https://iamroq.com/docs/publishing/[Github Pages deployment]
+
+and more.
+
+If you've made it this far, kudos to you, and my apologies. It kinda got away from, but there's so much cool stuff you can do with this (as an added bonus, the time it takes for the Github Action to publish my updates went from about 6 minutes with Jekyll to just over 1 minute). It's good stuff all the way down. Now quit reading and go migrate your own site. I don't think you'll regret it!
