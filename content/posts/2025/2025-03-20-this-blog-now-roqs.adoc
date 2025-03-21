@@ -8,6 +8,10 @@ author: jdlee
 status: published
 ---
 
+++++
+<img src="/images/2025/iamroq.png" alt="Roq Logo" height="250" style="float: right"/>
+++++
+
 Years ago, I started this blog on Wordpress, then moved to awestruct, then to JBake, then to Jekyll. I've not done that because I like to change things (though I must admit I've enjoyed doing it each time ;), but because I'm looking for something that best suits my needs. I need to be able to post source code. It would be nice to be able to change theming -- especially for source code -- globally and easily. A static site would be nice for both performance and security. And as icing on the cake, being able to extend the build tool would be amazing. By chance in the past week or so, I was introduced to a new a tool, https://iamroq.com[Roq], which is built in Java, and based on Quarkus. A whole lot of boxes were suddenly checked. Now, less than two weeks later, I've https://jasondl.ee/[converted] https://okcjug.org/[three] https://jberet.org/[sites], including this one. In this post, I'll walk you through building your own static site that... Roqs. :P
 
 Roq, of course, has its own https://iamroq.com/docs/getting-started/[documentation], which helped me immensely. However, as all docs go, there were some use cases that weren't covered as thoroughly as I needed (or I'm slower than I like to think), so I thought I'd add my own voice, as they say, and maybe it will help you (and maybe help beef up the official docs. Andy, Roq's author, has been super helpful and eager for feedback).
