@@ -1,6 +1,6 @@
 ---
 title: "Incorporating preview/experimental features in WildFly"
-aliases: [incorporating-experimental-features-in-wildfly]
+aliases: [2023/incorporating-experimental-features-in-wildfly]
 date: 2023-07-07
 tags: [WildFly]
 type: post

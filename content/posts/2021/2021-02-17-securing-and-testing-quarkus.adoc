@@ -1,6 +1,6 @@
 ---
 title: "Securing and Testing Quarkus Applications using Keycloak and Wiremock"
-aliases: [securing-and-testing-quarkus]
+aliases: [2021/securing-and-testing-quarkus]
 date: 2021-02-17
 tags: [Java,Quarkus,Keycloak,JUnit,Wiremock]
 type: post

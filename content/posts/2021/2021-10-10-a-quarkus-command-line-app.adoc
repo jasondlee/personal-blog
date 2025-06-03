@@ -1,6 +1,6 @@
 ---
 title: A Quarkus Command Line Application
-aliases: [a-quarkus-command-line-app]
+aliases: [2021/a-quarkus-command-line-app]
 date: 2021-10-10
 tags: [Java, Quarkus, CLI]
 type: post
