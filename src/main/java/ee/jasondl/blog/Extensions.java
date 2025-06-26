@@ -18,27 +18,8 @@ public class Extensions {
         return new AsciidocConverter().apply(rawText);
     }
 
-    public static String stripHtml(String rawText) {
-        return Jsoup.parse(rawText).text();
-    }
-
     public static String excerpt(String text) {
         int index = text.indexOf("// more");
         return (index == -1) ? text : text.substring(0, index);
-    }
-
-    public static String toCSV(JsonArray input) {
-        if (input == null) {
-            return "";
-        }
-
-        StringBuilder sb = new StringBuilder();
-        String sep = "";
-
-        for (var element : input) {
-            sb.append(sep).append(element.toString());
-            sep = ",";
-        }
-        return sb.toString();
     }
 }
