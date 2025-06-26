@@ -1,0 +1,39 @@
+---
+type: post
+title: Mobile App Development Series Introduction
+description: Series introductions
+date: 2025-06-25
+tags: [ plugin, frontmatter, guide, series ]
+series: Mobile App Development
+---
+
+In recent years, I've found myself needing to build a mobile app here or there, and it has been, at times, a bit of a struggle as the landscape -- and opinions about it -- are wide and varied. There are debates about native, hybrid, and cross-platform approaches, and once you've made that decision, you have to wade through a lot of opinions on what library to use. This is especially true for the non-native approaches. What I'd like to do, then, is provide a how-to on the approach _I_ have settled on, with a complete, working application to help someone else get started.
+
+// more
+
+What will follow here on my site is a series of posts that will describe how to get started with each architectural piece (that I'll outline below). In the process of this series, we'll build a gift-tracking application (if you attended my https://okcjug/org[] presentation in March of this year, you've seen some of this already). Since I'm a sucker for bad puns, we're going to riff on "Facebook" and call this "GiftBook". The premise is pretty simple:
+
+* You need to track gifts for multiple people
+* You will want to track multiple gift-giving occasions
+* Each person may have a target quantity or cost for each gift-giving occasion
+* For each person, you will want to track a list of gift ideas
+* Gift ideas used for one occasion will no longer be suggested for other occasions
+* On the home screen, you can select an occasion and see each recipient for that occasion, as well as a progress bar indicating how close to you are to being finished for that recipient
+
+And so on. As with just about every project, there will likely be additional features pop up as we proceed, and we'll either implement those or file them away for a future version.
+
+For the architecture, we'll use the following items:
+
+* Compose Multiplatform
+* Decompose
+* Android Room
+* Koin
+* KMP Form
+
+While we (likely) won't use these in _this_ application, I also plan to cover
+
+* Datastore
+* Ktor
+* Coil
+
+A final note: I'm a big believer in sharing what you know, even as you're learning it. There are parts of this application that will change over time as I continue to learn and refine, so you can expect some changes in already-published posts. Or maybe a follow-up. At any rate, if you're interested in mobile application development and are looking for a place to start, I hope this will be a good one. Let get started.

@@ -1,0 +1,102 @@
+---
+type: post
+title: Getting Started with Compose Multiplatform
+description: Series introductions
+date: 2025-06-26
+tags: [ plugin, frontmatter, guide, series ]
+series: Mobile App Development
+---
+
+In this installation in my Mobile App Development series, we'll take a look at the most foundational piece of the puzzle, Compose Multiplatform. We'll see what it is and how to use it.
+
+// more
+
+:toc:
+
+[#what-is-it]
+== What Is It?
+Quoting from its homepage, https://www.jetbrains.com/compose-multiplatform/[Compose Multiplatform] is "[a]n open-source, declarative framework for sharing stunning UIs across multiple platforms." It builds on two technologies: Kotlin Multiplatform, and Jetpack Compose.
+
+Quoting from _its_ homepage, https://www.jetbrains.com/kotlin-multiplatform/[Kotlin Multiplatform] "is a technology that allows you to create applications for various platforms and efficiently reuse code across them while retaining the benefits of native programming. Your applications will run on iOS, Android, macOS, Windows, Linux, and more." Kotlin Multiplatform (or KMP) encompasses a number of technologies that manage the compilation of (mostly) Kotlin-based code into native builds for a given platform. It also allows for integration with platform-specific code in instances where a lower-level integration is required (think system integration).
+
+https://developer.android.com/compose[Jetpack Compose], on the other hand, is "Android’s recommended modern toolkit for building native UI". It replaced Android's older, XML- and Java-based solution from its earlier days. It provides a lighter, more modern approach to application development that is faster on the device, and easier to maintain. It requires Kotlin, rather than Java, so it's quite a sea change for seasoned Android developers.
+
+Put together, mobile developers can now (mostly) write a single codebase with a single, shared architecture. The resulting source code is compiled to a native application, which will provide a near-native experience (in both user experience and performance) on the intended target. As I understand things, a purely Swift-based application will _probably_ perform slightly better, but only just. With each CMP release, though, performance continues to improve, so I think most developers should be well-served by CMP, given all that it offers. If you're interested in who is using CMP, you can visit its https://www.jetbrains.com/help/kotlin-multiplatform-dev/case-studies.html[case studies page].
+
+[#getting-started]
+== Getting Started
+Armed with all of that knowledge, how does one get started? Fortunately, the good folks at JetBrains provide two options, The Kotlin Multiplatform IDE plugin for IntelliJ IDEA (or Android Studio), or the https://kmp.jetbrains.com/?android=true&ios=true&iosui=compose&desktop=true&web=true&includeTests=true[KMP Wizard]. If you'd like to use the IDE, you can follow the https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-create-first-app.html#create-a-project[instructions here]. To make things simpler, we'll use the web wizard.
+
+Once you open the web wizard, you will be asked for the project name, package, and target platforms. By default, all platforms are checked. What is _not_ checked is the `Server` option at the bottom. If your application needs a backend and you'd like to write it using JetBrain's Ktor framework (personally, I'm more of a Quarkus guy), you can check that box. In our case, though, we just want to target Android and iOS, so we can uncheck everything but those two.
+
+To make things _even_ simpler, we can switch to the `Templates Gallery` tab at the top and click https://github.com/Kotlin/KMP-App-Template/archive/refs/heads/main.zip[Download] to get a zip file containing a basic project targeting Android and iOS. The only issue with this approach is that it leaves you updating the project information manually, and that can be trickier than you might expect, so I'd suggest using the wizard.
+
+Since we're going to build an application together, using the wizard, we'll configure our project like this. Feel free to use your own package name. :)
+
+++++
+<img src="{page.file("wizard.png")}" alt="wizard" class="aligncenter"/>
+++++
+
+Once you download and extract the zip, open it Android Studio. When you first open the project, you need to be prepared to wait a bit as the IDE imports the project, generates run targets, etc. When it completes, you should see a project layout that looks like this:
+
+++++
+<img src="{page.file("project.png")}" alt="project" class="aligncenter"/>
+++++
+
+There's a lot going on, so I won't try to cover it all here (we should cover most of it as we walk through the process), but a brief overview of the directories would be prudent:
+
+* `composeApp/src/commonMain`: Most of our application's code will live here.
+* `composeApp/src/androidMain`: Any Android-specific code lives here
+* `composeApp/src/iosMain`: Any iOS-specific code lives here
+* `composeApp/src/commonTest`: Unit/integration tests go here
+* `iosApp/iosApp`: The iOS wrapper code lives here. Here be dragons, and by that I mean Swift code. 🤪
+
+[#android-emulator]
+== Running the Android Emulator
+While it's not much right now, we actually have a runnable application. To run it, though, we'll need to create a virtual device. To do that, go to `Tools | Device Manager`. This will open a panel on the right. At the top, there will be a plus sign. Click that and select `Create Virtual Device`. Select `Phone` on the left and the device of your choice on the right, click `Next`, then `Finish`. There's a chance I'm missing some details as I have this already set up, so if it goes haywire, consult the Android Studio documentation.
+
+With the device created, we can now run our application using the toolbar at the top:
+
+++++
+<img src="{page.file("rundebugtoolbar.png")}" alt="rundebugtoolbar" class="aligncenter"/>
+++++
+
+When you click the `Run` button (the green triangle), after some time, you will see the emulator appear:
+
+++++
+<img src="{page.file("androidemulator.png")}" alt="android emulator" class="aligncenter"/>
+++++
+
+[#ios-emulator]
+== Running the iOS Emulator
+
+If you're on a Mac, you can run the iOS version of the application. To do so, you must first install XCode (the details of which I'll skip here. This post is long enough as it is :) and then install the iOS platform:
+
+----
+$ xcodebuild -downloadPlatform iOS
+----
+
+That will take a while, and you may need to restart Android Studio for it to pick up the target (again, my environment is already set up, so I'm having to guess a bit here). At any rate, Android Studio should now offer these options:
+
+++++
+<table style="width: 100%">
+    <tr style="vertical-align: top">
+        <td>
+            <img src="{page.file("configurationselector.png")}" alt ="configurationselector" class="aligncenter"/>
+        </td>
+        <td>
+            <img src="{page.file("iosemulatorselector.png")}" alt="iosemulatorselector" class="aligncenter"/>
+        </td>
+    </tr>
+</table>
+++++
+
+Again, clicking the `Run` button (and waiting a good long while, as the initial iOS build takes a while), we see this:
+
+++++
+<img src="{page.file("iosemulator.png")}" alt="android emulator" class="aligncenter"/>
+++++
+
+Kinda wild that it looks exactly like the Android version, right? 😛 It doesn't do much that's interesting yet, but we do have a working Compose Multiplatform application. In the next installment, we'll add what will be (for the architecture we're using), a core library: https://arkivanov.github.io/Decompose/[Decompose].
+
+Until next time...

@@ -276,3 +276,7 @@ div.ulist {
 .search-button {
     display: none;
 }
+
+section.series > ul {
+    list-style-type: none;
+}

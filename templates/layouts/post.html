@@ -10,6 +10,8 @@ link: /:year/:slug
             </h1>
             {page.date.format("EEEE, MMM d, YYYY")} | {#include partials/share-page.html /}
             <div>
+                {#include partials/roq-series /}
+
                 {#insert /}
             </div>
             <footer>
