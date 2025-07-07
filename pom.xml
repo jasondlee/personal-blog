@@ -14,8 +14,8 @@
         <skipITs>true</skipITs>
 
         <version.compiler-plugin>3.14.0</version.compiler-plugin>
-        <version.quarkus-roq>1.6.1</version.quarkus-roq>
-        <version.quarkus.platform>3.23.0</version.quarkus.platform>
+        <version.quarkus-roq>1.6.3</version.quarkus-roq>
+        <version.quarkus.platform>3.24.2</version.quarkus.platform>
         <version.surefire-plugin>3.5.3</version.surefire-plugin>
     </properties>
 
