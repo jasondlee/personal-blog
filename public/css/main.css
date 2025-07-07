@@ -280,3 +280,38 @@ div.ulist {
 section.series > ul {
     list-style-type: none;
 }
+
+div.listingblock > div.title {
+    font-style: italic;
+    background-color: var(--headerTextColor);
+}
+
+.quoteblock {
+    margin: 0 1em 1.25em 1.5em;
+    display: table;
+}
+
+.quoteblock blockquote {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.quoteblock blockquote::before {
+    content: "\201c";
+    float: left;
+    font-size: 2.75em;
+    font-weight: bold;
+    line-height: .6em;
+    margin-left: -.6em;
+    color: #7a2518;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+}
+.quoteblock blockquote, .quoteblock p {
+    color: rgba(0, 0, 0, .85);
+    font-size: 1.15rem;
+    line-height: 1.75;
+    word-spacing: .1em;
+    letter-spacing: 0;
+    font-style: italic;
+    text-align: justify;
+}

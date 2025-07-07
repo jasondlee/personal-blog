@@ -1,0 +1,136 @@
+---
+type: post
+title: What's Up with expect/actual?
+description: A brief look at Kotlin Multiplatform's expect/actual
+date: 2025-07-07
+tags: [ compose, multiplatform, android, mobile, decompose ]
+series: Mobile App Development
+---
+
+In the last link:../compose-multiplatform-with-decompose[post], we saw -- and then ignored -- a couple of interesting keywords: `expect` and `actual`. In this short post, I'll give what I hope is enough of an explanation to satisfy the mildly curious.
+
+// more
+
+:toc:
+
+To recap, the code in question looks like this:
+
+.composeApp/src/commonMain/kotlin/com/steeplesoft/giftbook/Platform.kt
+[source,kotlin]
+----
+interface Platform {
+    val name: String
+}
+
+expect fun getPlatform(): Platform
+----
+
+So... what is that? Quoting from the https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-expect-actual.html[official docs],
+
+[quote,Kotlin Multiplatform Documentation]
+____
+Expected and actual declarations allow you to access platform-specific APIs from Kotlin Multiplatform modules. You can provide platform-agnostic APIs in the common code.
+____
+
+In a nutshell, this will allow us to declare a function, property, class, interface, enumeration, or annotation in our common source set, and then implement it, using the `actual` keyword, in a platform-specific source set using APIs for that platform.
+
+.composeApp/src/androidMain/kotlin/com/steeplesoft/giftbook/Platform.android.kt
+[source,kotlin]
+----
+import android.os.Build
+
+class AndroidPlatform : Platform {
+    override val name: String = "Android $\{Build.VERSION.SDK_INT}"
+}
+
+actual fun getPlatform(): Platform = AndroidPlatform()
+----
+
+or
+
+.composeApp/src/iosMain/kotlin/com/steeplesoft/giftbook/Platform.ios.kt
+[source,kotlin]
+----
+import platform.UIKit.UIDevice
+
+class IOSPlatform: Platform {
+    override val name: String = UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
+}
+
+actual fun getPlatform(): Platform = IOSPlatform()
+----
+
+This code, straight from the Compose Multiplatform wizard, offers a pretty simple demonstration. Here, we want to display the name of the platform, but how one gets that information will involve different APIs for each of the mobile platforms. It's like a cross-platform `interface` declaration. :)
+
+Let's try another, more practical example: logging. Both Android and iOS provide their own logging framework, but we can't have platform-specific APIs in our shared code, so we can leverage `expect` and `actual` to hide those details. Let's start with the logging API wrapper:
+
+.composeApp/src/commonMain/kotlin/com/steeplesoft/giftbook/logger/AppLogger.kt
+[source,kotlin]
+----
+expect object AppLogger {
+    fun e(message: String, throwable: Throwable? = null)
+    fun d(message: String)
+    fun i(message: String)
+}
+----
+
+Nothing fancy here, just a small interface providing error, debug, and info logging functions.
+
+For the Android implementation, we might have something like this:
+
+.composeApp/src/androidMain/kotlin/com/steeplesoft/giftbook/logger/AppLogger.kt
+[source,kotlin]
+----
+import android.util.Log
+import com.steeplesoft.giftbook.TAG
+
+actual object AppLogger {
+    actual fun e(message: String, throwable: Throwable?) {
+        if (throwable != null) {
+            Log.e(TAG, message, throwable)
+        } else {
+            Log.e(TAG, message)
+        }
+    }
+
+    actual fun d(message: String) {
+        Log.d(TAG, message)
+    }
+
+    actual fun i(message: String) {
+        Log.i(TAG, message)
+    }
+}
+----
+
+and for iOS:
+
+.composeApp/src/iosMain/kotlin/com/steeplesoft/giftbook/logger/AppLogger.kt
+[source,kotlin]
+----
+import com.steeplesoft.giftbook.TAG
+import platform.Foundation.NSLog
+
+actual object AppLogger {
+    actual fun e(message: String, throwable: Throwable?) {
+        if (throwable != null) {
+            NSLog("ERROR: [$TAG] $message. Throwable: $throwable CAUSE $\{throwable.cause}")
+        } else {
+            NSLog("ERROR: [$TAG] $message")
+        }
+    }
+
+    actual fun d(message: String) {
+        NSLog("DEBUG: [$TAG] $message")
+    }
+
+    actual fun i(message: String) {
+        NSLog("INFO: [$TAG] $message")
+    }
+
+}
+----
+
+Clearly, the implementation details are pretty different, but from our shared code, we can simply call `AppLogger.d("hello")`, and the KMP build process handles the details. Note that the implementations are `actual object`, so we create a singleton instance of `AppLogger` that we can simply reference.
+
+And that's it in a nutshell. There's more to it, of course, but that should do for our purposes here for now. For more information, see the https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-expect-actual.html[aforementioned docs].
