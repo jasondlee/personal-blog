@@ -1,0 +1,253 @@
+---
+type: post
+title: Compose Multiplatform with Decompose
+description: Getting started with Decompose
+date: 2025-07-06
+tags: [ compose, multiplatform, android, mobile, decompose ]
+series: Mobile App Development
+---
+
+In this installation in my Mobile App Development series, I'm going to introduce our next architectural layer, https://arkivanov.github.io/Decompose/[Decompose]. We'll look at what it is, why you might want it, and how to get started.
+
+// more
+
+:toc:
+
+== What is Decompose?
+Decompose, other than sporting one heckuva punny name, is "Kotlin Multiplatform library for breaking down your code into lifecycle-aware business logic components (aka BLoC), with routing functionality and pluggable UI (Compose, Android Views, SwiftUI, Kotlin/React, etc.)" It is the brainchild of https://x.com/arkann1985[Arkadii Ivanov], who describes himself as a Senior Android Engineer at https://x.com[X] and former Googler. Developed from Ivanov's experience, it hides/simplifies some the complexities involved in writing Compose applications.
+
+== Why Decompose?
+But what does it offer? Quoting straight from its website,
+
+* Decompose draws clear boundaries between UI and non-UI code, which gives the following benefits:
+** Better separation of concerns
+** Pluggable platform-specific UI (Compose, SwiftUI, Kotlin/React, etc.)
+** Business logic code is testable with pure multiplatform unit tests
+* Proper dependency injection (DI) and inversion of control (IoC) via constructor, including but not limited to type-safe arguments.
+* Shared navigation logic
+* Lifecycle-aware components
+* Components in the back stack are not destroyed, they continue working in background without UI
+* Components and UI state preservation (mostly useful in Android)
+* Instances retaining (aka ViewModels) over configuration changes (mostly useful in Android)
+
+That's a pretty decent overview. If you're interested in more, please visit the Decompose site.
+
+== How to use Decompose
+
+That's all great, but how do we use it? Let's start with some terms. Decompose, as I understand it, at least, relies pretty heavily on the concept of a `Component`, which wraps your business logic. The UI is handled (in a separate file) in what the Decompose docs typically refer to as `*Content`. For example, if have a screen that lists users, you might have two files, `UserListComponent` and `UserListContent`. This provides a clean separation for business and UI logic, while logically grouping/ordering related files. What might those look like? Let's convert the standard CMP demo app for a quick and easy example.
+
+== Build Changes
+
+The first step, of course, is adding Decompose to our project. First, we'll define the dependencies in our `library`, then modify the Gradle build as needed:
+
+.gradle/libs.versions.toml
+[source,kotlin]
+----
+[versions]
+decompose = "3.3.0"
+essenty = "2.5.0"
+//...
+[libraries]
+decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
+decompose-extensions = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose" }
+essenty-lifecycle = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty" }
+essenty-statekeeper = { module = "com.arkivanov.essenty:state-keeper", version.ref = "essenty" }
+----
+
+.composeApp/build.gradle.kts
+[source,kotlin]
+----
+kotlin {
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.compilations {
+            val main by getting {
+            }
+        }
+
+        iosTarget.binaries.framework {
+            baseName = "ComposeApp"
+            isStatic = true
+
+            // Decompose
+            export(libs.decompose)
+            export(libs.decompose.extensions)
+            export(libs.essenty.lifecycle)
+            export(libs.essenty.statekeeper)
+            // Decompose
+        }
+    }
+
+    sourceSets {
+
+        commonMain.dependencies {
+            // Decompose
+            implementation(libs.decompose)
+            implementation(libs.decompose.extensions)
+            // Decompose
+        }
+        //...
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        iosMain.dependencies {
+            // Decompose
+            api(libs.decompose)
+            api(libs.decompose.extensions)
+            api(libs.essenty.lifecycle)
+            api(libs.essenty.statekeeper)
+            // Decompose
+        }
+    }
+}
+----
+
+[NOTE]
+====
+Those better versed in Gradle build magic might have a better (or at least different) way of handling dependencies, but this works for me.
+====
+
+Once you've updated your build files, make sure you tell Android Studio to reload the build files. In my experience, it is usually sufficient to click the reload button, but, for some changes, it seems some wires get crossed, requiring me to restart the editor. YMMV.
+
+== The Pieces
+
+=== GreeterComponent
+
+The demo app delivers most of the demo in the `App` class. This is the entry point into the CMP code from the platform-specific wrappers, which we'll take another look at later. With our build fixed up, we need to break this apart, so we start by renaming `Greeting` to `GreeterComponent`, and modify as follows:
+
+[source,kotlin]
+----
+class GreeterComponent(componentContext: ComponentContext) :
+    ComponentContext by componentContext {
+    private val platform = getPlatform()
+
+    fun greet(): String {
+        return "Hello, ${platform.name}!"
+    }
+}
+----
+
+Every Decompose component needs a `ComponentContext`, which allows the framework to do the things we're asking of it (lifecycles, etc). The class itself implements `ComponentContext`, which is an interface with a lot of methods on it, but the `by` keyword (for those that are curious) tells the compiler that the instance of `componentContext` will handle the functions declared by the interface, so (if I understand correctly) the compiler generates the delegation code for us, which is kinda cool. :)
+
+=== GreeterContent
+
+Next, we need to create the view, which is basically a file with a `@Composable` function in it. I do, though, like to put functions in a package, so I tell Android Studio to create a new class (`GreeterContent` in this case), then replace the class definition with this:
+
+[source,kotlin]
+----
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import giftbook.composeapp.generated.resources.Res
+import giftbook.composeapp.generated.resources.compose_multiplatform
+import org.jetbrains.compose.resources.painterResource
+
+@Composable
+fun greeter(
+    component: GreeterComponent,
+    modifier: Modifier = Modifier
+) {
+    var showContent by remember { mutableStateOf(false) }
+    Column(
+        modifier = Modifier
+            .safeContentPadding()
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Button(onClick = { showContent = !showContent }) {
+            Text("Click me!")
+        }
+        AnimatedVisibility(showContent) {
+            val greeting = remember { component.greet() } // !!!
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Image(painterResource(Res.drawable.compose_multiplatform), null)
+                Text("Compose: $greeting")
+            }
+        }
+    }
+}
+----
+
+The body of this function is basically the body of the original `App` function, though we need replace the `Greeter` construction with a reference to the `GreetingComponent` instance, `component`. We still don't have a runnable application, though, so let's fix that now.
+
+=== Platform Entry Points
+
+While Compose Multiplatform lets us _mostly_ avoid platform-specific concerns, there are obvious exceptions. The most pressing concern, of course, is bootstrapping the application, but there are others, particularly around some hardware interactions, but we won't discuss those in this series. Probably.
+
+To start, let's look at the Android `MainActivity`:
+
+[source,kotlin]
+----
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import com.arkivanov.decompose.defaultComponentContext
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
+
+        // Always create the root component outside Compose on the main thread
+        val rootComponent = GreeterComponent(defaultComponentContext())
+
+        setContent {
+            App(rootComponent)
+        }
+    }
+}
+----
+
+And the iOS `MainViewController`:
+
+[source,kotlin]
+----
+import androidx.compose.runtime.remember
+import androidx.compose.ui.window.ComposeUIViewController
+import com.arkivanov.decompose.DefaultComponentContext
+import com.arkivanov.essenty.lifecycle.ApplicationLifecycle
+
+fun MainViewController() = ComposeUIViewController {
+    val rootComponent = remember {
+        GreeterComponent(DefaultComponentContext(ApplicationLifecycle()))
+    }
+    App(rootComponent)
+}
+----
+
+You've probably noticed the req squiglly on the `App()` invocations. We need to fix up that function now:
+
+[source,kotlin]
+----
+fun App(component: GreeterComponent) {
+    AppTheme {
+        greeter(component)
+    }
+}
+----
+
+With those changes in place, you should now be able to run either the ` composeApp` or `iosApp` configurations and see the changes in action. Visually, you should look identical to the non-Decompose version.
+
+== Is That It?
+
+Yes, that's it for now. There is, of course, much more to cover, such as that odd `expect fun getPlatform(): Platform` found in `Platform.kt`, and there's the ever important topic of navigation, but that's enough for this slice. Next, we'll take a quick look at `expect`/`actual`, and then we'll take a look at how Decompose supports navigation. If you're brave enough, you can read the documentation and work it out yourself, of course.
+
+Until next time...

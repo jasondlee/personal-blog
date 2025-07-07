@@ -3,7 +3,7 @@ type: post
 title: Mobile App Development Series Introduction
 description: Series introductions
 date: 2025-06-25
-tags: [ plugin, frontmatter, guide, series ]
+tags: [ compose, multiplatform, android, mobile ]
 series: Mobile App Development
 ---
 

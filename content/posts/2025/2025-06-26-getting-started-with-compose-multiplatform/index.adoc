@@ -3,7 +3,7 @@ type: post
 title: Getting Started with Compose Multiplatform
 description: Series introductions
 date: 2025-06-26
-tags: [ plugin, frontmatter, guide, series ]
+tags: [ compose, multiplatform, android, mobile ]
 series: Mobile App Development
 ---
 
