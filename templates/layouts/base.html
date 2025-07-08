@@ -1,29 +1,28 @@
+---
+title: Coming Up for Air
+description: The online home of Jason Lee, Enterprise Edition :)
+image: profile-pic.jpg
+author: Jason Lee
+twitter: jasondlee
+site_name: Coming Up for Air
+---
 <!DOCTYPE html>
 <html>
 <head>
     <title>Coming Up for Air {#if page.title}: {page.title}{/if}</title>
+
     {#bundle /}
     {#seo page site /}
-    <meta property="og:image" content="{site.url('/images/profile-pic.jpg').absolute}" />
+
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+    <link rel="author" href="/images/profile-pic.jpg"/>
+
+    {#ga4 tag="3GQK1YDRQM" /}
     {#rss site /}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQK1YDRQM"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-
-        gtag('config', 'G-3GQK1YDRQM');
-    </script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
 
     <link rel="stylesheet" href="/css/main.css" />
 
@@ -33,7 +32,6 @@
     <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
 
     <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
-    <link rel="author" href="/images/profile-pic.jpg"/>
     {#search-script /}
 </head>
 <body>
@@ -45,7 +43,6 @@
     </div>
 </div>
 <div class="grid main">
-    <!-- { #search-overlay / } -->
     {#insert /}
 </div>
 <div class="footer">
