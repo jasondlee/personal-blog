@@ -3,6 +3,7 @@ title: "Quarkus for Frontend Devs"
 date: 2023-08-11
 tags: [Quarkus,JavaScript,Getting Started]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: highlight.js

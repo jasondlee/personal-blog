@@ -3,6 +3,7 @@ title: "The Means Stultify the End"
 date: 2008-09-12
 tags: [General, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = The Means Stultify the End

@@ -3,6 +3,7 @@ title: "Sandbox Demo and Nightlies Available"
 date: 2007-02-23
 tags: [Java, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Sandbox Demo and Nightlies Available

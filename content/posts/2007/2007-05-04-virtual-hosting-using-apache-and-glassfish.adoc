@@ -3,6 +3,7 @@ title: "Virtual Hosting using Apache and GlassFish"
 date: 2007-05-04
 tags: [GlassFish, Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Virtual Hosting using Apache and GlassFish

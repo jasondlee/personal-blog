@@ -3,6 +3,7 @@ title: "JSF and File Downloads"
 date: 2006-04-04
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSF and File Downloads

@@ -3,6 +3,7 @@ title: "OC4J Seam Archetype Update"
 date: 2007-10-25
 tags: [JPA, Maven, OC4J, Seam]
 type: post
+link: /:year/:slug
 status: published
 ---
 = OC4J Seam Archetype Update

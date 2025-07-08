@@ -3,6 +3,7 @@ title: "Jerkey: A Kotlin DSL for Jersey"
 date: 2018-04-11
 tags: [Kotlin, Jersey, REST]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

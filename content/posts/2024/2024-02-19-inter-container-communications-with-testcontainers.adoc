@@ -3,6 +3,7 @@ title: "Inter-container Communications with Testcontainers"
 date: 2024-02-19
 tags: [Testcontainers]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: pygments

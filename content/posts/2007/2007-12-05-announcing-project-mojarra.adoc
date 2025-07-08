@@ -3,6 +3,7 @@ title: "Announcing Project Mojarra"
 date: 2007-12-05
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Announcing Project Mojarra

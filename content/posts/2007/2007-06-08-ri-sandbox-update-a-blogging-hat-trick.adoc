@@ -3,6 +3,7 @@ title: "RI Sandbox Update:  A Blogging Hat Trick"
 date: 2007-06-08
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = RI Sandbox Update:  A Blogging Hat Trick

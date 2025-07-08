@@ -3,6 +3,7 @@ title: "CommunityOne 2009"
 date: 2009-06-02
 tags: [JavaOne, JavaOne]
 type: post
+link: /:year/:slug
 status: published
 ---
 = CommunityOne 2009

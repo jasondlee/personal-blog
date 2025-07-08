@@ -3,6 +3,7 @@ title: "Another RI Sandbox Progress Report"
 date: 2007-06-15
 tags: [Java, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Another RI Sandbox Progress Report
@@ -25,6 +26,6 @@ and several minor fixes here and there.  Having done that, I've bumped the versi
 * Post 1.0
 ** Lazy loading the tree (https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=588[588])
 ** Animations (https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=585[585])
-** MyFaces support (https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=564'[564] - I may just make these all 1.2-only since MyFaces 1.2 finally appears to be close) 
+** MyFaces support (https://javaserverfaces.dev.java.net/issues/show_bug.cgi?id=564'[564] - I may just make these all 1.2-only since MyFaces 1.2 finally appears to be close)
 
 If you have any comments, questions, suggestions, etc., please let me know here or in the issue https://javaserverfaces.dev.java.net/issues/enter_bug.cgi?issue_type: DEFECT&subcomponent=sandbox[tracker].

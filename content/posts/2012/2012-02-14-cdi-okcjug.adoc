@@ -3,6 +3,7 @@ title: "CDI @OKCJUG"
 date: 2012-02-14
 tags: [CDI, CDI, Java EE, OKCJUG]
 type: post
+link: /:year/:slug
 status: published
 ---
 = CDI @OKCJUG

@@ -3,6 +3,7 @@ title: "What&#039;s Happening In the World of Mojarra Scales?"
 date: 2009-02-23
 tags: [GlassFish, JSF, Kenai, Mojarra, Scales]
 type: post
+link: /:year/:slug
 status: published
 ---
 = What&#039;s Happening In the World of Mojarra Scales?

@@ -3,6 +3,7 @@ title: "GlassFish 3.1.2, REST Security, and the Jersey Client"
 date: 2012-03-12
 tags: [GlassFish, REST]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish 3.1.2, REST Security, and the Jersey Client

@@ -4,6 +4,7 @@ date: 2011-11-22
 tags: [Android, Maven, Testing, VirtualBox]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Testing Android Applications with Maven, Android-x86 and VirtualBox

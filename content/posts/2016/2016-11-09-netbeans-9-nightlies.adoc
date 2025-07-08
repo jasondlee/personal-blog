@@ -3,6 +3,7 @@ title: "NetBeans 9 Nightlies"
 date: 2016-11-09
 tags: [NetBeans]
 type: post
+link: /:year/:slug
 status: published
 ---
 

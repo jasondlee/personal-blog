@@ -3,6 +3,7 @@ title: "JSF 2.0 Public Review is online"
 date: 2008-12-01
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSF 2.0 Public Review is online

@@ -3,6 +3,7 @@ title: "Writing Pluggable Java EE Applications, The Explanation"
 date: 2012-07-10
 tags: [CDI, Java EE, JSF, REST]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Writing Pluggable Java EE Applications, The Explanation
@@ -379,6 +380,3 @@ When the REST application is initialized, this class is loaded and exposed at `/
 
 == Conclusion ==
 There are many, many plugin systems available for Java applications.  It might be that one of these systems, modeled after or borrowed from, for example, http://hudson-ci.org[Hudson] or others, is the best choice for your application.  I think that chances are good, though, that you need not resort to such a relatively complex system. The Java EE platform provides a rich set of APIs that will allow you to implement an domain-specific plugin system very simply, and with the introduction of another external dependency.
-
-
-

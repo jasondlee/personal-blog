@@ -3,6 +3,7 @@ title: "Resurrecting Turbo Vision"
 date: 2018-04-23
 tags: [TurboVision, Java]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

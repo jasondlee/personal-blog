@@ -3,13 +3,14 @@ title: "Yahoo! UI and JSF Update"
 date: 2006-12-14
 tags: [Java, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Yahoo! UI and JSF Update
 Jason Lee
 2006-12-14
 
-I've had several people ask for an update on where things stand with my YUI components and their JSF component wrappers, so I figure I should take the time to answer that question. 
+I've had several people ask for an update on where things stand with my YUI components and their JSF component wrappers, so I figure I should take the time to answer that question.
 // more
 
 In terms of the _state_ of the components, I currently have (admittedly basic) support for three components:  `Calendar`, `Menu` and `TreeView`.  Of the three, the `Calendar` seems to be the most "complete" in terms of how _I_ intend to use it, i.e., as a pop-up, one-up calendar.  I'd like to add support for two-ups, as well as an always-showing form.  I have not had the need to use it in such ways, so those have remained on the to do list, but they're certainly there.

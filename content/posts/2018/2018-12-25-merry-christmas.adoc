@@ -3,6 +3,7 @@ title: "Merry Christmas, 2018"
 date: 2018-12-25
 tags: [Personal]
 type: post
+link: /:year/:slug
 status: published
 ---
 

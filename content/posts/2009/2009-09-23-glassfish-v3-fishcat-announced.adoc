@@ -3,6 +3,7 @@ title: "GlassFish v3 FishCAT Announced"
 date: 2009-09-23
 tags: [GlassFish]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish v3 FishCAT Announced

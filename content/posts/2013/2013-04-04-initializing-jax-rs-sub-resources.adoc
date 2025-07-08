@@ -3,6 +3,7 @@ title: "Initializing JAX-RS Sub-resources"
 date: 2013-04-04
 tags: [Java, Java EE, JAX-RS, REST]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Initializing JAX-RS Sub-resources

@@ -3,6 +3,7 @@ title: "New Components in Mojarra Scales: Part III – sc:imageZoomer and sc:lig
 date: 2010-02-18
 tags: [Components, JSF, Scales]
 type: post
+link: /:year/:slug
 status: published
 ---
 = New Components in Mojarra Scales: Part III – sc:imageZoomer and sc:lightbox

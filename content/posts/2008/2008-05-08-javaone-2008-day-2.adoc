@@ -3,6 +3,7 @@ title: "JavaOne 2008: Day 2"
 date: 2008-05-08
 tags: [Java, JavaOne]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JavaOne 2008: Day 2
@@ -12,7 +13,7 @@ Jason Lee
 Day 2 of JavaOne is effectively over.  As I sit here typing, I have one more event, the hands-on-lab Plug Into GlassFish™ V3 With JavaServer™ Faces and jMaki in about an hour, which should be really good.  It's basically a lab showing how to do what Jerome demoed yesterday afternoon in the general session when he added a feature to the GlassFish admin console.
 // more
 
-The day has been pretty good.  I skipped the Oracle general session this morning, but I was told that they announced that they are releasing Eclipse plug-ins that offer some of JDev's functionality with regard to the Oracle ESB.  While that doesn't help us NetBeans users, it _is_ is good news for Eclipse users, as now they won't be forced to use JDev if they have to talk to the Oracle ESB.  
+The day has been pretty good.  I skipped the Oracle general session this morning, but I was told that they announced that they are releasing Eclipse plug-ins that offer some of JDev's functionality with regard to the Oracle ESB.  While that doesn't help us NetBeans users, it _is_ is good news for Eclipse users, as now they won't be forced to use JDev if they have to talk to the Oracle ESB.
 
 Another announcement I somehow missed is Sun's announcement of a partnership with Liferay, which is really good news, I think.  In a former life, I used Liferay briefly.  While I didn't get the chance to become really proficient with the system, I really liked it.  I think I might take a look at that as a solution for the OKC JUG (assuming I can solve the Java hosting issue).  http://blogs.sun.com/bytor/entry/sun_liferay_initiative[Here] are more details on the announcement, if you're interested.
 

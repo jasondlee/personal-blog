@@ -3,6 +3,7 @@ title: "TinyMCE Support in the Sandbox"
 date: 2007-04-16
 tags: [Java, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = TinyMCE Support in the Sandbox

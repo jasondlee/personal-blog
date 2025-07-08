@@ -3,6 +3,7 @@ title: "Putting Facelets in a Jar"
 date: 2010-05-04
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Putting Facelets in a Jar

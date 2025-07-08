@@ -3,6 +3,7 @@ title: "JavaFX and Maven"
 date: 2014-06-09
 tags: [JavaFX, Maven]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JavaFX and Maven

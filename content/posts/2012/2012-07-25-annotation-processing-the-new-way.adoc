@@ -3,6 +3,7 @@ title: "Annotation Processing the New Way"
 date: 2012-07-25
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Annotation Processing the New Way

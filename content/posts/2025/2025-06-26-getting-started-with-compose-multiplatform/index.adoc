@@ -1,5 +1,6 @@
 ---
 type: post
+link: /:year/:slug
 title: Getting Started with Compose Multiplatform
 description: Series introductions
 date: 2025-06-26

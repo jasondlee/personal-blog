@@ -3,6 +3,7 @@ title: "Hands-free Flyway and jOOQ"
 date: 2020-05-14
 tags: [Maven,Flyway,jOOQ]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: highlight.js

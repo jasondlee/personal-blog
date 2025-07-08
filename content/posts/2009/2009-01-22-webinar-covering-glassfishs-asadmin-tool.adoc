@@ -3,6 +3,7 @@ title: "Webinar Covering GlassFish's ASadmin Tool"
 date: 2009-01-22
 tags: [Aquarium, GlassFish, webinar]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Webinar Covering GlassFish's ASadmin Tool
@@ -10,7 +11,7 @@ Jason Lee
 2009-01-22
 
 
-Today at 1:00PM CST, the GlassFish team will host a webinar discussing the asadmin utility that ships with GlassFish.  Here's the official annoucment by Eduardo Pelegri-Llopart (webified be me : 
+Today at 1:00PM CST, the GlassFish team will host a webinar discussing the asadmin utility that ships with GlassFish.  Here's the official annoucment by Eduardo Pelegri-Llopart (webified be me :
 
 _____
 This week's webinar set presents ASadmin, the GlassFish administration CLI.  The GlassFish GUI console is well designed and very well appreciated by the users but GUIs are not best for automation and power users tend to use CLIs for that reason.  The ASadmin console has been called the "hidden gem" in GlassFish; hopefully this webinar will make it a bit less hidden.

@@ -3,6 +3,7 @@ title: "A Seam+JPA/Hibernate on OC4J Maven 2 Archetype"
 date: 2007-10-25
 tags: [JPA, Maven, OC4J, Seam]
 type: post
+link: /:year/:slug
 status: published
 ---
 = A Seam+JPA/Hibernate on OC4J Maven 2 Archetype

@@ -3,6 +3,7 @@ title: "A Disappointing Wait"
 date: 2006-09-01
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = A Disappointing Wait

@@ -3,6 +3,7 @@ title: "Kotlin-RS"
 date: 2015-11-03
 tags: [Kotlin, JAX-RS]
 type: post
+link: /:year/:slug
 status: published
 ---
 

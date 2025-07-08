@@ -3,6 +3,7 @@ title: "Site Outage"
 date: 2007-03-19
 tags: [General]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Site Outage

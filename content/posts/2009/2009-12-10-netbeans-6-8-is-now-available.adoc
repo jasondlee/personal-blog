@@ -3,6 +3,7 @@ title: "NetBeans 6.8 Is Now Available"
 date: 2009-12-10
 tags: [NetBeans]
 type: post
+link: /:year/:slug
 status: published
 ---
 = NetBeans 6.8 Is Now Available
@@ -13,7 +14,7 @@ While we're making product announcements, I might as well mention that NetBeans 
 // more
 
 _____
-Today Sun and the NetBeans(TM) community are announcing the availability of the NetBeans Integrated Development Environment (IDE) 6.8 -- in conjunction with the availability of Java(TM) Platform Enterprise Edition 6 (Java EE 6) and Sun GlassFish(TM) Enterprise Server v3. The NetBeans 6.8 IDE is the first IDE to provide complete support for Java EE 6 and GlassFish v3, and offers other new and exciting features. 
+Today Sun and the NetBeans(TM) community are announcing the availability of the NetBeans Integrated Development Environment (IDE) 6.8 -- in conjunction with the availability of Java(TM) Platform Enterprise Edition 6 (Java EE 6) and Sun GlassFish(TM) Enterprise Server v3. The NetBeans 6.8 IDE is the first IDE to provide complete support for Java EE 6 and GlassFish v3, and offers other new and exciting features.
 
 The NetBeans IDE 6.8 is available for download free of charge at www.netbeans.org.
 

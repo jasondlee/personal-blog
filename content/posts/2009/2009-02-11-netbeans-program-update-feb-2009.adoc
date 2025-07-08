@@ -3,6 +3,7 @@ title: "NetBeans Program Update - Feb 2009"
 date: 2009-02-11
 tags: [NetBeans]
 type: post
+link: /:year/:slug
 status: published
 ---
 = NetBeans Program Update - Feb 2009

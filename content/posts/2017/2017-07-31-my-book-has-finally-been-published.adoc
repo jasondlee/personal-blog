@@ -3,13 +3,14 @@ title: "My Book Has Finally Been Published"
 date: 2017-07-31
 tags: [General, Java 9]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---
 
 image:/images/2017/j9pb.png[Java 9 Programming Blueprints, float="right", style="padding-left:10px; padding-bottom: 10px;" link=https://www.packtpub.com/application-development/java-9-programming-blueprints]
 
-As the title states, my book has finally been published. You can get it (and you know you 
+As the title states, my book has finally been published. You can get it (and you know you
 want to)  at a number of places:
 
 * https://www.packtpub.com/application-development/java-9-programming-blueprints[Packt]

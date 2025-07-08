@@ -3,6 +3,7 @@ title: "UPDATED: Web Beans Webinar"
 date: 2009-05-11
 tags: [Aquarium, JSF, Seam, Web Beans]
 type: post
+link: /:year/:slug
 status: published
 ---
 = UPDATED: Web Beans Webinar

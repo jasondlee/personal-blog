@@ -3,6 +3,7 @@ title: "Converting Many Images to One PDF"
 date: 2012-09-05
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Converting Many Images to One PDF

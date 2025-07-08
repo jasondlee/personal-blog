@@ -3,6 +3,7 @@ title: "JSFTemplating Meets Facelets"
 date: 2007-04-04
 tags: [Java, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSFTemplating Meets Facelets

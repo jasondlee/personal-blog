@@ -3,6 +3,7 @@ title: "Bootstrapping a JSF 2 project"
 date: 2009-01-12
 tags: [JSF, Tutorials]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Bootstrapping a JSF 2 project

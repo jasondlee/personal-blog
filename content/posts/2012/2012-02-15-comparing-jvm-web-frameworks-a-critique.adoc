@@ -3,6 +3,7 @@ title: "Comparing JVM Web Frameworks - A Critique"
 date: 2012-02-15
 tags: [Java, Java EE]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Comparing JVM Web Frameworks - A Critique

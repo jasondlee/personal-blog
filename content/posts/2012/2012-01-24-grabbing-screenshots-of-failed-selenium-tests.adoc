@@ -4,6 +4,7 @@ date: 2012-01-24
 tags: [Java, Selenium, Testing]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Grabbing Screenshots of Failed Selenium Tests

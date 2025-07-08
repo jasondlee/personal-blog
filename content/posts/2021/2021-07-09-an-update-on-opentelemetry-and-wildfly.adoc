@@ -3,6 +3,7 @@ title: "An Update on OpenTelemetry and WildFly"
 date: 2021-07-09
 tags: [Java,Jakarta EE,WildFly,OpenTelemetry,Microservices]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

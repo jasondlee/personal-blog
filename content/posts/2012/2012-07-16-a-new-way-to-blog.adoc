@@ -3,6 +3,7 @@ title: "A New Way to Blog"
 date: 2012-07-16
 tags: [General]
 type: post
+link: /:year/:slug
 status: published
 ---
 = A New Way to Blog

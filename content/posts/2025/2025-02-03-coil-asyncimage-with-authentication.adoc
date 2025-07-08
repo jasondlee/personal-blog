@@ -3,6 +3,7 @@ title: "Coil AsyncImage with Authentication"
 date: 2025-02-03
 tags: [ Android, Kotlin Multiplatform, Coil]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: pygments

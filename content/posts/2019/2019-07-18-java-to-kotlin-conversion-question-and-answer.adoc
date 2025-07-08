@@ -3,6 +3,7 @@ title: "Java to Kotlin Conversion Question. And Answer."
 date: 2019-07-18
 tags: [Kotlin]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

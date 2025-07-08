@@ -3,6 +3,7 @@ title: "An Introduction to Programming with Minecraft at the Oklahoma City JUG"
 date: 2015-06-30
 tags: [Java, JUG, Minecraft]
 type: post
+link: /:year/:slug
 status: published
 ---
 

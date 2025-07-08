@@ -3,6 +3,7 @@ title: "A Little Less Spring in Our Step?"
 date: 2006-05-22
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = A Little Less Spring in Our Step?

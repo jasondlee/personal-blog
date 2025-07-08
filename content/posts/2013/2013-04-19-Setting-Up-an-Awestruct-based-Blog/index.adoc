@@ -3,6 +3,7 @@ title: "Setting Up an Awestruct-based Blog"
 date: 2013-04-19
 tags: [Awestruct]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Setting Up an Awestruct-based Blog

@@ -3,6 +3,7 @@ title: "Review: Building Ajax JSF Components"
 date: 2006-10-12
 tags: [Java, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Review: Building Ajax JSF Components

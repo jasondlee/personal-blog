@@ -3,6 +3,7 @@ title: "A Jersey POJOMapping Client/Server Example"
 date: 2012-01-26
 tags: [Java EE, JAX-RS, Jersey, REST]
 type: post
+link: /:year/:slug
 status: published
 ---
 = A Jersey POJOMapping Client/Server Example

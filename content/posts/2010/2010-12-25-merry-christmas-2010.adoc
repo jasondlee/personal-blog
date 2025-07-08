@@ -3,6 +3,7 @@ title: "Merry Christmas, 2010"
 date: 2010-12-25
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Merry Christmas, 2010

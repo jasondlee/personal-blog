@@ -3,6 +3,7 @@ title: "GlassFish v3 Virtual Conference"
 date: 2009-12-15
 tags: [GlassFish, Java, Java EE, JPA, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish v3 Virtual Conference

@@ -3,6 +3,7 @@ title: Merry Christmas, 2021
 date: 2021-12-25
 tags: [Personal]
 type: post
+link: /:year/:slug
 status: published
 ---
 
@@ -12,4 +13,4 @@ would find real, lasting hope, in the birth the baby we celebrate today, Jesus C
 image::/images/2021/emmanuel.png[]
 
 
-(https://twitter.com/billmounce/status/1474469935782846468[Image source]. Thanks, Dr. Mounce :) 
+(https://twitter.com/billmounce/status/1474469935782846468[Image source]. Thanks, Dr. Mounce :)

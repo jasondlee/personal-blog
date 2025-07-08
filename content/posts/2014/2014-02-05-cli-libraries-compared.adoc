@@ -3,6 +3,7 @@ title: "CLI Libraries Compared"
 date: 2014-02-05
 tags: [Java, CLI]
 type: post
+link: /:year/:slug
 status: published
 author: Jason Lee
 ---

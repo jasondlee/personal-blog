@@ -3,6 +3,7 @@ title: "Seam, WebBeans and GlassFish"
 date: 2008-11-18
 tags: [EJB3, GlassFish, JSF, Seam]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Seam, WebBeans and GlassFish

@@ -3,6 +3,7 @@ title: "Changing the GlassFish Admin Users's Password Programmatically"
 date: 2015-05-29
 tags: [GlassFish, REST, Docker]
 type: post
+link: /:year/:slug
 status: published
 ---
 

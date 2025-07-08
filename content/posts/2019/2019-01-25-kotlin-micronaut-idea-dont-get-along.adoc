@@ -3,6 +3,7 @@ title: "Kotlin+Micronaut and IDEA Don't Get Along Together"
 date: 2019-01-25
 tags: [Kotlin,Micronaut,IDEA]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

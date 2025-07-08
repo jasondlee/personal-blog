@@ -3,6 +3,7 @@ title: "Interested in Remote Method Calls via JS in JSF?"
 date: 2010-09-21
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Interested in Remote Method Calls via JS in JSF?

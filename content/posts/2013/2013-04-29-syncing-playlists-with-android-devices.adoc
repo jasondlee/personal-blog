@@ -4,6 +4,7 @@ date: 2013-04-29
 tags: [Android, Bash]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Syncing Playlists with Android Devices

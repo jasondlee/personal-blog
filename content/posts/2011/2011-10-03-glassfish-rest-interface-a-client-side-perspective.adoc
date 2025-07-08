@@ -3,6 +3,7 @@ title: "GlassFish REST Interface, a Client-side Perspective"
 date: 2011-10-03
 tags: [GlassFish, REST]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish REST Interface, a Client-side Perspective

@@ -4,6 +4,7 @@ link: /2025/a-recap-of-my-night-at-the-okcjug
 date: 2025-03-12
 tags: [ Android, Kotlin Multiplatform]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: pygments

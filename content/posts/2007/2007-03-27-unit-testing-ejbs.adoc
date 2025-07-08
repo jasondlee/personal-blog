@@ -4,6 +4,7 @@ date: 2007-03-27
 tags: [EJB3, Java, Testing]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Unit Testing EJBs

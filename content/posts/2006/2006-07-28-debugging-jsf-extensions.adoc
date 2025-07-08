@@ -3,6 +3,7 @@ title: "Debugging jsf-extensions"
 date: 2006-07-28
 tags: [Java, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Debugging jsf-extensions

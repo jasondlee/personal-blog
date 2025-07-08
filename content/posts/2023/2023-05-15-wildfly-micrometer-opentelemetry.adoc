@@ -3,6 +3,7 @@ title: "WildFly, Micrometer, and OpenTelemetry"
 date: 2023-05-15
 tags: [WildFly,Micrometer,OpenTelemetry]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: highlight.js

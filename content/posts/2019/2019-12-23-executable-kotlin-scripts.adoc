@@ -3,6 +3,7 @@ title: "Executable Kotlin Scripts"
 date: 2019-12-23
 tags: [Kotlin]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

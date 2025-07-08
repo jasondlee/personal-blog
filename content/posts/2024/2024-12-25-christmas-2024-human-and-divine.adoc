@@ -3,6 +3,7 @@ title: Christmas 2024 - Human and Divine
 date: 2024-12-25
 tags: [Personal]
 type: post
+link: /:year/:slug
 status: published
 ---
 

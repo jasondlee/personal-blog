@@ -3,6 +3,7 @@ title: "JavaServer Faces 2.0 Is Final!"
 date: 2009-05-27
 tags: [JSF, JCP, Mojarra]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JavaServer Faces 2.0 Is Final!

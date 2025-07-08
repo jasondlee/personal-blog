@@ -3,6 +3,7 @@ title: "Setting Up a New Web Site on DreamHost"
 date: 2009-11-03
 tags: [General]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Setting Up a New Web Site on DreamHost

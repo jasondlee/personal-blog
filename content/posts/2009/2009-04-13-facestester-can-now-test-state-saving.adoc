@@ -4,6 +4,7 @@ date: 2009-04-13
 tags: [FacesTester, JSF, Testing]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = FacesTester Can Now Test State Saving

@@ -3,6 +3,7 @@ title: "JavaOne on Your Google Calendar"
 date: 2008-04-29
 tags: [Java, JavaOne]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JavaOne on Your Google Calendar

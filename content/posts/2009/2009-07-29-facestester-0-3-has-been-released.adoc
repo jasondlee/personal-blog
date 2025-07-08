@@ -4,6 +4,7 @@ date: 2009-07-29
 tags: [FacesTester, JSF, Testing]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = FacesTester 0.3 Has Been Released

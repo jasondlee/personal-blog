@@ -3,6 +3,7 @@ title: "Testing Spring Repositories with Flyway"
 date: 2019-12-20
 tags: [Testing,SQL,Spring,Flyway]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

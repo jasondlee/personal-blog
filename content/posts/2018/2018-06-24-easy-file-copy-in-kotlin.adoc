@@ -3,6 +3,7 @@ title: "Easy File Copy in Kotlin"
 date: 2018-06-24
 tags: [Kotlin]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

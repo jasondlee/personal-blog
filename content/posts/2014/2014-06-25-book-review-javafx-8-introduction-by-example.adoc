@@ -4,6 +4,7 @@ date: 2014-06-25
 tags: [JavaFX, Reviews]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Book Review: JavaFX 8: Introduction by Example
@@ -28,7 +29,7 @@ image:http://www.apress.com/media/catalog/product/cache/9/image/9df78eab33525d08
 . JavaFX and Arduino
 . JavaFX on the Raspberry Pi
 . Gesture-based Interfaces
-. Appendix A. References 
+. Appendix A. References
 
 As you can see, there is wide array of topics, starting with some very fundamental topics (covering JavaFX and Java 8 fundamentals), then moving on to more complex topics. If you're familiar with the updates in Java 8, then chapter 3 can probably be safely skipped, but chapter lays the foundation on which the rest of the book is read.
 
@@ -38,6 +39,6 @@ The book ends with what I would consider a bit more advanced topic: JavaFX and t
 
 The last chapter (actually an appendix), is called "References", and it is exactly that: 16 pages of links, and it might be one of the best parts of the book. Being an introduction to JavaFX, there's no way the authors can cover everything you need to know about the topic, so Appendix A comes to the rescue with link after link to help you go deeper. Topics include: Java 8 SDK and APIs, IDEs, Properties and Bindings, Layouts, Tools, Enterprise GUI Frameworks, and on and on. If my count is correct, there are links to 210 difference resources. I don't remember the last time I saw such an exhaustive list in a book like this.
 
-As I said at the beginning, this is a very solid introduction to JavaFX. The prose is well-written and easy to follow, and there are ample, ready to use examples for each topic. If you are interested in JavaFX in even the slightest way, this is a great place to start. 
+As I said at the beginning, this is a very solid introduction to JavaFX. The prose is well-written and easy to follow, and there are ample, ready to use examples for each topic. If you are interested in JavaFX in even the slightest way, this is a great place to start.
 
 In case you missed the link earlier, you can purchase the book direct from the publishers http://www.apress.com/9781430264606[here].

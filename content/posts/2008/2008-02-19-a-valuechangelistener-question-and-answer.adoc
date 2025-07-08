@@ -3,6 +3,7 @@ title: "A ValueChangeListener Question and Answer"
 date: 2008-02-19
 tags: [JSF, Tutorials]
 type: post
+link: /:year/:slug
 status: published
 ---
 = A ValueChangeListener Question and Answer

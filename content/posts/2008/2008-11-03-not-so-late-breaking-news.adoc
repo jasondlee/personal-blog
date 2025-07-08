@@ -3,6 +3,7 @@ title: "Not So Late Breaking News"
 date: 2008-11-03
 tags: [General, GlassFish]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Not So Late Breaking News

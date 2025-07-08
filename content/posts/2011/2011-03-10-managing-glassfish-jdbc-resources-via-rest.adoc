@@ -3,6 +3,7 @@ title: "Managing GlassFish JDBC Resources via REST"
 date: 2011-03-10
 tags: [GlassFish, REST]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Managing GlassFish JDBC Resources via REST

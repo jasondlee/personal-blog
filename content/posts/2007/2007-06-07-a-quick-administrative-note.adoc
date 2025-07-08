@@ -3,6 +3,7 @@ title: "A Quick Administrative Note"
 date: 2007-06-07
 tags: [General]
 type: post
+link: /:year/:slug
 status: published
 ---
 = A Quick Administrative Note

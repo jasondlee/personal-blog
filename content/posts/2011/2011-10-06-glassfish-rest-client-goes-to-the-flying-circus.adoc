@@ -3,6 +3,7 @@ title: "GlassFish REST Client Goes to the Flying Circus"
 date: 2011-10-06
 tags: [GlassFish, Java, Python, REST]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish REST Client Goes to the Flying Circus

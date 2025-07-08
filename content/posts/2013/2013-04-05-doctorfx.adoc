@@ -3,6 +3,7 @@ title: "DoctorFX"
 date: 2013-04-05
 tags: [JavaFX, AsciiDoc]
 type: post
+link: /:year/:slug
 status: published
 ---
 = DoctorFX

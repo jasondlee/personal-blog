@@ -3,6 +3,7 @@ title: "Gradle, 'provided' scope, and Java EE 7"
 date: 2013-08-22
 tags: [Gradle, Java EE]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Gradle, 'provided' scope, and Java EE 7

@@ -4,6 +4,7 @@ date: 2011-02-22
 tags: [GlassFish, Java, Java EE, Tutorials]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Java EE&#039;s Buried Treasure: the Application Client Container

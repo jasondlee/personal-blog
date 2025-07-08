@@ -3,6 +3,7 @@ title: "Maven and Annotations: Not as Easy as It Should Be"
 date: 2008-07-11
 tags: [Ant, Java, Maven]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Maven and Annotations: Not as Easy as It Should Be

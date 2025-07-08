@@ -3,6 +3,7 @@ title: "Mojarra Scales Gets a Z-Order Update"
 date: 2009-01-16
 tags: [Java, JSF, Scales]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Mojarra Scales Gets a Z-Order Update

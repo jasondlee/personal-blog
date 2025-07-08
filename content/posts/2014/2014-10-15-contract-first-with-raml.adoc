@@ -4,6 +4,7 @@ date: 2014-10-15
 tags: [REST, Java EE]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Contract-First REST APIs with RAML

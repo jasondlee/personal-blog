@@ -3,6 +3,7 @@ title: "Easily Switching JDKs"
 date: 2019-08-26
 tags: [JDK, Bash]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

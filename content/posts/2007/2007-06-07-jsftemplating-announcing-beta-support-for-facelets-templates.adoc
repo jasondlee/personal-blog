@@ -3,6 +3,7 @@ title: "JSFTemplating: Announcing beta support for Facelets templates"
 date: 2007-06-07
 tags: [JSFTemplating]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSFTemplating: Announcing beta support for Facelets templates

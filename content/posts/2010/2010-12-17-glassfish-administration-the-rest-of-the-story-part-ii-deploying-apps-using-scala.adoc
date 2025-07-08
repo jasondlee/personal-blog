@@ -3,6 +3,7 @@ title: "GlassFish Administration: The REST of the Story Part II - Deploying Apps
 date: 2010-12-17
 tags: [administration, GlassFish, REST, Scala]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish Administration: The REST of the Story Part II - Deploying Apps Using Scala

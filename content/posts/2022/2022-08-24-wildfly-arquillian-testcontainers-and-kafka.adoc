@@ -3,6 +3,7 @@ title: 'WildFly, Arquillian, Testcontainers, and Kafka'
 date: 2022-08-24
 tags: [Java, WildFly, Kafka, Arquillian, Testcontainers]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: prettify
@@ -100,7 +101,7 @@ mp.messaging.outgoing.model-event.value.serializer=org.apache.kafka.common.seria
 
 In theory, once you start up Kafka and WildFly (as described in the https://github.com/jasondlee/wildfly-arquillian-testcontainers-kafka-demo/blob/master/README.md[README]), you should be able to deploy and test the application:
 
-[source, bash]
+[source,bash]
 ----
 $ mvn package wildfly:deploy
 $ http -v POST :8080/wildfly-arq-testcontainers-kafka-1.0-SNAPSHOT \

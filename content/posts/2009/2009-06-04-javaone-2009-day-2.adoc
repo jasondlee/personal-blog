@@ -4,6 +4,7 @@ date: 2009-06-04
 tags: [JavaOne]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = JavaOne 2009 Day 2

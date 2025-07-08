@@ -3,6 +3,7 @@ title: "Free JCP Membership for JUGs Through the End of February"
 date: 2009-01-21
 tags: [JCP, JUG]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Free JCP Membership for JUGs Through the End of February

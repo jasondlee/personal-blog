@@ -3,6 +3,7 @@ title: "JSFOne: Day Two"
 date: 2008-09-06
 tags: [Java, JSFOne]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSFOne: Day Two

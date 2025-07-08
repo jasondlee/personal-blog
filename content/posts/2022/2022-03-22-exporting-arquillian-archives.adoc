@@ -3,6 +3,7 @@ title: Exporting Arquillian Archives
 date: 2022-03-22
 tags: [Java, Arquillian]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: prettify

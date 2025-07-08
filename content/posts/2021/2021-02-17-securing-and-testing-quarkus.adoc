@@ -4,6 +4,7 @@ aliases: [2021/securing-and-testing-quarkus]
 date: 2021-02-17
 tags: [Java,Quarkus,Keycloak,JUnit,Wiremock]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 #source-highlighter: prettify

@@ -3,6 +3,7 @@ title: "A Possibly Silly Question about Java Visibility"
 date: 2018-12-20
 tags: [Java]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

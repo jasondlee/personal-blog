@@ -3,6 +3,7 @@ title: "What's the Deal With Containerless Frameworks?"
 date: 2013-07-08
 tags: [General]
 type: post
+link: /:year/:slug
 status: published
 ---
 = What's the Deal With Containerless Frameworks?

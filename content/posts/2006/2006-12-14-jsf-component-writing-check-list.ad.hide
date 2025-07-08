@@ -4,6 +4,7 @@ date: 2006-12-14
 tags: [Components, Java, JavaServer Faces, Tutorials]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: unpublished
 ---
 = JSF Component Writing Check List

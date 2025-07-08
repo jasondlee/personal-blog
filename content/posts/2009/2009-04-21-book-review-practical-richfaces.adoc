@@ -4,6 +4,7 @@ date: 2009-04-21
 tags: [Components, JSF, Reviews]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Book Review: Practical RichFaces

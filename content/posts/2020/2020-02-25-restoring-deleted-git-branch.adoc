@@ -3,6 +3,7 @@ title: "Restoring a Deleted Git Branch"
 date: 2020-02-25
 tags: [Git]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

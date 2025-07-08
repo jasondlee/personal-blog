@@ -3,6 +3,7 @@ title: "To PHP or not to PHP..."
 date: 2005-03-28
 tags: [Java, PHP]
 type: post
+link: /:year/:slug
 status: published
 ---
 = To PHP or not to PHP...

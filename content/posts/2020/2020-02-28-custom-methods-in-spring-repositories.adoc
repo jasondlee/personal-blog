@@ -3,6 +3,7 @@ title: "Custom Methods in Spring Repositories"
 date: 2020-02-28
 tags: [Spring,Kotlin]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 #source-highlighter: prettify

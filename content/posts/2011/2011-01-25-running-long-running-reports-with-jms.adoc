@@ -3,6 +3,7 @@ title: "Running Long-Running Reports with JMS"
 date: 2011-01-25
 tags: [GlassFish, JSF, JMS]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Running Long-Running Reports with JMS

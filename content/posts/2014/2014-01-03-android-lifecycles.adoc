@@ -3,6 +3,7 @@ title: "Android Lifecycles"
 date: 2014-01-03
 tags: [Android]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Android Lifecycles

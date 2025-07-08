@@ -3,6 +3,7 @@ title: "Be Careful with Statics"
 date: 2015-07-16
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 

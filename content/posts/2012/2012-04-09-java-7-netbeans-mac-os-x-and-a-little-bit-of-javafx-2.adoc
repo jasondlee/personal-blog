@@ -3,6 +3,7 @@ title: "Java 7, NetBeans, Mac OS X, and a Little Bit of JavaFX 2"
 date: 2012-04-09
 tags: [Java, JavaFX, Mac, NetBeans]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Java 7, NetBeans, Mac OS X, and a Little Bit of JavaFX 2

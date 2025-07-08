@@ -1,5 +1,6 @@
 ---
 type: post
+link: /:year/:slug
 title: What's Up with expect/actual?
 description: A brief look at Kotlin Multiplatform's expect/actual
 date: 2025-07-07
@@ -10,8 +11,6 @@ series: Mobile App Development
 In the last link:../compose-multiplatform-with-decompose[post], we saw -- and then ignored -- a couple of interesting keywords: `expect` and `actual`. In this short post, I'll give what I hope is enough of an explanation to satisfy the mildly curious.
 
 // more
-
-:toc:
 
 To recap, the code in question looks like this:
 

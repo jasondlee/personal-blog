@@ -3,6 +3,7 @@ title: "File Uploads with JAX-RS 2"
 date: 2014-05-01
 tags: [Java EE, JAX-RS]
 type: post
+link: /:year/:slug
 status: published
 ---
 = File Uploads with JAX-RS 2

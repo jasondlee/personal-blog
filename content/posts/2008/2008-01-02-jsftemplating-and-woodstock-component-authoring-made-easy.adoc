@@ -3,6 +3,7 @@ title: "JSFTemplating and Woodstock: Component Authoring Made Easy "
 date: 2008-01-02
 tags: [JSF, JSFTemplating, Scales]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSFTemplating and Woodstock: Component Authoring Made Easy

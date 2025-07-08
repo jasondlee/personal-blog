@@ -3,6 +3,7 @@ title: "Custom Maven Packaging Type"
 date: 2015-04-24
 tags: [Maven]
 type: post
+link: /:year/:slug
 status: published
 ---
 

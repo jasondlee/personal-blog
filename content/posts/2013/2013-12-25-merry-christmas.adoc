@@ -4,6 +4,7 @@ date: 2013-12-25
 tags: [General, Personal]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Merry Christmas

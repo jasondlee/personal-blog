@@ -3,6 +3,7 @@ title: "String.format()... You May Be Doing It Wrong"
 date: 2018-03-29
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 

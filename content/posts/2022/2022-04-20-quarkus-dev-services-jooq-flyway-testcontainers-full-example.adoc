@@ -3,6 +3,7 @@ title: 'Quarkus Dev Services, jOOQ, Flyway, and Testcontainers: A Full Example'
 date: 2022-04-20
 tags: [Java, Quarkus, Flyway, Testcontainers]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: prettify

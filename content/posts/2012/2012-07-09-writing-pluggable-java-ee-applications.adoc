@@ -3,6 +3,7 @@ title: "Writing Pluggable Java EE Applications"
 date: 2012-07-09
 tags: [CDI, Java EE]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Writing Pluggable Java EE Applications

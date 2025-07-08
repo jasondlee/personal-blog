@@ -3,6 +3,7 @@ title: "Maven Project Version from the Command Line"
 date: 2012-10-30
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Maven Project Version from the Command Line

@@ -4,6 +4,7 @@ aliases: [2023/incorporating-experimental-features-in-wildfly]
 date: 2023-07-07
 tags: [WildFly]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: highlight.js

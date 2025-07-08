@@ -4,6 +4,7 @@ aliases: [2021/a-quarkus-command-line-app]
 date: 2021-10-10
 tags: [Java, Quarkus, CLI]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: prettify

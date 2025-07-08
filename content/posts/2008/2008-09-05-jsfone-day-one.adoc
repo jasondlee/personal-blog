@@ -3,6 +3,7 @@ title: "JSFOne: Day One"
 date: 2008-09-05
 tags: [JSFOne]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSFOne: Day One
@@ -14,7 +15,7 @@ I'm actually writing this on day 2, but I was up late working and didn't get a c
 
 This conference is a little different for me, as I'm speaking at this one.  My first day, then, was technically Wednesday night.  I finally arrived at the hotel and promptly ran into Chris Schalk, who was chatting with Matthias Wessendorf, so I joined them for some non-shop talk, mostly, which was a nice change.  Ed Burns arrived a bit later and joined the conversation, which ran later into the night than we four speakers should have been up. :)
 
-The actual first day of the conference was a little odd for me, as I only went to one session, which was mine.  The rest of my day was spent working on GlassFish bugs and a little bit on my presentation.  The meals, which were excellent, as is usual at a NFJS event, punctuated my bug squashing, giving me a good reason to take a break.  
+The actual first day of the conference was a little odd for me, as I only went to one session, which was mine.  The rest of my day was spent working on GlassFish bugs and a little bit on my presentation.  The meals, which were excellent, as is usual at a NFJS event, punctuated my bug squashing, giving me a good reason to take a break.
 
 Other than being my first time to speak at a conference, another first occurred for me on day 1:  my first podcast interview.  Kito is interviewing, presumably, all of the speakers for jsfcentral.com.  It was a fun experience, and I can only hope I don't sound like a blathering idiot. :)  I won't steal Kito's thunder by telling what was asked and answered, but I will say this:  he asked me what the difference was between Mojarra and MyFaces, which caught me off guard.  I _think_ I was Fair and Balanced in my response -- I certainly tried to be -- but we'll have to wait and see how it turned out.  I really hope it didn't come across like I was bashing MyFaces in anyway.  I _do_ think Mojarra is the better implementation,but I have a clear bias.  The MyFaces guys (and there are at least three here: Matthias, Martin, and Cagatay) are all very, very sharp and they've done a great job on MyFaces, so if I said something derogatory about them, it's simply because I was caught off guard a little bit (which is my fault, but I'll move on. :)
 

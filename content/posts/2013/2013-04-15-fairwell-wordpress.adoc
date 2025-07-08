@@ -4,6 +4,7 @@ date: 2013-04-15
 tags: [General]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Fairwell, Wordpress!

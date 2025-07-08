@@ -3,6 +3,7 @@ title: "Yahoo! UI Meets JavaServer Faces"
 date: 2006-05-25
 tags: [Java, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Yahoo! UI Meets JavaServer Faces

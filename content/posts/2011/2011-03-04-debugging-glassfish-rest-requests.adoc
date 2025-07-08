@@ -3,6 +3,7 @@ title: "Debugging GlassFish REST Requests"
 date: 2011-03-04
 tags: [GlassFish, REST]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Debugging GlassFish REST Requests

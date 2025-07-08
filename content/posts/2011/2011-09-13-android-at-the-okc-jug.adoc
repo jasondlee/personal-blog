@@ -3,6 +3,7 @@ title: "Android at the OKC JUG"
 date: 2011-09-13
 tags: [Android, JUG]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Android at the OKC JUG

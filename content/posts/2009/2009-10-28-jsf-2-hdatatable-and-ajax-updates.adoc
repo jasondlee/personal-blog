@@ -3,6 +3,7 @@ title: "JSF 2, h:dataTable, and Ajax Updates"
 date: 2009-10-28
 tags: [ajax, Java, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSF 2, h:dataTable, and Ajax Updates

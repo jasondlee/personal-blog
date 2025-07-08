@@ -3,6 +3,7 @@ title: "Rich Web Experience, Day 1"
 date: 2007-09-07
 tags: [General]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Rich Web Experience, Day 1

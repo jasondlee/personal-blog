@@ -3,6 +3,7 @@ title: "JSF, PhaseListeners, and GET Requests"
 date: 2006-04-25
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSF, PhaseListeners, and GET Requests

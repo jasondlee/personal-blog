@@ -4,6 +4,7 @@ date: 2009-02-19
 tags: [Java, NetBeans]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Another NetBeans Update

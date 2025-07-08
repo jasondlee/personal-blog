@@ -3,6 +3,7 @@ title: "There has to be a decent ORM for PHP"
 date: 2005-04-13
 tags: [PHP]
 type: post
+link: /:year/:slug
 status: published
 ---
 = There has to be a decent ORM for PHP

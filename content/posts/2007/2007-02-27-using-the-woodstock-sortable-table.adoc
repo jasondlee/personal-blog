@@ -3,6 +3,7 @@ title: "Using the Woodstock Sortable Table"
 date: 2007-02-27
 tags: [Java, JSF, Woodstock]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Using the Woodstock Sortable Table

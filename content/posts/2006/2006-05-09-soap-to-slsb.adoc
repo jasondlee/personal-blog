@@ -3,6 +3,7 @@ title: "SOAP to slsb"
 date: 2006-05-09
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = SOAP to slsb

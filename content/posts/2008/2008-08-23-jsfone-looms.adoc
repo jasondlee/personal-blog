@@ -3,13 +3,14 @@ title: "JSFOne Looms!"
 date: 2008-08-23
 tags: [Java, JSFOne]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSFOne Looms!
 Jason Lee
 2008-08-23
 
-http://www.jsfone.com/[JSFOne] is just a week and a half away, so if you haven't done so yet, buy those tickets!  http://www.javaposse.com/[The Java Posse] recently plugged the show in the Quick News section in what I think might be the greatest 34 seconds in Java Posse history.  Listen for yourself. ;) 
+http://www.jsfone.com/[JSFOne] is just a week and a half away, so if you haven't done so yet, buy those tickets!  http://www.javaposse.com/[The Java Posse] recently plugged the show in the Quick News section in what I think might be the greatest 34 seconds in Java Posse history.  Listen for yourself. ;)
 
 ++++
 <script type: "text/javascript" src="https://media.dreamhost.com/swfobject.js"></script>

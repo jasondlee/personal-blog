@@ -3,6 +3,7 @@ title: "Compiling for Java 8 and Java 9"
 date: 2017-04-15
 tags: [Java 9]
 type: post
+link: /:year/:slug
 status: published
 ---
 

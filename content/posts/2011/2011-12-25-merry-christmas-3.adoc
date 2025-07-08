@@ -1,9 +1,10 @@
 ---
-title: "Merry Christmas 2011" 
+title: "Merry Christmas 2011"
 date: 2011-12-25
 tags: [Christmas, Personal]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Merry Christmas

@@ -3,6 +3,7 @@ title: "New Components in Mojarra Scales: Part I - sc:dataTable"
 date: 2009-12-05
 tags: [Components, JSF, Scales]
 type: post
+link: /:year/:slug
 status: published
 ---
 = New Components in Mojarra Scales: Part I - sc:dataTable

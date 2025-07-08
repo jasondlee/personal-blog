@@ -3,6 +3,7 @@ title: "Backing Up Your Data with Duplicity"
 date: 2013-06-26
 tags: [backup]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Backing Up Your Data with Duplicity

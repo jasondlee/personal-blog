@@ -3,6 +3,7 @@ title: "Error Reporting for Android Apps"
 date: 2013-04-05
 tags: [Android]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Error Reporting for Android Apps

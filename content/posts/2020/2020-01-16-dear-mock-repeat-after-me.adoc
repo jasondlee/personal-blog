@@ -3,6 +3,7 @@ title: "Dear MockK, Repeat After Me"
 date: 2020-01-16
 tags: [Kotlin, Mock]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 #source-highlighter: prettify

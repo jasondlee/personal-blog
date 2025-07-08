@@ -3,6 +3,7 @@ title: "JavaFX and AsciiDoctor: a Quick and Dirty Hack"
 date: 2013-04-30
 tags: [JavaFX, AsciiDoc]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JavaFX and AsciiDoctor: a Quick and Dirty Hack

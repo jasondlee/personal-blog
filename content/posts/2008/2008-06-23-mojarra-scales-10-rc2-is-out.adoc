@@ -3,6 +3,7 @@ title: "Mojarra Scales 1.0 RC2 is out"
 date: 2008-06-23
 tags: [Java, JSF, Mojarra, Scales]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Mojarra Scales 1.0 RC2 is out

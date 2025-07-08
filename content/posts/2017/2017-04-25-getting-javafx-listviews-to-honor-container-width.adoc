@@ -3,6 +3,7 @@ title: "Getting JavaFX ListViews to Honor Container Width"
 date: 2017-04-25
 tags: [JavaFX]
 type: post
+link: /:year/:slug
 status: published
 ---
 

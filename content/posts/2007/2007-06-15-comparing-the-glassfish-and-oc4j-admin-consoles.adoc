@@ -3,6 +3,7 @@ title: "Comparing the GlassFish and OC4J Admin Consoles"
 date: 2007-06-15
 tags: [GlassFish]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Comparing the GlassFish and OC4J Admin Consoles
@@ -12,7 +13,7 @@ Jason Lee
 As I've link:/2007/06/07/a-quick-administrative-note/[noted previously], a recent job change has required that I become familiar with Oracle's application server, Oracle Containers for Java, or OC4J.  I recently set aside time to set up my OC4J environment to test a prototype I have been working on and have running under GlassFish.  After getting the server installed and logging on to the administration console, I was struck by how nice it was.  I've long held that one of the many strengths GlassFish has over its open source competition is a vastly superior administration console.  Presented now with a commercial application server with the might of a company like Oracle behind it, how well does GlassFish stand uplink:#footnote-1[^1^]?  In this entry, I'd like to take a look at that question.  Since a Java EE container is a complicated piece of software, an exhaustive comparison of any two such containers is an overwhelming task.  In the interest of brevity, we'll take a look at just a couple of areaslink:#footnote-2[^2^], and wrap things up with some general observations.
 // more
 
-When I first log on to each of the consoles, it's apparent that the two were designed with different emphases.  In OC4J's console, the front page seems to have chosen server health to highlight, showing some general information (including status, server start time, and version) and a chart of response and load (showing both request processing time in seconds and requests per second).  The navigation for OC4J is achieved via a horizontal navigation bar that is shown above and below that page's main content.  
+When I first log on to each of the consoles, it's apparent that the two were designed with different emphases.  In OC4J's console, the front page seems to have chosen server health to highlight, showing some general information (including status, server start time, and version) and a chart of response and load (showing both request processing time in seconds and requests per second).  The navigation for OC4J is achieved via a horizontal navigation bar that is shown above and below that page's main content.
 
 image::/images/2007/06/oc4j_admin_console_front.png[]
 
@@ -20,7 +21,7 @@ The GlassFish console, on the other hand, seems to have chosen ease of use, pres
 
 image::/images/2007/06/glassfish_admin_console_front.png[]
 
-Application deployment in the two containers is affected by the navigation choices.  In OC4J, the administrator clicks on the Applications link in the horizontal menu and is presented with a table listing the deployed resources (applications, modules, and standalone resource adapters). 
+Application deployment in the two containers is affected by the navigation choices.  In OC4J, the administrator clicks on the Applications link in the horizontal menu and is presented with a table listing the deployed resources (applications, modules, and standalone resource adapters).
 
 image::/images/2007/06/oc4j_admin_console_applications.png[]
 
@@ -86,7 +87,7 @@ OC4J goes a step further though, giving a nice performance overview of historica
 
 image::/images/2007/06/oc4j_admin_console_jta2.png[]
 
-In general, I feel more comfortable with the GlassFish administration console, though that's probably due, at least in part, to my higher degree of familiarity.  Having said that, though, the OC4J console is really quite nice and has some features that the GlassFish administration console team would be wise to take a look at it.  As I've noted, it's quite possible that the "deficiencies" I've found in the GlassFish console aren't really deficiencies at all, at least not in the way I thought they were.  It's quite possible I just don't know where to look (the same goes for OC4J, for that matter).  If that's the case though, the console team might consider making those items easier to find.  
+In general, I feel more comfortable with the GlassFish administration console, though that's probably due, at least in part, to my higher degree of familiarity.  Having said that, though, the OC4J console is really quite nice and has some features that the GlassFish administration console team would be wise to take a look at it.  As I've noted, it's quite possible that the "deficiencies" I've found in the GlassFish console aren't really deficiencies at all, at least not in the way I thought they were.  It's quite possible I just don't know where to look (the same goes for OC4J, for that matter).  If that's the case though, the console team might consider making those items easier to find.
 
 One thing that OC4J does that I wish GlassFish would do is really pretty simple, but it sure is nice:  server restarts.  GlassFish allows an administrator to stop the server instance, but he must then restart it via the host operating system:  batch file, shell script, Serivce Control Manager, etc.  OC4J's console has a restart button -- click that, wait just a few moments, then log back in.  Nice and simple, and you never have to leave your browser.
 

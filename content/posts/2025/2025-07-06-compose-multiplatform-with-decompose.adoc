@@ -1,5 +1,6 @@
 ---
 type: post
+link: /:year/:slug
 title: Compose Multiplatform with Decompose
 description: Getting started with Decompose
 date: 2025-07-06

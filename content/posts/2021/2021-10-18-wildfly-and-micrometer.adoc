@@ -3,6 +3,7 @@ title: WildFly and Micrometer
 date: 2021-10-18
 tags: [Java, WildFly, Micrometer]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: prettify

@@ -3,6 +3,7 @@ title: "Ajaxifiying JSF"
 date: 2006-07-27
 tags: [Java, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Ajaxifiying JSF

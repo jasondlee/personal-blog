@@ -3,6 +3,7 @@ title: "Merry Christmas, 2020"
 date: 2020-12-25
 tags: [Personal]
 type: post
+link: /:year/:slug
 status: published
 ---
 

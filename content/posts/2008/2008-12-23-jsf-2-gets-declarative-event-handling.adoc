@@ -3,6 +3,7 @@ title: "JSF 2 Gets Declarative Event Handling"
 date: 2008-12-23
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSF 2 Gets Declarative Event Handling

@@ -3,6 +3,7 @@ title: "Run GlassFish V3 As a Non-Root Service on Gentoo Linux"
 date: 2010-03-04
 tags: [Gentoo, GlassFish, Linux]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Run GlassFish V3 As a Non-Root Service on Gentoo Linux

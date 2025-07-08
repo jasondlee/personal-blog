@@ -3,6 +3,7 @@ title: "The Tyranny of Choice"
 date: 2006-06-08
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = The Tyranny of Choice
@@ -18,6 +19,6 @@ Recently, there have been a http://www.infoq.com/news/Spring-WebLogic-EJB3[numbe
 
 Ater reading the comments http://www.jroller.com/page/raible?entry=ejb3_running_in_tomcat_as#comments[here], I'm really not sure.  Gavin, of course, loves EJB3 (as do I), but Rod and others seem not to.  Both parties are, of course, a bit biased, but is that because they feel that way honestly, or because they have to because preivous public positions or employers require that they do.  Or a mix of both.  It's tough to say, and far be it from me to try to guess at then malign someone's motives, but that uncertainty does require that I take their comments with a grain of salt the size of a <a title: "I stole this line :)">Ford Taurus</a>.  Rick Hightower seems to be somewhere in the middle, tied to neither platform, and he prefers Spring.  Being someone whose opinion I tend to value and trust (though I've never actually met him ;) ), his stance lends a good deal of support to maintaining our Spring commitment.  Gavin (and Rod), though, are no slouches themselves.  Ah, the tyranny of choice.  I feel like Robin Williams in _Moscow on the Hudon_ trying to buy coffee.  Maybe we should just switch to Ruby where, apparently, we'd pretty much have only one choice.  Ugh.  Forget I said that. :)"
 
-So, we have a dilemma that we need to resolve and move on.  I don't want it to come down to the toss of a coin, but, personally, I'm having a hard time making a decision.  My experience this week, though, has made me wonder if our all-EJB3 experiment is worth finishing, so maybe that tells me something.  I'm certainly leaning toward ending the experiment.  I've long been a Spring fan, and 2.x looks really exciting.  If we need session bean injection, I _think_ we can always use aspects (neatly handled by Spring) to force container injection at object creation time.  That may be the route we go.  As Matt Drudge would say, 
+So, we have a dilemma that we need to resolve and move on.  I don't want it to come down to the toss of a coin, but, personally, I'm having a hard time making a decision.  My experience this week, though, has made me wonder if our all-EJB3 experiment is worth finishing, so maybe that tells me something.  I'm certainly leaning toward ending the experiment.  I've long been a Spring fan, and 2.x looks really exciting.  If we need session bean injection, I _think_ we can always use aspects (neatly handled by Spring) to force container injection at object creation time.  That may be the route we go.  As Matt Drudge would say,
 
 _Developing..._

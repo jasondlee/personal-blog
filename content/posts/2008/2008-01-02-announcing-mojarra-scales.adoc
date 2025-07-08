@@ -3,6 +3,7 @@ title: "Announcing Mojarra Scales"
 date: 2008-01-02
 tags: [Java, JSF, JSFTemplating, Scales]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Announcing Mojarra Scales

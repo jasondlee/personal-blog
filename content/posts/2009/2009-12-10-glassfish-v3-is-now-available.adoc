@@ -3,6 +3,7 @@ title: "GlassFish v3 Is Now Available"
 date: 2009-12-10
 tags: [GlassFish]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish v3 Is Now Available

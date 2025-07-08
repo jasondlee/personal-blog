@@ -4,6 +4,7 @@ date: 2012-04-03
 tags: [Java, JavaFX, Reviews]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Book Review: Pro JavaFX 2: A Definitive Guide to Rich Clients with Java Technology

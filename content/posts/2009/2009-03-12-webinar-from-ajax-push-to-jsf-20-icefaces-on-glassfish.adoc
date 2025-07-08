@@ -3,6 +3,7 @@ title: "Webinar: From Ajax Push to JSF 2.0: ICEfaces on GlassFish"
 date: 2009-03-12
 tags: [Aquarium, Components, GlassFish, JSF, webinar]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Webinar: From Ajax Push to JSF 2.0: ICEfaces on GlassFish

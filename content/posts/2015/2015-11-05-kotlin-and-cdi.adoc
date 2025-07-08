@@ -3,6 +3,7 @@ title: "Kotlin and CDI"
 date: 2015-11-05
 tags: [Kotlin, CDI]
 type: post
+link: /:year/:slug
 status: published
 ---
 

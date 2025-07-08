@@ -3,6 +3,7 @@ title: "I&#039;ve Updated My About Page"
 date: 2009-06-30
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = I&#039;ve Updated My About Page

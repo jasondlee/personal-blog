@@ -3,6 +3,7 @@ title: "Where will you be the first weekend in September?"
 date: 2008-06-17
 tags: [Java, JSF, JSFOne]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Where will you be the first weekend in September?

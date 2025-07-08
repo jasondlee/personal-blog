@@ -3,6 +3,7 @@ title: "Using Acegi Security With JSF"
 date: 2006-11-09
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Using Acegi Security With JSF

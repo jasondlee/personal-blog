@@ -3,6 +3,7 @@ title: "Changes Are Coming to the GlassFish Admin Console"
 date: 2008-12-16
 tags: [GlassFish]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Changes Are Coming to the GlassFish Admin Console
@@ -15,10 +16,10 @@ GlassFish isn't just an application server.  It's a community.  For that reason,
 Table of Contents
 -----------------
 
-* link:#removing[What we're removing] 
+* link:#removing[What we're removing]
 ** link:#remove-frames[Frames]
 ** link:#remove-tree[Tree Navigation]
-* link:#adding[What we're adding] 
+* link:#adding[What we're adding]
 ** link:#add-menus[Menus]
 ** link:#add-desktop[Desktop Paradigm]
 ** link:#add-dock[Dock Bar]
@@ -34,13 +35,13 @@ Let's start this discussion by listing what we want to get rid of.
 [[remove-frames]]
 Frames
 ---
-The general concensus amongst web developers these days is that frames are no good, and we agree, so we're going to get rid of them for several reasons:  
+The general concensus amongst web developers these days is that frames are no good, and we agree, so we're going to get rid of them for several reasons:
 
-* Less redundancy in serving multiple resources to the various frames - Since each frame is bascially its own document, various resources are requested by each frame.  Specifically, since each frame uses the same JSF component set, each frame requests the various Javascript and CSS files, for example, resulting in many, many duplicate trips to the server.  If we can cut down on the number of trips back to the server, we'll see a lighter, snappier UI.</li> 
-* Better UI experience - Having frames either breaks a lot of things, or makes them difficult or awkward.  For example:  Printing a page in a frameset ie harder than it ought to be.  Extra care must be taken when using the mouse wheel to scroll to make sure you're over the correct frame.  The use of the back button sometimes doesn't do what you think it might.  Screen real estate is wasted on the the frames' scrollbars, etc.  </li> 
-* Opportunity for bookmarkable URLs - One of the big problems with frames is that they make it difficult to link easily to a specific page.  Sure, the user can right click on the frame, open that frame in a new tab and then get the correct URL, but that's not user friendly at all (in fact, it's as un-funny as its namesake comic strip!).  If we remove the frame, the page you're on is the location bar at the top.  Copy. Paste. Done.</li> 
-* Reduce implementation complexity - JSF only caches a certain number of pages for you, so if you don't use a frame for while (the header is the best example of this), it's server-side state may no longer be cached, which will cause the application to throw an exception.  If the pages don't live in a frame, there's no chance for the view's state to be purged from the cache.</li> 
-* Don't need to worry about the artificial boundaries that frames impose (menus overlapping frames, JS across frames, etc). - Our UI choices are a bit limited, especially in the tree navigation and header frames, as content from the frame can't extend beyond the frame's boundaries.  It is either clipped, or the frame displays scroll bars.  For that reason, we have to make sure our content fits inside the frame, or increase the frame size when we need more room.  It makes for a less than ideal user experience, and some pretty ugly code, so it has to go. :)</li> 
+* Less redundancy in serving multiple resources to the various frames - Since each frame is bascially its own document, various resources are requested by each frame.  Specifically, since each frame uses the same JSF component set, each frame requests the various Javascript and CSS files, for example, resulting in many, many duplicate trips to the server.  If we can cut down on the number of trips back to the server, we'll see a lighter, snappier UI.</li>
+* Better UI experience - Having frames either breaks a lot of things, or makes them difficult or awkward.  For example:  Printing a page in a frameset ie harder than it ought to be.  Extra care must be taken when using the mouse wheel to scroll to make sure you're over the correct frame.  The use of the back button sometimes doesn't do what you think it might.  Screen real estate is wasted on the the frames' scrollbars, etc.  </li>
+* Opportunity for bookmarkable URLs - One of the big problems with frames is that they make it difficult to link easily to a specific page.  Sure, the user can right click on the frame, open that frame in a new tab and then get the correct URL, but that's not user friendly at all (in fact, it's as un-funny as its namesake comic strip!).  If we remove the frame, the page you're on is the location bar at the top.  Copy. Paste. Done.</li>
+* Reduce implementation complexity - JSF only caches a certain number of pages for you, so if you don't use a frame for while (the header is the best example of this), it's server-side state may no longer be cached, which will cause the application to throw an exception.  If the pages don't live in a frame, there's no chance for the view's state to be purged from the cache.</li>
+* Don't need to worry about the artificial boundaries that frames impose (menus overlapping frames, JS across frames, etc). - Our UI choices are a bit limited, especially in the tree navigation and header frames, as content from the frame can't extend beyond the frame's boundaries.  It is either clipped, or the frame displays scroll bars.  For that reason, we have to make sure our content fits inside the frame, or increase the frame size when we need more room.  It makes for a less than ideal user experience, and some pretty ugly code, so it has to go. :)</li>
 
 [[remove-tree]]
 Tree navigation
@@ -63,7 +64,7 @@ The direction we're heading is a menu bar, the horizontal application menu bar t
 [[add-desktop]]
 Desktop Paradigm
 ---
-In my experience, when interacting with the console, I often have to work in different areas.  Take creating a JDBC resource.  Currently, I have to create the connection pool, then navigate to the JDBC resource page.  To help reduce the amount of navigation needed for common tasks like this, we're experimenting with a window-based interface -- not multiple windows, but those fancy DIV-based "windows" that so many sites have these days.  Our ultimate goal, should be implement this particular change, is to allow multiple open windows, allowing the user to work in several area "simultaneously."  Our initial plan is to support only one window at a time, given our time frame, but this will get us moving in the right direction.  
+In my experience, when interacting with the console, I often have to work in different areas.  Take creating a JDBC resource.  Currently, I have to create the connection pool, then navigate to the JDBC resource page.  To help reduce the amount of navigation needed for common tasks like this, we're experimenting with a window-based interface -- not multiple windows, but those fancy DIV-based "windows" that so many sites have these days.  Our ultimate goal, should be implement this particular change, is to allow multiple open windows, allowing the user to work in several area "simultaneously."  Our initial plan is to support only one window at a time, given our time frame, but this will get us moving in the right direction.
 
 [[add-dock]]
 Dock Bar

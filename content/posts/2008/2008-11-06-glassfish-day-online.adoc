@@ -3,6 +3,7 @@ title: "GlassFish Day Online"
 date: 2008-11-06
 tags: [GlassFish]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish Day Online

@@ -1,8 +1,9 @@
 ---
 title: "New Blog Site"
 date: 2006-04-19
-tags: 
+tags:
 type: post
+link: /:year/:slug
 status: published
 ---
 = New Blog Site

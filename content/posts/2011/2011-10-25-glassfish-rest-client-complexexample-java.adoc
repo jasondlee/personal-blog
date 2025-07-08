@@ -3,6 +3,7 @@ title: "GlassFish REST Client - ComplexExample.java"
 date: 2011-10-25
 tags: [GlassFish, REST]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish REST Client - ComplexExample.java

@@ -3,6 +3,7 @@ title: "Funky Object Initialization"
 date: 2011-10-25
 tags: [Java, Tutorials]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Funky Object Initialization

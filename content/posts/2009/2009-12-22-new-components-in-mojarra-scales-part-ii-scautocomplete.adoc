@@ -3,6 +3,7 @@ title: "New Components in Mojarra Scales: Part II – sc:autoComplete"
 date: 2009-12-22
 tags: [Components, JSF, Scales]
 type: post
+link: /:year/:slug
 status: published
 ---
 = New Components in Mojarra Scales: Part II – sc:autoComplete

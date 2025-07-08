@@ -3,6 +3,7 @@ title: "JavaOne 2008: Day 1"
 date: 2008-05-07
 tags: [Java, JavaOne]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JavaOne 2008: Day 1

@@ -3,6 +3,7 @@ title: "VirtualBox Shared Folders under Linux"
 date: 2018-05-29
 tags: [VirtualBox, Linux]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

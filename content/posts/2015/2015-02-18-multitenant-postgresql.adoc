@@ -3,6 +3,7 @@ title: "Multitenant PostgreSQL"
 date: 2015-02-18
 tags: [database, PostgreSQL, multitenancy]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Multitenant PostgreSQL

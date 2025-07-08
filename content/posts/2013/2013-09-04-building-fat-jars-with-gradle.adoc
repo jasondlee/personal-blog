@@ -3,6 +3,7 @@ title: "Building \"Fat Jars\" with Gradle"
 date: 2013-09-04
 tags: [Gradle]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Building \"Fat Jars\" with Gradle

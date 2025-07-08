@@ -4,6 +4,7 @@ date: 2011-11-14
 tags: [EJB3, Java EE, JPA, REST, Reviews, Testing]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Book Review: Real World Java EE Night Hacks - Dissecting the Business Tier

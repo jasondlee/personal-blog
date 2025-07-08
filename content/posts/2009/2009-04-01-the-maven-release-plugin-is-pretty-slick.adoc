@@ -3,6 +3,7 @@ title: "The Maven Release Plugin Is Pretty Slick"
 date: 2009-04-01
 tags: [Maven]
 type: post
+link: /:year/:slug
 status: published
 ---
 = The Maven Release Plugin Is Pretty Slick

@@ -3,6 +3,7 @@ title: "A Simple Jakarta EE 9.1 REST Project"
 date: 2021-05-25
 tags: [Java,Jakarta EE,WildFly]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

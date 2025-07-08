@@ -3,6 +3,7 @@ title: "Simulating Swipes in Your Android Tests"
 date: 2013-02-13
 tags: [Android, Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Simulating Swipes in Your Android Tests

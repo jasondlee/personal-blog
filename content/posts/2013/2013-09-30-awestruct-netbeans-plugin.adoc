@@ -4,6 +4,7 @@ date: 2013-09-30
 draft: false
 tags: [Awestruct, NetBeans]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Awestruct NetBeans Plugin

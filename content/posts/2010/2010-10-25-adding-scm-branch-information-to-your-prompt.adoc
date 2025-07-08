@@ -4,6 +4,7 @@ date: 2010-10-25
 tags: [Bash, CVS, General, Git, hg, Prompt, SCM, SVN]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Adding SCM Branch Information to Your Prompt

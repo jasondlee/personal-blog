@@ -4,6 +4,7 @@ date: 2013-09-10
 tags: [Gradle, Testing]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Gradle Tip: Attaching a Debugger
@@ -88,4 +89,3 @@ allprojects {
     }
 }
 ----
-

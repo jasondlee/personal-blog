@@ -3,6 +3,7 @@ title: "From Awestruct to JBake"
 date: 2015-03-19
 tags: [General]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

@@ -3,6 +3,7 @@ title: "GlassFish, PHP and WordPress"
 date: 2008-06-18
 tags: [GlassFish, Java, PHP, quercus]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish, PHP and WordPress

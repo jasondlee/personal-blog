@@ -3,6 +3,7 @@ title: "A Java-based 'Playground' App"
 date: 2005-07-06
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = A Java-based 'Playground' App

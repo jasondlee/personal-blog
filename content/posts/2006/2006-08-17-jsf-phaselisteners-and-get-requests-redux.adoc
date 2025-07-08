@@ -3,6 +3,7 @@ title: "JSF, PhaseListeners, and GET Requests Redux"
 date: 2006-08-17
 tags: [Java, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSF, PhaseListeners, and GET Requests Redux

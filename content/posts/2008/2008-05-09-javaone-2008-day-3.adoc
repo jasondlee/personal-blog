@@ -3,6 +3,7 @@ title: "JavaOne 2008: Day 3"
 date: 2008-05-09
 tags: [Java, JavaOne]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JavaOne 2008: Day 3
@@ -14,7 +15,7 @@ My day started today with the Intel general session.  I went in with low expecta
 
 Fisher then went on to speak about the mobile space for a bit, talking about Intel's Atom processor, which is TINY.  He had 1,000 Atom processors in a vial like one might find in a science lab.  Amazing.  He then showed a video for moblin.org, which highlighted where Intel sees things going with mobile devices, and there were some _very_ cool smoke and mirrors demos in the videos.  If any of those products ever make it to market, we're going to see some very, very cool things in terms of personalized, context-aware mobile devices.
 
-My first session of the day compared the Eclipse RCP and the NetBeans Platform.  I'm not currently doing any desktop work, but I have considered getting back into that.  It sounds like a fun challenge, and one completely different from what I normally work with.  The session was really good.  It was a great, even-handed comparison between the two, complete with the to-be-expected assessment that the best framework depends on your needs.  Personally, should I start a project like that, I'll probably use NetBeans, as I prefer a pure Swing approach to Eclipse's SWT approach, and, to be honest, Eclipse annoys me a bit. : ) 
+My first session of the day compared the Eclipse RCP and the NetBeans Platform.  I'm not currently doing any desktop work, but I have considered getting back into that.  It sounds like a fun challenge, and one completely different from what I normally work with.  The session was really good.  It was a great, even-handed comparison between the two, complete with the to-be-expected assessment that the best framework depends on your needs.  Personally, should I start a project like that, I'll probably use NetBeans, as I prefer a pure Swing approach to Eclipse's SWT approach, and, to be honest, Eclipse annoys me a bit. : )
 
 Next up, after a long break, was Migrating (Large) Applications to OSGi.  I don't know what I expected, really, but that wasn't it.  Not that it was bad, mind you.  They gave a brief overview of what OSGi is and what it offers, then gave some pretty sound, concrete tips on migrating large systems, such as migrating piece by piece, for example.  They also couldn't stress enough that custom ClassLoaders are bad.  Don't do it. :P  I'm not sure what I was looking for, but I enjoyed the session nonetheless.
 
@@ -31,4 +32,3 @@ and took some pictures of the Moscone Center on my way out:
 |=====
 |image:/images/2008/05/southlobby1.jpg|image:/images/2008/05/southlobby2.jpg|image:/images/2008/05/southlobby3.jpg|image:/images/2008/05/southlobby4.jpg
 |=====
-

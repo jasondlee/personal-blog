@@ -3,6 +3,7 @@ title: "JIRA and GlassFish"
 date: 2006-04-19
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JIRA and GlassFish

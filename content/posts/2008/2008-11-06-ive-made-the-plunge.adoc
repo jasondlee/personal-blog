@@ -3,6 +3,7 @@ title: "I&#039;ve made the plunge"
 date: 2008-11-06
 tags: [General]
 type: post
+link: /:year/:slug
 status: published
 ---
 = I&#039;ve made the plunge

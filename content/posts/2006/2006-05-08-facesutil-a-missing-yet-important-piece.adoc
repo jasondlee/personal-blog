@@ -3,6 +3,7 @@ title: "FacesUtil:  A missing, yet important piece"
 date: 2006-05-08
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = FacesUtil:  A missing, yet important piece
@@ -190,4 +191,3 @@ public class FacesUtil {
     }
 }
 ----
-

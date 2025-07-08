@@ -3,6 +3,7 @@ title: "Thank you, Sun"
 date: 2007-07-31
 tags: [GlassFish, Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Thank you, Sun

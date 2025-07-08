@@ -4,6 +4,7 @@ link: /2025/this-blog-now-roqs
 date: 2025-03-20
 tags: [ Roq ]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 ---

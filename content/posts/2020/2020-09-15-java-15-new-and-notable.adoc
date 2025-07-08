@@ -3,6 +3,7 @@ title: "Java 15: New and Notable"
 date: 2020-09-15
 tags: [Java]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 #source-highlighter: prettify

@@ -3,6 +3,7 @@ title: "GlassFish 3.1 Is Now Available"
 date: 2011-02-28
 tags: [GlassFish, Java EE]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish 3.1 Is Now Available

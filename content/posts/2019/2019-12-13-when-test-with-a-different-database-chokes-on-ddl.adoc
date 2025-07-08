@@ -3,6 +3,7 @@ title: "When Testing with a Different Database Chokes on Your DDL"
 date: 2019-12-13
 tags: [Testing,SQL,H2]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

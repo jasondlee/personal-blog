@@ -3,6 +3,7 @@ title: "JavaOne 2009 Day 3"
 date: 2009-06-05
 tags: [JavaOne, JavaOne]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JavaOne 2009 Day 3
@@ -35,4 +36,3 @@ After the dinner, it was about time for the Meet the GlassFish™ Server Team BO
 |===
 
 Tomorrow is the final day of JavaOne.  It's been a quick week.
-

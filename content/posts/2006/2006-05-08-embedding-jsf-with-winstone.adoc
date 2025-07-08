@@ -3,6 +3,7 @@ title: "Embedding JSF with Winstone"
 date: 2006-05-08
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Embedding JSF with Winstone
@@ -416,4 +417,3 @@ That's all there is to.  To run the sample application, simply run `embed.Winsto
 
 As I've hopefully made clear, embedding a JSF application can be quite simple, though that simplicitly is linked somewhat to the embedding environment.  Please note that this sample is not meant to be a catalog of best practices for JSF, Facelets or Winstone embedding, but to be a simple introduction to the topic, and, to that end, I hope you'll find it useful.
 (You can download the source archive link:/images/2006/05/EmbedJsf-src.zip[here]).
-

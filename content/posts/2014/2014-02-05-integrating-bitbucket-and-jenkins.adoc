@@ -4,6 +4,7 @@ date: 2014-02-05
 tags: [Bitbucket, Jenkins, Git, CI]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Integrating Bitbucket and Jenkins

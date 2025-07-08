@@ -3,6 +3,7 @@ title: "Mojarra 2.0 hits FCS"
 date: 2009-10-19
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Mojarra 2.0 hits FCS

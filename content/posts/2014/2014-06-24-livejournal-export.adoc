@@ -3,6 +3,7 @@ title: "LiveJournal Export"
 date: 2014-06-24
 tags: [JavaFX]
 type: post
+link: /:year/:slug
 status: published
 ---
 = LiveJournal Export

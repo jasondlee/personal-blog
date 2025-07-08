@@ -3,6 +3,7 @@ title: "Two 'Quick' Notes"
 date: 2006-09-18
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Two 'Quick' Notes

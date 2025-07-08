@@ -1,5 +1,6 @@
 ---
 type: post
+link: /:year/:slug
 title: Mobile App Development Series Introduction
 description: Series introductions
 date: 2025-06-25

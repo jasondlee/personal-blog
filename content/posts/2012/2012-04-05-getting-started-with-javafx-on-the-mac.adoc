@@ -3,6 +3,7 @@ title: "Getting Started with JavaFX on the Mac"
 date: 2012-04-05
 tags: [JavaFX, NetBeans]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Getting Started with JavaFX on the Mac

@@ -3,6 +3,7 @@ title: "OpenTelemetry and Jakarta REST Services"
 date: 2021-06-02
 tags: [Java,Jakarta EE,WildFly,OpenTelemetry,Microservices]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

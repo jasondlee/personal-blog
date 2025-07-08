@@ -3,6 +3,7 @@ title: "Building Maps in Kotlin"
 date: 2020-04-08
 tags: [Kotlin]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 #source-highlighter: prettify

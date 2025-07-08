@@ -3,6 +3,7 @@ title: "Import Maven Artifacts to Ceylon Repos"
 date: 2013-11-22
 tags: [Ceylon, Maven]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Import Maven Artifacts to Ceylon Repos

@@ -3,6 +3,7 @@ title: "Making Tables Harder Than They Need To Be"
 date: 2009-05-13
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Making Tables Harder Than They Need To Be

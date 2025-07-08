@@ -3,6 +3,7 @@ title: "Opinions Wanted: v3 GUI Prototype"
 date: 2009-02-25
 tags: [GlassFish]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Opinions Wanted: v3 GUI Prototype

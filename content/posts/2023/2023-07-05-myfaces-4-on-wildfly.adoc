@@ -3,6 +3,7 @@ title: "MyFaces 4 on WildFly"
 date: 2023-07-05
 tags: [WildFly,Jakarta Faces]
 type: post
+link: /:year/:slug
 author: jdlee
 status: published
 source-highlighter: highlight.js

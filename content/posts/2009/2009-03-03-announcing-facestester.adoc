@@ -4,6 +4,7 @@ date: 2009-03-03
 tags: [JSF, Kenai, Testing]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Announcing FacesTester

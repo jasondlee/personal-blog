@@ -3,6 +3,7 @@ title: "String.split(), Java 8 style"
 date: 2017-09-27
 tags: [Java 8]
 type: post
+link: /:year/:slug
 status: published
 ---
 

@@ -3,6 +3,7 @@ title: "Firefox, Wine, and Linux"
 date: 2018-01-19
 tags: [Linux]
 type: post
+link: /:year/:slug
 status: published
 ---
 
@@ -17,4 +18,3 @@ image::/images/2018/wine_firefox_prefs.png[]
 Restart Firefox, and you should be golden.
 
 For what it's worth, credit where credit is due: https://forum.winehq.org/viewtopic.php?f=8&t=28450#p109365[this] is the post that finally got me over the hump.
-

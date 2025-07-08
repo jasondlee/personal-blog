@@ -3,6 +3,7 @@ title: "WebJars and JSF"
 date: 2013-08-28
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = WebJars and JSF

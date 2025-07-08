@@ -4,6 +4,7 @@ date: 2013-07-12
 tags: [Android, Droidium]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Setting Up Droidium for Android Testing

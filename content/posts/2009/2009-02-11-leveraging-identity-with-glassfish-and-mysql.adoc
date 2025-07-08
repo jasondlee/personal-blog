@@ -3,6 +3,7 @@ title: "Leveraging Identity with GlassFish and MySQL"
 date: 2009-02-11
 tags: [GlassFish, identity, MySQL]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Leveraging Identity with GlassFish and MySQL

@@ -3,6 +3,7 @@ title: "Running IDEA 14 on Java 8 on the Mac"
 date: 2015-06-26
 tags: [Java, Mac]
 type: post
+link: /:year/:slug
 status: published
 ---
 

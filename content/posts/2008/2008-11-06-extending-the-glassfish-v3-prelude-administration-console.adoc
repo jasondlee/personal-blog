@@ -3,6 +3,7 @@ title: "Extending the GlassFish v3 Prelude Administration Console"
 date: 2008-11-06
 tags: [GlassFish, Java, JSFTemplating, Tutorials, v3]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Extending the GlassFish v3 Prelude Administration Console

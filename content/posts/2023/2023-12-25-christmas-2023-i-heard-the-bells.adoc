@@ -3,6 +3,7 @@ title: Christmas 2023 - I Heard the Bells on Christmas Day
 date: 2023-12-25
 tags: [Personal]
 type: post
+link: /:year/:slug
 status: published
 ---
 

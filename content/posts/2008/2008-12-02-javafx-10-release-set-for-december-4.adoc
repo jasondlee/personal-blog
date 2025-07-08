@@ -3,6 +3,7 @@ title: "JavaFX 1.0 Release Set for December 4"
 date: 2008-12-02
 tags: [Java, JavaFX]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JavaFX 1.0 Release Set for December 4

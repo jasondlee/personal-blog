@@ -3,6 +3,7 @@ title: "Can I Use Dropwizard for This?"
 date: 2014-08-11
 tags: [Java EE, JAX-RS, CDI, Weld]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Can I Use Dropwizard for This?

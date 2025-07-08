@@ -3,6 +3,7 @@ title: "GlassFish Success Stories"
 date: 2007-03-26
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish Success Stories

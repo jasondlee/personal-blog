@@ -3,6 +3,7 @@ title: "Making Your GlassFish v3 Prelude Administration Console Plugin Pluggable
 date: 2008-11-06
 tags: [GlassFish, Tutorials, v3]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Making Your GlassFish v3 Prelude Administration Console Plugin Pluggable

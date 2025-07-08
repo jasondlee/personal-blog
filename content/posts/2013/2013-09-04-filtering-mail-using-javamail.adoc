@@ -3,6 +3,7 @@ title: "Filtering Mail using JavaMail"
 date: 2013-09-04
 tags: [JavaMail]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Filtering Mail using JavaMail

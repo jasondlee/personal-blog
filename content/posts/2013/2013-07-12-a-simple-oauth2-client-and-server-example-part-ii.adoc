@@ -3,6 +3,7 @@ title: "A Simple OAuth2 Client and Server Example: Part II"
 date: 2013-07-12
 tags: [Java EE, OAuth2, REST, JAX-RS, Arquillian]
 type: post
+link: /:year/:slug
 status: published
 ---
 = A Simple OAuth2 Client and Server Example: Part II

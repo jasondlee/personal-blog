@@ -4,6 +4,7 @@ date: 2010-06-09
 tags: [Components, Java EE, JSF, Reviews]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Book Review: JSF 1.2 Components

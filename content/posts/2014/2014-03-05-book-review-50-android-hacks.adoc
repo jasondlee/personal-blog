@@ -4,6 +4,7 @@ date: 2014-03-05
 tags: [Android, Reviews]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Book Review: 50 Android Hacks

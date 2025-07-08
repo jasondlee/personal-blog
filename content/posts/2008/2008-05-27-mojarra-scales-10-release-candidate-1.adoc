@@ -3,6 +3,7 @@ title: "Mojarra Scales 1.0 Release Candidate 1"
 date: 2008-05-27
 tags: [Components, Java, JSF, JSFTemplating, Scales]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Mojarra Scales 1.0 Release Candidate 1
@@ -17,7 +18,7 @@ _____
 I am pleased to announce the first release candidate of Mojarra Scales 1.0, a new JSF component set.  Mojarra Scales started out as the Sandbox for the JSF RI (now known as Mojarra) and was recently promoted to its own java.net project.  The component set includes a tab view, several menu controls, JavaScript charts, a multi-file upload control, the first (as far as we can tell) free JSF rich text editor control, as well as several other visual controls.  Additionally, Scales offers a simple, easy to use pretty URL component, allowing JSF applications to offer search engine-friendly "deep links."
 The home page for Mojarra Scales is at https://scales.dev.java.net, and the RC bits, including a demo application, which shows the components used in JSP, JSFTemplating and Facelets pages, can be found at http://tinyurl.com/3u4doe  The demo application can also be viewed online at http://jsftemplating.org/mojarra-scales-demo.  The jars will be available via Maven as soon as we get some technical issues worked out.
 
-As this is a release candidate, there are more than likely going to be issues.  If any are are found, or if you would like to file requests for enhancements, please see the Scales issue tracker:  https://scales.dev.java.net/issues/. 
+As this is a release candidate, there are more than likely going to be issues.  If any are are found, or if you would like to file requests for enhancements, please see the Scales issue tracker:  https://scales.dev.java.net/issues/.
 
 The Scales architecture, based on JSFTemplating, makes it extremely easy to add new components, so if there's something missing that you'd like to see, please drop us a note, or, better yet get involved and submit a patch!
 

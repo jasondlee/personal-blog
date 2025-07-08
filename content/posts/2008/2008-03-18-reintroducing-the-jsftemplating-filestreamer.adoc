@@ -4,6 +4,7 @@ date: 2008-03-18
 tags: [Java, JSF, JSFTemplating, Scales]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Reintroducing the JSFTemplating FileStreamer

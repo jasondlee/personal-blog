@@ -3,6 +3,7 @@ title: "Bad Horse!"
 date: 2015-09-28
 tags: [Misc]
 type: post
+link: /:year/:slug
 status: published
 ---
 

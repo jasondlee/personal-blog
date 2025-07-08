@@ -3,6 +3,7 @@ title: "JSF and Annotations"
 date: 2006-04-14
 tags: [JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSF and Annotations

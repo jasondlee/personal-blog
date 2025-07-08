@@ -4,6 +4,7 @@ date: 2013-09-24
 tags: [Gradle, Testing]
 author: Jason Lee
 type: post
+link: /:year/:slug
 status: published
 ---
 = Gradle Tip: Running a Single Test

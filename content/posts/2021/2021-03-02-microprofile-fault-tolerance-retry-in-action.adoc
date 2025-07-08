@@ -3,6 +3,7 @@ title: "Microprofile Fault Tolerance Retry in Action"
 date: 2021-03-02
 tags: [Java,Quarkus,MicroProfile,Fault Tolerance,Wiremock]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 #source-highlighter: prettify

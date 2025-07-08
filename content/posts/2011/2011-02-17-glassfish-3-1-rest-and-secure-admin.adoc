@@ -3,6 +3,7 @@ title: "GlassFish 3.1, REST, and Secure Admin"
 date: 2011-02-17
 tags: [GlassFish, REST]
 type: post
+link: /:year/:slug
 status: published
 ---
 = GlassFish 3.1, REST, and Secure Admin

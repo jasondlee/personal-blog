@@ -3,6 +3,7 @@ title: "Seam and JPA/Hibernate on OC4J 10.1.3"
 date: 2007-10-17
 tags: [EJB3, Hibernate, JSF, JPA, Maven, OC4J, Seam]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Seam and JPA/Hibernate on OC4J 10.1.3

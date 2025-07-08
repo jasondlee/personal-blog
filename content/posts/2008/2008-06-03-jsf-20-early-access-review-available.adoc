@@ -3,6 +3,7 @@ title: "JSF 2.0 Early Access Review Available"
 date: 2008-06-03
 tags: [Java, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 = JSF 2.0 Early Access Review Available

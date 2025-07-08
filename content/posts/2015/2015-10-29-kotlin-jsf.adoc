@@ -3,6 +3,7 @@ title: "Kotlin Faces"
 date: 2015-10-29
 tags: [Kotlin, JSF]
 type: post
+link: /:year/:slug
 status: published
 ---
 

@@ -3,6 +3,7 @@ title: "Yum Pseudo-Transactions"
 date: 2012-09-19
 tags: [Linux]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Yum Pseudo-Transactions

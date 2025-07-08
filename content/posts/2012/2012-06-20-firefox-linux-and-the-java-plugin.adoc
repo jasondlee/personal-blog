@@ -3,6 +3,7 @@ title: "Firefox, Linux, and the Java Plugin"
 date: 2012-06-20
 tags: [Firefox, Java, Linux, plugin]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Firefox, Linux, and the Java Plugin

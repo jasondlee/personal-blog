@@ -3,6 +3,7 @@ title: "Adding Users to a GlassFish Realm via REST"
 date: 2011-03-09
 tags: [GlassFish, REST]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Adding Users to a GlassFish Realm via REST

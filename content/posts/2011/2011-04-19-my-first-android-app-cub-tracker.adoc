@@ -3,6 +3,7 @@ title: "My First Android App: Cub Tracker"
 date: 2011-04-19
 tags: [Android]
 type: post
+link: /:year/:slug
 status: published
 ---
 = My First Android App: Cub Tracker

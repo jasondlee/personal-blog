@@ -3,13 +3,14 @@ title: "A Comparison Table of 4 Android Phones"
 date: 2010-02-11
 tags: [Android]
 type: post
+link: /:year/:slug
 status: published
 ---
 = A Comparison Table of 4 Android Phones
 Jason Lee
 2010-02-11
 
-I've been an iPhone user for about 1.5 years now.  I'm mostly happy with it, but I'd kinda like to write applications for it.  The problem, though, is that the iPhone uses Objective-C (and I don't consider writing web apps the same thing as writing an iPhone app ; ).  Enter Google's Android.  I can use my existing Java knowledge to write applications for an Android device, giving me a much smaller learning curve.  The question, then, is which device should I get?  There are several available, unlike the iPhone, so the choice can be difficult.  
+I've been an iPhone user for about 1.5 years now.  I'm mostly happy with it, but I'd kinda like to write applications for it.  The problem, though, is that the iPhone uses Objective-C (and I don't consider writing web apps the same thing as writing an iPhone app ; ).  Enter Google's Android.  I can use my existing Java knowledge to write applications for an Android device, giving me a much smaller learning curve.  The question, then, is which device should I get?  There are several available, unlike the iPhone, so the choice can be difficult.
 
 Recently, I ran across http://www.linuxlinks.com/article/20100206062016681/Android.html[6 of the Best Android Mobile Devices], which has a pretty nice run down of six different devices, not all of which are phones.  The problem with this particular comparison, was that each phone was on a different page, making comparison more difficult as I had to switch tabs a lot.  My solution, then, is the table below.  Inspired by the link above, though taking most of the data from the devices' product pages, I've compiled the following table.  Obviously, this isn't every Android phone on the market.  I took the three listed in the article above, and added one other phone that I've been considering.  Hopefully this table will be helpful in those looking at these devices.
 // more

@@ -3,6 +3,7 @@ title: "RESTful GlassFish Monitoring"
 date: 2011-02-28
 tags: [GlassFish, Java, monitoring, REST]
 type: post
+link: /:year/:slug
 status: published
 ---
 = RESTful GlassFish Monitoring

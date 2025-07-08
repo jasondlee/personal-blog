@@ -3,6 +3,7 @@ title: "A One-Man JSF 2 Blog Storm"
 date: 2008-12-09
 tags: [Components, JSF, Tutorials]
 type: post
+link: /:year/:slug
 status: published
 ---
 = A One-Man JSF 2 Blog Storm
@@ -10,7 +11,7 @@ Jason Lee
 2008-12-09
 
 
-As the specification writing part of JSF 2 comes to a close, we're getting a more complete implementation done on the reference implementation, Mojarra.  One of the primary developers on Mojarra is Jim Driscoll (the other being Ryan Lubke, who has done such an excellent job on the 1.2 series).  Jim, apparently, has been in a writing mood and has posted a number of very good (and small) posts on some of the features coming in JSF 2 (similar to Ryan's http://blogs.sun.com/rlubke/[series] from earlier this year). 
+As the specification writing part of JSF 2 comes to a close, we're getting a more complete implementation done on the reference implementation, Mojarra.  One of the primary developers on Mojarra is Jim Driscoll (the other being Ryan Lubke, who has done such an excellent job on the 1.2 series).  Jim, apparently, has been in a writing mood and has posted a number of very good (and small) posts on some of the features coming in JSF 2 (similar to Ryan's http://blogs.sun.com/rlubke/[series] from earlier this year).
 
 I was about to start planning a smallish app, to be based on JSF 2, so I was perusing Jim's entries, and it occurred to me that a list of the links would be helpful for those following JSF 2 but not Jim's http://weblogs.java.net/blog/driscoll/atom.xml[feed], so here it is.  I hope it helps. :)
 

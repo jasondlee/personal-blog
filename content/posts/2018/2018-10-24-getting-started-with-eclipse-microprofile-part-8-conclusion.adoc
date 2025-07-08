@@ -3,6 +3,7 @@ title: "Getting Started with Eclipse MicroProfile, Part 8: The Conclusion"
 date: 2018-10-24
 tags: [Java EE, MicroProfile]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

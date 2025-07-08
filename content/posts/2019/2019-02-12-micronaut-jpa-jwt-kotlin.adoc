@@ -3,6 +3,7 @@ title: "Getting started with Micronaut: Kotlin, JPA, and JWT"
 date: 2019-02-12
 tags: [Kotlin,Micronaut,JPA,JWT]
 type: post
+link: /:year/:slug
 author: Jason Lee
 status: published
 ---

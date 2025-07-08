@@ -3,6 +3,7 @@ title: "Interested in Servlet 3.0?"
 date: 2008-12-15
 tags: [Java EE, JCP, Servlet]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Interested in Servlet 3.0?

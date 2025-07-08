@@ -3,6 +3,7 @@ title: "Oracle JDK and the Linux Alternatives System"
 date: 2013-01-15
 tags: [Java]
 type: post
+link: /:year/:slug
 status: published
 ---
 = Oracle JDK and the Linux Alternatives System
