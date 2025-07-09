@@ -81,7 +81,6 @@ For the Android implementation, we might have something like this:
 [source,kotlin]
 ----
 import android.util.Log
-import com.steeplesoft.giftbook.TAG
 
 actual object AppLogger {
     actual fun e(message: String, throwable: Throwable?) {
@@ -107,7 +106,6 @@ and for iOS:
 .composeApp/src/iosMain/kotlin/com/steeplesoft/giftbook/logger/AppLogger.kt
 [source,kotlin]
 ----
-import com.steeplesoft.giftbook.TAG
 import platform.Foundation.NSLog
 
 actual object AppLogger {
