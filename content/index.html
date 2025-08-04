@@ -1,6 +1,8 @@
 ---
 layout: default
-paginate: posts
+paginate:
+    size: 10
+    collection: posts
 ---
 {#include partials/pagination.html/}
 
@@ -24,7 +26,7 @@ paginate: posts
             </div>
         </div>
     </div>
-    {post.rawContent.excerpt.convert.raw}
+    {site.pageContent(post).stripHtml.excerpt(255).raw}
     <div class="read-more small">
         <a href="{post.url.absolute}">Read More &rsaquo;</a>
     </div>

@@ -1,6 +1,6 @@
 ---
 title: "This Blog Now Roqs. I mean... it always has, of course, but now it REALLY does"
-link: /2025/this-blog-now-roqs
+alias: /2025/this-blog-now-roqs
 date: 2025-03-20
 tags: [ Roq ]
 type: post
@@ -48,7 +48,7 @@ I took my Liquid sources, then, and put them where Roq wants them: `templates/la
 ----
 <html>
     <body>
-        #\{insert /}
+        #{insert /}
     </body>
 </html>
 ----
@@ -62,7 +62,7 @@ layout: base
 ---
 <html>
     <body>
-        #\{insert /}
+        #{insert /}
     </body>
 </html>
 ----
@@ -93,12 +93,12 @@ layout: default
 title: Home
 paginate: posts
 ---
-\{#include partials/pagination.html/}
+{#include partials/pagination.html/}
 
 <ul>
-    \{#for post in site.collections.posts.paginated(page.paginator)}
-    <li><a href=\{post.url}</li>
-    \{/for}
+    {#for post in site.collections.posts.paginated(page.paginator)}
+    <li><a href={post.url}</li>
+    {/for}
 </ul>
 ----
 
@@ -136,7 +136,7 @@ Finally, in your template, add this to your `<head>` section:
 
 [source]
 ----
-\{#bundle /}
+{#bundle /}
 ----
 
 == Site Data
@@ -153,10 +153,10 @@ in a page or post, you can reference it this way:
 
 [source,asciidoc]
 ----
-You can find me on https://x.com/\{cdi:info.x_username}[X] or https://github.com/\{cdi:info.github_username}[Github]
+You can find me on https://x.com/{cdi:info.x_username}[X] or https://github.com/{cdi:info.github_username}[Github]
 ----
 
-Via the markup `\{cdi:info}`, you get a `JsonObject` you can query, which works fine, but what if you have more complex data, like a collection of https://github.com/okcjug/site/blob/master/data/speakers.yml[speakers] (if I may be so bold as to "steal" an example from my https://okcjug.org[local JUG])?
+Via the markup `{cdi:info}`, you get a `JsonObject` you can query, which works fine, but what if you have more complex data, like a collection of https://github.com/okcjug/site/blob/master/data/speakers.yml[speakers] (if I may be so bold as to "steal" an example from my https://okcjug.org[local JUG])?
 
 [source,yaml]
 ----
@@ -214,34 +214,34 @@ and we'd like to look up information about this amazing and engaging speaker:
 
 [source,html]
 ----
-\{#let id = post.data("speaker").or("")}
-\{#let speaker = cdi:speakers.get(id) }
+{#let id = post.data("speaker").or("")}
+{#let speaker = cdi:speakers.get(id) }
 <div class="row" style="padding: 0 0 1em 0">
     <div class="col">
-        <a class="post-link" href="\{post.url}" title="\{post.title}" data-toggle="tooltip">
-            \{post.title}
+        <a class="post-link" href="{post.url}" title="{post.title}" data-toggle="tooltip">
+            {post.title}
         </a>
     </div>
 </div>
 <div class="row">
     <div class="col">
-        <b>\{post.data('when')}</b>
+        <b>{post.data('when')}</b>
     </div>
 </div>
 <div class="row">
     <div class="col">
-        \{#if speaker}
-        <img src="/img/\{speaker.image}" class="speaker-img"/>
-        \{/if}
+        {#if speaker}
+        <img src="/img/{speaker.image}" class="speaker-img"/>
+        {/if}
     </div>
 </div>
-\{/let}
-\{/let}
+{/let}
+{/let}
 ----
 
-First, we can extract the speaker key from the post by `\{#let id = post.data("speaker").or("")}`. Then, using the `get()` method we defined on our `Speakers` class, we can get a `Speaker`: `\{#let speaker = cdi:speakers.get(id) }`. Now, in our template, we can use references like `\{speaker.image}` or `\{speaker.bio}`.
+First, we can extract the speaker key from the post by `{#let id = post.data("speaker").or("")}`. Then, using the `get()` method we defined on our `Speakers` class, we can get a `Speaker`: `{#let speaker = cdi:speakers.get(id) }`. Now, in our template, we can use references like `{speaker.image}` or `{speaker.bio}`.
 
-An important note, variables defined/assigned in a `\{#let}` directive only exist until the closing `\{/let}`. They're not defined from the first left until the end of the page, so be aware of that. See https://quarkus.io/guides/qute-reference#let_section[here] for more details. You can also make more than one assignment in the `\{#let}` block, but I chose not too. Knowing a bit more now, I may revisit that. We'll see how the mood strikes. :)
+An important note, variables defined/assigned in a `{#let}` directive only exist until the closing `{/let}`. They're not defined from the first left until the end of the page, so be aware of that. See https://quarkus.io/guides/qute-reference#let_section[here] for more details. You can also make more than one assignment in the `{#let}` block, but I chose not too. Knowing a bit more now, I may revisit that. We'll see how the mood strikes. :)
 
 == Template Extensions
 
@@ -268,9 +268,9 @@ Is there a smarter, better way to do it? Perhaps, but, again: I'm learing and th
 
 There's so much more I could cover in detail, this is already longer than I'd planned, but there's
 
-* SEO: `\{#seo page site /}`
-* RSS feeds: `\{#include fm/rss.html}`
-* Sitemaps: `\{#include fm/sitemap.xml}`
+* SEO: `{#seo page site /}`
+* RSS feeds: `{#include fm/rss.html}`
+* Sitemaps: `{#include fm/sitemap.xml}`
 * Easy https://iamroq.com/docs/publishing/[Github Pages deployment]
 
 and more.

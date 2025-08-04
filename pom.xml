@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.steeplesoft</groupId>
     <artifactId>jasondlee-blog</artifactId>
@@ -14,8 +15,8 @@
         <skipITs>true</skipITs>
 
         <version.compiler-plugin>3.14.0</version.compiler-plugin>
-        <version.quarkus-roq>1.6.3</version.quarkus-roq>
-        <version.quarkus.platform>3.24.2</version.quarkus.platform>
+        <version.quarkus-roq>1.7.0</version.quarkus-roq>
+        <version.quarkus.platform>3.25.0</version.quarkus.platform>
         <version.surefire-plugin>3.5.3</version.surefire-plugin>
     </properties>
 
@@ -80,12 +81,6 @@
         </dependency>
 
         <!-- Testing -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.18.0</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>io.quarkiverse.roq</groupId>
             <artifactId>quarkus-roq-testing</artifactId>
