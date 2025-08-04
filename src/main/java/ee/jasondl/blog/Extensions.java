@@ -33,7 +33,7 @@ public class Extensions {
         int index = text.strip().indexOf("\n");
         var firstLine = text.substring(0, (index != -1) ? index : text.length());
         String[] words = firstLine.split("\\s+");
-        
+
         return ((words.length < limit) ? firstLine :
                 String.join(" ", Arrays.copyOfRange(words, 0, limit))) + "...";
     }
