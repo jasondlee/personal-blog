@@ -16,16 +16,6 @@
         {/if}
     </div>
 
-    {!
-    {% if paginator.page_trail %}
-    {% for trail in paginator.page_trail %}
-    <div {% if page.url == trail.path %}class="selected"{% endif %}>
-        <a href="{{ trail.path | prepend: site.baseurl | replace: '//', '/' }}" title="{{trail.title}}">{{ trail.num }}</a>
-    </div>
-    {% endfor %}
-    {% endif %}
-    !}
-
     <div class="col-6" style="text-align: right;">
         {#if page.paginator.next }
         <div class="next">
