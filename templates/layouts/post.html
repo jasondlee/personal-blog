@@ -16,15 +16,16 @@ link: /:year/:month/:day/:slug
             </div>
             <footer>
                 <div class="grid">
+                    {!
                     <div class="col tags">
                         {#if page.data.tags and page.data.tags.size > 0}
                         <span class="title">tags: </span>
                         {#for tag in page.data.tags }
-                        {! <a href="/{site.tag_page_dir}/{tag | slugify: 'pretty'}/">{tag}</a> !}
-                        <!--                <a href="{{site.url}}/tags/{{tag}}.html">{{tag}}</a>-->
+                        <a href="/posts/tag/{tag}/">{tag}</a>
                         {/for}
                         {/if}
                     </div>
+                    !}
                     <div class="col">{#include partials/share-page.html /}</div>
                 </div>
             </footer>

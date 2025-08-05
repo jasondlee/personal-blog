@@ -153,6 +153,12 @@
 
     <profiles>
         <profile>
+            <id>snapshot</id>
+            <properties>
+                <version.quarkus-roq>999-SNAPSHOT</version.quarkus-roq>
+            </properties>
+        </profile>
+        <profile>
             <id>native</id>
             <activation>
                 <property>

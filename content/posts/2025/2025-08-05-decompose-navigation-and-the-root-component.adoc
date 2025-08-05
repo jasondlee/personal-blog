@@ -1,0 +1,190 @@
+---
+type: post
+link: /:year/:slug
+title: Decompose Navigation and the Root Component
+description: Adding basic navigation to our Decompose-based application
+date: 2025-08-05
+tags: [ compose, multiplatform, android, mobile, decompose ]
+series: Mobile App Development
+---
+
+So far, we have an app that runs but has only one "screen". Decompose makes adding more screens -- and navigating between them -- pretty simple. In this post, we'll start to see how that's done.
+
+If you remember from our discussion in link:/2025/compose-multiplatform-with-decompose[Compose Multiplatform with Decompose], we had a class called `GreeterComponent`. We even told Decompose that this was our root component:
+
+[source,kotlin]
+-----
+val rootComponent = GreeterComponent(defaultComponentContext())
+-----
+
+That's certainly valid, but what we want to do is provide another component as our root that will provide for navigation, as well as a "host" for displaying `GreeterComponent`.
+
+If you read the official https://arkivanov.github.io/Decompose/getting-started/quick-start/#extracting-an-interface[Decompose docs], it will suggest to you a code organization that I have chosen not to follow: an `interface` that defines the... interface for the component (e.g., `FooComponent`), a default implementation (`DefaultFooComponent`), and the content file (`FooContent`) which holds our composable. The separation of the component into an interface and an implementation is probably a good idea, as it makes swapping out the implementation (e.g., for testing) much simpler. Generally, I agree with that approach, but (and I know this might bite me eventually), I don't like it much here as it adds a lot of noise. Feel free to use that approach if you like, but for the code here, we'll just provide a class (`FooComponent`) and the content (`FooContent.kt`).
+
+== RootComponent [[RootComponent]]
+That said, let's create our root component. To do that, we _will_ follow some coding conventions from the Decompose docs and call ours `RootComponent`:
+
+[source,java]
+-----
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.value.Value
+import com.steeplesoft.giftbook.ui.drawer.NavigationConfig
+
+val nav = StackNavigation<NavigationConfig>() // 1
+
+class RootComponent(componentContext: ComponentContext) :
+    ComponentContext by componentContext {
+
+    // 2
+    val stack: Value<ChildStack<*, ComponentContext>> = childStack(
+        source = nav,
+        serializer = NavigationConfig.serializer(),
+        initialConfiguration = NavigationConfig.Home,
+        handleBackButton = true,
+        childFactory = ::child, // 3a
+    )
+
+    // 3b
+    private fun child(config: NavigationConfig,
+            componentContext: ComponentContext): ComponentContext {
+        // 4
+        return when (config) {
+            is NavigationConfig.Home -> GreeterComponent(componentContext)
+        }
+    }
+}
+-----
+
+Here's a quick rundown of what's happening here:
+
+1. We're defining a navigation object that we'll use to navigate from page to page. Yes, it's global, and, yes, it's ugly, but it will work for now, and we'll clean that up later when we introduce dependency injection.
+2. The `ChildStack` here is the heart of Decompose navigation. Using the `nav` object, we can push https://arkivanov.github.io/Decompose/getting-started/quick-start/#component-configurations["component configurations"] onto this stack, and code from 3 and 4 will do the needful.
+3. Here, we're defining a factory that will take the component configurations and return the appropriate component. This configuration/component separation feels a bit noisy like the interface/impl separation discussed above, but I think this makes sense: screens can push a configuration on the stack that's appropriate for a given user interaction, then, in a single place, the component is created and configured outside the context of any UI or business logic. We'll see what these configurations look like shortly.
+4. The heart of the `child` function is a `when` block that converts, so to speak, the configuration to a component.
+
+That's a pretty high-level, but I hope you get the gist. To see the other side of this (and how the nav actually works), let's look at the `@Composable`:
+
+[NOTE]
+=====
+Remember when I said to create a new class called `FooContent` then replace its contents? I do that because I'm [.line-through]#lazy# efficient. If I create a new Kotlin file, I'll get and empty `FooContent.kt`, and then I have to manually add the package (to keep our compiled code tidy). If, however, I create a class `FooContent`, it generates the package statement for me. Not a big deal, but that's how I roll, in case that helps anyone. :)
+=====
+
+== RootContent [[RootContent]]
+
+[source,kotlin]
+-----
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.arkivanov.decompose.extensions.compose.stack.Children
+import com.arkivanov.decompose.extensions.compose.stack.animation.slide
+import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
+
+@Composable
+fun RootContent(
+    component: RootComponent,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        Children(
+            stack = component.stack, // 1
+            modifier = modifier.padding(5.dp),
+            animation = stackAnimation(slide()),
+        ) {
+            val childModifier = modifier.fillMaxWidth().padding(10.dp)
+            when (val component = it.instance) {
+                is GreeterComponent -> greeter(component, childModifier)
+            }
+        }
+    }
+}
+-----
+
+Thanks to genius of Compose, when the value of `stack` changes, the `Children` component will rerender itself. In the block of code we see (which is a lambda passed to `Children`), there is a `when` block that looks at the component returned by `RootComponent.child` and calls the related Composable function. This component-to-composable mapping must be maintained by hand (i.e., there are no fancy annotations or compiler tricks to do this for us), so, if you're copying and pasting as you add screens, take some care here.
+
+We're now almost ready to run our application. If you're playing along in your IDE, you'll probably see it complaining about `NavigationConfig`, so let's fix that. In a nutshell, it's `sealed interface` that provides child classes or objects to help us abstract our navigation. Here again, I deviate from the recommended Decompose pattern (because I know better than the framework author, of course. Or something ;). In the https://arkivanov.github.io/Decompose/getting-started/quick-start/#using-the-child-stack[docs], you will see a `sealed interface` called `RootComponent.Child` that defines classes that wrap the components, etc. I have not found this useful, so I've slimmed it down a bit. Again, like the `interface` discussion above, I may hate myself for it someday, but I did it, and that's how I'll present it here.
+
+== NavigationConfig [[NavigationConfig]]
+
+So, `NavigationConfig`:
+
+[source,kotlin]
+-----
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed interface NavigationConfig {
+    @Serializable
+    data class Foo(val bar: String? = null) : NavigationConfig
+
+    @Serializable
+    data object Home : NavigationConfig
+}
+-----
+
+I've included two configs, though we only need one at the moment, to show a couple of options. If you need to pass data as you navigate, the first option is the one you want: when you create the config, you pass the data you need, and it can be accessed in the `child` function. If don't need to pass data for a given configuration, then a `data object` is what you need, as a `data class` requires at least one primary constructor parameter.
+
+== Build Updates [[BuildUpdates]]
+There are a couple more steps we need before we can run our application. First, we need to add the Kotlin serialization plugin to the build. To do that, we need to modify a few files:
+
+.gradle/libs.version.toml
+[source,toml]
+-----
+[plugins]
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+-----
+
+.build.gradle.kts
+[source,kotlin]
+-----
+plugins {
+    alias(libs.plugins.kotlinSerialization) apply false
+}
+-----
+
+.composeApp/build.gradle.kts
+[source,kotlin]
+-----
+plugins {
+    alias(libs.plugins.kotlinSerialization)
+}
+-----
+
+Once you refresh the IDE's view of the Gradle files (why it won't do that automatically is beyond me), the line `serializer = NavigationConfig.serializer()` should no longer show an error.
+
+== Enable the RootComponent [[EnableRootComponent]]
+
+The last step is to change the root component we're passing into our application. In `composeApp/src/androidMain/kotlin/com/steeplesoft/giftbook/MainActivity.kt`, we need to change our root component declaration to this:
+
+[source,kotlin]
+-----
+val rootComponent = RootComponent(defaultComponentContext())
+-----
+
+Likewise, in `composeApp/src/iosMain/kotlin/com/steeplesoft/giftbook/MainViewController.kt`, we need to make a similar change:
+
+[source,kotlin]
+-----
+val rootComponent = remember {
+    RootComponent(DefaultComponentContext(ApplicationLifecycle()))
+}
+-----
+
+And, finally, in `composeApp/src/commonMain/kotlin/com/steeplesoft/giftbook/App.kt`, we need to update the function to take a `RootComponent`:
+
+[source,kotlin]
+-----
+fun App(component: RootComponent) {
+    MaterialTheme {
+        RootContent(component)
+    }
+}
+-----
+
+Now, we can run our application (either Android or iOS) and see... nothing new. :) Visually, it's underwhelming, and I know you want to see more, but this post has gone on long enough, and I'd like to keep these bite-sized as much as possible, so we'll add a new screen in my next post...
