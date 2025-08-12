@@ -1,0 +1,45 @@
+---
+title: "Review: Building Ajax JSF Components"
+date: 2006-10-12
+tags: [Java, JSF]
+type: post
+link: /:year/:slug
+status: published
+---
+= Review: Building Ajax JSF Components
+Jason Lee
+2006-10-12
+
+If you're doing web development, you have likely at least heard of Ajax, and, if you're not currently using it, you've likely investigated its possible use.  One of the tricky aspects of working with a technology like Ajax is integrating it with various frameworks.  JavaServer Faces, now a standard part of the Java EE stack, is no different.  For both a page and component author, the integration issue can be a big question.  Luckily for those of us in the JSF world, that question has been addressed by Chris Schalk and Ed Burns, in their new book http://www.amazon.com/JavaServer-Faces-Complete-Reference/dp/0072262400/ref=sr_11_1/104-8011241-4536743?ie=UTF8[JavaServer Faces:  The Complete Reference].
+// more
+
+While the book is a comprehensive look at the entirety of the JSF framework, one particular chapter, Building AJAX JSF Components, should be of interest to anyone working with Ajax, especially component authors.  The chapter begins by making the grandiose claim that "JSF and AJAX are a perfect match."  The authors then attempt to back up their claim by showing how JSF's lifecycle phase management helps implement components that use AJAX very cleanly, especially from the component users' perspective.
+
+After a brief introduction to how AJAX works, the authors implement an employee directory search page using hand-written AJAX code and a servlet (no JSF involved at all).  This component, in a fashion similar to the myriad of autocomplete components available, allows the user to type in the name of the desired employee and see, as he types, a list of possible matches appear in a table below the text field:
+
+image::F11-03.png[title: "Ajax Directory Search"]
+
+Complete code for this component is shown, demonstrating what many of us already know:  there's much to be done on the both client and server sides to make AJAX work.  It also highlights well one of the downsides of Ajax:  there's a fair amount of work a page developer must do to set up the Ajax environment.
+
+Taking that example, the authors then reimplement the same component as a JSF component.  For those new to JSF or unfamiliar with writing JSF components, some of the inner workings of the component can seem a bit overwhelming, but the advantage for those that would like to consume this component is hard to miss.  The requirement for reuse goes from copying several JavaScript files into one's project, adding the script includes, and writing all the (X)HTML markup to display the component to adding one JAR to the project and adding two lines to the markup: the tag library declaration, and this line:
+
+[source,xml,linenums]
+----
+<jcr:directorySearch />
+----
+
+And, if that one example were not enough, Schalk and company go on to implement a spell check text area component for JSF.  This component "extends HtmlInputTextArea and provides a simple Ajax-enabled spell-checking facility,"  which can be used with a single line of code like this:
+
+[source,xml,linenums]
+----
+<jcr:spellCheckTextArea cols="30" rows="15"
+    value="#\{user.interests}" />
+----
+
+which results in something like this:
+
+image::F11-06.png[title: "Spell Check Text Area"]
+
+That's all there is to it.  For component authors, this should be extremely exciting, as it very handily encapsulates all the desired functionality in an easy to deploy and use package, instantly making the component more attractive to end users.  That, I think, is the crux of the authors' assertion that JSF and Ajax are a perfect match.  There's nothing magic about JSF that makes Ajax components easier to write, but the encapsulation provided by a JSF component offers a perfect way for component authors to deliver their components.
+
+In a nutshell, this chapter highlights the strengths of both Ajax and JSF in a very clear and easy to follow manner.  If you're not using either technology, a quick read through the chapter should really get you excited about the future of both of these great technologies.

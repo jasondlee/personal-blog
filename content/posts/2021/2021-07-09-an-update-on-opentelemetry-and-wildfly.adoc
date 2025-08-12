@@ -12,10 +12,20 @@ In a link:opentelemetry-and-jakarta-rest-services.html[recent post], I worked th
 
 // more
 
+[NOTE]
+=====
+These changes are now part of the official WildFly builds, so this part is no longer necessary.
+=====
++++++
+<strike>
++++++
 To get started experimenting with my changes, you need to do one of two things:
 
 . build the server from source using my https://github.com/jasondlee/wildfly/tree/WFLY-14854[branch], or
-. download this hopefully up-to-date binary link:/wildfly/wildfly-otel.zip[build].
+. download this hopefully up-to-date binary build.__
++++++
+</strike>
++++++
 
 With the current state of changes, you get the following:
 

@@ -13,7 +13,7 @@
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
-  line-height: 1.42857143;
+  /*line-height: 1.42857143;*/
   color: #333;
   background-color: var(--white);
 }
@@ -252,7 +252,7 @@ a {
 }
 
 div.ulist {
-  line-height: 0.5;
+  /*line-height: 0.5;*/
 }
 .pager {
     /*margin: 10px 0px 0px 10px;*/

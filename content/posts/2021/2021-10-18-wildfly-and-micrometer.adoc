@@ -22,7 +22,14 @@ Savvy users will likely note that WildFly already has metrics support. In fact, 
 
 So how does one get started with Micrometer on WildFly? Of course, you've always been able to add Micrometer to your application and deploy it, but we're hoping to do is integrate it with the server so that it's always available, and so that administrators can get server- and JVM-level metrics as well, right out of the box. Since this feature is still under discussion and development, though, it doesn't reside in the main WildFly git repo. It lives, instead, in my own \{git-repo}[repository] as a feature branch.
 
-To install it, you have two options: 1) Install link:\{archive-link}[this archive], or 2) Build from \{git-repo}[source]. Once you have a server running, it's time (no pun intended) to get some metrics.
+[NOTE]
+=====
+These changes are now part of the official WildFly builds, so this part is no longer necessary.
+=====
+
+[line-through]#To install it, you have two options: 1) Install link:\{archive-link}[this archive], or 2) Build from \{git-repo}[source].#
+
+Once you have a server running, it's time (no pun intended) to get some metrics.
 
 As a small demo, take this Jakarta REST resource:
 
