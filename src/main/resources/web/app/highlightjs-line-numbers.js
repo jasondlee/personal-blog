@@ -1,6 +1,6 @@
 // jshint multistr:true
 
-function foo  (hljs, w, d) {
+function installLineNumbers (hljs, w, d) {
     'use strict';
 
     var TABLE_NAME = 'hljs-ln',
@@ -258,7 +258,7 @@ function foo  (hljs, w, d) {
     }
 
     function getSingleLineOption (options) {
-        var defaultValue = false;
+        var defaultValue = true;
         if (!!options.singleLine) {
             return options.singleLine;
         }
@@ -372,4 +372,4 @@ function foo  (hljs, w, d) {
 
 }
 
-export default foo;
+export default installLineNumbers;

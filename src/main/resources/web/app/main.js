@@ -1,9 +1,8 @@
 import hljs from 'highlight.js';
-import foo from './highlightjs-line-numbers.js';
+import installLineNumbers from './highlightjs-line-numbers.js';
 import 'highlight.js/styles/agate.css';
 
+installLineNumbers(hljs, window, document);
 
 hljs.highlightAll();
-
-foo(hljs, window, document);
 hljs.initLineNumbersOnLoad();
