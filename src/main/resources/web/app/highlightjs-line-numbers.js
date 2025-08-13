@@ -2,7 +2,6 @@
 
 function foo  (hljs, w, d) {
     'use strict';
-    alert('hello');
 
     var TABLE_NAME = 'hljs-ln',
         LINE_NAME = 'hljs-ln-line',
