@@ -35,13 +35,13 @@ To make things _even_ simpler, we can switch to the `Templates Gallery` tab at t
 Since we're going to build an application together, using the wizard, we'll configure our project like this. Feel free to use your own package name. :)
 
 ++++
-<img src="{page.file("wizard.png")}" alt="wizard" class="aligncenter"/>
+<img src="wizard.png" alt="wizard" class="aligncenter"/>
 ++++
 
 Once you download and extract the zip, open it Android Studio. When you first open the project, you need to be prepared to wait a bit as the IDE imports the project, generates run targets, etc. When it completes, you should see a project layout that looks like this:
 
 ++++
-<img src="{page.file("project.png")}" alt="project" class="aligncenter"/>
+<img src="project.png" alt="project" class="aligncenter"/>
 ++++
 
 There's a lot going on, so I won't try to cover it all here (we should cover most of it as we walk through the process), but a brief overview of the directories would be prudent:
@@ -59,13 +59,13 @@ While it's not much right now, we actually have a runnable application. To run i
 With the device created, we can now run our application using the toolbar at the top:
 
 ++++
-<img src="{page.file("rundebugtoolbar.png")}" alt="rundebugtoolbar" class="aligncenter"/>
+<img src="rundebugtoolbar.png"" alt="rundebugtoolbar" class="aligncenter"/>
 ++++
 
 When you click the `Run` button (the green triangle), after some time, you will see the emulator appear:
 
 ++++
-<img src="{page.file("androidemulator.png")}" alt="android emulator" class="aligncenter"/>
+<img src="androidemulator.png")" alt="android emulator" class="aligncenter"/>
 ++++
 
 [#ios-emulator]
@@ -73,6 +73,7 @@ When you click the `Run` button (the green triangle), after some time, you will 
 
 If you're on a Mac, you can run the iOS version of the application. To do so, you must first install XCode (the details of which I'll skip here. This post is long enough as it is :) and then install the iOS platform:
 
+[source,bash]
 ----
 $ xcodebuild -downloadPlatform iOS
 ----
@@ -83,10 +84,10 @@ That will take a while, and you may need to restart Android Studio for it to pic
 <table style="width: 100%">
     <tr style="vertical-align: top">
         <td>
-            <img src="{page.file("configurationselector.png")}" alt ="configurationselector" class="aligncenter"/>
+            <img src="configurationselector.png" alt ="configurationselector" class="aligncenter"/>
         </td>
         <td>
-            <img src="{page.file("iosemulatorselector.png")}" alt="iosemulatorselector" class="aligncenter"/>
+            <img src="iosemulatorselector.png" alt="iosemulatorselector" class="aligncenter"/>
         </td>
     </tr>
 </table>
@@ -95,7 +96,7 @@ That will take a while, and you may need to restart Android Studio for it to pic
 Again, clicking the `Run` button (and waiting a good long while, as the initial iOS build takes a while), we see this:
 
 ++++
-<img src="{page.file("iosemulator.png")}" alt="android emulator" class="aligncenter"/>
+<img src="iosemulator.png" alt="android emulator" class="aligncenter"/>
 ++++
 
 Kinda wild that it looks exactly like the Android version, right? 😛 It doesn't do much that's interesting yet, but we do have a working Compose Multiplatform application. In the next installment, we'll add what will be (for the architecture we're using), a core library: https://arkivanov.github.io/Decompose/[Decompose].
