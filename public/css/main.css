@@ -315,3 +315,9 @@ div.listingblock > div.title {
     font-style: italic;
     text-align: justify;
 }
+
+/* highlight.js line numbers */
+td.hljs-ln-line.hljs-ln-numbers {
+    padding-right: 1em;
+}
+/* highlight.js line numbers */
