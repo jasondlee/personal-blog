@@ -6,7 +6,6 @@ type: post
 link: /:year/:slug
 author: jdlee
 status: published
-source-highlighter: highlight.js
 ---
 
 Recently, I started working on a new project and I wanted to give https://www.jooq.org/[Jooq] a go. I also wanted to integrate

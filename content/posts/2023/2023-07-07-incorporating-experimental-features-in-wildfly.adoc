@@ -7,7 +7,6 @@ type: post
 link: /:year/:slug
 author: jdlee
 status: published
-source-highlighter: highlight.js
 ---
 
 One of the toughest challenges facing a mature product like WildFly is adding features without breaking existing users. It's especially difficult when that project serves as the foundation for a commercial product downstream that requires a higher degree of stability. While WildFly is a wholly independent project, it's not completely immune to concerns that EAP may have with regard to API stability, long term support, etc. That has made it difficult at times to change WildFly, though efforts like WildFly Preview have certainly helped.

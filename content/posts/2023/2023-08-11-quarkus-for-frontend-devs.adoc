@@ -6,7 +6,6 @@ type: post
 link: /:year/:slug
 author: jdlee
 status: published
-source-highlighter: highlight.js
 ---
 
 A friend of mine is a very good Angular developer. For a project he's been asked to help with, though, he finds himself needing to do some backend work. Since that's a bit outside his wheelhouse, he asked me for advice. In this post, I'll write up what I told him in case it might be of use to someone else.

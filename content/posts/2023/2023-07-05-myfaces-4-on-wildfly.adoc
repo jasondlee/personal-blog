@@ -6,7 +6,6 @@ type: post
 link: /:year/:slug
 author: jdlee
 status: published
-source-highlighter: highlight.js
 ---
 
 For several years now, WildFly has supported the ability to install and use different Jakarta Faces (Faces) implementations, either across every application deployed to the server, or for a specific application only. We supported running either Mojarra and MyFaces, with versions running all the way back to 1.2. With the move to Jakarta EE 10, however, that feature was temporarily broken simply because there was not a 4.0-compliant version of MyFaces available by the time we were ready to ship. That has changed now, though, as has the manner in which we support changing the implementations. In this short post, I'll show you how that works starting in WildFly 29.

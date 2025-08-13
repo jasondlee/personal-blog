@@ -6,7 +6,6 @@ type: post
 link: /:year/:slug
 author: jdlee
 status: published
-source-highlighter: highlight.js
 ---
 
 With the release of https://www.wildfly.org/news/2023/04/20/WildFly28-Released/[WildFly 28], we've made a few changes to our supported telemetry libraries that are worth noting.  In this post, I'll give a quick overview of those changes.
