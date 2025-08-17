@@ -1,0 +1,37 @@
+---
+title: "CommunityOne 2009"
+date: 2009-06-02
+tags: [JavaOne, JavaOne]
+type: post
+link: /:year/:slug
+status: published
+---
+= CommunityOne 2009
+Jason Lee
+2009-06-02
+
+Today was CommunityOne, the free conference that precedes, and this year, runs concurrently with JavaOne.  This year, my wife was able to travel out with me for a little vacation after JavaOne concludes.  With her CommunityOne pass, she got to attend today's activities with me, which was a nice change from last year.  When we landed in San Francisco, we checked in, ate a quick lunch, then jumped into the sessions.
+// more
+
+The first session we attended was "Sun Cloud APIs Birds of a Feather."  As a Sun employee, I feel I should know what our cloud story is, but I don't.  While this session didn't really explain a lot of the business side, Java luminaries Tim Bray and Craig McClanahan (ironically, one responsible for XML itself and the other for a very XML-heavy web application framework) demonstrated the RESTful APIs we provide to manage the cloud which uses...JSON. :)  Tim and Craig clearly know their stuff, handling both the presentation and the audience questions comfortably.  I need to see if Sun employees or Java User Groups get any kind of special deal on a virtual data center, as I'd really like to play with one with breaking the bank.
+
+Next was "Developing RESTful Web Services with JAX-RS and Jersey," which, I must say, was quite a cool presentation.  I haven't done anything serious with web services since my Hobby Lobby days, and that was done with Axis.  If you've used Axis, you know it's painful.  If pressed, I might even call it the EJB 2 of the web services APIs.  Marc Hadley and Paul Sandoz gave a nice overview of the spec, and lots of clear, simple examples.  JSR 311 looks like a really nice spec.  I fear, though, that I've found a new hammer in search of a nail. :)
+
+After some time in the pavilion, I ended up in Frank Wierzbicki's "Getting Started with Jython and Django."  The presentation started off a bit rough, with Frank noticing that he had the wrong slides, and he never seemed to recover fully from the disruption (I probably wouldn't either! : ).  In the end, we got a good look at what Django offers, especially when used in conjunction with Jython, but we didn't get to see enough of the actual code.  The presentation seemed to focus more on Jython than on Django, but that didn't dampen my eagerness to learn the framework.
+
+That being the last presentation of the day for us, we hung out in the pavilion for a while, talking with some of the Mojarra guys before heading to Hall A for the OpenSolaris and Sun Cloud Party.  The half-naked freak show marching band (of which I should have a picture coming from Ryan Lubke soon) that descended on the Pavilion followed us to the party.  As we ate finger foods, they played and danced and were generally a bit odd.  When they finally quit being too loud, we were able to have conversations.  Eventually, we have a veritable who's who of the JSF world in one place.  There were, of course, notable absences (Jim Driscoll, for example, left early), but we did get this snapshot of the group (thanks to my awesome wife) :
+
+image::P6010248-300x225.jpg[link="P6010248.jpg", title: "'The JSF Meetup at CommunityOne'"]
+
+Right to left we have Alexander Smirnov, Ryan Lubke, Jason Lee (me! : ), Dan Allen, Ed Burns, Anisaa Lam (GlassFish Admin Console team), Roger Kitain, Imre Oswald (JSF power user and ##jsf regular), Ken Paulsen, Matthias Wessendorf, and Andy Schwartz.
+
+The final part of the evening might have been the best.  The _real_ entertainment for the night was The Spazmatics, a very eclectic, and crazy, cover band.  Words really can't describe them, so here's a bunch of pictures:
+
+|=====
+| image:P6010253.jpg[] | image:P6010264.jpg[]
+| image:P6010254.jpg[] | image:P6010255.jpg[]
+| image:P6010268.jpg[] | image:P6010269.jpg[]
+| image:P6010273.jpg[] | image:P6010277.jpg[]
+|=====
+
+It was a good way to start the conference.  Tomorrow starts with the opening keynote, which is supposed to be chock-full of exciting news and surprises.  We'll see! :)

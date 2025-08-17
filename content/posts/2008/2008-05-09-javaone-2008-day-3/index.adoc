@@ -1,0 +1,34 @@
+---
+title: "JavaOne 2008: Day 3"
+date: 2008-05-09
+tags: [Java, JavaOne]
+type: post
+link: /:year/:slug
+status: published
+---
+= JavaOne 2008: Day 3
+Jason Lee
+2008-05-09
+
+My day started today with the Intel general session.  I went in with low expectations for some reason, but came away pretty pleased.  The speaker, Douglas Fisher, Vice President, Software and Solutions Group and General Manager, Systems Software Division of Intel Corporation, talked about how software drives innovation in hardware, which makes possible more interesting things in hardware, which in turn drives more innovation in hardware, and the cycle repeats.  Years ago, an Intel exec whose name escapes me  described this as the software spiral.  He then brought a Sun exec (Jeet Kaul, if I recall correctly) onto the stage to discuss performance gains in the JVM, presumably in the virtualization space.  He shared how from January 2007 to JavaOne 2007, they made a 20% gain in performance, so they set their goal for JavaOne 2008 at 60%.  They announced today a 68% gain, with the demo peaking at 74%, on the exact same hardware and software that was used last year.  The only difference was the JVM.  Very cool.
+// more
+
+Fisher then went on to speak about the mobile space for a bit, talking about Intel's Atom processor, which is TINY.  He had 1,000 Atom processors in a vial like one might find in a science lab.  Amazing.  He then showed a video for moblin.org, which highlighted where Intel sees things going with mobile devices, and there were some _very_ cool smoke and mirrors demos in the videos.  If any of those products ever make it to market, we're going to see some very, very cool things in terms of personalized, context-aware mobile devices.
+
+My first session of the day compared the Eclipse RCP and the NetBeans Platform.  I'm not currently doing any desktop work, but I have considered getting back into that.  It sounds like a fun challenge, and one completely different from what I normally work with.  The session was really good.  It was a great, even-handed comparison between the two, complete with the to-be-expected assessment that the best framework depends on your needs.  Personally, should I start a project like that, I'll probably use NetBeans, as I prefer a pure Swing approach to Eclipse's SWT approach, and, to be honest, Eclipse annoys me a bit. : )
+
+Next up, after a long break, was Migrating (Large) Applications to OSGi.  I don't know what I expected, really, but that wasn't it.  Not that it was bad, mind you.  They gave a brief overview of what OSGi is and what it offers, then gave some pretty sound, concrete tips on migrating large systems, such as migrating piece by piece, for example.  They also couldn't stress enough that custom ClassLoaders are bad.  Don't do it. :P  I'm not sure what I was looking for, but I enjoyed the session nonetheless.
+
+The close of my day in terms of sessions as Ed Burns and Roger Kitain's talk on JSF 2.  As an Expert Group member, I know (or should know ; ) everything that might be in the talk, but I still wanted the recap.  I wish they had gone into more detail on the annotations side of things, as I think that's pretty exciting in terms of productivity, though it likely would have devolved into one slide after another of "here's another annotation!" so they probably made a wise choice.  Ed did show off the composite component support currently in the draft spec.  That support, coupled with Ryan's Groovy work, made for a very cool demo.  Given the short time allotted, they did a fine job.  I hope it got everyone in the room as excited as I am about the upcoming spec.  Here are some pictures from that session:
+|=====
+|image:burns_kitain_jsf2_talk1-150x150.jpg[link="burns_kitain_jsf2_talk1.jpg" title: "Ed discusses JSF 2"]|image:burns_kitain_jsf2_talk2-150x150.jpg[link="burns_kitain_jsf2_talk2.jpg" title="Roger shows his Ajax demo"]|"
+image:burns_kitain_jsf2_talk3-150x150.jpg[link="burns_kitain_jsf2_talk3.jpg" title: "Ed shows his ezcomp demo"]
+|=====
+Before I left, I got my picture taken with Duke:
+image::meandduke.jpg
+
+and took some pictures of the Moscone Center on my way out:
+
+|=====
+|image:southlobby1.jpg|image:southlobby2.jpg|image:southlobby3.jpg|image:southlobby4.jpg
+|=====

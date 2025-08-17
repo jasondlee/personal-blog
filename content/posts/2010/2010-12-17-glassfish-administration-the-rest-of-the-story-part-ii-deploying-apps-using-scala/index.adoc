@@ -1,0 +1,133 @@
+---
+title: "GlassFish Administration: The REST of the Story Part II - Deploying Apps Using Scala"
+date: 2010-12-17
+tags: [administration, GlassFish, REST, Scala]
+type: post
+link: /:year/:slug
+status: published
+---
+= GlassFish Administration: The REST of the Story Part II - Deploying Apps Using Scala
+Jason Lee
+2010-12-17
+
+In a previous post (far too long ago :), I began showing off the RESTful administration API in GlassFish v3.  In link:/2010/08/glassfish-administration-the-rest-of-the-story/[GlassFish Administration: The REST of the Story Part I], I showed the basics of the API, what to send, what you get back, etc.  In this post, I want to show a practical use of the API, namely, deploying an application, and this time, for no particular reason other than I'm trying to learn the language, we'll do it in Scala.
+// more
+
+If you'll recall from Part I, the default root URL is http://localhost:4848/management/domain[http://localhost:4848/management/domain].  The endpoint, then for deploying applications works out to be http://localhost:4848/management/domain/applications/application[http://localhost:4848/management/domain/applications/application]. [1] Submitting an OPTIONS request to this endpoint gets us a document like this (trimmed down for clarity):
+[source,json,linenums]
+----
+{
+     "extraProperties": {
+         "methods": [
+             {"name": "GET"},
+             {
+                 "name": "POST",
+                 "messageParameters": {
+                     "contextroot": {
+                         "acceptableValues": "",
+                         "optional": "true",
+                         "type": "string",
+                         "defaultValue": ""
+                     },
+                     "enabled": {
+                         "acceptableValues": "",
+                         "optional": "true",
+                         "type": "boolean",
+                         "defaultValue": ""
+                     },
+                     "force": {
+                         "acceptableValues": "",
+                         "optional": "true",
+                         "type": "boolean",
+                         "defaultValue": "false"
+                     },
+                     "id": {
+                         "acceptableValues": "",
+                         "optional": "false",
+                         "type": "class java.io.File",
+                         "defaultValue": ""
+                     },
+                     "name": {
+                         "acceptableValues": "",
+                         "optional": "true",
+                         "type": "string",
+                         "defaultValue": ""
+                     },
+                 }
+             }
+         ]
+     }
+ }
+----
+
+There are a lot of options there, but there are many more, giving you really fine-grained control over the deployment of your application.  In our case, we only care about a few options, which are in the list above:  `id`, `contextroot`, and `force`.  The `contextroot` option specifies the context root at which the application will be available, and `force` tells the server to redeploy the application if an existing app of the same name is already deployed.
+
+The id `parameter` is a bit different.  It's called id because of the way the REST Resource is implemented on the server side (i.e., the REST Resources wrap, more or less, various GlassFish CLI commands, pulling the required data in from the REST request, and handing if off to the appropriate AdminCommand instance.  It all boils down to a lot of internal GlassFish code that's outside the scope of this entry : ).  In our client code, we'll handle it as a String that represents the path to the archive to be deployed.  When we make the actual REST call (via the Jersey Client), we'll see that a File object is created as we pass the data to Jersey.
+
+Having already said too much, let's see some Scala code (for the Scala enthusiasts out there, this is, quite literally, the very first bit of Scala I've ever written, so be kind :):
+[source,scala,linenums]
+----
+import com.sun.jersey.api.client.Client
+import com.sun.jersey.api.client.ClientResponse
+import com.sun.jersey.multipart.FormDataMultiPart
+import com.sun.jersey.multipart.file.FileDataBodyPart
+import javax.ws.rs.core.MediaType
+import java.io.File
+import scala.xml._
+object Main {
+  def main(args: Array[String]): Unit = {
+    val deployer = new GlassFishDeployer
+    deployer.deployApp("test.war");
+    deployer.applications foreach println
+  }
+}
+object GlassFishDeployer {
+  val RESPONSE_TYPE = "application/xml"
+}
+class GlassFishDeployer {
+  val url = "http://localhost:4848/management/domain"
+  val client: Client = Client.create()
+  /**
+   * Get the management URLs for each deployed app
+   */
+  def applications: List[String] = {
+    var apps = List[String]()
+    val xml = XML.loadString(client.resource(url + "/applications/application")
+      .accept(GlassFishDeployer.RESPONSE_TYPE)
+      .get(classOf[String]))
+    for (entry <- ((xml \\ "entry" filter { node => (node \ "@key").text == "childResources" }) \ "map" \ "entry")) {
+      apps ::= entry.attributes("value").text
+    }
+    return apps
+  }
+  def deployApp(pathToArchive: String) = {
+    postWithUpload("/applications/application", Map[String, Any](
+      "id" -> new File(pathToArchive),
+      "contextroot" -> "testApp",
+      "force" -> "true"))
+  }
+  def postWithUpload(address: String, payload: Map[String, Any]) = {
+    val form = new FormDataMultiPart();
+    for ((key, value) <- payload) {
+      value match {
+        case x: File => form.getBodyParts().add((new FileDataBodyPart(key, value.asInstanceOf[File])))
+        case _ => form.field(key, value, MediaType.TEXT_PLAIN_TYPE)
+      }
+    }
+    client.resource(url + address)
+      .`type`(MediaType.MULTIPART_FORM_DATA)
+      .accept(GlassFishDeployer.RESPONSE_TYPE)
+      .post(classOf[ClientResponse], form)
+  }
+}
+----
+
+The two methods that are of interest here are `GlassFishDeployer.deployApp` and `GlassFishDeployer.postWithUpload`.  In the first, we build the map that holds all of the information we want to pass to the REST interface.  Of these three values, only `id` is required, for you minimalists out there.  In `postWithUpload`, we see the Jersey Client code.  We create a FormDataMultiPart object and populate it, then pass that to client as part of the chained calls at the end of the method.  There's no error handling here as that would obscure our objective here, but, barring something unforeseen, the test app should now be deployed.
+
+Back in the main method of Main, we make another call to the applications endpoint, which simply returns a list of application endpoints (for further management, such as undeploying) and prints each URL.
+
+That's all there is to it.  Using less-than-stellar Scala code, we've demonstrated how to deploy an application to a GlassFish instance.  Using the RESTful interface that shipped with v3, and which we continue to improve in 3.1, allows us to manage GlassFish from an application written in the language of our choice.
+
+The full project (including the Maven pom file), can be found link:GlassFishDeployDemo.tar.gz[here].
+
+[1] You might look at that an wonder why it's "applications/application," and the answer is because the tree mimics the structure of the domain.xml file that is being manipulated via these endpoints.

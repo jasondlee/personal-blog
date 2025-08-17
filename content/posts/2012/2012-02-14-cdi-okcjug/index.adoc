@@ -1,0 +1,15 @@
+---
+title: "CDI @OKCJUG"
+date: 2012-02-14
+tags: [CDI, CDI, Java EE, OKCJUG]
+type: post
+link: /:year/:slug
+status: published
+---
+= CDI @OKCJUG
+Jason Lee
+2012-02-14
+
+I had the opportunity today to present an introduction to CDI at the http://okcjug.org[Oklahoma City Java Users Group].  It was a smaller crowd, but they had great questions nonetheless.  After a rough start in a workspace that wasn't quite as clean as it should have been, I think the rest went fairly well. _I_ had a good time at least. : )
+
+Thanks to all those that came out and asked questions during and after.  If you'd like to play with the code (WARNING: for those that weren't there, these examples are 100% creativity-free :), you can download the project link:okcjug_cdi_demo.tar.gz[here].
