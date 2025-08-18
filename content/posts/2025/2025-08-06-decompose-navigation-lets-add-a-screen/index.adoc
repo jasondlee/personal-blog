@@ -20,7 +20,7 @@ Each screen/page in our app will need several changes:
 . Child factory support in `RootComponent.child`
 . Child content support in `RootContent()`
 
-== The Component
+== The Component [[component]]
 
 For demo purposes, we're just going to add a very simple screen (that we fully intend to throw away later). We could create a screen our app will actually use later, but I don't want to muddy the details here by introducing our app's business logic. That said, here's our dummy component:
 

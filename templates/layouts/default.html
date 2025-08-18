@@ -42,9 +42,7 @@ layout: base
         <ul>
             {#for item in cdi:links.list}
             <li>
-                <a href="{item.link}" title="{item.title}">
-                    {item.title}
-                </a>
+                <a href="{item.link}" title="{item.title}">{item.title}</a>
             </li>
             {/for}
         </ul>
