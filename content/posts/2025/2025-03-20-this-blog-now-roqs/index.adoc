@@ -9,6 +9,8 @@ author: jdlee
 status: published
 ---
 
+:toc:
+
 ++++
 <img src="/images/2025/iamroq.png" alt="Roq Logo" height="250" style="float: right"/>
 ++++

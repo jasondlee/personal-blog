@@ -8,6 +8,8 @@ tags: [ compose, multiplatform, android, mobile, decompose ]
 series: Mobile App Development
 ---
 
+:toc:
+
 In the link:/2025/decompose-navigation-and-the-root-component[last post], we added the various pieces to make navigation possible and stopped JUST short of the goal line. In this post, we'll finish up our navigation discussion by adding a new screen and seeing navigation in action.
 
 == The Needed Pieces [[pieces]]

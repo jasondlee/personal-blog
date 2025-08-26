@@ -321,3 +321,16 @@ td.hljs-ln-line.hljs-ln-numbers {
     padding-right: 1em;
 }
 /* highlight.js line numbers */
+
+/* TOC */
+div#toctitle {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 1em;
+}
+/* TOC */
+
+section.series {
+    background-color: lightgrey;
+    padding: 1px 0px 5px 15px ;
+}

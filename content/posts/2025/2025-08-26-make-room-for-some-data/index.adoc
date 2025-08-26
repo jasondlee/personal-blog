@@ -1,0 +1,440 @@
+---
+type: post
+link: /:year/:slug
+title: "Make Room for Some Data"
+description: Adding Android Room support to our application
+date: 2025-08-26
+tags: [ compose, multiplatform, android, mobile, room ]
+series: Mobile App Development
+---
+
+:toc:
+
+So far, we have a runnable application that has two screens. We can navigate between those screens, but the app doesn't really do anything. In this post, we'll start to fix that. We'll layout the data model for the application, then introduce the library, Android Room, we'll use to access it.
+
+:toc:
+
+== Android Room
+
+Android Room allows us to write Kotlin data classes as the representations for our data, providing an abstraction over an SQLite database. Developers familiar with Hibernate, JPA, Spring Data, etc. should be quite comfortable with Room. With a combination of annotations and compiler plugins, we can create a fairly robust data layer with very little effort. We'll take a look at how that works, but, first, let's look at our data model.
+
+== The Data Model
+
+Since we discussed the gist of the application in the first entry in this series, I'll not rehash that here. If you're coming into the series in the middle, it might be helpful to visit the first post in the links above. That said, we are going to need three basic entities: occasions, recipients, and ideas. We'll also need some relationships, but we'll get to those later.
+
+=== Entity: Occasion
+
+One of the fundamental ideas (no pun intended) in a gift-tracking application is that of an occasion: _when_ am I giving something? Our occasion entity will be, at least for now, pretty simple, consisting of a name, a date, and a type. The Kotlin `data class` will look something like this:
+
+[source,kotlin]
+-----
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import com.steeplesoft.giftbook.database.LocalDateConverter
+import kotlinx.datetime.LocalDate
+import kotlinx.serialization.Serializable
+
+@Entity // 1
+@Serializable
+data class Occasion (
+    @PrimaryKey(autoGenerate = true) // 2
+    var id: Long = 0,
+
+    @ColumnInfo(name = "name") // 3
+    var name: String,
+    @field:TypeConverters(LocalDateConverter::class) // 4
+    @ColumnInfo(name="eventDate", typeAffinity = ColumnInfo.TEXT)
+    var eventDate: LocalDate,
+    @field:TypeConverters(EventTypeConverter::class) // 5
+    @ColumnInfo(name="eventType", typeAffinity = ColumnInfo.INTEGER)
+    var eventType: EventType = EventType.OTHER
+)
+-----
+
+Let's break this down:
+
+1. Every Room entity object is annotated with `androidx.room.Entity` as well as `kotlinx.serialization.Serializable`
+2. This identifies the primary key of our entity. We also instruct Room to autogenerate the value for us. If the value is `0`, which we've specified as the default value, then Room generates the key's value for us.
+3. Each column in the database needs to be annotated with `@ColumnInfo`. This also allows us to specify a table column name for those situations where we need to conform to an existing or externally-managed schema, or if we just really care about the column names.
+4. This column is tricky. We want to store a `LocalDate` (more on that in a minute), but Room doesn't understand how to do that natively, so we specify a `TypeConverter` that will do the work for us. We'll take a look at that below as well.
+5. This is another tricky field, for basically the same reason: Room doesn't know how to handle `enum` classes, so we specify the `TypeConverter` for this as well. We'll look at both converters together.
+
+=== Type Converter: `LocalDateConverter`
+
+This field is tricky for a couple of reasons. One is the aforementioned lack of support from Room. The second is the lack of direct support for modern Java date/time types across the platform supported by Kotlin Multiplatform. You might notice, then, in the imports that we're using `kotlinx.datetime.LocalDate` and company. This is a library provided by Jetbrains that *does* provide the cross-platform support we need.
+
+.gradle/libs.version.toml
+[source,toml]
+-----
+kotlinxDatetime = "0.7.1"
+# ...
+[libraries]
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+-----
+
+.composeApp/build.gradle.kts
+[source,kotlin]
+-----
+// ...
+kotlin {
+    // ...
+    sourceSets {
+// ...
+        commonMain.dependencies {
+            // ...
+            implementation(libs.kotlinx.datetime)
+            // ...
+        }
+    }
+}
+-----
+
+Once our build is updated, we can write our converter:
+
+[source,kotlin]
+-----
+import androidx.room.TypeConverter
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.format
+
+class LocalDateConverter {
+    @TypeConverter
+    fun toLocalDate(days: String): LocalDate {
+        return LocalDate.parse(days)
+    }
+
+    @TypeConverter
+    fun fromLocalDate(date: LocalDate): String {
+        return date.format(LocalDate.Formats.ISO)
+    }
+}
+-----
+
+A detail I didn't point out on our type declaration is another attribute on our annotation:
+
+[source,kotlin]
+-----
+@ColumnInfo(name="eventDate", typeAffinity = ColumnInfo.TEXT)
+-----
+
+Since SQLite doesn't support a "real" datetime type, we tell Room to model this field as a `TEXT` field. In our converter, as you can see above, we convert to and from a ISO-8601 format. For the performance-conscious, this is not the fastest data type one might use (a `Long`, for example, might be better), but I chose this so that if I'm looking at the database, I can easily read the value. That's kind of a dumb not-good-for-production reason, but the volume of data in this app will be small enough that I have some room (har har) for silliness like this. You can, of course, make different decisions.
+
+=== Type Converter: `EventTypeConverter`
+
+This converter is, in principle, the same, but we're dealing with an `enum class` now, so there's a little more work. First, the converter:
+
+[source,kotlin]
+-----
+import androidx.room.TypeConverter
+
+class EventTypeConverter {
+    @TypeConverter
+    fun toEventType(type: Int): EventType {
+        return EventType.of(type)
+    }
+
+    @TypeConverter
+    fun fromEventType(type: EventType): Int {
+        return type.code
+    }
+}
+-----
+
+This looks very similar to `LocalDateConverter`, but the part of interest now is `toEventType`. Note the `.of` function. That's a function we will write, to convert an `Int` to `EventType`:
+
+[source,kotlin]
+-----
+import giftbook.composeapp.generated.resources.Res
+import giftbook.composeapp.generated.resources.anniversary
+import giftbook.composeapp.generated.resources.cake
+import giftbook.composeapp.generated.resources.gift
+import giftbook.composeapp.generated.resources.graduation
+import giftbook.composeapp.generated.resources.tree
+import giftbook.composeapp.generated.resources.valentines
+import org.jetbrains.compose.resources.DrawableResource
+
+enum class EventType(
+    val code: Int,
+    val label: String,
+    val image: DrawableResource
+) {
+    BIRTHDAY(0, "Birthday", Res.drawable.cake),
+    CHRISTMAS(1, "Christmas", Res.drawable.tree),
+    ANNIVERSARY(2, "Anniversary", Res.drawable.anniversary),
+    GRADUATION(3, "Graduation", Res.drawable.graduation),
+    VALENTINES(4, "Valentine's Day", Res.drawable.valentines),
+    OTHER(999, "Other", Res.drawable.gift);
+
+    companion object {
+        fun of(code: Int): EventType {
+
+            return when (code) {
+                0 -> BIRTHDAY
+                1 -> CHRISTMAS
+                2 -> ANNIVERSARY
+                3 -> GRADUATION
+                4 -> VALENTINES
+                999 -> OTHER
+                else -> throw RuntimeException("Unknown event type")
+            }
+        }
+    }
+}
+-----
+
+This is a basic Kotlin `enum class`, providing a `code`, which is what is stored in the database, a `label` that provides the on-screen text, and an `image` that provides an icon for the event. The `of` function we mentioned above can be seen here, which handles the `Int` to `EventType` conversion. In my experience, this is a pretty common approach for conversion from a primitive to an enum type, but maybe it's new to you. If so, you're welcome. If you hate it, then you can blame Larry. #Gatto
+
+== The Data Access Object
+
+Room uses the https://developer.android.com/training/data-storage/room/accessing-data[Data Access Object] (or DAO) pattern for accessing and mutating data. To create the DAO, you:
+
+. Declare an interface, annotated with `androidx.room.Dao`
+. Add functions to the interface to perform any operations you may need (e.g., get, insert, update, delete, etc)
+. If you want asynchronous queries (and you probably do so that you're not causing your app to block), each function should be a `suspend` function.
+. Annotate your operations with the appropriate annotation from `android.room.*` (e.g., `@Query`, `@Insert`, etc).
+. For any mutation methods, remember to add `@Transactional`.
+. For any operation beyond the basics (e.g., `getFutureOccasions`), use `@Query` and provide the required SQL as the `value` for the annotation.
+
+That said, here is our occasion DAO:
+
+[source,kotlin]
+-----
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+
+@Dao
+interface OccasionDao {
+    @Transaction
+    @Query("SELECT * FROM Occasion")
+    suspend fun getAll(): List<Occasion>
+
+    @Query("SELECT * FROM Occasion WHERE id = :occasionId")
+    suspend fun getOccasion(occasionId: Long): Occasion
+
+    @Transaction
+    @Query("SELECT * from Occasion where eventDate >= :limit order by eventDate")
+    suspend fun getFutureOccasions(limit: String = LocalDate.now().format(LocalDate.Formats.ISO)): List<Occasion>
+
+    @Insert
+    @Transaction
+    suspend fun insert(occasion: Occasion) : Long
+
+    @Update
+    @Transaction
+    suspend fun update(occasion: Occasion)
+
+    @Delete
+    @Transaction
+    suspend fun delete(occasion: Occasion)
+}
+
+@OptIn(ExperimentalTime::class)
+fun LocalDate.Companion.now() = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+-----
+
+As you can see, we have a mix of basic CRUD operations (`@Insert`, `@Update`, and `@Delete`). There is not, however, say, a `@Get`. Retrieval operations are annotated with `@Query`, and we have to pass the retrieval query. With those annotations in place, though, Room handles all the marshalling and unmarshalling for us, so we can deal with our data -- mostly -- in an object-oriented manner. Again, if you're a Hibernate, JPA, or Spring Data user, you should be right at home.
+
+One final note: Notice that last line? For some reason, kotlinx-datetime doesn't have a `now()` function on `LocalDate`, and I find that very useful, so we've cobbled one on here. Kotlin extension functions for the win!
+
+== Creating the RoomDatabase
+
+With our model and DAO defined, we now need to create the actual Room database. Unfortunately, we can't just `@Inject` an `EntityManager` configured by some XML. No, we're going to have to write some less-than-pretty code. :)
+
+[source,kotlin]
+-----
+import androidx.room.ConstructedBy
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.RoomDatabaseConstructor
+import androidx.room.TypeConverters
+
+@Database(
+    entities = [Occasion::class], version = 1
+)
+@TypeConverters(LocalDateConverter::class)
+@ConstructedBy(AppDatabaseConstructor::class)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun occasionDao(): OccasionDao
+}
+
+// The Room compiler generates the `actual` implementations.
+@Suppress("KotlinNoActualForExpect")
+expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
+    override fun initialize(): AppDatabase
+}
+-----
+
+There's a lot going on there, so let's break it down. First up, we need to create our own `RoomDatabase` instance. It's via this child class that we can add our application's data model, etc., so we:
+
+. Create an abstract class that extends `RoomDatabase`
+. Add an abstract function that returns our DAO, `OccasionDao`
+. Annotate the class with `@Database` and list the entites the database will support
+. Add a `@TypeConverters` annotation to register the converter
+. Add a `@ConstructedBy` annotation, which will enable Room to wire together generated code required to produce our database instance
+
+Now, that's a lot, but, as Ron Popeil used to say on TV, "Wait! There's more!" Each platform supported by Kotlin Multiplatform has its own way of accessing the filesystem, which will be required for creating the actual, physical database file, so we need to provide that code:
+
+.Android
+[source,kotlin]
+-----
+fun getDatabaseBuilder(context: Context): RoomDatabase.Builder<AppDatabase> {
+  val appContext = context.applicationContext
+  val dbFile = appContext.getDatabasePath("giftbook.db")
+  return Room.databaseBuilder<AppDatabase>(
+    context = appContext,
+    name = dbFile.absolutePath
+  )
+}
+-----
+
+.iOS
+[source,kotlin]
+-----
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import kotlinx.cinterop.ExperimentalForeignApi
+import platform.Foundation.NSDocumentDirectory
+import platform.Foundation.NSFileManager
+import platform.Foundation.NSUserDomainMask
+
+@OptIn(ExperimentalForeignApi::class)
+fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+    val documentDirectoryUrl = NSFileManager.defaultManager.URLForDirectory(
+        directory = NSDocumentDirectory,
+        inDomain = NSUserDomainMask,
+        appropriateForURL = null,
+        create = false,
+        error = null,
+    )
+    val documentDirectory = requireNotNull(documentDirectoryUrl?.path)
+
+    return Room.databaseBuilder<AppDatabase>(
+        name = "$documentDirectory/giftbook.db",
+    )
+}
+-----
+
+And, finally, to get our `AppDatabase` instance, we call:
+
+[source,kotlin]
+-----
+fun getRoomDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase {
+  return builder
+      .setDriver(BundledSQLiteDriver())
+      .setQueryCoroutineContext(Dispatchers.IO)
+      .build()
+}
+-----
+
+If you're following along in your IDE, you've noticed two things. This post has gotten incredibly long, and trying to call `getRoomDatabase()` leaves us with a problem: how do I get the `RoomDatabase.Builder<>` the function needs? To answer that question, we're going to back to `expect`/`actual`. And this will take some doing, so strap in.
+
+=== Getting the Builder: common
+
+To set up the platform-specific calls, we'll add this to `AppDatabase.kt`:
+
+[source,kotlin]
+-----
+expect fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase>
+-----
+
+The IDE should complain, but we'll fix that right now.
+
+=== Getting the Builder: iOS
+
+We'll start with the iOS implementation, as it's pretty simple. In fact, we're just going to modify existing code a bit:
+
+[source,kotlin]
+-----
+actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+    // ...
+}
+-----
+
+We just added the `actual` keyword to our existing function. And we're done.
+
+=== Getting the Builder: Android
+
+Things are a bit more complicated for Android, as the function we have above requires a `Context` (e.g., `ApplicationContext`). At no point in our code, though, will we have easy access to that, so we're going hack together a solution. Judge all you want, but sometimes you do what you have to do, and I just haven't spent the time to find a nicer way. This is the price you pay for coming along on this journey with me. :)
+
+First, let's add a new object:
+
+[source,kotlin]
+-----
+object AppContext {
+    private var value: WeakReference<Context?>? = null
+    fun set(context: Context) {
+        value = WeakReference(context)
+    }
+    internal fun get(): Context {
+        return value?.get() ?: throw kotlin.RuntimeException("Context Error")
+    }
+}
+-----
+
+This `object` will hold the reference to our `ApplicationContext` for us. Now, let's set that value. To do _that_, we'll need another class, a child of `android.app.Application`:
+
+[source,kotlin]
+-----
+class GiftbookApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+
+        AppContext.apply { set(applicationContext) }
+    }
+}
+-----
+
+This provides an explicit `Application` class for Android to use (as opposed to the implicit one that lives magically somewhere :), but we have to tell the system to use it:
+
+.composeApp/src/androidMain/AndroidManifest.xml
+[source,xml]
+-----
+<application android:name=".GiftbookApplication"
+-----
+
+Now, we should be able to get our instance:
+
+.composeApp/src/commonMain/kotlin/com/steeplesoft/giftbook/database/AppDatabase.kt
+[source,kotlin]
+-----
+val db by lazy { getRoomDatabase(getDatabaseBuilder()) }
+-----
+
+If all goes as planned, when we reference `db` here in a moment, it will be lazily initiated, and all of these functions we've put together will work in peace and harmony to produce a database instance. :P Let's see if we're lucky!
+
+We're not going to mess with any _real_ data just yet, but we will make a dummy call to make sure we've wired things up correctly. So, in `RootComponent`, we'll add some throw-away code:
+
+[source,kotlin]
+-----
+class RootComponent(componentContext: ComponentContext) :
+    ComponentContext by componentContext {
+    init {
+        val dao = db.occasionDao()
+        AppLogger.i("The dao is $dao")
+    }
+}
+-----
+
+Let's run our application and check Logcat:
+
+[source,text]
+-----
+2025-08-26 17:13:25.905 26593-26593 lesoft.giftbook         com.steeplesoft.giftbook             W  Verification of kotlin.Unit com.steeplesoft.giftbook.MainActivity.onCreate$lambda$0(com.steeplesoft.giftbook.ui.RootComponent, androidx.compose.runtime.Composer, int) took 185.007ms (302.69 bytecodes/s) (3456B approximate peak alloc)
+2025-08-26 17:13:26.002 26593-26593 CompatChangeReporter    com.steeplesoft.giftbook             D  Compat change id reported: 309578419; UID 10234; state: ENABLED
+2025-08-26 17:13:36.957 26593-26593 GIFTBOOK                com.steeplesoft.giftbook             I  The dao is com.steeplesoft.giftbook.database.OccasionDao_Impl@aa93cab
+-----
+
+And it works! It's not super pretty, which I'm sure you're tired of me saying, but we'll clean it up a bit when we integrate dependency injection. For now, play with that and see what you can do. In the next post, we'll look at putting data on the screen. If you'd like more details on Room, including data migrations and other more advanced/detailed topics, you can find those https://developer.android.com/kotlin/multiplatform/room[here].

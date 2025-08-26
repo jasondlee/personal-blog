@@ -8,6 +8,8 @@ tags: [ compose, multiplatform, android, mobile, decompose ]
 series: Mobile App Development
 ---
 
+:toc:
+
 In this installation in my Mobile App Development series, I'm going to introduce our next architectural layer, https://arkivanov.github.io/Decompose/[Decompose]. We'll look at what it is, why you might want it, and how to get started.
 
 // more

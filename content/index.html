@@ -26,7 +26,7 @@ paginate:
             </div>
         </div>
     </div>
-    {site.pageContent(post).stripHtml.excerpt(255).raw}
+    {site.pageContent(post).removeToc().stripHtml.excerpt(255).raw}
     <div class="read-more small">
         <a href="{post.url.absolute}">Read More &rsaquo;</a>
     </div>

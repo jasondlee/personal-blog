@@ -8,11 +8,9 @@ tags: [ compose, multiplatform, android, mobile ]
 series: Mobile App Development
 ---
 
-In this installation in my Mobile App Development series, we'll take a look at the most foundational piece of the puzzle, Compose Multiplatform. We'll see what it is and how to use it.
-
-// more
-
 :toc:
+
+In this installation in my Mobile App Development series, we'll take a look at the most foundational piece of the puzzle, Compose Multiplatform. We'll see what it is and how to use it.
 
 [#what-is-it]
 == What Is It?

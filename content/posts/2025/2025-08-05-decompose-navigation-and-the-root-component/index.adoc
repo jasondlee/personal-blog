@@ -8,6 +8,8 @@ tags: [ compose, multiplatform, android, mobile, decompose ]
 series: Mobile App Development
 ---
 
+:toc:
+
 So far, we have an app that runs but has only one "screen". Decompose makes adding more screens -- and navigating between them -- pretty simple. In this post, we'll start to see how that's done.
 
 If you remember from our discussion in link:/2025/compose-multiplatform-with-decompose[Compose Multiplatform with Decompose], we had a class called `GreeterComponent`. We even told Decompose that this was our root component:
