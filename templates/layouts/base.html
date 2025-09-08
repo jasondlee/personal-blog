@@ -1,7 +1,6 @@
 ---
 title: Coming Up for Air
 description: The online home of Jason Lee, Enterprise Edition :) This blog covers topics such as Java, Kotlin, Quarkus, Android development, and a myriad of other JVM-related topics.
-image: sophielaptop.jpg
 author: Jason Lee
 twitter: jasondlee
 site_name: Coming Up for Air
@@ -13,6 +12,8 @@ site_name: Coming Up for Air
 
     {#bundle /}
     {#seo page site /}
+    <meta name="twitter:image:src" content="{site.url('images/sophielaptop.jpg').absolute}" />
+    <meta property="og:image" content="{site.url('images/sophielaptop.jpg').absolute}" />
 
     <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
     <link rel="author" href="{site.file('images/profile-pic.jpg').absolute}"/>

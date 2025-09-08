@@ -1,21 +1,30 @@
 ---
 layout: default
+paginate: true
+tagging: posts
 ---
-{% assign postsByYear = page.posts | group_by_exp:"post", "post.date | date: '%Y'" %}
-{% for year in postsByYear %}
-<h1>{{ year.name }}</h1>
-{% assign postsByMonth = year.items | group_by_exp:"post", "post.date | date: '%B'" %}
 
-{% for month in postsByMonth %}
-<h2>{{ month.name }}</h2>
-<ul>
-    {% for post in month.items %}
-    <li>
-        <a href="{{ post.url }}">{{ post.title }}</a>
-        <div>{{ post.excerpt }}</div>
-    </li>
-    {% endfor %}
-</ul>
+{@io.quarkiverse.roq.frontmatter.runtime.model.NormalPage page}
 
-{% endfor %}
-{% endfor %}
+
+<header class="header-page">
+    <h1 class="page-title">{page.data.tag}</h1>
+</header>
+
+{#for post in site.collections.get(page.data.tagCollection).paginated(page.paginator)}
+<article class="post">
+    {! #if post.image}
+    <a class="post-thumbnail" style="background-image: url({post.image})" href="{post.url}"></a>
+    {/if !}
+    <div class="post-content">
+        <h2 class="post-title"><a href="{post.url}">{post.title}</a></h2>
+        <p>{post.description}</p>
+        <span class="post-date">{post.date.format('yyyy, MMM dd')}&nbsp;&nbsp;&nbsp;—&nbsp;</span>
+        <span class="post-words">
+      {post.readTime} minute(s) read
+    </span>
+    </div>
+</article>
+{/for}
+
+{! #include partials/roq-default/pagination.html/ !}
