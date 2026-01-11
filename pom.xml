@@ -17,6 +17,7 @@
         <version.compiler-plugin>3.14.0</version.compiler-plugin>
         <version.quarkus-roq>2.0.3</version.quarkus-roq>
         <version.quarkus.platform>3.30.6</version.quarkus.platform>
+        <version.quarkus-web-bundler>2.0.0.CR7</version.quarkus-web-bundler>
         <version.surefire-plugin>3.5.3</version.surefire-plugin>
     </properties>
 
@@ -68,6 +69,12 @@
             <artifactId>quarkus-roq-plugin-series</artifactId>
             <version>${version.quarkus-roq}</version>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.web-bundler</groupId>
+            <artifactId>quarkus-web-bundler-tailwind-css</artifactId>
+            <version>${version.quarkus-web-bundler}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>

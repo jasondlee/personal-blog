@@ -12,8 +12,8 @@ site_name: Coming Up for Air
 
     {#bundle /}
     {#seo page site /}
-    <meta name="twitter:image:src" content="{site.url('images/sophielaptop.jpg').absolute}" />
-    <meta property="og:image" content="{site.url('images/sophielaptop.jpg').absolute}" />
+    <meta name="twitter:image:src" content="{site.url('images/sophielaptop.jpg').absolute}"/>
+    <meta property="og:image" content="{site.url('images/sophielaptop.jpg').absolute}"/>
 
     <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
     <link rel="author" href="{site.file('images/profile-pic.jpg').absolute}"/>
@@ -22,28 +22,36 @@ site_name: Coming Up for Air
     {#rss site /}
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link rel="icon" type="image/x-icon" href="{site.url('favicon.ico').absolute}" />
+    <link rel="icon" type="image/x-icon" href="{site.url('favicon.ico').absolute}"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+
+    <!--
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
     <link rel="stylesheet" href="/css/main.css" />
+    -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <!-- Web Fonts -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
     <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
 
-    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
     {#search-script /}
 </head>
 <body>
-<div class="grid">
-    <div class="col blogname">
-        <span>
-            <a href="{site.url.absolute}">Coming Up for Air</a>
-        </span>
+<header>
+    <div class="container py-6 flex place-content-center text-4xl" style="letter-spacing: 30px;">
+        <a href="{site.url.absolute}">Coming Up for Air</a>
     </div>
-</div>
+</header>
 <div class="grid main">
     {#insert /}
 </div>
