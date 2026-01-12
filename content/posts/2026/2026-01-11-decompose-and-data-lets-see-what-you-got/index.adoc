@@ -1,25 +1,25 @@
 ---
 type: post
 link: /:year/:slug
-title: Displaying Data on the Screen
+title: Decompose and Data. Let's See What You Got
 description: Reading data via Room and displaying it on our Decompose-based view
-date: 2026-01-12
+date: 2026-01-11
 tags: [ compose, multiplatform, android, mobile, decompose, room ]
 series: Mobile App Development
 ---
 
 :toc:
 
-In the last post -- months ago (and, yes, I hand typed the em dash, not some soulless AI :) -- we added support for the Room database API, so now we can store data, but we have no way of seeing what we've saved. We also have no way of giving it data _to_ save. In this post, we'll tackle the first part by loading the database with demo data, then creating views to show what we have. Let's dive in.
+In the last post -- months ago (and, yes, I hand typed the em dash, not some soulless AI :) -- we added support for the Room database API, so now we can store data, but we have no way of seeing what we've saved. We also have no way of giving it data _to_ save. In this post, we'll tackle the first part by creating views to show what we have, then loading the database with demo data. Let's dive in.
 
 == A Real Custom Screen [[CustomView]]
 
-Currently, our application has just the demo screen from the generator plus our dummy screen use to demonstrate navigation. Our first step will be to fix that. Let's start by moving `RootComponent` and `RootContent` to the package `com.steeplesoft.giftbook.ui.root`, and deleting `DummyComponent`, `DummyContent`, `GreeterComponent`, and `GreeterContent`.  This breaks our app, of course, but we'll clean that up as we go.
+Currently, our application has just the demo screen from the generator plus our dummy screen used to demonstrate navigation. Our first step will be to fix that. Let's start by moving `RootComponent` and `RootContent` to the package `com.steeplesoft.giftbook.ui.root`, and deleting `DummyComponent`, `DummyContent`, `GreeterComponent`, and `GreeterContent`.  This breaks our app, of course, but we'll clean that up as we go.
 
 Next, let's create a new component in the package `com.steeplesoft.giftbook.ui.home`. You are free to organize your classes how you'd like, so if you feel this is overkill, feel free to adjust as needed.
 
 .HomeComponent.kt
-[source,java]
+[source,kotlin]
 ----
 import com.arkivanov.decompose.ComponentContext
 
@@ -32,7 +32,7 @@ class HomeComponent(
 ----
 
 .HomeContent.kt
-[source,java]
+[source,kotlin]
 ----
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,10 +47,10 @@ fun Home(
 }
 ----
 
-And now let's fix build:
+And now let's fix our build:
 
 .RootComponent
-[source,java]
+[source,kotlin]
 ----
 // ...
 private fun child(config: NavigationConfig,
@@ -62,7 +62,7 @@ private fun child(config: NavigationConfig,
 ----
 
 .RootContent
-[source,java]
+[source,kotlin]
 ----
 // ...
 when (val component = it.instance) {
@@ -73,7 +73,7 @@ when (val component = it.instance) {
 and, finally
 
 .NavigationConfig
-[source,java]
+[source,kotlin]
 ----
 @Serializable
 sealed interface NavigationConfig {
@@ -92,7 +92,7 @@ We'll not get there completely in this post, but this shows you where we're head
 
 In the screenshot above, the page has a header and a footer. Those are added in `RootContent`, as this allows all of our screens to have the same decorations. We'll do that be replacing this:
 
-[source,java]
+[source,kotlin]
 ----
     Column(modifier = modifier) {
         Children(
@@ -104,7 +104,7 @@ In the screenshot above, the page has a header and a footer. Those are added in 
 
 with this:
 
-[source,java]
+[source,kotlin]
 ----
 Scaffold(
     modifier = Modifier.fillMaxSize(),
@@ -123,19 +123,23 @@ Scaffold(
     }
 ) { innerPadding ->
     Children(
+    stack = component.stack,
+    modifier = modifier.padding(innerPadding).padding(5.dp),
+    animation = stackAnimation(slide()),
+) {
         // ...
 ----
 
 I won't pretend I understand everything about the `Scaffold`, so I'll quote the link:https://developer.android.com/develop/ui/compose/components/scaffold[official docs]:
 
 [quote]
-====
+____
 The Scaffold composable provides a straightforward API you can use to quickly assemble your app's structure according to Material Design guidelines. Scaffold accepts several composables as parameters. Among these are the following:
 
 * topBar: The app bar across the top of the screen.
 * bottomBar: The app bar across the bottom of the screen.
 * floatingActionButton: A button that hovers over the bottom-right corner of the screen that you can use to expose key actions.
-====
+____
 
 Our top bar is pretty basic. We use the Material3 component, `TopAppBar`, and add a single `Text` child component that holds the app name. For the record, `Res.string.app_name` is defined in `composeApp/src/commonMain/composeResources/values/strings.xml` (you will likely need to create the directory and file):
 
@@ -150,9 +154,9 @@ The bottom bar is a little more complicated, so we'll skip that for now.
 
 == The Home Screen [[HomeScreen]]
 
-If you run the app now, you should have a screen with a purple header (I know. Hideous.) with the text "Gfitbook", and a plain 'Hello' just below it. To fix that, let's replace `Home` with the following code:
+If you run the app now, you should have a screen with a purple header (I know. Hideous.) with the text "Giftbook", and a plain 'Hello' just below it. Let's replace `Home` with the following:
 
-[source,java]
+[source,kotlin]
 ----
 @Composable
 fun Home(
@@ -197,11 +201,11 @@ fun Home(
 }
 ----
 
-There's a lot of red that, but, for now, make note of the following:
+There's a lot of red after that, but, for now, make note of the following:
 
-* We have two `subscribeAsState()` calls. These will allow our screen to react implicitly when data changes in the component changes. We'll see that shortly.
-* The `AsyncLoad` component will allow us to display a "loading" screen while we query the database. Admittedly, that's going to happen really quickly, but it's a necessary step or we'll get really odd errors trying to read data that's not available yet on the initial screen draw.
-* Inside `AsyncLoad`, we a `remember { mutableStateOf() }` call. This will help us remember (har har) the current state of the UI during "configuration changes" or, in plain English, screen rotations. :P
+* We have two `subscribeAsState()` calls. These will allow our screen to react implicitly when data changes in the component. We'll see that shortly.
+* The `AsyncLoad` component will allow us to display a "loading" screen while we query the database. Admittedly, that's going to happen really quickly, but it's a necessary step, or we'll get really odd errors trying to read data that's not available yet on the initial screen draw.
+* Inside `AsyncLoad`, we have a `remember { mutableStateOf() }` call. This will help us remember (har har) the current state of the UI during "configuration changes" or, in plain English, screen rotations. :P
 * We make use of `LazyColumn`, which is a component that allows us to make a list of components as a column. Rather than drawing every item in the list every time, though, `LazyColumn` will only draw the items that are visible at the moment, and will reuse components (if I understand correctly), to reduce memory and increase rendering speed.
 
 For all of this to work, we need to update the component.
@@ -210,29 +214,11 @@ For all of this to work, we need to update the component.
 
 To make the compiler happy -- and to make our app work -- we need to make `HomeComponent` look something like this:
 
-[source,java]
+[source,kotlin]
 ----
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+// ...
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.steeplesoft.giftbook.model.Occasion
-import com.steeplesoft.giftbook.ui.general.AsyncLoad
-import com.steeplesoft.giftbook.ui.general.ComboBox
+// ...
 
 class HomeComponent(
     componentContext: ComponentContext,
@@ -297,18 +283,18 @@ Having said that, let's break down the changes:
 
 * We use an `init` block to register a lifecycle callback, specifically `doOnResume`. This function will be called when the component is initially created, as well as after the screen/page/view is recreated on rotation, etc.
 * In this function, we load data from the database, but we can't do it on the UI thread, so we start a coroutine using the IO dispatcher.
-* The first thing we do is set `requestStatus` to `LOADING`. If you look at `AsyncLoad` in `HomeContent`, you should see that we declared `val status by component.requestStatus.subscribeAsState()`, and then pass `status` to `AsyncLoad`. By doing this, when we update `HomeComponent.requestStatus`, `AsyncLoad` will automatically rerender if needed. We'll make use of that shortly. For now, a value of `LOADING` gets us a nice spinning loading screen.
-* Next, we call `occasionDao.getFutureOccasions()` to get all the upcoming occassions defined in the app. See the Git repo if you'd like to see the implementation for that. It's a pretty simple SQL query.
-* Following that, we get the currently selected `Occasion`. On initial load, `occasionId` is null, so we just grab the first occasion in the list. However, if we have navigated to this page (something we haven't seen yet), `occasionId` is _not_ null, so we query for that occassion. We could simple filter `list`, but it's possible that the user has requested a past occasion (again, via functionality we haven't see yet), so, to be safe, we just query the database. It's all local on the device, so the performance hit is not noticeable.
-* Once we have our `Occassion`, we call `occassions.update`, which updates the `MutableValue` variable, and triggers, potentially, rerenders in the view.
-* If `occassion` is null, we call `onOccasionChange`, which will load the details (recipients, etc) for the occasion. That function (shown above) uses similar logic to what we have here, so I'll not walk through that one. This post is long enough as it is. :)
+* The first thing we do is set `requestStatus` to `LOADING`. If you look at the `AsyncLoad` usage in `HomeContent`, you should see that we declared `val status by component.requestStatus.subscribeAsState()`, and then pass `status` to `AsyncLoad`. By doing this, when we update `HomeComponent.requestStatus`, `AsyncLoad` will automatically rerender if needed. We'll make use of that shortly. For now, a value of `LOADING` gets us a nice spinning loading screen.
+* Next, we call `occasionDao.getFutureOccasions()` to get all the upcoming occasions defined in the app (see the Git repo if you'd like to see the implementation for that. It's a pretty simple SQL query).
+* Following that, we get the currently selected `Occasion`. On initial load, `occasionId` is null, so we just grab the first occasion in the list. However, if we have navigated to this page (something we haven't seen yet), `occasionId` is _not_ null, so we query for that occasion. We could simply filter `list`, but it's possible that the user has requested a past occasion (again, via functionality we haven't seen yet), so, to be safe, we just query the database. It's all local on the device, so the performance hit is not noticeable.
+* Once we have our `Occasion`, we call `occasions.update`, which updates the `MutableValue` variable, and triggers, potentially, rerenders in the view.
+* If `occasion` is null, we call `onOccasionChange`, which will load the details (recipients, etc) for the occasion. That function (shown above) uses similar logic to what we have here, so I'll not walk through that one. This post is long enough as it is. :)
 * Finally, we call `requestStatus.update { Status.SUCCESS }`, which will trigger `AsyncLoad` to rerender, and our actual view is displayed on the screen.
 
 == Dummy Data [[DummyData]]
 
 You should be able to run the app now, but there's nothing to show. Unfortunately, if my understanding is correct, there is currently no way to ship a pre-populated Room database on Android, so we'll use a bit of a hack to load some data when the app is installed. In `AppDatabase.kt`, we need to modify `getRoomDatabase()` like this:
 
-[source,java]
+[source,kotlin]
 ----
 fun getRoomDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase {
     val database = builder
@@ -324,7 +310,7 @@ fun getRoomDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase {
 
 Then, in `composeApp/src/commonMain/kotlin/com/steeplesoft/giftbook/database/DemoData.kt`, add this:
 
-[source,java]
+[source,kotlin]
 ----
 val mutex = Mutex()
 fun loadDemoData(database: AppDatabase) {
@@ -364,6 +350,6 @@ These methods check to see if their respective table is empty, then load data if
 
 image::dummy_data.png[align=center,height=500]
 
-And that's basic data-to-screen logic. I breezed over a bit in this for brevity's sake, so be sure you check out the https://github.com/jasondlee/giftbook-demo/tree/DATA[Git repo] for the complete source. In the next post, we'll add the ability to create occasions, recipients, etc., and then we'll take a look at dependency injection to see how we can clean up that object instantiation.
+And that's basic data-to-screen logic. I breezed over a bit in this for brevity's sake, so be sure you check out the https://github.com/jasondlee/giftbook-demo/tree/DATA[Git repo] for the complete source. In the next few posts, we'll add the ability to create occasions, recipients, etc., and then we'll take a look at dependency injection to see how we can clean up that object instantiation.
 
 If you have any questions, comments, corrections, or complaints, you can find me on https://x.com/jasondlee[X] or https://linkedin.com/in/jasondlee[LinkedIn]. Until next time...
