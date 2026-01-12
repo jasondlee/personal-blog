@@ -27,7 +27,7 @@ If you read the official https://arkivanov.github.io/Decompose/getting-started/q
 That said, let's create our root component. To do that, we _will_ follow some coding conventions from the Decompose docs and call ours `RootComponent`:
 
 [source,java]
------
+----
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -58,7 +58,7 @@ class RootComponent(componentContext: ComponentContext) :
         }
     }
 }
------
+----
 
 Here's a quick rundown of what's happening here:
 
