@@ -1,0 +1,418 @@
+---
+type: post
+link: /:year/:slug
+title: Moar Data!
+description: Persisting data using Room
+date: 2026-01-20
+tags: [ compose, multiplatform, android, mobile, decompose, room ]
+series: Mobile App Development
+---
+
+:toc:
+
+In the last entry, we looked at how to read data from the device's local database using Room and display it on the screen, but we did so using dummy data. In this entry, we'll look at how to use Room in our components to persist user-entered data in our SQLite database.
+
+== Adding the button[[Button]]
+
+Before we can attempt to add data, we need to update the UI to provide a means by which user can enter data. To do that, we're going to add an "action button" to the screen. Compose has a built-on component, `FloatingActionButton`, but we're going to wrap that a bit to make our usages a little simpler:
+
+.ActionButton.kt
+[source,kotlin]
+----
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
+
+@Composable
+fun ActionButton(
+    icon: ImageVector = Icons.Filled.Add,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier.fillMaxSize().padding(20.dp),
+    ) {
+        Row(modifier = Modifier.align(Alignment.BottomEnd)) {
+            FloatingActionButton(onClick = onClick) {
+                Icon(icon, contentDescription = "Floating action button")
+            }
+        }
+    }
+}
+
+----
+
+Now, in `HomeContent.kt`, we can add this to the bottom of lambda body for `AsyncLoad`:
+
+[source,kotlin]
+----
+ActionButton(
+    onClick = {
+        component.addRecipient()
+    }
+)
+----
+
+and the function to handle the click:
+
+.HomeComponent.kt
+[source,kotlin]
+----
+    fun addRecipient() {
+        occasion?.let {
+            nav.bringToFront(NavigationConfig.AddEditOccasionRecipient(it))
+        }
+    }
+----
+
+When the user taps the action button, rendered as a plus in the lower right corner of the screen, we're going to navigate to a new screen, which means we need to make a series of changes:
+
+- Add a new `NavigationConfig` entry
+- Add support for the new entry in `RootComponent.child()`
+- Create a new component in `AddEditOccasionRecipientComponent.kt`
+- Create a new composable in `AddEditOccasionRecipientContent.kt`
+
+.NavigationConfig.kt
+[source,kotlin]
+----
+@Serializable
+data class AddEditOccasionRecipient(val occasion: Occasion, val recipient: Recipient? = null,
+    val occasionRecip: OccasionRecipient? = null): NavigationConfig
+----
+
+.RootComponent.kt
+[source,kotlin]
+----
+private fun child(config: NavigationConfig, componentContext: ComponentContext): ComponentContext {
+    return when (config) {
+        // ...
+        is NavigationConfig.ViewOccasionRecipient -> ViewOccasionRecipient(componentContext, config.recipId, config.occasionId)
+        // ...
+    }
+}
+----
+
+== Adding the screen[[Screen]]
+
+=== Creating the Component[[Component]]
+
+The next two steps are a bit more involved. Both the component and the composable have been written in a way that they can be reused to either add or edit the record. When adding a recipient for an occasion, we know the occasion ID, but, of course, not the recipient. When editing the recipient for the occasion, we know both. To support that, the constructor takes the required `Occasion`, and an option `Recipient`. For now, ignore that last parameter. :)
+
+As discussed in the last post, we register a `doOnResume` handler to load the data we need:
+
+. If there is no recipient,
+.. We load a list of all recipients
+.. We then load all of the `OccasionRecipient` already set up for this occasion
+.. Finally, we filter the list of recipients to remove all that have already been added to this occasion. We'll display this in the UI
+. If there _is_ a recipient, we load the appropriate `OccasionRecipient`
+. Finally, we create an instance of `OccasionRecipForm` to help with our form handling in the UI. We'll discuss that in the next post.
+
+Finally, to save the change, we create a new instance of `OccasionRecipient`, then call either `updateOccasionRecip` or `insertOccasionRecip`, depending on our need.
+
+Here's the full component:
+
+.AddEditOccasionRecipientComponent.kt
+[source,kotlin]
+----
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.value.MutableValue
+import com.arkivanov.decompose.value.update
+import com.arkivanov.essenty.lifecycle.doOnResume
+import com.steeplesoft.camper.components.Status
+import com.steeplesoft.giftbook.NavigationConfig
+import com.steeplesoft.giftbook.database.dao.OccasionDao
+import com.steeplesoft.giftbook.database.dao.RecipientDao
+import com.steeplesoft.giftbook.form.OccasionRecipForm
+import com.steeplesoft.giftbook.model.Occasion
+import com.steeplesoft.giftbook.model.OccasionRecipient
+import com.steeplesoft.giftbook.model.Recipient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+
+class AddEditOccasionRecipientComponent(
+    val componentContext: ComponentContext,
+    val occasion: Occasion,
+    var recipient: Recipient? = null,
+    var occasionRecipient: OccasionRecipient? = null
+) : ComponentContext by componentContext, KoinComponent {
+    private val nav: StackNavigation<NavigationConfig> by inject()
+    private val occasionDao: OccasionDao by inject()
+    private val recipientDao: RecipientDao by inject()
+
+    var form = OccasionRecipForm(occasionRecipient)
+    var requestStatus: MutableValue<Status> = MutableValue(Status.LOADING)
+    var recipients: MutableValue<List<Recipient>> = MutableValue(emptyList())
+
+    init {
+        componentContext.doOnResume {
+            CoroutineScope(Dispatchers.IO).launch {
+                if (recipient == null) {
+                    val allRecips = recipientDao.getAll()
+                    val recipsForOccasion = recipientDao.getRecipientListForOccasion(occasion.id).map { it.id }
+                    val available = allRecips.filter { !recipsForOccasion.contains(it.id) }
+                    recipients.update { available }
+                }
+
+                if (recipient != null && occasionRecipient == null) {
+                    occasionRecipient = recipientDao.getRecipientForOccasion(occasion.id, recipient!!.id)
+                }
+
+                form = OccasionRecipForm(occasionRecipient)
+
+                requestStatus.update { Status.SUCCESS }
+            }
+        }
+    }
+
+    fun save() {
+        CoroutineScope(Dispatchers.Main).launch {
+            if (recipient != null) {
+                val or = OccasionRecipient(
+                    occasionId = occasion.id,
+                    recipientId = recipient!!.id,
+                    targetCost = form.cost.state.value ?: 0,
+                    targetCount = form.count.state.value ?: 0
+                )
+
+                if (occasionRecipient != null) {
+                    occasionDao.updateOccasionRecip(or)
+                } else {
+                    occasionDao.insertOccasionRecip(or)
+                }
+
+                nav.pop()
+            }
+        }
+    }
+
+    fun cancel() {
+        CoroutineScope(Dispatchers.Main).launch {
+            nav.pop()
+        }
+    }
+}
+----
+
+=== Creating the Composable[[Composable]]
+
+To finish creating the view, we create the associated `@Composable`. Like the component, this can be used to add or edit, with the UI changing based on the presence of a `recipient` value. If it's null, the user is presented with a combo box. If it's not, the user is shown the recipient's name. That composable looks like this:
+
+.AddEditOccasionRecipient.kt
+[source,kotlin]
+----
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.steeplesoft.camper.components.AsyncLoad
+import com.steeplesoft.camper.components.ComboBox
+import com.steeplesoft.camper.fields.IntegerField
+import com.steeplesoft.giftbook.model.Recipient
+
+@Composable
+fun AddEditOccasionRecipient(
+component: AddEditOccasionRecipientComponent,
+modifier: Modifier
+) {
+Column(
+modifier = modifier,
+verticalArrangement = Arrangement.spacedBy(16.dp)
+) {
+val status by component.requestStatus.subscribeAsState()
+
+        AsyncLoad(status) {
+            val form = component.form
+
+            Text(
+                buildAnnotatedString {
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("Occasion: ")
+                    }
+                    append(component.occasion.name)
+                },
+                fontSize = 20.sp,
+            )
+
+            if (component.recipient != null) {
+                Text(
+                    buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append("Recipient: ")
+                        }
+                        append(component.recipient!!.name)
+                    },
+                    fontSize = 20.sp,
+                )
+            } else {
+                val recipients by component.recipients.subscribeAsState()
+
+                val current: Recipient? by remember { mutableStateOf(component.recipient) }
+
+                ComboBox(label = "Recipient",
+                    selected = current,
+                    onChange = { newValue ->
+                        component.recipient = newValue
+                    },
+                    items = recipients,
+                    itemLabel = { recip -> recip?.name ?: "--" }
+                )
+            }
+
+            IntegerField(
+                label = "Target Count",
+                form = form,
+                fieldState = form.count,
+            ).Field()
+
+            IntegerField(
+                label = "Target Cost",
+                form = form,
+                fieldState = form.cost,
+            ).Field()
+
+            Row(modifier = Modifier.padding(top = 5.dp).fillMaxWidth()) {
+                Button(
+                    onClick = { component.save() },
+                    modifier = Modifier.padding(end = 3.dp)
+                        .fillMaxWidth(0.5f)
+                ) {
+                    Text("Save")
+                }
+
+                Button(
+                    onClick = { component.cancel() },
+                    modifier = Modifier.padding(start = 3.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text("Cancel")
+                }
+            }
+        }
+    }
+}
+----
+
+The references to `IntegerField` we'll cover in the next post. Other than that, this is a pretty basic Compose usage.
+
+To return briefly to the component, it's important to note that, in the `save()` function, database access must be done off the UI thread. Here, we use the `Main` dispatcher:
+
+[source,kotlin]
+----
+CoroutineScope(Dispatchers.Main).launch {
+    // ..
+}
+----
+
+== Adding the database support
+
+The Room API makes inserting and updating data effortless. If you need a review of setting up Room, please refer back to link:/2025/make-room-for-some-data[Make Room for Some Data].
+
+We'll start by showing the new `OccasionRecipient` model (`Recipient` is not that interesting, so we'll not show it here):
+
+[source,kotlin]
+----
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import kotlinx.serialization.Serializable
+
+@Entity(
+    // 1
+    primaryKeys = ["occasionId", "recipientId"],
+    // 2
+    foreignKeys = [
+        ForeignKey(entity = Occasion::class, parentColumns = ["id"], childColumns = ["occasionId"], onDelete = ForeignKey.CASCADE),
+        ForeignKey(entity = Recipient::class, parentColumns = ["id"], childColumns = ["recipientId"], onDelete = ForeignKey.CASCADE)
+    ],
+    // 3
+    indices =[
+        Index(value = ["recipientId"]),
+        Index(value = ["occasionId"]),
+    ]
+)
+@Serializable
+data class OccasionRecipient (
+    val occasionId: Long,
+    val recipientId: Long,
+    val targetCount: Int,
+    val targetCost: Int
+)
+----
+
+This is a touch more complex than the entities we've looked at before, but if you've used Hibernate, JPA, etc., it shouldn't be completely unfamiliar. The class itself is unremarkable. The annotation, and its parameters, are doing the heavy lifting here.
+
+. `primaryKeys` is a list of fields on the entity that make up the primary key
+. `foreignKeys` is a list of `ForeignKey` objects that define everything need to create the foreign key
+.. `entity` - the parent entity
+.. `parentColumns` - a list of fields in the parent entity to include in the key
+.. `childColumns` - a list of fields in the child entity. The order in this list must match the order in `parentColumns` so that the fields are matched correctly
+.. `onDelete` - the action to perform when the parent record is deleted
+.. `onUpdate` - the action to perform when the parent record is updated (not shown here)
+. `indices` - a list of indexes to be created in the database.
+
+When Room creates the database, these annotations will help control what database objects (tables, keys, indexes, etc.) are created.
+
+Remember to update the `RoomDatabase` definition:
+
+.AppDatabase.kt
+[source,kotlin]
+----
+@Database(
+    entities = [Occasion::class, GiftIdea::class, Recipient::class, OccasionRecipient::class], version = 1
+)
+@TypeConverters(LocalDateConverter::class)
+@ConstructedBy(AppDatabaseConstructor::class)
+abstract class AppDatabase : RoomDatabase() {
+// ...
+}
+----
+
+Finally, we can add the update and insert methods to `OccasionDao`:
+
+.OccasionDao.kt
+[source,kotlin]
+----
+@Insert
+@Transaction
+suspend fun insertOccasionRecip(occasion: OccasionRecipient)
+
+@Update
+@Transaction
+suspend fun updateOccasionRecip(occasion: OccasionRecipient)
+----
+
+Room is smart enough to know how to create the SQL statements based on our `@Entity`, so that's all we need to do.
+
+== Conclusion
+
+We are now a bit closer to a complete application. As usual some details have been left out to attempt to keep this small. You can see more details in the https://github.com/jasondlee/giftbook-demo/tree/MOAR[Git repo]. It's not a complete, runnable application, but we're getting there!
