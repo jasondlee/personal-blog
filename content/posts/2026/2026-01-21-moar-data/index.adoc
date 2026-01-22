@@ -3,7 +3,7 @@ type: post
 link: /:year/:slug
 title: Moar Data!
 description: Persisting data using Room
-date: 2026-01-20
+date: 2026-01-21
 tags: [ compose, multiplatform, android, mobile, decompose, room ]
 series: Mobile App Development
 ---
