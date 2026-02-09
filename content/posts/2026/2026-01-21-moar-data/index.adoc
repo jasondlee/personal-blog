@@ -12,7 +12,7 @@ series: Mobile App Development
 
 In the last entry, we looked at how to read data from the device's local database using Room and display it on the screen, but we did so using dummy data. In this entry, we'll look at how to use Room in our components to persist user-entered data in our SQLite database.
 
-== Adding the button[[Button]]
+== Setting up navigation[[Nav]]
 
 Before we can attempt to add data, we need to update the UI to provide a means by which user can enter data. To do that, we're going to add an "action button" to the screen. Compose has a built-on component, `FloatingActionButton`, but we're going to wrap that a bit to make our usages a little simpler:
 
