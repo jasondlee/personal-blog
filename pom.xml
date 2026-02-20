@@ -14,10 +14,8 @@
 
         <skipITs>true</skipITs>
 
-        <version.compiler-plugin>3.14.0</version.compiler-plugin>
-        <version.quarkus-roq>2.0.3</version.quarkus-roq>
+        <version.quarkus-roq>2.1.0.BETA2</version.quarkus-roq>
         <version.quarkus.platform>3.30.6</version.quarkus.platform>
-        <version.surefire-plugin>3.5.3</version.surefire-plugin>
     </properties>
 
     <dependencyManagement>
@@ -114,14 +112,12 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.compiler-plugin}</version>
                 <configuration>
                     <parameters>true</parameters>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${version.surefire-plugin}</version>
                 <configuration>
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
@@ -131,7 +127,6 @@
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${version.surefire-plugin}</version>
                 <executions>
                     <execution>
                         <goals>

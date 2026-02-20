@@ -1,0 +1,284 @@
+---
+type: post
+link: /:year/:slug
+title: "Koin: The Way Object Handling Was Mint to Be"
+description: "Migrating to dependency injection via Koin"
+#date: 2026-01-24
+tags: [ compose, multiplatform, android, mobile, decompose, koin ]
+series: Mobile App Development
+---
+
+:toc:
+
+Sharp-eyed readers of this series may have noticed something...suboptimal: Up until this point, we've been creating certain objects as global variables. They're immutable, so that may be technically OK, but those of a certain age have been taught for years how wrong that is, so technically OK or not, it just feels gross. In this post, we're going to fix that with by implementing inversion of control with https://insert-koin.io[Koin].
+
+== What is Koin?
+
+https://insert-koin.io[Koin] is "[t]he pragmatic Kotlin & Kotlin Multiplatform Dependency Injection framework". If you search for Kotlin dependency injection frameworks, Koin will almost certainly be one of the top 3 (Koin, Dagger, and Hilt). Of those 3, Koin is the only one that is (currently) Kotlin Multiplatform compatible, so while the others may be fantastic, that lack of KMP compatibility helps make our decision. Fortunately, Koin is quite powerful and easy to use, so that works out great.
+
+Koin can be used either declaratively (i.e., manually building the modules via code) or via annotations. I have, for now, settled on the code approach. This does require a bit more work up front, but there's much to be said for having an explicit and predictable set of objects for injection.
+
+Stealing the example from the Koin docs just to add some clarity, that would look something like this:
+
+[source,kotlin]
+----
+class MyRepository()
+class MyPresenter(val repository : MyRepository)
+
+// just declare it
+val myModule = module {
+  singleOf(::MyPresenter)
+  singleOf(::MyRepository)
+}
+----
+
+which could then be injected like this:
+
+[source,kotlin]
+----
+class MyActivity : AppCompatActivity() {
+  val myPresenter : MyPresenter by inject()
+}
+----
+
+That's pretty nice as it allows us, as users of DI have come to expect, to replace the implementation of `MyPresenter` as needed, whether it's a new-and-improved implementation, or a mock for testing. DI decouples object instantiation and use, making our code a little less coupled and more flexible. So let's see how we can enable that in our mobile app.
+
+== Adding Koin to Our Build
+
+The first step, of course, is to make the libraries available to the app, so we need to update our build. We start with the version catalog:
+
+.gradle/libs.versions.toml
+[source,toml]
+----
+[versions]
+koin = "4.2.0-RC1"
+[libraries]
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose" }
+----
+
+and then the application build file:
+
+.composeApp/build.gradle.kts
+[source,kotlin]
+----
+commonMain.dependencies {
+    implementation(project.dependencies.platform(libs.koin.bom))
+    implementation(libs.koin.compose)  // No version needed
+}
+----
+
+All done. No need for plugins, etc., and we can move on to code changes.
+
+== Defining Our Modules
+
+As alluded to earlier, we need to build our module(s), and then we need to start Koin itself. First up, we'll build our module:
+
+.composeApp/src/commonMain/kotlin/com/steeplesoft/giftbook/KoinModule.kt
+[source,kotlin]
+----
+import androidx.room.RoomDatabase
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.steeplesoft.giftbook.database.AppDatabase
+import com.steeplesoft.giftbook.database.dao.GiftIdeaDao
+import com.steeplesoft.giftbook.database.dao.OccasionDao
+import com.steeplesoft.giftbook.database.dao.RecipientDao
+import com.steeplesoft.giftbook.database.loadDemoData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import org.koin.core.context.startKoin
+import org.koin.core.module.Module
+import org.koin.dsl.KoinAppDeclaration
+import org.koin.dsl.module
+
+fun initKoin(config: KoinAppDeclaration? = null) {
+    startKoin {
+        modules(appModule, platformModule)
+        config?.invoke(this)
+    }
+}
+
+expect val platformModule : Module
+
+val appModule = module {
+    single<StackNavigation<NavigationConfig>> { StackNavigation() }
+    single<AppDatabase>(createdAtStart = true) {
+        val builder : RoomDatabase.Builder<AppDatabase> by inject()
+        val database = builder
+            .setDriver(BundledSQLiteDriver())
+            .setQueryCoroutineContext(Dispatchers.IO)
+            .build()
+
+        loadDemoData(database)
+
+        database
+    }
+    single<GiftIdeaDao> { val db : AppDatabase by inject(); db.giftIdeaDao() }
+    single<OccasionDao> { val db : AppDatabase by inject(); db.occasionDao() }
+    single<RecipientDao> { val db : AppDatabase by inject(); db.recipientDao() }
+}
+----
+
+At the start of the file, you'll notice `initKoin()`. That's the function that we'll use to start Koin. We'll come back to that in a bit.
+
+Next is `expect val platformModule : Module`. We have already seen, when setting up Room, how the different platforms supported by KMP sometimes need platform-specific code to perform various operations. By using the (hopefully now somewhat familiar) `actual/expect` mechanism, we instruct the compiler to `expect` a `module` definition in each platform to fulfill those platform-specific needs. We'll show those in just a moment as well.
+
+Finally, we come to `appModule`, in which we define the objects we want to inject in our application, things like navigation and database objects. In previous versions of the app, we had, for example, `val nav = StackNavigation<NavigationConfig>()` at the top of `RootComponent.kt`. With Koin, we replace that with `single<StackNavigation<NavigationConfig>> { StackNavigation() }`. It's effectively similar (immutable navigation object), but we can swap out the implementation as needed. If needed. The module then continues to create the `RoomDatabase` object (`AppDatabase`) and the related data access objects.
+
+[NOTE]
+You may notice that call to `loadDemoData(database)`. Remember that this is there only to provide demo data for our purposes here, and is probably not something you want in a production app. Or maybe you do, but there are better ways to do it than this. :)
+
+So what does `platformModule` look like? Here's the one for Android:
+
+.composeApp/src/androidMain/kotlin/com/steeplesoft/giftbook/KoinModule.android.kt
+[source,kotlin]
+----
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.steeplesoft.giftbook.database.AppDatabase
+import com.steeplesoft.giftbook.database.dbFileName
+import org.koin.dsl.module
+
+actual val platformModule = module {
+    single<RoomDatabase.Builder<AppDatabase>> {
+        val context = AppContext.get()
+        Room.databaseBuilder<AppDatabase>(
+            context, context.getDatabasePath(dbFileName).absolutePath
+        )
+    }
+}
+----
+
+and iOS:
+
+.composeApp/src/iosMain/kotlin/com/steeplesoft/giftbook/KoinModule.ios.kt
+[source,kotlin]
+----
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.steeplesoft.giftbook.database.AppDatabase
+import com.steeplesoft.giftbook.database.dbFileName
+import kotlinx.cinterop.ExperimentalForeignApi
+import org.koin.dsl.module
+import platform.Foundation.NSDocumentDirectory
+import platform.Foundation.NSFileManager
+import platform.Foundation.NSUserDomainMask
+
+actual val platformModule = module {
+    single<RoomDatabase.Builder<AppDatabase>> {
+        val documentDirectoryUrl = NSFileManager.defaultManager.URLForDirectory(
+            directory = NSDocumentDirectory,
+            inDomain = NSUserDomainMask,
+            appropriateForURL = null,
+            create = false,
+            error = null,
+        )
+        val documentDirectory = requireNotNull(documentDirectoryUrl?.path)
+
+        Room.databaseBuilder<AppDatabase>(
+            name = "$documentDirectory/$dbFileName",
+        )
+    }
+}
+----
+
+These files replace their platform's respective `AppDatabase.*.kt` files.
+
+== Enabling Koin
+
+Once we have our modules defined, we need to configure the app to start Koin. That is done in the platform-specific modules. For Android, we do that in our `Application` instance:
+
+.composeApp/src/androidMain/kotlin/com/steeplesoft/giftbook/GiftBookApplication.kt
+[source,kotlin]
+----
+import android.app.Application
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import kotlin.apply
+
+class GiftbookApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+
+        AppContext.apply { set(applicationContext) }
+
+        initKoin {
+            androidLogger()
+            androidContext(this@GiftbookApplication)
+        }
+    }
+}
+----
+
+and for iOS, it's done in the `App` instance:
+
+.iosApp/iosApp/iOSApp.swift
+[source,swift]
+----
+import SwiftUI
+import ComposeApp
+
+@main
+struct iOSApp: App {
+    init() {
+        KoinModuleKt.doInitKoin()
+    }
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+----
+
+If you look at the https://insert-koin.io/docs/reference/koin-core/starting-koin#kotlin-multiplatform[Koin docs], you'll see some different approaches -- perhaps better approaches -- but this worked for me, and, for now, that's good enough. Let's get to injectin'...
+
+== Injecting the Instances
+
+Now that we have our common and platform-specific modules defined, we need to modify our code to use them. We'll start with `RootComponent`. In previous entries, we created the `nav` variable outside the class (thus making it global), and used in our class. To change that, we will
+
+. Delete the variable declaration: `val nav = StackNavigation<NavigationConfig>()` is deleted
+. Add a new interface to our class: `KoinComponent`
+. Add our injection site: `private val nav : StackNavigation<NavigationConfig> by inject()`
+
+That leaves the file looking like this:
+
+[source,kotlin]
+----
+//...
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+
+class RootComponent(componentContext: ComponentContext) :
+    ComponentContext by componentContext, KoinComponent {
+    private val nav : StackNavigation<NavigationConfig> by inject()
+//...
+}
+----
+
+The rest of the class remains unchanged. We can make a similar change to `HomeComponent`:
+
+[source,kotlin]
+----
+// ...
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+
+class HomeComponent(
+    componentContext: ComponentContext,
+    var occasionId: Long? = null
+) : ComponentContext by componentContext, KoinComponent {
+    private val giftIdeaDao: GiftIdeaDao by inject()
+    private val occasionDao: OccasionDao by inject()
+    private val recipientDao: RecipientDao by inject()
+    private val nav: StackNavigation<NavigationConfig> by inject()
+//...
+----
+
+== That's it!
+
+There's obviously more to DI and Koin, but for this app, that's all we need for now. Anywhere there is a need to create a business/service object, we should at least consider adding it to the module (I hesitate to say "always", as every situation is different) and injecting it. With these changes, our app is now set up to allow us to do that.
+
+You can find the changes made in this entry in the KOIN tag of the https://github.com/jasondlee/giftbook-demo/tree/KOIN[repo].
