@@ -7,29 +7,20 @@ paginate:
 {#include partials/pagination.html/}
 
 {#for post in site.collections.posts.paginated(page.paginator)}
-<article class="post">
-    <div class="grid">
-        <div class="col-fixed" style="padding-top: 0.4rem; width: 100px;">
-            <div class="entry-date">
-                <div class="date-box updated">
-                    <div class="date">{post.date.format("d")}</div> {!  | date: "%d" !}
-                    <div class="month-year">{post.date.format("MMM YYYY")}</div> {!  | date: "%b %Y" !}
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <h1 class="title">
-                <a href="{post.url.absolute}">{post.title}</a>
-            </h1>
-            <div class="col">
-                {!#include share-page.html /!}
-            </div>
-        </div>
-    </div>
-    {site.pageContent(post).removeToc().stripHtml.excerpt(255).raw}
-    <div class="read-more small">
-        <a href="{post.url.absolute}">Read More &rsaquo;</a>
-    </div>
+<article class="bg-white rounded-lg shadow-sm p-6 mb-6 border border-gray-200">
+    <time class="text-sm text-gray-500 uppercase tracking-wide" datetime="2026-02-09">
+        <div class="date">{post.date.format("d")}</div> {!  | date: "%d" !}
+        <div class="month-year">{post.date.format("MMM YYYY")}</div> {!  | date: "%b %Y" !}
+    </time>
+    <h2 class="text-2xl font-bold mt-2 mb-4 uppercase">
+        <a href="{post.url.absolute}" class="text-gray-900 hover:text-blue-600">{post.title}</a>
+    </h2>
+    <p class="text-gray-700 leading-relaxed mb-4">
+        {site.pageContent(post).removeToc().stripHtml.excerpt(255).raw}
+    </p>
+    <a href="{post.url.absolute}" class="text-blue-600 hover:text-blue-800 font-medium">
+        Read More &rsaquo;
+    </a>
 </article>
 {/for}
 <div style="border-top: 2px solid #47586d;"></div>
