@@ -6,9 +6,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= CDI @OKCJUG
-Jason Lee
-2012-02-14
 
 I had the opportunity today to present an introduction to CDI at the http://okcjug.org[Oklahoma City Java Users Group].  It was a smaller crowd, but they had great questions nonetheless.  After a rough start in a workspace that wasn't quite as clean as it should have been, I think the rest went fairly well. _I_ had a good time at least. : )
 

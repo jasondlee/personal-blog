@@ -7,13 +7,10 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Book Review: JavaFX 8: Introduction by Example
 
 http://carlfx.wordpress.com[Carl Dea], this time with the help of https://blogs.oracle.com/javajungle[Mark Heckler], http://harmoniccode.blogspot.com[Gerrit Grunwald], http://jperedadnr.blogspot.com[José Pereda], and http://birdasaur.tumblr.com[Sean Phillips], recently http://www.apress.com/9781430264606[published] an updated and greatly expanded introductory work on JavaFX, with both the title and content updated to reflect the updates in the JDK and library.
 
 *tl;dr*: A solid introduction with a plethora of usable examples. You can purchase it http://www.apress.com/9781430264606[here.]
-
-// more
 
 image:http://www.apress.com/media/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/A/9/A9781430264606-3d.png[float=right, role=right]To start with, let's take a quick glance at the table of contents:
 

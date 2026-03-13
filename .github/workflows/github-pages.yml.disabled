@@ -22,7 +22,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      # Use GitHub Deploy Action to build and deploy to Github
+      # Use GitHub Deploy Action to build and deploy to GitHub
       - uses: jeffreytse/jekyll-deploy-action@v0.6.0
         with:
           provider: 'github'

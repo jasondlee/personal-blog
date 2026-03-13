@@ -7,13 +7,10 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Contract-First REST APIs with RAML
 
 Yesterday, at the http://okcjug.org[OKC JUG], I presented on the topic of Contract-first REST API development with RAML. This post is a rough blogification of that discussion. For those of you who were at the meeting, the preamble to the source demo (introduction, background, options discussion, etc) have been not been reproduced here.
 
 *tl;dr*: You can find the demo source https://bitbucket.org/jdlee/raml-demo[here] and play around with it.
-
-// more
 
 == Introduction
 

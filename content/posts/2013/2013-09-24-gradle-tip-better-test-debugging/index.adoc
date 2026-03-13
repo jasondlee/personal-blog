@@ -7,7 +7,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Gradle Tip: Better Test Debugging
 
 In a link:/posts/2013/09/10/gradle-tip-attaching-a-debugger/[recent post], I showed how to attach a debugger to tests run from the command line via Gradle. While it worked, it turns out that it's a bit over kill.  Try this instead:
 

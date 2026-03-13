@@ -6,13 +6,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Can I Use Dropwizard for This?
-Jason Lee
-2014-08-11
-
-
-
-
 
 I've been toying with using DropWizard as my... deployment platform for a personal project, but I need/want JAX-RS 2 and CDI, which is a problem for the the stable DW. There is a branch that is migrating to JAX-RS 2 (and Jersey 2.9), and it sort of works, but trying a simple injection is causing a failure I can't quite figure out:
 

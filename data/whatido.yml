@@ -1,0 +1,46 @@
+- title: Greenfield Development
+  description: >
+    Build new systems with modern architecture patterns, microservices, and cloud-native design. 
+    Careful in choosing the right technology stack for your specific needs.
+  icon: 🚀
+- title: Mentor Younger Developers
+  description: >
+    Mentor junior developers in their journey to master the latest technologies and best practices. Provide guidance, 
+    support, and mentorship to help them grow.
+  icon: 👨‍🏫
+- title: REST API Architecture
+  description: >
+    Design and implement robust, scalable REST APIs using MicroProfile, Jakarta Rest, and modern API best practices. From 
+    design to documentation and versioning.
+  icon: 🏗️
+- title: Code Quality Excellence
+  description: >
+    Maintain high standards through comprehensive test-driven development (TDD) strategies, code reviews, CI/CD pipelines, 
+    and quality automation. Build maintainable, production-ready code.
+  icon: ✨
+- title: Open Source Experience
+  description: >
+    Work actively on multiple open-source projects, contributing to the community and sharing knowledge. Collaborate with 
+    industry experts to solve complex problems and drive innovation.
+  icon2: 🐧
+  icon: 📖
+- title: Conference and User Group Speaker
+  description: >
+    Present at conferences and user groups, sharing knowledge and experiences on cutting-edge technologies. Sharing as I
+    build and learn to bring others along with me.
+  icon: 🔈
+#- title: Legacy Migration
+#  description: >
+#    Transform outdated J2EE and Java EE systems into modern Jakarta EE or Quarkus applications. Minimize disruption while
+#    maximizing performance and maintainability.
+#  icon: 🔄
+#- title: Third-Party Integrations
+#  description: >
+#    Seamlessly connect your systems with external services, payment gateways, CRM platforms, and enterprise software.
+#    Build reliable, secure integration layers.
+#  icon: 🔌
+#- title: AI Integration
+#  description: >
+#    Leverage cutting-edge AI capabilities including LLM integration, intelligent automation, and machine learning
+#    features to add smart functionality to your applications.
+#  icon: 🤖

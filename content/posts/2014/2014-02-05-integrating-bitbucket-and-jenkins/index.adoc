@@ -7,15 +7,12 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Integrating Bitbucket and Jenkins
 
 If you're like me, you have your source code hosted in a hosted environment (such as
 http://bitbucket.org[Bitbucket]), but you have a local continuous integration server
 (such as http://jenkins-ci.org[Jenkins]). It would be really nice if you could have Jenkins
 build your project every time you commit, but without the heavy requirement of polling
 your repo. In this post, I'll show you how to integrate the two to do just that.
-
-// more
 
 The first step is to get Jenkins set up (the zeroth step, of course, is to have your
 code hosted by Bitbucket. I'll leave that as an exercise for the reader ;). The basic

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jason Lee - Java Champion & Enterprise Architect</title>
+    <meta name="description" content="Jason Lee - Java Champion, Principal Software Engineer at IBM, specializing in Jakarta EE, Quarkus, Android, and enterprise application development.">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    {#seo page site /}
+    {#bundle /}
+
+    <meta name="twitter:image:src" content="{site.url('images/sophielaptop.jpg').absolute}"/>
+    <meta property="og:image" content="{site.url('images/sophielaptop.jpg').absolute}"/>
+
+    <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
+    <link rel="author" href="{site.file('images/profile-pic.jpg').absolute}"/>
+
+    {#ga4 tag="3GQK1YDRQM" /}
+    {#rss site /}
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .nav-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            scroll-margin-top: 80px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .capability-card {
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+
+        .capability-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-color: #3b82f6;
+        }
+
+        .tech-badge {
+            transition: all 0.2s ease;
+        }
+
+        .tech-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .profile-image {
+            transition: all 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
+
+</head>
+<body class="bg-gray-50">
+
+<!-- Navigation -->
+<nav class="nav-sticky">
+    <div class="container mx-auto px-4 py-4">
+        <div class="flex justify-between items-center max-w-6xl mx-auto">
+            <div class="text-xl font-bold text-gray-800"><a href="{site.url()}">Coming Up for Air</a></div>
+            <div class="flex gap-6">
+                <a href="{page.homePageLink("#blogs")}" class="text-gray-600 hover:text-blue-600 transition-colors">Latest Blogs</a>
+                <a href="{page.homePageLink("#about")}" class="text-gray-600 hover:text-blue-600 transition-colors">About Me</a>
+                <a href="{page.homePageLink("#whatido")}" class="text-gray-600 hover:text-blue-600 transition-colors">What I Do</a>
+                <a href="{page.homePageLink("#whatiuse")}" class="text-gray-600 hover:text-blue-600 transition-colors">What I Use</a>
+                <a href="{page.homePageLink("#whativedone")}" class="text-gray-600 hover:text-blue-600 transition-colors">What I've Done</a>
+                <a href="{page.homePageLink("#contact")}" class="text-gray-600 hover:text-blue-600 transition-colors">Let's Connect</a>
+                {!<a href="{page.homePageLink("#contact")}" class="btn-primary text-white px-6 py-2 rounded-lg">Hire Me</a>!}
+            </div>
+        </div>
+    </div>
+</nav>
+
+{#insert /}
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-400 py-8">
+    <div class="container mx-auto px-4 text-center">
+        <p class="text-sm text-gray-600 text-center">
+            &#169; Copyright Jason Lee, 2005–2026. All rights reserved.
+        </p>
+        <p class="text-sm text-gray-500 text-center mt-2">
+            Powered by Quarkus Roq {global:roqVersion}.
+        </p>
+    </div>
+</footer>
+
+<footer class="bg-white border-t border-gray-200 mt-12">
+    <div class="container mx-auto px-4 py-6">
+
+    </div>
+</footer>
+
+</body>
+</html>

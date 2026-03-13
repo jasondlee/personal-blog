@@ -517,7 +517,7 @@ It's also worth noting that, in our tests, we're not actually interacting with h
 The only place we use https://www.testcontainers.org/[Testcontainers] directly is in our https://flywaydb.org/[Flyway]/codegen configuration above, but it's still there, and it's still awesome. :)
 
 == Conclusion
-In this project, we show a complete -- if simple -- integration of several important technologies which will allow use to write REST endpoints quickly and easily, and we need to worry (too much) about the local environment, whether it's our machine, a coworkers, or even, say, a Github Action. If the machine has Java and Maven installed (and git and docker, of course), it's simply a matter of cloning the project and issuing `mvn clean install` to build, test, and package the application.
+In this project, we show a complete -- if simple -- integration of several important technologies which will allow use to write REST endpoints quickly and easily, and we need to worry (too much) about the local environment, whether it's our machine, a coworkers, or even, say, a GitHub Action. If the machine has Java and Maven installed (and git and docker, of course), it's simply a matter of cloning the project and issuing `mvn clean install` to build, test, and package the application.
 
 In case you missed the link above, you can find this complete example https://github.com/jasondlee/quarkus-dev-service-full-example[here].
 

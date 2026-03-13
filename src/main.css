@@ -1,0 +1,181 @@
+@import "tailwindcss";
+
+@theme {
+    /* Fonts */
+    --font-sans: "Montserrat", sans-serif;
+
+    --mainColor: #47586d;
+    --white: #ffffff;
+    --headerTextColor: #cecfd1;
+    --footerBorderColor: #2ba6cb;
+    --widgetBorderColor: #666666;
+    --defaultCodeColor: #7f0a0cbb;
+    --buttonColor: var(--mainColor);
+    --buttonHover: var(--defaultCodeColor);
+}
+
+@utility container {
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+}
+
+body {
+    font-size: 18px;
+    color: #333;
+}
+
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+    margin: unset;
+}
+
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+
+h1.title {
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 400;
+    margin-bottom: 0px;
+    margin-top: 0.5rem;
+}
+
+section.series {
+    background-color: lightgrey;
+    padding: 1px 0px 5px 15px;
+}
+
+code {
+    padding-bottom: 0;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 0;
+    color: var(--defaultCodeColor);
+    font-weight: bold;
+    font-family: monospace;
+}
+
+a {
+    color: var(--mainColor);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    unicode-bidi: isolate;
+}
+
+code, kbd, pre, samp {
+    font-family: monospace, serif;
+    font-size: 1em;
+}
+
+td.hljs-ln-line.hljs-ln-numbers {
+    padding-right: 1em;
+}
+
+div#toctitle {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+div.listingblock > div.title {
+    font-style: italic;
+    background-color: var(--headerTextColor);
+}
+
+.ulist ul li p {
+    display: inline;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    padding-inline-start: 40px;
+    unicode-bidi: isolate;
+}
+
+ol {
+    display: block;
+    list-style-type: decimal;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    padding-inline-start: 40px;
+    unicode-bidi: isolate;
+}
+
+ol.loweralpha {
+    list-style-type: lower-alpha;
+}
+
+section.series ul {
+    list-style-type: none;
+}
+
+.sectlevel1, .sectlevel2, .sectlevel3, .sectlevel4, .sectlevel5 {
+    list-style-type: disc;
+    list-style-position: inside;
+    padding-left: 1em;
+}
+
+.sectlevel2, .sectlevel3, .sectlevel4, .sectlevel5 {
+    padding-left: 1em;
+    list-style-type: circle;
+}
+
+.sectlevel3, .sectlevel4, .sectlevel5 {
+    padding-left: 1em;
+    list-style-type: square;
+}
+
+div.imageblock.text-center {
+    display: grid;
+    place-items: center; /* Centers both horizontally and vertically */
+    max-height: 500px;
+}
+
+img {
+    max-height: 500px;
+}

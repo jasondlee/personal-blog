@@ -7,8 +7,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Merry Christmas
-
 
 To all of my readers, I wish you all a very Merry Christmas. My hope, as always, is
 that even in the busyness and the hustle of the Christmas season, you will find the peace and joy of God

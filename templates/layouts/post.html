@@ -1,34 +1,33 @@
 ---
-layout: base
+layout: base2
 link: /:year/:month/:day/:slug
 ---
-<div class="col-11" style="margin: auto; left: 0; right: 0;">
-    <div id="content">
-        <article class="post">
-            <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
-                {page.title}
-            </h1>
-            {page.date.format("EEEE, MMM d, YYYY")} | {#include partials/share-page.html /}
-            <div>
-                {#include partials/roq-series /}
-
-                {#insert /}
-            </div>
-            <footer>
-                <div class="grid">
-                    {!
-                    <div class="col tags">
-                        {#if page.data.tags and page.data.tags.size > 0}
-                        <span class="title">tags: </span>
-                        {#for tag in page.data.tags }
-                        <a href="/posts/tag/{tag}/">{tag}</a>
-                        {/for}
-                        {/if}
-                    </div>
-                    !}
-                    <div class="col">{#include partials/share-page.html /}</div>
+<section id="capabilities" class="section py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <article class="post">
+                <h1 class="title" style="border-bottom: solid 1px #47586d; margin-bottom: 0.25rem;">
+                    {page.title}
+                </h1>
+                {page.date.format("EEEE, MMM d, YYYY")} | {#include partials/share-page.html /}
+                <div>
+                    {#include partials/roq-series /}
+                    {#insert /}
                 </div>
-            </footer>
-        </article>
+                <footer>
+                        {!
+                                <div class="col tags">
+                                    {#if page.data.tags and page.data.tags.size > 0}
+                                    <span class="title">tags: </span>
+                                    {#for tag in page.data.tags }
+                                    <a href="/posts/tag/{tag}/">{tag}</a>
+                                    {/for}
+                                    {/if}
+                                </div>
+                                !}
+                        <div class="col">{#include partials/share-page.html /}</div>
+                </footer>
+            </article>
+        </div>
     </div>
-</div>
+</section>

@@ -10,10 +10,14 @@ site_name: Coming Up for Air
 <head>
     <title>Coming Up for Air {#if page.title}: {page.title}{/if}</title>
 
+    <!-- script src="https://cdn.tailwindcss.com"></script -->
+
     {#bundle /}
+
     {#seo page site /}
-    <meta name="twitter:image:src" content="{site.url('images/sophielaptop.jpg').absolute}" />
-    <meta property="og:image" content="{site.url('images/sophielaptop.jpg').absolute}" />
+
+    <meta name="twitter:image:src" content="{site.url('images/sophielaptop.jpg').absolute}"/>
+    <meta property="og:image" content="{site.url('images/sophielaptop.jpg').absolute}"/>
 
     <link rel="me" href="https://mastodon.cloud/@jasondlee"/>
     <link rel="author" href="{site.file('images/profile-pic.jpg').absolute}"/>
@@ -22,39 +26,56 @@ site_name: Coming Up for Air
     {#rss site /}
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link rel="icon" type="image/x-icon" href="{site.url('favicon.ico').absolute}" />
+    <link rel="icon" type="image/x-icon" href="{site.url('favicon.ico').absolute}"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+
+    <!--
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
     <link rel="stylesheet" href="/css/main.css" />
+    -->
+
+    <!-- script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script -->
 
     <!-- Web Fonts -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cherry+Cream+Soda">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Philosopher">
     <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
 
-    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.2/primeflex.css"/>
     {#search-script /}
 </head>
 <body>
-<div class="grid">
-    <div class="col blogname">
-        <span>
+<header class="bg-white shadow-sm border-b border-gray-200">
+    <div class="container mx-auto px-4 py-6">
+        <h1 class="text-3xl font-bold text-gray-900">
             <a href="{site.url.absolute}">Coming Up for Air</a>
-        </span>
+        </h1>
+    </div>
+</header>
+<!-- Main Container -->
+<div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Main Content Area -->
+        {#insert /}
     </div>
 </div>
-<div class="grid main">
-    {#insert /}
-</div>
-<div class="footer">
-    <div>
-        <div>
-            &#169; Copyright Jason Lee, 2005–2026. All rights reserved. Powered by Quarkus Roq {global:roqVersion}.
-            <img style="vertical-align: top" src="{site.image("roqico.png")}" />
-        </div>
+<!-- Footer -->
+<footer class="bg-white border-t border-gray-200 mt-12">
+    <div class="container mx-auto px-4 py-6">
+        <p class="text-sm text-gray-600 text-center">
+            &#169; Copyright Jason Lee, 2005–2026. All rights reserved.
+        </p>
+        <p class="text-sm text-gray-500 text-center mt-2">
+            Powered by Quarkus Roq {global:roqVersion}.
+        </p>
     </div>
-</div>
+</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
 <script src="/js/copy.js" type="text/javascript"></script>
 </body>

@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+.share-page a {
+    text-decoration: none;
+}
+
+section.series {
+    @apply bg-blue-100 rounded-lg shadow-sm p-6 mb-6 border border-gray-200;
+    padding: 1px 0px 5px 15px;
+}
+
+
+
+
+td.hljs-ln-line.hljs-ln-numbers {
+    padding-right: 1em;
+}
+
+div#toctitle {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+div.listingblock > div.title {
+    font-style: italic;
+    @apply bg-blue-100;
+}

@@ -10,9 +10,7 @@ series: Mobile App Development
 
 :toc:
 
-So far, we have a runnable application that has two screens. We can navigate between those screens, but the app doesn't really do anything. In this post, we'll start to fix that. We'll layout the data model for the application, then introduce the library, Android Room, we'll use to access it.
-
-:toc:
+So far, we have a runnable application that has two screens. We can navigate between those screens, but the app doesn't really do anything. In this post, we'll start to fix that. We'll lay out the data model for the application, then introduce the library, Android Room, we'll use to access it.
 
 == Android Room
 
