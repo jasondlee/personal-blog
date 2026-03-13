@@ -6,6 +6,7 @@ description: Persisting data using Room
 date: 2026-01-21
 tags: [ compose, multiplatform, android, mobile, decompose, room ]
 series: Mobile App Development
+image: https://developer.android.com/static/images/android-kmp-logo.png
 ---
 
 :toc:

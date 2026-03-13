@@ -6,6 +6,7 @@ description: Adding Android Room support to our application
 date: 2025-08-26
 tags: [ compose, multiplatform, android, mobile, room ]
 series: Mobile App Development
+image: https://developer.android.com/static/images/android-kmp-logo.png
 ---
 
 :toc:

@@ -6,6 +6,7 @@ description: Getting started with Decompose
 date: 2025-07-06
 tags: [ compose, multiplatform, android, mobile, decompose ]
 series: Mobile App Development
+image: https://arkivanov.github.io/Decompose/media/logo/circle-2.png
 ---
 
 :toc:

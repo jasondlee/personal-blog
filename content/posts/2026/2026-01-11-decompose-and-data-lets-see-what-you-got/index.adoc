@@ -6,6 +6,7 @@ description: Reading data via Room and displaying it on our Decompose-based view
 date: 2026-01-11
 tags: [ compose, multiplatform, android, mobile, decompose, room ]
 series: Mobile App Development
+image: https://arkivanov.github.io/Decompose/media/logo/circle-2.png
 ---
 
 :toc:

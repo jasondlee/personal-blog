@@ -6,6 +6,7 @@ description: Adding basic navigation to our Decompose-based application
 date: 2025-08-05
 tags: [ compose, multiplatform, android, mobile, decompose ]
 series: Mobile App Development
+image: https://arkivanov.github.io/Decompose/media/logo/circle-2.png
 ---
 
 :toc:
