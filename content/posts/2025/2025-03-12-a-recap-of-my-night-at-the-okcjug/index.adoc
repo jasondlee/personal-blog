@@ -7,11 +7,8 @@ type: post
 link: /:year/:slug
 author: jdlee
 status: published
+image: https://okcjug.org/img/logo-vertical.png
 ---
-
-++++
-<img src="https://okcjug.org/img/logo-vertical.png" alt="OKC JUG Logo" height="200" style="float: right"/>
-++++
 
 Last night, I had the opportunity to present at my local jug, the https://okcjug.org[Oklahoma City Java User Group]. My topic was building applications Kotlin/Compose Multiplatform. For the most part, it was awesome. More on that in a moment.
 
