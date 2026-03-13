@@ -1,5 +1,6 @@
 package ee.jasondl.blog;
 
+import io.quarkiverse.roq.frontmatter.runtime.model.Page;
 import io.quarkus.qute.TemplateExtension;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,11 +16,11 @@ public class Extensions {
         return new SimpleDateFormat(format).format(date);
     }
 
-    public static String removeToc(String doc) {
-        Document parse = Jsoup.parse(doc);
-        parse.select("#toc").remove();
+    public static String removeToc(String html) {
+        Document doc = Jsoup.parse(html);
+        doc.select("#toc").remove();
 
-        return parse.html();
+        return doc.html();
     }
 
     public static String excerpt(String text, int limit) {
@@ -29,5 +30,9 @@ public class Extensions {
 
         return ((words.length < limit) ? firstLine :
                 String.join(" ", Arrays.copyOfRange(words, 0, limit))) + "...";
+    }
+
+    public static String homePageLink(Page page, String link) {
+        return page.url().path().equals("/") ? link : page.site().url().toString() + link;
     }
 }

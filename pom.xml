@@ -17,7 +17,7 @@
         <version.compiler-plugin>3.14.0</version.compiler-plugin>
         <version.quarkus-roq>2.1.0.BETA2</version.quarkus-roq>
         <version.quarkus.platform>3.31.2</version.quarkus.platform>
-        <version.quarkus-web-bundler>2.0.0.CR8</version.quarkus-web-bundler>
+        <version.quarkus-web-bundler>2.2.1</version.quarkus-web-bundler>
         <version.surefire-plugin>3.5.4</version.surefire-plugin>
     </properties>
 
@@ -72,11 +72,11 @@
         <dependency>
             <groupId>io.quarkiverse.web-bundler</groupId>
             <artifactId>quarkus-web-bundler</artifactId>
-            <version>2.2.1</version>
+            <version>${version.quarkus-web-bundler}</version>
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.web-bundler</groupId>
-            <artifactId>quarkus-web-bundler-tailwind-css</artifactId>
+            <artifactId>quarkus-web-bundler-tailwindcss</artifactId>
             <version>${version.quarkus-web-bundler}</version>
         </dependency>
 

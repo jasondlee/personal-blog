@@ -1,0 +1,69 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+h1 {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+h3 {
+    display: block;
+    font-size: 1.17em;
+    font-weight: bold;
+}
+
+code, kbd, pre, samp {
+    font-family: monospace, serif;
+    font-size: 1em;
+    margin-bottom: 1em;
+}
+
+toc ul, .ulist ul {
+    margin-left: 1em;
+    list-style-type: disc;
+}
+
+.sectlevel1, .sectlevel2, .sectlevel3, .sectlevel4, .sectlevel5 {
+    list-style-type: disc;
+    list-style-position: inside;
+    padding-left: 1em;
+}
+
+.sectlevel2, .sectlevel3, .sectlevel4, .sectlevel5 {
+    list-style-type: circle;
+}
+
+.sectlevel3, .sectlevel4, .sectlevel5 {
+    list-style-type: square;
+}
+
+ol {
+    margin-left: 1em;
+    list-style-type: arabic;
+}
+
+ol ol {
+    list-style-type: lower-alpha;
+}
+
+div.paragraph {
+    margin-top: 1em;
+}
+
+div.imageblock.text-center {
+    display: grid;
+    place-items: center; /* Centers both horizontally and vertically */
+    max-height: 500px;
+}
+
+img {
+    max-height: 500px;
+}

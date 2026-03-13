@@ -1,28 +1,269 @@
 ---
-layout: default
+layout: base2
 paginate:
     size: 10
     collection: posts
----
-{#include partials/pagination.html/}
+------
 
-{#for post in site.collections.posts.paginated(page.paginator)}
-<article class="bg-white rounded-lg shadow-sm p-6 mb-6 border border-gray-200">
-    <time class="text-sm text-gray-500 uppercase tracking-wide" datetime="2026-02-09">
-        <div class="date">{post.date.format("d")}</div> {!  | date: "%d" !}
-        <div class="month-year">{post.date.format("MMM YYYY")}</div> {!  | date: "%b %Y" !}
-    </time>
-    <h2 class="text-2xl font-bold mt-2 mb-4 uppercase">
-        <a href="{post.url.absolute}" class="text-gray-900 hover:text-blue-600">{post.title}</a>
-    </h2>
-    <p class="text-gray-700 leading-relaxed mb-4">
-        {site.pageContent(post).removeToc().stripHtml.excerpt(255).raw}
-    </p>
-    <a href="{post.url.absolute}" class="text-blue-600 hover:text-blue-800 font-medium">
-        Read More &rsaquo;
-    </a>
-</article>
-{/for}
-<div style="border-top: 2px solid #47586d;"></div>
+<!-- Hero Section -->
+<section class="bg-white py-16">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <!-- Profile Image -->
+                <div class="shrink-0">
+                    <img src="{site.url('/images/profile-pic.jpg')}"
+                         alt="Jason Lee"
+                         class="size-48 rounded-full object-cover shadow-xl profile-image border-4 border-blue-100">
+                </div>
 
-{#include partials/pagination.html/}
+                <!-- Hero Content -->
+                <div class="flex-grow text-center md:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                        Jason Lee
+                    </h1>
+                    <p class="text-2xl text-gray-600 mb-6">
+                        Java Champion • Principal Software Engineer at IBM
+                    </p>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                        <div class="text-center">
+                            <div class="stat-number">25+</div>
+                            <div class="text-sm text-gray-600 uppercase">Years Experience</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="stat-number">{site.collections.posts.size}</div>
+                            <div class="text-sm text-gray-600 uppercase">Posts Authored</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="stat-number">20+</div>
+                            <div class="text-sm text-gray-600 uppercase">Years JUG Leadership</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="stat-number">7</div>
+                            <div class="text-sm text-gray-600 uppercase">Books and Articles Published</div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                        <a href="https://jasondl.ee/resume.pdf"
+                           class="btn-primary text-white px-8 py-3 rounded-lg font-semibold inline-flex items-center gap-2">
+                            <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Resume
+                        </a>
+                        <a href="https://www.linkedin.com/in/jasondlee/"
+                           class="bg-white border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:border-blue-500 transition-all inline-flex items-center gap-2">
+                            <svg class="size-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                            LinkedIn
+                        </a>
+                        <a href="https://github.com/jasondlee"
+                           class="bg-white border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:border-blue-500 transition-all inline-flex items-center gap-2">
+                            <svg class="size-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blogs Section -->
+<section id="blogs" class="section py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-12">Latest Blog Entries</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="capabilities-grid">
+                {#for post in site.collections.posts.subList(0, 6)}
+                <div class="capability-card bg-white rounded-xl p-6 shadow-md"
+                     style="opacity: 0; animation: fadeInUp 0.6s ease-out 0.{post_index}s forwards;">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">{post.title}</h3>
+                    <time class="text-sm text-gray-500 uppercase tracking-wide">
+                        {!<div class="date">{post.date.format("d")}</div> !}
+                        <div class="month-year">{post.date.format("MMM d YYYY")}</div>
+                    </time>
+
+                    <p class="text-gray-600 leading-relaxed">
+                        {site.pageContent(post).removeToc().stripHtml.excerpt(75).raw}
+                    </p>
+
+                    <a href="{post.url.absolute}" class="atext-blue-800 hover:text-blue-600 font-medium">
+                        Read More &rsaquo;
+                    </a>
+                </div>
+                {/for}
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto mt-6">
+            <a href="/blogs" class="ztext-gray-600 hover:text-blue-600 transition-colors">
+                <h2>See All Blog Entries &rsaquo;</h2>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="section py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">About Me</h2>
+            <div class="prose prose-lg max-w-none">
+                <p class="text-gray-700 text-lg leading-relaxed mb-4">
+                    I'm a <strong>Java Champion</strong> and <strong>Principal Software Engineer at IBM</strong> with
+                    over 25 years of experience building enterprise-grade applications. I’ve been a professional developer
+                    since 1997, using a variety of languages, including Java, Kotlin, C/C++, JavaScript, PHP, Python,
+                    Delphi, C#, and even a bit of COBOL and JCL. I currently work for IBM on the WildFly/EAP team, where,
+                    among other things, I maintain integrations for some MicroProfile specs, OpenTelemetry, Micrometer,
+                    Jakarta Faces, and Bean Validation.
+                </p>
+                <p class="text-gray-700 text-lg leading-relaxed mb-4">
+                    As <strong>President of the Oklahoma City JUG</strong>, I'm passionate about community building,
+                    mentoring developers, and advancing the Java ecosystem. I am a frequent speaker at our local JUG, as
+                    well at a variety of technical conferences across the country.
+                </p>
+                <p class="text-gray-700 text-lg leading-relaxed mb-4">
+                    I published <em>Java 9 Programming Blueprints</em>, and actively contribute to several major open-source
+                    projects, including WildFly, Undertow, and Arquillian.
+                </p>
+                <p class="text-gray-700 text-lg leading-relaxed mb-4">
+                    I am a life-long learner who loves to apply what I've learned to real-world business problems to find
+                    a solution to make employers and customers alike happy. My favorite place to be is slightly out of my
+                    depth as I strive to grow while bringing value to the project.
+                </p>
+                <p class="text-gray-700 text-lg leading-relaxed">
+                    On the personal side, I’m active in my church, and enjoy bass guitar, running, fishing, and a variety
+                    of martial arts. I’m also married to a beautiful woman and have two boys, who, thankfully, look like
+                    their mother.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Capabilities Section -->
+<section id="whatido" class="section py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">What I Do</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="capabilities-grid">
+                <!-- Capabilities will be added by jQuery -->
+                {#for cap in cdi:whatido}
+                {@io.vertx.core.json.JsonObject cap}
+                <div class="capability-card bg-white rounded-xl p-6 shadow-md" style="opacity: 0; animation: fadeInUp 0.6s ease-out 0.{cap_index}s forwards;">
+                    <div class="text-5xl mb-4">{cap.getString("icon")}</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">{cap.getString("title")}</h3>
+                    <p class="text-gray-600 leading-relaxed">{cap.getString("description")}</p>
+                </div>
+                {/for}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tech Stack Section -->
+<section id="whatiuse" class="section py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">What I Use</h2>
+
+            {#for tech in cdi:whatiuse.techs}
+            <div class="mb-10">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">{tech.label}</h3>
+                <div class="flex flex-wrap gap-3" id="enterprise">
+                    {#let color=tech.color}
+                    {#for badge in tech.entries}
+                    <span class="tech-badge bg-{color}-100 text-{color}-700 px-4 py-2 rounded-lg font-medium border border-{color}-200" style="opacity: 1; transition: opacity 0.3s ease;">
+                        <span style="color: {color};">{badge}</span>
+                    </span>
+                    {/for}
+                </div>
+            </div>
+            {/for}
+        </div>
+    </div>
+</section>
+
+<!-- Publications Section -->
+<section id="whativedone" class="section py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">What I've Done</h2>
+
+            <div class="bg-gradient-to-r from-purple-100 to-pink-50 rounded-xl p-8 border-2 border-purple-200">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Open Source Contributions</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <svg class="size-6 text-green-500 me-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span><strong>WildFly Application Server</strong> - Active contributor to the leading Jakarta EE application server</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="size-6 text-green-500 me-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span><strong>Arquillian</strong> - Testing framework ecosystem contributions</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="size-6 text-green-500 me-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span><strong>128+ GitHub Repositories</strong> - Extensive portfolio of open-source projects and tools</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mt-8 bg-gradient-to-r from-green-100 to-yellow-50 rounded-xl p-8 border-2 border-green-200">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Community Leadership</h3>
+                <p class="text-gray-700 text-lg leading-relaxed">
+                    <strong>President, Oklahoma City JUG</strong> - Leading one of the most active Java User Groups in the region, organizing regular meetups, workshops, and knowledge-sharing sessions. Committed to fostering growth and mentorship in the Java community.
+                </p>
+            </div>
+
+            <div class="mt-8 bg-gradient-to-r from-blue-100 to-purple-50 rounded-xl p-8 border-2 border-blue-200">
+                <div class="flex flex-col md:flex-row gap-6 items-start">
+                    <div class="flex-grow">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Java 9 Programming Blueprints</h3>
+                        <p class="text-gray-600 mb-4">Packt Publishing, 2017</p>
+                        <p class="text-gray-700 leading-relaxed">
+                            A comprehensive guide featuring 10 projects demonstrating Java 9's powerful features, including
+                            modules, reactive programming, and modern development patterns. This book helps developers master
+                            the latest Java capabilities through hands-on, real-world examples.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact / CTA Section -->
+<section id="contact" class="section py-20 bg-gradient-to-br from-blue-600 to-purple-600">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h2 class="text-4xl font-bold mb-6">Ready to Build Something Exceptional?</h2>
+            <p class="text-xl mb-8 text-blue-100 leading-relaxed">
+                Whether you need a greenfield enterprise application, legacy system modernization, robust API architecture,
+                or cutting-edge AI integration—I bring 25+ years of proven expertise to turn your vision into reality.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="https://www.linkedin.com/in/jasondlee/"
+                   class="bg-white text-blue-600 px-10 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-xl">
+                    Connect on LinkedIn
+                </a>
+                <a href="https://github.com/jasondlee"
+                   class="bg-transparent border-2 border-white text-white px-10 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-blue-600 transition-all transform hover:scale-105">
+                    View GitHub Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
