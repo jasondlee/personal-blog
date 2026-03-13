@@ -20,6 +20,10 @@ paginate:
                     <div class="month-year">{post.date.format("MMM d YYYY")}</div>
                 </time>
                 <p class="text-gray-700 leading-relaxed mb-4">
+                    {#if post.data.containsKey("image")}
+                    <img src="{post.image(post.data.image)}"
+                         style="max-height: 75px; float: left; margin-right: 10px; margin-top: 10px;">
+                    {/if}
                     {post.excerpt(75).raw}
                 </p>
                 <a href="{post.url.absolute}" class="text-blue-600 hover:text-blue-800 font-medium">

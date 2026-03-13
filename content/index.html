@@ -86,6 +86,11 @@ layout: base2
                 {#for post in site.collections.posts.subList(0, 6)}
                 <div class="capability-card bg-white rounded-xl p-6 shadow-md"
                      style="opacity: 0; animation: fadeInUp 0.6s ease-out 0.{post_index}s forwards;">
+                    {#if post.data.containsKey("image")}
+                    <div class="text-5xl mb-4">
+                        <img src="{post.image(post.data.image)}" style="max-height: 50px">
+                    </div>
+                    {/if}
                     <h3 class="text-xl font-bold text-gray-900 mb-3">{post.title}</h3>
                     <time class="text-sm text-gray-500 uppercase tracking-wide">
                         {!<div class="date">{post.date.format("d")}</div> !}

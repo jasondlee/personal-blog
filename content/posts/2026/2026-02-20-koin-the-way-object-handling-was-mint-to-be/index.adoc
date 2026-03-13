@@ -6,6 +6,7 @@ description: "Migrating to dependency injection via Koin"
 #date: 2026-01-24
 tags: [ compose, multiplatform, android, mobile, decompose, koin ]
 series: Mobile App Development
+image: koin_new_logo.png
 ---
 
 :toc:
