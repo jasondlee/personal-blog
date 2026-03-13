@@ -6,10 +6,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Gradle Tip: Seeing Standard Streams During Tests
-Jason Lee
-2013-09-10
-
 
 I'm not a real big fan of using standard out as a debugging strategy (I prefer an IDE and break points, for what it's worth), but there are times when it's either necessary or just convenient. The standard Gradle configuration, though, makes this a bit more difficult than it probably should be. Fortunately, Gradle also makes it easy to change:
 

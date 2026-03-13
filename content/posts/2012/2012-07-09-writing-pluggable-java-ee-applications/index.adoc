@@ -6,9 +6,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Writing Pluggable Java EE Applications
-Jason Lee
-2012-07-09
 
 image::jaxlogo.gif[]
 

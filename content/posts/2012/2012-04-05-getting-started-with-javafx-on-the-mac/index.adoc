@@ -6,9 +6,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Getting Started with JavaFX on the Mac
-Jason Lee
-2012-04-05
 
 image::javafx_logo_color_1-300x150.jpg
 

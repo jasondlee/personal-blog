@@ -6,9 +6,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= GlassFish 3.1.2 and REST Security
-Jason Lee
-2012-03-01
 
 As you may know by now, we https://blogs.oracle.com/theaquarium/entry/glassfish_3_1_2_final[released GlassFish] 3.1.2 yesterday.  Tim Quinn has a nice https://blogs.oracle.com/quinn/entry/a_few_changes_to_secure[overview] of some of the security-related changes, but one change he didn't cover was one in the RESTful administration area, namely CSRF protection. I won't go into the details of what https://www.owasp.org/index.php/CSRF[CSRF attack] is here, but I do want to show we've added protections to GlassFish to make sure the server is as secure as possible.
 

@@ -7,10 +7,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Awestruct NetBeans Plugin
-Jason lee
-2013-09-30
-
 
 Several weeks ago, I posted blurb about a JavaFX project I had cobbled together, link:/posts/2013/04/30/doctorfx[DoctorFX].
 It is an effort to build a semi-graphical editor for http://www.methods.co.nz/asciidoc/[Asciidoc], but it is, currently,

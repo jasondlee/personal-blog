@@ -6,10 +6,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= A Quick-start for Scala and Gradle
-Jason Lee
-2013-08-22
-
 
 For those interested, here's a quick and simple project to get you started using Gradle and Scala together:
 

@@ -6,10 +6,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= So long, and thanks for all the fish
-Jason Lee
-2014-10-03
-
 
 image:/images/2014/10/thanksforallthefish.png[float="right"]As so many of my friends and peers have done before me, it's time to use that admittedly overplayed Douglas Adams quote and announce my departure from Oracle.
 

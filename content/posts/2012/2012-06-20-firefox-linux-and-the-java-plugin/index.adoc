@@ -6,9 +6,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Firefox, Linux, and the Java Plugin
-Jason Lee
-2012-06-20
 
 image::java-plugin-300x284.png[link="/images/2012/06/java-plugin.png" title: "'java-plugin'"]
 

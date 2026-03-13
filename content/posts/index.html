@@ -8,24 +8,27 @@ paginate:
 <section id="capabilities" class="section py-16 bg-white">
     <div class="container mx-auto px-4">
         <div class="max-w-6xl mx-auto">
+            {#include partials/pagination.html/}
+
             {#for post in site.collections.posts.paginated(page.paginator)}
             <article class="bg-white rounded-lg shadow-sm p-6 mb-6 border border-gray-200">
-                <h2 class="text-2xl font-bold mt-2 mb-4 uppercase">
+                <h2 class="text-2xl font-bold mt-2 mb-4">
                     <a href="{post.url.absolute}" class="text-gray-900 hover:text-blue-600">{post.title}</a>
                 </h2>
-                <time class="text-sm text-gray-500 uppercase tracking-wide">
+                <time class="text-sm text-gray-500 tracking-wide">
                     {!<div class="date">{post.date.format("d")}</div> !}
                     <div class="month-year">{post.date.format("MMM d YYYY")}</div>
                 </time>
                 <p class="text-gray-700 leading-relaxed mb-4">
-                    {site.pageContent(post).removeToc().stripHtml.excerpt(255).raw}
+                    {post.excerpt(75).raw}
                 </p>
                 <a href="{post.url.absolute}" class="text-blue-600 hover:text-blue-800 font-medium">
                     Read More &rsaquo;
                 </a>
             </article>
             {/for}
-            <div style="border-top: 2px solid #47586d;"></div>
+            {! <div style="border-top: 2px solid #47586d;"></div> !}
+            {#include partials/pagination.html/}
         </div>
     </div>
 </section>

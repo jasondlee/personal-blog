@@ -7,28 +7,31 @@ type: post
 link: /:year/:slug
 author: jdlee
 status: published
+escaped: false
 ---
 
 :toc:
 
+Years ago, I started this blog on WordPress, then moved to awestruct, then to JBake, then to Jekyll. I've not done that because I like to change things, though I must admit I've enjoyed doing it each time, but because I'm looking for something that best suits my needs.
+
 ++++
-<img src="/images/2025/iamroq.png" alt="Roq Logo" height="250" style="float: right"/>
+<img src="iamroq.png" alt="Roq Logo" height="250" style="float: right"/>
 ++++
 
-Years ago, I started this blog on Wordpress, then moved to awestruct, then to JBake, then to Jekyll. I've not done that because I like to change things (though I must admit I've enjoyed doing it each time ;), but because I'm looking for something that best suits my needs. I need to be able to post source code. It would be nice to be able to change theming -- especially for source code -- globally and easily. A static site would be nice for both performance and security. And as icing on the cake, being able to extend the build tool would be amazing. By chance in the past week or so, I was introduced to a new a tool, https://iamroq.com[Roq], which is built in Java, and based on Quarkus. A whole lot of boxes were suddenly checked. Now, less than two weeks later, I've https://jasondl.ee/[converted] https://okcjug.org/[three] https://jberet.org/[sites], including this one. In this post, I'll walk you through building your own static site that... Roqs. :P
+I need to be able to post source code. It would be nice to be able to change theming -- especially for source code -- globally and easily. A static site would be nice for both performance and security. And as icing on the cake, being able to extend the build tool would be amazing. By chance in the past week or so, I was introduced to a new tool, https://iamroq.com[Roq], which is built in Java, and based on Quarkus. A whole lot of boxes were suddenly checked. Now, less than two weeks later, I've https://jasondl.ee/[converted] https://okcjug.org/[three] https://jberet.org/[sites], including this one. In this post, I'll walk you through building your own static site that... Roqs. :P
+
 
 Roq, of course, has its own https://iamroq.com/docs/getting-started/[documentation], which helped me immensely. However, as all docs go, there were some use cases that weren't covered as thoroughly as I needed (or I'm slower than I like to think), so I thought I'd add my own voice, as they say, and maybe it will help you (and maybe help beef up the official docs. Andy, Roq's author, has been super helpful and eager for feedback).
-
-// more
 
 == Getting Started
 
 [NOTE]
 ====
-I've been using Roq in anger for less than a week, so I've much left to learn. What I'm sharing here is what I've learned and how I've gotten things to work for me. I can't guarantee that it's correct, but it does seem to work. Caveat emptor. :)
+I've been using Roq in anger for less than a week, so I've much left to learn. What I'm sharing here is what I've learned
+and how I've gotten things to work for me. I can't guarantee that it's correct, but it does seem to work. Caveat emptor. :)
 ====
 
-The easiest way to start is with the Quarkus CLI tool (I'll leave it as an exercise for the reader on how to https://quarkus.io/guides/cli-tooling[install that]). With that tool installed, it's as simple as this:
+The easiest way to start is with the Quarkus CLI (I'll leave it as an exercise for the reader on how to https://quarkus.io/guides/cli-tooling[install that]). With that tool installed, it's as simple as this:
 
 [source,bash]
 ----
@@ -42,36 +45,32 @@ And your http://localhost:8080[site] is ready to go. As an added bonus, you get 
 
 == The layout/theme
 
-In converting the three sites that I have, the hardest part for me (poor, simple backend engineer that I am) was the theme. Luckily, I had existing sources for the sites I was converting, so it was a matter of copying the Jekyll/Liquid sources and migrating them to the https://quarkus.io/guides/qute[Qute syntax]. This seems like a good time to mention that Roq uses Qute as its templating language. If you've used Liquid, Thyme, Freemarker, etc, you should feel right at home with Qute. If and when you need help, you can take a look at the https://quarkus.io/guides/qute-reference[Qute reference]. It seems pretty through.
+In converting the three sites that I have, the hardest part for me (poor, simple backend engineer that I am) was the theme. Luckily, I had existing sources for the sites I was converting, so it was a matter of copying the Jekyll/Liquid sources and migrating them to the https://quarkus.io/guides/qute[Qute syntax]. This seems like a good time to mention that Roq uses Qute as its templating language. If you've used Liquid, Thyme, Freemarker, etc., you should feel right at home with Qute. If and when you need help, you can take a look at the https://quarkus.io/guides/qute-reference[Qute reference]. It seems pretty through.
 
 I took my Liquid sources, then, and put them where Roq wants them: `templates/layouts`. Themes are HTML-based, which should be no surprise, but you can still use -- indeed must use -- Qute markup in. For example, your main layout could be as simple as this:
 
 [source,html]
 ----
-<html>
-    <body>
-        #{insert /}
-    </body>
-</html>
+<body>
+    {#insert /}
+</body>
 ----
 
-That tag marks the point at which each rendered page will inserted into your template. Templates can also extend other templates:
+That tag marks the point at which each rendered page will be inserted into your template. Templates can also extend other templates:
 
 [source,html]
 ----
 ---
 layout: base
 ---
-<html>
-    <body>
-        #{insert /}
-    </body>
-</html>
+<body>
+    {#insert /}
+</body>
 ----
 
 == Blog Posts
 
-Blog posts are pretty simple. As a post, they make up a Roq collection, over which you can iterate. First, a post, in, say `content/post/2025/2025-03-20-blog-post-demp.adoc`:
+Blog posts are pretty simple. As a post, they make up a Roq collection, over which you can iterate. First, a post, in, say `content/post/2025/2025-03-20-blog-post-demo.adoc`:
 
 [source,asciidoc]
 ----
@@ -86,7 +85,7 @@ author: jlee
 This is a blog post!
 ----
 
-And to create your site's index, in `content/index.html` (yes, you can use Markdown, but would you? :) :
+And to create your site's index, in `content/index.html` (yes, you can use Markdown, but why would you? :) :
 
 [source,html]
 ----
@@ -120,7 +119,7 @@ Again, the official docs, plus the Roq blog, cover this, but I'm going to try to
 </dependency>
 ----
 
-Using the transitively-incluced `io.quarkiverse.web-bundler:quarkus-web-bundler`, Highlight.js is made available to your site. It does take a bit of extra wiring, though, to put the resources in your template.
+Using the transitively-included `io.quarkiverse.web-bundler:quarkus-web-bundler`, Highlight.js is made available to your site. It does take a bit of extra wiring, though, to put the resources in your template.
 
 First, in `src/main/resources/web/app`, create `main.js`:
 
@@ -143,7 +142,7 @@ Finally, in your template, add this to your `<head>` section:
 
 == Site Data
 
-While your site may be static, it will likely have _some_ data associated with it. For example, you have a list of authors or speakers, a site menu, or just generic site data such as an associated X or Github account. To support this, Roq offers data support in `data/foo.yml`. The filename, of course, will hopefully have a meaningful, and it will be the means by which you access the data in your page. For example, if you have `data/info.yml`:
+While your site may be static, it will likely have _some_ data associated with it. For example, you have a list of authors or speakers, a site menu, or just generic site data such as an associated X or GitHub account. To support this, Roq offers data support in `data/foo.yml`. The filename, of course, will hopefully have a meaningful, and it will be the means by which you access the data in your page. For example, if you have `data/info.yml`:
 
 [source,yaml]
 ----
@@ -155,7 +154,7 @@ in a page or post, you can reference it this way:
 
 [source,asciidoc]
 ----
-You can find me on https://x.com/{cdi:info.x_username}[X] or https://github.com/{cdi:info.github_username}[Github]
+You can find me on https://x.com/{cdi:info.x_username}[X] or https://github.com/{cdi:info.github_username}[GitHub]
 ----
 
 Via the markup `{cdi:info}`, you get a `JsonObject` you can query, which works fine, but what if you have more complex data, like a collection of https://github.com/okcjug/site/blob/master/data/speakers.yml[speakers] (if I may be so bold as to "steal" an example from my https://okcjug.org[local JUG])?
@@ -237,8 +236,6 @@ and we'd like to look up information about this amazing and engaging speaker:
         {/if}
     </div>
 </div>
-{/let}
-{/let}
 ----
 
 First, we can extract the speaker key from the post by `{#let id = post.data("speaker").or("")}`. Then, using the `get()` method we defined on our `Speakers` class, we can get a `Speaker`: `{#let speaker = cdi:speakers.get(id) }`. Now, in our template, we can use references like `{speaker.image}` or `{speaker.bio}`.
@@ -273,8 +270,8 @@ There's so much more I could cover in detail, this is already longer than I'd pl
 * SEO: `{#seo page site /}`
 * RSS feeds: `{#include fm/rss.html}`
 * Sitemaps: `{#include fm/sitemap.xml}`
-* Easy https://iamroq.com/docs/publishing/[Github Pages deployment]
+* Easy https://iamroq.com/docs/publishing/[GitHub Pages deployment]
 
 and more.
 
-If you've made it this far, kudos to you, and my apologies. It kinda got away from, but there's so much cool stuff you can do with this (as an added bonus, the time it takes for the Github Action to publish my updates went from about 6 minutes with Jekyll to just over 1 minute). It's good stuff all the way down. Now quit reading and go migrate your own site. I don't think you'll regret it!
+If you've made it this far, kudos to you, and my apologies. It kinda got away from me. However, there's so much cool stuff you can do with this (as a bonus, the time it takes for the GitHub Action to publish my updates went from about 6 minutes with Jekyll to just over 1 minute). It's good stuff all the way down. Now quit reading and go migrate your own site. I don't think you'll regret it!

@@ -7,8 +7,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Reintroducing the JSFTemplating FileStreamer
-
 
 In a http://blogs.sun.com/paulsen/entry/streaming_content_in_jsf_with[blog entry] last year, Ken Paulsen gave a http://blogs.sun.com/paulsen/entry/streaming_content_in_jsf_with[short introduction] to the FileStreamer utility in https://jsftemplating.dev.java.net/[JSFTemplating].  Since Scales is now using JSFTemplating to make the component authoring process easier, I have been able to use this facility, allowing me to deprecate some custom code.  In the process of making the migration, I've made changes to JSFTemplating that will be of benefit to all.  In this entry, I'd like to highlight those changes, and show you how you, too, can use this great facility.// more
 

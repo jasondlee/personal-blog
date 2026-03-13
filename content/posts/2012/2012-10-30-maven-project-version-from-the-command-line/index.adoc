@@ -6,14 +6,8 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Maven Project Version from the Command Line
-Jason Lee
-2012-10-30
-
 
 A friend asked me today how to get a project's version out of a Maven POM file without having to read and parse it. A quick Google search brought up the http://stackoverflow.com/a/3545363[answer], which I thought I'd share here.
-
-// more
 
 The short answer is this:
 

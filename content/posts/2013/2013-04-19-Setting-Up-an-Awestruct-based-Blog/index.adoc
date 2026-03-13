@@ -6,14 +6,8 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Setting Up an Awestruct-based Blog
-Jason Lee
-2013-04-19
-
 
 In case you missed the link:/posts/2013-04-15-farewell-wordpress[announcement], I recently migrated my blog from Wordpress to Awestruct, the static site generation tool written by several JBoss engineers. As can be expected with a tool this new, there were some bumps and bruises along the way, but I managed -- with lots of help -- to make it to production with my efforts. To be a good open source citizen, then, I thought I'd explain my process and try to pass on what I learned.
-
-// more
 
 The first step is, of course, installing Awestruct, which is pretty simple:
 

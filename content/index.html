@@ -1,8 +1,8 @@
 ---
 layout: base2
-paginate:
-    size: 10
-    collection: posts
+#paginate:
+#    size: 10
+#    collection: posts
 ------
 
 <!-- Hero Section -->
@@ -77,6 +77,7 @@ paginate:
 </section>
 
 <!-- Blogs Section -->
+{! TODO: Readd search !}
 <section id="blogs" class="section py-16 bg-gray-100">
     <div class="container mx-auto px-4">
         <div class="max-w-6xl mx-auto">
@@ -92,7 +93,7 @@ paginate:
                     </time>
 
                     <p class="text-gray-600 leading-relaxed">
-                        {site.pageContent(post).removeToc().stripHtml.excerpt(75).raw}
+                        {post.excerpt(75).raw}
                     </p>
 
                     <a href="{post.url.absolute}" class="atext-blue-800 hover:text-blue-600 font-medium">

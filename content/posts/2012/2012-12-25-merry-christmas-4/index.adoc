@@ -7,7 +7,6 @@ type: post
 link: /:year/:slug
 status: published
 ---
-= Merry Christmas
 
 Merry Christmas!
 
