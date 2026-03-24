@@ -74,7 +74,6 @@ Blog posts are pretty simple. As a post, they make up a Roq collection, over whi
 ---
 title: Blog post demo
 description: Blog post description
-layout: default
 date: 2052-03-20
 author: jlee
 ---
@@ -87,7 +86,6 @@ And to create your site's index, in `content/index.html` (yes, you can use Markd
 [source,html]
 ----
 ---
-layout: default
 title: Home
 paginate: posts
 ---
