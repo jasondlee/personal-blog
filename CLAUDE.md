@@ -39,7 +39,7 @@ Deployment happens automatically via GitHub Actions when changes are pushed to t
 
 ### Templates
 - **`templates/layouts/`** - Page layouts using Qute templating
-  - `base2.html` - Main site layout with navigation and footer
+  - `base.html` - Main site layout with navigation and footer
   - `post.html` - Blog post layout
   - `tag.html` - Tag listing layout
 - **`templates/partials/`** - Reusable template fragments (share-page, pagination, about)
@@ -92,7 +92,7 @@ Access in templates with: `{global:links.list}`, `{global:publications.list}`, e
 
 ## Styling
 
-The project uses Tailwind CSS classes directly in templates. The `quarkus-web-bundler` handles JavaScript bundling and CSS processing. Custom styles are inline in `base2.html` for animations and component-specific styling.
+The project uses Tailwind CSS classes directly in templates. The `quarkus-web-bundler` handles JavaScript bundling and CSS processing. Custom styles are inline in `base.html` for animations and component-specific styling.
 
 ## GitHub Actions Workflow
 
