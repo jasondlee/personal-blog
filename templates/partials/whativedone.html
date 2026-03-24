@@ -6,24 +6,15 @@
             <div class="bg-gradient-to-r from-purple-100 to-pink-50 rounded-xl p-8 border-2 border-purple-200">
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">Open Source Contributions</h3>
                 <ul class="space-y-2 text-gray-700">
+                    {#for done in cdi:whativedone}
+                    {@io.vertx.core.json.JsonObject done}
                     <li class="flex items-start">
                         <svg class="size-6 text-green-500 me-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span><strong>WildFly Application Server</strong> - Active contributor to the leading Jakarta EE application server</span>
+                        <span><strong>{done.getString("title")}</strong> - {done.getString("description")}</span>
                     </li>
-                    <li class="flex items-start">
-                        <svg class="size-6 text-green-500 me-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span><strong>Arquillian</strong> - Testing framework ecosystem contributions</span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="size-6 text-green-500 me-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span><strong>128+ GitHub Repositories</strong> - Extensive portfolio of open-source projects and tools</span>
-                    </li>
+                    {/for}
                 </ul>
             </div>
 

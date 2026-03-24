@@ -1,0 +1,15 @@
+- id: wildfly
+  title: WildFly Application Server
+  description: Active contributor to the leading Jakarta EE application server
+- id: arquillian
+  title: Arquillian
+  description: Testing framework ecosystem contributions, particularly with arquillian-testcontainers
+- id: roq
+  title: Roq
+  description: Open-source contributions to the Roq project
+- id: mojarra
+  title: Eclipse Mojarra
+  description: Committer to the Eclipse Mojarra project, and maintainer of the Eclipse Mojarra Eclipse integration in WildFly
+- id: other
+  title: Other Various Projects
+  description: Creating, maintaing, or contributing to a variety of other projects
