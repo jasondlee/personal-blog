@@ -5,8 +5,9 @@
             <h2 class="text-3xl font-bold text-gray-900 mb-12">Latest Blog Entries</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="capabilities-grid">
                 {#for post in site.collections.posts.subList(0, 6)}
-                <div class="capability-card bg-white rounded-xl p-6 shadow-md"
-                     style="opacity: 0; animation: fadeInUp 0.6s ease-out 0.{post_index}s forwards;">
+                <div id="blog_post-{post_index}" class="capability-card bg-white rounded-xl p-6 shadow-md cursor-pointer"
+                     style="opacity: 0; animation: fadeInUp 0.6s ease-out 0.{post_index}s forwards;"
+                     onclick="window.location.href='{post.url.absolute}'">
                     {#if post.data.containsKey("image")}
                     <div class="text-5xl mb-4">
                         <img src="{post.image(post.data.image)}" style="max-height: 50px">
