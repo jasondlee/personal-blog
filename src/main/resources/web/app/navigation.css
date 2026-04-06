@@ -38,7 +38,7 @@ body {
     display: block;
     width: 25px;
     height: 3px;
-    background-color: #374151;
+    background-color: var(--color-gray-700);
     transition: all 0.3s ease;
 }
 
@@ -61,7 +61,7 @@ body {
 .stat-number {
     font-size: 2.5rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    background: linear-gradient(to bottom right, #3b82f6, #8b5cf6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -69,13 +69,13 @@ body {
 
 .capability-card {
     transition: all 0.3s ease;
-    border: 2px solid #e5e7eb;
+    border: 2px solid var(--color-gray-200);
 }
 
 .capability-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    border-color: #3b82f6;
+    border-color: var(--color-blue-500);
 }
 
 .tech-badge {
@@ -96,7 +96,7 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    background: linear-gradient(to bottom right, #3b82f6, #8b5cf6);
     transition: all 0.3s ease;
 }
 

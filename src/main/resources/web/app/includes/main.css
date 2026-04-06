@@ -4,11 +4,86 @@
     /* Fonts */
     --font-sans: "Montserrat", sans-serif;
 
+    /* Gray Scale */
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-400: #9ca3af;
+    --color-gray-500: #6b7280;
+    --color-gray-600: #4b5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1f2937;
+    --color-gray-900: #111827;
+    --color-gray-950: #030712;
+
+    /* Blue (Primary) */
+    --color-blue-100: #dbeafe;
+    --color-blue-200: #bfdbfe;
+    --color-blue-500: #3b82f6;
+    --color-blue-600: #2563eb;
+    --color-blue-700: #1d4ed8;
+    --color-blue-800: #1e40af;
+
+    /* Green */
+    --color-green-100: #dcfce7;
+    --color-green-200: #bbf7d0;
+    --color-green-500: #22c55e;
+    --color-green-700: #15803d;
+
+    /* Purple (Accent) */
+    --color-purple-50: #faf5ff;
+    --color-purple-100: #f3e8ff;
+    --color-purple-200: #e9d5ff;
+    --color-purple-600: #9333ea;
+    --color-purple-700: #7e22ce;
+
+    /* Red */
+    --color-red-100: #fee2e2;
+    --color-red-200: #fecaca;
+    --color-red-700: #b91c1c;
+
+    /* Orange */
+    --color-orange-100: #ffedd5;
+    --color-orange-200: #fed7aa;
+    --color-orange-700: #c2410c;
+
+    /* Yellow */
+    --color-yellow-50: #fefce8;
+    --color-yellow-100: #fef9c3;
+    --color-yellow-200: #fef08a;
+    --color-yellow-700: #a16207;
+
+    /* Pink */
+    --color-pink-50: #fdf2f8;
+
+    /* Semantic Colors */
+    --color-primary: var(--color-blue-600);
+    --color-primary-hover: var(--color-blue-700);
+    --color-accent: var(--color-purple-600);
+    --color-surface: var(--color-gray-50);
+    --color-border: var(--color-gray-200);
+
+    /* Gradients - using hex for compatibility */
+    --1gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    --gradient-primary: linear-gradient(to bottom right, #3b82f6, #8b5cf6);
+    --gradient-cta: linear-gradient(to bottom right, #2563eb, #bbf7d0);
+    --gradient-feature-purple: linear-gradient(to right, #ede9fe, #fce7f3);
+    --gradient-feature-green: linear-gradient(to right, #d1fae5, #fef9c3);
+    --gradient-feature-blue: linear-gradient(to right, #dbeafe, #faf5ff);
+
+    /* Shadow Colors */
+    --shadow-color-sm: rgba(0, 0, 0, 0.1);
+    --shadow-color-md: rgba(0, 0, 0, 0.15);
+    --shadow-color-lg: rgba(59, 130, 246, 0.3);
+    --shadow-color-xl: rgba(59, 130, 246, 0.4);
+
+    /* Navigation */
+    --nav-bg-blur: rgba(255, 255, 255, 0.95);
+
+    /* Legacy Variables (backwards compatibility) */
     --mainColor: #47586d;
     --white: #ffffff;
     --headerTextColor: #cecfd1;
-    --footerBorderColor: #2ba6cb;
-    --widgetBorderColor: #666666;
     --defaultCodeColor: #7f0a0cbb;
     --buttonColor: var(--mainColor);
     --buttonHover: var(--defaultCodeColor);
@@ -75,7 +150,7 @@ h1.title {
 }
 
 section.series {
-    background-color: lightgrey;
+    background-color: var(--color-gray-100);
     padding: 1px 0px 5px 15px;
 }
 
@@ -90,9 +165,7 @@ code {
 }
 
 a {
-    color: var(--mainColor);
     cursor: pointer;
-    text-decoration: underline;
 }
 
 p {

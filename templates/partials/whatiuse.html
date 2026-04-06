@@ -11,7 +11,7 @@
                     {#let color=tech.color}
                     {#for badge in tech.entries}
                     <span class="tech-badge bg-{color}-100 text-{color}-700 px-4 py-2 rounded-lg font-medium border border-{color}-200" style="opacity: 1; transition: opacity 0.3s ease;">
-                        <span style="color: {color};">{badge}</span>
+                        {badge}
                     </span>
                     {/for}
                 </div>
