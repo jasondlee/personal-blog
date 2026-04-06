@@ -16,8 +16,8 @@
 
         <version.compiler-plugin>3.14.0</version.compiler-plugin>
         <version.quarkus-roq>2.1.0.BETA2</version.quarkus-roq>
-        <version.quarkus-web-bundler>2.2.1</version.quarkus-web-bundler>
-        <version.quarkus.platform>3.31.2</version.quarkus.platform>
+        <version.quarkus-web-bundler>2.3.0</version.quarkus-web-bundler>
+        <version.quarkus.platform>3.34.2</version.quarkus.platform>
         <version.surefire-plugin>3.5.4</version.surefire-plugin>
     </properties>
 
