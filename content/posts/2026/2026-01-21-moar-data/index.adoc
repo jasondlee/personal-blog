@@ -68,11 +68,11 @@ and the function to handle the click:
 .HomeComponent.kt
 [source,kotlin]
 ----
-    fun addRecipient() {
-        occasion?.let {
-            nav.bringToFront(NavigationConfig.AddEditOccasionRecipient(it))
-        }
+fun addRecipient() {
+    occasion?.let {
+        nav.bringToFront(NavigationConfig.AddEditOccasionRecipient(it))
     }
+}
 ----
 
 When the user taps the action button, rendered as a plus in the lower right corner of the screen, we're going to navigate to a new screen, which means we need to make a series of changes:
