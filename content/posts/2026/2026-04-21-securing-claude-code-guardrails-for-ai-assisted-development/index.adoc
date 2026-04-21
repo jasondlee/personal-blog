@@ -1,0 +1,57 @@
+---
+type: post
+link: /:year/:slug
+title: "Securing Claude Code: Guardrails for AI-Assisted Development by Jim Manico"
+description: "Jim Manico shares how he bootstraps projects using Claude Code"
+#date: 2026-01-24
+tags: [ i, claude ]
+image: Claude_AI_symbol.png
+---
+
+In a presentation to https://www.youtube.com/watch?v=thsdAsgIsFc[OWASP London], Jim Manico, founder of Manicode Security, presents how he uses Claude Code to bootstrap projects safely using Claude Code and carefully scripted prompts and inputs. Using the approach he demos, developers won't just vibe code sloppy, insecure software, but will set up their projects to get deterministic, high quality results.
+
+Manico begins by starting Claude and having it create a new repository on GitHub. Once the repository has been created and cloned, he ends his Claude session, then begins another from _inside_ the newly created local directory. This allows Claude to sandbox itself to that directory.
+
+Once he has a repository, he thinks -- and talks to Claude -- about the architecture of the project, in this case a hypothetical llama farm, "for llama farmers and enthusisasts." To help with this, he uses a script that asks for a number of details, including:
+
+- System purpose
+- Primary use cases
+- Runtime environment
+- Server framework
+- Client framework
+
+and many others. By using this script, he guarantees that certain very important questions are asked and answered every time he starts a new project. Once he has completed filling out his script, he copies and pastes the text into his Claude sessions, and Claude generates the ARCHITECTURE.md for his project. This file is then committed and pushed to the GitHub repository.
+
+Next, he talks to Claude about SECURITY.md. Like the previous, his bootstrap script asks a number of questions related to security:
+
+- HTTP boundary security
+- authentication and authorization
+- input validation
+- secret handling
+- logging and error handling
+- deployment and CI/CD safety
+
+In his prompt, he references the ARCHITECTURE.md file, as well as some prompt files that he has developed over time, covering topics like general code quality and secure API best practices. The script itself includes several other instructions, hints, restrictions, etc. on what should be included in the resulting file. Once he's happy with the script, he copies and pastes, and Claude generates file. After a quick review, he commits and pushes this file too.
+
+For the third step, he walks Claude through setting up a GitHub issue template for requirements. The template is pretty large, and may all be appropriate for _your_ project, but it should server as a good starting point. His template includes like
+
+- ID
+- Title
+- Version
+- Status
+- Author
+- Last Updated
+- Priority
+- Classification
+
+It is at this point that he suggests never letting Claude write code directly. His suggestion is that every change needed for the system should be broken down into one or more issues, using this template, which Claude will use later to generate the actual code changes. This also gives the developer a chance to review each step of a potentially large change, tweaking requirements, expectations, etc, as well as baking in logging and tracking for these changes. Using his script, he tweaks the text as needed for this project, then follows his now-familiar, copy, paste, review, commit, push cycle.
+
+Finally, his script instructs Claude to create the CLAUDE.md file, using the three files created previously as inputs. This file, of course, is the main memory file used by Claude, so getting it correct is very important. As a final step, to help reduce maintenance, token usage, etc., he instructs Claude to analyze ARCHITECTURE.md, SECURITY.md, and CLAUDE.md to find overlap, contradictions, and "low-signal content".
+
+With all of these files created, tuned, and trimmed, he then asks Claude to create an "EPIC master issue" to build the site. Claude generates a plan and breaks it down into the smaller steps, creating an issue in the GitHub tracker for each step, using the requirements template created earlier. Once the process finishes, the project has a number of issues that can be worked on by Claude (or a human), and the project has been bootstrapped in less than 45 minutes.
+
+As he mentions at the top of his talk, there are an infinite number of ways to set up and manage an AI-based development effort. This approach works for him, and might be a great place to start for you.  To learn more from him, including getting access to his bootstrap script, follow him on https://x.com/manicode[X] or visit his https://manicode.com[website].
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/thsdAsgIsFc?si=1yFtpa87eXIsbHGR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
