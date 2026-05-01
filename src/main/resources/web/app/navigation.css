@@ -6,9 +6,9 @@ body {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--nav-bg-blur);
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px var(--shadow-color-sm);
 }
 
 .mobile-menu {
@@ -74,7 +74,7 @@ body {
 
 .capability-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px var(--shadow-color-md);
     border-color: var(--color-blue-500);
 }
 
@@ -84,7 +84,7 @@ body {
 
 .tech-badge:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 12px var(--shadow-color-lg);
 }
 
 .profile-image {
@@ -102,7 +102,7 @@ body {
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 10px 25px var(--shadow-color-xl);
 }
 
 @keyframes fadeInUp {

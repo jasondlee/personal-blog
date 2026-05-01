@@ -62,6 +62,7 @@
     --color-accent: var(--color-purple-600);
     --color-surface: var(--color-gray-50);
     --color-border: var(--color-gray-200);
+    --color-text: #333333;
 
     /* Gradients - using hex for compatibility */
     --1gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
@@ -96,7 +97,7 @@
 
 body {
     font-size: 18px;
-    color: #333;
+    color: var(--color-text);
 }
 
 
