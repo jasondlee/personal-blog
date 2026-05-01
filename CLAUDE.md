@@ -4,60 +4,34 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal blog built with **Quarkus Roq**, a static site generator for Quarkus. The site is written in Java 17, uses AsciiDoc for content, Qute for templating, and is deployed to GitHub Pages.
+Personal blog built with **Quarkus Roq** (a Quarkus-based static site generator). Content is written in AsciiDoc, templates use Qute, and the site deploys to GitHub Pages.
 
 ## Development Commands
 
-### Running the Development Server
 ```bash
-./mvnw quarkus:dev
+./mvnw quarkus:dev          # Dev server at http://localhost:8080 (live reload)
+./mvnw clean package        # Build static site → target/roq/
+./mvnw test                 # Run tests (validates all pages generate successfully)
 ```
-This starts Quarkus in dev mode with live reload. The site will be available at `http://localhost:8080`.
 
-### Building the Site
-```bash
-./mvnw clean package
-```
-Generates the static site in `target/roq/`.
+There is no linter or type-checker beyond Maven compilation. The project has no `eslint`, `tsc`, or equivalent configured.
 
-### Running Tests
-```bash
-./mvnw test
-```
-The test suite validates that all pages can be generated successfully using the `@RoqAndRoll` annotation.
+**Maven profiles:**
+- `-Psnapshot` — uses `999-SNAPSHOT` Roq version for testing unreleased Roq changes
+- `-Pnative` — enables GraalVM native image build
 
-### Deploying
-Deployment happens automatically via GitHub Actions when changes are pushed to the `master` branch. The workflow builds the site and deploys to the `gh-pages` branch.
+## Architecture
 
-## Project Structure
+### Content → Template → Static Site Pipeline
 
-### Content Organization
-- **`content/posts/YYYY/`** - Blog posts organized by year, each in its own directory with an `index.adoc` file
-- **`content/`** - Site root pages (presentations, projects, etc.)
-- **`public/`** - Static assets (images, PDFs, presentations)
-- **`data/*.yml`** - YAML data files consumed by Java records (links, publications, whatido, whatiuse)
+1. **Content** (`content/posts/YYYY/<slug>/index.adoc`) — AsciiDoc posts with YAML frontmatter
+2. **Data** (`data/*.yml`) — structured data mapped to Java records via `@DataMapping`
+3. **Templates** (`templates/`) — Qute templates render content + data into HTML
+4. **Extensions** (`src/main/java/ee/jasondl/blog/Extensions.java`) — custom Qute template methods
+5. **Static output** — Roq generates the final site to `target/roq/`
 
-### Templates
-- **`templates/layouts/`** - Page layouts using Qute templating
-  - `base.html` - Main site layout with navigation and footer
-  - `post.html` - Blog post layout
-  - `tag.html` - Tag listing layout
-- **`templates/partials/`** - Reusable template fragments (share-page, pagination, about)
+### Blog Post Frontmatter
 
-### Java Code
-- **`src/main/java/ee/jasondl/blog/`**
-  - `Extensions.java` - Qute template extensions (date formatting, HTML processing, excerpts)
-  - `Links.java`, `Publications.java`, `WhatIUse.java` - `@DataMapping` records for YAML data files
-- **`src/main/resources/web/app/`** - JavaScript and CSS bundled via quarkus-web-bundler
-- **`src/main/resources/application.properties`** - Quarkus configuration (site URL, timezone, AsciiDoc settings)
-
-### Configuration
-- **`config/application.properties`** - Override for local development (sets site.url to localhost)
-- **`pom.xml`** - Maven dependencies including Quarkus Roq plugins (asciidoc-jruby, aliases, sitemap, lunr, series)
-
-## Blog Post Format
-
-Posts use AsciiDoc with YAML frontmatter:
 ```yaml
 ---
 title: "Post Title"
@@ -67,55 +41,75 @@ type: post
 link: /:year/:slug
 status: published
 image: optional-image.jpg
+series: "Optional Series Name"
+seriesOrder: 1
 ---
 ```
 
-Posts can be part of a series using the `series` and `seriesOrder` frontmatter fields (handled by quarkus-roq-plugin-series).
+Posts live in `content/posts/YYYY/<slug>/index.adoc`. Images referenced by `image:` go in the same directory.
 
-## Template Extensions
+### Data Mappings (`data/*.yml` → Java Records)
 
-Custom template extensions in `Extensions.java`:
-- `{date.format("EEEE, MMM d, YYYY")}` - Format dates
-- `{post.excerpt(150)}` - Generate post excerpts with word limit
-- `{html.removeToc()}` - Strip table of contents from HTML
-- `{page.homePageLink("#section")}` - Generate links that work on both home and detail pages
+YAML files in `data/` are mapped to Java records annotated with `@DataMapping`:
 
-## Data Mappings
+| File | Record | Template access |
+|------|--------|-----------------|
+| `links.yml` | `Links(List<Link> list)` | `{global:links.list}` |
+| `publications.yml` | `Publications(List<Publication> list)` | `{global:publications.list}` |
+| `whatiuse.yml` | `WhatIUse(List<Tech> techs)` | `{global:whatiuse.techs}` |
+| `whatido.yml` | accessed directly in template | `{global:whatido.items}` |
 
-YAML files in `data/` are automatically mapped to Java records via `@DataMapping`:
-- `links.yml` → `Links` record (list of title/link pairs)
-- `publications.yml` → `Publications` record (list of publications with title/link/text)
-- `whatiuse.yml` → `WhatIUse` record
-- `whatido.yml` - Similar pattern (no Java class visible but likely exists)
+### Template Extensions (`Extensions.java`)
 
-Access in templates with: `{global:links.list}`, `{global:publications.list}`, etc.
+Static methods available in all Qute templates:
 
-## Styling
+- `{date.format("EEEE, MMM d, YYYY")}` — format dates via `SimpleDateFormat`
+- `{html.removeToc()}` — strip `<div id="toc">` from rendered HTML (uses jsoup)
+- `{post.excerpt(150)}` — word-limited plain-text excerpt from post content; has retry logic for a race condition where `content()` can return empty
+- `{page.homePageLink("#section")}` — generates `#section` on home page, `/path#section` on other pages
 
-The project uses Tailwind CSS classes directly in templates. The `quarkus-web-bundler` handles JavaScript bundling and CSS processing. Custom styles are inline in `base.html` for animations and component-specific styling.
+### Template Layouts
 
-## GitHub Actions Workflow
+- `base.html` — main site layout (nav, footer, SEO meta, GA4 analytics, jQuery, highlight.js)
+- `post.html` — blog post layout (extends `base`); URL pattern `/:year/:month/:day/:slug`
+- `tag.html` — tag listing with pagination
+- `none.html` — raw content passthrough (no layout wrapper)
+- `redhat.ftl` — FreeMarker template generating an Atom XML feed filtered to Red Hat-related technologies
 
-`.github/workflows/deploy.yml` runs on push to `master`:
-1. Checks out code
-2. Generates static site using `quarkiverse/quarkus-roq@v1` action
-3. Deploys to GitHub Pages (requires `pages: write` and `id-token: write` permissions)
+### Tests
 
-The `gh-pages` branch is the deployment target (not `master`).
+The single test class (`RoqSiteTest.java`) uses `@QuarkusTest` + `@RoqAndRoll`. The test method body is empty — the `@RoqAndRoll` annotation itself triggers full site generation during test setup, which validates that all pages render without errors.
 
-## Roq Plugins
+### Styling
 
-The site uses several Roq plugins (configured in pom.xml):
-- **asciidoc-jruby** - AsciiDoc rendering
-- **aliases** - URL alias support
-- **sitemap** - Automatic sitemap generation
-- **lunr** - Search index generation
-- **series** - Blog post series support
+Tailwind CSS via `quarkus-web-bundler-tailwindcss`. Custom styles are split across:
+- `src/main/resources/web/app/new.css` — series, code blocks, TOC
+- `src/main/resources/web/app/navigation.css` — sticky nav, mobile menu, animations
+- `src/main/resources/web/app/includes/main.css` — Tailwind config, typography
+- `src/main/resources/web/app/includes/colors.css` — color utility classes
+
+### Deployment
+
+GitHub Actions (`.github/workflows/deploy.yml`) triggers on push to `master` or manual dispatch. Uses `quarkiverse/quarkus-roq@v1` action to build, then deploys to GitHub Pages. The `gh-pages` branch is the deployment target.
+
+### Configuration
+
+- `src/main/resources/application.properties` — production config (site URL, timezone, AsciiDoc settings)
+- `config/application.properties` — local dev override (sets `site.url=http://localhost:8080`)
 
 ## Key Dependencies
 
-- **Quarkus Platform**: 3.31.2
-- **Quarkus Roq**: 2.1.0.BETA2
-- **Quarkus Web Bundler**: 2.2.1
-- **Java**: 17
-- **highlight.js**: 11.11.1 (for code syntax highlighting)
+- **Java**: 21
+- **Quarkus Platform**: 3.35.1
+- **Quarkus Roq**: 2.1.1
+- **Quarkus Web Bundler**: 2.3.1
+- **jsoup**: 1.22.1 (HTML manipulation in Extensions.java)
+- **highlight.js**: 11.11.1 (code syntax highlighting)
+
+## Roq Plugins (configured in pom.xml)
+
+- **asciidoc-jruby** — AsciiDoc rendering
+- **aliases** — URL alias/redirect support
+- **sitemap** — automatic sitemap.xml generation
+- **lunr** — client-side search index generation
+- **series** — blog post series grouping via `series`/`seriesOrder` frontmatter
