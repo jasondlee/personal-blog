@@ -9,7 +9,7 @@
   description: Open-source contributions to the Roq project
 - id: mojarra
   title: Eclipse Mojarra
-  description: Committer to the Eclipse Mojarra project, and maintainer of the Eclipse Mojarra Eclipse integration in WildFly
+  description: Committer to the Eclipse Mojarra project, and maintainer of the Eclipse Mojarra integration in WildFly
 - id: other
   title: Other Various Projects
-  description: Creating, maintaing, or contributing to a variety of other projects
+  description: Creating, maintaining, or contributing to a variety of other projects
