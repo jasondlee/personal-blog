@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+        (function() {
+            const t = localStorage.getItem('theme');
+            if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Jason Lee - Java Champion & Enterprise Architect</title>
@@ -28,10 +36,21 @@
     <div class="container mx-auto px-4 py-4">
         <div class="max-w-6xl mx-auto">
             <div class="flex justify-between items-center">
-                <div class="text-xl font-bold text-gray-800"><a href="{site.url()}">Coming Up for Air</a></div>
+                <div class="flex items-center gap-3">
+                    <div class="text-xl font-bold text-gray-800"><a href="{site.url()}">Coming Up for Air</a></div>
+
+                </div>
 
                 <!-- Desktop Navigation -->
                 <div id="navbar" class="hidden md:flex gap-6">
+                    <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode" type="button">
+                        <svg class="icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
+                        </svg>
+                        <svg class="icon-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/>
+                        </svg>
+                    </button>
                     <a href="{page.homePageLink("#blogs")}" class="text-gray-600 hover:text-blue-600 transition-colors">Latest Blogs</a>
                     <a href="{page.homePageLink("#about")}" class="text-gray-600 hover:text-blue-600 transition-colors">About Me</a>
                     <a href="{page.homePageLink("#whatido")}" class="text-gray-600 hover:text-blue-600 transition-colors">What I Do</a>
@@ -76,15 +95,6 @@
         </p>
     </div>
 </footer>
-
-<footer class="bg-white border-t border-gray-200 mt-12">
-    <div class="container mx-auto px-4 py-6">
-
-    </div>
-</footer>
-
-<script>
-</script>
 
 </body>
 </html>

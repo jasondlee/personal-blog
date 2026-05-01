@@ -56,6 +56,10 @@
     /* Pink */
     --color-pink-50: #fdf2f8;
 
+    /* White & missing gray */
+    --color-white: #ffffff;
+    --color-gray-300: #d1d5db;
+
     /* Semantic Colors */
     --color-primary: var(--color-blue-600);
     --color-primary-hover: var(--color-blue-700);

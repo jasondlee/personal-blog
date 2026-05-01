@@ -1,0 +1,200 @@
+/* ==============================================
+   DARK MODE
+   All dark-mode styles live here. The mechanism is
+   a .dark class on <html>, set by an inline script
+   in <head> before first paint.
+   ============================================== */
+
+/* --- Toggle Button -------------------------------- */
+
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    /*padding: 0.5rem;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease;
+    color: var(--color-gray-600);
+}
+
+.dark-mode-toggle:hover {
+    background-color: var(--color-gray-200);
+}
+
+.dark-mode-toggle svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.dark-mode-toggle .icon-sun {
+    display: none;
+}
+
+.dark-mode-toggle .icon-moon {
+    display: block;
+}
+
+html.dark .dark-mode-toggle .icon-sun {
+    display: block;
+}
+
+html.dark .dark-mode-toggle .icon-moon {
+    display: none;
+}
+
+/* --- Smooth Transition on Toggle ------------------ */
+
+html.dark-transition,
+html.dark-transition *,
+html.dark-transition *::before,
+html.dark-transition *::after {
+    transition: background-color 0.3s ease,
+                color 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease !important;
+    transition-delay: 0s !important;
+}
+
+/* --- Variable Overrides --------------------------- */
+
+html.dark {
+    /* Gray Scale (inverted) */
+    --color-gray-50:  #111827;
+    --color-gray-100: #1f2937;
+    --color-gray-200: #374151;
+    --color-gray-300: #4b5563;
+    --color-gray-400: #9ca3af;
+    --color-gray-500: #9ca3af;
+    --color-gray-600: #d1d5db;
+    --color-gray-700: #e5e7eb;
+    --color-gray-800: #f3f4f6;
+    --color-gray-900: #f9fafb;
+    --color-gray-950: #ffffff;
+
+    --color-white: #1a202c;
+
+    /* Blue (Primary) */
+    --color-blue-100: #1e3a5f;
+    --color-blue-200: #1e40af;
+    --color-blue-500: #60a5fa;
+    --color-blue-600: #3b82f6;
+    --color-blue-700: #60a5fa;
+    --color-blue-800: #93bbfd;
+
+    /* Green */
+    --color-green-100: #064e3b;
+    --color-green-200: #065f46;
+    --color-green-500: #34d399;
+    --color-green-700: #6ee7b7;
+
+    /* Purple (Accent) */
+    --color-purple-50:  #2e1065;
+    --color-purple-100: #3b0764;
+    --color-purple-200: #581c87;
+    --color-purple-600: #a855f7;
+    --color-purple-700: #c084fc;
+
+    /* Red */
+    --color-red-100: #450a0a;
+    --color-red-200: #7f1d1d;
+    --color-red-700: #fca5a5;
+
+    /* Orange */
+    --color-orange-100: #431407;
+    --color-orange-200: #7c2d12;
+    --color-orange-700: #fdba74;
+
+    /* Yellow */
+    --color-yellow-50:  #422006;
+    --color-yellow-100: #713f12;
+    --color-yellow-200: #854d0e;
+    --color-yellow-700: #fde047;
+
+    /* Pink */
+    --color-pink-50: #500724;
+
+    /* Semantic */
+    --color-primary: #3b82f6;
+    --color-primary-hover: #60a5fa;
+    --color-accent: #a855f7;
+    --color-surface: #111827;
+    --color-border: #374151;
+    --color-text: #e5e7eb;
+
+    /* Shadows */
+    --shadow-color-sm: rgba(0, 0, 0, 0.3);
+    --shadow-color-md: rgba(0, 0, 0, 0.4);
+    --shadow-color-lg: rgba(96, 165, 250, 0.25);
+    --shadow-color-xl: rgba(96, 165, 250, 0.35);
+
+    /* Navigation */
+    --nav-bg-blur: rgba(17, 24, 39, 0.95);
+
+    /* Legacy */
+    --mainColor: #93bbfd;
+    --white: #1a202c;
+    --headerTextColor: #374151;
+    --defaultCodeColor: #f87171;
+}
+
+/* --- Footer Fix ----------------------------------- */
+/* bg-gray-900 inverts to near-white; footer must stay dark */
+
+html.dark footer.bg-gray-900 {
+    background-color: #111827 !important;
+    color: #9ca3af !important;
+}
+
+html.dark footer.bg-gray-900 .text-gray-600 {
+    color: #6b7280 !important;
+}
+
+html.dark footer.bg-gray-900 .text-gray-500 {
+    color: #6b7280 !important;
+}
+
+/* --- Contact Section Fix -------------------------- */
+/* Restore actual white inside the gradient-backed contact section */
+
+html.dark #contact {
+    --color-white: #ffffff;
+}
+
+/* --- btn-primary Text Fix ------------------------- */
+/* Resume button uses text-white on gradient bg */
+
+html.dark .btn-primary {
+    color: #ffffff;
+}
+
+/* --- Gradient Overrides --------------------------- */
+
+html.dark .dark-gradient-contact {
+    background: linear-gradient(to bottom right, #1e40af, #065f46) !important;
+}
+
+html.dark .dark-gradient-purple {
+    background: linear-gradient(to right, #3b0764, #500724) !important;
+}
+
+html.dark .dark-gradient-green {
+    background: linear-gradient(to right, #064e3b, #422006) !important;
+}
+
+html.dark .dark-gradient-blue {
+    background: linear-gradient(to right, #1e3a5f, #2e1065) !important;
+}
+
+html.dark .stat-number {
+    background: linear-gradient(to bottom right, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+html.dark .btn-primary {
+    background: linear-gradient(to bottom right, #60a5fa, #a78bfa);
+}

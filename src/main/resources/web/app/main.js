@@ -21,3 +21,19 @@ $(document).ready(function() {
         $('#mobile-menu-toggle').removeClass('active');
     });
 });
+
+// Dark mode toggle
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.getElementById('dark-mode-toggle');
+    if (toggle) {
+        toggle.addEventListener('click', function() {
+            document.documentElement.classList.add('dark-transition');
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme',
+                document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            setTimeout(function() {
+                document.documentElement.classList.remove('dark-transition');
+            }, 350);
+        });
+    }
+});
