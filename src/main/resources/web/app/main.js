@@ -1,9 +1,22 @@
 import hljs from 'highlight.js';
 import installLineNumbers from './highlightjs-line-numbers.js';
+import CopyButtonPlugin from 'highlightjs-copy';
+import 'highlightjs-copy/dist/highlightjs-copy.min.css';
 import 'highlight.js/styles/rainbow.css';
+import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+import '@fortawesome/fontawesome-free/scss/regular.scss';
+import '@fortawesome/fontawesome-free/scss/brands.scss';
+import '@fortawesome/fontawesome-free/scss/solid.scss';
 
 installLineNumbers(hljs, window, document);
 
+hljs.addPlugin(
+    new CopyButtonPlugin({
+            hook: (text, _) => {
+                return text.replaceAll(/\(\d+\)$/gm, '');
+            },
+        }
+    ));
 hljs.highlightAll();
 hljs.initLineNumbersOnLoad();
 
