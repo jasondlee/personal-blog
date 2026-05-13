@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@300;400;500;600;700&family=Red+Hat+Display:wght@300;400;600;700&family=PT+Mono&display=swap');
 @import "tailwindcss";
 
 @theme {
     /* Fonts */
     --font-sans: "Montserrat", sans-serif;
+    --font-heading: 'Red Hat Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-body: 'Red Hat Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'PT Mono', monospace;
 
     /* Gray Scale */
     --color-gray-50: #f9fafb;
@@ -99,6 +103,10 @@
     padding-inline: 1.5rem;
 }
 
+* {
+    font-family: var(--font-body);
+}
+
 body {
     font-size: 18px;
     color: var(--color-text);
@@ -106,44 +114,33 @@ body {
 
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: inherit;
-    font-weight: 500;
+    font-family: var(--font-heading);
+    display: block;
     line-height: 1.1;
     color: inherit;
     margin: unset;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
 h1 {
-    display: block;
     font-size: 2em;
     margin-block-start: 0.67em;
     margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
 }
 
 h2 {
-    display: block;
     font-size: 1.5em;
     margin-block-start: 0.83em;
     margin-block-end: 0.83em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
 }
 
 h3 {
-    display: block;
     font-size: 1.17em;
     margin-block-start: 1em;
     margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
 }
 
 h1.title {
@@ -155,18 +152,15 @@ h1.title {
 }
 
 section.series {
-    background-color: var(--color-gray-100);
+    @apply bg-blue-100 rounded-lg shadow-sm p-6 mb-6 border border-gray-200;
     padding: 1px 0px 5px 15px;
 }
 
 code {
-    padding-bottom: 0;
-    padding-left: 3px;
-    padding-right: 3px;
-    padding-top: 0;
+    padding: 0 3px;
     color: var(--defaultCodeColor);
     font-weight: bold;
-    font-family: monospace;
+    font-family: var(--font-mono);
 }
 
 a {
@@ -183,8 +177,9 @@ p {
 }
 
 code, kbd, pre, samp {
-    font-family: monospace, serif;
+    font-family: var(--font-mono);
     font-size: 1em;
+    margin-bottom: 1em;
 }
 
 td.hljs-ln-line.hljs-ln-numbers {
@@ -199,7 +194,8 @@ div#toctitle {
 
 div.listingblock > div.title {
     font-style: italic;
-    background-color: var(--headerTextColor);
+    /*background-color: var(--headerTextColor);*/
+    @apply bg-blue-100;
 }
 
 .ulist ul li p {
@@ -217,11 +213,17 @@ ul {
 
 ol {
     display: block;
-    list-style-type: decimal;
+    /*list-style-type: decimal;*/
+    list-style-type: arabic;
     margin-block-start: 1em;
     margin-block-end: 1em;
     padding-inline-start: 40px;
     unicode-bidi: isolate;
+
+    ol {
+        list-style-type: lower-alpha;
+    }
+
 }
 
 ol.loweralpha {
@@ -256,4 +258,27 @@ div.imageblock.text-center {
 
 img {
     max-height: 500px;
+}
+
+toc ul, .ulist ul {
+    margin-left: 1em;
+    list-style-type: disc;
+}
+
+div.paragraph {
+    margin-top: 1em;
+}
+
+.share-page a {
+    text-decoration: none;
+}
+
+.index {
+    text-align: center;
+    min-width: 1em;
+    display: inline-block;
+}
+
+.title::before {
+    content: " - ";
 }
