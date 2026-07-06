@@ -282,6 +282,7 @@ div.toc {
 
     ul, .ulist ul {
         margin: 0 0 0 1em;
+        list-style-position: outside;
     }
 
     li a {
@@ -299,6 +300,11 @@ div.toc {
 
     ul.sectlevel3 {
         list-style-type: lower-alpha;
+    }
+
+
+    ul.sectlevel4 {
+        list-style-type: lower-greek;
     }
 
 }
