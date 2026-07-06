@@ -169,8 +169,8 @@ a {
 
 p {
     display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
+    /*margin-block-start: 1em;*/
+    /*margin-block-end: 1em;*/
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     unicode-bidi: isolate;
@@ -186,11 +186,6 @@ td.hljs-ln-line.hljs-ln-numbers {
     padding-right: 1em;
 }
 
-div#toctitle {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-top: 1em;
-}
 
 div.listingblock > div.title {
     font-style: italic;
@@ -205,8 +200,8 @@ div.listingblock > div.title {
 ul {
     display: block;
     list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
+    /*margin-block-start: 1em;*/
+    /*margin-block-end: 1em;*/
     padding-inline-start: 40px;
     unicode-bidi: isolate;
 }
@@ -215,8 +210,8 @@ ol {
     display: block;
     /*list-style-type: decimal;*/
     list-style-type: arabic;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
+    /*margin-block-start: 1em;*/
+    /*margin-block-end: 1em;*/
     padding-inline-start: 40px;
     unicode-bidi: isolate;
 
@@ -260,11 +255,6 @@ img {
     max-height: 500px;
 }
 
-toc ul, .ulist ul {
-    margin-left: 1em;
-    list-style-type: disc;
-}
-
 div.paragraph {
     margin-top: 1em;
 }
@@ -280,5 +270,35 @@ div.paragraph {
 }
 
 .title::before {
-    content: " - ";
+    #content: " - ";
+}
+
+div.toc {
+    #toctitle {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-top: 1em;
+    }
+
+    ul, .ulist ul {
+        margin: 0 0 0 1em;
+    }
+
+    li a {
+        text-decoration: underline;
+        text-decoration-color: var(--color-blue-300);
+    }
+
+    ul.sectlevel1 {
+        list-style-type: upper-roman;
+    }
+
+    ul.sectlevel2 {
+        list-style-type: lower-roman;
+    }
+
+    ul.sectlevel3 {
+        list-style-type: lower-alpha;
+    }
+
 }
