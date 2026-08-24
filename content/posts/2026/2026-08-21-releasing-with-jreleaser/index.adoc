@@ -256,7 +256,7 @@ project:
             version: 25
             groupId: com.steeplesoft
             artifactId: jreleaser-demo
-            mainClass: com.steeplesoft.jreleaserdemo.DemoApp.DemoApp
+            mainClass: com.steeplesoft.jreleaserdemo.JReleaserDemo
             jvmOptions:
             environmentVariables:
             multiProject: false
