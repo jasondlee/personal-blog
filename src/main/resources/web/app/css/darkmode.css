@@ -138,6 +138,13 @@ html.dark {
     --white: #1a202c;
     --headerTextColor: #374151;
     --defaultCodeColor: #f87171;
+
+
+    --quote-background: #5d5d5d;
+    --quote-border-color: #fafafa;
+    --quote-font-color: #5d5d5d;
+    --quote-attribution-font-color: #8e8e8e;
+
 }
 
 /* --- Footer Fix ----------------------------------- */
