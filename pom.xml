@@ -15,9 +15,9 @@
         <skipITs>true</skipITs>
 
         <version.compiler-plugin>3.14.0</version.compiler-plugin>
-        <version.quarkus-roq>2.1.5</version.quarkus-roq>
+        <version.quarkus-roq>2.1.7</version.quarkus-roq>
         <version.quarkus-web-bundler>2.3.3</version.quarkus-web-bundler>
-        <version.quarkus.platform>3.37.1</version.quarkus.platform>
+        <version.quarkus.platform>3.38.3</version.quarkus.platform>
         <version.surefire-plugin>3.5.4</version.surefire-plugin>
     </properties>
 
@@ -176,7 +176,7 @@
         <profile>
             <id>snapshot</id>
             <properties>
-                <version.quarkus-roq>999-SNAPSHOT</version.quarkus-roq>
+                <version.quarkus-roq>2.1.7</version.quarkus-roq>
             </properties>
         </profile>
         <profile>
