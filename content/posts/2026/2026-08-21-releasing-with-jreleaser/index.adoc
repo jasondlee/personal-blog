@@ -6,7 +6,7 @@ tags: [ java, jreleaser ]
 image: jreleaser-duke.png
 ---
 
-One of the less glamorous parts of maintaining a software project is release management. Projects vary, of course, but a release might include creating application bundles; signing artifacts; pushing to "stores" like Maven Central, Homebrew, sdkman, etc; creating GitHub releases; announcing the release; and maybe many, many others. The more complex a project's release requirements are, the more opportunities for error there are. A tool exists, though, to help streamline this process, JReleaser. In this post, we'll take a quick look at what the tool is and see a fairly simple configuration to help get you started.
+One of the less glamorous parts of maintaining a software project is release management. A release might include creating application bundles, signing artifacts, pushing to stores like Maven Central or Homebrew, creating GitHub releases, and announcing the release. The more complex a project's release requirements, the more opportunities for error. JReleaser helps streamline this process. In this post, we'll take a quick look at what the tool is and see a fairly simple configuration to help get you started.
 
 Quoting from the https://jreleaser.org/[JReleaser site]:
 
@@ -15,17 +15,17 @@ ____
 JReleaser is a release automation tool. Its goal is to simplify creating releases and publishing artifacts to multiple package managers while providing customizable options. However, you may also use it with projects that do not require publishing binary assets. The tool can be used to create Git releases (tag, changelog, assets), announce releases, assemble additional binaries and files to be published via package managers. JReleaser supports any kind of project regardless of its source language (Java, Go, Node, Rust, Perl, Python, C/C++, C#, Elixir, Haskell, etc), although it provides additional benefits to Java-based projects.
 ____
 
-To learn how to use JReleaser, we'll develop a configuration to create a GitHub release, publish it to Maven Central, as well as publish a JBang script to make our demo app easy to access.
+To learn how to use JReleaser, we'll develop a configuration to create a GitHub release, publish to Maven Central, and publish a JBang script to make our demo app easy to access.
 
 == The Basic Project
 
-To avoid too much noise, we're just going to fork a https://tamboui.dev/docs/main/demos-toolkit.html#new-year[demo app] from TamboUI. The app itself is not important, so we'll skip the details here. You can, of course, see the full app in all its glory in the https://github.com/jasondlee/jreleaser-demo[git repo].
+We'll use a simple https://tamboui.dev/docs/main/demos-toolkit.html#new-year[demo app] forked from TamboUI. The app itself is not important, so we'll skip the details here. You can see the full app in the https://github.com/jasondlee/jreleaser-demo[git repo].
 
 == Preparing the POM
 
-Before we can worry too much about the JReleaser config, we need to make sure the POM has certain functionality configured. In a real app or library, you probably have this done already, but we don't for this app, so we need to add it. Doing so highlights the requirement anyway.
+Before configuring JReleaser, we need to ensure the POM has certain functionality configured. Real applications likely have this already, but adding it here highlights the requirement.
 
-To deploy to Central, we're going to need source and javadoc archives, otherwise the deployer will complain (there might be a way to silence that, but it seems like a good thing to do regardless). To do that, we'll configure a couple of plugins, `maven-source-plugin` and `maven-javadoc-plugin`. For large projects, these might take time I don't want to spend while developing, so we'll put these in a profile so they're enabled only when needed:
+Maven Central requires source and javadoc archives. We'll configure `maven-source-plugin` and `maven-javadoc-plugin` to generate them. Since these plugins can slow down development builds in large projects, we'll put them in a profile to enable only when needed:
 
 [source,xml]
 ----
@@ -66,7 +66,7 @@ To deploy to Central, we're going to need source and javadoc archives, otherwise
 </profiles>
 ----
 
-JReleaser also seems to want a local "deploy" directory to work against, so we'll configure the `maven-deploy-plugin`:
+JReleaser requires a local "deploy" directory, so we'll configure the `maven-deploy-plugin`:
 
 [source,xml]
 ----
@@ -84,7 +84,7 @@ JReleaser also seems to want a local "deploy" directory to work against, so we'l
 
 == JReleaser Configuration
 
-Now we're ready to configure JReleaser. You have at least a couple of options. You can configure it via an external YAML file or via your Maven POM. I tend to prefer the POM file as it requires less duplication of information (project version, authors, description, etc), and doesn't require the installation of another tool. It does, though, bloat your POM some, so keep that in mind when making your choice. For this project, we'll add this plugin configuration to our `release` profile:
+Now we're ready to configure JReleaser. You can configure it via an external YAML file or via your Maven POM. The POM approach requires less duplication of information (project version, authors, description, etc) and doesn't require installing another tool, though it does increase POM size. For this project, we'll add this plugin configuration to our `release` profile:
 
 [source,xml]
 ----
@@ -157,23 +157,23 @@ Now we're ready to configure JReleaser. You have at least a couple of options. Y
 </plugin>
 ----
 
-The configuration model, regardless of format, is quite large, so I can't cover it all here, but I'll try to give a brief overview of each section used here.
+The configuration model is extensive. Here's a brief overview of each section used in this configuration.
 
 === Section: <project>
 
-This, obviously, defines the project. Most information here will be pulled straight from the POM (N.B., with `jreleaser.yaml`, this section would be much more verbose, repeating a fair bit of project metadata). If you'd like to override information for whatever reason, you may do so here.
+This section defines the project. When using the POM approach, most information is pulled from the POM automatically (unlike `jreleaser.yaml`, which requires explicit project metadata). Override any values here as needed.
 
 For full details on what options are available, see the `Project` model https://github.com/jreleaser/jreleaser/blob/main/api/jreleaser-model-api/src/main/java/org/jreleaser/model/api/project/Project.java[here].
 
 === Section: <release>
 
-In this section, we describe our GitHub release. The `owner` can be inferred from the repository owner, but I've specified it here from clarity, which will also enable releases from forks should you choose to do so. We can also configure whether to replace existing releases (should you need to correct an error, for example), as well as how the changelog should look.
+This section describes the GitHub release. While `owner` can be inferred from the repository, specifying it explicitly provides clarity and enables releases from forks. You can also configure whether to replace existing releases and how the changelog should look.
 
-Full model details, see https://github.com/jreleaser/jreleaser/blob/main/api/jreleaser-model-api/src/main/java/org/jreleaser/model/api/release/Release.java[here].
+For full model details, see https://github.com/jreleaser/jreleaser/blob/main/api/jreleaser-model-api/src/main/java/org/jreleaser/model/api/release/Release.java[here].
 
 === Section: <distributions>
 
-In this section, we'll define our distributions. This section is a map, so the top-level elements in this section will be the entry keys. Our only distribution is a single jar, which is just the artifact that Maven builds.
+This section defines distributions. Since it's a map, top-level elements become entry keys. Our only distribution is a single jar—the artifact Maven builds.
 
 We have also specified a JBang deployment, and this might be one of my favorite features. When JReleaser creates the release, it will:
 
@@ -184,11 +184,11 @@ We have also specified a JBang deployment, and this might be one of my favorite 
 
 === Section: <signing>
 
-This section configures signing globally for the JReleaser project. Some deployers (e.g., Maven Central) require signing, and configuring this here means we don't need to configure it for each deployer that needs it.
+This section configures signing globally. Some deployers (e.g., Maven Central) require signing, and setting it here applies to all deployers that need it.
 
 === Section: <deploy>
 
-Here we can define where we want the project artifacts deployed (Central, Nexus, Gitlab, etc). The configuration seems a bit odd here. The model looks like this:
+This section defines where project artifacts should be deployed (Central, Nexus, Gitlab, etc). The model structure looks like this:
 
 [source,xml]
 ----
@@ -206,11 +206,11 @@ Here we can define where we want the project artifacts deployed (Central, Nexus,
 </deploy>
 ----
 
-Most of this is pretty straightforward, but one option I'd like to call out and stress is `<stage>`. The default value is `FULL`, which means JReleaser will upload and then publish your artifact whether you want to or not. With `UPLOAD`, you have to manually publish it from the Maven Central dashboard, which I prefer as a safeguard, since you can't unpublish from Maven Central. Assuming you're not running this from a GitHub Action, I like the safety net this provides.
+Most of this is straightforward, but `<stage>` deserves special attention. The default value `FULL` uploads and immediately publishes your artifact. With `UPLOAD`, you must manually publish from the Maven Central dashboard. Since you can't unpublish from Maven Central, this manual step provides a useful safeguard for local releases.
 
 == Secrets Config
 
-Depending on how you want to run JReleaser (i.e., from your local workstation via the command line or from a GitHub Action), you're going to need to provide secrets to JReleaser somehow. For local runs, you can define environment variables, or use `$HOME/.jreleaser/config.properties`. That file might look something like this:
+JReleaser needs access to secrets for deployment. For local runs, define environment variables or use `$HOME/.jreleaser/config.properties`. That file might look like this:
 
 [source,properties]
 ----
@@ -224,7 +224,7 @@ JRELEASER_GPG_SECRET_KEY=...
 JRELEASER_GPG_PUBLIC_KEY=...
 ----
 
-I'll leave it as an exercise for the reader to figure out how to get those, but their values should be pretty obvious. The only catch is the GPG keys, which seem to need to be the ascii-armored keys themselves. I've read through the JReleaser source a bit and saw nothing to suggest otherwise.
+Most values are self-explanatory. Note that GPG keys must be ascii-armored keys themselves.
 
 Once you've set up that file (or the environment variables), you can check your JRelease config using the plugin:
 
@@ -343,7 +343,7 @@ Assuming you've added my JBang catalog to your local config (which is a HUGE ass
 $ jbang jreleaser-demo@jasondlee
 ----
 
-There is one last step I'd like to note. If you use the Maven Release Plugin, you're likely chafing a bit at setting the version manually, etc. Fortunately, this is pretty easy to fix. We just need to tweak the JRelease Maven plugin config a bit to tell it to execute when deploying:
+If you use the Maven Release Plugin, you can avoid setting the version manually by configuring JReleaser to execute during deployment:
 
 [source,xml]
 ----
@@ -366,6 +366,6 @@ $ mvn release:prepare
 $ mvn -Prelease release:perform
 ----
 
-There's much, more to JReleaser, but I hope this helps get you started. At the very least, I've documented what I need to know the next time I need this and have flushed the details to cold storage. :P
+There's much more to JReleaser, but I hope this helps get you started.
 
 Enjoy!
