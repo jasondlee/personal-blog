@@ -96,6 +96,11 @@
     --defaultCodeColor: #7f0a0cbb;
     --buttonColor: var(--mainColor);
     --buttonHover: var(--defaultCodeColor);
+
+    --quote-background: #fafafa;
+    --quote-border-color: #5d5d5d;
+    --quote-font-color: #5d5d5d;
+    --quote-attribution-font-color: #8e8e8e;
 }
 
 @utility container {
@@ -302,9 +307,28 @@ div.toc {
         list-style-type: lower-alpha;
     }
 
-
     ul.sectlevel4 {
         list-style-type: lower-greek;
     }
+}
 
+div.quoteblock {
+    background: #fafafa;
+    background: var(--quote-background);
+    border-left: 5px solid #5d5d5d;
+    border-left: 5px solid var(--quote-border-color);
+    padding-left: 1em;
+}
+
+div.quoteblock .attribution {
+    color: #8e8e8e;
+    color: var(--quote-attribution-font-color);
+    font-size: .83333rem;
+    font-size: calc(15/var(--rem-base)*1rem);
+    margin-top: .75rem;
+}
+
+.post a {
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
 }
