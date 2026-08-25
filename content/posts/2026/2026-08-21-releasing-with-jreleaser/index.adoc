@@ -6,7 +6,9 @@ tags: [ java, jreleaser ]
 image: jreleaser-duke.png
 ---
 
-One of the less glamorous parts of maintaining a software project is release management. A release might include creating application bundles, signing artifacts, pushing to stores like Maven Central or Homebrew, creating GitHub releases, and announcing the release. The more complex a project's release requirements, the more opportunities for error. JReleaser helps streamline this process. In this post, we'll take a quick look at what the tool is and see a fairly simple configuration to help get you started.
+:toc:
+
+One of the less glamorous parts of maintaining a software project is release management. A release might include creating application bundles, signing artifacts, pushing to stores like Maven Central or Homebrew, creating GitHub releases, and announcing the release. The more complex a project's release requirements are, the more opportunities for error. JReleaser helps streamline this process. In this post, we'll take a quick look at what the tool is and see a fairly simple configuration to help get you started.
 
 Quoting from the https://jreleaser.org/[JReleaser site]:
 
@@ -20,6 +22,26 @@ To learn how to use JReleaser, we'll develop a configuration to create a GitHub 
 == The Basic Project
 
 We'll use a simple https://tamboui.dev/docs/main/demos-toolkit.html#new-year[demo app] forked from TamboUI. The app itself is not important, so we'll skip the details here. You can see the full app in the https://github.com/jasondlee/jreleaser-demo[git repo].
+
+== Before Getting Started
+
+To complete this walkthrough, you will need two things: a verified Maven Central namespace, and your ascii-armored GPG keys. Getting a namespace is fairly involved, so I will refer you the official docs https://central.sonatype.org/register/namespace/[here].
+
+I've not found a nice, concise document detailing the export of your GPG keys, so I'll provide those commands here:
+
+[source,bash]
+----
+$ gpg --list-secret-keys --keyid-format LONG
+sec   rsa4096/3AA5C34371567BD2 2023-01-15 [SC]
+      1234ABCD5678EF901234ABCD5678EF901234ABCD
+uid                 [ultimate] Your Name <you@example.com>
+ssb   rsa4096/ABCDEF1234567890 2023-01-15 [E]
+$ gpg --armor --export 3AA5C34371567BD2 > public.asc
+$ gpg --armor --export-secret-keys 3AA5C34371567BD2 > private.asc
+----
+
+Protect these files very carefully. Make sure they're never committed to a public repository or published anywhere. That would be bad. :)
+
 
 == Preparing the POM
 
@@ -40,7 +62,7 @@ Maven Central requires source and javadoc archives. We'll configure `maven-sourc
                     <executions>
                         <execution>
                             <id>attach-sources</id>
-                            <phase>verify</phase>
+                            <phase>package</phase>
                             <goals>
                                 <goal>jar-no-fork</goal>
                             </goals>
@@ -53,7 +75,7 @@ Maven Central requires source and javadoc archives. We'll configure `maven-sourc
                     <executions>
                         <execution>
                             <id>attach-javadocs</id>
-                            <phase>verify</phase>
+                            <phase>package</phase>
                             <goals>
                                 <goal>jar</goal>
                             </goals>
@@ -199,7 +221,9 @@ This section defines where project artifacts should be deployed (Central, Nexus,
                 <active>ALWAYS</active>
                 <url>https://central.sonatype.com/api/v1/publisher</url>
                 <stage>UPLOAD</stage>
-                <stagingRepositories>${project.build.directory}/staging-deploy</stagingRepositories>
+                <stagingRepositories>
+                    <staginRepository>${project.build.directory}/staging-deploy</staginRepository>
+                </stagingRepositories>
             </sonatype>
         </mavenCentral>
     </maven>
@@ -224,7 +248,28 @@ JRELEASER_GPG_SECRET_KEY=...
 JRELEASER_GPG_PUBLIC_KEY=...
 ----
 
-Most values are self-explanatory. Note that GPG keys must be ascii-armored keys themselves.
+Most values are self-explanatory. Note that GPG keys must be ascii-armored keys themselves. Using the `.asc` files above, you'll put the text between the `BEGIN` and `END` block markers as the value of their respective variable, using `\` line continuations. The resulting file might look like this:
+
+[source,properties]
+----
+JRELEASER_GPG_SECRET_KEY=lQOYBF8xYzIBCACq8vX9kLmNpQrStUvWxYzA1b2c3d4e5f6g7h8i9j0k1l2m3n4 \
+o5p6q7r8s9t0u1v2w3x4y5z6A7B8C9D0E1F2G3H4I5J6K7L8M9N0O1P2Q3R4S5 \
+T6U7V8W9X0Y1Z2a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p8q9r0s1t2u3v4w5x6 \
+y7z8A9B0C1D2E3F4G5H6I7J8K9L0M1N2O3P4Q5R6S7T8U9V0W1X2Y3Z4a5b6c7 \
+d8e9f0g1h2i3j4k5l6m7n8o9p0q1r2s3t4u5v6w7x8y9z0A1B2C3D4E5F6G7H8 \
+I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6a7b8c9d0e1f2g3h4i5j6k7l8m9 \
+n0o1p2q3r4s5t6u7v8w9x0y1z2A3B4C5D6E7F8G9H0I1J2K3L4M5N6O7P8Q9R0 \
+=AbCd
+JRELEASER_GPG_PUBLIC_KEY=mQENBGXk9pIBCADd3fK9pLmN5qR2sT8vY0uI3oP6aB1cD4eF7gH0jK3lM6nO9pQ \
+2rS5tU8vW1xY4zA7bC0dE3fG6hI9jK2lM5nO8pQ1rS4tU7vW0xY3zA6bC9dE2f \
+G5hI8jK1lM4nO7pQ0rS3tU6vW9xY2zA5bC8dE1fG4hI7jK0lM3nO6pQ9rS2tU5 \
+vW8xY1zA4bC7dE0fG3hI6jK9lM2nO5pQ8rS1tU4vW7xY0zA3bC6dE9fG2hI5jK \
+=AbCd
+----
+
+WARNING: The file `$HOME/.jreleaser/config.properties` _should not be world-readable_.
+
+== Verifying the setup
 
 Once you've set up that file (or the environment variables), you can check your JRelease config using the plugin:
 
@@ -323,9 +368,11 @@ distributions:
 
 Once that looks right, you're almost ready to release. Maven Central does not allow `SNAPSHOT` deployments, so we need to set the version correctly, then we can deploy.
 
+== Making a release
+
 [source,bash]
 ----
-$ mvn versions:set -DnewVersion=1.0.0
+$ mvn versions:set -DnewVersion=0.0.1
 $ mvn -Prelease clean deploy jreleaser:full-release
 ----
 
@@ -342,6 +389,8 @@ Assuming you've added my JBang catalog to your local config (which is a HUGE ass
 ----
 $ jbang jreleaser-demo@jasondlee
 ----
+
+== Maven Release Plugin Support
 
 If you use the Maven Release Plugin, you can avoid setting the version manually by configuring JReleaser to execute during deployment:
 
@@ -366,6 +415,6 @@ $ mvn release:prepare
 $ mvn -Prelease release:perform
 ----
 
-There's much more to JReleaser, but I hope this helps get you started.
+There's much more to JReleaser, of course. I have only mentioned release announcements and CI integration, for example, but those will have to wait for another post. In the meantime, I hope this helps get you started.
 
 Enjoy!
