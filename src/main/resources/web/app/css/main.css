@@ -101,6 +101,8 @@
     --quote-border-color: #5d5d5d;
     --quote-font-color: #5d5d5d;
     --quote-attribution-font-color: #8e8e8e;
+
+    --warning-icon-color: red;
 }
 
 @utility container {
@@ -312,39 +314,44 @@ div.toc {
     }
 }
 
-div.quoteblock {
-    background: #fafafa;
-    background: var(--quote-background);
-    border-left: 5px solid #5d5d5d;
-    border-left: 5px solid var(--quote-border-color);
-    padding-left: 1em;
-}
-
-div.quoteblock .attribution {
-    color: #8e8e8e;
-    color: var(--quote-attribution-font-color);
-    font-size: .83333rem;
-    font-size: calc(15/var(--rem-base)*1rem);
-    margin-top: .75rem;
-}
-
 .post a {
     text-decoration-line: underline;
     text-decoration-style: dashed;
 }
 
-atd.icon {
+div.quoteblock {
+    background-color: var(--quote-background);
+    border-left: 5px solid var(--quote-border-color);
+    padding-left: 1em;
+}
+
+div.quoteblock .attribution {
+    color: var(--quote-attribution-font-color);
     font-size: .83333rem;
-    font-size: calc(15/var(--rem-base)*1rem);
+    margin-top: .75rem;
+}
+
+div.admonitionblock.warning {
+    background-color: var(--quote-background);
+    border-left: 5px solid var(--quote-border-color);
+}
+
+/*div.admonitionblock.warning content:before {*/
+/*    content: " boogity ";*/
+/*}*/
+
+td.icon {
+    padding-left: 1em;
+    font-size: .83333rem;
     left: 0;
-    line-height: 1;
-    padding: 0;
-    /*position: absolute;*/
+    line-height: 3;
+    /*padding: 0;*/
     top: 0;
-    transform: translate(-.5rem,-50%);
-    background-color: #990000;
 }
 
 .icon-warning {
     --fa: "\f071";
+    color: var(--warning-icon-color);
+    font-size: xxx-large;
+    padding-top: 10px;
 }
