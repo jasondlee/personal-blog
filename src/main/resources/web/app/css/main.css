@@ -1,11 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@300;400;500;600;700&family=Red+Hat+Display:wght@300;400;600;700&family=PT+Mono&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@300;400;500;600;700&family=Red+Hat+Display:wght@300;400;600;700&family=PT+Mono&display=swap');*/
 @import "tailwindcss";
 
 @theme {
     /* Fonts */
     --font-sans: "Montserrat", sans-serif;
     --font-heading: 'Red Hat Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-body: 'Red Hat Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-body2: 'Red Hat Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-body: "Noto Serif","DejaVu Serif",serif;
+
     --font-mono: 'PT Mono', monospace;
 
     /* Gray Scale */
@@ -101,8 +103,6 @@
     --quote-border-color: #5d5d5d;
     --quote-font-color: #5d5d5d;
     --quote-attribution-font-color: #8e8e8e;
-
-    --warning-icon-color: red;
 }
 
 @utility container {
@@ -266,10 +266,6 @@ div.paragraph {
     margin-top: 1em;
 }
 
-.share-page a {
-    text-decoration: none;
-}
-
 .index {
     text-align: center;
     min-width: 1em;
@@ -316,42 +312,25 @@ div.toc {
 
 .post a {
     text-decoration-line: underline;
-    text-decoration-style: dashed;
+    /*text-decoration-style: dashed;*/
+}
+
+footer a {
+    text-decoration: none;
+}
+
+.share-page a {
+    text-decoration: none;
 }
 
 div.quoteblock {
     background-color: var(--quote-background);
-    border-left: 5px solid var(--quote-border-color);
-    padding-left: 1em;
+    /*border-left: 5px solid var(--quote-border-color);*/
+    padding-left: 2em;
 }
 
 div.quoteblock .attribution {
     color: var(--quote-attribution-font-color);
     font-size: .83333rem;
     margin-top: .75rem;
-}
-
-div.admonitionblock.warning {
-    background-color: var(--quote-background);
-    border-left: 5px solid var(--quote-border-color);
-}
-
-/*div.admonitionblock.warning content:before {*/
-/*    content: " boogity ";*/
-/*}*/
-
-td.icon {
-    padding-left: 1em;
-    font-size: .83333rem;
-    left: 0;
-    line-height: 3;
-    /*padding: 0;*/
-    top: 0;
-}
-
-.icon-warning {
-    --fa: "\f071";
-    color: var(--warning-icon-color);
-    font-size: xxx-large;
-    padding-top: 10px;
 }
