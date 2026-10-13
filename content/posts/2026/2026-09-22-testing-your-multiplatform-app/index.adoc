@@ -1,0 +1,220 @@
+---
+type: post
+link: /:year/:slug
+title: "Testing Your Multiplatform App"
+description: "Writing automated UI tests for Compose Multiplatform applications"
+tags: [ compose, multiplatform, android, mobile, testing ]
+series: Mobile App Development
+image: android.png
+---
+
+:toc:
+
+We've put a lot of effort into our app so far, and we're almost 'done' with it, but there's a pretty obvious (I
+hope) gap: testing is completely manual, and that's fine at first. At some point, though, it would be nice to be able
+to stop tapping and typing every time we make a change. The good news is that time is now. In this post, we'll
+create an automated UI test setup and get at least a basic test working to demonstrate _a_ way to automate things.
+
+Before we dive in, I need to make a full disclosure. Part of the point of this app and this blog series is to learn
+the modern way of writing Android apps and to share the journey in case it helps or inspires others. It has been a
+long time since my first Android app, and things have changed pretty significantly, with testing applications being
+one of those changes. Techniques, libraries, etc. have all changed quite a bit, so I used AI assistance to bootstrap
+some of the test code. The examples here have been reviewed and tested, but generated tests still require the same
+scrutiny as hand-written code.
+
+[IMPORTANT]
+====
+While this series is about Compose Multiplatform development, and this post does claim to be adding testing, the
+_only_ testing we'll be adding is Android instrumented tests. That does leave gaps for iOS-specific UIs, business
+logic, etc., but I just don't know enough to be able to demonstrate that now. This is the best I can offer at this
+point, so I hope it's enough. :)
+====
+
+== Build Updates
+
+The first step to implementing tests will be getting the build updated so that test dependencies are available:
+
+.composeApp/build.gradle.kts
+[source,gradle]
+----
+sourceSets {
+    androidInstrumentedTest.dependencies {
+        implementation(libs.compose.ui.test.junit4.android)
+        implementation(libs.core.ktx)
+        implementation(libs.androidx.test.runner)
+        implementation(libs.androidx.test.rules)
+        implementation(libs.androidx.test.ext.junit)
+    }
+}
+// ...
+android {
+    defaultConfig {
+        // ...
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+}
+----
+
+== The Base Class: `TestWatcher`
+
+The main driver for our tests will be a child class of `org.junit.rules.TestWatcher`. TestWatcher is a `TestRule`,
+which "is an alteration in how a test method, or set of test methods, is run and reported." TestWatcher is a JUnit 4
+rule that can observe test lifecycle events and perform setup, cleanup, or reporting around a test.  This is how
+we're going to set up various Android-related items for our tests. For example:
+
+[source,kotlin]
+----
+package com.steeplesoft.giftbook.test
+
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import com.steeplesoft.giftbook.MainActivity
+import org.junit.rules.TestWatcher
+import org.junit.runner.Description
+import org.junit.runners.model.Statement
+
+class GiftBookAndroidTestRule : TestWatcher() {
+    val compose = createAndroidComposeRule<MainActivity>()
+
+    override fun apply(base: Statement, description: Description): Statement =
+        super.apply(compose.apply(base, description), description)
+}
+----
+
+There's more to that class, which you can read in the Git repository, but we're going to focus on that `val compose`.
+The function `createAndroidComposeRule()` creates a test rule with a custom `Activity`. This instance is what
+provides the Compose test environment and activity handling. With the power of Kotlin's extension functions, we'll
+use this rule to drive UI behavior.
+
+== The Test Class
+
+Before we get to that, let's set up our first test so we can see what this looks like in action:
+
+[source,kotlin]
+----
+class RecipientLifecycleTest {
+    @get:Rule
+    val giftBook = GiftBookAndroidTestRule()
+
+    @Test
+    fun creatingRecipientShowsItInList() {
+        val name = "Alex Recipient"
+
+        giftBook.compose.createRecipient(name)
+
+        giftBook.compose.onNodeWithText(name).assertIsDisplayed()
+    }
+}
+----
+
+All this test does is make sure the `Recipient` "Alex Recipient" can be created and displayed on the screen.
+The word "all" is a bit misleading, as there's some UI magic hiding in that `createRecipient()` function, so let's
+peel back the lid on that now.
+
+== `UiActions`: Encapsulating UI interactions
+
+One of the helper classes Codex was nice enough to generate for us -- and a pattern I quite like -- is the
+`UiActions.kt` file. In this file are a number of extension functions that add functionality to the
+`AndroidComposeTestRule` we created earlier. For example:
+
+.composeApp/src/androidInstrumentedTest/kotlin/com/steeplesoft/giftbook/test/UiActions.kt
+[source,kotlin]
+----
+fun AndroidComposeTestRule<*, *>.createRecipient(name: String) {
+    onNodeWithContentDescription("Recipients").performClick()
+    onNodeWithText("Recipients").assertIsDisplayed()
+    tapAdd()
+    enterRecipientName(name)
+    tapSave()
+    onNodeWithText("Recipients").assertIsDisplayed()
+}
+
+fun AndroidComposeTestRule<*, *>.enterRecipientName(name: String) {
+    onNode(
+        hasSetTextAction() and hasAnyAncestor(hasTestTag("recipient-name-field")),
+        useUnmergedTree = true,
+    ).performTextReplacement(name)
+}
+
+fun AndroidComposeTestRule<*, *>.tapAdd() {
+    onNodeWithTag("add-action").performClick()
+}
+----
+
+If you look at the full file, you'll see a very common pattern: use various `onNode*` methods to identify a node,
+then perform an action. If you've done any UI testing, this should look very familiar. Our function here does a bunch
+ of those in succession:
+
+- Click a node with the description 'Recipients'
+- Make sure a node with the text 'Recipients' is displayed
+- Click the node with the tag 'add-action'
+- On the node with the tag 'recipient-name-field', replace the text with `name`
+
+And so on. `UiActions.kt` provides a vast number of such methods, and, to be honest, I'm thankful that an LLM wrote
+those for me. It can be done by hand, but it's tedious work, so I'm happy to offload that. It is important to read
+and verify LLM-generated code, though, so don't let anyone tell you otherwise. Free, unrelated advice. Moving on.
+
+== Making the UI Testable
+
+You might notice the test code references certain tags, content descriptions, etc. How do we know what those values
+are so we know what to look for in our test? Easy. We add them ourselves. Here's an example from our compose function:
+
+.composeApp/src/commonMain/kotlin/com/steeplesoft/giftbook/ui/recipients/AddEditRecipientContent.kt
+[source,kotlin]
+----
+TextField(
+    label = "Recipient Name",
+    form = form,
+    modifier = Modifier.testTag("recipient-name-field"),
+    fieldState = form.name,
+).Field()
+----
+
+For any UI element that we want to interact with in our tests, we can add a `Modifier.testTag` call. For `Icon` and
+`Image` instances, we can set `contentDescription`. Giving unique tags, descriptions, etc. allows us to identify,
+programmatically, which node in the tree we want. Since the test framework can't see like we can, we have to give it
+some hints to help us out. Simple and effective.
+
+== Running the Tests
+
+Now that we know how to write tests and have one small example, how do we run them? You can, of course, run it easily
+from Android Studio by selecting an emulator then telling the IDE to run all tests, but we're looking for
+automation in our testing, and that means we go back to Gradle:
+
+.composeApp/build.gradle.kts
+[source,gradle]
+----
+android {
+    testOptions {
+        managedDevices {
+            localDevices {
+                create("pixel7") {
+                    device = "Pixel 7"
+                    apiLevel = 33
+                    systemImageSource = "google"
+                }
+            }
+        }
+    }
+}
+----
+
+By adding this section to our build, we can now run our test(s) without having to worry about downloading images,
+creating devices, and so on:
+
+[source,bash]
+----
+$ ./gradlew composeApp:pixel7DebugAndroidTest
+----
+
+The first time you issue that, Gradle will download all the bits it needs and create the emulator. It will then run
+your tests and report back when it's finished, exactly as expected. This even works from GitHub Actions, though I
+won't show that here.
+
+== Next steps
+
+In this entry, we only developed one pretty straightforward test, and there's much more to the app to be tested, so
+there's a lot of work left to be done. Whether you're writing the tests by hand or having an agent help you, make
+sure you think through all the testing scenarios, make a list of each step, then methodically work through the
+list until your tests are complete. Again, it can be tedious, but your users will thank you.
+
+Until next, I hope this helps someone out as much as it has helped me!
