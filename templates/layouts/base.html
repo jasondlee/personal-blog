@@ -29,7 +29,7 @@
     {#ga4 tag="3GQK1YDRQM" /}
     {#rss site /}
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-1000">
 
 <!-- Navigation -->
 <nav class="nav-sticky">
@@ -37,8 +37,9 @@
         <div class="max-w-6xl mx-auto">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <div class="text-xl font-bold text-gray-800"><a href="{site.url()}">Coming Up for Air</a></div>
-
+                    <div class="text-5xl font-bold text-gray-800">
+                        <a href="{site.url()}#">Coming Up for Air</a>
+                    </div>
                 </div>
 
                 <!-- Desktop Navigation -->
@@ -53,10 +54,12 @@
                     </button>
                     <a href="{page.homePageLink("#blogs")}" class="text-gray-600 hover:text-blue-600 transition-colors">Latest Blogs</a>
                     <a href="{page.homePageLink("#about")}" class="text-gray-600 hover:text-blue-600 transition-colors">About Me</a>
+{!
                     <a href="{page.homePageLink("#whatido")}" class="text-gray-600 hover:text-blue-600 transition-colors">What I Do</a>
                     <a href="{page.homePageLink("#whatiuse")}" class="text-gray-600 hover:text-blue-600 transition-colors">What I Use</a>
                     <a href="{page.homePageLink("#whativedone")}" class="text-gray-600 hover:text-blue-600 transition-colors">What I've Done</a>
                     <a href="{page.homePageLink("#contact")}" class="text-gray-600 hover:text-blue-600 transition-colors">Let's Connect</a>
+!}
                 </div>
 
                 <!-- Mobile Hamburger Button -->
@@ -85,7 +88,7 @@
 {#insert /}
 
 <!-- Footer -->
-<footer class="bg-gray-900 text-gray-400 py-8">
+<footer class="bg-gray-100 text-gray-400 py-8">
     <div class="container mx-auto px-4 text-center">
         <p class="text-sm text-gray-600 text-center">
             &#169; Copyright Jason Lee, 2005–2026. All rights reserved.

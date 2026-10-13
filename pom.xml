@@ -16,8 +16,8 @@
 
         <version.compiler-plugin>3.14.0</version.compiler-plugin>
         <version.quarkus-roq>2.1.9</version.quarkus-roq>
-        <version.quarkus-web-bundler>2.3.4</version.quarkus-web-bundler>
-        <version.quarkus.platform>3.39.3</version.quarkus.platform>
+        <version.quarkus-web-bundler>3.0.0</version.quarkus-web-bundler>
+        <version.quarkus.platform>3.40.1</version.quarkus.platform>
         <version.surefire-plugin>3.5.4</version.surefire-plugin>
     </properties>
 
@@ -83,7 +83,6 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.23.2</version>
         </dependency>
         <dependency>
             <groupId>org.mvnpm</groupId>

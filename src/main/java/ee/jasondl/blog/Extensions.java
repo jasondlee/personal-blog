@@ -42,7 +42,6 @@ public class Extensions {
         return limited + (limited.endsWith(".") ? ".." : "...");
     }
 
-
     public static String homePageLink(Page page, String link) {
         return page.url().path().equals("/") ? link : page.site().url().toString() + link;
     }
